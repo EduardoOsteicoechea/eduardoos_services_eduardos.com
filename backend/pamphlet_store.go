@@ -12,9 +12,11 @@ import (
 )
 
 const (
-	colEpams       = "epams"
-	colEpamBodies  = "epam_bodies"
-	colEpamFooters = "epam_footers"
+	colEpams        = "epams"
+	colEpamBodies   = "epam_bodies"
+	colEpamFooters  = "epam_footers"
+	colEpamSeries   = "epam_series"
+	colEpamAuthors  = "epam_authors"
 )
 
 // PamphletStore persists pamphlet metadata, bodies, and footer profiles in MongoDB.
@@ -28,6 +30,16 @@ type PamphletStore interface {
 	GetFooter(ctx context.Context, userID, footerID, correlationID string) (FooterProfile, bool, error)
 	ListFooters(ctx context.Context, userID, correlationID string) ([]FooterProfile, error)
 	DeleteFooter(ctx context.Context, userID, footerID, correlationID string) error
+
+	SaveSeries(ctx context.Context, rec EpamSeriesProfile, correlationID string) (EpamSeriesProfile, error)
+	GetSeries(ctx context.Context, userID, seriesID, correlationID string) (EpamSeriesProfile, bool, error)
+	ListSeries(ctx context.Context, userID, correlationID string) ([]EpamSeriesProfile, error)
+	DeleteSeries(ctx context.Context, userID, seriesID, correlationID string) error
+
+	SaveAuthor(ctx context.Context, rec EpamAuthorProfile, correlationID string) (EpamAuthorProfile, error)
+	GetAuthor(ctx context.Context, userID, authorID, correlationID string) (EpamAuthorProfile, bool, error)
+	ListAuthors(ctx context.Context, userID, correlationID string) ([]EpamAuthorProfile, error)
+	DeleteAuthor(ctx context.Context, userID, authorID, correlationID string) error
 }
 
 func openPamphletStore(store DataStore, _ string) PamphletStore {
@@ -39,9 +51,11 @@ func openPamphletStore(store DataStore, _ string) PamphletStore {
 
 type memoryPamphletStore struct {
 	mu      sync.RWMutex
-	epams   map[string]EpamRecord     // userID:epamID
-	bodies  map[string]map[string]any // userID:epamID
-	footers map[string]FooterProfile  // userID:footerID
+	epams   map[string]EpamRecord        // userID:epamID
+	bodies  map[string]map[string]any    // userID:epamID
+	footers map[string]FooterProfile     // userID:footerID
+	series  map[string]EpamSeriesProfile // userID:seriesID
+	authors map[string]EpamAuthorProfile // userID:authorID
 }
 
 func newMemoryPamphletStore() *memoryPamphletStore {
@@ -49,6 +63,8 @@ func newMemoryPamphletStore() *memoryPamphletStore {
 		epams:   map[string]EpamRecord{},
 		bodies:  map[string]map[string]any{},
 		footers: map[string]FooterProfile{},
+		series:  map[string]EpamSeriesProfile{},
+		authors: map[string]EpamAuthorProfile{},
 	}
 }
 
@@ -157,6 +173,92 @@ func (s *memoryPamphletStore) DeleteFooter(_ context.Context, userID, footerID, 
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	delete(s.footers, footerDocID(userID, footerID))
+	return nil
+}
+
+func seriesDocID(userID, seriesID string) string { return userID + ":" + seriesID }
+func authorDocID(userID, authorID string) string { return userID + ":" + authorID }
+
+func (s *memoryPamphletStore) SaveSeries(_ context.Context, rec EpamSeriesProfile, _ string) (EpamSeriesProfile, error) {
+	now := pamphletNow()
+	if rec.SeriesID == "" {
+		rec.SeriesID = randomID(16)
+	}
+	if rec.CreatedAt == "" {
+		rec.CreatedAt = now
+	}
+	rec.UpdatedAt = now
+	rec.Chapters = normalizeSeriesChapters(rec.Chapters)
+	s.mu.Lock()
+	s.series[seriesDocID(rec.UserID, rec.SeriesID)] = rec
+	s.mu.Unlock()
+	return rec, nil
+}
+
+func (s *memoryPamphletStore) GetSeries(_ context.Context, userID, seriesID, _ string) (EpamSeriesProfile, bool, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	rec, ok := s.series[seriesDocID(userID, seriesID)]
+	return rec, ok, nil
+}
+
+func (s *memoryPamphletStore) ListSeries(_ context.Context, userID, _ string) ([]EpamSeriesProfile, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	out := make([]EpamSeriesProfile, 0)
+	for _, rec := range s.series {
+		if rec.UserID == userID {
+			out = append(out, rec)
+		}
+	}
+	return out, nil
+}
+
+func (s *memoryPamphletStore) DeleteSeries(_ context.Context, userID, seriesID, _ string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	delete(s.series, seriesDocID(userID, seriesID))
+	return nil
+}
+
+func (s *memoryPamphletStore) SaveAuthor(_ context.Context, rec EpamAuthorProfile, _ string) (EpamAuthorProfile, error) {
+	now := pamphletNow()
+	if rec.AuthorID == "" {
+		rec.AuthorID = randomID(16)
+	}
+	if rec.CreatedAt == "" {
+		rec.CreatedAt = now
+	}
+	rec.UpdatedAt = now
+	s.mu.Lock()
+	s.authors[authorDocID(rec.UserID, rec.AuthorID)] = rec
+	s.mu.Unlock()
+	return rec, nil
+}
+
+func (s *memoryPamphletStore) GetAuthor(_ context.Context, userID, authorID, _ string) (EpamAuthorProfile, bool, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	rec, ok := s.authors[authorDocID(userID, authorID)]
+	return rec, ok, nil
+}
+
+func (s *memoryPamphletStore) ListAuthors(_ context.Context, userID, _ string) ([]EpamAuthorProfile, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	out := make([]EpamAuthorProfile, 0)
+	for _, rec := range s.authors {
+		if rec.UserID == userID {
+			out = append(out, rec)
+		}
+	}
+	return out, nil
+}
+
+func (s *memoryPamphletStore) DeleteAuthor(_ context.Context, userID, authorID, _ string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	delete(s.authors, authorDocID(userID, authorID))
 	return nil
 }
 
@@ -296,5 +398,146 @@ func (s *mongoPamphletStore) ListFooters(ctx context.Context, userID, _ string) 
 
 func (s *mongoPamphletStore) DeleteFooter(ctx context.Context, userID, footerID, _ string) error {
 	_, err := s.footers().DeleteOne(ctx, bson.M{"_id": footerDocID(userID, footerID)})
+	return err
+}
+
+func (s *mongoPamphletStore) seriesCol() *mongo.Collection {
+	return s.db.Collection(colEpamSeries)
+}
+func (s *mongoPamphletStore) authorsCol() *mongo.Collection {
+	return s.db.Collection(colEpamAuthors)
+}
+
+type epamSeriesDoc struct {
+	ID        string               `bson:"_id"`
+	UserID    string               `bson:"user_id"`
+	SeriesID  string               `bson:"series_id"`
+	Name      string               `bson:"name"`
+	Chapters  []EpamChapterProfile `bson:"chapters"`
+	CreatedAt string               `bson:"created_at,omitempty"`
+	UpdatedAt string               `bson:"updated_at,omitempty"`
+}
+
+type epamAuthorDoc struct {
+	ID        string `bson:"_id"`
+	UserID    string `bson:"user_id"`
+	AuthorID  string `bson:"author_id"`
+	Name      string `bson:"name"`
+	CreatedAt string `bson:"created_at,omitempty"`
+	UpdatedAt string `bson:"updated_at,omitempty"`
+}
+
+func (s *mongoPamphletStore) SaveSeries(ctx context.Context, rec EpamSeriesProfile, _ string) (EpamSeriesProfile, error) {
+	now := pamphletNow()
+	if rec.SeriesID == "" {
+		rec.SeriesID = randomID(16)
+	}
+	if rec.CreatedAt == "" {
+		rec.CreatedAt = now
+	}
+	rec.UpdatedAt = now
+	rec.Chapters = normalizeSeriesChapters(rec.Chapters)
+	doc := epamSeriesDoc{
+		ID: seriesDocID(rec.UserID, rec.SeriesID), UserID: rec.UserID, SeriesID: rec.SeriesID,
+		Name: rec.Name, Chapters: rec.Chapters, CreatedAt: rec.CreatedAt, UpdatedAt: rec.UpdatedAt,
+	}
+	_, err := s.seriesCol().ReplaceOne(ctx, bson.M{"_id": doc.ID}, doc, options.Replace().SetUpsert(true))
+	return rec, err
+}
+
+func (s *mongoPamphletStore) GetSeries(ctx context.Context, userID, seriesID, _ string) (EpamSeriesProfile, bool, error) {
+	var doc epamSeriesDoc
+	err := s.seriesCol().FindOne(ctx, bson.M{"_id": seriesDocID(userID, seriesID)}).Decode(&doc)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return EpamSeriesProfile{}, false, nil
+	}
+	if err != nil {
+		return EpamSeriesProfile{}, false, err
+	}
+	return EpamSeriesProfile{
+		UserID: doc.UserID, SeriesID: doc.SeriesID, Name: doc.Name, Chapters: doc.Chapters,
+		CreatedAt: doc.CreatedAt, UpdatedAt: doc.UpdatedAt,
+	}, true, nil
+}
+
+func (s *mongoPamphletStore) ListSeries(ctx context.Context, userID, _ string) ([]EpamSeriesProfile, error) {
+	cur, err := s.seriesCol().Find(ctx, bson.M{"user_id": userID})
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+	out := make([]EpamSeriesProfile, 0)
+	for cur.Next(ctx) {
+		var doc epamSeriesDoc
+		if err := cur.Decode(&doc); err != nil {
+			return nil, err
+		}
+		out = append(out, EpamSeriesProfile{
+			UserID: doc.UserID, SeriesID: doc.SeriesID, Name: doc.Name, Chapters: doc.Chapters,
+			CreatedAt: doc.CreatedAt, UpdatedAt: doc.UpdatedAt,
+		})
+	}
+	return out, cur.Err()
+}
+
+func (s *mongoPamphletStore) DeleteSeries(ctx context.Context, userID, seriesID, _ string) error {
+	_, err := s.seriesCol().DeleteOne(ctx, bson.M{"_id": seriesDocID(userID, seriesID)})
+	return err
+}
+
+func (s *mongoPamphletStore) SaveAuthor(ctx context.Context, rec EpamAuthorProfile, _ string) (EpamAuthorProfile, error) {
+	now := pamphletNow()
+	if rec.AuthorID == "" {
+		rec.AuthorID = randomID(16)
+	}
+	if rec.CreatedAt == "" {
+		rec.CreatedAt = now
+	}
+	rec.UpdatedAt = now
+	doc := epamAuthorDoc{
+		ID: authorDocID(rec.UserID, rec.AuthorID), UserID: rec.UserID, AuthorID: rec.AuthorID,
+		Name: rec.Name, CreatedAt: rec.CreatedAt, UpdatedAt: rec.UpdatedAt,
+	}
+	_, err := s.authorsCol().ReplaceOne(ctx, bson.M{"_id": doc.ID}, doc, options.Replace().SetUpsert(true))
+	return rec, err
+}
+
+func (s *mongoPamphletStore) GetAuthor(ctx context.Context, userID, authorID, _ string) (EpamAuthorProfile, bool, error) {
+	var doc epamAuthorDoc
+	err := s.authorsCol().FindOne(ctx, bson.M{"_id": authorDocID(userID, authorID)}).Decode(&doc)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return EpamAuthorProfile{}, false, nil
+	}
+	if err != nil {
+		return EpamAuthorProfile{}, false, err
+	}
+	return EpamAuthorProfile{
+		UserID: doc.UserID, AuthorID: doc.AuthorID, Name: doc.Name,
+		CreatedAt: doc.CreatedAt, UpdatedAt: doc.UpdatedAt,
+	}, true, nil
+}
+
+func (s *mongoPamphletStore) ListAuthors(ctx context.Context, userID, _ string) ([]EpamAuthorProfile, error) {
+	cur, err := s.authorsCol().Find(ctx, bson.M{"user_id": userID})
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+	out := make([]EpamAuthorProfile, 0)
+	for cur.Next(ctx) {
+		var doc epamAuthorDoc
+		if err := cur.Decode(&doc); err != nil {
+			return nil, err
+		}
+		out = append(out, EpamAuthorProfile{
+			UserID: doc.UserID, AuthorID: doc.AuthorID, Name: doc.Name,
+			CreatedAt: doc.CreatedAt, UpdatedAt: doc.UpdatedAt,
+		})
+	}
+	return out, cur.Err()
+}
+
+func (s *mongoPamphletStore) DeleteAuthor(ctx context.Context, userID, authorID, _ string) error {
+	_, err := s.authorsCol().DeleteOne(ctx, bson.M{"_id": authorDocID(userID, authorID)})
 	return err
 }

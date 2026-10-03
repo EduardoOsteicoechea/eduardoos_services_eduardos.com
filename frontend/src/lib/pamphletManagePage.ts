@@ -15,6 +15,11 @@ import {
   type EpamSeriesTreeResponse,
 } from "./epams";
 import {
+  fetchEpamCatalog,
+  fillNameSelect,
+  type EpamSeriesProfile,
+} from "./pamphletCatalog";
+import {
   createFooterProfile,
   deleteFooterProfile,
   fetchFooterProfiles,
@@ -50,9 +55,9 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
   const chromeForm = requireEl<HTMLFormElement>(root, "[data-manage-chrome-form]");
   const headerTitle = requireEl<HTMLInputElement>(root, "[data-manage-header-title]");
   const headerSubtitle = requireEl<HTMLInputElement>(root, "[data-manage-header-subtitle]");
-  const headerAuthor = requireEl<HTMLInputElement>(root, "[data-manage-header-author]");
-  const headerSeries = requireEl<HTMLInputElement>(root, "[data-manage-header-series]");
-  const headerChapter = requireEl<HTMLInputElement>(root, "[data-manage-header-chapter]");
+  const headerAuthor = requireEl<HTMLSelectElement>(root, "[data-manage-header-author]");
+  const headerSeries = requireEl<HTMLSelectElement>(root, "[data-manage-header-series]");
+  const headerChapter = requireEl<HTMLSelectElement>(root, "[data-manage-header-chapter]");
   const headerDateDisplay = requireEl<HTMLElement>(root, "[data-manage-header-date-display]");
   const footerAction = requireEl<HTMLInputElement>(root, "[data-manage-footer-action]");
   const footerMessage = requireEl<HTMLInputElement>(root, "[data-manage-footer-message]");
@@ -83,6 +88,7 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
   const profileFromDoc = requireEl<HTMLButtonElement>(root, "[data-manage-profile-from-doc]");
 
   let managed: Managed | null = null;
+  let catalogSeries: EpamSeriesProfile[] = [];
   const disposers: Array<() => void> = [];
 
   function on(el: Element, type: string, handler: EventListener): void {
@@ -105,12 +111,37 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
     });
   }
 
+  function chaptersForSeries(seriesName: string): string[] {
+    const match = catalogSeries.find(
+      (s) => s.name.trim().toLowerCase() === seriesName.trim().toLowerCase(),
+    );
+    return (match?.chapters ?? []).map((c) => c.name);
+  }
+
+  async function refreshCatalogOptions(doc?: PamphletStructure): Promise<void> {
+    try {
+      const catalog = await fetchEpamCatalog();
+      catalogSeries = catalog.series;
+      const authorNames = catalog.authors.map((a) => a.name);
+      const seriesNames = catalog.series.map((s) => s.name);
+      const current = doc ?? managed?.document;
+      fillNameSelect(headerAuthor, authorNames, current?.header.author ?? "", "Sin autor");
+      fillNameSelect(headerSeries, seriesNames, current?.header.series ?? "", "Sin serie");
+      fillNameSelect(
+        headerChapter,
+        chaptersForSeries(current?.header.series ?? ""),
+        current?.header.series_chapter ?? "",
+        "Sin capítulo",
+      );
+    } catch {
+      // Keep existing options if catalog fails; free-text values still save via sync.
+    }
+  }
+
   function fillChrome(doc: PamphletStructure): void {
     headerTitle.value = doc.header.title ?? "";
     headerSubtitle.value = doc.header.subtitle ?? "";
-    headerAuthor.value = doc.header.author ?? "";
-    headerSeries.value = doc.header.series ?? "";
-    headerChapter.value = doc.header.series_chapter ?? "";
+    void refreshCatalogOptions(doc);
     const stamp = formatHeaderLastUpdateDate(managed?.meta.updatedAt ?? doc.header.date);
     headerDateDisplay.textContent = `Fecha (última actualización): ${stamp}`;
     footerAction.value = doc.footer.action ?? "";
@@ -328,7 +359,8 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
     const meta = document.createElement("span");
     meta.className = "pamphlet-manage__item-meta";
     const updated = (item.updatedAt ?? "").slice(0, 10) || "—";
-    meta.textContent = `${item.fileName || "sin-nombre.epam"} · ${updated}`;
+    const visibility = item.public ? "Visible" : "Hidden";
+    meta.textContent = `${item.fileName || "sin-nombre.epam"} · ${updated} · ${visibility}`;
     btn.append(title, meta);
     btn.addEventListener("click", () => {
       void (async () => {
@@ -363,7 +395,7 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
     for (const seriesNode of tree.series) {
       const seriesEl = document.createElement("details");
       seriesEl.className = "pamphlet-manage__series";
-      seriesEl.open = true;
+      seriesEl.open = false;
       const seriesSummary = document.createElement("summary");
       seriesSummary.textContent = seriesNode.name;
       seriesEl.appendChild(seriesSummary);
@@ -414,6 +446,15 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
       });
     }
   }
+
+  on(headerSeries, "change", () => {
+    fillNameSelect(
+      headerChapter,
+      chaptersForSeries(headerSeries.value),
+      headerChapter.value,
+      "Sin capítulo",
+    );
+  });
 
   on(publicToggle, "change", () => {
     void (async () => {
@@ -566,7 +607,7 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
     })();
   });
 
-  void load();
+  void load().then(() => refreshCatalogOptions());
 
   return {
     destroy() {

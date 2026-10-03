@@ -47,6 +47,11 @@ import Layout from "../../layouts/Layout.astro";
           <span class="pamphlet-vanilla-dash__card-title">Manage</span>
           <span class="pamphlet-vanilla-dash__card-desc">Hide, delete, or edit headers and footers.</span>
         </a>
+        <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/series" data-pamphlet-nav="series">
+          <span class="material-symbols-outlined" aria-hidden="true">account_tree</span>
+          <span class="pamphlet-vanilla-dash__card-title">Series</span>
+          <span class="pamphlet-vanilla-dash__card-desc">Create series, chapters, authors; manage articles.</span>
+        </a>
         <a class="pamphlet-vanilla-dash__card" href="/documents/pamphlet/footers" data-pamphlet-nav="footers">
           <span class="material-symbols-outlined" aria-hidden="true">vertical_align_bottom</span>
           <span class="pamphlet-vanilla-dash__card-title">Footers</span>
@@ -80,9 +85,21 @@ import Layout from "../../layouts/Layout.astro";
             <legend>Header</legend>
             <label>Title <input data-manage-header-title name="title" type="text" autocomplete="off" /></label>
             <label>Subtitle <input data-manage-header-subtitle name="subtitle" type="text" autocomplete="off" /></label>
-            <label>Author <input data-manage-header-author name="author" type="text" autocomplete="off" /></label>
-            <label>Series <input data-manage-header-series name="series" type="text" autocomplete="off" /></label>
-            <label>Chapter <input data-manage-header-chapter name="series_chapter" type="text" autocomplete="off" /></label>
+            <label>Author
+              <select data-manage-header-author name="author">
+                <option value="">Sin autor</option>
+              </select>
+            </label>
+            <label>Series
+              <select data-manage-header-series name="series">
+                <option value="">Sin serie</option>
+              </select>
+            </label>
+            <label>Chapter
+              <select data-manage-header-chapter name="series_chapter">
+                <option value="">Sin capítulo</option>
+              </select>
+            </label>
             <p class="pamphlet-manage__hint" data-manage-header-date-display>Date follows last update (yyyy - mm - dd).</p>
           </fieldset>
           <fieldset>
@@ -129,6 +146,48 @@ import Layout from "../../layouts/Layout.astro";
           <button type="submit">Save profile</button>
         </div>
       </form>
+    </section>
+  </section>
+
+  <section id="pamphlet-series" class="pamphlet-manage" aria-label="Series catalog" hidden>
+    <header class="pamphlet-manage__head">
+      <a class="pamphlet-manage__back" href="/documents/pamphlet" data-pamphlet-nav="dashboard">← Back to EPAM</a>
+      <p class="pamphlet-manage__hint" data-series-hint>Create authors and series. Pamphlets pick them from dropdowns in Manage and the editor.</p>
+      <p class="pamphlet-manage__status" data-series-status hidden></p>
+    </header>
+
+    <section class="pamphlet-manage__profiles" aria-labelledby="series-authors-title">
+      <h2 class="pamphlet-manage__section-title" id="series-authors-title">Authors</h2>
+      <div class="pamphlet-manage__profile-list" data-series-authors></div>
+      <form class="pamphlet-manage__profile-form product-dash__card" data-series-author-form>
+        <input type="hidden" data-series-author-id value="" />
+        <label>Name <input data-series-author-name name="name" type="text" required autocomplete="off" /></label>
+        <div class="pamphlet-manage__actions">
+          <button type="button" data-series-author-reset>New</button>
+          <button type="submit">Save author</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="pamphlet-manage__profiles" aria-labelledby="series-catalog-title">
+      <h2 class="pamphlet-manage__section-title" id="series-catalog-title">Series &amp; chapters</h2>
+      <p class="pamphlet-manage__hint">Chapters: comma-separated names.</p>
+      <div class="pamphlet-manage__profile-list" data-series-catalog></div>
+      <form class="pamphlet-manage__profile-form product-dash__card" data-series-form>
+        <input type="hidden" data-series-id value="" />
+        <label>Series name <input data-series-name name="name" type="text" required autocomplete="off" /></label>
+        <label>Chapters <input data-series-chapters name="chapters" type="text" autocomplete="off" placeholder="1, 2, Intro" /></label>
+        <div class="pamphlet-manage__actions">
+          <button type="button" data-series-reset>New</button>
+          <button type="submit">Save series</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="pamphlet-manage__list-panel" aria-labelledby="series-articles-title">
+      <h2 class="pamphlet-manage__section-title" id="series-articles-title">Articles by series</h2>
+      <p class="pamphlet-manage__hint">Show/hide in Articles or delete pamphlets.</p>
+      <div class="pamphlet-manage__list" data-series-articles role="list"></div>
     </section>
   </section>
 
@@ -373,11 +432,24 @@ import Layout from "../../layouts/Layout.astro";
     flex-wrap: wrap;
   }
 
+  .pamphlet-manage__list {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--space-padding) * 2);
+  }
+
   .pamphlet-manage__series,
   .pamphlet-manage__chapter {
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     padding: var(--space-padding);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+  }
+
+  .pamphlet-manage__series + .pamphlet-manage__series {
+    margin-top: 0;
   }
 
   .pamphlet-manage__series summary,
@@ -405,15 +477,18 @@ import Layout from "../../layouts/Layout.astro";
   import { fetchEpams } from "../../lib/epams";
   import { mountPamphletManagePage } from "../../lib/pamphletManagePage";
   import type { PamphletManageHandle } from "../../lib/pamphletManagePage";
+  import { mountPamphletSeriesPage } from "../../lib/pamphletSeriesPage";
+  import type { PamphletSeriesHandle } from "../../lib/pamphletSeriesPage";
   import { mountPamphletGenerator } from "../../lib/pamphlet-generator/src/index.ts";
   import type { PamphletMountHandle } from "../../lib/pamphlet-generator/src/index.ts";
   import { pushClientUrl, replaceClientUrl } from "../../lib/router";
 
   const PAMPHLET_BASE = "/documents/pamphlet";
-  const PAMPHLET_VIEWS = new Set(["new", "open", "recent", "manage", "footers", "edit"]);
+  const PAMPHLET_VIEWS = new Set(["new", "open", "recent", "manage", "series", "footers", "edit"]);
 
   let handle: PamphletMountHandle | null = null;
   let manageHandle: PamphletManageHandle | null = null;
+  let seriesHandle: PamphletSeriesHandle | null = null;
 
   function formatEpamDate(value: string | undefined): string {
     if (!value) return "";
@@ -537,18 +612,26 @@ import Layout from "../../layouts/Layout.astro";
     manageHandle = null;
   }
 
+  function destroySeries(): void {
+    seriesHandle?.destroy();
+    seriesHandle = null;
+  }
+
   function hideAllSurfaces(): void {
     const dash = document.getElementById("pamphlet-dash");
     const manage = document.getElementById("pamphlet-manage");
+    const series = document.getElementById("pamphlet-series");
     const host = document.getElementById("pamphlet-root");
     if (dash) dash.hidden = true;
     if (manage) manage.hidden = true;
+    if (series) series.hidden = true;
     if (host) host.hidden = true;
   }
 
   function showDashboard(): void {
     destroyEditor();
     destroyManage();
+    destroySeries();
     clearBleed();
     hideAllSurfaces();
     const dash = document.getElementById("pamphlet-dash");
@@ -559,6 +642,7 @@ import Layout from "../../layouts/Layout.astro";
   function showManage(): void {
     destroyEditor();
     destroyManage();
+    destroySeries();
     clearBleed();
     hideAllSurfaces();
     const manage = document.getElementById("pamphlet-manage");
@@ -576,6 +660,27 @@ import Layout from "../../layouts/Layout.astro";
     }
   }
 
+  function showSeries(): void {
+    destroyEditor();
+    destroyManage();
+    destroySeries();
+    clearBleed();
+    hideAllSurfaces();
+    const series = document.getElementById("pamphlet-series");
+    if (!series) {
+      console.error("[pamphlet] missing #pamphlet-series");
+      return;
+    }
+    series.hidden = false;
+    try {
+      seriesHandle = mountPamphletSeriesPage(series);
+    } catch (err) {
+      console.error("[pamphlet] series mount failed", err);
+      const message = err instanceof Error ? err.message : String(err);
+      series.textContent = `Could not open series page: ${message}`;
+    }
+  }
+
   function showEditor(view: string, epamId = ""): void {
     const host = document.getElementById("pamphlet-root");
     if (!host) {
@@ -585,6 +690,7 @@ import Layout from "../../layouts/Layout.astro";
 
     destroyEditor();
     destroyManage();
+    destroySeries();
     hideAllSurfaces();
     host.hidden = false;
     applyBleed();
@@ -608,6 +714,7 @@ import Layout from "../../layouts/Layout.astro";
     const { view, epamId } = readRoute();
     if (view === "dashboard") showDashboard();
     else if (view === "manage") showManage();
+    else if (view === "series") showSeries();
     else showEditor(view, epamId);
   }
 
@@ -640,6 +747,7 @@ import Layout from "../../layouts/Layout.astro";
     }
     setViewInUrl(view);
     if (view === "manage") showManage();
+    else if (view === "series") showSeries();
     else showEditor(view);
   }
 
@@ -652,6 +760,7 @@ import Layout from "../../layouts/Layout.astro";
     const onBeforeSwap = () => {
       destroyEditor();
       destroyManage();
+      destroySeries();
       clearBleed();
       document.removeEventListener("click", onClick);
       window.removeEventListener("popstate", syncFromUrl);

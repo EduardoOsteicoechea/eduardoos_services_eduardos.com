@@ -179,6 +179,7 @@ type epamSeriesTreeItem struct {
 	FileName      string `json:"fileName,omitempty"`
 	Series        string `json:"series,omitempty"`
 	SeriesChapter string `json:"seriesChapter,omitempty"`
+	Public        bool   `json:"public"`
 	UpdatedAt     string `json:"updatedAt,omitempty"`
 }
 
@@ -247,15 +248,11 @@ func syncEpamMetaFromHeader(rec *EpamRecord) {
 	if t := stringFromAny(header["title"]); t != "" {
 		rec.Title = t
 	}
-	if s := stringFromAny(header["series"]); s != "" {
-		rec.Series = s
-	}
-	if c := stringFromAny(header["series_chapter"]); c != "" {
-		rec.SeriesChapter = c
-	}
-	if a := stringFromAny(header["author"]); a != "" {
-		rec.Author = a
-	}
+	// Always mirror series/chapter/author from the document header — including
+	// clears — so Manage saves and list/Articles grouping stay consistent.
+	rec.Series = stringFromAny(header["series"])
+	rec.SeriesChapter = stringFromAny(header["series_chapter"])
+	rec.Author = stringFromAny(header["author"])
 	if d := stringFromAny(header["date"]); d != "" {
 		rec.Date = d
 	}
@@ -295,7 +292,8 @@ func buildEpamSeriesTree(records []EpamRecord) epamSeriesTreeResponse {
 		}
 		seriesMap[sk][ck].items = append(seriesMap[sk][ck].items, epamSeriesTreeItem{
 			EpamID: rec.EpamID, Title: title, FileName: rec.FileName,
-			Series: rec.Series, SeriesChapter: rec.SeriesChapter, UpdatedAt: rec.UpdatedAt,
+			Series: rec.Series, SeriesChapter: rec.SeriesChapter, Public: rec.Public,
+			UpdatedAt: rec.UpdatedAt,
 		})
 	}
 	names := make([]string, 0, len(seriesMap))

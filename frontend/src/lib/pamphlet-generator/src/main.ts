@@ -66,6 +66,11 @@ import {
 import { copyEpam, fetchEpam, fetchEpams, fetchEpamSeriesTree, recycleEpam, saveEpamToCloud } from "../../epams";
 import type { EpamSeriesTreeItem, EpamSeriesTreeResponse } from "../../epams";
 import {
+    fetchEpamCatalog,
+    fillNameSelect,
+    type EpamSeriesProfile,
+} from "../../pamphletCatalog";
+import {
     createFooterProfile,
     deleteFooterProfile,
     fetchFooterProfiles,
@@ -223,13 +228,13 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const createForm = requireElement<HTMLFormElement>("#create-form");
     const modalCancelBtn = requireElement<HTMLButtonElement>("#modal-cancel");
     const modalTitle = requireElement<HTMLInputElement>("#modal-title");
-    const modalSeries = requireElement<HTMLInputElement>("#modal-series");
-    const modalChapter = requireElement<HTMLInputElement>("#modal-chapter");
-    const modalAuthor = requireElement<HTMLInputElement>("#modal-author");
+    const modalSeries = requireElement<HTMLSelectElement>("#modal-series");
+    const modalChapter = requireElement<HTMLSelectElement>("#modal-chapter");
+    const modalAuthor = requireElement<HTMLSelectElement>("#modal-author");
     const seriesModal = requireElement<HTMLDialogElement>("#series-modal");
     const seriesForm = requireElement<HTMLFormElement>("#series-form");
-    const seriesModalSeries = requireElement<HTMLInputElement>("#series-modal-series");
-    const seriesModalChapter = requireElement<HTMLInputElement>("#series-modal-chapter");
+    const seriesModalSeries = requireElement<HTMLSelectElement>("#series-modal-series");
+    const seriesModalChapter = requireElement<HTMLSelectElement>("#series-modal-chapter");
     const seriesTreeEl = requireElement<HTMLElement>("#series-tree");
     const seriesTreeHint = requireElement<HTMLElement>("#series-tree-hint");
     const seriesModalCancelBtn = requireElement<HTMLButtonElement>("#series-modal-cancel");
@@ -239,9 +244,10 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const chromeModalCancelBtn = requireElement<HTMLButtonElement>("#chrome-modal-cancel");
     const chromeHeaderTitle = requireElement<HTMLInputElement>("#chrome-header-title");
     const chromeHeaderSubtitle = requireElement<HTMLInputElement>("#chrome-header-subtitle");
-    const chromeHeaderAuthor = requireElement<HTMLInputElement>("#chrome-header-author");
-    const chromeHeaderSeries = requireElement<HTMLInputElement>("#chrome-header-series");
-    const chromeHeaderChapter = requireElement<HTMLInputElement>("#chrome-header-chapter");
+    const chromeHeaderAuthor = requireElement<HTMLSelectElement>("#chrome-header-author");
+    const chromeHeaderSeries = requireElement<HTMLSelectElement>("#chrome-header-series");
+    const chromeHeaderChapter = requireElement<HTMLSelectElement>("#chrome-header-chapter");
+    let catalogSeriesCache: EpamSeriesProfile[] = [];
     const chromeFooterAction = requireElement<HTMLInputElement>("#chrome-footer-action");
     const chromeFooterMessage = requireElement<HTMLInputElement>("#chrome-footer-message");
     const chromeFooterLabel1 = requireElement<HTMLInputElement>("#chrome-footer-label1");
@@ -1740,6 +1746,70 @@ function coalesceChromeField(primary: string | undefined, fallback: string | und
     return fallback ?? "";
 }
 
+function chaptersForCatalogSeries(seriesName: string): string[] {
+    const match = catalogSeriesCache.find(
+        (s) => s.name.trim().toLowerCase() === seriesName.trim().toLowerCase(),
+    );
+    return (match?.chapters ?? []).map((c) => c.name);
+}
+
+async function refreshChromeCatalogOptions(doc: PamphletStructure): Promise<void> {
+    try {
+        const catalog = await fetchEpamCatalog();
+        catalogSeriesCache = catalog.series;
+        fillNameSelect(
+            chromeHeaderAuthor,
+            catalog.authors.map((a) => a.name),
+            doc.header.author ?? "",
+            "Sin autor",
+        );
+        fillNameSelect(
+            chromeHeaderSeries,
+            catalog.series.map((s) => s.name),
+            doc.header.series ?? "",
+            "Sin serie",
+        );
+        fillNameSelect(
+            chromeHeaderChapter,
+            chaptersForCatalogSeries(doc.header.series ?? ""),
+            doc.header.series_chapter ?? "",
+            "Sin capítulo",
+        );
+        fillNameSelect(
+            seriesModalSeries,
+            catalog.series.map((s) => s.name),
+            doc.header.series ?? "",
+            "Sin serie",
+        );
+        fillNameSelect(
+            seriesModalChapter,
+            chaptersForCatalogSeries(doc.header.series ?? ""),
+            doc.header.series_chapter ?? "",
+            "Sin capítulo",
+        );
+        fillNameSelect(
+            modalAuthor,
+            catalog.authors.map((a) => a.name),
+            modalAuthor.value,
+            "Sin autor",
+        );
+        fillNameSelect(
+            modalSeries,
+            catalog.series.map((s) => s.name),
+            modalSeries.value,
+            "Sin serie",
+        );
+        fillNameSelect(
+            modalChapter,
+            chaptersForCatalogSeries(modalSeries.value),
+            modalChapter.value,
+            "Sin capítulo",
+        );
+    } catch {
+        // Keep previous options when catalog is unavailable.
+    }
+}
+
 function fillChromeModalForm(doc: PamphletStructure): void {
     const hasHeader = Boolean(main.querySelector(":scope > .pamphlet-page-header"));
     const hasFooter = Boolean(main.querySelector(":scope > .pamphlet-page-footer"));
@@ -1747,9 +1817,15 @@ function fillChromeModalForm(doc: PamphletStructure): void {
     const footer = hasFooter ? serializeFooterFromDom(main) : doc.footer;
     chromeHeaderTitle.value = coalesceChromeField(header.title, doc.header.title);
     chromeHeaderSubtitle.value = coalesceChromeField(header.subtitle, doc.header.subtitle);
-    chromeHeaderAuthor.value = coalesceChromeField(header.author, doc.header.author);
-    chromeHeaderSeries.value = coalesceChromeField(header.series, doc.header.series);
-    chromeHeaderChapter.value = coalesceChromeField(header.series_chapter, doc.header.series_chapter);
+    void refreshChromeCatalogOptions({
+        ...doc,
+        header: {
+            ...doc.header,
+            author: coalesceChromeField(header.author, doc.header.author),
+            series: coalesceChromeField(header.series, doc.header.series),
+            series_chapter: coalesceChromeField(header.series_chapter, doc.header.series_chapter),
+        },
+    });
     chromeFooterAction.value = coalesceChromeField(footer.action, doc.footer.action);
     chromeFooterMessage.value = coalesceChromeField(footer.message, doc.footer.message);
     chromeFooterLabel1.value = coalesceChromeField(footer.label1, doc.footer.label1);
@@ -3300,8 +3376,7 @@ async function openSeriesModal(): Promise<void> {
         setError("Open a pamphlet before editing its series.");
         return;
     }
-    seriesModalSeries.value = currentDoc.header.series || "";
-    seriesModalChapter.value = currentDoc.header.series_chapter || "";
+    await refreshChromeCatalogOptions(currentDoc);
     seriesModal.showModal();
     seriesModalSeries.focus();
     await refreshSeriesTree(cloudEpamId);
@@ -3529,6 +3604,29 @@ on(chromeModalCancelBtn, "click", () => {
 
 on(chromeForm, "input", () => {
     scheduleChromeLiveSave();
+});
+
+on(chromeForm, "change", () => {
+    scheduleChromeLiveSave();
+});
+
+on(chromeHeaderSeries, "change", () => {
+    fillNameSelect(
+        chromeHeaderChapter,
+        chaptersForCatalogSeries(chromeHeaderSeries.value),
+        chromeHeaderChapter.value,
+        "Sin capítulo",
+    );
+    scheduleChromeLiveSave();
+});
+
+on(seriesModalSeries, "change", () => {
+    fillNameSelect(
+        seriesModalChapter,
+        chaptersForCatalogSeries(seriesModalSeries.value),
+        seriesModalChapter.value,
+        "Sin capítulo",
+    );
 });
 
 on(chromeForm, "submit", (event: Event) => {
@@ -3784,9 +3882,36 @@ function openCreateModal(): void {
     clearError();
     createForm.reset();
     pendingCreateMeta = null;
+    void refreshChromeCatalogOptions(
+        currentDoc ??
+            ({
+                header: { title: "", subtitle: "", author: "", series: "", series_chapter: "", date: "" },
+                footer: {
+                    action: "",
+                    message: "",
+                    label1: "",
+                    value1: "",
+                    label2: "",
+                    value2: "",
+                    label3: "",
+                    value3: "",
+                    label4: "",
+                    value4: "",
+                },
+            } as PamphletStructure),
+    );
     createModal.showModal();
     modalTitle.focus();
 }
+
+on(modalSeries, "change", () => {
+    fillNameSelect(
+        modalChapter,
+        chaptersForCatalogSeries(modalSeries.value),
+        modalChapter.value,
+        "Sin capítulo",
+    );
+});
 
 function closeCreateModal(): void {
     if (createModal.open) createModal.close();

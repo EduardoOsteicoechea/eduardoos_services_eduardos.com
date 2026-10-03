@@ -218,15 +218,21 @@ export function renderShell(_menuIconSrc?: string): string {
     </label>
     <label>
       Series name
-      <input id="modal-series" name="series" type="text" required autocomplete="off" />
+      <select id="modal-series" name="series" required>
+        <option value="">Sin serie</option>
+      </select>
     </label>
     <label>
       Chapter
-      <input id="modal-chapter" name="series_chapter" type="text" required autocomplete="off" />
+      <select id="modal-chapter" name="series_chapter" required>
+        <option value="">Sin capítulo</option>
+      </select>
     </label>
     <label>
       Author
-      <input id="modal-author" name="author" type="text" required autocomplete="off" />
+      <select id="modal-author" name="author" required>
+        <option value="">Sin autor</option>
+      </select>
     </label>
     <div class="create-modal-actions">
       <button type="button" id="modal-cancel" value="cancel">Cancel</button>
@@ -285,11 +291,15 @@ export function renderShell(_menuIconSrc?: string): string {
     <p class="create-modal-hint">Define the series this pamphlet belongs to, then browse the tree series → chapter → pamphlet.</p>
     <label>
       Series
-      <input id="series-modal-series" name="series" type="text" required autocomplete="off" />
+      <select id="series-modal-series" name="series" required>
+        <option value="">Sin serie</option>
+      </select>
     </label>
     <label>
       Chapter
-      <input id="series-modal-chapter" name="series_chapter" type="text" required autocomplete="off" />
+      <select id="series-modal-chapter" name="series_chapter" required>
+        <option value="">Sin capítulo</option>
+      </select>
     </label>
     <div id="series-tree" class="series-tree" role="tree" aria-label="Series tree"></div>
     <p class="create-modal-hint" id="series-tree-hint"></p>
@@ -316,15 +326,21 @@ export function renderShell(_menuIconSrc?: string): string {
       </label>
       <label>
         Autor
-        <input id="chrome-header-author" name="author" type="text" autocomplete="off" />
+        <select id="chrome-header-author" name="author">
+          <option value="">Sin autor</option>
+        </select>
       </label>
       <label>
         Serie
-        <input id="chrome-header-series" name="series" type="text" autocomplete="off" />
+        <select id="chrome-header-series" name="series">
+          <option value="">Sin serie</option>
+        </select>
       </label>
       <label>
         Capítulo
-        <input id="chrome-header-chapter" name="series_chapter" type="text" autocomplete="off" />
+        <select id="chrome-header-chapter" name="series_chapter">
+          <option value="">Sin capítulo</option>
+        </select>
       </label>
     </fieldset>
     <fieldset>

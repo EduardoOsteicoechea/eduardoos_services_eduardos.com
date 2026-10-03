@@ -244,6 +244,15 @@ func safeSchemaMigrations() []schemaMigration {
 				{Collection: colHomescoolProgress, Keys: bson.D{{Key: "owner_user_id", Value: 1}, {Key: "photos.id", Value: 1}}},
 			},
 		},
+		{
+			ID:          "013_epam_catalog",
+			Description: "Create EPAM series and author catalog collections",
+			Collections: []string{colEpamSeries, colEpamAuthors},
+			Indexes: []indexSpec{
+				{Collection: colEpamSeries, Keys: bson.D{{Key: "user_id", Value: 1}, {Key: "series_id", Value: 1}}, Unique: true},
+				{Collection: colEpamAuthors, Keys: bson.D{{Key: "user_id", Value: 1}, {Key: "author_id", Value: 1}}, Unique: true},
+			},
+		},
 	}
 }
 

@@ -54,9 +54,10 @@ import Layout from "../layouts/Layout.astro";
   .articles-page__tree {
     display: flex;
     flex-direction: column;
-    gap: var(--space-padding);
+    gap: calc(var(--space-padding) * 2);
   }
 
+  .articles-recent,
   .articles-series {
     display: flex;
     flex-direction: column;
@@ -68,15 +69,20 @@ import Layout from "../layouts/Layout.astro";
     background: var(--color-surface);
   }
 
+  .articles-recent__title,
   .articles-series > summary {
     display: flex;
     align-items: center;
     gap: var(--rail-gap);
+    margin: 0;
     padding: 0;
     font-size: var(--font-size-md);
     font-weight: 650;
     color: var(--color-text);
     border: 0;
+  }
+
+  .articles-series > summary {
     cursor: pointer;
     list-style: none;
   }
@@ -134,6 +140,7 @@ import Layout from "../layouts/Layout.astro";
 
   const UNASSIGNED_SERIES = "Sin serie";
   const UNASSIGNED_CHAPTER = "Sin capítulo";
+  const RECENT_LIMIT = 8;
 
   type ArticleRow = {
     epamId: string;
@@ -142,12 +149,28 @@ import Layout from "../layouts/Layout.astro";
     date?: string;
     series?: string;
     seriesChapter?: string;
+    updatedAt?: string;
   };
 
   type SeriesTree = {
     count: number;
     series: Array<{ name: string; count: number; chapters: Array<{ name: string; items: ArticleRow[] }> }>;
   };
+
+  function articleSortKey(rec: ArticleRow): string {
+    return (rec.updatedAt || rec.date || "").trim();
+  }
+
+  function recentArticles(records: ArticleRow[]): ArticleRow[] {
+    return [...records]
+      .sort((a, b) => {
+        const kb = articleSortKey(b);
+        const ka = articleSortKey(a);
+        if (kb !== ka) return kb.localeCompare(ka);
+        return (a.title || "").localeCompare(b.title || "") || a.epamId.localeCompare(b.epamId);
+      })
+      .slice(0, RECENT_LIMIT);
+  }
 
   function groupBySeries(records: ArticleRow[]): SeriesTree {
     const seriesMap = new Map<string, Map<string, ArticleRow[]>>();
@@ -179,12 +202,56 @@ import Layout from "../layouts/Layout.astro";
     return { count, series };
   }
 
-  function renderTree(list: HTMLElement, tree: SeriesTree) {
+  function appendArticleCard(cards: HTMLElement, article: ArticleRow): void {
+    const li = document.createElement("li");
+    const link = document.createElement("a");
+    link.className = "product-dash__card";
+    link.href = `/articles/read?id=${encodeURIComponent(article.epamId)}`;
+    link.setAttribute("data-route", "");
+    const head = document.createElement("span");
+    head.className = "product-dash__card-head";
+    const icon = document.createElement("span");
+    icon.className = "material-symbols-outlined";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "article";
+    const title = document.createElement("span");
+    title.className = "product-dash__card-title";
+    title.textContent = article.title || "Untitled";
+    head.append(icon, title);
+    link.appendChild(head);
+    const meta = [article.author, article.date].filter(Boolean).join(" · ");
+    if (meta) {
+      const detail = document.createElement("span");
+      detail.className = "product-dash__card-desc";
+      detail.textContent = meta;
+      link.appendChild(detail);
+    }
+    li.appendChild(link);
+    cards.appendChild(li);
+  }
+
+  function renderTree(list: HTMLElement, articles: ArticleRow[], tree: SeriesTree) {
     list.replaceChildren();
+
+    const recent = recentArticles(articles);
+    if (recent.length) {
+      const recentBlock = document.createElement("section");
+      recentBlock.className = "articles-recent";
+      const recentTitle = document.createElement("h2");
+      recentTitle.className = "articles-recent__title";
+      recentTitle.textContent = "Recientes";
+      recentBlock.appendChild(recentTitle);
+      const cards = document.createElement("ul");
+      cards.className = "product-dash__grid";
+      for (const article of recent) appendArticleCard(cards, article);
+      recentBlock.appendChild(cards);
+      list.appendChild(recentBlock);
+    }
+
     for (const seriesNode of tree.series) {
       const seriesEl = document.createElement("details");
       seriesEl.className = "articles-series";
-      seriesEl.open = true;
+      seriesEl.open = false;
 
       const seriesSummary = document.createElement("summary");
       const seriesName = document.createElement("span");
@@ -198,7 +265,7 @@ import Layout from "../layouts/Layout.astro";
       for (const chapter of seriesNode.chapters) {
         const chapterEl = document.createElement("details");
         chapterEl.className = "articles-chapter";
-        chapterEl.open = true;
+        chapterEl.open = false;
         const chapterSummary = document.createElement("summary");
         const chapterName = document.createElement("span");
         chapterName.textContent = chapter.name;
@@ -207,33 +274,7 @@ import Layout from "../layouts/Layout.astro";
 
         const cards = document.createElement("ul");
         cards.className = "product-dash__grid";
-        for (const article of chapter.items) {
-          const li = document.createElement("li");
-          const link = document.createElement("a");
-          link.className = "product-dash__card";
-          link.href = `/articles/read?id=${encodeURIComponent(article.epamId)}`;
-          link.setAttribute("data-route", "");
-          const head = document.createElement("span");
-          head.className = "product-dash__card-head";
-          const icon = document.createElement("span");
-          icon.className = "material-symbols-outlined";
-          icon.setAttribute("aria-hidden", "true");
-          icon.textContent = "article";
-          const title = document.createElement("span");
-          title.className = "product-dash__card-title";
-          title.textContent = article.title || "Untitled";
-          head.append(icon, title);
-          link.appendChild(head);
-          const meta = [article.author, article.date].filter(Boolean).join(" · ");
-          if (meta) {
-            const detail = document.createElement("span");
-            detail.className = "product-dash__card-desc";
-            detail.textContent = meta;
-            link.appendChild(detail);
-          }
-          li.appendChild(link);
-          cards.appendChild(li);
-        }
+        for (const article of chapter.items) appendArticleCard(cards, article);
         chapterEl.appendChild(cards);
         seriesEl.appendChild(chapterEl);
       }
@@ -263,7 +304,7 @@ import Layout from "../layouts/Layout.astro";
     }
     const articles = data.articles ?? [];
     const tree = groupBySeries(articles);
-    renderTree(list, tree);
+    renderTree(list, articles, tree);
     if (!tree.count) {
       status.hidden = false;
       status.textContent = "No public articles are available.";

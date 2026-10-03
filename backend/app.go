@@ -327,6 +327,13 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/scrib/print/pdf", a.scribPrintPDFHandler)
 
 	mux.HandleFunc("GET /api/epams/series-tree", a.listEpamSeriesTreeHandler)
+	mux.HandleFunc("GET /api/epams/catalog", a.listEpamCatalogHandler)
+	mux.HandleFunc("POST /api/epams/series", a.createEpamSeriesHandler)
+	mux.HandleFunc("PUT /api/epams/series/{id}", a.updateEpamSeriesHandler)
+	mux.HandleFunc("DELETE /api/epams/series/{id}", a.deleteEpamSeriesHandler)
+	mux.HandleFunc("POST /api/epams/authors", a.createEpamAuthorHandler)
+	mux.HandleFunc("PUT /api/epams/authors/{id}", a.updateEpamAuthorHandler)
+	mux.HandleFunc("DELETE /api/epams/authors/{id}", a.deleteEpamAuthorHandler)
 	mux.HandleFunc("GET /api/epams/footers", a.listFootersHandler)
 	mux.HandleFunc("POST /api/epams/footers", a.createFooterHandler)
 	mux.HandleFunc("PUT /api/epams/footers/{id}", a.updateFooterHandler)

@@ -2,7 +2,7 @@
 import PamphletRoutePage from "../../../components/Pamphlet/PamphletRoutePage.astro";
 
 export function getStaticPaths() {
-  return ["new", "open", "recent", "manage", "footers"].map((view) => ({
+  return ["new", "open", "recent", "manage", "series", "footers"].map((view) => ({
     params: { view },
   }));
 }
