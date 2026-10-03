@@ -5,6 +5,48 @@ import (
 	"testing"
 )
 
+func TestHomescoolIngD1EnglishFrame(t *testing.T) {
+	page, err := LoadHCLetterPageWithPracticeImage("week1/ing-c3-w1-d1-l6.eoschool.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var all strings.Builder
+	for _, col := range page.Columns {
+		for i := 1; i <= 52; i++ {
+			if t := col.LineText[i]; t != "" {
+				all.WriteString(t)
+				all.WriteByte('\n')
+			}
+		}
+	}
+	s := all.String()
+	for _, needle := range []string{
+		"What did you learn in the last class?",
+		"Point 1: Review of the last class",
+		"Write here what you learned:",
+	} {
+		if !strings.Contains(s, needle) {
+			t.Fatalf("ing ink missing %q; sample=%q", needle, firstLineContaining(s, "What"))
+		}
+	}
+	if page.SubjectLabel != "Inglés" {
+		t.Fatalf("subject label=%q", page.SubjectLabel)
+	}
+	if len(page.PracticeImageJPEG) == 0 {
+		t.Fatal("expected per-class practice JPEG for ing d1")
+	}
+	raw, err := BuildHomescoolLetterGridPDF([]HCLetterPageInk{page})
+	if err != nil {
+		t.Fatal(err)
+	}
+	out := string(raw)
+	for _, needle := range []string{"What did you learn", "Point 1", "Write here what you learned", "DCTDecode"} {
+		if !strings.Contains(out, needle) {
+			t.Fatalf("ing PDF missing %q", needle)
+		}
+	}
+}
+
 func TestHomescoolEspD1KeepsAccents(t *testing.T) {
 	page, err := LoadHCLetterPageWithPracticeImage("week1/esp-c3-w1-d1-l6.eoschool.json")
 	if err != nil {

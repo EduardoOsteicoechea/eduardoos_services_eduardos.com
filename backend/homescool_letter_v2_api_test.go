@@ -159,6 +159,12 @@ func TestBuildEoschoolLetterV2SamplePDFsV3(t *testing.T) {
 			needles:  []string{"Matem", "Punto 1", "Escribe aqu"},
 			wantJPEG: true,
 		},
+		{
+			rel:      "week1/ing-c3-w1-d1-l6.eoschool.json",
+			name:     "ing-d1-english.pdf",
+			needles:  []string{"Ingl", "What did you learn", "Point 1", "Write here what you learned"},
+			wantJPEG: true,
+		},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {

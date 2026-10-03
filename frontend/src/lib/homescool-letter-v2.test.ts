@@ -42,4 +42,26 @@ describe("Letter v2 viewer", () => {
     expect(pages.length).toBeGreaterThan(0);
     expect(pages[0]!.classList.contains("homescool-letter-v2")).toBe(false);
   });
+
+  it("keeps Spanish accents on esp and English frame on ing", () => {
+    const esp = loadEspD2();
+    const espPage = renderLetterV2Page(esp);
+    expect(espPage.textContent || "").toContain("¿Qué aprendiste la clase pasada?");
+    expect(espPage.textContent || "").toMatch(/Punto 1:.*clase pasada/);
+
+    const ingPath = resolve(
+      process.cwd(),
+      "public/homescool/media/week1/ing-c3-w1-d1-l6.eoschool.json",
+    );
+    const ing = JSON.parse(readFileSync(ingPath, "utf8")) as EoschoolDocument;
+    const pages = renderEoschoolPages(ing);
+    expect(pages).toHaveLength(1);
+    const text = pages[0]!.textContent || "";
+    expect(text).toContain("What did you learn in the last class?");
+    expect(text).toContain("Point 1: Review of the last class");
+    expect(text).toContain("Write here what you learned:");
+    expect(pages[0]!.querySelector(".homescool-letter-v2__practice")?.getAttribute("src")).toContain(
+      "ing-c3-w1-d1-practice.jpg",
+    );
+  });
 });
