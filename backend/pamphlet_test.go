@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"net/http"
@@ -213,6 +214,55 @@ func TestArticlesLoadOnlyPublicPamphletsForConfiguredOwner(t *testing.T) {
 	app.Handler().ServeHTTP(foreign, httptest.NewRequest(http.MethodGet, "/api/articles/foreign", nil))
 	if foreign.Code != http.StatusNotFound {
 		t.Fatalf("other owner's pamphlet exposed: %d %s", foreign.Code, foreign.Body.String())
+	}
+}
+
+func TestArticlePDFForPublicPamphlet(t *testing.T) {
+	app := newTestApp(false)
+	app.cfg.PublicArticlesOwnerEmail = "member@eduardoos.com"
+	_, err := app.pamphlet.SaveEpam(context.Background(), EpamRecord{
+		UserID: "member-1", EpamID: "pdf-public", Title: "PDF Public", Public: true,
+		Body: map[string]any{
+			"type":   "pamphlet_single_sheet",
+			"header": map[string]any{"title": "PDF Public"},
+			"footer": map[string]any{},
+			"column_1": []any{
+				map[string]any{"type": "paragraph", "content": "Readable for print."},
+			},
+		},
+	}, "test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = app.pamphlet.SaveEpam(context.Background(), EpamRecord{
+		UserID: "member-1", EpamID: "pdf-draft", Title: "PDF Draft", Public: false,
+		Body: map[string]any{"type": "pamphlet_single_sheet", "header": map[string]any{"title": "PDF Draft"}, "footer": map[string]any{}},
+	}, "test")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	okRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(okRec, httptest.NewRequest(http.MethodGet, "/api/articles/pdf-public/pdf", nil))
+	if okRec.Code != http.StatusOK {
+		t.Fatalf("public article pdf: %d %s", okRec.Code, okRec.Body.String())
+	}
+	if ct := okRec.Header().Get("Content-Type"); !strings.HasPrefix(ct, "application/pdf") {
+		t.Fatalf("content-type: %q", ct)
+	}
+	if !bytes.HasPrefix(okRec.Body.Bytes(), []byte("%PDF")) {
+		t.Fatalf("expected PDF magic, got %q", okRec.Body.Bytes()[:min(8, okRec.Body.Len())])
+	}
+
+	draft := httptest.NewRecorder()
+	app.Handler().ServeHTTP(draft, httptest.NewRequest(http.MethodGet, "/api/articles/pdf-draft/pdf", nil))
+	if draft.Code != http.StatusNotFound {
+		t.Fatalf("unpublished pdf should 404: %d %s", draft.Code, draft.Body.String())
+	}
+	missing := httptest.NewRecorder()
+	app.Handler().ServeHTTP(missing, httptest.NewRequest(http.MethodGet, "/api/articles/missing-id/pdf", nil))
+	if missing.Code != http.StatusNotFound {
+		t.Fatalf("missing pdf should 404: %d %s", missing.Code, missing.Body.String())
 	}
 }
 

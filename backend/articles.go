@@ -6,6 +6,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"strings"
+
+	"github.com/EduardoOsteicoechea/eduardoos_services_eduardos.com/pkg/pdf"
 )
 
 // Public articles are a projection of every pamphlet owned by the configured
@@ -229,6 +231,54 @@ func (a *App) getArticleHandler(w http.ResponseWriter, r *http.Request) {
 		"contentHash": hex.EncodeToString(sum[:]),
 		"canonicalPath": "/articles/read?id=" + id,
 	})
+}
+
+// GET /api/articles/{id}/pdf — public pamphlet PDF for a published article only.
+func (a *App) getArticlePDFHandler(w http.ResponseWriter, r *http.Request) {
+	owner, ok := a.publicArticleOwner(r)
+	if !ok {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	id := strings.TrimSpace(r.PathValue("id"))
+	record, found, err := a.pamphlet.GetEpam(r.Context(), owner.ID, id, requestIDFrom(r, nil))
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !found || !record.Public {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	a.applyLinkedFooter(r, &record)
+	raw, err := json.Marshal(record.Body)
+	if err != nil || len(raw) == 0 || string(raw) == "null" {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	var doc pdf.PamphletDocument
+	if err := json.Unmarshal(raw, &doc); err != nil {
+		a.mustLogf(r, "articles.pdf.json_error", "epam_id", id, "err", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if strings.TrimSpace(doc.Type) == "" {
+		doc.Type = "pamphlet_single_sheet"
+	}
+	data := pdf.BuildPamphletPDF(doc)
+	downloadName := "panfleto.pdf"
+	if title := strings.TrimSpace(record.Title); title != "" {
+		downloadName = title + ".pdf"
+	} else if title := strings.TrimSpace(doc.Header.Title); title != "" {
+		downloadName = title + ".pdf"
+	}
+	a.mustLogf(r, "articles.pdf.ok", "epam_id", id, "pdf_bytes", len(data))
+	a.auditEvent(r, "article_pdf", "ok", id)
+	w.Header().Set("Content-Type", "application/pdf")
+	w.Header().Set("Content-Disposition", contentDispositionAttachment(downloadName))
+	w.Header().Set("Access-Control-Expose-Headers", "Content-Disposition")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(data)
 }
 
 type articlePublicationBody struct {

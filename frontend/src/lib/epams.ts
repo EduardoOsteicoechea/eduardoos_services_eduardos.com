@@ -58,6 +58,7 @@ export type EpamSeriesTreeItem = {
   fileName?: string;
   series?: string;
   seriesChapter?: string;
+  public?: boolean;
   updatedAt?: string;
 };
 
@@ -265,4 +266,43 @@ export async function downloadPamphletPdf(
     throw new Error(message);
   }
   return response.blob();
+}
+
+/** Public article → pamphlet PDF (no session write entitlement required). */
+export async function downloadPublicArticlePdf(
+  articleId: string,
+  opts?: { fileName?: string },
+): Promise<void> {
+  const id = articleId.trim();
+  if (!id) throw new Error("Article id is missing.");
+  const response = await fetch(`/api/articles/${encodeURIComponent(id)}/pdf`, {
+    method: "GET",
+    credentials: "include",
+    headers: { Accept: "application/pdf, application/json" },
+  });
+  if (!response.ok) {
+    let message = `PDF failed (${response.status})`;
+    try {
+      const body = (await response.json()) as { message?: string };
+      if (body.message) message = body.message;
+    } catch {
+      /* ignore */
+    }
+    throw new Error(message);
+  }
+  const blob = await response.blob();
+  const cd = response.headers.get("Content-Disposition") || "";
+  const fromHeader = /filename\*?=(?:UTF-8''|")?([^\";]+)/i.exec(cd)?.[1];
+  const decoded = fromHeader ? decodeURIComponent(fromHeader.replace(/"/g, "").trim()) : "";
+  const fileName =
+    (opts?.fileName || decoded || "panfleto.pdf").replace(/[<>:"/\\|?*\u0000-\u001f]+/g, "_") ||
+    "panfleto.pdf";
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName.toLowerCase().endsWith(".pdf") ? fileName : `${fileName}.pdf`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }

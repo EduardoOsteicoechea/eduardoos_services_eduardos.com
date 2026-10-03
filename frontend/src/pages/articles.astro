@@ -19,7 +19,7 @@ import Layout from "../layouts/Layout.astro";
     </p>
   </header>
 
-  <section class="articles-page" data-articles aria-labelledby="page-title">
+  <section class="articles-page product-dash" data-articles aria-labelledby="page-title">
     <p class="status" data-articles-status>Loading articles…</p>
     <div class="articles-page__tree" data-articles-list></div>
   </section>
@@ -39,20 +39,81 @@ import Layout from "../layouts/Layout.astro";
     border: 0;
   }
 
-  /* main already supplies --main-inline. Desktop measure = --article-measure (25rem / 400px). */
   .articles-page {
     display: flex;
     flex-direction: column;
     gap: var(--space-padding);
     grid-column: 1 / span var(--span-full);
-    max-width: min(
-      var(--article-measure),
-      calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2))
-    );
+    max-width: none;
     margin-inline: 0;
     width: auto;
     min-width: 0;
     justify-self: start;
+  }
+
+  .articles-page__tree {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+  }
+
+  .articles-series {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    margin: 0;
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+  }
+
+  .articles-series > summary {
+    display: flex;
+    align-items: center;
+    gap: var(--rail-gap);
+    padding: 0;
+    font-size: var(--font-size-md);
+    font-weight: 650;
+    color: var(--color-text);
+    border: 0;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .articles-series > summary::-webkit-details-marker,
+  .articles-chapter > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .articles-series__count {
+    margin-left: auto;
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+  }
+
+  .articles-chapter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    margin: 0;
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+  }
+
+  .articles-chapter > summary {
+    display: flex;
+    align-items: center;
+    gap: var(--rail-gap);
+    padding: 0;
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+    color: var(--color-muted);
+    border: 0;
+    cursor: pointer;
+    list-style: none;
   }
 
   .articles-page__empty {
@@ -60,8 +121,8 @@ import Layout from "../layouts/Layout.astro";
     padding: var(--space-padding);
     color: var(--color-muted);
     font-size: var(--font-size-sm);
-    background: var(--surface-sunken);
-    border: var(--border-width) dashed var(--eo-line-strong, var(--color-border));
+    background: var(--surface-sunken, var(--color-surface));
+    border: var(--border-width) dashed var(--color-border);
     border-radius: var(--border-radius);
   }
 </style>
@@ -145,21 +206,28 @@ import Layout from "../layouts/Layout.astro";
         chapterEl.appendChild(chapterSummary);
 
         const cards = document.createElement("ul");
-        cards.className = "articles-cards";
+        cards.className = "product-dash__grid";
         for (const article of chapter.items) {
           const li = document.createElement("li");
           const link = document.createElement("a");
-          link.className = "articles-card";
+          link.className = "product-dash__card";
           link.href = `/articles/read?id=${encodeURIComponent(article.epamId)}`;
           link.setAttribute("data-route", "");
-          const title = document.createElement("strong");
-          title.className = "articles-card__title";
+          const head = document.createElement("span");
+          head.className = "product-dash__card-head";
+          const icon = document.createElement("span");
+          icon.className = "material-symbols-outlined";
+          icon.setAttribute("aria-hidden", "true");
+          icon.textContent = "article";
+          const title = document.createElement("span");
+          title.className = "product-dash__card-title";
           title.textContent = article.title || "Untitled";
-          link.appendChild(title);
+          head.append(icon, title);
+          link.appendChild(head);
           const meta = [article.author, article.date].filter(Boolean).join(" · ");
           if (meta) {
             const detail = document.createElement("span");
-            detail.className = "articles-card__meta";
+            detail.className = "product-dash__card-desc";
             detail.textContent = meta;
             link.appendChild(detail);
           }

@@ -688,7 +688,8 @@ main > .diag{
   margin-top: auto;
 }
 
-/* When the pamphlet footer is empty, pin the back row to the bottom instead. */
+/* When the pamphlet footer is empty, pin the actions row to the bottom instead. */
+.article-page:not(:has(.article-page__footer:not([hidden]))) .article-page__actions,
 .article-page:not(:has(.article-page__footer:not([hidden]))) .article-page__back {
   margin-top: auto;
 }
@@ -704,10 +705,7 @@ main > .diag{
 
 .articles-page{
   grid-column: 1 / span var(--span-full);
-  max-width: min(
-    var(--article-measure),
-    calc(var(--shell-viewport-width, var(--content-basis)) - (var(--main-inline) * 2))
-  );
+  max-width: none;
   margin-inline: 0;
   gap: var(--space-padding);
   justify-self: start;
@@ -715,16 +713,19 @@ main > .diag{
 }
 
 .articles-page__tree{
-  gap: var(--space-padding);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--space-padding) * 2);
 }
 
 .articles-series{
   display: flex;
   flex-direction: column;
   gap: var(--space-padding);
-  padding: 0;
+  padding: var(--space-padding);
   background: transparent;
-  border: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
 }
 
 .articles-series > summary{

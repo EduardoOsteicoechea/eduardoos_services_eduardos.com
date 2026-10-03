@@ -22,11 +22,15 @@ import Layout from "../../layouts/Layout.astro";
 
     <footer class="article-page__footer" data-article-footer hidden></footer>
 
-    <p class="article-page__back">
+    <p class="article-page__actions">
       <a class="btn" href="/articles" data-route>
         <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
         All articles
       </a>
+      <button class="btn" type="button" data-article-print hidden>
+        <span class="material-symbols-outlined" aria-hidden="true">print</span>
+        Imprimir
+      </button>
     </p>
   </article>
 </Layout>
@@ -57,7 +61,10 @@ import Layout from "../../layouts/Layout.astro";
     }
   }
 
-  .article-page__back {
+  .article-page__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
     margin: 0;
   }
 
@@ -73,6 +80,7 @@ import Layout from "../../layouts/Layout.astro";
   import { showErrorModal } from "../../lib/error-modal";
   import { mustLog } from "../../lib/dev-log";
   import { applyArticleSeo } from "../../lib/article-seo";
+  import { downloadPublicArticlePdf } from "../../lib/epams";
 
   type ArticleBlock = { type?: string; content?: string };
 
@@ -162,6 +170,7 @@ import Layout from "../../layouts/Layout.astro";
     const content = document.querySelector("[data-article-content]");
     const footer = document.querySelector("[data-article-footer]");
     const bylineHost = document.querySelector("[data-article-byline]");
+    const printBtn = document.querySelector("[data-article-print]");
     if (!(status instanceof HTMLElement) || !(content instanceof HTMLElement) || !(footer instanceof HTMLElement)) return;
     const id = new URLSearchParams(window.location.search).get("id")?.trim();
     status.hidden = false;
@@ -169,6 +178,10 @@ import Layout from "../../layouts/Layout.astro";
     content.replaceChildren();
     footer.replaceChildren();
     footer.hidden = true;
+    if (printBtn instanceof HTMLButtonElement) {
+      printBtn.hidden = true;
+      printBtn.disabled = true;
+    }
     if (titleEl instanceof HTMLElement) {
       titleEl.textContent = "Article";
       titleEl.setAttribute("itemprop", "headline");
@@ -227,6 +240,24 @@ import Layout from "../../layouts/Layout.astro";
     }
     renderBlocks(footer, result.data.footer);
     footer.hidden = !footer.childElementCount;
+    if (printBtn instanceof HTMLButtonElement) {
+      printBtn.hidden = false;
+      printBtn.disabled = false;
+      printBtn.onclick = () => {
+        void (async () => {
+          printBtn.disabled = true;
+          try {
+            await downloadPublicArticlePdf(id, { fileName: `${title}.pdf` });
+          } catch (err) {
+            showErrorModal({
+              message: err instanceof Error ? err.message : "Could not download the PDF.",
+            });
+          } finally {
+            printBtn.disabled = false;
+          }
+        })();
+      };
+    }
     const path = result.data.canonicalPath || `/articles/read?id=${encodeURIComponent(id)}`;
     applyArticleSeo({
       title,

@@ -230,6 +230,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/subscriptions/entitlements/preview", a.subscriptionsEntitlementsPreviewHandler)
 	mux.HandleFunc("GET /api/subscriptions/access/{serviceID}", a.subscriptionsAccessHandler)
 	mux.HandleFunc("GET /api/articles", a.listArticlesHandler)
+	mux.HandleFunc("GET /api/articles/{id}/pdf", a.getArticlePDFHandler)
 	mux.HandleFunc("GET /api/articles/{id}", a.getArticleHandler)
 	mux.HandleFunc("POST /api/payments/intents", a.paymentsCreateIntentHandler)
 	mux.HandleFunc("GET /api/payments/status/{intentID}", a.paymentsStatusHandler)
