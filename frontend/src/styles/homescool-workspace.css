@@ -120,6 +120,139 @@ html[data-page="homescool-workspace"] .product-tree-sidebar {
   background: var(--color-bg);
 }
 
+.homescool-progress-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  margin: var(--space-margin);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+}
+
+.homescool-progress-panel header,
+.homescool-progress-panel__controls,
+.homescool-progress-panel__photos {
+  display: flex;
+  gap: var(--rail-gap);
+}
+
+.homescool-progress-panel header {
+  flex-direction: column;
+}
+
+.homescool-progress-panel h2,
+.homescool-progress-panel p {
+  margin: 0;
+}
+
+.homescool-progress-panel h2 {
+  font-size: var(--font-size-md);
+}
+
+.homescool-progress-panel__controls {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.homescool-progress-panel__photos {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.homescool-progress-panel__photo-row {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.homescool-progress-panel__thumb {
+  display: inline-flex;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.homescool-progress-panel__thumb img,
+.homescool-progress-panel__photos img {
+  width: 6rem;
+  height: 4.5rem;
+  object-fit: cover;
+  display: block;
+}
+
+.homescool-progress-panel__delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--button-size);
+  height: var(--button-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.homescool-progress-panel__status {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.homescool-progress-panel__upload-again {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  font-size: var(--font-size-sm);
+}
+
+.homescool-progress-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  background: var(--color-bg);
+}
+
+.homescool-progress-lightbox[hidden] {
+  display: none !important;
+}
+
+.homescool-progress-lightbox__img {
+  max-width: 40rem;
+  max-height: 40rem;
+  object-fit: contain;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+}
+
+.homescool-progress-lightbox__close {
+  position: absolute;
+  top: var(--space-padding);
+  right: var(--space-padding);
+  width: var(--button-size);
+  height: var(--button-size);
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .homescool-workspace__stage {
   flex: 1 1 auto;
   min-height: 0;

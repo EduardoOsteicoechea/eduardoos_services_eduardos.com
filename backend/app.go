@@ -9,51 +9,54 @@ import (
 )
 
 type App struct {
-	cfg             config
-	log             *slog.Logger
-	store           DataStore
-	scrib           ScribStore
-	pamphlet        PamphletStore
-	mailer          Mailer
-	chat            map[string]ChatClient
-	audit           *auditStore
-	dummyHash       string
-	loginIPLimit    *limiter
-	loginIDLimit    *limiter
-	registerLimit   *limiter
-	resendIPLimit   *limiter
-	resendIDLimit   *limiter
-	resetIPLimit    *limiter
-	resetIDLimit    *limiter
-	refreshLimit    *limiter
-	profileLimit    *limiter
-	emailAdminLimit *limiter
-	emailSiteLimit  *limiter
-	aiAdminLimit    *limiter
-	aiSiteLimit     *limiter
-	chatIPLimit     *limiter
-	chatUserLimit   *limiter
-	voice           *voiceManager
-	voiceSTT        STTEngine
-	voiceTTS        TTSEngine
-	voiceIPLimit    *limiter
-	voiceUserLimit  *limiter
-	voiceSpeakLimit *limiter
-	voiceInterpret  *limiter
-	inviteOTPLimit  *limiter
-	inviteVerifyLim *limiter
-	apiKeyLimit     *limiter
+	cfg              config
+	log              *slog.Logger
+	store            DataStore
+	scrib            ScribStore
+	pamphlet         PamphletStore
+	mailer           Mailer
+	chat             map[string]ChatClient
+	audit            *auditStore
+	dummyHash        string
+	loginIPLimit     *limiter
+	loginIDLimit     *limiter
+	registerLimit    *limiter
+	resendIPLimit    *limiter
+	resendIDLimit    *limiter
+	resetIPLimit     *limiter
+	resetIDLimit     *limiter
+	refreshLimit     *limiter
+	profileLimit     *limiter
+	emailAdminLimit  *limiter
+	emailSiteLimit   *limiter
+	aiAdminLimit     *limiter
+	aiSiteLimit      *limiter
+	chatIPLimit      *limiter
+	chatUserLimit    *limiter
+	voice            *voiceManager
+	voiceSTT         STTEngine
+	voiceTTS         TTSEngine
+	voiceIPLimit     *limiter
+	voiceUserLimit   *limiter
+	voiceSpeakLimit  *limiter
+	voiceInterpret   *limiter
+	inviteOTPLimit   *limiter
+	inviteVerifyLim  *limiter
+	apiKeyLimit      *limiter
 	ordinatoLimit    *limiter
 	publisherLimit   *limiter
 	revisionOCRLimit *limiter
+	progressOCRLimit *limiter
 	ereport          *ereportFS
-	evoiceMeta      evoiceMetaStore
-	evoiceFS        *evoiceFS
-	evoiceJobs      *evoiceJobStore
-	homescool       HomescoolStore
-	eoproject       eoprojectStore
-	eoprojectFS     *eoprojectFS
-	failClosedEnt   bool
+	evoiceMeta       evoiceMetaStore
+	evoiceFS         *evoiceFS
+	evoiceJobs       *evoiceJobStore
+	homescool        HomescoolStore
+	progress         HomescoolProgressStore
+	progressFS       *homescoolProgressFS
+	eoproject        eoprojectStore
+	eoprojectFS      *eoprojectFS
+	failClosedEnt    bool
 }
 
 func newApp(cfg config) *App {
@@ -104,46 +107,49 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	_ = os.MkdirAll(cfg.EoprojectMediaRoot, 0750)
 	dummy, _ := hashPassword(randomID(16))
 	app := &App{
-		cfg:             cfg,
-		log:             newJSONLogger(),
-		store:           store,
-		scrib:           openScribStore(store),
-		pamphlet:        openPamphletStore(store, cfg.MediaRoot),
-		homescool:       openHomescoolStore(store, cfg.MediaRoot),
-		eoproject:       newEoprojectStoreFromDataStore(store),
-		eoprojectFS:     newEoprojectFS(cfg.EoprojectMediaRoot),
-		mailer:          smtpMailer{cfg: cfg},
-		chat:            map[string]ChatClient{},
-		audit:           newAuditStore(),
-		dummyHash:       dummy,
-		loginIPLimit:    newLimiter(15*time.Minute, 5),
-		loginIDLimit:    newLimiter(15*time.Minute, 5),
-		registerLimit:   newLimiter(time.Hour, 3),
-		resendIPLimit:   newLimiter(time.Hour, 3),
-		resendIDLimit:   newLimiter(time.Hour, 3),
-		resetIPLimit:    newLimiter(time.Hour, 3),
-		resetIDLimit:    newLimiter(time.Hour, 3),
-		refreshLimit:    newLimiter(time.Minute, 30),
-		profileLimit:    newLimiter(time.Hour, 20),
-		emailAdminLimit: newLimiter(emailAdminWindow, 1),
-		emailSiteLimit:  newLimiter(emailSiteWindow, emailSiteMax),
-		aiAdminLimit:    newLimiter(aiAdminWindow, aiAdminMax),
-		aiSiteLimit:     newLimiter(aiSiteWindow, aiSiteMax),
-		chatIPLimit:     newLimiter(publicChatWindow, publicChatIPMax),
-		chatUserLimit:   newLimiter(publicChatWindow, publicChatUserMax),
-		voiceIPLimit:    newLimiter(voiceRateSpace, voiceIPMax),
-		voiceUserLimit:  newLimiter(voiceRateSpace, voiceUserMax),
-		voiceSpeakLimit: newLimiter(voiceRateSpace, voiceSpeakMax),
-		voiceInterpret:  newLimiter(voiceRateSpace, voiceInterpretMax),
-		inviteOTPLimit:  newLimiter(time.Hour, 8),
-		inviteVerifyLim: newLimiter(15*time.Minute, 10),
-		apiKeyLimit:     newLimiter(time.Minute, apiKeyRatePerMin),
+		cfg:              cfg,
+		log:              newJSONLogger(),
+		store:            store,
+		scrib:            openScribStore(store),
+		pamphlet:         openPamphletStore(store, cfg.MediaRoot),
+		homescool:        openHomescoolStore(store, cfg.MediaRoot),
+		progress:         newHomescoolProgressStore(store),
+		progressFS:       newHomescoolProgressFS(cfg.MediaRoot),
+		eoproject:        newEoprojectStoreFromDataStore(store),
+		eoprojectFS:      newEoprojectFS(cfg.EoprojectMediaRoot),
+		mailer:           smtpMailer{cfg: cfg},
+		chat:             map[string]ChatClient{},
+		audit:            newAuditStore(),
+		dummyHash:        dummy,
+		loginIPLimit:     newLimiter(15*time.Minute, 5),
+		loginIDLimit:     newLimiter(15*time.Minute, 5),
+		registerLimit:    newLimiter(time.Hour, 3),
+		resendIPLimit:    newLimiter(time.Hour, 3),
+		resendIDLimit:    newLimiter(time.Hour, 3),
+		resetIPLimit:     newLimiter(time.Hour, 3),
+		resetIDLimit:     newLimiter(time.Hour, 3),
+		refreshLimit:     newLimiter(time.Minute, 30),
+		profileLimit:     newLimiter(time.Hour, 20),
+		emailAdminLimit:  newLimiter(emailAdminWindow, 1),
+		emailSiteLimit:   newLimiter(emailSiteWindow, emailSiteMax),
+		aiAdminLimit:     newLimiter(aiAdminWindow, aiAdminMax),
+		aiSiteLimit:      newLimiter(aiSiteWindow, aiSiteMax),
+		chatIPLimit:      newLimiter(publicChatWindow, publicChatIPMax),
+		chatUserLimit:    newLimiter(publicChatWindow, publicChatUserMax),
+		voiceIPLimit:     newLimiter(voiceRateSpace, voiceIPMax),
+		voiceUserLimit:   newLimiter(voiceRateSpace, voiceUserMax),
+		voiceSpeakLimit:  newLimiter(voiceRateSpace, voiceSpeakMax),
+		voiceInterpret:   newLimiter(voiceRateSpace, voiceInterpretMax),
+		inviteOTPLimit:   newLimiter(time.Hour, 8),
+		inviteVerifyLim:  newLimiter(15*time.Minute, 10),
+		apiKeyLimit:      newLimiter(time.Minute, apiKeyRatePerMin),
 		ordinatoLimit:    newLimiter(ordinatoProxyWindow, ordinatoProxyMax),
 		publisherLimit:   newLimiter(publisherProxyWindow, publisherProxyMax),
 		revisionOCRLimit: newLimiter(homescoolRevisionOCRWindow, homescoolRevisionOCRUserMax),
+		progressOCRLimit: newLimiter(homescoolProgressOCRWindow, homescoolProgressOCRUserMax),
 		ereport:          newEreportFS(cfg.EreportMediaRoot),
-		evoiceMeta:      newEvoiceMetaFromStore(store),
-		evoiceFS:        newEvoiceFS(cfg.EvoiceMediaRoot),
+		evoiceMeta:       newEvoiceMetaFromStore(store),
+		evoiceFS:         newEvoiceFS(cfg.EvoiceMediaRoot),
 	}
 	app.evoiceJobs = newEvoiceJobStore(resolveEvoiceRunner(cfg), app.evoiceMeta, app.evoiceFS, app.log, cfg.MustLog)
 	app.voice, app.voiceSTT, app.voiceTTS = resolveVoice(cfg, app.log)
@@ -363,6 +369,11 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/homescool/materials/{materialId}/print/pdf", a.postHomescoolMaterialPrintPDFHandler)
 	mux.HandleFunc("POST /api/homescool/preview", a.postHomescoolPreviewHandler)
 	mux.HandleFunc("POST /api/homescool/revision/ocr", a.postHomescoolRevisionOCRHandler)
+	mux.HandleFunc("GET /api/homescool/progress", a.getHomescoolProgressHandler)
+	mux.HandleFunc("GET /api/homescool/progress/summary", a.getHomescoolProgressSummaryHandler)
+	mux.HandleFunc("POST /api/homescool/progress/photos", a.postHomescoolProgressPhotoHandler)
+	mux.HandleFunc("DELETE /api/homescool/progress/photos/{photoId}", a.deleteHomescoolProgressPhotoHandler)
+	mux.HandleFunc("GET /api/homescool/progress/photos/{photoId}/{variant}", a.getHomescoolProgressPhotoHandler)
 	mux.HandleFunc("GET /api/homescool/web-assets/{name}", a.getHomescoolWebAssetHandler)
 
 	a.registerEvoiceRoutes(mux)

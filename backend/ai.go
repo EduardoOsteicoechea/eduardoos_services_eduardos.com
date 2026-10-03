@@ -40,6 +40,10 @@ type VisionChatClient interface {
 	CompleteVision(ctx context.Context, system, prompt, imageMIME string, imageData []byte, maxTokens int) (ChatResult, error)
 }
 
+type longChatClient interface {
+	CompleteLong(ctx context.Context, system string, history []ChatMessage, maxTokens int) (ChatResult, error)
+}
+
 type recordingChat struct {
 	provider   string
 	text       string
@@ -478,20 +482,25 @@ func (c *recordingChat) CompleteVisionParts(_ context.Context, system, prompt st
 	return ChatResult{Text: c.text, Usage: c.usage}, nil
 }
 
-func completeVisionParts(client ChatClient, ctx context.Context, system, prompt string, images []visionImagePart, maxTokens int) (ChatResult, error) {
-	switch c := client.(type) {
-	case openAICompatClient:
-		return c.CompleteVisionParts(ctx, system, prompt, images, maxTokens)
-	case *openAICompatClient:
-		return c.CompleteVisionParts(ctx, system, prompt, images, maxTokens)
-	case *recordingChat:
-		return c.CompleteVisionParts(ctx, system, prompt, images, maxTokens)
-	default:
-		if v, ok := client.(VisionChatClient); ok && len(images) == 1 {
-			return v.CompleteVision(ctx, system, prompt, images[0].MIME, images[0].Data, maxTokens)
-		}
-		return ChatResult{}, fmt.Errorf("provider unavailable")
+func completeLong(client ChatClient, ctx context.Context, system string, history []ChatMessage, maxTokens int) (ChatResult, error) {
+	if long, ok := client.(longChatClient); ok {
+		return long.CompleteLong(ctx, system, history, maxTokens)
 	}
+	return client.Complete(ctx, system, history)
+}
+
+type visionPartsClient interface {
+	CompleteVisionParts(ctx context.Context, system, prompt string, images []visionImagePart, maxTokens int) (ChatResult, error)
+}
+
+func completeVisionParts(client ChatClient, ctx context.Context, system, prompt string, images []visionImagePart, maxTokens int) (ChatResult, error) {
+	if c, ok := client.(visionPartsClient); ok {
+		return c.CompleteVisionParts(ctx, system, prompt, images, maxTokens)
+	}
+	if v, ok := client.(VisionChatClient); ok && len(images) == 1 {
+		return v.CompleteVision(ctx, system, prompt, images[0].MIME, images[0].Data, maxTokens)
+	}
+	return ChatResult{}, fmt.Errorf("provider unavailable")
 }
 
 func newHTTPClient() *http.Client {

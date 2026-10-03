@@ -132,9 +132,44 @@ import "../../styles/homescool-workspace.css";
           <p class="homescool-workspace__loading-msg">Cargando material…</p>
         </div>
         <div class="homescool-sheet-host" data-homescool-sheets hidden aria-label="Hojas de la clase"></div>
+        <section class="homescool-progress-panel" data-homescool-progress-panel hidden aria-labelledby="homescool-progress-title">
+          <header>
+            <h2 id="homescool-progress-title">Progreso de la actividad</h2>
+            <p data-homescool-progress-summary>Sube una foto de la hoja completada para registrar el avance.</p>
+          </header>
+          <div class="homescool-progress-panel__controls">
+            <input data-homescool-progress-file type="file" accept="image/jpeg,image/png,image/webp" />
+            <button class="button" type="button" data-homescool-progress-upload>Analizar foto</button>
+            <a href="/homescool/progress" data-route>Ver resumen</a>
+          </div>
+          <div class="homescool-progress-panel__photos" data-homescool-progress-photos></div>
+          <p class="homescool-progress-panel__status" data-homescool-progress-status hidden></p>
+          <label class="homescool-progress-panel__upload-again">
+            <span>Subir otra foto</span>
+            <input
+              data-homescool-progress-file-extra
+              type="file"
+              accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+            />
+          </label>
+        </section>
       </div>
     </div>
   </section>
+
+  <div
+    class="homescool-progress-lightbox"
+    data-homescool-progress-lightbox
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-label="Foto de la actividad"
+  >
+    <button type="button" class="homescool-progress-lightbox__close" data-homescool-progress-lightbox-close aria-label="Cerrar">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </button>
+    <img class="homescool-progress-lightbox__img" data-homescool-progress-lightbox-img alt="Foto de la actividad" />
+  </div>
 
   <div
     class="homescool-mppe-modal"
@@ -234,6 +269,12 @@ import "../../styles/homescool-workspace.css";
   import { hasLetterV2Slots } from "../../lib/homescool-letter-v2";
   import { showErrorModal } from "../../lib/error-modal";
   import {
+    deleteHomescoolProgressPhoto,
+    fetchHomescoolProgress,
+    uploadHomescoolProgressPhoto,
+    type HomescoolProgress,
+  } from "../../lib/homescool-progress";
+  import {
     HOMESCOOL_SUBJECTS_ACTIVE,
     isHomescoolSubjectPaused,
     renderEoschoolPages,
@@ -292,6 +333,7 @@ import "../../styles/homescool-workspace.css";
   let collapseBound = false;
   let debugToggleBound = false;
   let mppeModalBound = false;
+  let progressBound = false;
   const DHS_COLLAPSE_KEY = "homescool-dhs-collapsed";
   const SELECTION_STORAGE_KEY = "homescool-nav-selection";
 
@@ -1407,6 +1449,7 @@ import "../../styles/homescool-workspace.css";
     currentPdfName = "homescool.pdf";
     currentDoc = null;
     currentPdfBytes = null;
+    setHidden(qs("[data-homescool-progress-panel]"), true);
     setPrintEnabled(false);
     const match = findCell();
     if (!match) {
@@ -1478,6 +1521,8 @@ import "../../styles/homescool-workspace.css";
       document.title = `${doc.title} · Homescool`;
       sheetsReady = true;
       setPrintEnabled(true);
+      setHidden(qs("[data-homescool-progress-panel]"), false);
+      await loadHomescoolProgress(doc);
       rebuildPublishedChips();
       log("openSelection.ready", {
         key: match.key,
@@ -1501,6 +1546,141 @@ import "../../styles/homescool-workspace.css";
       if (emptyMsg) emptyMsg.textContent = "No se pudo cargar el documento.";
       showErrorModal({ message: "Could not load eoschool document." });
     }
+  }
+
+  function openProgressLightbox(url: string) {
+    const box = qs<HTMLElement>("[data-homescool-progress-lightbox]");
+    const img = qs<HTMLImageElement>("[data-homescool-progress-lightbox-img]");
+    if (!(box instanceof HTMLElement) || !(img instanceof HTMLImageElement)) return;
+    img.src = url;
+    setHidden(box, false);
+  }
+
+  function closeProgressLightbox() {
+    const box = qs<HTMLElement>("[data-homescool-progress-lightbox]");
+    const img = qs<HTMLImageElement>("[data-homescool-progress-lightbox-img]");
+    if (img instanceof HTMLImageElement) img.removeAttribute("src");
+    if (box instanceof HTMLElement) setHidden(box, true);
+  }
+
+  function setProgressStatus(msg: string, show: boolean) {
+    const el = qs<HTMLElement>("[data-homescool-progress-status]");
+    if (!(el instanceof HTMLElement)) return;
+    el.textContent = msg;
+    setHidden(el, !show);
+  }
+
+  function renderHomescoolProgress(progress: HomescoolProgress | null) {
+    const summary = qs<HTMLElement>("[data-homescool-progress-summary]");
+    const photos = qs<HTMLElement>("[data-homescool-progress-photos]");
+    if (summary) {
+      summary.textContent = progress
+        ? `${progress.score.value || "—"} / ${progress.score.scale || 10} · ${progress.studyState.summary || "Foto registrada."}`
+        : "Sube una foto de la hoja completada para registrar el avance.";
+    }
+    if (!photos) return;
+    photos.replaceChildren();
+    for (const photo of progress?.photos || []) {
+      const row = document.createElement("div");
+      row.className = "homescool-progress-panel__photo-row";
+      const thumbBtn = document.createElement("button");
+      thumbBtn.type = "button";
+      thumbBtn.className = "homescool-progress-panel__thumb";
+      thumbBtn.title = "Ver foto grande";
+      thumbBtn.setAttribute("aria-label", "Ver foto grande");
+      const image = document.createElement("img");
+      image.src = photo.thumbUrl || photo.url || "";
+      image.alt = "Hoja de trabajo registrada";
+      image.loading = "lazy";
+      thumbBtn.append(image);
+      thumbBtn.addEventListener("click", () => {
+        if (photo.url) openProgressLightbox(photo.url);
+      });
+      const del = document.createElement("button");
+      del.type = "button";
+      del.className = "homescool-progress-panel__delete";
+      del.title = "Eliminar foto";
+      del.setAttribute("aria-label", "Eliminar foto");
+      del.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">delete</span>';
+      del.addEventListener("click", () => void onDeleteProgressPhoto(photo.id));
+      row.append(thumbBtn, del);
+      photos.append(row);
+    }
+  }
+
+  async function onDeleteProgressPhoto(photoId: string) {
+    setProgressStatus("Eliminando foto…", true);
+    const result = await deleteHomescoolProgressPhoto(photoId);
+    setProgressStatus("", false);
+    if (result.error) {
+      showErrorModal({ message: result.error, requestId: result.requestId });
+      return;
+    }
+    renderHomescoolProgress(result.progress);
+  }
+
+  async function loadHomescoolProgress(doc: EoschoolDocument) {
+    const result = await fetchHomescoolProgress({
+      cycle: doc.cycle,
+      week: doc.week,
+      day: doc.day,
+      subject: doc.subject,
+    });
+    if (result.error) {
+      renderHomescoolProgress(null);
+      return;
+    }
+    renderHomescoolProgress(result.progress);
+  }
+
+  async function runProgressUpload(file: File, input?: HTMLInputElement | null) {
+    if (!currentDoc) return;
+    const button = qs<HTMLButtonElement>("[data-homescool-progress-upload]");
+    if (button) button.disabled = true;
+    setProgressStatus("Subiendo y evaluando la foto…", true);
+    try {
+      const result = await uploadHomescoolProgressPhoto({
+        cycle: currentDoc.cycle,
+        week: currentDoc.week,
+        day: currentDoc.day,
+        subject: currentDoc.subject,
+        document: currentDoc,
+        file,
+      });
+      if (result.error) {
+        showErrorModal({ message: result.error, requestId: result.requestId });
+        return;
+      }
+      if (input) input.value = "";
+      renderHomescoolProgress(result.progress);
+    } finally {
+      setProgressStatus("", false);
+      if (button) button.disabled = false;
+    }
+  }
+
+  function bindHomescoolProgressOnce() {
+    if (progressBound) return;
+    progressBound = true;
+    qs<HTMLButtonElement>("[data-homescool-progress-upload]")?.addEventListener("click", async () => {
+      const input = qs<HTMLInputElement>("[data-homescool-progress-file]");
+      const file = input?.files?.[0];
+      if (!file) return;
+      await runProgressUpload(file, input);
+    });
+    qs<HTMLInputElement>("[data-homescool-progress-file-extra]")?.addEventListener("change", async () => {
+      const input = qs<HTMLInputElement>("[data-homescool-progress-file-extra]");
+      const file = input?.files?.[0];
+      if (!file) return;
+      await runProgressUpload(file, input);
+    });
+    qs("[data-homescool-progress-lightbox-close]")?.addEventListener("click", () => closeProgressLightbox());
+    qs("[data-homescool-progress-lightbox]")?.addEventListener("click", (ev) => {
+      if (ev.target === ev.currentTarget) closeProgressLightbox();
+    });
+    document.addEventListener("keydown", (ev) => {
+      if (ev.key === "Escape") closeProgressLightbox();
+    });
   }
 
   async function mountEoschool(doc: EoschoolDocument, seq: number) {
@@ -1557,6 +1737,7 @@ import "../../styles/homescool-workspace.css";
   }
 
   document.addEventListener("astro:page-load", () => {
+    bindHomescoolProgressOnce();
     if (document.documentElement.getAttribute("data-page") !== "homescool-workspace") return;
     void boot();
   });

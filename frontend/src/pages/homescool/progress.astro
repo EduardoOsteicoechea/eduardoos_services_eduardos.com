@@ -1,0 +1,194 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Progreso Homescool"
+  description="Avance del niño por ciclo, semana, día y materia."
+  page="homescool-progress"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/homescool" data-route title="Homescool" aria-label="Homescool">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">school</span></span>
+      Homescool
+    </a>
+  </Fragment>
+
+  <h1 class="page-title-sr">Progreso Homescool</h1>
+
+  <section class="product-dash" data-homescool-progress-dash>
+    <p class="status" data-banner>Cargando…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Necesitas sesión e entitlement Homescool.</p>
+      <a class="button" href="/session" data-route>Sign in</a>
+    </div>
+
+    <div data-authed hidden>
+      <div class="product-dash__grid">
+        <article class="product-dash__card">
+          <header class="product-dash__card-head">
+            <h2 class="product-dash__card-title">Filtro</h2>
+            <p class="product-dash__card-desc">Ciclo y semana del avance.</p>
+          </header>
+          <div class="session-grid">
+            <label>
+              Ciclo
+              <select data-cycle>
+                <option value="3" selected>3</option>
+              </select>
+            </label>
+            <label>
+              Semana
+              <select data-week>
+                <option value="1">1</option>
+                <option value="2" selected>2</option>
+              </select>
+            </label>
+            <button type="button" class="button" data-reload>Actualizar</button>
+          </div>
+        </article>
+
+        <article class="product-dash__card">
+          <header class="product-dash__card-head">
+            <h2 class="product-dash__card-title">Resumen</h2>
+            <p class="product-dash__card-desc" data-avg>Sin datos aún.</p>
+          </header>
+          <p class="hint" data-by-subject></p>
+          <p class="hint" data-by-day></p>
+        </article>
+      </div>
+
+      <article class="product-dash__card">
+        <header class="product-dash__card-head">
+          <h2 class="product-dash__card-title">Actividades</h2>
+          <p class="product-dash__card-desc">Score 1–10 por materia y día.</p>
+        </header>
+        <ul class="product-list" data-items></ul>
+      </article>
+
+      <article class="product-dash__card">
+        <header class="product-dash__card-head">
+          <h2 class="product-dash__card-title">Sugerencias al docente</h2>
+          <p class="product-dash__card-desc">Fortalezas, debilidades y próximos pasos.</p>
+        </header>
+        <div class="session-grid">
+          <div>
+            <h3 class="product-dash__card-title">Fortalezas</h3>
+            <ul class="product-list" data-strengths></ul>
+          </div>
+          <div>
+            <h3 class="product-dash__card-title">Debilidades</h3>
+            <ul class="product-list" data-weaknesses></ul>
+          </div>
+          <div>
+            <h3 class="product-dash__card-title">Sugerencias</h3>
+            <ul class="product-list" data-suggestions></ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { fetchHomescoolProgressSummary } from "../../lib/homescool-progress";
+  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+  import { subjectDisplayName } from "../../lib/homescool-eoschool";
+
+  const root = document.querySelector("[data-homescool-progress-dash]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const authed = root?.querySelector("[data-authed]");
+  const cycleSel = root?.querySelector("[data-cycle]");
+  const weekSel = root?.querySelector("[data-week]");
+  const reloadBtn = root?.querySelector("[data-reload]");
+  const avgEl = root?.querySelector("[data-avg]");
+  const bySubjectEl = root?.querySelector("[data-by-subject]");
+  const byDayEl = root?.querySelector("[data-by-day]");
+  const itemsEl = root?.querySelector("[data-items]");
+  const strengthsEl = root?.querySelector("[data-strengths]");
+  const weaknessesEl = root?.querySelector("[data-weaknesses]");
+  const suggestionsEl = root?.querySelector("[data-suggestions]");
+
+  function fillList(host: Element | null | undefined, rows: string[], empty: string) {
+    if (!(host instanceof HTMLElement)) return;
+    host.replaceChildren();
+    if (!rows.length) {
+      const li = document.createElement("li");
+      li.textContent = empty;
+      host.append(li);
+      return;
+    }
+    for (const row of rows) {
+      const li = document.createElement("li");
+      li.textContent = row;
+      host.append(li);
+    }
+  }
+
+  async function load() {
+    if (!(cycleSel instanceof HTMLSelectElement) || !(weekSel instanceof HTMLSelectElement)) return;
+    const cycle = Number(cycleSel.value);
+    const week = Number(weekSel.value);
+    if (banner instanceof HTMLElement) banner.textContent = "Cargando…";
+    const res = await fetchHomescoolProgressSummary({ cycle, week });
+    if (res.error || !res.summary) {
+      apiFail(res.error || "No se pudo cargar el resumen.", { requestId: res.requestId });
+      if (banner instanceof HTMLElement) banner.textContent = "Error al cargar.";
+      return;
+    }
+    const s = res.summary;
+    if (banner instanceof HTMLElement) {
+      banner.textContent = `Ciclo ${s.cycle} · Semana ${s.week} · ${s.scoredCount} actividad(es)`;
+    }
+    if (avgEl instanceof HTMLElement) {
+      avgEl.textContent =
+        s.scoredCount > 0
+          ? `Promedio ${s.averageScore.toFixed(1)} / 10 en ${s.scoredCount} actividad(es).`
+          : "Sin datos aún. Sube fotos bajo el PDF de cada clase.";
+    }
+    if (bySubjectEl instanceof HTMLElement) {
+      const parts = Object.entries(s.bySubject || {}).map(
+        ([subj, avg]) => `${subjectDisplayName(subj)}: ${avg.toFixed(1)}`,
+      );
+      bySubjectEl.textContent = parts.length ? `Por materia: ${parts.join(" · ")}` : "";
+    }
+    if (byDayEl instanceof HTMLElement) {
+      const parts = Object.entries(s.byDay || {}).map(([day, avg]) => `Día ${day}: ${avg.toFixed(1)}`);
+      byDayEl.textContent = parts.length ? `Por día: ${parts.join(" · ")}` : "";
+    }
+    if (itemsEl instanceof HTMLElement) {
+      itemsEl.replaceChildren();
+      if (!s.items?.length) {
+        const li = document.createElement("li");
+        li.textContent = "Todavía no hay fotos evaluadas en esta semana.";
+        itemsEl.append(li);
+      } else {
+        for (const item of s.items) {
+          const li = document.createElement("li");
+          li.textContent = `${subjectDisplayName(item.subject)} · d${item.day} · ${item.score}/10 · ${item.photoCount} foto(s)${item.summary ? ` — ${item.summary}` : ""}`;
+          itemsEl.append(li);
+        }
+      }
+    }
+    fillList(strengthsEl, s.strengths || [], "Sin fortalezas registradas.");
+    fillList(weaknessesEl, s.weaknesses || [], "Sin debilidades registradas.");
+    fillList(suggestionsEl, s.teacherSuggestions || [], "Sin sugerencias aún.");
+  }
+
+  const result = await requireService("homescool", { requireSubscription: true });
+  if (!result.sessionOk || !result.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
+    setHidden(gate, false);
+  } else {
+    setHidden(gate, true);
+    setHidden(authed, false);
+    reloadBtn?.addEventListener("click", () => void load());
+    cycleSel?.addEventListener("change", () => void load());
+    weekSel?.addEventListener("change", () => void load());
+    await load();
+  }
+</script>

@@ -234,6 +234,16 @@ func safeSchemaMigrations() []schemaMigration {
 				{Collection: colEpamBodies, Keys: bson.D{{Key: "user_id", Value: 1}, {Key: "epam_id", Value: 1}}, Unique: true},
 			},
 		},
+		{
+			ID:          "012_homescool_progress",
+			Description: "Create Homescool worksheet progress collection",
+			Collections: []string{colHomescoolProgress},
+			Indexes: []indexSpec{
+				{Collection: colHomescoolProgress, Keys: bson.D{{Key: "owner_user_id", Value: 1}, {Key: "student_key", Value: 1}, {Key: "cell_key", Value: 1}}, Unique: true},
+				{Collection: colHomescoolProgress, Keys: bson.D{{Key: "owner_user_id", Value: 1}, {Key: "student_key", Value: 1}, {Key: "cycle", Value: 1}, {Key: "week", Value: 1}}},
+				{Collection: colHomescoolProgress, Keys: bson.D{{Key: "owner_user_id", Value: 1}, {Key: "photos.id", Value: 1}}},
+			},
+		},
 	}
 }
 
