@@ -47,7 +47,7 @@
     "weekRecap": "Esta semana seguimos con: Tablas del 5 al 16. Lee cada parte con calma y prueba la actividad.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una hilera de 7 cayos de Morrocoy. Pon 6 botes en cada cayo. Escribe al lado: 7 × 6 = 42. Deja una caja vacía para comprobar 6 en 6.",
+    "imageBandInstruction": "Dibuja una cuadrícula de 7 × 6 casillas. Pon un punto en cada casilla. Escribe al lado: 7 × 6 = 42. Deja vacía una caja: 3 × 7 y su doble.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1243,28 +1243,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una hilera de 7 cayos de Morrocoy."
+        "text": "Dibuja una cuadrícula de 7 × 6 casillas. Pon"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Pon 6 botes en cada cayo. Escribe al lado:"
+        "text": "un punto en cada casilla. Escribe al lado: 7"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "7 × 6 = 42. Deja una caja vacía para"
+        "text": "× 6 = 42. Deja vacía una caja: 3 × 7 y su"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "comprobar 6 en 6."
+        "text": "doble."
       }
     ],
     "packOrder": "column-major-sequential",

@@ -46,7 +46,7 @@
     "summary": "Un experimento es una prueba con orden. Armaste un disco que guiña, como el Salto Ángel que de lejos parece una cinta de agua.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un disco con un ojo abierto. Dibuja por detrás el ojo cerrado. Dibuja al lado el Salto Ángel de lejos. Rotula: disco, lápiz, cinta y cartulina.",
+    "imageBandInstruction": "Dibuja un disco: un ojo en cada cara. Rotula cartulina, lápiz, cinta y ojos. Deja vacía una tabla: rápido y lento. Anota en ella lo que ves al girarlo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1232,28 +1232,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un disco con un ojo abierto. Dibuja"
+        "text": "Dibuja un disco: un ojo en cada cara."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "por detrás el ojo cerrado. Dibuja al lado el"
+        "text": "Rotula cartulina, lápiz, cinta y ojos. Deja"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Salto Ángel de lejos. Rotula: disco, lápiz,"
+        "text": "vacía una tabla: rápido y lento. Anota en"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "cinta y cartulina."
+        "text": "ella lo que ves al girarlo."
       }
     ],
     "packOrder": "column-major-sequential",

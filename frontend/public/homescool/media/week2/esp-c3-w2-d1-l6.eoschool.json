@@ -47,7 +47,7 @@
     "memoryPhrase": "Una palabra: **canto / cantaba / canté / cantaré / cantaría**. Dos palabras: **haber** + participio (**he cantado**).",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja Cumaná y una línea del tiempo con ayer, hoy y mañana. Escribe «canté», «canto» y «cantaré» en su lugar y deja un espacio para «he cantado».",
+    "imageBandInstruction": "Dibuja una línea del tiempo con ayer, hoy y mañana. Escribe «canté», «canto» y «cantaré» en su lugar. Deja un espacio vacío para «he cantado».",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1235,28 +1235,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja Cumaná y una línea del tiempo con"
+        "text": "Dibuja una línea del tiempo con ayer, hoy y"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "ayer, hoy y mañana. Escribe «canté»,"
+        "text": "mañana. Escribe «canté», «canto» y"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "«canto» y «cantaré» en su lugar y deja un"
+        "text": "«cantaré» en su lugar. Deja un espacio"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "espacio para «he cantado»."
+        "text": "vacío para «he cantado»."
       }
     ],
     "packOrder": "column-major-sequential",

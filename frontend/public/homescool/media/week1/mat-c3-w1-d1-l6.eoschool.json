@@ -41,7 +41,7 @@
     "summary": "Multiplicar es sumar grupos iguales, como cayos de Los Roques con las mismas palmeras.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja 4 cayos de Los Roques en un mapa. Pon 5 palmeras en cada cayo igual. Rotula 4 grupos de 5 y escribe 5+5+5+5. Deja vacío el producto de 4 × 5.",
+    "imageBandInstruction": "Dibuja 3 grupos de 4 puntos: 3 × 4. Escribe la suma 4 + 4 + 4 en una fila. Rotula factores y producto con flechas. Deja vacía la casilla del producto.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1250,28 +1250,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja 4 cayos de Los Roques en un mapa."
+        "text": "Dibuja 3 grupos de 4 puntos: 3 × 4. Escribe"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Pon 5 palmeras en cada cayo igual. Rotula"
+        "text": "la suma 4 + 4 + 4 en una fila. Rotula factores"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "4 grupos de 5 y escribe 5+5+5+5. Deja vacío"
+        "text": "y producto con flechas. Deja vacía la"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "el producto de 4 × 5."
+        "text": "casilla del producto."
       }
     ],
     "packOrder": "column-major-sequential",

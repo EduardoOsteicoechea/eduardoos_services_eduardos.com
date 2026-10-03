@@ -47,7 +47,7 @@
     "memoryPhrase": "Cuatro tejidos: **epitelial** (cubre), **conectivo** (une), **muscular** (mueve), **nervioso** (mensaje).",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un niño en un bote de noche. Rotula piel, hueso, músculo y nervio. Deja en blanco el tejido de cada rótulo. Dibuja un relámpago del Catatumbo al fondo.",
+    "imageBandInstruction": "Dibuja un niño y marca cuatro zonas: piel, hueso, músculo y nervio. Rotula el nombre de cada tejido. Deja en blanco qué hace cada uno.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1233,28 +1233,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un niño en un bote de noche. Rotula"
+        "text": "Dibuja un niño y marca cuatro zonas: piel,"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "piel, hueso, músculo y nervio. Deja en"
+        "text": "hueso, músculo y nervio. Rotula el nombre"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "blanco el tejido de cada rótulo. Dibuja un"
+        "text": "de cada tejido. Deja en blanco qué hace"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "relámpago del Catatumbo al fondo."
+        "text": "cada uno."
       }
     ],
     "packOrder": "column-major-sequential",

@@ -47,7 +47,7 @@
     "memoryPhrase": "**in** = en · **apud** = con · **per** = por · **sine** = sin · **a/ab** = de · **de** = de.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un puente entre dos orillas. Rotula el puente: per pontem. Dibuja una barca en el agua: in aqua. Deja una línea vacía bajo cada rótulo.",
+    "imageBandInstruction": "Dibuja 6 tarjetas con un icono simple: in, apud, per, sine, a/ab y de. Rotula cada tarjeta con su palabra. Deja vacío el renglón del significado.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1224,28 +1224,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un puente entre dos orillas. Rotula"
+        "text": "Dibuja 6 tarjetas con un icono simple: in,"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "el puente: per pontem. Dibuja una barca en"
+        "text": "apud, per, sine, a/ab y de. Rotula cada"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "el agua: in aqua. Deja una línea vacía bajo"
+        "text": "tarjeta con su palabra. Deja vacío el"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "cada rótulo."
+        "text": "renglón del significado."
       }
     ],
     "packOrder": "column-major-sequential",

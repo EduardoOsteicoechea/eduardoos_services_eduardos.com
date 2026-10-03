@@ -47,7 +47,7 @@
     "memoryPhrase": "Orden antiguo: primero el relato, después el mapa. Recuerda: **Babel**, **sumerios** (Tigris y Éufrates), y otros pueblos del mundo antiguo.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una roca con dos petroglifos. Numera cuál grabaron primero y cuál después, como en una línea de tiempo. Deja vacío el rótulo de cada dibujo.",
+    "imageBandInstruction": "Dibuja una línea con 3 hitos de tu día. Numéralos 1, 2, 3: lo más antiguo es 1. Abajo dibuja un mapa pequeño (dónde). Deja vacía la etiqueta de cada hito.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1245,28 +1245,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una roca con dos petroglifos."
+        "text": "Dibuja una línea con 3 hitos de tu día."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Numera cuál grabaron primero y cuál"
+        "text": "Numéralos 1, 2, 3: lo más antiguo es 1."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "después, como en una línea de tiempo."
+        "text": "Abajo dibuja un mapa pequeño (dónde)."
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Deja vacío el rótulo de cada dibujo."
+        "text": "Deja vacía la etiqueta de cada hito."
       }
     ],
     "packOrder": "column-major-sequential",

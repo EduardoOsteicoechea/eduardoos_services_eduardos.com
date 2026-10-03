@@ -46,7 +46,7 @@
     "summary": "Génesis cuenta la creación, la caída, el diluvio y la promesa a Abraham, como un panorama.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja Los Llanos con tres señales: creación, diluvio y promesa. Dibuja un símbolo pequeño en cada una. Escribe cuál va primero y cuál último.",
+    "imageBandInstruction": "Dibuja cuatro recuadros en una fila. Escribe en ellos: promesa, creación, diluvio y caída, mezclados. Numéralos del 1 al 4, en orden.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1232,28 +1232,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja Los Llanos con tres señales:"
+        "text": "Dibuja cuatro recuadros en una fila."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "creación, diluvio y promesa. Dibuja un"
+        "text": "Escribe en ellos: promesa, creación, diluvio"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "símbolo pequeño en cada una. Escribe cuál"
+        "text": "y caída, mezclados. Numéralos del 1 al 4,"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "va primero y cuál último."
+        "text": "en orden."
       }
     ],
     "packOrder": "column-major-sequential",

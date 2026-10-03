@@ -96,3 +96,18 @@ Qué dibujar/rotular hoy para practicar lo aprendido; concreta, completa y ligad
 ## Qué devolver
 
 Respuesta breve en español: módulo creado, salida del generador (`withProblems`), si el audit dio 0, y cualquier dato dudoso que dejaste fuera. No pegues el contenido completo.
+
+## v3b — dos cambios (obligatorios, mandan sobre lo anterior)
+
+### A. La imagen NO lleva la metáfora
+La metáfora venezolana vive solo en las preguntas y respuestas de la clase. La **imagen** (`image`, 4 líneas = `imageBandInstruction`, y de ahí sale el prompt del generador de imágenes) se escribe **solo con la idea central / el tema de la clase** (lo que se explica: p. ej. las cuatro piezas de OiLS, la matriz 7 × 8, el esqueleto, las categorías gramaticales), como ilustración que **explica y genera actividad** (dibujar, rotular, completar, ordenar). Prohibido que la imagen mencione o dibuje el hito (Médanos, Orinoco, Roques, Morrocoy, Chuao, La Guaira, cueva, puente, laguna, etc.) ni lugares venezolanos que no sean el tema de la materia. El audit lo exige (`imageMetaphor`; sólo `his` queda exenta porque sus lugares son el tema).
+Una buena `image`: concreta, completa, 4 líneas ≤ 40 caracteres, dice qué se ve, qué se rotula y qué deja vacío el niño para completar.
+
+### B. Inglés (`ing`) se enseña EN INGLÉS y espeja a Español
+`ing` ya no enseña español ni mezcla idiomas: cada clase de `ing` es **el mismo tema que `esp` de esa semana, estudiado en su equivalente en inglés**, escrita en inglés sencillo para un niño de 8 años hispanohablante.
+- Semana 1: esp = las nueve clases de palabras. `ing` = **the grammatical categories in English (parts of speech)**: noun, pronoun, verb, adjective, adverb, preposition, conjunction, interjection, y los artículos *a / an / the* (que muchos gramáticos llaman *determiners*). Cuenta con honestidad cuántas son en inglés y dilo en la clase (8 partes de la oración + los artículos = 9 grupos en esta clase). Ejemplos y oraciones en inglés.
+- Semana 2: esp = los tiempos del verbo (una palabra / dos palabras con haber). `ing` = **English verb tenses**: simple present, simple past (*I sang*), simple future (*I will sing*), past continuous (*I was singing*), present perfect (*I have sung*, *have/has + past participle*). Reparte d1 panorama, d2 cada tiempo de cerca, d3 elegir el tiempo con pistas (*yesterday, already, now*) y contarlo.
+- **Todo en inglés**: preguntas, respuestas, quiz, `image`, `summary`, `memoryPhrase`, `title` y `mppe` (cambia los `label` de `mppe` y `title` a lo que ahora se enseña; conserva los `id`). Un término gramatical nuevo puede llevar una glosa mínima en español entre paréntesis la primera vez (p. ej. *noun (sustantivo)*), nada más. Oraciones cortas, vocabulario de 8 años.
+- El generador pone el marco en inglés para `ing`: `What did you learn in the last class?`, `Write here what you learned:`. Tú escribe los encabezados como `Point 1: Review of the last class`, `Point 2: …`, … (**`Point`**, no `Punto`).
+- El hito (Ávila en w1, Teleférico de Mérida en w2) sigue siendo la metáfora explicativa y se nombra en las preguntas/respuestas (en inglés: *Mount Ávila*, *Mérida cable car*), pero **no va en la imagen**.
+- Fuente de ideas del tema: `scripts/homescool-ask-first-content/esp-c3-w{N}.mjs` (mismo reparto d1/d2/d3). No traduzcas: reescribe como una clase de inglés auténtica.

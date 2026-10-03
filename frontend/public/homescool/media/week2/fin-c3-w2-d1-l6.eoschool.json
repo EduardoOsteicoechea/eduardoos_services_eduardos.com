@@ -49,7 +49,7 @@
     "quizIntegrated": true,
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1",
-    "imageBandInstruction": "Dibuja el puerto de La Guaira con un barco. Abajo haz una tabla: Fecha, Qué elegí, Qué dejé y Cuánto ahorré. Deja las filas vacías para que las llenes tú.",
+    "imageBandInstruction": "Dibuja dos columnas: necesito y deseo. Abajo haz una tabla: Fecha, Qué elegí, Qué dejé y Cuánto ahorré. Deja las filas vacías para que las llenes tú.",
     "slotSequence": [
       {
         "index": 1,
@@ -1246,7 +1246,7 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja el puerto de La Guaira con un barco."
+        "text": "Dibuja dos columnas: necesito y deseo."
       },
       {
         "index": 154,

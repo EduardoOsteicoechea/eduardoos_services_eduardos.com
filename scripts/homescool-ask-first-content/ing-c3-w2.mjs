@@ -1,317 +1,329 @@
 /**
- * Inglés · ciclo 3 · semana 2 · nivel 6 — v3 (3 días).
- * Tiempos del verbo: una palabra (canto, cantaba, canté, cantaré, cantaría)
- * o dos (haber + participio), con ejemplos en inglés.
- * Hito de Venezuela: Teleférico de Mérida
+ * Inglés · ciclo 3 · semana 2 · nivel 6 — v3 (3 días) + v3b (se enseña EN INGLÉS).
+ * Espeja a esp semana 2 (los tiempos del verbo) en su equivalente en inglés:
+ * simple present, simple past, simple future, past continuous, present perfect.
+ * Hito de Venezuela (solo en preguntas y respuestas, NO en la imagen): Teleférico de Mérida
  * (sube por tramos, con estaciones, hacia las alturas de la sierra).
- * d1 panorama · d2 cada forma de cerca · d3 elegir y contarlo.
+ * d1 panorama (una palabra / más palabras) · d2 pasado, continuo y perfecto de cerca
+ * · d3 elegir el tiempo con pistas y contarlo.
  */
 export default [
-  // ───────────────────────── DÍA 1 ─────────────────────────
+  // ───────────────────────── DAY 1 ─────────────────────────
   {
     key: "ing-c3-w2-d1",
+    title: "English verb tenses: the big picture",
+    mppe: [
+      { id: "len-lec-06", label: "I name the English verb tenses on a timeline." },
+      { id: "len-lec-05", label: "I say simple present, past and future aloud." },
+    ],
+    memoryPhrase: "One word: I sing, I sang. More words: I will sing, I was singing, I have sung.",
     units: [
       {
-        h: "Punto 1: Repaso de la clase pasada",
+        h: "Point 1: Review of the last class",
         a: [
-          "La semana pasada viste verbos como",
-          "cantar, comer y vivir: -ar, -er, -ir.",
-          "Hoy subimos al teleférico de Mérida.",
+          "Last week you learned that a verb is",
+          "an action word, like sing, run or eat.",
+          "Today we ride the Mérida cable car.",
         ],
       },
       {
         q: [
-          "El teleférico de Mérida sube por tramos.",
-          "¿Cómo dice un verbo cuándo pasa algo?",
+          "The Mérida cable car climbs in sections.",
+          "How does a verb tell us when it happens?",
         ],
-        h: "Punto 2: El verbo dice cuándo",
+        h: "Point 2: A verb tells us when",
         a: [
-          "Cada estación del viaje es un momento.",
-          "Ayer dices «canté»; hoy, «canto»;",
-          "mañana, «cantaré».",
+          "Each station is a different time:",
+          "before, now and later. The verb changes",
+          "to show it. These are tenses (tiempos).",
         ],
       },
       {
         q: [
-          "Si cantas en cada estación, ¿cambia",
-          "toda la palabra o solo una parte?",
+          "You stand at a station and you sing.",
+          "What do you say now? And yesterday?",
         ],
-        h: "Punto 3: La raíz se queda",
+        h: "Point 3: One-word tenses",
         a: [
-          "La raíz «cant-» se queda igual.",
-          "Solo cambia el final, como cambia",
-          "la vista en cada estación.",
+          "Now you say “I sing”: simple present.",
+          "Before, you say “I sang”: simple past.",
+          "Both tenses use only one word.",
         ],
       },
       {
         q: [
-          "En el teleférico de Mérida, ¿cuántas",
-          "formas de una palabra tiene «cantar»?",
+          "Tomorrow you ride the cable car again.",
+          "How do you say that you will sing?",
         ],
-        h: "Punto 4: Cinco formas de una palabra",
+        h: "Point 4: Simple future",
         a: [
-          "Una palabra: canto / cantaba / canté /",
-          "cantaré / cantaría.",
-          "Cada una cuenta un momento distinto.",
+          "You add the helper word will:",
+          "“I will sing” is the simple future.",
+          "The verb after will does not change.",
         ],
       },
       {
         q: [
-          "El teleférico también sube en dos tramos.",
-          "¿Hay verbos que llevan dos palabras?",
+          "Some trips need two sections. Can a verb",
+          "use two or three words to tell when?",
         ],
-        h: "Punto 5: Dos tramos con haber",
+        h: "Point 5: Helper words",
         a: [
-          "«He cantado» tiene dos tramos:",
-          "la ayudante «he» y «cantado».",
-          "En inglés: «I have sung».",
+          "“I was singing”: past continuous.",
+          "“I have sung”: present perfect.",
+          "Was and have are helper verbs.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: ¿«cantaba» y",
-          "«he cantado» usan las mismas palabras?",
+          "Look at the five tenses together.",
+          "Which use one word, which use more?",
         ],
-        h: "Punto 6: Una palabra o dos",
+        h: "Point 6: One word or more words",
         a: [
-          "No. «Cantaba» es una sola palabra.",
-          "«He cantado» son dos, como dos tramos.",
-          "Pronto verás cómo elegir.",
+          "One word: I sing, I sang.",
+          "More words: I will sing, I was singing,",
+          "I have sung.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿Qué parte de «cantar» se queda igual?", o: ["La raíz «cant-»", "El final", "Todo", "Nada"] },
-        { q: "¿Cuántas formas de una palabra hay?", o: ["Cinco", "Dos", "Tres", "Cuatro"] },
-        { q: "¿Cuál de estas formas tiene una palabra?", o: ["cantaba", "he cantado", "han cantado", "hemos cantado"] },
-        { q: "¿Cuál forma de «cantar» tiene dos palabras?", o: ["he cantado", "canté", "canto", "cantaré"] },
-        { q: "En «he cantado», ¿cuál es la ayudante?", o: ["he", "cantado", "cant-", "canto"] },
-        { q: "¿Cómo se dice «I have sung» en español?", o: ["he cantado", "canté", "canto", "cantaré"] },
-        { q: "En el viaje, ¿qué es cada estación?", o: ["Un momento distinto", "Una letra", "Un verbo nuevo", "Una raíz"] },
-        { q: "¿Qué forma cuenta lo que pasó ayer?", o: ["canté", "canto", "cantaré", "cantaría"] },
+        { q: "Which sentence is the simple present?", o: ["I sing", "I sang", "I will sing", "I have sung"] },
+        { q: "Which sentence is the simple past?", o: ["I sang", "I sing", "I will sing", "I was singing"] },
+        { q: "Which helper word makes the future?", o: ["will", "was", "have", "sang"] },
+        { q: "How many words are in “I sing”?", o: ["One", "Two", "Three", "Four"] },
+        { q: "Which tense is “I was singing”?", o: ["Past continuous", "Simple past", "Simple future", "Present perfect"] },
+        { q: "In “I have sung”, which is the helper?", o: ["have", "sung", "I", "sing"] },
+        { q: "Which tense is “I have sung”?", o: ["Present perfect", "Simple past", "Simple present", "Past continuous"] },
+        { q: "In the cable car story, what is a station?", o: ["A different time", "A letter", "A new verb", "A sentence"] },
       ],
       write: [
-        "Escribe tres formas de «cantar» de una palabra.",
-        "Explica qué hace «he» en «he cantado».",
+        "Write sing for before, now and later.",
+        "Tell in your words what a helper verb is.",
       ],
       schematic: [
-        "Dibuja el teleférico con canté, canto y cantaré.",
-        "Dibuja «he» y «cantado» como dos tramos.",
+        "Draw a timeline: before, now and later.",
+        "Draw two boxes: one word and more words.",
       ],
     },
     image: [
-      "Dibuja el teleférico de Mérida subiendo",
-      "con tres estaciones: ayer, hoy y mañana.",
-      "Escribe canté, canto y cantaré en ellas",
-      "y deja un cuadro vacío para tu frase.",
+      "Draw a timeline with three big boxes:",
+      "before, now and later. Write I sang,",
+      "I sing and I will sing inside them.",
+      "Add one empty box for a have sentence.",
     ],
-    summary: "El verbo dice cuándo pasa algo, con una palabra (canté) o con dos (he cantado), como las estaciones del teleférico.",
+    summary: "A verb tells us when: I sing, I sang, I will sing, I was singing, I have sung.",
   },
 
-  // ───────────────────────── DÍA 2 ─────────────────────────
+  // ───────────────────────── DAY 2 ─────────────────────────
   {
     key: "ing-c3-w2-d2",
-    title: "Spanish verb times up close",
+    title: "Past, continuous and perfect up close",
+    mppe: [{ id: "len-lec-05", label: "I compare I sang, I was singing and I have sung." }],
+    memoryPhrase: "Simple past: I sang. Past continuous: I was singing. Present perfect: I have sung.",
     units: [
       {
-        h: "Punto 1: Repaso de la clase pasada",
+        h: "Point 1: Review of the last class",
         a: [
-          "La clase pasada viste cinco formas de",
-          "una palabra y otra de dos palabras.",
-          "Hoy miras cada tramo más de cerca.",
+          "Last class you met five tenses: one",
+          "word and more words. Today we study",
+          "three of them on the Mérida cable car.",
         ],
       },
       {
         q: [
-          "Estás en una estación del teleférico y",
-          "cantas. ¿Cómo dices «cantar» ahora?",
+          "You left the first station of the",
+          "Mérida cable car. How do you say it?",
         ],
-        h: "Punto 2: Ahora y pasado abierto",
+        h: "Point 2: Simple past",
         a: [
-          "Ahora dices «canto»: I sing.",
-          "De pequeño dices «cantaba»: pasado",
-          "abierto, como «I used to sing».",
+          "“I sang”: the action is finished.",
+          "It is a station you already left.",
+          "Add -ed (walked) or change: sing, sang.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: ayer cantaste",
-          "una vez arriba. ¿«cantaba» o «canté»?",
+          "While the Mérida cable car climbed, you",
+          "sang for a long time. Which tense?",
         ],
-        h: "Punto 3: El pasado que se cierra",
+        h: "Point 3: Past continuous",
         a: [
-          "Dices «canté»: el pasado que se cerró.",
-          "Fue una vez, como llegar a una estación.",
-          "En inglés: «I sang».",
+          "Use was or were + a verb with -ing.",
+          "“I was singing”, “they were singing”.",
+          "It is the ride between two stations.",
         ],
       },
       {
         q: [
-          "Mañana subirás otra vez al teleférico.",
-          "¿Y si pudieras subir hoy? ¿Cómo lo dices?",
+          "You are at the top station now.",
+          "How do you say what you have done?",
         ],
-        h: "Punto 4: Después y «si pudiera»",
+        h: "Point 4: Present perfect",
         a: [
-          "«Cantaré» es lo que pasará después.",
-          "«Cantaría» es lo que harías si pudieras.",
-          "Inglés: «I will sing», «I would sing».",
+          "Use have or has + a past participle.",
+          "“I have sung”: you are at the top now.",
+          "The result is still here today.",
         ],
       },
       {
         q: [
-          "«He cantado» sube en dos tramos. ¿Cuál",
-          "es el primero y cuál es el segundo?",
+          "I have walked, but I have sung. Why?",
+          "How do you make the past participle?",
         ],
-        h: "Punto 5: Las dos piezas",
+        h: "Point 5: The past participle",
         a: [
-          "El primero es «haber»: he, has, ha,",
-          "hemos, han. Es la ayudante.",
-          "El segundo es el participio: «cantado».",
+          "Regular verbs add -ed: walk, walked.",
+          "Irregular: sing, sang, sung.",
+          "Also: eat, ate, eaten.",
         ],
       },
       {
         q: [
-          "Busca el segundo tramo de «cantar»,",
-          "«comer» y «vivir». ¿Cómo terminan?",
+          "You say “I have sung”. What about Ana?",
+          "Is it “Ana have sung” or “Ana has sung”?",
         ],
-        h: "Punto 6: El participio",
+        h: "Point 6: Have or has?",
         a: [
-          "Dices cantado, comido y vivido.",
-          "Los verbos -ar hacen -ado;",
-          "los verbos -er e -ir hacen -ido.",
+          "I, you, we and they use have.",
+          "He, she and it use has.",
+          "“Ana has sung” is correct.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿Qué forma dice lo que pasará después?", o: ["cantaré", "cantaba", "canté", "canto"] },
-        { q: "¿Cuál es un pasado que sigue abierto?", o: ["cantaba", "canté", "cantaré", "canto"] },
-        { q: "¿Qué forma dice lo que harías?", o: ["cantaría", "cantaré", "canté", "canto"] },
-        { q: "En inglés, ¿qué forma es «I sang»?", o: ["canté", "canto", "cantaré", "cantaría"] },
-        { q: "En «he cantado», ¿cuál es el participio?", o: ["cantado", "he", "cant-", "canto"] },
-        { q: "¿Cuál es el participio de «comer»?", o: ["comido", "comer", "como", "comiendo"] },
-        { q: "¿Cómo termina el participio de «cantar»?", o: ["-ado", "-ido", "-ando", "-ar"] },
-        { q: "¿Cuál es «I will sing» en español?", o: ["cantaré", "canté", "canto", "cantaba"] },
+        { q: "Which tense is “I sang”?", o: ["Simple past", "Past continuous", "Present perfect", "Simple future"] },
+        { q: "Which words go before a verb with -ing?", o: ["was or were", "will", "have or has", "sang"] },
+        { q: "Which is the past continuous?", o: ["They were singing", "They sang", "They will sing", "They have sung"] },
+        { q: "Which words make the present perfect?", o: ["have or has + participle", "was + -ing", "will + verb", "only -ed"] },
+        { q: "What is the past participle of “walk”?", o: ["walked", "walking", "walks", "walkes"] },
+        { q: "What is the past participle of “sing”?", o: ["sung", "sang", "singed", "sing"] },
+        { q: "Which sentence is correct?", o: ["Ana has sung.", "Ana have sung.", "Ana has sing.", "Ana haves sung."] },
+        { q: "What does “I sang” tell us?", o: ["The action is finished", "It is still going", "It will happen later", "It has no time"] },
       ],
       write: [
-        "Escribe una frase con «cantaba» y otra con «canté».",
-        "Escribe he, has y ha con «cantado».",
+        "Write a sentence using was singing.",
+        "Write have or has with sung for I and Ana.",
       ],
       schematic: [
-        "Dibuja estaciones con las formas de «cantar».",
-        "Dibuja dos tramos: haber y participio.",
+        "Draw three cards: sang, was singing, have sung.",
+        "Draw a table: sing, sang and sung.",
       ],
     },
     image: [
-      "Dibuja el teleférico con cinco paradas.",
-      "En cada una escribe una forma de «cantar»",
-      "y su significado en inglés.",
-      "Abajo: dos tramos, «he» y «cantado».",
+      "Draw three cards in a row. Write I sang,",
+      "I was singing and I have sung.",
+      "Under each card, leave a blank line",
+      "for your own sentence with that tense.",
     ],
-    summary: "Con una palabra contamos cinco momentos; con dos, unimos «haber» y un participio: he cantado.",
+    summary: "I sang is finished, I was singing was going on, and I have sung links before with today.",
   },
 
-  // ───────────────────────── DÍA 3 ─────────────────────────
+  // ───────────────────────── DAY 3 ─────────────────────────
   {
     key: "ing-c3-w2-d3",
-    title: "Choose and tell: one word or two?",
+    title: "Choose the tense and tell it",
+    mppe: [{ id: "len-lec-06", label: "I choose the right tense with clue words." }],
+    memoryPhrase: "Ask: When? Is it going on? Is it done?",
     units: [
       {
-        h: "Punto 1: Repaso de la clase pasada",
+        h: "Point 1: Review of the last class",
         a: [
-          "La clase pasada viste las cinco formas",
-          "de una palabra y los dos tramos",
-          "de «he cantado» en el teleférico.",
+          "Last class you studied the simple past,",
+          "the continuous and the perfect. Today",
+          "you pick the tense with clue words.",
         ],
       },
       {
         q: [
-          "Te cuentan: «Terminé ayer». ¿Una palabra",
-          "o dos? ¿Qué pista te lo dice?",
+          "Yesterday you rode the Mérida cable car.",
+          "Compare “Yesterday I sang” and “I sing",
+          "every day”. What tells you the tense?",
         ],
-        h: "Punto 2: Ayer cierra el momento",
+        h: "Point 2: Clue words",
         a: [
-          "Es una palabra: «terminé».",
-          "«Ayer» es un momento cerrado,",
-          "como una estación que ya pasaste.",
+          "Yesterday and last week: simple past.",
+          "Every day and now: simple present.",
+          "Clue words show you which station.",
         ],
       },
       {
         q: [
-          "Ahora escuchas: «Ya he terminado».",
-          "¿Qué cambió? ¿Aún importa el resultado?",
+          "Tomorrow you ride the Mérida cable car",
+          "again. Which clue word and tense?",
         ],
-        h: "Punto 3: Ya deja vivo el resultado",
+        h: "Point 3: Clues for the future",
         a: [
-          "Son dos palabras: «he terminado».",
-          "«Ya» dice que el resultado sigue vivo,",
-          "como estar ahora en una estación.",
+          "Tomorrow and next week: simple future.",
+          "“I will ride the cable car tomorrow.”",
+          "Will goes before the verb.",
         ],
       },
       {
         q: [
-          "Subías en el teleférico leyendo cuando",
-          "sonó el teléfono. ¿Cuál es el fondo?",
+          "You were riding when your phone rang.",
+          "Which action is long? Which is short?",
         ],
-        h: "Punto 4: Fondo y golpe",
+        h: "Point 4: Long and short actions",
         a: [
-          "«Leía» pinta el fondo: lo que pasaba.",
-          "«Sonó» es el golpe: pasó y terminó.",
-          "Las dos son de una sola palabra.",
+          "Was riding is the long action.",
+          "Rang is the sudden one: simple past.",
+          "“I was riding when the phone rang.”",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: si todos comieron,",
-          "¿«han comido» o «han comidos»?",
+          "Compare “I finished yesterday” and",
+          "“I have already finished”. What changed?",
         ],
-        h: "Punto 5: El participio no cambia",
+        h: "Point 5: Already and just",
         a: [
-          "Dices «han comido». El participio",
-          "no lleva -s si son muchos.",
-          "Solo cambia la ayudante: he, has, ha.",
+          "Already and just: present perfect.",
+          "The trip is done, and you are here now.",
+          "“I have already finished the trip.”",
         ],
       },
       {
         q: [
-          "Ahora cuéntalo a tu familia, como un guía",
-          "del teleférico de Mérida. ¿Cómo eliges?",
+          "Be a guide of the Mérida cable car.",
+          "How do you pick and tell each tense?",
         ],
-        h: "Punto 6: Elige y cuéntalo",
+        h: "Point 6: Pick and tell",
         a: [
-          "Pregunta: ¿el momento cerró, o el",
-          "resultado sigue vivo? Luego di un ejemplo",
-          "de una palabra y otro de dos.",
+          "Ask: When? Is it going on? Is it done?",
+          "Choose the tense, then say the clue word",
+          "and a sentence, like a good guide.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿Qué pide un momento cerrado («ayer»)?", o: ["Una palabra: terminé", "Dos palabras: he terminado", "cantaré", "habré terminado"] },
-        { q: "¿Qué pista dice que el resultado vive?", o: ["Ya", "Ayer", "Mañana", "Cantaba"] },
-        { q: "¿Cuál frase usa dos palabras?", o: ["Ya he terminado.", "Ayer terminé.", "Terminaré mañana.", "Terminaba."] },
-        { q: "«Leía cuando sonó»: ¿cuál es el fondo?", o: ["Leía", "Sonó", "Cuando", "El teléfono"] },
-        { q: "«Leía cuando sonó»: ¿cuál es el golpe?", o: ["Sonó", "Leía", "Cuando", "El"] },
-        { q: "¿Cuál frase está bien escrita?", o: ["Han comido.", "Han comidos.", "Han comer.", "Han comiendo."] },
-        { q: "¿Qué pieza cambia: he, has, ha, han?", o: ["La ayudante haber", "El participio", "La raíz", "Nada"] },
-        { q: "¿«Ayer terminé» tiene una o dos palabras?", o: ["Una", "Dos", "Tres", "Cuatro"] },
+        { q: "What tense goes with “yesterday”?", o: ["Simple past", "Simple future", "Present perfect", "Simple present"] },
+        { q: "Which clue word goes with the future?", o: ["tomorrow", "yesterday", "already", "last week"] },
+        { q: "Which clue word shows the simple present?", o: ["every day", "yesterday", "tomorrow", "already"] },
+        { q: "Which action is long: riding or rang?", o: ["Was riding", "Rang", "Both", "Neither"] },
+        { q: "Which action is short and sudden?", o: ["Rang", "Was riding", "Will ride", "Every day"] },
+        { q: "Which words point to the present perfect?", o: ["already and just", "yesterday", "tomorrow", "last week"] },
+        { q: "Which sentence is the simple future?", o: ["I will ride the cable car tomorrow.", "I rode the cable car yesterday.", "I have finished the trip.", "I was riding the cable car."] },
+        { q: "What is the first question to ask?", o: ["When?", "Where?", "Who?", "Why?"] },
       ],
       write: [
-        "Escribe una frase de una palabra y otra de dos.",
-        "Explica por qué «ayer terminé» es una palabra.",
+        "Write a sentence with the clue word yesterday.",
+        "Write a sentence with the clue word already.",
       ],
       schematic: [
-        "Dibuja un esquema: momento cerrado o vivo.",
-        "Dibuja «Leía cuando sonó» con fondo y golpe.",
+        "Draw a chart: clue words and their tenses.",
+        "Draw a line: was riding and rang.",
       ],
     },
     image: [
-      "Dibuja tres estaciones del teleférico.",
-      "Escribe «ayer», «ya» y «leía» en ellas.",
-      "Deja un espacio para tu frase en cada una.",
-      "Encierra la que tenga dos palabras.",
+      "Draw a clue-word chart with four rows:",
+      "yesterday, every day, tomorrow, already.",
+      "Next to each, draw an empty box for",
+      "the tense and a short sentence.",
     ],
-    summary: "Para elegir una palabra o dos, mira si el momento cerró o si el resultado sigue vivo.",
+    summary: "Look at the clue word and ask: When? Is it going on? Is it done? Then pick the tense.",
   },
 ];

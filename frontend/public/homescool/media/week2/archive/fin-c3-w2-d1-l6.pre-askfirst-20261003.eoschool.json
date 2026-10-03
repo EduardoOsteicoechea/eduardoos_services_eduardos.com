@@ -2,12 +2,12 @@
   "format": "eoschool",
   "version": 1,
   "cycle": 3,
-  "week": 1,
+  "week": 2,
   "day": 1,
   "level": 6,
-  "subject": "exe",
+  "subject": "fin",
   "locale": "es",
-  "title": "Leer con cuidado Romanos 1:1",
+  "title": "Querer mucho, tener poco: elegir",
   "lesson": {
     "kind": "intro",
     "focusPoint": null,
@@ -15,39 +15,41 @@
       {
         "id": "p1",
         "heading": "Punto 1: Repaso de la clase pasada",
-        "body": "¿Qué aprendiste la clase pasada?\n\nYa sabes leer la carta de un amigo. Hoy leerás una carta de la Biblia, alumbrando cada palabra con cuidado."
+        "body": "¿Qué aprendiste la clase pasada?\n\nLa semana pasada viste que Dios es dueño y tú eres su mayordomo. Como el cacao de Chuao, el dinero pasa por muchas manos."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Leer con cuidado",
-        "body": "En la Cueva del Guácharo, en Caripe, no se ve. ¿Cómo caminas sin chocar?\n\nVas despacio y alumbras cada paso. Exégesis es leer un texto así: con cuidado, para ver qué dice."
+        "heading": "Punto 2: Necesidades y deseos",
+        "body": "Al puerto de La Guaira llegan barcos con muchas cosas. ¿Todas son necesarias?\n\nUna necesidad es lo que ocupas para vivir: comida, agua y un techo. Un deseo es algo que te gustaría tener."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Quién escribe",
-        "body": "Dentro de la cueva oyes un sonido. ¿Qué quieres saber antes de asustarte?\n\nPablo escribe a los cristianos de Roma. Al inicio de la carta se presenta, así sabes quién te habla."
+        "heading": "Punto 3: La escasez",
+        "body": "Quieres un juguete, un libro y un helado, pero tienes pocas monedas. ¿Qué pasa?\n\nQuerer mucho y tener poco se llama escasez. Por eso no puedes comprarlo todo. Hay que elegir con sabiduría."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Siervo y apóstol",
-        "body": "Pablo dice que es «siervo» y «apóstol». ¿Qué crees que significan?\n\nSiervo es quien pertenece a su señor y lo sirve; Pablo sirve a Cristo. Apóstol es un enviado con un mensaje."
+        "heading": "Punto 4: El costo de oportunidad",
+        "body": "Imagina un espacio del puerto donde cabe una sola carga. ¿Qué pasa con la otra?\n\nElegir una cosa es dejar otra. Lo que dejas se llama costo de oportunidad. Siempre cuesta algo elegir."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Apartado",
-        "body": "Si apartas un regalo para tu mamá, ¿qué haces con ese regalo?\n\nApartar es separar algo para un fin. Pablo fue separado para una tarea: el evangelio de Dios."
+        "heading": "Punto 5: Calcular antes de comprar",
+        "body": "Un constructor quiere hacer una torre. ¿Qué crees que hace antes de empezar?\n\nJesús dijo que primero se sienta a calcular cuánto costará (Lucas 14:28). Tú también cuentas antes de gastar."
       },
       {
         "id": "p6",
-        "heading": "Punto 6: El evangelio de Dios",
-        "body": "Sales de la cueva y cuentas algo bueno. ¿Qué crees que es el «evangelio»?\n\nEvangelio quiere decir buena noticia. «De Dios» dice de dónde viene: Pablo no la inventó; viene de Dios."
+        "heading": "Punto 6: Práctica económica de hoy",
+        "body": "Quieres dos cosas y tienes pocas monedas. ¿Qué puedes hacer hoy para ahorrar?\n\nCon permiso de papá o mamá, elige un deseo. Espera con el otro y guarda su costo. Anota cuánto guardaste en tu registro."
       }
     ],
-    "summary": "Exégesis es leer con cuidado, como con linterna en la cueva: Pablo se presenta, siervo y apóstol, apartado para el evangelio de Dios.",
+    "summary": "Querer mucho y tener poco me obliga a elegir, y calcular antes de gastar me ayuda a ahorrar.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una carta abierta con su sobre. Rotula «Pablo» como quien la escribe. Abajo, tres cajas vacías: siervo, apóstol y apartado. Complétalas.",
     "quizIntegrated": true,
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1",
+    "imageBandInstruction": "Dibuja el puerto de La Guaira con un barco. Abajo haz una tabla: Fecha, Qué elegí, Qué dejé y Cuánto ahorré. Deja las filas vacías para que las llenes tú.",
     "slotSequence": [
       {
         "index": 1,
@@ -74,64 +76,64 @@
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 5,
         "column": 1,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 1: Repaso de la clase pasada"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La semana pasada viste que Dios es dueño"
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Ya sabes leer la carta de un amigo."
+        "text": "y tú eres su mayordomo. Como el cacao"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "Hoy leerás una carta de la Biblia,"
+        "text": "de Chuao, el dinero pasa por muchas manos."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
-        "kind": "lesson",
-        "text": "alumbrando cada palabra con cuidado."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 13,
@@ -144,50 +146,50 @@
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Al puerto de La Guaira llegan barcos"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "En la Cueva del Guácharo, en Caripe,"
+        "text": "con muchas cosas. ¿Todas son necesarias?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "no se ve. ¿Cómo caminas sin chocar?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 2: Necesidades y deseos"
       },
       {
         "index": 21,
@@ -200,85 +202,85 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "heading",
-        "text": "Punto 2: Leer con cuidado"
+        "kind": "lesson",
+        "text": "Una necesidad es lo que ocupas para vivir:"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "comida, agua y un techo."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Vas despacio y alumbras cada paso."
+        "text": "Un deseo es algo que te gustaría tener."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "lesson",
-        "text": "Exégesis es leer un texto así:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "con cuidado, para ver qué dice."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Quieres un juguete, un libro y un helado,"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "pero tienes pocas monedas. ¿Qué pasa?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Dentro de la cueva oyes un sonido."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "¿Qué quieres saber antes de asustarte?"
+        "text": "________________________________________"
       },
       {
         "index": 34,
@@ -291,106 +293,106 @@
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 3: La escasez"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Querer mucho y tener poco se llama"
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "heading",
-        "text": "Punto 3: Quién escribe"
+        "kind": "lesson",
+        "text": "escasez."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Por eso no puedes comprarlo todo."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Pablo escribe a los cristianos de Roma."
+        "text": "Hay que elegir con sabiduría."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "Al inicio de la carta se presenta,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "así sabes quién te habla."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Imagina un espacio del puerto donde cabe"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "una sola carga. ¿Qué pasa con la otra?"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Pablo dice que es «siervo» y «apóstol»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "¿Qué crees que significan?"
+        "text": "________________________________________"
       },
       {
         "index": 50,
@@ -403,85 +405,85 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 4: El costo de oportunidad"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Elegir una cosa es dejar otra."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "heading",
-        "text": "Punto 4: Siervo y apóstol"
+        "kind": "lesson",
+        "text": "Lo que dejas se llama costo de oportunidad."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Siempre cuesta algo elegir."
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "lesson",
-        "text": "Siervo es quien pertenece a su señor"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "y lo sirve; Pablo sirve a Cristo."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "Apóstol es un enviado con un mensaje."
+        "text": "________________________________________"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Un constructor quiere hacer una torre."
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "¿Qué crees que hace antes de empezar?"
       },
       {
         "index": 63,
@@ -495,98 +497,98 @@
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "Si apartas un regalo para tu mamá,"
+        "text": "________________________________________"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "¿qué haces con ese regalo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Calcular antes de comprar"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Jesús dijo que primero se sienta a calcular"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "heading",
-        "text": "Punto 5: Apartado"
+        "kind": "lesson",
+        "text": "cuánto costará (Lucas 14:28)."
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Tú también cuentas antes de gastar."
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "lesson",
-        "text": "Apartar es separar algo para un fin."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
         "kind": "lesson",
-        "text": "Pablo fue separado para una tarea:"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
         "kind": "lesson",
-        "text": "el evangelio de Dios."
+        "text": "________________________________________"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Quieres dos cosas y tienes pocas monedas."
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "¿Qué puedes hacer hoy para ahorrar?"
       },
       {
         "index": 78,
@@ -600,98 +602,98 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Sales de la cueva y cuentas algo bueno."
+        "text": "________________________________________"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "lesson",
-        "text": "¿Qué crees que es el «evangelio»?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Práctica económica de hoy"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Con permiso de papá o mamá, elige un"
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "heading",
-        "text": "Punto 6: El evangelio de Dios"
+        "kind": "lesson",
+        "text": "deseo."
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Espera con el otro y guarda su costo."
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "Evangelio quiere decir buena noticia."
+        "text": "Anota cuánto guardaste en tu registro."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "lesson",
-        "text": "«De Dios» dice de dónde viene:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
         "kind": "lesson",
-        "text": "Pablo no la inventó; viene de Dios."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 93,
@@ -705,7 +707,7 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué es la exégesis?",
+        "text": "¿Qué es una necesidad?",
         "questionId": "d1-q1",
         "questionType": "mcq",
         "gutter": {
@@ -720,7 +722,7 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Leer un texto con cuidado",
+        "text": "A) Lo que ocupas para vivir",
         "questionId": "d1-q1"
       },
       {
@@ -728,7 +730,7 @@
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Inventar una historia",
+        "text": "B) Algo que te gustaría tener",
         "questionId": "d1-q1"
       },
       {
@@ -736,7 +738,7 @@
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Copiar sin leer",
+        "text": "C) Un juguete nuevo",
         "questionId": "d1-q1"
       },
       {
@@ -744,7 +746,7 @@
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) Leer solo el final",
+        "text": "D) Un helado grande",
         "questionId": "d1-q1"
       },
       {
@@ -759,7 +761,7 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Quién escribe la carta a Roma?",
+        "text": "¿Qué es un deseo?",
         "questionId": "d1-q2",
         "questionType": "mcq",
         "gutter": {
@@ -774,7 +776,7 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Pedro",
+        "text": "A) Lo que ocupas para vivir",
         "questionId": "d1-q2"
       },
       {
@@ -782,7 +784,7 @@
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Un soldado",
+        "text": "B) El agua que bebes",
         "questionId": "d1-q2"
       },
       {
@@ -790,7 +792,7 @@
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Un niño",
+        "text": "C) Un techo",
         "questionId": "d1-q2"
       },
       {
@@ -798,7 +800,7 @@
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Pablo",
+        "text": "D) Algo que te gustaría tener",
         "questionId": "d1-q2"
       },
       {
@@ -806,7 +808,7 @@
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "¿Dónde se presenta Pablo?",
+        "text": "¿Qué llega al puerto de La Guaira?",
         "questionId": "d1-q3",
         "questionType": "mcq",
         "gutter": {
@@ -821,7 +823,7 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) Al final de la carta",
+        "text": "A) Solo aviones",
         "questionId": "d1-q3"
       },
       {
@@ -829,7 +831,7 @@
         "column": 3,
         "line": 3,
         "kind": "option",
-        "text": "B) Al inicio de la carta",
+        "text": "B) Barcos con cosas",
         "questionId": "d1-q3"
       },
       {
@@ -837,7 +839,7 @@
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) En el sobre",
+        "text": "C) Solo trenes",
         "questionId": "d1-q3"
       },
       {
@@ -845,7 +847,7 @@
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) No se presenta",
+        "text": "D) Nada",
         "questionId": "d1-q3"
       },
       {
@@ -860,7 +862,7 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "¿Qué significa «siervo»?",
+        "text": "Querer mucho y tener poco se llama…",
         "questionId": "d1-q4",
         "questionType": "mcq",
         "gutter": {
@@ -875,7 +877,7 @@
         "column": 3,
         "line": 8,
         "kind": "option",
-        "text": "A) Manda a todos",
+        "text": "A) ganancia",
         "questionId": "d1-q4"
       },
       {
@@ -883,7 +885,7 @@
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) Viaja solo",
+        "text": "B) puerto",
         "questionId": "d1-q4"
       },
       {
@@ -891,7 +893,7 @@
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) Pertenece a su señor y lo sirve",
+        "text": "C) escasez",
         "questionId": "d1-q4"
       },
       {
@@ -899,7 +901,7 @@
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) Escribe cartas",
+        "text": "D) regalo",
         "questionId": "d1-q4"
       },
       {
@@ -914,7 +916,7 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿Qué es un apóstol?",
+        "text": "Elegir una cosa es dejar otra. ¿Cómo se",
         "questionId": "d1-q5",
         "questionType": "mcq",
         "gutter": {
@@ -928,8 +930,8 @@
         "index": 118,
         "column": 3,
         "line": 14,
-        "kind": "option",
-        "text": "A) Un soldado romano",
+        "kind": "lesson",
+        "text": "llama?",
         "questionId": "d1-q5"
       },
       {
@@ -937,7 +939,7 @@
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) Un vecino de Roma",
+        "text": "A) Escasez",
         "questionId": "d1-q5"
       },
       {
@@ -945,7 +947,7 @@
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) Un cantante",
+        "text": "B) Ahorro",
         "questionId": "d1-q5"
       },
       {
@@ -953,22 +955,30 @@
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) Un enviado con un mensaje",
+        "text": "C) Intercambio",
         "questionId": "d1-q5"
       },
       {
         "index": 122,
         "column": 3,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Costo de oportunidad",
+        "questionId": "d1-q5"
       },
       {
         "index": 123,
         "column": 3,
         "line": 19,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
         "kind": "question",
-        "text": "¿Qué significa «apartado»?",
+        "text": "¿Qué hace el constructor antes de empezar?",
         "questionId": "d1-q6",
         "questionType": "mcq",
         "gutter": {
@@ -979,19 +989,11 @@
         }
       },
       {
-        "index": 124,
-        "column": 3,
-        "line": 20,
-        "kind": "option",
-        "text": "A) Lejos de todos",
-        "questionId": "d1-q6"
-      },
-      {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) Separado para un fin",
+        "text": "A) Compra todo",
         "questionId": "d1-q6"
       },
       {
@@ -999,7 +1001,7 @@
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) Guardado en un cajón",
+        "text": "B) Calcula cuánto costará",
         "questionId": "d1-q6"
       },
       {
@@ -1007,22 +1009,30 @@
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) Castigado",
+        "text": "C) Pide prestado",
         "questionId": "d1-q6"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Se va a dormir",
+        "questionId": "d1-q6"
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
         "kind": "question",
-        "text": "¿Qué quiere decir «evangelio»?",
+        "text": "¿Dónde dijo Jesús lo de calcular el costo?",
         "questionId": "d1-q7",
         "questionType": "mcq",
         "gutter": {
@@ -1033,19 +1043,11 @@
         }
       },
       {
-        "index": 130,
-        "column": 3,
-        "line": 26,
-        "kind": "option",
-        "text": "A) Buena noticia",
-        "questionId": "d1-q7"
-      },
-      {
         "index": 131,
         "column": 3,
         "line": 27,
         "kind": "option",
-        "text": "B) Mala noticia",
+        "text": "A) Lucas 14:28",
         "questionId": "d1-q7"
       },
       {
@@ -1053,7 +1055,7 @@
         "column": 3,
         "line": 28,
         "kind": "option",
-        "text": "C) Carta larga",
+        "text": "B) Salmo 24:1",
         "questionId": "d1-q7"
       },
       {
@@ -1061,22 +1063,30 @@
         "column": 3,
         "line": 29,
         "kind": "option",
-        "text": "D) Canción antigua",
+        "text": "C) Génesis 2:15",
         "questionId": "d1-q7"
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Mateo 25:14",
+        "questionId": "d1-q7"
       },
       {
         "index": 135,
         "column": 3,
         "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
         "kind": "question",
-        "text": "Escribe qué es leer con cuidado.",
+        "text": "Escribe qué ahorraste hoy y cuánto",
         "questionId": "d1-w1",
         "questionType": "write",
         "gutter": {
@@ -1087,34 +1097,42 @@
         }
       },
       {
-        "index": 136,
-        "column": 3,
-        "line": 32,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
-      },
-      {
         "index": 137,
         "column": 3,
         "line": 33,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "guardaste.",
         "questionId": "d1-w1"
       },
       {
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
         "kind": "question",
-        "text": "Cuenta con tus palabras quién es Pablo.",
+        "text": "Cuenta con tus palabras qué es la escasez.",
         "questionId": "d1-w2",
         "questionType": "write",
         "gutter": {
@@ -1125,34 +1143,34 @@
         }
       },
       {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
-      },
-      {
         "index": 142,
         "column": 3,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
       },
       {
         "index": 143,
         "column": 3,
         "line": 39,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
         "kind": "question",
-        "text": "Dibuja una carta y rotula quién escribe.",
+        "text": "Dibuja dos columnas: necesidades y deseos.",
         "questionId": "d1-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1163,34 +1181,34 @@
         }
       },
       {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
         "kind": "question",
-        "text": "Dibuja un esquema: siervo, apóstol,",
+        "text": "Dibuja dos cosas y marca cuál eliges hoy.",
         "questionId": "d1-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1199,22 +1217,6 @@
           "border": "#fff",
           "text": "#fff"
         }
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
-        "kind": "lesson",
-        "text": "apartado.",
-        "questionId": "d1-w4"
-      },
-      {
-        "index": 149,
-        "column": 3,
-        "line": 45,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
       },
       {
         "index": 150,
@@ -1228,8 +1230,9 @@
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
       },
       {
         "index": 152,
@@ -1243,32 +1246,30 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una carta abierta con su sobre."
+        "text": "Dibuja el puerto de La Guaira con un barco."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula «Pablo» como quien la escribe."
+        "text": "Abajo haz una tabla: Fecha, Qué elegí, Qué"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Abajo, tres cajas vacías: siervo, apóstol y"
+        "text": "dejé y Cuánto ahorré. Deja las filas vacías"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "apartado. Complétalas."
+        "text": "para que las llenes tú."
       }
-    ],
-    "packOrder": "column-major-sequential",
-    "method": "ask-first-v1"
+    ]
   },
   "quiz": {
     "questionCount": 11,
@@ -1277,14 +1278,14 @@
         "id": "d1-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué es la exégesis?",
+        "prompt": "¿Qué es una necesidad?",
         "choices": [
-          "Leer un texto con cuidado",
-          "Inventar una historia",
-          "Copiar sin leer",
-          "Leer solo el final"
+          "Lo que ocupas para vivir",
+          "Algo que te gustaría tener",
+          "Un juguete nuevo",
+          "Un helado grande"
         ],
-        "answer": "Leer un texto con cuidado",
+        "answer": "Lo que ocupas para vivir",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1295,14 +1296,14 @@
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Quién escribe la carta a Roma?",
+        "prompt": "¿Qué es un deseo?",
         "choices": [
-          "Pedro",
-          "Un soldado",
-          "Un niño",
-          "Pablo"
+          "Lo que ocupas para vivir",
+          "El agua que bebes",
+          "Un techo",
+          "Algo que te gustaría tener"
         ],
-        "answer": "Pablo",
+        "answer": "Algo que te gustaría tener",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1313,14 +1314,14 @@
         "id": "d1-q3",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Dónde se presenta Pablo?",
+        "prompt": "¿Qué llega al puerto de La Guaira?",
         "choices": [
-          "Al final de la carta",
-          "Al inicio de la carta",
-          "En el sobre",
-          "No se presenta"
+          "Solo aviones",
+          "Barcos con cosas",
+          "Solo trenes",
+          "Nada"
         ],
-        "answer": "Al inicio de la carta",
+        "answer": "Barcos con cosas",
         "slot": {
           "column": 3,
           "line": 1,
@@ -1331,14 +1332,14 @@
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué significa «siervo»?",
+        "prompt": "Querer mucho y tener poco se llama…",
         "choices": [
-          "Manda a todos",
-          "Viaja solo",
-          "Pertenece a su señor y lo sirve",
-          "Escribe cartas"
+          "ganancia",
+          "puerto",
+          "escasez",
+          "regalo"
         ],
-        "answer": "Pertenece a su señor y lo sirve",
+        "answer": "escasez",
         "slot": {
           "column": 3,
           "line": 7,
@@ -1349,14 +1350,14 @@
         "id": "d1-q5",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué es un apóstol?",
+        "prompt": "Elegir una cosa es dejar otra. ¿Cómo se llama?",
         "choices": [
-          "Un soldado romano",
-          "Un vecino de Roma",
-          "Un cantante",
-          "Un enviado con un mensaje"
+          "Escasez",
+          "Ahorro",
+          "Intercambio",
+          "Costo de oportunidad"
         ],
-        "answer": "Un enviado con un mensaje",
+        "answer": "Costo de oportunidad",
         "slot": {
           "column": 3,
           "line": 13,
@@ -1367,88 +1368,95 @@
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué significa «apartado»?",
+        "prompt": "¿Qué hace el constructor antes de empezar?",
         "choices": [
-          "Lejos de todos",
-          "Separado para un fin",
-          "Guardado en un cajón",
-          "Castigado"
+          "Compra todo",
+          "Calcula cuánto costará",
+          "Pide prestado",
+          "Se va a dormir"
         ],
-        "answer": "Separado para un fin",
+        "answer": "Calcula cuánto costará",
         "slot": {
           "column": 3,
-          "line": 19,
-          "index": 123
+          "line": 20,
+          "index": 124
         }
       },
       {
         "id": "d1-q7",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Qué quiere decir «evangelio»?",
+        "prompt": "¿Dónde dijo Jesús lo de calcular el costo?",
         "choices": [
-          "Buena noticia",
-          "Mala noticia",
-          "Carta larga",
-          "Canción antigua"
+          "Lucas 14:28",
+          "Salmo 24:1",
+          "Génesis 2:15",
+          "Mateo 25:14"
         ],
-        "answer": "Buena noticia",
+        "answer": "Lucas 14:28",
         "slot": {
           "column": 3,
-          "line": 25,
-          "index": 129
+          "line": 26,
+          "index": 130
         }
       },
       {
         "id": "d1-w1",
         "originDay": 1,
         "type": "write",
-        "prompt": "Escribe qué es leer con cuidado.",
+        "prompt": "Escribe qué ahorraste hoy y cuánto guardaste.",
         "slot": {
           "column": 3,
-          "line": 31,
-          "index": 135
+          "line": 32,
+          "index": 136
         }
       },
       {
         "id": "d1-w2",
         "originDay": 1,
         "type": "write",
-        "prompt": "Cuenta con tus palabras quién es Pablo.",
+        "prompt": "Cuenta con tus palabras qué es la escasez.",
         "slot": {
           "column": 3,
-          "line": 35,
-          "index": 139
+          "line": 37,
+          "index": 141
         }
       },
       {
         "id": "d1-w3",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja una carta y rotula quién escribe.",
+        "prompt": "Dibuja dos columnas: necesidades y deseos.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 39,
-          "index": 143
+          "line": 41,
+          "index": 145
         }
       },
       {
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja un esquema: siervo, apóstol, apartado.",
+        "prompt": "Dibuja dos cosas y marca cuál eliges hoy.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 43,
-          "index": 147
+          "line": 45,
+          "index": 149
         }
       }
     ]
   },
   "media": [],
-  "supportUrl": "https://www.youtube.com/watch?v=ak06MSETeo4"
+  "mppe": {
+    "objectives": [
+      {
+        "id": "fin-w2-d1-01",
+        "label": "Distingo lo que necesito de lo que deseo, y elijo con calma antes de gastar."
+      }
+    ]
+  }
 }

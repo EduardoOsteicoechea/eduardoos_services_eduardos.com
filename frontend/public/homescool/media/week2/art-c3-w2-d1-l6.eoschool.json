@@ -46,7 +46,7 @@
     "summary": "En la Laguna de Mucubají el agua quieta es un espejo. El eje parte la imagen en dos mitades que coinciden.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una laguna de páramo y su montaña. Traza el eje donde el agua toca la montaña. Arriba pon tres formas OiLS; abajo, vacío. Anota cuántos dedos hay de cada una al eje.",
+    "imageBandInstruction": "Traza un eje de simetría en el papel. Arriba pon tres formas OiLS rotuladas. Abajo deja vacío el lado de las parejas. Anota los dedos de cada una al eje.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1227,36 +1227,36 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "imageInstruction",
-        "text": "Dibuja una laguna de páramo y su"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "montaña. Traza el eje donde el agua toca"
+        "text": "Traza un eje de simetría en el papel. Arriba"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "la montaña. Arriba pon tres formas OiLS;"
+        "text": "pon tres formas OiLS rotuladas. Abajo deja"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "abajo, vacío. Anota cuántos dedos hay de"
+        "text": "vacío el lado de las parejas. Anota los"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "cada una al eje."
+        "text": "dedos de cada una al eje."
       }
     ],
     "packOrder": "column-major-sequential",

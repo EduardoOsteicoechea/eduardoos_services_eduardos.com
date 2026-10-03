@@ -49,7 +49,7 @@
     "quizIntegrated": true,
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1",
-    "imageBandInstruction": "Dibuja la ruta del cacao de Chuao: mata, mazorca, semillas secas y chocolate. Debajo, un registro: Qué hice, Gané, y una caja vacía para anotar tu pago.",
+    "imageBandInstruction": "Dibuja un esquema con flechas: tú, tu trabajo y quien te paga. Debajo, un registro: Qué hice, Gané, y una caja vacía para anotar tu pago.",
     "slotSequence": [
       {
         "index": 1,
@@ -1247,28 +1247,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja la ruta del cacao de Chuao: mata,"
+        "text": "Dibuja un esquema con flechas: tú, tu"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "mazorca, semillas secas y chocolate."
+        "text": "trabajo y quien te paga. Debajo, un"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Debajo, un registro: Qué hice, Gané, y una"
+        "text": "registro: Qué hice, Gané, y una caja vacía"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "caja vacía para anotar tu pago."
+        "text": "para anotar tu pago."
       }
     ]
   },

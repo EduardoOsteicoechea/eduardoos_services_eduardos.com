@@ -47,7 +47,7 @@
     "memoryPhrase": "**Distrito Capital**—Caracas · **La Guaira**—La Guaira · **Miranda**—Los Teques · **Aragua**—Maracay.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una sabana con un tepuy grande. Al lado, cuatro tarjetas de estados. En cada una escribe estado y capital. Marca con una estrella a Caracas.",
+    "imageBandInstruction": "Dibuja cuatro tarjetas, una por estado. En cada una escribe estado y capital, completando los pares que faltan. Marca con una estrella a Caracas.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1231,28 +1231,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una sabana con un tepuy grande. Al"
+        "text": "Dibuja cuatro tarjetas, una por estado. En"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "lado, cuatro tarjetas de estados. En cada"
+        "text": "cada una escribe estado y capital,"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "una escribe estado y capital. Marca con"
+        "text": "completando los pares que faltan. Marca"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "una estrella a Caracas."
+        "text": "con una estrella a Caracas."
       }
     ],
     "packOrder": "column-major-sequential",

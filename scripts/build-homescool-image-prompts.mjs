@@ -12,7 +12,6 @@ import fs from "node:fs";
 import path from "node:path";
 
 const MEDIA = "frontend/public/homescool/media";
-const METAPHORS = JSON.parse(fs.readFileSync("scripts/homescool-venezuela-metaphors.json", "utf8"));
 
 const SUBJECT_LABEL = {
   teb: "Teología bíblica",
@@ -39,17 +38,17 @@ const SUBJECT_NOTE = {
 };
 
 function buildPrompt(doc) {
-  const hito = METAPHORS[`w${doc.week}`]?.[doc.subject]?.hito || "";
   const instr = (doc.lesson?.imageBandInstruction || "").replace(/\s+/g, " ").trim();
   const lines = [
-    "Ilustración de hoja de trabajo infantil (niño de 8 años), arte lineal en blanco y negro sobre fondo blanco, trazo limpio y uniforme, sin rellenos sólidos de tinta, sin sombreados oscuros, sin texto que el niño deba leer (solo rótulos cortos si la indicación los pide, en español, letra imprenta grande).",
+    "Ilustración de hoja de trabajo infantil (niño de 8 años), arte lineal en blanco y negro sobre fondo blanco, trazo limpio y uniforme, sin rellenos sólidos de tinta, sin sombreados oscuros, sin texto que el niño deba leer (solo rótulos cortos si la indicación los pide, en el mismo idioma que la indicación, letra imprenta grande).",
     "Formato: horizontal 203 × 70 mm (relación 2.9 : 1), 2398 × 827 px, JPEG sRGB; contenido importante a ≥ 2 mm de los bordes.",
     `Materia: ${SUBJECT_LABEL[doc.subject] || doc.subject}. Tema de la clase: ${doc.title}.`,
     "Debe mostrar exactamente lo que pide la indicación de la hoja:",
     `«${instr}»`,
     "Deja vacíos (con cajas, líneas punteadas o círculos) los espacios que el niño completará dibujando o escribiendo.",
   ];
-  if (hito) lines.push(`Metáfora venezolana de la semana (solo como motivo visual si encaja): ${hito}.`);
+  lines.push("Ilustra únicamente el tema de la clase tal como lo pide la indicación. No añadas metáforas, paisajes ni lugares emblemáticos que no estén en la indicación.");
+  if (doc.subject === "ing") lines.push("Todos los rótulos van en inglés, tal como están en la indicación.");
   if (SUBJECT_NOTE[doc.subject]) lines.push(SUBJECT_NOTE[doc.subject]);
   lines.push("Sin marcas de agua, sin firmas, sin personas reales identificables.");
   return lines.join("\n");

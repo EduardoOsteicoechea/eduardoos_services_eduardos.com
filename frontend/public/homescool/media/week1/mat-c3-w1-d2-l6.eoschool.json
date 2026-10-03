@@ -47,7 +47,7 @@
     "weekRecap": "Multiplicar = grupos iguales. Factores y producto. Tablas 1–12 con patrones y comprobación.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja 3 cayos de Los Roques. Pon 6 conchas en cada cayo. Rotula 6 + 6 + 6 y 3 × 6 sin resultado. Deja vacío el espacio para completar.",
+    "imageBandInstruction": "Dibuja una cuadrícula de 3 × 6 casillas. Pon un punto en cada casilla: 3 × 6. Escribe la suma 6 + 6 + 6 en una fila. Deja vacía la casilla del producto.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1244,28 +1244,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja 3 cayos de Los Roques. Pon 6"
+        "text": "Dibuja una cuadrícula de 3 × 6 casillas. Pon"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "conchas en cada cayo. Rotula 6 + 6 + 6 y 3 ×"
+        "text": "un punto en cada casilla: 3 × 6. Escribe la"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "6 sin resultado. Deja vacío el espacio para"
+        "text": "suma 6 + 6 + 6 en una fila. Deja vacía la"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "completar."
+        "text": "casilla del producto."
       }
     ],
     "packOrder": "column-major-sequential",

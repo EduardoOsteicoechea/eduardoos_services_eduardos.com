@@ -47,7 +47,7 @@
     "memoryPhrase": "**Cráneo** protege el cerebro · **columna** protege la médula · **costillas + esternón** protegen corazón y pulmones.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja el Cerro Autana con su cueva. A su lado dibuja la columna del cuerpo. Rotula cráneo, vértebras, costillas y esternón; deja un cuadro para la médula.",
+    "imageBandInstruction": "Dibuja un esqueleto entero de frente. Rotula cráneo, vértebras, costillas y esternón. Deja un cuadro vacío para la médula y otro para el órgano que cuida.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1246,28 +1246,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja el Cerro Autana con su cueva. A su"
+        "text": "Dibuja un esqueleto entero de frente."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "lado dibuja la columna del cuerpo. Rotula"
+        "text": "Rotula cráneo, vértebras, costillas y"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "cráneo, vértebras, costillas y esternón; deja"
+        "text": "esternón. Deja un cuadro vacío para la"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "un cuadro para la médula."
+        "text": "médula y otro para el órgano que cuida."
       }
     ],
     "packOrder": "column-major-sequential",

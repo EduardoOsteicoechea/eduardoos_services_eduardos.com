@@ -48,7 +48,7 @@
     "priorDayRecap": "«Prometió de antemano» en profundidad. Hoy profundizamos en la frase prometió de antemano. El evangelio son las buenas nuevas sobre Jesucristo; prometió significa que Dios aseguró algo, y de antemano significa antes de.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un camino de 1811 a Carabobo con tres señales: antemano, profetas y Escrituras. Al final escribe «evangelio» en letras grandes. Abajo deja tres cuadros: inicio, medio y cierre.",
+    "imageBandInstruction": "Dibuja un camino con tres señales: antemano, profetas y Escrituras. Al final escribe «evangelio» grande. Abajo: inicio, medio y cierre vacíos.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1024,9 +1024,9 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "Escribe Romanos 1:2 con tus palabras en dos",
-        "questionId": "d3-w1",
-        "questionType": "write",
+        "text": "¿Cómo se cierra una buena exposición?",
+        "questionId": "d3-q7",
+        "questionType": "mcq",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1038,37 +1038,91 @@
         "index": 130,
         "column": 3,
         "line": 26,
-        "kind": "lesson",
-        "text": "frases.",
-        "questionId": "d3-w1"
+        "kind": "option",
+        "text": "A) Con lo que dice el versículo",
+        "questionId": "d3-q7"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
+        "kind": "option",
+        "text": "B) Sin decir nada",
+        "questionId": "d3-q7"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
+        "kind": "option",
+        "text": "C) Con un chiste largo",
+        "questionId": "d3-q7"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Con un rumor",
+        "questionId": "d3-q7"
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "question",
+        "text": "Escribe Romanos 1:2 con tus palabras en dos",
+        "questionId": "d3-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "lesson",
+        "text": "frases.",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
         "kind": "question",
         "text": "Cuenta cómo empezarías tu exposición en",
         "questionId": "d3-w2",
@@ -1081,40 +1135,40 @@
         }
       },
       {
-        "index": 135,
+        "index": 141,
         "column": 3,
-        "line": 31,
+        "line": 37,
         "kind": "lesson",
         "text": "casa.",
         "questionId": "d3-w2"
       },
       {
-        "index": 136,
+        "index": 142,
         "column": 3,
-        "line": 32,
+        "line": 38,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w2"
       },
       {
-        "index": 137,
+        "index": 143,
         "column": 3,
-        "line": 33,
+        "line": 39,
         "kind": "answerLine",
         "text": "",
         "questionId": "d3-w2"
       },
       {
-        "index": 138,
+        "index": 144,
         "column": 3,
-        "line": 34,
+        "line": 40,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 139,
+        "index": 145,
         "column": 3,
-        "line": 35,
+        "line": 41,
         "kind": "question",
         "text": "Dibuja un esquema: promesa, profetas,",
         "questionId": "d3-w3",
@@ -1127,80 +1181,28 @@
         }
       },
       {
-        "index": 140,
+        "index": 146,
         "column": 3,
-        "line": 36,
+        "line": 42,
         "kind": "lesson",
         "text": "Escrituras.",
         "questionId": "d3-w3"
       },
       {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w3"
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "question",
-        "text": "Dibuja inicio, medio y cierre de tu exposición.",
-        "questionId": "d3-w4",
-        "questionType": "schematic",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
-      },
-      {
-        "index": 146,
-        "column": 3,
-        "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
-      },
-      {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
       },
       {
         "index": 149,
@@ -1213,57 +1215,67 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "Dibuja inicio, medio y cierre de tu exposición.",
+        "questionId": "d3-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "imageInstruction",
-        "text": "Dibuja un camino de 1811 a Carabobo con"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "tres señales: antemano, profetas y"
+        "text": "Dibuja un camino con tres señales:"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escrituras. Al final escribe «evangelio» en"
+        "text": "antemano, profetas y Escrituras. Al final"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "letras grandes. Abajo deja tres cuadros:"
+        "text": "escribe «evangelio» grande. Abajo: inicio,"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "inicio, medio y cierre."
+        "text": "medio y cierre vacíos."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 10,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d3-q1",
@@ -1374,14 +1386,32 @@
         }
       },
       {
+        "id": "d3-q7",
+        "originDay": 3,
+        "type": "mcq",
+        "prompt": "¿Cómo se cierra una buena exposición?",
+        "choices": [
+          "Con lo que dice el versículo",
+          "Sin decir nada",
+          "Con un chiste largo",
+          "Con un rumor"
+        ],
+        "answer": "Con lo que dice el versículo",
+        "slot": {
+          "column": 3,
+          "line": 25,
+          "index": 129
+        }
+      },
+      {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
         "prompt": "Escribe Romanos 1:2 con tus palabras en dos frases.",
         "slot": {
           "column": 3,
-          "line": 25,
-          "index": 129
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1391,8 +1421,8 @@
         "prompt": "Cuenta cómo empezarías tu exposición en casa.",
         "slot": {
           "column": 3,
-          "line": 30,
-          "index": 134
+          "line": 36,
+          "index": 140
         }
       },
       {
@@ -1404,8 +1434,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 35,
-          "index": 139
+          "line": 41,
+          "index": 145
         }
       },
       {
@@ -1417,8 +1447,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 40,
-          "index": 144
+          "line": 46,
+          "index": 150
         }
       }
     ]

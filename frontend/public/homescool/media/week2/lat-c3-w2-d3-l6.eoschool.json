@@ -49,7 +49,7 @@
     "priorDayRecap": "Ayer practicaste **et** uniendo nombres y acciones del mismo nivel, sin explicar meta.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja Guri con tres cajas en el río. Caja 1: escribe et y un ejemplo. Caja 2: escribe ut y un ejemplo. Caja 3 vacía: escribe non y un ejemplo.",
+    "imageBandInstruction": "Dibuja una tarjeta con la palabra non. Icono de non: un círculo con una X. Dibuja al lado las tarjetas et y ut. Deja vacíos los renglones de ejemplo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1246,28 +1246,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja Guri con tres cajas en el río. Caja 1:"
+        "text": "Dibuja una tarjeta con la palabra non."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "escribe et y un ejemplo. Caja 2: escribe ut y"
+        "text": "Icono de non: un círculo con una X. Dibuja"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "un ejemplo. Caja 3 vacía: escribe non y un"
+        "text": "al lado las tarjetas et y ut. Deja vacíos los"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "ejemplo."
+        "text": "renglones de ejemplo."
       }
     ],
     "packOrder": "column-major-sequential",

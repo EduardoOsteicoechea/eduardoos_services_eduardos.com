@@ -58,16 +58,18 @@ Con el método v3 ([`homescool-class-method-v3.mdc`](homescool-class-method-v3.m
 ### Plantilla del prompt (se llena con datos de la clase)
 
 ```
-Ilustración de hoja de trabajo infantil (niño de 8 años), arte lineal en blanco y negro sobre fondo blanco, trazo limpio y uniforme, sin rellenos sólidos de tinta, sin sombreados oscuros, sin texto que el niño deba leer (solo rótulos cortos si la indicación los pide, en español, letra imprenta grande).
+Ilustración de hoja de trabajo infantil (niño de 8 años), arte lineal en blanco y negro sobre fondo blanco, trazo limpio y uniforme, sin rellenos sólidos de tinta, sin sombreados oscuros, sin texto que el niño deba leer (solo rótulos cortos si la indicación los pide, en el mismo idioma que la indicación, letra imprenta grande).
 Formato: horizontal 203 × 70 mm (relación 2.9 : 1), 2398 × 827 px, JPEG sRGB; contenido importante a ≥ 2 mm de los bordes.
 Materia: {materia}. Tema de la clase: {título}.
 Debe mostrar exactamente lo que pide la indicación de la hoja:
 «{imageBandInstruction}»
 Deja vacíos (con cajas, líneas punteadas o círculos) los espacios que el niño completará dibujando o escribiendo.
-Metáfora venezolana de la semana (solo como motivo visual si encaja): {hito}.
+Ilustra únicamente el tema de la clase tal como lo pide la indicación. No añadas metáforas, paisajes ni lugares emblemáticos que no estén en la indicación.
 Sin marcas de agua, sin firmas, sin personas reales identificables.
 ```
 
+- **La metáfora venezolana NO va en la imagen** (v3b): la metáfora explica en las preguntas y respuestas; la imagen sale solo de la idea central de la clase. `lesson.imageBandInstruction` no puede nombrar el hito (el audit lo exige, `imageMetaphor`; solo `his` queda exenta).
+- `ing`: la indicación y los rótulos van en inglés.
 - Materias de fe (`teb`, `exe`): imagen sobria, sin representar a Dios; solo símbolos, mapas, líneas de tiempo o manuscritos.
 - `fin`: la imagen es un **registro por completar** (tabla de ganancias/ahorros, frascos de dar-ahorrar-gastar, libreta), nunca fajos de dinero llamativos.
 - `mat`: solo la cuadrícula/matriz que pide la hoja, con números correctos si aparecen.

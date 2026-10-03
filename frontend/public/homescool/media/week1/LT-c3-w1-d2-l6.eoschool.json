@@ -48,7 +48,7 @@
     "weekRecap": "Orden: primero el relato, después el mapa. Babel, sumerios (Tigris y Éufrates) y otros pueblos.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja dos rocas con petroglifos juntas. Rotula una «historia antigua» y la otra «Génesis». Deja un hito vacío en cada una para que lo completes tú.",
+    "imageBandInstruction": "Dibuja dos líneas de tiempo paralelas. Rotula una «historia antigua» y otra «Génesis». Marca 3 hitos en cada una. Deja vacío el nombre de cada hito.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1244,28 +1244,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja dos rocas con petroglifos juntas."
+        "text": "Dibuja dos líneas de tiempo paralelas."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula una «historia antigua» y la otra"
+        "text": "Rotula una «historia antigua» y otra"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "«Génesis». Deja un hito vacío en cada una"
+        "text": "«Génesis». Marca 3 hitos en cada una. Deja"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "para que lo completes tú."
+        "text": "vacío el nombre de cada hito."
       }
     ],
     "packOrder": "column-major-sequential",

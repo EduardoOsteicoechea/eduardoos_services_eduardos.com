@@ -1,322 +1,345 @@
 /**
- * Inglés · ciclo 3 · semana 1 · nivel 6 — verbos del español: familias -ar, -er, -ir (v3, 3 días).
- * Hito de Venezuela: Los tres senderos del Ávila (tres caminos hacia la misma cima).
- * Datos seguros usados: el Ávila separa Caracas del mar; se sube por distintos senderos.
- * d1 = panorama de los tres senderos · d2 = -ar y -er más de cerca · d3 = -ir, los tres juntos y contarlo.
- * Formato "Ask First" (ver BRIEF.md y GOLD.example.mjs).
+ * Inglés · ciclo 3 · semana 1 · nivel 6 — "The grammatical categories in English (parts of speech)" (v3b, 3 días).
+ * Espeja a esp-c3-w1 (las nueve clases de palabras), pero se enseña EN INGLÉS sencillo.
+ * Conteo honesto: 8 partes de la oración (noun, pronoun, verb, adjective, adverb, preposition,
+ * conjunction, interjection) + los artículos a / an / the = 9 grupos en esta clase.
+ * Hito de Venezuela (solo en preguntas y respuestas, NO en la imagen): Mount Ávila (Caracas).
+ * Datos seguros usados: el Ávila es la montaña que separa Caracas del mar; se sube por distintos caminos.
+ * d1 = panorama de los nueve grupos · d2 = noun, verb, pronoun, article, adjective de cerca ·
+ * d3 = adverb, conjunction, preposition, interjection y contarlo (cierra la semana).
  */
 export default [
-  // ───────────────────────── DÍA 1 ─────────────────────────
+  // ───────────────────────── DAY 1 · overview ─────────────────────────
   {
     key: "ing-c3-w1-d1",
+    title: "The nine groups of English words",
+    mppe: [
+      { id: "len-lec-07", label: "I spot nouns and verbs in English sentences." },
+      { id: "len-lec-05", label: "I read English sentences aloud to practice." },
+    ],
+    memoryPhrase:
+      "Noun, pronoun, verb, adjective, adverb, preposition, conjunction, interjection, and the articles a, an, the: 9 groups.",
     units: [
       {
-        h: "Punto 1: Repaso de la clase pasada",
+        h: "Point 1: Review of the last class",
         a: [
-          "Ya sabes que hay palabras de acción:",
-          "cantar, comer, vivir. Son verbos.",
-          "Hoy subimos el Ávila con ellos.",
+          "You already know many English words.",
+          "Words are like hikers in a team.",
+          "Today we climb Mount Ávila with them.",
         ],
       },
       {
         q: [
-          "El Ávila separa Caracas del mar.",
-          "¿Por qué «yo canto» pero «tú cantas»?",
+          "On Mount Ávila, do all hikers do the",
+          "same job? Do all English words?",
         ],
-        h: "Punto 2: El verbo cambia con quien actúa",
+        h: "Point 2: Every word has a job",
         a: [
-          "Un verbo dice una acción: cantar, subir.",
-          "Si cambia quien actúa, cambia el final.",
-          "Cambiar el verbo así se llama conjugar.",
+          "No, each hiker has a different job.",
+          "English words are a team too:",
+          "8 parts of speech (clases de palabras)",
+          "plus the articles a, an, the.",
         ],
       },
       {
         q: [
-          "Quita «-ar» de «cantar». ¿Qué parte",
-          "queda quieta, como la cima del Ávila?",
+          "“Sofia climbs. She sees the mountain.”",
+          "Which words name, act or replace?",
         ],
-        h: "Punto 3: La raíz y la terminación",
+        h: "Point 3: Name, act and replace",
         a: [
-          "«Cantar» es el infinitivo: el verbo",
-          "como lo trae el diccionario.",
-          "Sin «-ar» queda «cant-»: la raíz.",
-          "La raíz es la cima. El final cambia.",
+          "A noun (sustantivo) names: Sofia.",
+          "A verb (verbo) shows action: climbs.",
+          "A pronoun (pronombre) replaces a noun.",
         ],
       },
       {
         q: [
-          "Hay muchos senderos para subir el Ávila.",
-          "¿Cuántas familias de verbos hay?",
+          "Mount Ávila has a high peak. Which",
+          "words say which one and what it is like?",
         ],
-        h: "Punto 4: Tres familias, tres senderos",
+        h: "Point 4: Describe",
         a: [
-          "Hay tres familias, según cómo termina",
-          "el infinitivo: -ar, -er e -ir.",
-          "Cada familia es un sendero del Ávila.",
+          "“The” is an article (a, an, the).",
+          "“High” is an adjective (adjetivo):",
+          "it says what the peak is like.",
+          "“Slowly” is an adverb: how we climb.",
         ],
       },
       {
         q: [
-          "Sube un verbo por cada sendero.",
-          "¿Cómo dices yo, tú y él con ellos?",
+          "“Sofia climbs with Luis and says: Wow!”",
+          "What do “with”, “and” and “Wow!” do?",
         ],
-        h: "Punto 5: Un verbo en cada sendero",
+        h: "Point 5: Join and feel",
         a: [
-          "-ar (cantar → canto, cantas, canta),",
-          "-er (comer → como, comes, come),",
-          "-ir (vivir → vivo, vives, vive).",
+          "“And” is a conjunction: it joins ideas.",
+          "“With” is a preposition: it links words.",
+          "“Wow!” is an interjection: a feeling.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: en los tres",
-          "senderos, ¿cambia la raíz o el final?",
+          "The team reached the top. How many",
+          "groups of words are in the team?",
         ],
-        h: "Punto 6: Una cima, tres senderos",
+        h: "Point 6: Nine groups",
         a: [
-          "Cambia el final, no la raíz.",
-          "Las tres familias llegan a la misma",
-          "cima: la raíz que se queda quieta.",
+          "Noun, pronoun, verb, adjective, adverb,",
+          "preposition, conjunction, interjection,",
+          "and the articles a, an, the: 9 groups.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿Qué dice un verbo?", o: ["Una acción", "Un lugar", "Un color", "Un número"] },
-        { q: "¿Qué es conjugar un verbo?", o: ["Cambiar su final", "Escribirlo más grande", "Quitarle la raíz", "Traducirlo al inglés"] },
-        { q: "¿Qué es «cantar»?", o: ["El infinitivo", "Una raíz", "Una terminación", "Un pronombre"] },
-        { q: "Sin «-ar», ¿qué raíz tiene «cantar»?", o: ["cant-", "canta", "cantar", "-ar"] },
-        { q: "¿Cómo se dice «cantar» con tú?", o: ["cantas", "canto", "canta", "cantar"] },
-        { q: "¿Cómo se dice «comer» con yo?", o: ["como", "comes", "come", "comer"] },
-        { q: "¿Cómo se dice «vivir» con él?", o: ["vive", "vives", "vivo", "vivir"] },
-        { q: "¿Cuántas familias de verbos hay?", o: ["Tres", "Dos", "Cuatro", "Nueve"] },
+        { q: "How many groups are in this class?", o: ["Nine", "Five", "Seven", "Twelve"] },
+        { q: "In “Sofia climbs”, which is the verb?", o: ["climbs", "Sofia", "she", "mountain"] },
+        { q: "What kind of word is “mountain”?", o: ["A noun", "A verb", "An adverb", "A pronoun"] },
+        { q: "What does the pronoun “she” do?", o: ["Replaces a noun", "Says how she climbs", "Joins two ideas", "Shows a feeling"] },
+        { q: "In “the high peak”, what is “high”?", o: ["An adjective", "An article", "A verb", "A preposition"] },
+        { q: "In “climb slowly”, what is “slowly”?", o: ["An adverb", "An adjective", "A noun", "A conjunction"] },
+        { q: "What kind of word is “with”?", o: ["A preposition", "A conjunction", "An interjection", "An article"] },
+        { q: "Which word shows a quick feeling?", o: ["Wow!", "with", "and", "high"] },
       ],
       write: [
-        "Escribe yo, tú y él con «hablar».",
-        "Explica con tus palabras qué es la raíz.",
+        "Write one sentence with a noun and a verb.",
+        "Tell in your words what a pronoun does.",
       ],
       schematic: [
-        "Dibuja un esquema: raíz «cant-» y tres finales.",
-        "Dibuja el Ávila con tres senderos y una cima.",
+        "Draw a mountain with three groups of words.",
+        "Draw “the high peak” and label each word.",
       ],
     },
     image: [
-      "Dibuja el cerro Ávila con tres senderos",
-      "que suben hacia la misma cima. Rotula",
-      "cada sendero: -ar, -er e -ir. Deja un",
-      "espacio para escribir un verbo en cada uno.",
+      "Draw nine boxes in three rows. Label",
+      "each one with a group name, such as noun",
+      "or verb. Leave space in every box for",
+      "you to write one short example word.",
     ],
-    summary: "En los tres senderos del Ávila el verbo cambia su final, pero su raíz es la cima que no cambia.",
+    summary:
+      "English has 8 parts of speech plus a, an and the: 9 groups. Like hikers on Mount Ávila, each one has its own job.",
   },
 
-  // ───────────────────────── DÍA 2 ─────────────────────────
+  // ───────────────────────── DAY 2 · closer ─────────────────────────
   {
     key: "ing-c3-w1-d2",
-    title: "Spanish -ar and -er verbs",
+    title: "Nouns, verbs, pronouns, articles and adjectives",
+    mppe: [
+      { id: "len-lec-05", label: "I read and repeat English noun, verb and pronoun examples." },
+    ],
+    memoryPhrase: "Noun names, verb acts, pronoun replaces.",
     units: [
       {
-        h: "Punto 1: Repaso de la clase pasada",
+        h: "Point 1: Review of the last class",
         a: [
-          "La clase pasada viste tres senderos",
-          "del Ávila: -ar, -er e -ir. El verbo",
-          "cambia su final y la raíz se queda.",
+          "Last class you met the nine groups.",
+          "Noun names, verb acts, pronoun replaces.",
+          "Today we see them closer on Mount Ávila.",
         ],
       },
       {
         q: [
-          "En el sendero «-ar» sube «cantar».",
-          "¿Qué finales usan yo, tú y él?",
+          "“Mountain” and “Mount Ávila” name the",
+          "same kind of thing. Do they look alike?",
         ],
-        h: "Punto 2: Los tres finales de -ar",
+        h: "Point 2: Common and proper nouns",
         a: [
-          "Se dice: yo canto, tú cantas, él canta.",
-          "Los finales son -o, -as y -a.",
-          "Todos los «-ar» usan estos tres finales.",
+          "“Mountain” is a common noun:",
+          "it names any mountain.",
+          "“Mount Ávila” is a proper noun: it names",
+          "one place and starts with capitals.",
         ],
       },
       {
         q: [
-          "Por el mismo sendero suben «hablar»",
-          "y «bailar». ¿Cuál es su raíz?",
+          "One hiker is on Mount Ávila. Five more",
+          "arrive. How do you say it for many?",
         ],
-        h: "Punto 3: La misma regla con otros verbos",
+        h: "Point 3: One or many",
         a: [
-          "La raíz de «hablar» es «habl-».",
-          "La de «bailar» es «bail-».",
-          "Cambian las raíces, pero los finales",
-          "son los mismos: -o, -as y -a.",
+          "One hiker, five hikers. Add -s: hikers.",
+          "Some nouns change: one child,",
+          "two children.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: en el sendero,",
-          "¿se dice «yo cantaro» o «yo canto»?",
+          "Say: “I climb.” Now say it for Sofia.",
+          "What changes in the verb?",
         ],
-        h: "Punto 4: Primero quita, luego añade",
+        h: "Point 4: The verb can change",
         a: [
-          "Se dice «yo canto».",
-          "Primero quita «-ar» y luego añade",
-          "el final: «cant-» más «-o» es «canto».",
+          "You say: I climb, you climb, she climbs.",
+          "With he, she or it, add -s.",
+          "The word “climb” stays inside.",
         ],
       },
       {
         q: [
-          "Ahora camina el sendero «-er» con «comer».",
-          "¿Qué raíz queda y qué finales lleva?",
+          "“Sofia climbs. Sofia sees the top.”",
+          "It sounds repeated. How can you fix it?",
         ],
-        h: "Punto 5: El sendero -er",
+        h: "Point 5: A pronoun avoids repeating",
         a: [
-          "Al quitar «-er» queda la raíz «com-».",
-          "Se dice: yo como, tú comes, él come.",
-          "Los finales son -o, -es y -e.",
+          "Say: “Sofia climbs. She sees the top.”",
+          "“She” takes the place of Sofia.",
+          "I, you, he, she, it, we, they: pronouns.",
         ],
       },
       {
         q: [
-          "También caminan «beber» y «leer».",
-          "¿Se dice «tú comas» o «tú comes»?",
+          "Say “a tall hiker” and “an old hiker”.",
+          "Which words are articles? Which describe?",
         ],
-        h: "Punto 6: Otros verbos «-er»",
+        h: "Point 6: Articles and adjectives",
         a: [
-          "Se dice «tú comes»: tú termina en «-es».",
-          "Y también: bebo, bebes, bebe",
-          "y leo, lees, lee.",
+          "“A” and “an” are articles (artículos).",
+          "We say “an old hiker”, “a tall hiker”.",
+          "“Old” and “tall” are adjectives: they",
+          "describe, and they never change.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "En «canto», ¿qué raíz se queda?", o: ["cant-", "canta", "cantar", "-ar"] },
-        { q: "¿Qué final lleva «tú» en un verbo -ar?", o: ["-as", "-o", "-a", "-es"] },
-        { q: "¿Cuál es la raíz de «bailar»?", o: ["bail-", "bailar", "baila", "-ar"] },
-        { q: "¿Cuál forma está mal escrita?", o: ["yo cantaro", "yo canto", "tú cantas", "él canta"] },
-        { q: "Al quitar «-er» de «comer», ¿qué queda?", o: ["com-", "comer", "come", "-er"] },
-        { q: "¿Cómo se dice «comer» con tú?", o: ["comes", "comas", "como", "comer"] },
-        { q: "¿Cómo se dice «beber» con él?", o: ["bebe", "bebes", "bebo", "beber"] },
-        { q: "¿Qué finales usan los verbos «-er»?", o: ["-o, -es, -e", "-o, -as, -a", "-a, -e, -o", "-es, -o, -as"] },
+        { q: "Which is a proper noun?", o: ["Mount Ávila", "mountain", "hiker", "child"] },
+        { q: "Which is a common noun?", o: ["mountain", "Mount Ávila", "Sofia", "Luis"] },
+        { q: "What is the plural of “hiker”?", o: ["hikers", "hikeres", "hikerz", "hikeers"] },
+        { q: "What is the plural of “child”?", o: ["children", "childs", "childes", "childrens"] },
+        { q: "How do you say “climb” with “she”?", o: ["She climbs.", "She climb.", "She climbes.", "She climbing."] },
+        { q: "Which word takes the place of Sofia?", o: ["She", "Hiker", "Climbs", "Top"] },
+        { q: "Which word is an article?", o: ["an", "tall", "hiker", "climbs"] },
+        { q: "In “a tall hiker”, what is “tall”?", o: ["An adjective", "An article", "A verb", "A pronoun"] },
       ],
       write: [
-        "Escribe yo, tú y él con «hablar» y «comer».",
-        "Explica por qué «yo cantaro» está mal.",
+        "Write a sentence with “she” and a verb.",
+        "Write two phrases: one with “a”, one with “an”.",
       ],
       schematic: [
-        "Dibuja un esquema: raíz «com-» y tres finales.",
-        "Dibuja el sendero -ar con yo, tú y él.",
+        "Draw two columns: common and proper nouns.",
+        "Draw a tall hiker and label each word.",
       ],
     },
     image: [
-      "Dibuja dos senderos del Ávila, -ar y -er.",
-      "En cada uno escribe un verbo conjugado",
-      "con yo, tú y él. Subraya el final de",
-      "cada verbo y deja la raíz sin subrayar.",
+      "Draw five boxes in a row and name them:",
+      "noun, verb, pronoun, article, adjective.",
+      "In each box add a picture and leave a",
+      "space to write a new example word.",
     ],
-    summary: "En el sendero «-ar» añades -o, -as o -a, y en el «-er» añades -o, -es o -e.",
+    summary:
+      "A noun names, a verb acts, a pronoun replaces, and articles and adjectives go with a noun.",
   },
 
-  // ───────────────────────── DÍA 3 ─────────────────────────
+  // ───────────────────────── DAY 3 · most focused, and tell it ─────────────────────────
   {
     key: "ing-c3-w1-d3",
-    title: "Spanish -ir verbs and the three paths",
+    title: "Adverbs, conjunctions, prepositions and interjections",
     mppe: [
-      { id: "len-esc-03", label: "I write short Spanish sentences with correct endings." },
-      { id: "len-ora-05", label: "I say conjugations aloud clearly." },
+      { id: "len-esc-03", label: "I write short English sentences with the right word groups." },
+      { id: "len-ora-05", label: "I say the nine groups of words aloud clearly." },
     ],
+    memoryPhrase:
+      "Noun, pronoun, verb, adjective, adverb, preposition, conjunction, interjection, and the articles a, an, the: 9 groups.",
     units: [
       {
-        h: "Punto 1: Repaso de la clase pasada",
+        h: "Point 1: Review of the last class",
         a: [
-          "La clase pasada subiste por «-ar» y «-er».",
-          "Con «cantar» usaste -o, -as y -a.",
-          "Con «comer» usaste -o, -es y -e.",
+          "Last class you studied nouns, verbs,",
+          "pronouns, articles and adjectives.",
+          "Today we finish the team on Mount Ávila.",
         ],
       },
       {
         q: [
-          "Llegamos al tercer sendero del Ávila:",
-          "el «-ir». ¿Qué raíz tiene «vivir»?",
+          "The team climbs Mount Ávila. How do you",
+          "say that they climb without hurry?",
         ],
-        h: "Punto 2: El sendero -ir",
+        h: "Point 2: An adverb tells how",
         a: [
-          "Al quitar «-ir» queda la raíz «viv-».",
-          "Se dice: yo vivo, tú vives, él vive.",
-          "Son los mismos finales que en «-er».",
+          "You say: “The team climbs slowly.”",
+          "“Slowly” is an adverb (adverbio).",
+          "It tells how. Others tell when: “today”.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: ¿se dice",
-          "«yo vive» o «yo vivo»? ¿Y «él vive»?",
+          "Join “I climb” and “I am tired”. Which",
+          "small word goes in the middle?",
         ],
-        h: "Punto 3: Cada final con su persona",
+        h: "Point 3: A conjunction joins ideas",
         a: [
-          "Se dice «yo vivo» y «él vive».",
-          "El final «-o» es para yo y «-e» para él.",
-          "Antes de escribir, piensa quién actúa.",
+          "You say: “I climb, but I am tired.”",
+          "“But” is a conjunction (conjunción).",
+          "“And” adds and “or” gives a choice.",
         ],
       },
       {
         q: [
-          "Ya pasaste por los tres senderos.",
-          "¿Cómo dices cantar, comer y vivir?",
+          "Fill in: “Sofia climbs ___ her friend.”",
+          "What changes with “with”? And “without”?",
         ],
-        h: "Punto 4: Los tres senderos juntos",
+        h: "Point 4: A preposition links words",
         a: [
-          "-ar (cantar → canto, cantas, canta),",
-          "-er (comer → como, comes, come),",
-          "-ir (vivir → vivo, vives, vive).",
+          "“With her friend”: they climb together.",
+          "“Without her friend”: Sofia climbs alone.",
+          "“With” is a preposition (preposición).",
         ],
       },
       {
         q: [
-          "Lee: «Yo hablo, tú comes y él escribe.»",
-          "¿Por cuál sendero va cada verbo?",
+          "You reach the top of Mount Ávila. What",
+          "do you shout when you feel happy?",
         ],
-        h: "Punto 5: Descubre el sendero",
+        h: "Point 5: An interjection shows feeling",
         a: [
-          "«Hablo» viene de «hablar»: sendero -ar.",
-          "«Comes» viene de «comer»: sendero -er.",
-          "«Escribe» viene de «escribir»: sendero -ir.",
+          "You can shout “Wow!” or “Yay!”",
+          "They are interjections (interjecciones):",
+          "they show a feeling right away.",
         ],
       },
       {
         q: [
-          "Cuéntale a tu familia tu subida del Ávila.",
-          "¿Cómo ordenas lo que dices?",
+          "Back home, you tell your family about",
+          "the nine groups. How do you order it?",
         ],
-        h: "Punto 6: Cómo contarlo con orden",
+        h: "Point 6: Tell it in order",
         a: [
-          "Inicio: «Hoy les cuento los tres senderos».",
-          "Medio: un verbo de cada familia, en voz alta.",
-          "Cierre: repite yo, tú y él y da las gracias.",
+          "First say hello. Then name the groups:",
+          "noun, pronoun, verb, adjective, adverb,",
+          "preposition, conjunction, interjection,",
+          "and the articles a, an, the: 9 groups.",
+          "Last, say thank you.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "Al quitar «-ir» de «vivir», ¿qué queda?", o: ["viv-", "vivir", "vive", "-ir"] },
-        { q: "¿Cómo se dice «vivir» con tú?", o: ["vives", "vivo", "vive", "vivir"] },
-        { q: "¿Qué finales usan los verbos «-ir»?", o: ["-o, -es, -e", "-o, -as, -a", "-a, -e, -o", "-es, -o, -as"] },
-        { q: "¿Cuál oración está bien escrita?", o: ["Él vive lejos.", "Yo vive lejos.", "Él vivo lejos.", "Tú vivo cerca."] },
-        { q: "¿Cuántos senderos recorriste?", o: ["Tres", "Dos", "Cuatro", "Nueve"] },
-        { q: "«Hablo» viene de «hablar». ¿Qué sendero?", o: ["-ar", "-er", "-ir", "Ninguno"] },
-        { q: "«Escribe» viene de «escribir». ¿Qué sendero?", o: ["-ir", "-ar", "-er", "Ninguno"] },
-        { q: "¿Qué dices al cerrar tu exposición?", o: ["Repito yo, tú y él", "Cambio la raíz", "Borro los verbos", "No digo nada"] },
+        { q: "In “climbs slowly”, which tells how?", o: ["slowly", "climbs", "the", "team"] },
+        { q: "What kind of word is “today”?", o: ["An adverb", "An adjective", "An article", "A verb"] },
+        { q: "What kind of word is “but”?", o: ["A conjunction", "A preposition", "An interjection", "An adverb"] },
+        { q: "Which word gives a choice?", o: ["or", "and", "but", "Wow!"] },
+        { q: "In “with her friend”, what is “with”?", o: ["A preposition", "A conjunction", "A verb", "An adverb"] },
+        { q: "“Without her friend” means…", o: ["Sofia climbs alone.", "They climb together.", "Sofia goes to sleep.", "Sofia calls her friend."] },
+        { q: "Which is an interjection?", o: ["Wow!", "with", "but", "slowly"] },
+        { q: "How many groups did you learn?", o: ["Nine", "Five", "Seven", "Twelve"] },
       ],
       write: [
-        "Escribe de memoria cantar, comer y vivir con yo, tú y él.",
-        "Cuenta con tus palabras cómo se conjuga un verbo.",
+        "Write two sentences: one with “but”, one with “today”.",
+        "Tell in order the nine groups of words.",
       ],
       schematic: [
-        "Dibuja un esquema con los tres senderos y sus finales.",
-        "Dibuja una oración tuya y une cada verbo con su sendero.",
+        "Draw three boxes: conjunction, preposition, interjection.",
+        "Draw yourself telling the nine groups.",
       ],
     },
     image: [
-      "Dibuja el cerro Ávila con tres senderos",
-      "hacia la misma cima. Rotula -ar, -er e -ir",
-      "y deja espacio para escribir en cada uno",
-      "un verbo con yo, tú y él conjugados.",
+      "Draw four speech bubbles and name them:",
+      "adverb, conjunction, preposition and",
+      "interjection. Write an example in each",
+      "and leave space for your own sentence.",
     ],
-    summary: "Tres senderos llevan a la misma cima: -ar, -er e -ir. Quitas el final y añades el de yo, tú o él.",
+    summary:
+      "Adverbs, conjunctions, prepositions and interjections complete the nine groups, and you can tell them in order.",
   },
 ];

@@ -47,7 +47,7 @@
     "weekRecap": "Hoy leímos Romanos 1:2: Dios anunció antes el evangelio por sus profetas y en las Escrituras.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja a un profeta con un rollo en las manos y rotula «mensajero de Dios». Al lado, al pueblo escuchando. Abajo traza una flecha larga de «1811» a «Carabobo, 1821» con «diez años».",
+    "imageBandInstruction": "Dibuja un profeta con un rollo. Rotúlalo «mensajero de Dios» y dibuja al pueblo que escucha. Abajo, una flecha: «promesa» hacia «cumplimiento».",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1023,9 +1023,9 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "Escribe qué significa «prometió de",
-        "questionId": "d2-w1",
-        "questionType": "write",
+        "text": "¿Qué da otras veces un profeta?",
+        "questionId": "d2-q7",
+        "questionType": "mcq",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1037,37 +1037,91 @@
         "index": 130,
         "column": 3,
         "line": 26,
-        "kind": "lesson",
-        "text": "antemano».",
-        "questionId": "d2-w1"
+        "kind": "option",
+        "text": "A) Impuestos",
+        "questionId": "d2-q7"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
+        "kind": "option",
+        "text": "B) Un viaje",
+        "questionId": "d2-q7"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
+        "kind": "option",
+        "text": "C) Esperanza",
+        "questionId": "d2-q7"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Un juego",
+        "questionId": "d2-q7"
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "question",
+        "text": "Escribe qué significa «prometió de",
+        "questionId": "d2-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "lesson",
+        "text": "antemano».",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
         "kind": "question",
         "text": "Explica qué hace un profeta y qué no hace.",
         "questionId": "d2-w2",
@@ -1080,32 +1134,32 @@
         }
       },
       {
-        "index": 135,
+        "index": 141,
         "column": 3,
-        "line": 31,
+        "line": 37,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w2"
       },
       {
-        "index": 136,
+        "index": 142,
         "column": 3,
-        "line": 32,
+        "line": 38,
         "kind": "answerLine",
         "text": "",
         "questionId": "d2-w2"
       },
       {
-        "index": 137,
+        "index": 143,
         "column": 3,
-        "line": 33,
+        "line": 39,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 138,
+        "index": 144,
         "column": 3,
-        "line": 34,
+        "line": 40,
         "kind": "question",
         "text": "Dibuja una línea: 1811 promesa, 1821",
         "questionId": "d2-w3",
@@ -1118,66 +1172,12 @@
         }
       },
       {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "lesson",
-        "text": "Carabobo.",
-        "questionId": "d2-w3"
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
-      },
-      {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "question",
-        "text": "Dibuja a Dios, un profeta y el pueblo con",
-        "questionId": "d2-w4",
-        "questionType": "schematic",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "lesson",
-        "text": "flechas.",
-        "questionId": "d2-w4"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "lesson",
+        "text": "Carabobo.",
+        "questionId": "d2-w3"
       },
       {
         "index": 146,
@@ -1185,14 +1185,15 @@
         "line": 42,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d2-w4"
+        "questionId": "d2-w3"
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
       },
       {
         "index": 148,
@@ -1205,64 +1206,75 @@
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "Dibuja a Dios, un profeta y el pueblo con",
+        "questionId": "d2-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "flechas.",
+        "questionId": "d2-w4"
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "imageInstruction",
-        "text": "Dibuja a un profeta con un rollo en las"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "manos y rotula «mensajero de Dios». Al"
+        "text": "Dibuja un profeta con un rollo. Rotúlalo"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "lado, al pueblo escuchando. Abajo traza"
+        "text": "«mensajero de Dios» y dibuja al pueblo"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "una flecha larga de «1811» a «Carabobo,"
+        "text": "que escucha. Abajo, una flecha:"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "1821» con «diez años»."
+        "text": "«promesa» hacia «cumplimiento»."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 10,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d2-q1",
@@ -1373,14 +1385,32 @@
         }
       },
       {
+        "id": "d2-q7",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué da otras veces un profeta?",
+        "choices": [
+          "Impuestos",
+          "Un viaje",
+          "Esperanza",
+          "Un juego"
+        ],
+        "answer": "Esperanza",
+        "slot": {
+          "column": 3,
+          "line": 25,
+          "index": 129
+        }
+      },
+      {
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
         "prompt": "Escribe qué significa «prometió de antemano».",
         "slot": {
           "column": 3,
-          "line": 25,
-          "index": 129
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1390,8 +1420,8 @@
         "prompt": "Explica qué hace un profeta y qué no hace.",
         "slot": {
           "column": 3,
-          "line": 30,
-          "index": 134
+          "line": 36,
+          "index": 140
         }
       },
       {
@@ -1403,8 +1433,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 34,
-          "index": 138
+          "line": 40,
+          "index": 144
         }
       },
       {
@@ -1416,8 +1446,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 39,
-          "index": 143
+          "line": 45,
+          "index": 149
         }
       }
     ]

@@ -48,7 +48,7 @@
     "weekRecap": "in = en · apud = con · per = por · sine = sin · a/ab = de · de = de. Relaciones de lugar, compañía, camino y origen.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un lago con un barco: in lacu. Dibuja amigos cruzando un puente: apud amicos y per pontem. Deja una línea vacía bajo cada rótulo.",
+    "imageBandInstruction": "Dibuja 4 tarjetas: in, apud, per, sine. Icono: punto en caja, dos caritas, flecha y caja con una X. Deja vacío el renglón del significado.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1245,29 +1245,29 @@
         "index": 153,
         "column": 3,
         "line": 49,
-        "kind": "imageInstruction",
-        "text": "Dibuja un lago con un barco: in lacu. Dibuja"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "amigos cruzando un puente: apud amicos"
+        "text": "Dibuja 4 tarjetas: in, apud, per, sine. Icono:"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "y per pontem. Deja una línea vacía bajo"
+        "text": "punto en caja, dos caritas, flecha y caja con"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "cada rótulo."
+        "text": "una X. Deja vacío el renglón del significado."
       }
     ],
     "packOrder": "column-major-sequential",

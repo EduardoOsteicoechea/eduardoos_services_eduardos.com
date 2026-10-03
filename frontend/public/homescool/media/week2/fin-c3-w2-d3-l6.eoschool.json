@@ -49,7 +49,7 @@
     "quizIntegrated": true,
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1",
-    "imageBandInstruction": "Dibuja el puerto de La Guaira con una grúa. Abajo dibuja una barra de meta de ahorro y una tabla: Gané, Ahorré y Para qué es. Deja la barra y la tabla vacías para ti.",
+    "imageBandInstruction": "Dibuja una barra de meta de ahorro para pintar hasta tu avance. Debajo, una tabla: Gané, Ahorré y Para qué es. Deja la barra y la tabla vacías para ti.",
     "slotSequence": [
       {
         "index": 1,
@@ -1236,28 +1236,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja el puerto de La Guaira con una grúa."
+        "text": "Dibuja una barra de meta de ahorro para"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Abajo dibuja una barra de meta de ahorro y"
+        "text": "pintar hasta tu avance. Debajo, una tabla:"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "una tabla: Gané, Ahorré y Para qué es. Deja"
+        "text": "Gané, Ahorré y Para qué es. Deja la barra y"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "la barra y la tabla vacías para ti."
+        "text": "la tabla vacías para ti."
       }
     ]
   },

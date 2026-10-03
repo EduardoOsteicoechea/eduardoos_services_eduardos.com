@@ -68,3 +68,8 @@ Detalle completo: [`docs/homescool-finanzas.md`](../../docs/homescool-finanzas.m
 - Una sola línea de copia.
 - Clases `fin` sin práctica económica diaria, o con promesas de riqueza.
 - Imágenes cuyo prompt no salga de la indicación de la clase.
+
+## v3b — imagen sin metáfora; inglés en inglés
+
+- **Imagen:** `lesson.imageBandInstruction` (y por tanto el prompt de la imagen) se escribe solo con la idea central de la clase. La metáfora venezolana vive en las preguntas y respuestas, nunca en la imagen. Audit: `imageMetaphor` (excepción: `his`).
+- **`ing` (Inglés):** se enseña en inglés y espeja el tema de `esp` de la misma semana (w1: grammatical categories / parts of speech; w2: English verb tenses). Marco en inglés generado por `build-homescool-ask-first-v2.mjs`: `What did you learn in the last class?`, `Point 1: Review of the last class`, `Point N: …`, `Write here what you learned:`. Glosa mínima en español solo para términos gramaticales nuevos, entre paréntesis. Audit: `ingSpanish` limita el español residual.

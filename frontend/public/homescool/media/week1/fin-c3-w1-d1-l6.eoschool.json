@@ -49,7 +49,7 @@
     "quizIntegrated": true,
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1",
-    "imageBandInstruction": "Dibuja tres frascos: dar, ahorrar, gastar. Debajo, una tabla con columnas: Fecha, Qué hice, Gané, Ahorré, vacía. Al fondo, una mata de cacao de Chuao.",
+    "imageBandInstruction": "Dibuja tres frascos: dar, ahorrar, gastar. Debajo, una tabla con columnas: Fecha, Qué hice, Gané, Ahorré, vacía. Arriba escribe: Dios dueño, yo cuido.",
     "slotSequence": [
       {
         "index": 1,
@@ -1260,14 +1260,14 @@
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Qué hice, Gané, Ahorré, vacía. Al fondo, una"
+        "text": "Qué hice, Gané, Ahorré, vacía. Arriba"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "mata de cacao de Chuao."
+        "text": "escribe: Dios dueño, yo cuido."
       }
     ]
   },

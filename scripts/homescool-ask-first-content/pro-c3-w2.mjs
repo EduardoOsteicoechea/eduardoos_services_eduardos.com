@@ -100,8 +100,8 @@ export default [
     },
     image: [
       "Dibuja un aro de alambre con una gota.",
-      "Al fondo, la neblina de La Llovizna.",
-      "Rotula aro, gota, luz y letra grande.",
+      "Dibuja una flecha de luz que entra.",
+      "Rotula: aro, gota, luz y letra grande.",
       "Deja vacía una tabla: gota 1 y gota 2.",
     ],
     summary: "Una gota redonda es como una lupa: la luz cambia de dirección. Lo cuentas con orden y con tus datos.",

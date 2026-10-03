@@ -88,12 +88,29 @@ for (const week of weeks) {
     const day = doc.day;
 
     // v3: every class opens with exactly «¿Qué aprendiste la clase pasada?» and Punto 1 is «Repaso de la clase pasada».
-    if (!body.includes("¿Qué aprendiste la clase pasada?") || /aprendiste ayer|sobre esta misma materia/i.test(body)) {
+    // `ing` is taught in English: English frame lines, "Point N:" headings, English content.
+    const isIng = doc.subject === "ing";
+    const OPEN = isIng ? "What did you learn in the last class?" : "¿Qué aprendiste la clase pasada?";
+    const COPY = isIng ? "Write here what you learned:" : "Escribe aquí lo que aprendiste:";
+    const PUNTO = isIng ? "Point" : "Punto";
+    if (!body.includes(OPEN) || /aprendiste ayer|sobre esta misma materia/i.test(body)) {
       fileIssues.push({ sev: "high", code: "ayerQuestion" });
     }
     const pts = L.points || [];
-    if (!/^Punto 1: Repaso de la clase pasada/i.test(pts[0]?.heading || "")) {
+    if (!new RegExp("^" + PUNTO + " 1: " + (isIng ? "Review of the last class" : "Repaso de la clase pasada"), "i").test(pts[0]?.heading || "")) {
       fileIssues.push({ sev: "high", code: "punto1Repaso" });
+    }
+    if (isIng) {
+      const es = (" " + body.toLowerCase() + " ").match(/ (que|los|las|una|para|con|por|del|es|esto|como|cuando) /g) || [];
+      if (es.length > 6) fileIssues.push({ sev: "high", code: "ingSpanish", detail: String(es.length) });
+    }
+    // v3b: the class image comes from the central idea only (no explanatory metaphor on the image).
+    if (doc.subject !== "his") {
+      const meta0 = JSON.parse(fs.readFileSync(path.join(__dirname, "homescool-venezuela-metaphors.json"), "utf8"));
+      const asg = meta0["w" + doc.week]?.[doc.subject];
+      const img = (L.imageBandInstruction || "").toLowerCase();
+      const hit = (asg?.keywords || []).filter((k) => img.includes(k.toLowerCase()));
+      if (hit.length) fileIssues.push({ sev: "high", code: "imageMetaphor", detail: hit.join(",") });
     }
     // v3: only d1..d3 (pro: d1 only); lesson kind per day.
     if (day > (doc.subject === "pro" ? 1 : 3)) fileIssues.push({ sev: "high", code: "dayBeyondV3", detail: String(day) });
@@ -115,7 +132,7 @@ for (const week of weeks) {
       fileIssues.push({ sev: "high", code: "puntoCount", detail: String(pts.length) });
     }
     pts.forEach((pt, i) => {
-      if (!new RegExp("^Punto " + (i + 1) + ": ").test(pt.heading || "")) {
+      if (!new RegExp("^" + PUNTO + " " + (i + 1) + ": ").test(pt.heading || "")) {
         fileIssues.push({ sev: "high", code: "puntoNumbering", detail: pt.heading });
       }
     });
@@ -134,14 +151,14 @@ for (const week of weeks) {
     }
     {
       const sl = L.slotSequence || [];
-      const cues = sl.filter((s) => s.text === "Escribe aquí lo que aprendiste:").length;
+      const cues = sl.filter((s) => s.text === COPY).length;
       const dashes = sl.filter((s) => /^_{40}$/.test(s.text || "")).length;
       if (cues !== pts.length) fileIssues.push({ sev: "high", code: "copyCue", detail: cues + "/" + pts.length });
       // v3: one try-first row (at least) + TWO copy rows per Punto.
       if (dashes < pts.length * 3) fileIssues.push({ sev: "high", code: "dashRows", detail: String(dashes) });
       const dashRe = /^_{40}$/;
       sl.forEach((s, i) => {
-        if (s.text === "Escribe aquí lo que aprendiste:") {
+        if (s.text === COPY) {
           if (!dashRe.test(sl[i + 1]?.text || "") || !dashRe.test(sl[i + 2]?.text || "")) {
             fileIssues.push({ sev: "high", code: "copyRowsTwo", detail: "slot " + s.index });
           }

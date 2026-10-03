@@ -47,7 +47,7 @@
     "weekRecap": "Redención: creación y caída, Israel y Cristo, esperanza de la nueva tierra.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un río largo con cinco paradas. Rotula: creación, caída, diluvio, patriarcas y profetas. Escribe una frase corta en cada parada.",
+    "imageBandInstruction": "Dibuja cinco recuadros en una fila. Rotula: creación, caída, diluvio, patriarcas y profetas, en orden. Escribe una frase corta en cada uno.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1244,28 +1244,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un río largo con cinco paradas."
+        "text": "Dibuja cinco recuadros en una fila. Rotula:"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula: creación, caída, diluvio, patriarcas y"
+        "text": "creación, caída, diluvio, patriarcas y"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "profetas. Escribe una frase corta en cada"
+        "text": "profetas, en orden. Escribe una frase corta"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "parada."
+        "text": "en cada uno."
       }
     ],
     "packOrder": "column-major-sequential",

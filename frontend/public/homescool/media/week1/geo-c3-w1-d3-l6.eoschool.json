@@ -49,7 +49,7 @@
     "priorDayRecap": "Ayer etiquetaste las cuatro fronteras con puntos cardinales.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un mapa sencillo de Venezuela. Dibuja una montaña, una llanura y el Roraima, mesa plana, en Guayana. Rotula los vecinos y la flecha norte.",
+    "imageBandInstruction": "Dibuja un mapa sencillo de Venezuela. Divídelo en seis regiones y rotúlalas. Dibuja una montaña en los Andes y una llanura en los Llanos. Marca el norte.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1254,21 +1254,21 @@
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja una montaña, una llanura y el"
+        "text": "Divídelo en seis regiones y rotúlalas. Dibuja"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Roraima, mesa plana, en Guayana. Rotula"
+        "text": "una montaña en los Andes y una llanura en"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "los vecinos y la flecha norte."
+        "text": "los Llanos. Marca el norte."
       }
     ],
     "packOrder": "column-major-sequential",

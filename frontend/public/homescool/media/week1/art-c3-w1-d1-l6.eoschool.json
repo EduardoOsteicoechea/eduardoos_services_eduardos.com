@@ -46,7 +46,7 @@
     "summary": "Un dibujo se arma con cuatro piezas: O redonda, i punto, L recta y S curva. En los Médanos de Coro las ves todas juntas.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Ilustra los Médanos de Coro: una duna con ondas, un sol redondo, huellas y horizonte recto, rotulados S, O, i, L. Deja un espacio vacío para otra duna.",
+    "imageBandInstruction": "Ilustra un dibujo con las cuatro piezas: círculo O, puntos i, rectas L, curvas S. Rotula cada pieza con su letra. Deja una caja vacía para tu dibujo OiLS.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1242,28 +1242,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Ilustra los Médanos de Coro: una duna con"
+        "text": "Ilustra un dibujo con las cuatro piezas:"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "ondas, un sol redondo, huellas y horizonte"
+        "text": "círculo O, puntos i, rectas L, curvas S."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "recto, rotulados S, O, i, L. Deja un espacio"
+        "text": "Rotula cada pieza con su letra. Deja una"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "vacío para otra duna."
+        "text": "caja vacía para tu dibujo OiLS."
       }
     ],
     "packOrder": "column-major-sequential",

@@ -49,7 +49,7 @@
     "quizIntegrated": true,
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1",
-    "imageBandInstruction": "Dibuja tres frascos: dar, ahorrar, gastar, con espacio para las monedas. Abajo, el registro de la semana: Gané, Ahorré y Repartí. Una mata de Chuao.",
+    "imageBandInstruction": "Dibuja tres frascos con espacio para monedas: dar, ahorrar y gastar. Abajo, una tabla vacía de la semana: Gané, Ahorré y Repartí.",
     "slotSequence": [
       {
         "index": 1,
@@ -1237,28 +1237,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja tres frascos: dar, ahorrar, gastar, con"
+        "text": "Dibuja tres frascos con espacio para"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "espacio para las monedas. Abajo, el"
+        "text": "monedas: dar, ahorrar y gastar. Abajo, una"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "registro de la semana: Gané, Ahorré y"
+        "text": "tabla vacía de la semana: Gané, Ahorré y"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Repartí. Una mata de Chuao."
+        "text": "Repartí."
       }
     ]
   },

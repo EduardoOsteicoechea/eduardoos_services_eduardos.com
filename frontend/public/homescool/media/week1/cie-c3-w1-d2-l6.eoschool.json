@@ -48,7 +48,7 @@
     "weekRecap": "Cuatro tejidos: epitelial (cubre), conectivo (une), muscular (mueve), nervioso (mensaje).",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una mano con piel, huesos y sangre. Rotula piel como epitelial, hueso y sangre como conectivo. Dibuja un brazo que rema. Marca con una estrella el movimiento voluntario.",
+    "imageBandInstruction": "Dibuja una mano con piel, hueso, sangre. Rotula piel (epitelial) y hueso y sangre (conectivo). Dibuja un brazo doblado. Marca con estrella lo voluntario.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1238,36 +1238,36 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "imageInstruction",
-        "text": "Dibuja una mano con piel, huesos y sangre."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Rotula piel como epitelial, hueso y sangre"
+        "text": "Dibuja una mano con piel, hueso, sangre."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "como conectivo. Dibuja un brazo que rema."
+        "text": "Rotula piel (epitelial) y hueso y sangre"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Marca con una estrella el movimiento"
+        "text": "(conectivo). Dibuja un brazo doblado."
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "voluntario."
+        "text": "Marca con estrella lo voluntario."
       }
     ],
     "packOrder": "column-major-sequential",

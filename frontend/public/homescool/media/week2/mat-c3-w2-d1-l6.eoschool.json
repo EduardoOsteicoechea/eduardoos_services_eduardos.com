@@ -46,7 +46,7 @@
     "summary": "En Morrocoy las tablas grandes se arman con tablas que ya conoces.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una hilera de 4 cayos de Morrocoy. En cada cayo dibuja 6 botes. Escribe al lado: 4 × 6 = 24. Rotula los factores y el producto.",
+    "imageBandInstruction": "Dibuja una cuadrícula de 4 × 6 casillas. Escribe al lado 4 × 6 = 24. Rotula factores y producto con flechas. Deja vacía una casilla para 13 × 4.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -1243,28 +1243,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja una hilera de 4 cayos de Morrocoy."
+        "text": "Dibuja una cuadrícula de 4 × 6 casillas."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "En cada cayo dibuja 6 botes. Escribe al"
+        "text": "Escribe al lado 4 × 6 = 24. Rotula factores y"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "lado: 4 × 6 = 24. Rotula los factores y el"
+        "text": "producto con flechas. Deja vacía una"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "producto."
+        "text": "casilla para 13 × 4."
       }
     ],
     "packOrder": "column-major-sequential",

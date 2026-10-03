@@ -7,49 +7,49 @@
   "level": 6,
   "subject": "ing",
   "locale": "en",
-  "title": "Choose and tell: one word or two?",
+  "title": "Choose the tense and tell it",
   "lesson": {
     "kind": "deepen",
     "focusPoint": 2,
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de la clase pasada",
-        "body": "¿Qué aprendiste la clase pasada?\n\nLa clase pasada viste las cinco formas de una palabra y los dos tramos de «he cantado» en el teleférico."
+        "heading": "Point 1: Review of the last class",
+        "body": "What did you learn in the last class?\n\nLast class you studied the simple past, the continuous and the perfect. Today you pick the tense with clue words."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Ayer cierra el momento",
-        "body": "Te cuentan: «Terminé ayer». ¿Una palabra o dos? ¿Qué pista te lo dice?\n\nEs una palabra: «terminé». «Ayer» es un momento cerrado, como una estación que ya pasaste."
+        "heading": "Point 2: Clue words",
+        "body": "Yesterday you rode the Mérida cable car. Compare “Yesterday I sang” and “I sing every day”. What tells you the tense?\n\nYesterday and last week: simple past. Every day and now: simple present. Clue words show you which station."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Ya deja vivo el resultado",
-        "body": "Ahora escuchas: «Ya he terminado». ¿Qué cambió? ¿Aún importa el resultado?\n\nSon dos palabras: «he terminado». «Ya» dice que el resultado sigue vivo, como estar ahora en una estación."
+        "heading": "Point 3: Clues for the future",
+        "body": "Tomorrow you ride the Mérida cable car again. Which clue word and tense?\n\nTomorrow and next week: simple future. “I will ride the cable car tomorrow.” Will goes before the verb."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Fondo y golpe",
-        "body": "Subías en el teleférico leyendo cuando sonó el teléfono. ¿Cuál es el fondo?\n\n«Leía» pinta el fondo: lo que pasaba. «Sonó» es el golpe: pasó y terminó. Las dos son de una sola palabra."
+        "heading": "Point 4: Long and short actions",
+        "body": "You were riding when your phone rang. Which action is long? Which is short?\n\nWas riding is the long action. Rang is the sudden one: simple past. “I was riding when the phone rang.”"
       },
       {
         "id": "p5",
-        "heading": "Punto 5: El participio no cambia",
-        "body": "Una pregunta con truco: si todos comieron, ¿«han comido» o «han comidos»?\n\nDices «han comido». El participio no lleva -s si son muchos. Solo cambia la ayudante: he, has, ha."
+        "heading": "Point 5: Already and just",
+        "body": "Compare “I finished yesterday” and “I have already finished”. What changed?\n\nAlready and just: present perfect. The trip is done, and you are here now. “I have already finished the trip.”"
       },
       {
         "id": "p6",
-        "heading": "Punto 6: Elige y cuéntalo",
-        "body": "Ahora cuéntalo a tu familia, como un guía del teleférico de Mérida. ¿Cómo eliges?\n\nPregunta: ¿el momento cerró, o el resultado sigue vivo? Luego di un ejemplo de una palabra y otro de dos."
+        "heading": "Point 6: Pick and tell",
+        "body": "Be a guide of the Mérida cable car. How do you pick and tell each tense?\n\nAsk: When? Is it going on? Is it done? Choose the tense, then say the clue word and a sentence, like a good guide."
       }
     ],
-    "summary": "Para elegir una palabra o dos, mira si el momento cerró o si el resultado sigue vivo.",
-    "memoryPhrase": "One word: **canto / cantaba / canté / cantaré / cantaría**. Two words: helper **haber** + already-done form (**he cantado**).",
+    "summary": "Look at the clue word and ask: When? Is it going on? Is it done? Then pick the tense.",
+    "memoryPhrase": "Ask: When? Is it going on? Is it done?",
     "weekRecap": "One word: canto / cantaba / canté / cantaré / cantaría. Two words: helper haber + participle (he cantado). Learn to narrate WHEN an action happens: one-word forms and two-word forms, choosing with meaning.",
     "priorDayRecap": "Deepen: one-word times. We stayed on one-word times only (no haber): verb = action; conjugate = change for who and when; stem and ending build each form.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja tres estaciones del teleférico. Escribe «ayer», «ya» y «leía» en ellas. Deja un espacio para tu frase en cada una. Encierra la que tenga dos palabras.",
+    "imageBandInstruction": "Draw a clue-word chart with four rows: yesterday, every day, tomorrow, already. Next to each, draw an empty box for the tense and a short sentence.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -57,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste la clase pasada?"
+        "text": "What did you learn in the last class?"
       },
       {
         "index": 2,
@@ -92,7 +92,7 @@
         "column": 1,
         "line": 6,
         "kind": "heading",
-        "text": "Punto 1: Repaso de la clase pasada"
+        "text": "Point 1: Review of the last class"
       },
       {
         "index": 7,
@@ -106,21 +106,21 @@
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "La clase pasada viste las cinco formas"
+        "text": "Last class you studied the simple past,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "de una palabra y los dos tramos"
+        "text": "the continuous and the perfect. Today"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "de «he cantado» en el teleférico."
+        "text": "you pick the tense with clue words."
       },
       {
         "index": 11,
@@ -134,7 +134,7 @@
         "column": 1,
         "line": 12,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Write here what you learned:"
       },
       {
         "index": 13,
@@ -162,28 +162,28 @@
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "Te cuentan: «Terminé ayer». ¿Una palabra"
+        "text": "Yesterday you rode the Mérida cable car."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "o dos? ¿Qué pista te lo dice?"
+        "text": "Compare “Yesterday I sang” and “I sing"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "every day”. What tells you the tense?"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 20,
@@ -196,64 +196,64 @@
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "heading",
-        "text": "Punto 2: Ayer cierra el momento"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Point 2: Clue words"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "lesson",
-        "text": "Es una palabra: «terminé»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "«Ayer» es un momento cerrado,"
+        "text": "Yesterday and last week: simple past."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "como una estación que ya pasaste."
+        "text": "Every day and now: simple present."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Clue words show you which station."
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Write here what you learned:"
       },
       {
         "index": 30,
@@ -266,36 +266,36 @@
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Ahora escuchas: «Ya he terminado»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "¿Qué cambió? ¿Aún importa el resultado?"
+        "text": "Tomorrow you ride the Mérida cable car"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "again. Which clue word and tense?"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
@@ -308,64 +308,64 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "heading",
-        "text": "Punto 3: Ya deja vivo el resultado"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Point 3: Clues for the future"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "Son dos palabras: «he terminado»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "«Ya» dice que el resultado sigue vivo,"
+        "text": "Tomorrow and next week: simple future."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "como estar ahora en una estación."
+        "text": "“I will ride the cable car tomorrow.”"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Will goes before the verb."
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Write here what you learned:"
       },
       {
         "index": 46,
@@ -378,36 +378,36 @@
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Subías en el teleférico leyendo cuando"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "sonó el teléfono. ¿Cuál es el fondo?"
+        "text": "You were riding when your phone rang."
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Which action is long? Which is short?"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 52,
@@ -428,7 +428,7 @@
         "column": 2,
         "line": 2,
         "kind": "heading",
-        "text": "Punto 4: Fondo y golpe"
+        "text": "Point 4: Long and short actions"
       },
       {
         "index": 55,
@@ -442,21 +442,21 @@
         "column": 2,
         "line": 4,
         "kind": "lesson",
-        "text": "«Leía» pinta el fondo: lo que pasaba."
+        "text": "Was riding is the long action."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "«Sonó» es el golpe: pasó y terminó."
+        "text": "Rang is the sudden one: simple past."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "Las dos son de una sola palabra."
+        "text": "“I was riding when the phone rang.”"
       },
       {
         "index": 59,
@@ -470,7 +470,7 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Write here what you learned:"
       },
       {
         "index": 61,
@@ -498,14 +498,14 @@
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "Una pregunta con truco: si todos comieron,"
+        "text": "Compare “I finished yesterday” and"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "¿«han comido» o «han comidos»?"
+        "text": "“I have already finished”. What changed?"
       },
       {
         "index": 66,
@@ -533,7 +533,7 @@
         "column": 2,
         "line": 17,
         "kind": "heading",
-        "text": "Punto 5: El participio no cambia"
+        "text": "Point 5: Already and just"
       },
       {
         "index": 70,
@@ -547,21 +547,21 @@
         "column": 2,
         "line": 19,
         "kind": "lesson",
-        "text": "Dices «han comido». El participio"
+        "text": "Already and just: present perfect."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
         "kind": "lesson",
-        "text": "no lleva -s si son muchos."
+        "text": "The trip is done, and you are here now."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
         "kind": "lesson",
-        "text": "Solo cambia la ayudante: he, has, ha."
+        "text": "“I have already finished the trip.”"
       },
       {
         "index": 74,
@@ -575,7 +575,7 @@
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Write here what you learned:"
       },
       {
         "index": 76,
@@ -603,14 +603,14 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Ahora cuéntalo a tu familia, como un guía"
+        "text": "Be a guide of the Mérida cable car."
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
         "kind": "lesson",
-        "text": "del teleférico de Mérida. ¿Cómo eliges?"
+        "text": "How do you pick and tell each tense?"
       },
       {
         "index": 81,
@@ -638,7 +638,7 @@
         "column": 2,
         "line": 32,
         "kind": "heading",
-        "text": "Punto 6: Elige y cuéntalo"
+        "text": "Point 6: Pick and tell"
       },
       {
         "index": 85,
@@ -652,21 +652,21 @@
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "Pregunta: ¿el momento cerró, o el"
+        "text": "Ask: When? Is it going on? Is it done?"
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
         "kind": "lesson",
-        "text": "resultado sigue vivo? Luego di un ejemplo"
+        "text": "Choose the tense, then say the clue word"
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
         "kind": "lesson",
-        "text": "de una palabra y otro de dos."
+        "text": "and a sentence, like a good guide."
       },
       {
         "index": 89,
@@ -680,7 +680,7 @@
         "column": 2,
         "line": 38,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Write here what you learned:"
       },
       {
         "index": 91,
@@ -708,7 +708,7 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué pide un momento cerrado («ayer»)?",
+        "text": "What tense goes with “yesterday”?",
         "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
@@ -723,7 +723,7 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Dos palabras: he terminado",
+        "text": "A) Simple future",
         "questionId": "d3-q1"
       },
       {
@@ -731,7 +731,7 @@
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Una palabra: terminé",
+        "text": "B) Simple past",
         "questionId": "d3-q1"
       },
       {
@@ -739,7 +739,7 @@
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) cantaré",
+        "text": "C) Present perfect",
         "questionId": "d3-q1"
       },
       {
@@ -747,7 +747,7 @@
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) habré terminado",
+        "text": "D) Simple present",
         "questionId": "d3-q1"
       },
       {
@@ -762,7 +762,7 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué pista dice que el resultado vive?",
+        "text": "Which clue word goes with the future?",
         "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
@@ -777,7 +777,7 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Ayer",
+        "text": "A) yesterday",
         "questionId": "d3-q2"
       },
       {
@@ -785,7 +785,7 @@
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Mañana",
+        "text": "B) already",
         "questionId": "d3-q2"
       },
       {
@@ -793,7 +793,7 @@
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Ya",
+        "text": "C) tomorrow",
         "questionId": "d3-q2"
       },
       {
@@ -801,7 +801,7 @@
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Cantaba",
+        "text": "D) last week",
         "questionId": "d3-q2"
       },
       {
@@ -809,7 +809,7 @@
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "¿Cuál frase usa dos palabras?",
+        "text": "Which clue word shows the simple present?",
         "questionId": "d3-q3",
         "questionType": "mcq",
         "gutter": {
@@ -824,7 +824,7 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) Ayer terminé.",
+        "text": "A) yesterday",
         "questionId": "d3-q3"
       },
       {
@@ -832,7 +832,7 @@
         "column": 3,
         "line": 3,
         "kind": "option",
-        "text": "B) Terminaré mañana.",
+        "text": "B) tomorrow",
         "questionId": "d3-q3"
       },
       {
@@ -840,7 +840,7 @@
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) Terminaba.",
+        "text": "C) already",
         "questionId": "d3-q3"
       },
       {
@@ -848,7 +848,7 @@
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) Ya he terminado.",
+        "text": "D) every day",
         "questionId": "d3-q3"
       },
       {
@@ -863,7 +863,7 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "«Leía cuando sonó»: ¿cuál es el fondo?",
+        "text": "Which action is long: riding or rang?",
         "questionId": "d3-q4",
         "questionType": "mcq",
         "gutter": {
@@ -878,7 +878,7 @@
         "column": 3,
         "line": 8,
         "kind": "option",
-        "text": "A) Sonó",
+        "text": "A) Rang",
         "questionId": "d3-q4"
       },
       {
@@ -886,7 +886,7 @@
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) Leía",
+        "text": "B) Was riding",
         "questionId": "d3-q4"
       },
       {
@@ -894,7 +894,7 @@
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) Cuando",
+        "text": "C) Both",
         "questionId": "d3-q4"
       },
       {
@@ -902,7 +902,7 @@
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) El teléfono",
+        "text": "D) Neither",
         "questionId": "d3-q4"
       },
       {
@@ -917,7 +917,7 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "«Leía cuando sonó»: ¿cuál es el golpe?",
+        "text": "Which action is short and sudden?",
         "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
@@ -932,7 +932,7 @@
         "column": 3,
         "line": 14,
         "kind": "option",
-        "text": "A) Sonó",
+        "text": "A) Rang",
         "questionId": "d3-q5"
       },
       {
@@ -940,7 +940,7 @@
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) Leía",
+        "text": "B) Was riding",
         "questionId": "d3-q5"
       },
       {
@@ -948,7 +948,7 @@
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) Cuando",
+        "text": "C) Will ride",
         "questionId": "d3-q5"
       },
       {
@@ -956,7 +956,7 @@
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) El",
+        "text": "D) Every day",
         "questionId": "d3-q5"
       },
       {
@@ -971,7 +971,7 @@
         "column": 3,
         "line": 19,
         "kind": "question",
-        "text": "¿Cuál frase está bien escrita?",
+        "text": "Which words point to the present perfect?",
         "questionId": "d3-q6",
         "questionType": "mcq",
         "gutter": {
@@ -986,7 +986,7 @@
         "column": 3,
         "line": 20,
         "kind": "option",
-        "text": "A) Han comidos.",
+        "text": "A) yesterday",
         "questionId": "d3-q6"
       },
       {
@@ -994,7 +994,7 @@
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) Han comer.",
+        "text": "B) tomorrow",
         "questionId": "d3-q6"
       },
       {
@@ -1002,7 +1002,7 @@
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) Han comido.",
+        "text": "C) already and just",
         "questionId": "d3-q6"
       },
       {
@@ -1010,7 +1010,7 @@
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) Han comiendo.",
+        "text": "D) last week",
         "questionId": "d3-q6"
       },
       {
@@ -1025,9 +1025,9 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "Escribe una frase de una palabra y otra de",
-        "questionId": "d3-w1",
-        "questionType": "write",
+        "text": "Which sentence is the simple future?",
+        "questionId": "d3-q7",
+        "questionType": "mcq",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1039,39 +1039,93 @@
         "index": 130,
         "column": 3,
         "line": 26,
-        "kind": "lesson",
-        "text": "dos.",
-        "questionId": "d3-w1"
+        "kind": "option",
+        "text": "A) I will ride the cable car tomorrow.",
+        "questionId": "d3-q7"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
+        "kind": "option",
+        "text": "B) I rode the cable car yesterday.",
+        "questionId": "d3-q7"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
+        "kind": "option",
+        "text": "C) I have finished the trip.",
+        "questionId": "d3-q7"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) I was riding the cable car.",
+        "questionId": "d3-q7"
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
         "kind": "question",
-        "text": "Explica por qué «ayer terminé» es una",
+        "text": "Write a sentence with the clue word",
+        "questionId": "d3-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "lesson",
+        "text": "yesterday.",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "question",
+        "text": "Write a sentence with the clue word already.",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1082,66 +1136,12 @@
         }
       },
       {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "lesson",
-        "text": "palabra.",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "question",
-        "text": "Dibuja un esquema: momento cerrado o",
-        "questionId": "d3-w3",
-        "questionType": "schematic",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "lesson",
-        "text": "vivo.",
-        "questionId": "d3-w3"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d3-w3"
+        "questionId": "d3-w2"
       },
       {
         "index": 142,
@@ -1149,7 +1149,7 @@
         "line": 38,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d3-w3"
+        "questionId": "d3-w2"
       },
       {
         "index": 143,
@@ -1163,8 +1163,8 @@
         "column": 3,
         "line": 40,
         "kind": "question",
-        "text": "Dibuja «Leía cuando sonó» con fondo y",
-        "questionId": "d3-w4",
+        "text": "Draw a chart: clue words and their tenses.",
+        "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
           "role": "question",
@@ -1177,9 +1177,9 @@
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "lesson",
-        "text": "golpe.",
-        "questionId": "d3-w4"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w3"
       },
       {
         "index": 146,
@@ -1187,36 +1187,45 @@
         "line": 42,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d3-w4"
+        "questionId": "d3-w3"
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "Draw a line: was riding and rang.",
+        "questionId": "d3-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w4"
       },
       {
         "index": 151,
@@ -1237,48 +1246,48 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja tres estaciones del teleférico."
+        "text": "Draw a clue-word chart with four rows:"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Escribe «ayer», «ya» y «leía» en ellas. Deja"
+        "text": "yesterday, every day, tomorrow, already."
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "un espacio para tu frase en cada una."
+        "text": "Next to each, draw an empty box for the"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Encierra la que tenga dos palabras."
+        "text": "tense and a short sentence."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 10,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué pide un momento cerrado («ayer»)?",
+        "prompt": "What tense goes with “yesterday”?",
         "choices": [
-          "Dos palabras: he terminado",
-          "Una palabra: terminé",
-          "cantaré",
-          "habré terminado"
+          "Simple future",
+          "Simple past",
+          "Present perfect",
+          "Simple present"
         ],
-        "answer": "Una palabra: terminé",
+        "answer": "Simple past",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1289,14 +1298,14 @@
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué pista dice que el resultado vive?",
+        "prompt": "Which clue word goes with the future?",
         "choices": [
-          "Ayer",
-          "Mañana",
-          "Ya",
-          "Cantaba"
+          "yesterday",
+          "already",
+          "tomorrow",
+          "last week"
         ],
-        "answer": "Ya",
+        "answer": "tomorrow",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1307,14 +1316,14 @@
         "id": "d3-q3",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuál frase usa dos palabras?",
+        "prompt": "Which clue word shows the simple present?",
         "choices": [
-          "Ayer terminé.",
-          "Terminaré mañana.",
-          "Terminaba.",
-          "Ya he terminado."
+          "yesterday",
+          "tomorrow",
+          "already",
+          "every day"
         ],
-        "answer": "Ya he terminado.",
+        "answer": "every day",
         "slot": {
           "column": 3,
           "line": 1,
@@ -1325,14 +1334,14 @@
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "«Leía cuando sonó»: ¿cuál es el fondo?",
+        "prompt": "Which action is long: riding or rang?",
         "choices": [
-          "Sonó",
-          "Leía",
-          "Cuando",
-          "El teléfono"
+          "Rang",
+          "Was riding",
+          "Both",
+          "Neither"
         ],
-        "answer": "Leía",
+        "answer": "Was riding",
         "slot": {
           "column": 3,
           "line": 7,
@@ -1343,14 +1352,14 @@
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "«Leía cuando sonó»: ¿cuál es el golpe?",
+        "prompt": "Which action is short and sudden?",
         "choices": [
-          "Sonó",
-          "Leía",
-          "Cuando",
-          "El"
+          "Rang",
+          "Was riding",
+          "Will ride",
+          "Every day"
         ],
-        "answer": "Sonó",
+        "answer": "Rang",
         "slot": {
           "column": 3,
           "line": 13,
@@ -1361,14 +1370,14 @@
         "id": "d3-q6",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuál frase está bien escrita?",
+        "prompt": "Which words point to the present perfect?",
         "choices": [
-          "Han comidos.",
-          "Han comer.",
-          "Han comido.",
-          "Han comiendo."
+          "yesterday",
+          "tomorrow",
+          "already and just",
+          "last week"
         ],
-        "answer": "Han comido.",
+        "answer": "already and just",
         "slot": {
           "column": 3,
           "line": 19,
@@ -1376,10 +1385,17 @@
         }
       },
       {
-        "id": "d3-w1",
+        "id": "d3-q7",
         "originDay": 3,
-        "type": "write",
-        "prompt": "Escribe una frase de una palabra y otra de dos.",
+        "type": "mcq",
+        "prompt": "Which sentence is the simple future?",
+        "choices": [
+          "I will ride the cable car tomorrow.",
+          "I rode the cable car yesterday.",
+          "I have finished the trip.",
+          "I was riding the cable car."
+        ],
+        "answer": "I will ride the cable car tomorrow.",
         "slot": {
           "column": 3,
           "line": 25,
@@ -1387,40 +1403,51 @@
         }
       },
       {
+        "id": "d3-w1",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Write a sentence with the clue word yesterday.",
+        "slot": {
+          "column": 3,
+          "line": 31,
+          "index": 135
+        }
+      },
+      {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Explica por qué «ayer terminé» es una palabra.",
+        "prompt": "Write a sentence with the clue word already.",
         "slot": {
           "column": 3,
-          "line": 30,
-          "index": 134
+          "line": 36,
+          "index": 140
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja un esquema: momento cerrado o vivo.",
-        "schematic": true,
-        "slotQuestionType": "schematic",
-        "slot": {
-          "column": 3,
-          "line": 35,
-          "index": 139
-        }
-      },
-      {
-        "id": "d3-w4",
-        "originDay": 3,
-        "type": "write",
-        "prompt": "Dibuja «Leía cuando sonó» con fondo y golpe.",
+        "prompt": "Draw a chart: clue words and their tenses.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
           "line": 40,
           "index": 144
+        }
+      },
+      {
+        "id": "d3-w4",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Draw a line: was riding and rang.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
         }
       }
     ]
@@ -1431,7 +1458,7 @@
     "objectives": [
       {
         "id": "len-lec-06",
-        "label": "I practice two-word Spanish verb times."
+        "label": "I choose the right tense with clue words."
       }
     ]
   }

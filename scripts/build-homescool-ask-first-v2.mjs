@@ -84,10 +84,16 @@ function stamp() {
 }
 
 const COPY_CUE = "Escribe aqu\u00ed lo que aprendiste:";
+const COPY_CUE_EN = "Write here what you learned:";
 /** Reflection / copy line (a row of underscores, one slot). Must fit the 59 mm text width. */
 const DASH = "_".repeat(40);
 // v3 (3 days per subject, not daily): "ayer" would be false, so the opening speaks of the last class.
 export const OPENING = "\u00bfQu\u00e9 aprendiste la clase pasada?";
+const OPENING_EN = "What did you learn in the last class?";
+/** English class (ing) is taught in English: its fixed frame lines are English too. */
+const isEn = (c) => /^ing-/.test(c.key);
+const openingOf = (c) => (isEn(c) ? OPENING_EN : OPENING);
+const copyCueOf = (c) => (isEn(c) ? COPY_CUE_EN : COPY_CUE);
 /** v3: the copy space after every "Escribe aqui lo que aprendiste:" is TWO dash rows. */
 const COPY_ROWS = 2;
 
@@ -113,7 +119,7 @@ function buildLesson(c, extra = 0) {
   };
 
   c.units.forEach((u, i) => {
-    if (i === 0) pushWrapped(out, [OPENING], "opening");
+    if (i === 0) pushWrapped(out, [openingOf(c)], "opening");
     else {
       ensureBlank();
       pushWrapped(out, u.q);
@@ -125,7 +131,7 @@ function buildLesson(c, extra = 0) {
     out.push(blank());
     pushWrapped(out, u.a);
     out.push(blank());
-    out.push(line(COPY_CUE));
+    out.push(line(copyCueOf(c)));
     for (let k = 0; k < COPY_ROWS; k++) out.push(line(DASH));
     out.push(blank());
   });
@@ -245,7 +251,7 @@ function finalize(s, index) {
 function pointsFrom(c) {
   return c.units.map((u, i) => {
     const paras = [];
-    if (i === 0) paras.push(OPENING);
+    if (i === 0) paras.push(openingOf(c));
     else if (u.q?.length) paras.push(u.q.join(" "));
     paras.push(u.a.join(" "));
     return { id: `p${i + 1}`, heading: u.h, body: paras.join("\n\n") };
