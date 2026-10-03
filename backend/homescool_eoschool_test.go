@@ -59,47 +59,58 @@ func TestValidateEoschoolDocumentDay1AllowsWrite(t *testing.T) {
 	}
 }
 
-func TestValidateEoschoolDocumentDay5(t *testing.T) {
-	doc := sampleEoschoolDay1()
-	doc.Day = 5
-	doc.Lesson.Kind = eoschoolKindReview
-	doc.Lesson.Summary = ""
-	doc.Lesson.Points = make([]EoschoolPoint, 5)
-	for i := range doc.Lesson.Points {
-		doc.Lesson.Points[i] = EoschoolPoint{ID: "p", Heading: "h", Body: "b"}
-	}
-	fillLetterQuizDay5(&doc)
-	if err := validateEoschoolDocument(&doc); err != nil {
-		t.Fatal(err)
+func TestValidateEoschoolDocumentRejectsDay4And5(t *testing.T) {
+	for _, day := range []int{4, 5} {
+		doc := sampleEoschoolDay1()
+		doc.Day = day
+		doc.Lesson.Kind = eoschoolKindDeepen
+		fp := day - 1
+		doc.Lesson.FocusPoint = &fp
+		doc.Lesson.Summary = ""
+		doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "h", Body: "b"}}
+		fillLetterQuizDay(&doc, 1)
+		if err := validateEoschoolDocument(&doc); err == nil {
+			t.Fatalf("day %d must be rejected in method v3", day)
+		}
 	}
 }
 
-func TestValidateEoschoolDocumentProDay5AllowsOnePoint(t *testing.T) {
+func TestValidateEoschoolDocumentProOnlyDay1(t *testing.T) {
 	doc := sampleEoschoolDay1()
 	doc.Subject = "pro"
-	doc.Day = 5
-	doc.Lesson.Kind = eoschoolKindReview
-	doc.Lesson.Summary = ""
-	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "Presenta el proyecto", Body: "Continúa el mismo experimento."}}
-	fillLetterQuizDay5(&doc)
 	if err := validateEoschoolDocument(&doc); err != nil {
 		t.Fatal(err)
 	}
-	doc.Subject = "mat"
-	if err := validateEoschoolDocument(&doc); err == nil {
-		t.Fatal("non-pro day 5 with 1 point should fail")
-	}
-}
-
-func TestValidateEoschoolDocumentDay4Write(t *testing.T) {
-	doc := sampleEoschoolDay1()
-	doc.Day = 4
+	doc.Day = 2
 	doc.Lesson.Kind = eoschoolKindDeepen
-	fp := 3
+	fp := 1
 	doc.Lesson.FocusPoint = &fp
 	doc.Lesson.Summary = ""
 	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "h", Body: "b"}}
-	fillLetterQuizDay(&doc, 4)
+	fillLetterQuizDay(&doc, 2)
+	if err := validateEoschoolDocument(&doc); err == nil {
+		t.Fatal("pro day 2 must be rejected")
+	}
+}
+
+func TestValidateEoschoolDocumentFinAllowsEmptySupportURL(t *testing.T) {
+	doc := sampleEoschoolDay1()
+	doc.Subject = "fin"
+	doc.SupportURL = ""
+	if err := validateEoschoolDocument(&doc); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestValidateEoschoolDocumentDay2Deepen(t *testing.T) {
+	doc := sampleEoschoolDay1()
+	doc.Day = 2
+	doc.Lesson.Kind = eoschoolKindDeepen
+	fp := 1
+	doc.Lesson.FocusPoint = &fp
+	doc.Lesson.Summary = ""
+	doc.Lesson.Points = []EoschoolPoint{{ID: "p1", Heading: "h", Body: "b"}}
+	fillLetterQuizDay(&doc, 2)
 	if err := validateEoschoolDocument(&doc); err != nil {
 		t.Fatal(err)
 	}
@@ -148,10 +159,6 @@ func fillLetterQuizDay(doc *EoschoolDocument, day int) {
 			ID: "w", OriginDay: day, Type: "write", Prompt: "cita y explica?",
 		}
 	}
-}
-
-func fillLetterQuizDay5(doc *EoschoolDocument) {
-	fillLetterQuizDay(doc, 5)
 }
 
 func sampleEoschoolDay1() EoschoolDocument {

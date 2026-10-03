@@ -123,3 +123,74 @@ func TestIsMatTablesLayoutSkipsLetterV2(t *testing.T) {
 		t.Fatal("mat with slotSequence must use Letter v2, not mat-tables")
 	}
 }
+
+func TestBuildEoschoolLetterV2SamplePDFsV3(t *testing.T) {
+	outDir := filepath.Join("..", "temp_test", "v3-sample-pdfs")
+	if err := os.MkdirAll(outDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	cases := []struct {
+		rel      string
+		name     string
+		needles  []string
+		wantJPEG bool
+	}{
+		{
+			rel:      "week1/esp-c3-w1-d1-l6.eoschool.json",
+			name:     "esp-d1-normal.pdf",
+			needles:  []string{"Espa", "Punto 1", "Fecha:", `clase pasada`},
+			wantJPEG: true,
+		},
+		{
+			rel:      "week1/pro-c3-w1-d1-l6.eoschool.json",
+			name:     "pro-d1.pdf",
+			needles:  []string{"Proyecto", "Punto 1", `clase pasada`},
+			wantJPEG: true,
+		},
+		{
+			rel:      "week1/fin-c3-w1-d1-l6.eoschool.json",
+			name:     "fin-d1.pdf",
+			needles:  []string{"Finanzas", "Punto 1", `clase pasada`},
+			wantJPEG: true,
+		},
+		{
+			rel:      "week2/mat-c3-w2-d2-l6.eoschool.json",
+			name:     "mat-d2-with-image.pdf",
+			needles:  []string{"Matem", "Punto 1", "Escribe aqu"},
+			wantJPEG: true,
+		},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			doc := loadPublishedEoschool(t, tc.rel)
+			raw, err := buildEoschoolPDF(doc)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !strings.HasPrefix(string(raw), "%PDF") {
+				t.Fatal("missing PDF header")
+			}
+			s := string(raw)
+			for _, needle := range tc.needles {
+				if !strings.Contains(s, needle) {
+					t.Fatalf("pdf missing %q", needle)
+				}
+			}
+			if !strings.Contains(s, "Repaso de la clase pasada") && !strings.Contains(s, "Repaso de la clase") {
+				// WinAnsi may escape accents; still require underscore copy rows via path.
+				t.Log("note: full 'Repaso de la clase pasada' may be WinAnsi-encoded")
+			}
+			if tc.wantJPEG && !strings.Contains(s, "/DCTDecode") && !strings.Contains(s, "/DCTDecode\n") {
+				// Practice image embedded as JPEG stream.
+				if !strings.Contains(s, "DCTDecode") {
+					t.Fatal("expected embedded practice JPEG (DCTDecode)")
+				}
+			}
+			out := filepath.Join(outDir, tc.name)
+			if err := os.WriteFile(out, raw, 0o644); err != nil {
+				t.Fatal(err)
+			}
+			t.Logf("wrote %s (%d bytes)", out, len(raw))
+		})
+	}
+}

@@ -306,7 +306,7 @@ import "../../styles/homescool-workspace.css";
       const subject = typeof parsed.subject === "string" ? parsed.subject.trim() : "";
       if (!Number.isFinite(cycle) || cycle < 1 || cycle > 3) return null;
       if (!Number.isFinite(week) || week < 1 || week > 24) return null;
-      if (!Number.isFinite(day) || day < 1 || day > 5) return null;
+      if (!Number.isFinite(day) || day < 1 || day > 3) return null;
       if (!subject || isHomescoolSubjectPaused(subject)) return null;
       return { cycle, week, day, subject };
     } catch {
@@ -610,7 +610,7 @@ import "../../styles/homescool-workspace.css";
 
     if (daysHost) {
       daysHost.replaceChildren();
-      // Proyecto = one project/week: no d1–d5 chips; single "du" (día único) → day 1.
+      // Proyecto = one project/week: no d1–d3 chips; single "du" (día único) → day 1.
       if (selection.subject === "pro") {
         selection.day = 1;
         const btn = makeChip("du");

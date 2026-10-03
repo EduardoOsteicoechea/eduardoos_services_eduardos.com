@@ -422,15 +422,18 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 	if doc.Week < 1 || doc.Week > 24 {
 		return fmt.Errorf("week must be 1–24")
 	}
-	if doc.Day < 1 || doc.Day > 5 {
-		return fmt.Errorf("day must be 1–5")
+	if doc.Day < 1 || doc.Day > 3 {
+		return fmt.Errorf("day must be 1–3")
 	}
 	if doc.Level != eoschoolLevelV1 {
 		return fmt.Errorf("level must be %d in method v1", eoschoolLevelV1)
 	}
 	doc.Subject = eoschoolNormalizeSubject(doc.Subject)
 	if !eoschoolSubjectOK(doc.Subject) {
-		return fmt.Errorf("subject must be one of the 12 method v1 codes")
+		return fmt.Errorf("subject must be one of the 13 method v3 codes")
+	}
+	if strings.EqualFold(doc.Subject, "pro") && doc.Day != 1 {
+		return fmt.Errorf("pro is only allowed on day 1")
 	}
 	doc.Title = strings.TrimSpace(doc.Title)
 	if doc.Title == "" {
@@ -440,6 +443,7 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 	if doc.Locale == "" {
 		doc.Locale = "es"
 	}
+	// supportUrl is optional (fin has none); only validate shape when present.
 	doc.SupportURL = strings.TrimSpace(doc.SupportURL)
 	if doc.SupportURL != "" {
 		lower := strings.ToLower(doc.SupportURL)
@@ -471,6 +475,7 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 	kind := strings.TrimSpace(strings.ToLower(doc.Lesson.Kind))
 	doc.Lesson.Kind = kind
 
+	// Method v3: d1 intro, d2/d3 deepen (focusPoint 1/2). No d4/d5.
 	switch doc.Day {
 	case 1:
 		if kind != eoschoolKindIntro {
@@ -485,9 +490,9 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 		if strings.TrimSpace(doc.Lesson.Summary) == "" {
 			return fmt.Errorf("day 1 summary required")
 		}
-	case 2, 3, 4:
+	case 2, 3:
 		if kind != eoschoolKindDeepen {
-			return fmt.Errorf("days 2–4 lesson.kind must be deepen")
+			return fmt.Errorf("days 2–3 lesson.kind must be deepen")
 		}
 		wantFocus := doc.Day - 1
 		if doc.Lesson.FocusPoint == nil || *doc.Lesson.FocusPoint != wantFocus {
@@ -495,19 +500,6 @@ func validateEoschoolDocument(doc *EoschoolDocument) error {
 		}
 		if len(doc.Lesson.Points) < 1 {
 			return fmt.Errorf("deepen days require at least one point block")
-		}
-	case 5:
-		if kind != eoschoolKindReview {
-			return fmt.Errorf("day 5 lesson.kind must be review")
-		}
-		// pro = one project/week: day 5 is wrap/expo (often 1 block). Ask-first sheets
-		// (Punto 1 = repaso de ayer + Punto 2..N) carry 5+ overview points.
-		if strings.EqualFold(strings.TrimSpace(doc.Subject), "pro") {
-			if len(doc.Lesson.Points) < 1 {
-				return fmt.Errorf("pro day 5 requires at least one overview point")
-			}
-		} else if len(doc.Lesson.Points) < 5 {
-			return fmt.Errorf("day 5 requires at least 5 overview points")
 		}
 	}
 

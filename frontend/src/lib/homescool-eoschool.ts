@@ -32,7 +32,7 @@ export {
 };
 export type { HomescoolSubject };
 
-/** Build letter-portrait DOM pages for lesson + quiz (+ d5 expo prep under review). */
+/** Build letter-portrait DOM pages for lesson + quiz. Letter v2 (156 slots) is the v3 path. */
 export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
   hcLog("eoschool", "render.start", {
     subject: doc.subject,
@@ -47,6 +47,7 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
     matTables: isMatTablesLayout(doc),
   });
 
+  // Method v3 published pack always has slotSequence → Letter v2 only (never legacy).
   if (hasLetterV2Slots(doc)) {
     const page = renderLetterV2Page(doc);
     enumerateLetterPageCodes(doc, [page]);
@@ -56,10 +57,6 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
 
   if (isMatTablesLayout(doc)) {
     const pages = renderMatTablesPages(doc);
-    if (doc.day === 5 && pages.length) {
-      appendExpoPrepColumns(pages[pages.length - 1]!);
-      hcLog("eoschool", "expo.prep", { layout: "mat-tables", attached: true });
-    }
     enumerateLetterPageCodes(doc, pages);
     hcLog("eoschool", "render.done", { pages: pages.length, layout: "mat-tables" });
     return pages;
@@ -68,21 +65,26 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
   const qs = doc.quiz?.questions ?? [];
   const pages: HTMLElement[] = [];
 
+  // Legacy only: skip empty support links (fin has none; Letter v2 never uses this page).
   if (doc.supportUrl?.trim()) {
     pages.push(buildSupportPage(doc));
   }
 
-  // Day 5: review + expo prep on the lesson sheet; quiz stays on its own page(s).
-  if (doc.day === 5) {
+  // Legacy multi-page path (no slotSequence). v3 pack never reaches here.
+  // Prefer one Letter page = class (2-col) + quiz bottom; dense intros fall back to multi-page.
+  const inlineable = qs.filter((q) => {
+    const t = quizItemType(q);
+    return t === "mcq" || t === "write";
+  });
+  const deferred = qs.filter((q) => {
+    const t = quizItemType(q);
+    return t !== "mcq" && t !== "write";
+  });
+  const lessonFitsOnePage = comboSliceFits(doc, []);
+  if (!lessonFitsOnePage && (doc.lesson?.kind === "intro" || doc.lesson?.kind === "review")) {
     const lessonPages = buildLessonPages(doc);
     pages.push(...lessonPages);
-    const host =
-      [...pages].reverse().find((p) => p.classList.contains("homescool-letter-page--lesson")) ||
-      pages[pages.length - 1];
-    if (host) {
-      appendExpoPrepColumns(host);
-      hcLog("eoschool", "expo.prep", { attached: true });
-    }
+    hcLog("eoschool", "combo.fallback-multipage", { lessonPages: lessonPages.length });
     if (qs.length) {
       const quizBatches = packQuizQuestions(doc, qs, 0);
       let start = 1;
@@ -92,46 +94,21 @@ export function renderEoschoolPages(doc: EoschoolDocument): HTMLElement[] {
       }
     }
   } else {
-    // Days 1–4: prefer one Letter page = class (2-col) + quiz bottom. Dense intros that
-    // cannot fit the lesson alone fall back to multi-page lesson + dedicated quiz sheets.
-    const inlineable = qs.filter((q) => {
-      const t = quizItemType(q);
-      return t === "mcq" || t === "write";
+    const fitted = maxComboQuizCount(doc, inlineable);
+    const comboQs = inlineable.slice(0, fitted);
+    pages.push(buildComboLessonQuizPage(doc, comboQs, 1, qs.length));
+    hcLog("eoschool", "combo.pack", {
+      fitted,
+      deferred: deferred.length,
+      leftover: inlineable.length - fitted,
     });
-    const deferred = qs.filter((q) => {
-      const t = quizItemType(q);
-      return t !== "mcq" && t !== "write";
-    });
-    const lessonFitsOnePage = comboSliceFits(doc, []);
-    if (!lessonFitsOnePage && (doc.lesson?.kind === "intro" || doc.lesson?.kind === "review")) {
-      const lessonPages = buildLessonPages(doc);
-      pages.push(...lessonPages);
-      hcLog("eoschool", "combo.fallback-multipage", { lessonPages: lessonPages.length });
-      if (qs.length) {
-        const quizBatches = packQuizQuestions(doc, qs, 0);
-        let start = 1;
-        for (const batch of quizBatches) {
-          pages.push(buildQuizPage(doc, batch, start, qs.length));
-          start += batch.length;
-        }
-      }
-    } else {
-      const fitted = maxComboQuizCount(doc, inlineable);
-      const comboQs = inlineable.slice(0, fitted);
-      pages.push(buildComboLessonQuizPage(doc, comboQs, 1, qs.length));
-      hcLog("eoschool", "combo.pack", {
-        fitted,
-        deferred: deferred.length,
-        leftover: inlineable.length - fitted,
-      });
-      const remaining = [...inlineable.slice(fitted), ...deferred];
-      if (remaining.length) {
-        const quizBatches = packQuizQuestions(doc, remaining, fitted);
-        let start = fitted + 1;
-        for (const batch of quizBatches) {
-          pages.push(buildQuizPage(doc, batch, start, qs.length));
-          start += batch.length;
-        }
+    const remaining = [...inlineable.slice(fitted), ...deferred];
+    if (remaining.length) {
+      const quizBatches = packQuizQuestions(doc, remaining, fitted);
+      let start = fitted + 1;
+      for (const batch of quizBatches) {
+        pages.push(buildQuizPage(doc, batch, start, qs.length));
+        start += batch.length;
       }
     }
   }
@@ -478,9 +455,6 @@ function lessonBlocksFit(
   if (withSummary) appendSummary(doc, band);
   finalizeLessonBand(band);
   page.append(band);
-  // Day 5: reserve the expo-prep band so review text does not crowd it out.
-  if (doc.day === 5) appendExpoPrepColumns(page);
-
   document.body.append(page);
   void page.offsetHeight;
   const client = page.clientHeight;
@@ -491,7 +465,7 @@ function lessonBlocksFit(
       segments.map(({ point, paragraphs }) => ({ ...point, body: paragraphs.join("\n\n") })),
       withSummary,
       doc.lesson?.summary,
-      doc.day === 5,
+      false,
     );
   }
   return scroll <= client + 1;

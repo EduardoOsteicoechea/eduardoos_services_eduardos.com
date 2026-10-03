@@ -148,28 +148,35 @@ describe("lesson rich layout", () => {
     expect(practice?.querySelector(".homescool-letter__practice-workspace--draw")).toBeTruthy();
   });
 
-  it("attaches day-5 expo prep under the review lesson (not a separate page)", () => {
+  it("Letter v2 slotSequence never attaches legacy day-5 expo prep", () => {
+    const slots = Array.from({ length: 156 }, (_, i) => {
+      const index = i + 1;
+      const column = Math.floor(i / 52) + 1;
+      const line = (i % 52) + 1;
+      return {
+        index,
+        column,
+        line,
+        kind: index === 1 ? "heading" : "blank",
+        text: index === 1 ? "¿Qué aprendiste la clase pasada?" : "",
+      };
+    });
     const doc = baseDoc({
-      day: 5,
+      day: 3,
+      supportUrl: "",
       lesson: {
-        kind: "review",
-        focusPoint: null,
-        points: [
-          { id: "p1", heading: "Panorama", body: "Idea.\n\nExplora.\n\nPráctica: escribe.\n\nError común: saltar." },
-          { id: "p2", heading: "Punto 1", body: "Repaso corto." },
-          { id: "p3", heading: "Punto 2", body: "Repaso corto." },
-          { id: "p4", heading: "Punto 3", body: "Repaso corto." },
-          { id: "p5", heading: "Síntesis", body: "Cierre." },
-        ],
+        kind: "deepen",
+        focusPoint: 2,
+        points: [{ id: "p1", heading: "Punto 1", body: "Repaso." }],
         summary: "",
+        slotSequence: slots,
       },
     });
     const pages = renderEoschoolPages(doc);
-    const lessonPages = pages.filter((p) => p.classList.contains("homescool-letter-page--lesson"));
-    const withExpo = lessonPages.filter((p) => p.querySelector(".homescool-letter__expo-prep"));
-    expect(withExpo.length).toBe(1);
-    expect(withExpo[0].querySelectorAll(".homescool-letter__expo-prep-col").length).toBe(2);
-    expect(pages.some((p) => p.classList.contains("homescool-letter-page--expo"))).toBe(false);
+    expect(pages).toHaveLength(1);
+    expect(pages[0].getAttribute("data-homescool-letter-v2")).toBe("1");
+    expect(pages[0].querySelector(".homescool-letter__expo-prep")).toBeNull();
+    expect(pages[0].querySelector(".homescool-letter__support-link")).toBeNull();
   });
 
   it("flows the lesson band as balanced CSS columns (height pinned for split)", () => {
