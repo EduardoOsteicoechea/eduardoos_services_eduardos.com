@@ -14,40 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nAyer viste las cuatro piezas, OiLS: O redonda, i punto, L recta, S curva. Hoy buscamos O e i en los Médanos."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nLa clase pasada viste las cuatro piezas: O redonda, i punto, L recta, S curva. Hoy miramos de cerca la O, la i y la L."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: La O, círculo grande",
-        "body": "En los Médanos de Coro sale el sol. ¿Qué forma dibujas para ese sol?\n\nEl sol es un círculo: es una O. Es la forma principal del dibujo. La dibujas primero, grande y clara."
+        "heading": "Punto 2: La O grande manda",
+        "body": "En los Médanos sale un sol grande y hay granitos de arena. ¿Cuál pieza manda?\n\nEl sol es una O grande y clara. Los granitos son i, mucho más chicas. Lo grande manda; lo chico acompaña."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: La i, el puntito",
-        "body": "Ahora mira la arena de cerca. ¿Qué forma tiene un granito de arena?\n\nUn granito de arena es un punto. Una huella pequeña también es un punto. El punto se llama i, como la letra."
+        "heading": "Punto 3: Que cada pieza se note",
+        "body": "Una pregunta con truco: si el punto mide igual que el sol, ¿se ve bien?\n\nNo. Si miden igual, no se sabe cuál manda. Hazlas distintas y rotúlalas. Rotular es escribir el nombre al lado."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: El punto es más pequeño",
-        "body": "Una pregunta con truco: ¿el punto puede ser igual de grande que el sol?\n\nNo. El punto es más chico que la O. Si miden igual, no se sabe cuál manda. Lo grande manda; lo pequeño acompaña."
+        "heading": "Punto 4: La L, horizontal y vertical",
+        "body": "Mira el horizonte y un palo clavado en la arena. ¿Hacia dónde va cada uno?\n\nEl horizonte va de lado a lado: es horizontal, como acostado. El palo va de arriba abajo: vertical."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Etiquetar cada marca",
-        "body": "¿Cómo marcas cuál es la O y cuál es la i cuando dibujas muchas?\n\nEscribe una O junto a cada círculo. Escribe una i junto a cada punto. Etiquetar es ponerle nombre a la pieza."
+        "heading": "Punto 5: Diagonal y ángulo",
+        "body": "La subida de una duna va inclinada. Si toca el palo, ¿qué se forma?\n\nUna recta inclinada es diagonal. Donde dos rectas se juntan, hay un ángulo, que es como una esquina."
       },
       {
         "id": "p6",
-        "heading": "Punto 6: Un detalle a la vez",
-        "body": "Ya tienes el sol y los granitos. ¿Cuántos detalles más pones?\n\nAñade un solo detalle pequeño. Si pones muchos, el dibujo se llena. Un detalle bien puesto es suficiente."
+        "heading": "Punto 6: Trazos firmes",
+        "body": "Una pregunta con truco: si tu recta sale temblorosa, ¿sigue siendo L?\n\nUna L temblorosa pierde su fuerza. La L debe salir firme y derecha. Traza despacio, con la mano segura."
       }
     ],
-    "summary": "En los Médanos de Coro dibujamos con O e i: el sol es una O grande y los granitos de arena son puntos i. Los rotulamos para no confundirnos.",
+    "summary": "En los Médanos de Coro la O grande manda y las i la acompañan. Las rectas L pueden ser horizontales, verticales o diagonales, y se juntan en ángulos.",
     "weekRecap": "OiLS: O redondos, i puntos, L rectas, S curvas. Primero la forma grande, luego el detalle.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un sol grande sobre una duna. Pon granitos de arena y huellas con i. Rotula cada marca con una O o una i. Revisa que cada punto sea más chico.",
+    "imageBandInstruction": "Ilustra una duna de los Médanos de Coro con sol grande y granitos chicos, un palo vertical y una subida diagonal. Deja sin escribir los rótulos O, i y L.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -55,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -90,7 +90,7 @@
         "column": 1,
         "line": 6,
         "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 7,
@@ -104,7 +104,7 @@
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Ayer viste las cuatro piezas, OiLS:"
+        "text": "La clase pasada viste las cuatro piezas:"
       },
       {
         "index": 9,
@@ -118,7 +118,7 @@
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Hoy buscamos O e i en los Médanos."
+        "text": "Hoy miramos de cerca la O, la i y la L."
       },
       {
         "index": 11,
@@ -145,36 +145,36 @@
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "En los Médanos de Coro sale el sol."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "¿Qué forma dibujas para ese sol?"
+        "text": "En los Médanos sale un sol grande y hay"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "granitos de arena. ¿Cuál pieza manda?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
@@ -187,120 +187,120 @@
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 2: La O, círculo grande"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: La O grande manda"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "lesson",
-        "text": "El sol es un círculo: es una O."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Es la forma principal del dibujo."
+        "text": "El sol es una O grande y clara."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "La dibujas primero, grande y clara."
+        "text": "Los granitos son i, mucho más chicas."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Lo grande manda; lo chico acompaña."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
         "kind": "lesson",
-        "text": "Ahora mira la arena de cerca."
+        "text": "________________________________________"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "lesson",
-        "text": "¿Qué forma tiene un granito de arena?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: si el punto mide"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "igual que el sol, ¿se ve bien?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "heading",
-        "text": "Punto 3: La i, el puntito"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
@@ -313,64 +313,64 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "lesson",
-        "text": "Un granito de arena es un punto."
+        "kind": "heading",
+        "text": "Punto 3: Que cada pieza se note"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "lesson",
-        "text": "Una huella pequeña también es un punto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "El punto se llama i, como la letra."
+        "text": "No. Si miden igual, no se sabe cuál"
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "manda. Hazlas distintas y rotúlalas."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Rotular es escribir el nombre al lado."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿el punto"
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "puede ser igual de grande que el sol?"
+        "text": "________________________________________"
       },
       {
         "index": 47,
@@ -384,14 +384,14 @@
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Mira el horizonte y un palo clavado"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "en la arena. ¿Hacia dónde va cada uno?"
       },
       {
         "index": 50,
@@ -404,57 +404,57 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "heading",
-        "text": "Punto 4: El punto es más pequeño"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "lesson",
-        "text": "No. El punto es más chico que la O."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Si miden igual, no se sabe cuál manda."
+        "kind": "heading",
+        "text": "Punto 4: La L, horizontal y vertical"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "Lo grande manda; lo pequeño acompaña."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El horizonte va de lado a lado:"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "es horizontal, como acostado."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "El palo va de arriba abajo: vertical."
       },
       {
         "index": 59,
@@ -468,42 +468,42 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "¿Cómo marcas cuál es la O y cuál"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "es la i cuando dibujas muchas?"
+        "text": "________________________________________"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La subida de una duna va inclinada."
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "heading",
-        "text": "Punto 5: Etiquetar cada marca"
+        "kind": "lesson",
+        "text": "Si toca el palo, ¿qué se forma?"
       },
       {
         "index": 66,
@@ -517,21 +517,21 @@
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "Escribe una O junto a cada círculo."
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Escribe una i junto a cada punto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "Etiquetar es ponerle nombre a la pieza."
+        "kind": "heading",
+        "text": "Punto 5: Diagonal y ángulo"
       },
       {
         "index": 70,
@@ -545,42 +545,42 @@
         "column": 2,
         "line": 19,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Una recta inclinada es diagonal."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Donde dos rectas se juntan, hay"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "un ángulo, que es como una esquina."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "lesson",
-        "text": "Ya tienes el sol y los granitos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "¿Cuántos detalles más pones?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 77,
@@ -600,111 +600,99 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "heading",
-        "text": "Punto 6: Un detalle a la vez"
+        "kind": "lesson",
+        "text": "Una pregunta con truco: si tu recta"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "sale temblorosa, ¿sigue siendo L?"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "lesson",
-        "text": "Añade un solo detalle pequeño."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
         "kind": "lesson",
-        "text": "Si pones muchos, el dibujo se llena."
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "lesson",
-        "text": "Un detalle bien puesto es suficiente."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Trazos firmes"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Una L temblorosa pierde su fuerza."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La L debe salir firme y derecha."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué letra es el sol?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Traza despacio, con la mano segura."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) i",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) L",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) S",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) O",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -718,8 +706,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué letra es un granito de arena?",
-        "questionId": "d2-q2",
+        "text": "¿Qué manda: la O grande o la i?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -733,32 +721,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) O",
-        "questionId": "d2-q2"
+        "text": "A) La i",
+        "questionId": "d2-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) i",
-        "questionId": "d2-q2"
+        "text": "B) Las dos igual",
+        "questionId": "d2-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) L",
-        "questionId": "d2-q2"
+        "text": "C) Ninguna",
+        "questionId": "d2-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) S",
-        "questionId": "d2-q2"
+        "text": "D) La O grande",
+        "questionId": "d2-q1"
       },
       {
         "index": 99,
@@ -772,8 +760,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué va primero, la O o la i?",
-        "questionId": "d2-q3",
+        "text": "¿Cómo es un granito frente al sol?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -787,40 +775,40 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) La i",
-        "questionId": "d2-q3"
+        "text": "A) Igual de grande",
+        "questionId": "d2-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Las dos juntas",
-        "questionId": "d2-q3"
+        "text": "B) Mucho más chico",
+        "questionId": "d2-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) La O",
-        "questionId": "d2-q3"
+        "text": "C) Más grande",
+        "questionId": "d2-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Ninguna",
-        "questionId": "d2-q3"
+        "text": "D) Más largo",
+        "questionId": "d2-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "¿Cómo es el punto frente a la O?",
-        "questionId": "d2-q4",
+        "text": "Si la i mide igual que la O, ¿qué pasa?",
+        "questionId": "d2-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -834,32 +822,32 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) Igual de grande",
-        "questionId": "d2-q4"
+        "text": "A) Queda perfecto",
+        "questionId": "d2-q3"
       },
       {
         "index": 107,
         "column": 3,
         "line": 3,
         "kind": "option",
-        "text": "B) Más grande",
-        "questionId": "d2-q4"
+        "text": "B) Se vuelve una L",
+        "questionId": "d2-q3"
       },
       {
         "index": 108,
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) Más largo",
-        "questionId": "d2-q4"
+        "text": "C) No se sabe cuál manda",
+        "questionId": "d2-q3"
       },
       {
         "index": 109,
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) Más pequeño",
-        "questionId": "d2-q4"
+        "text": "D) Se vuelve una S",
+        "questionId": "d2-q3"
       },
       {
         "index": 110,
@@ -873,8 +861,8 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "Si el punto y la O miden igual, ¿qué pasa?",
-        "questionId": "d2-q5",
+        "text": "¿Qué es rotular?",
+        "questionId": "d2-q4",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -888,32 +876,32 @@
         "column": 3,
         "line": 8,
         "kind": "option",
-        "text": "A) Queda perfecto",
-        "questionId": "d2-q5"
+        "text": "A) Borrar el dibujo",
+        "questionId": "d2-q4"
       },
       {
         "index": 113,
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) No se sabe cuál manda",
-        "questionId": "d2-q5"
+        "text": "B) Pintar de colores",
+        "questionId": "d2-q4"
       },
       {
         "index": 114,
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) Se vuelve una L",
-        "questionId": "d2-q5"
+        "text": "C) Agrandar la pieza",
+        "questionId": "d2-q4"
       },
       {
         "index": 115,
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) Se vuelve una S",
-        "questionId": "d2-q5"
+        "text": "D) Escribir el nombre al lado",
+        "questionId": "d2-q4"
       },
       {
         "index": 116,
@@ -927,8 +915,8 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿Para qué sirve etiquetar?",
-        "questionId": "d2-q6",
+        "text": "¿Cómo va el horizonte?",
+        "questionId": "d2-q5",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -942,32 +930,32 @@
         "column": 3,
         "line": 14,
         "kind": "option",
-        "text": "A) Para nombrar cada pieza",
-        "questionId": "d2-q6"
+        "text": "A) Vertical",
+        "questionId": "d2-q5"
       },
       {
         "index": 119,
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) Para borrar el dibujo",
-        "questionId": "d2-q6"
+        "text": "B) Horizontal",
+        "questionId": "d2-q5"
       },
       {
         "index": 120,
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) Para pintarlo",
-        "questionId": "d2-q6"
+        "text": "C) Diagonal",
+        "questionId": "d2-q5"
       },
       {
         "index": 121,
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) Para agrandarlo",
-        "questionId": "d2-q6"
+        "text": "D) Redondo",
+        "questionId": "d2-q5"
       },
       {
         "index": 122,
@@ -981,8 +969,8 @@
         "column": 3,
         "line": 19,
         "kind": "question",
-        "text": "¿Qué letra va junto a un círculo?",
-        "questionId": "d2-q7",
+        "text": "¿Cómo va el palo clavado en la arena?",
+        "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -996,32 +984,32 @@
         "column": 3,
         "line": 20,
         "kind": "option",
-        "text": "A) i",
-        "questionId": "d2-q7"
+        "text": "A) Vertical",
+        "questionId": "d2-q6"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) L",
-        "questionId": "d2-q7"
+        "text": "B) Horizontal",
+        "questionId": "d2-q6"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) O",
-        "questionId": "d2-q7"
+        "text": "C) Diagonal",
+        "questionId": "d2-q6"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) S",
-        "questionId": "d2-q7"
+        "text": "D) Curvo",
+        "questionId": "d2-q6"
       },
       {
         "index": 128,
@@ -1035,8 +1023,8 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "¿Qué pasa si pones muchos detalles?",
-        "questionId": "d2-q8",
+        "text": "¿Cómo se llama una recta inclinada?",
+        "questionId": "d2-q7",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -1050,32 +1038,32 @@
         "column": 3,
         "line": 26,
         "kind": "option",
-        "text": "A) El dibujo se llena",
-        "questionId": "d2-q8"
+        "text": "A) Horizontal",
+        "questionId": "d2-q7"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
         "kind": "option",
-        "text": "B) Queda más claro",
-        "questionId": "d2-q8"
+        "text": "B) Vertical",
+        "questionId": "d2-q7"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
         "kind": "option",
-        "text": "C) Se vuelve una L",
-        "questionId": "d2-q8"
+        "text": "C) Diagonal",
+        "questionId": "d2-q7"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
         "kind": "option",
-        "text": "D) Se vuelve una O",
-        "questionId": "d2-q8"
+        "text": "D) Redonda",
+        "questionId": "d2-q7"
       },
       {
         "index": 134,
@@ -1089,7 +1077,7 @@
         "column": 3,
         "line": 31,
         "kind": "question",
-        "text": "Escribe tres cosas redondas y tres puntitos.",
+        "text": "Escribe cómo va cada recta del dibujo.",
         "questionId": "d2-w1",
         "questionType": "write",
         "gutter": {
@@ -1127,7 +1115,7 @@
         "column": 3,
         "line": 35,
         "kind": "question",
-        "text": "Explica por qué el punto es menor que la O.",
+        "text": "Cuenta por qué la O manda sobre la i.",
         "questionId": "d2-w2",
         "questionType": "write",
         "gutter": {
@@ -1203,7 +1191,7 @@
         "column": 3,
         "line": 43,
         "kind": "question",
-        "text": "Dibuja una O grande y una i pequeña.",
+        "text": "Dibuja un palo, el horizonte y su ángulo.",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1255,66 +1243,48 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un sol grande sobre una duna. Pon"
+        "text": "Ilustra una duna de los Médanos de Coro"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "granitos de arena y huellas con i. Rotula"
+        "text": "con sol grande y granitos chicos, un palo"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "cada marca con una O o una i. Revisa que"
+        "text": "vertical y una subida diagonal. Deja sin"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "cada punto sea más chico."
+        "text": "escribir los rótulos O, i y L."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué letra es el sol?",
+        "prompt": "¿Qué manda: la O grande o la i?",
         "choices": [
-          "i",
-          "L",
-          "S",
-          "O"
+          "La i",
+          "Las dos igual",
+          "Ninguna",
+          "La O grande"
         ],
-        "answer": "O",
-        "slot": {
-          "column": 2,
-          "line": 36,
-          "index": 88
-        }
-      },
-      {
-        "id": "d2-q2",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué letra es un granito de arena?",
-        "choices": [
-          "O",
-          "i",
-          "L",
-          "S"
-        ],
-        "answer": "i",
+        "answer": "La O grande",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1322,17 +1292,17 @@
         }
       },
       {
-        "id": "d2-q3",
+        "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué va primero, la O o la i?",
+        "prompt": "¿Cómo es un granito frente al sol?",
         "choices": [
-          "La i",
-          "Las dos juntas",
-          "La O",
-          "Ninguna"
+          "Igual de grande",
+          "Mucho más chico",
+          "Más grande",
+          "Más largo"
         ],
-        "answer": "La O",
+        "answer": "Mucho más chico",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1340,17 +1310,17 @@
         }
       },
       {
-        "id": "d2-q4",
+        "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cómo es el punto frente a la O?",
+        "prompt": "Si la i mide igual que la O, ¿qué pasa?",
         "choices": [
-          "Igual de grande",
-          "Más grande",
-          "Más largo",
-          "Más pequeño"
+          "Queda perfecto",
+          "Se vuelve una L",
+          "No se sabe cuál manda",
+          "Se vuelve una S"
         ],
-        "answer": "Más pequeño",
+        "answer": "No se sabe cuál manda",
         "slot": {
           "column": 3,
           "line": 1,
@@ -1358,17 +1328,17 @@
         }
       },
       {
-        "id": "d2-q5",
+        "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Si el punto y la O miden igual, ¿qué pasa?",
+        "prompt": "¿Qué es rotular?",
         "choices": [
-          "Queda perfecto",
-          "No se sabe cuál manda",
-          "Se vuelve una L",
-          "Se vuelve una S"
+          "Borrar el dibujo",
+          "Pintar de colores",
+          "Agrandar la pieza",
+          "Escribir el nombre al lado"
         ],
-        "answer": "No se sabe cuál manda",
+        "answer": "Escribir el nombre al lado",
         "slot": {
           "column": 3,
           "line": 7,
@@ -1376,17 +1346,17 @@
         }
       },
       {
-        "id": "d2-q6",
+        "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Para qué sirve etiquetar?",
+        "prompt": "¿Cómo va el horizonte?",
         "choices": [
-          "Para nombrar cada pieza",
-          "Para borrar el dibujo",
-          "Para pintarlo",
-          "Para agrandarlo"
+          "Vertical",
+          "Horizontal",
+          "Diagonal",
+          "Redondo"
         ],
-        "answer": "Para nombrar cada pieza",
+        "answer": "Horizontal",
         "slot": {
           "column": 3,
           "line": 13,
@@ -1394,17 +1364,17 @@
         }
       },
       {
-        "id": "d2-q7",
+        "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué letra va junto a un círculo?",
+        "prompt": "¿Cómo va el palo clavado en la arena?",
         "choices": [
-          "i",
-          "L",
-          "O",
-          "S"
+          "Vertical",
+          "Horizontal",
+          "Diagonal",
+          "Curvo"
         ],
-        "answer": "O",
+        "answer": "Vertical",
         "slot": {
           "column": 3,
           "line": 19,
@@ -1412,17 +1382,17 @@
         }
       },
       {
-        "id": "d2-q8",
+        "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué pasa si pones muchos detalles?",
+        "prompt": "¿Cómo se llama una recta inclinada?",
         "choices": [
-          "El dibujo se llena",
-          "Queda más claro",
-          "Se vuelve una L",
-          "Se vuelve una O"
+          "Horizontal",
+          "Vertical",
+          "Diagonal",
+          "Redonda"
         ],
-        "answer": "El dibujo se llena",
+        "answer": "Diagonal",
         "slot": {
           "column": 3,
           "line": 25,
@@ -1433,7 +1403,7 @@
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Escribe tres cosas redondas y tres puntitos.",
+        "prompt": "Escribe cómo va cada recta del dibujo.",
         "slot": {
           "column": 3,
           "line": 31,
@@ -1444,7 +1414,7 @@
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Explica por qué el punto es menor que la O.",
+        "prompt": "Cuenta por qué la O manda sobre la i.",
         "slot": {
           "column": 3,
           "line": 35,
@@ -1468,7 +1438,7 @@
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja una O grande y una i pequeña.",
+        "prompt": "Dibuja un palo, el horizonte y su ángulo.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

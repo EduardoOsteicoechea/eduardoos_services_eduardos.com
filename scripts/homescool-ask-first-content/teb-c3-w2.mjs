@@ -1,11 +1,14 @@
 /**
  * Teología bíblica · ciclo 3 · semana 2 · nivel 6 — "Génesis: creación,
- * diluvio y promesa". Formato Ask First v2.
+ * diluvio y promesa". Método v3 (3 días): Ask First.
  * Hito de Venezuela: Los Llanos (lluvia y sequía). Es una imagen («es como…»),
  * nunca una equivalencia teológica. Solo datos seguros de
  * docs/homescool-venezuela-metaphors.md: grandes llanuras con ríos; en la
  * época de lluvia muchas zonas se inundan y en la sequía el suelo se seca.
  * Citas bíblicas parafraseadas, sin comillas.
+ *
+ * d1 = panorama de Génesis · d2 = creación y caída (más de cerca) ·
+ * d3 = diluvio, alianza y promesa a Abraham + contar Génesis con orden.
  */
 export default [
   // ───────────────────────── DÍA 1 ─────────────────────────
@@ -13,7 +16,7 @@ export default [
     key: "teb-c3-w2-d1",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
           "La semana pasada viste que la Biblia",
           "cuenta una sola historia larga.",
@@ -54,12 +57,9 @@ export default [
         ],
         h: "Punto 4: Caída y diluvio",
         a: [
-          "Adán y Eva desobedecieron a Dios.",
-          "Esa es la caída: entró el pecado.",
-          "Después el mal creció y vino el diluvio,",
-          "un gran juicio por agua.",
-          "Noé y su familia se cuidaron en el arca,",
-          "un barco grande.",
+          "Adán y Eva desobedecieron: la caída.",
+          "Entró el pecado. Luego vino el diluvio,",
+          "un juicio por agua. Noé usó el arca.",
         ],
       },
       {
@@ -67,12 +67,12 @@ export default [
           "Después de la sequía llega la lluvia",
           "a los Llanos. ¿Qué prometió Dios luego?",
         ],
-        h: "Punto 5: Promesa y patriarcas",
+        h: "Punto 5: Promesa a Abraham",
         a: [
           "Dios prometió bendecir a Abraham",
-          "y a su familia.",
-          "Los patriarcas: Abraham, Isaac y Jacob.",
-          "La tierra prometida es Canaán.",
+          "y a toda su familia.",
+          "Luego siguieron Isaac y Jacob.",
+          "Su tierra prometida es Canaán.",
         ],
       },
       {
@@ -94,8 +94,8 @@ export default [
         { q: "¿Cuál es el primer libro de la Biblia?", o: ["Génesis", "Salmos", "Hechos", "Romanos"] },
         { q: "¿Qué dijo Dios de lo que creó?", o: ["Que era bueno", "Que era pequeño", "Que estaba roto", "Que no servía"] },
         { q: "¿Qué es la caída?", o: ["La desobediencia de Adán y Eva", "Una caída de agua", "Un viaje largo", "Una fiesta"] },
-        { q: "¿Qué fue el diluvio?", o: ["Un gran juicio por agua", "Una torre alta", "Una ciudad", "Un desierto"] },
-        { q: "¿Qué era el arca?", o: ["Un barco grande", "Una casa de piedra", "Un libro", "Una corona"] },
+        { q: "¿Qué fue el diluvio?", o: ["Un juicio por agua", "Una torre alta", "Una ciudad", "Un desierto"] },
+        { q: "¿Qué usó Noé en el diluvio?", o: ["El arca", "Una torre", "Un libro", "Una corona"] },
         { q: "¿A quién prometió Dios bendecir?", o: ["A Abraham y su familia", "A Adán solo", "A los ángeles", "A ningún pueblo"] },
         { q: "¿Qué va primero en Génesis?", o: ["La creación", "La promesa", "El diluvio", "La caída"] },
       ],
@@ -122,11 +122,12 @@ export default [
     key: "teb-c3-w2-d2",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
-          "Ayer viste el panorama de Génesis,",
-          "como una llanura vista desde lejos.",
-          "Hoy te quedas en la creación.",
+          "La clase pasada viste el panorama",
+          "de Génesis, como una llanura",
+          "vista desde lejos.",
+          "Hoy te acercas a la creación y la caída.",
         ],
       },
       {
@@ -145,7 +146,7 @@ export default [
       {
         q: [
           "Recorre los Llanos de río a horizonte.",
-          "¿En qué orden cuenta Génesis todo?",
+          "¿En qué orden cuenta Génesis la creación?",
         ],
         h: "Punto 3: Los siete días",
         a: [
@@ -169,27 +170,26 @@ export default [
       },
       {
         q: [
-          "Imagina una tarde calma en los Llanos.",
-          "¿Dios descansó el día siete cansado?",
+          "En la sequía, el suelo de los Llanos",
+          "se seca. ¿Qué se rompió con la caída?",
         ],
-        h: "Punto 5: El día de descanso",
+        h: "Punto 5: La caída",
         a: [
-          "No descansó por estar cansado.",
-          "Fue un día de descanso santo,",
-          "un modelo de descanso y adoración.",
-          "Es como una tarde de calma en el Llano.",
+          "Adán y Eva desobedecieron a Dios.",
+          "Pecado es romper la confianza en Dios.",
+          "Es como el suelo seco: algo falta.",
         ],
       },
       {
         q: [
-          "Si la lluvia llena de agua los Llanos,",
-          "¿qué le dices a Dios por lo que hizo?",
+          "Una pregunta con truco: ¿el mal estuvo",
+          "desde el principio en el mundo?",
         ],
-        h: "Punto 6: Cuidar y dar gracias",
+        h: "Punto 6: Por qué hay dolor",
         a: [
-          "Puedes cuidar plantas, animales",
-          "y personas. Y puedes dar gracias a Dios.",
-          "La creación abre la historia, y sigue.",
+          "No. Primero Dios hizo un mundo bueno.",
+          "La caída ayuda a explicar el dolor.",
+          "Y aun así puedes dar gracias a Dios.",
         ],
       },
     ],
@@ -201,8 +201,8 @@ export default [
         { q: "¿Qué día llegaron las personas?", o: ["El día seis", "El día uno", "El día siete", "El día dos"] },
         { q: "¿Qué hizo Dios el día siete?", o: ["Descansó", "Hizo el arca", "Hizo la luz", "Cerró el mar"] },
         { q: "¿Cómo hizo Dios al ser humano?", o: ["A su imagen", "Sin propósito", "Como un río", "Sin tarea"] },
-        { q: "¿Qué tarea recibió el ser humano?", o: ["Cuidar lo creado", "Romper lo creado", "Olvidar lo creado", "Vender lo creado"] },
-        { q: "¿Cómo es el día de descanso?", o: ["Santo", "De diluvio", "De viaje", "De guerra"] },
+        { q: "¿Qué es el pecado?", o: ["Romper la confianza en Dios", "Un barco", "Una montaña", "Un río"] },
+        { q: "¿Qué ayuda a explicar la caída?", o: ["Por qué hay dolor", "Por qué hay estrellas", "Por qué hay mares", "Por qué hay plantas"] },
       ],
       write: [
         "Explica con tus palabras bueno y bonito.",
@@ -210,16 +210,16 @@ export default [
       ],
       schematic: [
         "Dibuja siete cajas, una por cada día.",
-        "Dibuja una persona: imagen de Dios y cuidar.",
+        "Haz dos columnas: lluvia con vida, sequía sin.",
       ],
     },
     image: [
       "Dibuja una llanura con ríos y pastizal.",
       "Añade una persona que cuida lo creado.",
       "Rotula tres cosas con la palabra buena.",
-      "Escribe arriba una frase de gracias.",
+      "A un lado dibuja suelo seco: la caída.",
     ],
-    summary: "Dios hizo un mundo bueno, creó al ser humano a su imagen y dejó un día de descanso santo.",
+    summary: "Dios hizo un mundo bueno y creó al ser humano a su imagen; la caída trajo el pecado.",
   },
 
   // ───────────────────────── DÍA 3 ─────────────────────────
@@ -227,36 +227,12 @@ export default [
     key: "teb-c3-w2-d3",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
-          "Ayer viste que Dios hizo un mundo bueno",
-          "y creó a las personas a su imagen.",
-          "Hoy ves qué pasó con la caída.",
-        ],
-      },
-      {
-        q: [
-          "En la sequía, el suelo de los Llanos",
-          "se seca. ¿Qué se rompió con la caída?",
-        ],
-        h: "Punto 2: La caída",
-        a: [
-          "Adán y Eva desobedecieron a Dios.",
-          "Esa es la caída: entró el pecado.",
-          "Pecado es romper la confianza en Dios.",
-          "Es como el suelo seco: algo falta.",
-        ],
-      },
-      {
-        q: [
-          "Dios hizo un mundo bueno, como los",
-          "Llanos tras la lluvia. ¿Por qué hay dolor?",
-        ],
-        h: "Punto 3: Por qué hay dolor",
-        a: [
-          "La caída ayuda a explicar el dolor.",
-          "El mal no estuvo desde el principio.",
-          "Primero Dios hizo un mundo bueno.",
+          "La clase pasada viste que Dios hizo",
+          "un mundo bueno y que la caída",
+          "trajo el pecado. Hoy sigues con",
+          "el diluvio y la promesa.",
         ],
       },
       {
@@ -264,32 +240,20 @@ export default [
           "En la lluvia, muchas zonas de los Llanos",
           "se inundan. ¿Qué fue el diluvio?",
         ],
-        h: "Punto 4: El diluvio",
+        h: "Punto 2: El diluvio y el arca",
         a: [
           "Una inundación de los Llanos ayuda",
           "a imaginar mucha agua, pero no es igual.",
-          "El diluvio fue un gran juicio de Dios",
-          "y mostró lo grave que es el mal.",
+          "El diluvio fue un gran juicio de Dios.",
+          "Noé se cuidó con su familia en el arca.",
         ],
       },
       {
         q: [
-          "Cuando el agua cubre la llanura,",
-          "¿cómo cuidó Dios a Noé y su familia?",
+          "Después de la lluvia llega la calma.",
+          "¿Qué promesa hizo Dios a Noé?",
         ],
-        h: "Punto 5: El arca de Noé",
-        a: [
-          "Dios mandó a Noé construir un arca,",
-          "un barco grande que protegió la vida.",
-          "Allí estuvieron su familia y animales.",
-        ],
-      },
-      {
-        q: [
-          "Después de la lluvia en los Llanos llega",
-          "la sequía. ¿Y después del diluvio?",
-        ],
-        h: "Punto 6: Justicia y misericordia",
+        h: "Punto 3: La alianza y el arco iris",
         a: [
           "Dios hizo una alianza con Noé,",
           "un compromiso muy importante.",
@@ -297,71 +261,17 @@ export default [
           "otro diluvio que destruyera la tierra.",
         ],
       },
-    ],
-    quiz: {
-      mcq: [
-        { q: "¿Qué es la caída?", o: ["La desobediencia de Adán y Eva", "Un viaje largo", "Una fiesta", "Una torre"] },
-        { q: "¿Qué entró con la caída?", o: ["El pecado", "La luz", "El arca", "La promesa"] },
-        { q: "¿Qué es el pecado?", o: ["Romper la confianza en Dios", "Un barco", "Una montaña", "Un río"] },
-        { q: "¿Qué ayuda a explicar la caída?", o: ["Por qué hay dolor", "Por qué hay estrellas", "Por qué hay mares", "Por qué hay plantas"] },
-        { q: "¿Qué fue el diluvio?", o: ["Un gran juicio por agua", "Una fiesta", "Una canción", "Una torre"] },
-        { q: "¿Qué era el arca?", o: ["Un barco grande", "Una casa de piedra", "Un libro", "Un templo"] },
-        { q: "¿Qué es una alianza?", o: ["Un compromiso muy importante", "Un juego", "Un barco", "Un castigo"] },
-        { q: "¿Qué señal puso Dios?", o: ["El arco iris", "Una torre", "Un mapa", "Una corona"] },
-      ],
-      write: [
-        "Explica qué señala el arco iris.",
-        "Define con tus palabras caída, diluvio y arca.",
-      ],
-      schematic: [
-        "Haz dos columnas: sequía y lluvia, caída y arca.",
-        "Dibuja el arca con el arco iris encima.",
-      ],
-    },
-    image: [
-      "Dibuja una llanura cubierta de agua.",
-      "Pon el arca sobre el agua con animales.",
-      "Añade un arco iris en el cielo.",
-      "Rotula el arca y el arco iris.",
-    ],
-    summary: "La caída trajo el pecado; el diluvio mostró el juicio y Dios dio el arco iris como señal.",
-  },
-
-  // ───────────────────────── DÍA 4 ─────────────────────────
-  {
-    key: "teb-c3-w2-d4",
-    units: [
-      {
-        h: "Punto 1: Repaso de ayer",
-        a: [
-          "Ayer viste que Dios cuidó a Noé",
-          "y puso el arco iris como señal.",
-          "Hoy sigues con otra promesa: Abraham.",
-        ],
-      },
-      {
-        q: [
-          "Después de la sequía llega la lluvia",
-          "a los Llanos. ¿A quién llamó Dios luego?",
-        ],
-        h: "Punto 2: Dios llama a Abraham",
-        a: [
-          "Dios llamó a Abraham y le pidió",
-          "que saliera de su tierra.",
-          "Le prometió bendecirlo a él",
-          "y a toda su familia.",
-        ],
-      },
       {
         q: [
           "Abraham miró el cielo. En los Llanos",
           "el horizonte se ve lejos. ¿Qué vio?",
         ],
-        h: "Punto 3: Las estrellas",
+        h: "Punto 4: Dios llama a Abraham",
         a: [
-          "Dios le mostró las estrellas.",
-          "Le prometió una familia muy grande,",
-          "difícil de contar como ellas.",
+          "Dios llamó a Abraham y le prometió",
+          "bendecir a su familia.",
+          "Le mostró las estrellas: su familia",
+          "sería difícil de contar como ellas.",
         ],
       },
       {
@@ -369,48 +279,37 @@ export default [
           "Un río lleva agua por la llanura.",
           "¿Quiénes llevaron la promesa de Dios?",
         ],
-        h: "Punto 4: Los patriarcas",
+        h: "Punto 5: Los patriarcas",
         a: [
-          "Los patriarcas: Abraham, Isaac y Jacob.",
-          "Son los padres fundadores de Israel.",
+          "Abraham, Isaac y Jacob son los patriarcas.",
           "La promesa pasó de uno a otro, como",
           "el agua de un río sigue su camino.",
-        ],
-      },
-      {
-        q: [
-          "Piensa en un lugar lejano, al horizonte.",
-          "¿Qué tierra prometió Dios a Abraham?",
-        ],
-        h: "Punto 5: La tierra prometida",
-        a: [
           "La tierra prometida es Canaán.",
-          "Dios prometió dar esa tierra a su gente.",
-          "Era parte de su pacto: promesa firme.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: ¿lluvia y sequía",
-          "en los Llanos son historias sueltas?",
+          "Ahora cuéntalo en voz alta, como",
+          "un viaje por los Llanos. ¿Qué va primero?",
         ],
-        h: "Punto 6: Un mismo hilo",
+        h: "Punto 6: Cómo contar Génesis",
         a: [
-          "No: son partes de un mismo paisaje.",
-          "En Génesis pasa igual: creación, caída,",
-          "diluvio y promesa forman un mismo hilo.",
+          "Primero la creación, luego la caída",
+          "y el diluvio, y al final la promesa.",
+          "No son cuentos sueltos: forman",
+          "un mismo hilo, como un mismo paisaje.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿A quién llamó Dios para una promesa?", o: ["A Abraham", "A Noé", "A Adán", "A un rey"] },
-        { q: "¿Qué prometió Dios a Abraham?", o: ["Bendecirlo a él y su familia", "Que no tendría familia", "Un barco", "Una torre"] },
+        { q: "¿Qué fue el diluvio?", o: ["Un gran juicio por agua", "Una fiesta", "Una canción", "Una torre"] },
+        { q: "¿Qué protegió a Noé y su familia?", o: ["El arca", "Una torre", "Un mapa", "Una corona"] },
+        { q: "¿Qué es una alianza?", o: ["Un compromiso muy importante", "Un juego", "Un barco", "Un castigo"] },
+        { q: "¿Qué señal puso Dios a Noé?", o: ["El arco iris", "Una torre", "Un mapa", "Una corona"] },
         { q: "¿Qué le mostró Dios a Abraham?", o: ["Las estrellas", "Un arca", "Un río", "Una torre"] },
-        { q: "¿Cómo se llama a los padres de Israel?", o: ["Patriarcas", "Profetas", "Jueces", "Ángeles"] },
         { q: "¿Quiénes son los patriarcas?", o: ["Abraham, Isaac y Jacob", "Noé y Adán", "Pedro y Pablo", "Eva y Sara"] },
         { q: "¿Cuál es la tierra prometida?", o: ["Canaán", "Egipto", "Roma", "Babilonia"] },
-        { q: "¿Qué es un pacto?", o: ["Una promesa firme", "Un barco", "Un río", "Una torre"] },
         { q: "¿Qué une las partes de Génesis?", o: ["Un mismo hilo", "Cuentos sueltos", "Una lista", "Un castillo"] },
       ],
       write: [
@@ -418,114 +317,8 @@ export default [
         "Cuenta qué le prometió Dios a Abraham.",
       ],
       schematic: [
+        "Dibuja el arca con el arco iris encima.",
         "Dibuja un árbol: Abraham, Isaac y Jacob.",
-        "Dibuja una línea con las cuatro partes de Génesis.",
-      ],
-    },
-    image: [
-      "Dibuja a Abraham mirando las estrellas.",
-      "Debajo escribe a Isaac y a Jacob.",
-      "Añade una flecha: la promesa de Dios.",
-      "Rotula la tierra prometida: Canaán.",
-    ],
-    summary: "Dios llamó a Abraham y prometió bendecir a su familia: Isaac y Jacob, los patriarcas.",
-  },
-
-  // ───────────────────────── DÍA 5 ─────────────────────────
-  {
-    key: "teb-c3-w2-d5",
-    units: [
-      {
-        h: "Punto 1: Repaso de ayer",
-        a: [
-          "Ayer viste a Abraham, Isaac y Jacob",
-          "y la promesa de Dios a su familia.",
-          "Hoy cuentas todo Génesis con orden.",
-        ],
-      },
-      {
-        q: [
-          "Imagina Los Llanos con sus ríos.",
-          "Sin mirar nada, ¿cómo empieza Génesis?",
-        ],
-        h: "Punto 2: Creación y bondad",
-        a: [
-          "Empieza con la creación.",
-          "Dios hizo un mundo y dijo que era bueno.",
-          "Bueno es completo y como Dios lo quería.",
-        ],
-      },
-      {
-        q: [
-          "En los Llanos hay lluvia y hay sequía.",
-          "¿Qué parte de Génesis trae el dolor?",
-        ],
-        h: "Punto 3: Caída y diluvio",
-        a: [
-          "La caída trajo el pecado.",
-          "El diluvio mostró el juicio de Dios,",
-          "pero Dios cuidó a Noé en el arca",
-          "y puso el arco iris como señal.",
-        ],
-      },
-      {
-        q: [
-          "Mira el horizonte de los Llanos.",
-          "¿Qué promesa sigue en la historia?",
-        ],
-        h: "Punto 4: Promesa y patriarcas",
-        a: [
-          "Dios llamó a Abraham y prometió",
-          "bendecir a su familia.",
-          "Isaac y Jacob siguieron la promesa.",
-          "La tierra prometida es Canaán.",
-        ],
-      },
-      {
-        q: [
-          "Cuéntale Génesis a tu familia como",
-          "un viaje por los Llanos. ¿Qué va primero?",
-        ],
-        h: "Punto 5: Tres partes, un hilo",
-        a: [
-          "Primero la creación, luego la caída",
-          "y el diluvio, y al final la promesa.",
-          "La promesa une las tres partes:",
-          "no son cuentos sueltos.",
-        ],
-      },
-      {
-        q: [
-          "Ahora practica en voz alta. ¿Cómo abres",
-          "tu exposición sobre Génesis?",
-        ],
-        h: "Punto 6: Cómo contarlo",
-        a: [
-          "Abres así: «Hoy les cuento Génesis,",
-          "el libro de los comienzos».",
-          "Sigues el orden del viaje y cierras",
-          "con la promesa de Dios.",
-        ],
-      },
-    ],
-    quiz: {
-      mcq: [
-        { q: "¿Cuál es el primer libro de la Biblia?", o: ["Génesis", "Romanos", "Salmos", "Hechos"] },
-        { q: "¿Qué significa «bueno»?", o: ["Completo y como Dios lo quería", "Solo bonito", "Sin cuidado", "Un dibujo"] },
-        { q: "¿Qué trajo la caída?", o: ["El pecado", "La torre", "El arca", "El descanso"] },
-        { q: "¿Qué mostró el diluvio?", o: ["El juicio de Dios", "Una fiesta", "Un viaje", "Una promesa vacía"] },
-        { q: "¿Qué señal puso Dios?", o: ["El arco iris", "Una torre", "Un mapa", "Una corona"] },
-        { q: "¿A quién prometió Dios bendición?", o: ["A Abraham", "A Noé", "A Adán", "A Caín"] },
-        { q: "¿Cuál es la tierra prometida?", o: ["Canaán", "Egipto", "Roma", "Babilonia"] },
-        { q: "¿Qué une las partes de Génesis?", o: ["La promesa de Dios", "Una lista", "Un castillo", "Un mapa"] },
-      ],
-      write: [
-        "Cuenta Génesis con orden en cuatro frases.",
-        "Explica por qué no son cuentos sueltos.",
-      ],
-      schematic: [
-        "Dibuja tres partes: creación, caída y promesa.",
-        "Dibuja un viaje por Los Llanos con tres paradas.",
       ],
     },
     image: [
@@ -534,6 +327,6 @@ export default [
       "diluvio y promesa, en orden.",
       "Revisa el orden, de izquierda a derecha.",
     ],
-    summary: "Génesis une creación, caída, diluvio y promesa en una sola historia que Dios guía.",
+    summary: "Tras el diluvio, Dios dio el arco iris y llamó a Abraham: Génesis es una historia en orden.",
   },
 ];

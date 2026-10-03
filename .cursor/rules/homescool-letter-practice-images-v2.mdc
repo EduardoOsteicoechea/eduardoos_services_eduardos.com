@@ -1,0 +1,79 @@
+---
+description: Regenerar imágenes de práctica Homescool al band Containerimages v2 (203×70 mm)
+globs: frontend/public/homescool/media/**/practice-images/**,frontend/public/homescool/media/**/*.eoschool.json,frontend/src/lib/homescool-eoschool.ts,.cursor/skills/eoschool/**/*
+alwaysApply: false
+---
+
+# Homescool practice images — Letter grid v2 band
+
+Applies when **creating or replacing** week practice JPGs that print in the **images band** of the v2 Letter sheet.
+
+## Geometry (SoT)
+
+From [`.cursor/rules/homescool-letter-grid-v2.mdc`](homescool-letter-grid-v2.mdc):
+
+| Field | x (mm) | top (mm) | w (mm) | h (mm) |
+| --- | --- | --- | --- | --- |
+| **Containerimages** | 5 | 205 | **203** | **70** |
+
+- **Aspect ratio (width ÷ height):** `203 / 70` ≈ **2.9 : 1** (landscape inside the band).
+- **Safe area:** full **203 × 70 mm** rect; keep important ink **≥ 2 mm** inside edges (stroke / trim).
+- Do **not** assume the old full-width practice sheet or 0.5 cm margin page layout for image sizing.
+
+## Export targets (raster)
+
+| DPI | Width × height (px) | Notes |
+| --- | --- | --- |
+| **300** (print) | **2398 × 827** | `round(mm / 25.4 × dpi)` |
+| **150** (draft) | **1199 × 414** | Half-res previews |
+
+Format: **JPEG**, sRGB, **no** embedded text the child must read (labels OK only if part of the worksheet art). Line art / workbook style; white or very light ground; **no** solid ink-wasting fills (align with `homescool-materials.mdc` print palette).
+
+## File layout (unchanged paths)
+
+- Directory: `frontend/public/homescool/media/week{N}/practice-images/`
+- Filename: `{subject}-c3-w{N}-practice.jpg`  
+  Example: `mat-c3-w2-practice.jpg`
+- `subject` ∈ `mat`, `esp`, `ing`, `his`, `lat`, `LT`, `geo`, `cie`, `art`, `pro`, `teb`, `exe` (case as today).
+- Alt / creative brief: `QUIZ_PRACTICE_ALTS` in `frontend/src/lib/homescool-eoschool.ts` (update alt when the scene changes).
+
+Optional per-cell override: `media[]` entry with id **`quiz-practice`** pointing at the same path (see `quizPracticeImage()`).
+
+## Regeneration checklist
+
+1. Read **week + subject** alt line from `QUIZ_PRACTICE_ALTS[week][subject]`.
+2. Generate at **2398 × 827** (or vector export then rasterize to that size).
+3. Replace JPG in `practice-images/`; keep filename.
+4. Spot-check in sample PDF / print preview that the image **fits the 203 × 70 mm band** without clipping (FE/PDF wiring may lag grid v2 — still size assets to this band).
+5. Do **not** delete prior art without a backup copy (see class v2 upsert rule).
+
+## v3 — una imagen por clase, prompt desde la indicación de la clase
+
+Con el método v3 ([`homescool-class-method-v3.mdc`](homescool-class-method-v3.mdc)) **cada clase** (74 en semanas 1–2) tiene su propia imagen:
+
+- Archivo: `practice-images/{subj}-c3-w{N}-d{D}-practice.jpg` (`pro`: solo `d1`). El archivo antiguo `{subj}-c3-w{N}-practice.jpg` queda como respaldo si falta el de la clase.
+- **Fuente única del prompt:** `lesson.imageBandInstruction` del JSON de la clase (las mismas 4 líneas impresas al final de la hoja, 3.ª columna). No se inventa otra escena: lo que dice la hoja es lo que se dibuja.
+- Generar la lista de prompts: `node scripts/build-homescool-image-prompts.mjs` → `docs/homescool-image-prompts.md` y `.json` (uno por clase). El agente de imágenes usa esa lista tal cual.
+
+### Plantilla del prompt (se llena con datos de la clase)
+
+```
+Ilustración de hoja de trabajo infantil (niño de 8 años), arte lineal en blanco y negro sobre fondo blanco, trazo limpio y uniforme, sin rellenos sólidos de tinta, sin sombreados oscuros, sin texto que el niño deba leer (solo rótulos cortos si la indicación los pide, en español, letra imprenta grande).
+Formato: horizontal 203 × 70 mm (relación 2.9 : 1), 2398 × 827 px, JPEG sRGB; contenido importante a ≥ 2 mm de los bordes.
+Materia: {materia}. Tema de la clase: {título}.
+Debe mostrar exactamente lo que pide la indicación de la hoja:
+«{imageBandInstruction}»
+Deja vacíos (con cajas, líneas punteadas o círculos) los espacios que el niño completará dibujando o escribiendo.
+Metáfora venezolana de la semana (solo como motivo visual si encaja): {hito}.
+Sin marcas de agua, sin firmas, sin personas reales identificables.
+```
+
+- Materias de fe (`teb`, `exe`): imagen sobria, sin representar a Dios; solo símbolos, mapas, líneas de tiempo o manuscritos.
+- `fin`: la imagen es un **registro por completar** (tabla de ganancias/ahorros, frascos de dar-ahorrar-gastar, libreta), nunca fajos de dinero llamativos.
+- `mat`: solo la cuadrícula/matriz que pide la hoja, con números correctos si aparecen.
+
+## Forbidden
+
+- Wrong aspect (square, portrait, or pre-v2 full-page practice dimensions).
+- New filenames that break `quizPracticeImage()` convention unless `media[]` is updated.
+- Text-heavy posters instead of drawable / traceable worksheet art.

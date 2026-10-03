@@ -59,7 +59,11 @@ Main columns keep **52 slots × 3.5 mm** for packing — **no** line-number / qu
 
 - **Outer column border:** always stroked **#000** 0.15 mm (full rect).
 - **Visible interior rules (toggle):** `HCLetterShowMainRules` in `homescool_letter_grid.go`. Default **`false`** — interior #ddd rules hidden; outer border stays. Set **`true`** to show full-width #ddd rules (0.15 mm) again.
-- Text/ink uses the **full column width** (small stroke inset only).
+- **Interior padding:** text/ink is inset **2 mm** left and right from the column border (`HCLetterMainTextPadMm`). Text width = column width - 4 mm (63 mm -> **59 mm**). Every lesson/quiz line must fit that width on one line; `TestHomescoolPublishedClassesFitColumns` guards it.
+- **Header padding and labels:** every header field has **2 mm** lateral padding (`HCLetterHeaderTextPadMm`). Cabecera 2 labels are write-in fields and end with a colon: `Fecha:`, `Estudiante:`, `Revisor:`, `Firma:`.
+- **Corner radius:** every stroked box (header fields, main columns, images band) has a **1 mm** radius (`HCLetterBorderRadiusMm`); the practice JPEG is clipped to the same rounded path.
+- **Quiz spacing:** one blank line between quiz questions (skipped at the top of a column). If the quiz does not fit with those gaps, questions are dropped (q8, q7, w2, w4, q6, q5, q4, q3 in that order), never below **2 selection + 1 schematic + 1 written reflection**. `quiz.questionCount` equals the questions kept.
+- **Vertical padding:** **2 mm** top and bottom inside each main column (`HCLetterMainTextPadYMm`). The 52 lines / 156 slots stay; the row pitch compresses from 3.5 mm to (182 - 4) / 52 ≈ **3.42 mm**.
 - Quiz rows are marked by content + the darker **quiz separator** above the first question in a column (separator stays visible even when main rules are hidden).
 - JSON may still carry optional `gutter` metadata on `question` slots for tooling; PDF/print **ignore** it.
 
@@ -71,8 +75,8 @@ Use the **`{ x, top, w, h }`** boxes below as the **only** placement targets.
 | --- | --- | --- |
 | **Containercabecera1** sub-boxes (`SignatureName`, `SignatureTopic`, `SheetCode`) | **left** | **middle** (centred in the 7 mm row height) |
 | **Containercabecera2** sub-boxes (`Date`, `Student`, `Reviewer`, `ReviewerSignature`) | **left** | **middle** (centred in the 5 mm row height) |
-| **Main** content slot (per line, full column width) | **left** | **middle** (centred in the 3.5 mm row band) |
-| **Containerimages** | practice JPEG fit | centred in band |
+| **Main** content slot (per line, column width minus 2 mm padding each side) | **left** | **middle** (centred in the 3.5 mm row band) |
+| **Containerimages** | practice JPEG fit | centred in band; the **#000 border is stroked after the image** so it stays visible |
 
 PDF: baseline from vertical middle of the target `h`. HTML/print mirror: `display: flex; align-items: center; justify-content: flex-start` (or equivalent) inside each target rect.
 
@@ -155,6 +159,7 @@ Spans **ContainerHeaderMargin** through **ContainerCol3**. Image/content placeme
 2. Map header strings into the seven cabecera **`RectMm`** fields; align **left + middle** in each box.
 3. Map lesson/quiz atoms into **ContentSlot** rects (156 max per sheet) in **column-major** order: col1 lines 1→52, then col2, then col3. Lesson first, then quiz, then col3 `imageInstruction` tail.
 4. Map practice JPEG into **Containerimages** (203×70 mm).
+4b. **Copy space (v3):** every `Escribe aquí lo que aprendiste:` is followed by **two** dash rows (40 `_` each), not one. Opening is `¿Qué aprendiste la clase pasada?` (see `homescool-class-method-v3.mdc`).
 5. Any new subdivisions (e.g. splitting the images band) require updating **this rule**, tests in `homescool_letter_grid_test.go`, and `homescool_letter_grid.go`.
 
 ## Forbidden

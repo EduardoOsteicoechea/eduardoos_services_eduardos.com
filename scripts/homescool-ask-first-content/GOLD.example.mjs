@@ -7,7 +7,7 @@
  *
  * Forma de una clase:
  *   key
- *   units[0] = { h: "Punto 1: Repaso de ayer", a: [...] }   // la apertura «¿Qué aprendiste ayer?» la pone el generador
+ *   units[0] = { h: "Punto 1: Repaso de la clase pasada", a: [...] }   // la apertura «¿Qué aprendiste la clase pasada?» la pone el generador
  *   units[1..N] = { q: [líneas de pregunta], h: "Punto N: título", a: [líneas de respuesta] }
  *   quiz  = { mcq: [{ q, o: [correcta, mala, mala, mala] } x8], write: [2 textos], schematic: [2 textos] }
  *   image = [4 líneas]   (instrucción de imagen: se envuelve a una caja de 59 mm)
@@ -16,7 +16,7 @@
  * Cada unit produce, en la hoja:
  *   pregunta -> línea en blanco -> línea de guiones (el niño intenta) -> línea en blanco ->
  *   "Punto N: título" -> línea en blanco -> respuesta (2 a 4 líneas cortas) -> línea en blanco ->
- *   "Escribe aquí lo que aprendiste:" -> línea de guiones -> línea en blanco.
+ *   "Escribe aquí lo que aprendiste:" -> DOS líneas de guiones (v3) -> línea en blanco.
  * El generador añade los guiones y los espacios; el módulo solo trae q, h y a.
  *
  * Reglas de redacción: una idea por línea, ~40 caracteres como máximo (el generador envuelve si te pasas),
@@ -28,9 +28,9 @@ export default [
     key: "esp-c3-w1-d2",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
-          "Ayer viste que cada palabra tiene",
+          "La clase pasada viste que cada palabra tiene",
           "su propio trabajo, como cada",
           "explorador en la Sierra Nevada.",
         ],

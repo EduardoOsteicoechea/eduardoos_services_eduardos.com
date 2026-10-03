@@ -14,23 +14,23 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nLa semana pasada viste in, apud, per, sine, a/ab y de: palabras cortas que muestran relaciones. Hoy sumas tres más para leer frases en Guri."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nViste in, apud, per, sine, a/ab y de: palabras cortas que muestran relaciones. Hoy sumas tres más, junto a Guri."
       },
       {
         "id": "p2",
         "heading": "Punto 2: Et une",
-        "body": "En Guri el agua del río se junta. ¿Cómo dices «agua y luz» en latín?\n\n«Aqua» es agua y «lux» es luz. Dices «aqua et lux»: agua y luz. «Et» es una conjunción: una palabra que une otras palabras."
+        "body": "La Represa de Guri junta el agua del río. ¿Cómo dices «agua y luz»?\n\n«Aqua» es agua y «lux» es luz. Dices «aqua et lux»: agua y luz. «Et» es una conjunción: une palabras."
       },
       {
         "id": "p3",
         "heading": "Punto 3: Ut dice para qué",
-        "body": "La represa detiene el agua. ¿Para qué crees que lo hace?\n\nPara dar energía: esa es la meta. En latín «ut» significa «para que». «Laboro ut discam» es «trabajo para aprender»."
+        "body": "La represa detiene el agua. ¿Para qué crees que lo hace?\n\nPara dar energía: esa es la meta. «Ut» es «para que». «Laboro ut discam» es «trabajo para aprender»."
       },
       {
         "id": "p4",
         "heading": "Punto 4: Non niega",
-        "body": "«Currit» es «corre». Si Guri detiene el agua, ¿cómo dices «no corre»?\n\nDices «aqua non currit»: el agua no corre. «Non» significa «no»: es una negación. Va justo antes del verbo."
+        "body": "«Currit» es «corre». Si Guri detiene el agua, ¿cómo dices «no corre»?\n\nDices «aqua non currit»: el agua no corre. «Non» es «no» y va antes del verbo."
       },
       {
         "id": "p5",
@@ -40,14 +40,14 @@
       {
         "id": "p6",
         "heading": "Punto 6: El trío de Guri",
-        "body": "El agua se une, se detiene y da energía. ¿Qué palabra va con cada trabajo?\n\nAgua que se une: et. Agua que se detiene: non. Energía, ¿para qué?: ut. Memoriza el trío: et = y · ut = para que / meta · non = no."
+        "body": "El agua se une, se detiene y da energía. ¿Qué palabra va con cada trabajo?\n\nSe une: et. Se detiene: non. Da energía, ¿para qué?: ut. et = y · ut = para que / meta · non = no."
       }
     ],
     "summary": "En Guri el agua se une (et), se detiene (non) y da energía (ut).",
     "memoryPhrase": "**et** = y · **ut** = para que / meta · **non** = no.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja la Represa de Guri y el río. Rotula el agua que se junta: aqua et lux. Rotula el agua detenida: aqua non currit. Escribe ut junto a la energía que da.",
+    "imageBandInstruction": "Dibuja la Represa de Guri y el río. Rotula el agua unida: aqua et lux. Rotula el agua parada: aqua non currit. Junto a la energía, escribe tú: ut.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -55,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -90,7 +90,7 @@
         "column": 1,
         "line": 6,
         "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 7,
@@ -104,42 +104,42 @@
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "La semana pasada viste in, apud, per,"
+        "text": "Viste in, apud, per, sine, a/ab y de:"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "sine, a/ab y de: palabras cortas"
+        "text": "palabras cortas que muestran relaciones."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "que muestran relaciones. Hoy sumas"
+        "text": "Hoy sumas tres más, junto a Guri."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "tres más para leer frases en Guri."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -160,14 +160,14 @@
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "En Guri el agua del río se junta."
+        "text": "La Represa de Guri junta el agua"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "¿Cómo dices «agua y luz» en latín?"
+        "text": "del río. ¿Cómo dices «agua y luz»?"
       },
       {
         "index": 18,
@@ -230,28 +230,28 @@
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "«Et» es una conjunción: una palabra"
+        "text": "«Et» es una conjunción: une palabras."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "lesson",
-        "text": "que une otras palabras."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 30,
@@ -335,35 +335,35 @@
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "En latín «ut» significa «para que»."
+        "text": "«Ut» es «para que». «Laboro ut discam»"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "«Laboro ut discam» es «trabajo"
+        "text": "es «trabajo para aprender»."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "lesson",
-        "text": "para aprender»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 46,
@@ -447,35 +447,35 @@
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "el agua no corre."
+        "text": "el agua no corre. «Non» es «no»"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "«Non» significa «no»: es una negación."
+        "text": "y va antes del verbo."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "lesson",
-        "text": "Va justo antes del verbo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 62,
@@ -523,64 +523,64 @@
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Cada una tiene su trabajo"
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "heading",
-        "text": "Punto 5: Cada una tiene su trabajo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. «Et» une, como el agua que se junta."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
         "kind": "lesson",
-        "text": "No. «Et» une, como el agua que se junta."
+        "text": "«Ut» dice para qué da energía."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
         "kind": "lesson",
-        "text": "«Ut» dice para qué da energía."
+        "text": "«Non» no une ni explica: niega."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "lesson",
-        "text": "«Non» no une ni explica: niega."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 77,
@@ -650,42 +650,42 @@
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "Agua que se une: et. Agua que se"
+        "text": "Se une: et. Se detiene: non."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
         "kind": "lesson",
-        "text": "detiene: non. Energía, ¿para qué?: ut."
+        "text": "Da energía, ¿para qué?: ut."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
         "kind": "lesson",
-        "text": "Memoriza el trío:"
+        "text": "et = y · ut = para que / meta · non = no."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "lesson",
-        "text": "et = y · ut = para que / meta · non = no."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 92,
@@ -1250,21 +1250,21 @@
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "agua que se junta: aqua et lux. Rotula el"
+        "text": "agua unida: aqua et lux. Rotula el agua"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "agua detenida: aqua non currit. Escribe ut"
+        "text": "parada: aqua non currit. Junto a la energía,"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "junto a la energía que da."
+        "text": "escribe tú: ut."
       }
     ],
     "packOrder": "column-major-sequential",

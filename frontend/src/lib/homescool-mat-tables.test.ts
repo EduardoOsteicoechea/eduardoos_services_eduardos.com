@@ -68,11 +68,11 @@ describe("homescool-subjects", () => {
     expect(subjectDisplayName("teb")).toBe("Teología bíblica");
   });
 
-  it("numbers subjects 1–12 in canonical menu order (teb…pro)", () => {
+  it("numbers subjects 1–13 in canonical menu order (teb…fin)", () => {
     expect(isHomescoolSubjectPaused("teb")).toBe(false);
     expect(isHomescoolSubjectPaused("exe")).toBe(false);
     expect(HOMESCOOL_SUBJECTS_ACTIVE[0]).toBe("teb");
-    expect(HOMESCOOL_SUBJECTS_ACTIVE[HOMESCOOL_SUBJECTS_ACTIVE.length - 1]).toBe("pro");
+    expect(HOMESCOOL_SUBJECTS_ACTIVE[HOMESCOOL_SUBJECTS_ACTIVE.length - 1]).toBe("fin");
     expect(subjectClassNumber("teb")).toBe(1);
     expect(subjectClassNumber("exe")).toBe(2);
     expect(subjectClassNumber("LT")).toBe(3);
@@ -85,6 +85,8 @@ describe("homescool-subjects", () => {
     expect(subjectClassNumber("lat")).toBe(10);
     expect(subjectClassNumber("cie")).toBe(11);
     expect(subjectClassNumber("pro")).toBe(12);
+    expect(subjectClassNumber("fin")).toBe(13);
+    expect(subjectDisplayName("fin")).toBe("Finanzas");
     expect(subjectChipText("geo")).toBe("geo");
     expect(subjectChipText("LT")).toBe("LinT");
   });

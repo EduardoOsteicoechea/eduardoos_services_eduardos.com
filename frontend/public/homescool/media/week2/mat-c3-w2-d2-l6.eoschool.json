@@ -14,18 +14,18 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nAyer subiste al bote rumbo a Morrocoy y viste que las tablas son piezas. Hoy visitas los cayos del 5 al 8."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nLa clase pasada viste Morrocoy de lejos: 4 × 6 = 24 y 13 × 4 = 52. Hoy te acercas a los cayos y al manglar."
       },
       {
         "id": "p2",
         "heading": "Punto 2: Un patrón en la tabla del 5",
-        "body": "Cada cayo de la hilera tiene 5 botes. ¿Cuántos hay en 1, 2, 3 y 4 cayos?\n\nCuentas 5, 10, 15 y 20: terminan en 0 o en 5. Eso es un patrón, una regla que se repite. En 12 cayos hay 5 × 12 = 60 botes."
+        "body": "Cada cayo de la hilera tiene 5 botes. ¿Cuántos hay en 1, 2, 3 y 4 cayos?\n\nCuentas 5, 10, 15 y 20: terminan en 0 o en 5. Eso es un patrón, una regla que se repite."
       },
       {
         "id": "p3",
         "heading": "Punto 3: Un problema con la tabla del 6",
-        "body": "En 7 cayos hay 6 botes en cada cayo. ¿Cuántos botes hay en total?\n\nSon siete grupos de seis: 7 × 6. Piensa 3 × 7 = 21 y dóblalo: 21 + 21 = 42 botes. Comprueba: 6 × 7 también da 42."
+        "body": "En 7 cayos hay 6 botes en cada cayo. ¿Cuántos botes hay en total?\n\nSon siete grupos de seis: 7 × 6. Piensa 3 × 7 = 21 y dóblalo: 21 + 21 = 42 botes."
       },
       {
         "id": "p4",
@@ -34,20 +34,20 @@
       },
       {
         "id": "p5",
-        "heading": "Punto 5: La tabla del 7 con dobles",
-        "body": "Imagina 7 cayos con 8 botes cada uno. ¿Cómo compruebas cuántos botes son?\n\nDobla 7 × 4 = 28: 28 + 28 = 56. Otra forma: 7 × 7 = 49 y 49 + 7 = 56. Entonces 7 × 8 = 56 botes."
+        "heading": "Punto 5: El orden no cambia el producto",
+        "body": "En el manglar hay 9 filas de 8 plantas. ¿Y 8 filas de 9 plantas, da otro total?\n\nDa lo mismo: 9 × 8 = 72 y 8 × 9 = 72. Son las mismas plantas al revés. Si sabes 8 × 9, ya sabes 9 × 8."
       },
       {
         "id": "p6",
-        "heading": "Punto 6: Comprueba, no adivines",
-        "body": "Una pregunta con truco: un guía dice que 12 cayos de 5 botes son 50. ¿Cierto?\n\n5 × 10 = 50, y faltan 2 cayos de 5. 2 × 5 = 10, y 50 + 10 = 60 botes. Nunca adivines: usa un doble o un patrón."
+        "heading": "Punto 6: Multiplicar por 10",
+        "body": "Una pregunta con truco: en el manglar hay 8 grupos de 10 plantas. ¿80 u 800?\n\nSon 80: ocho decenas. Una decena es un grupo de 10. Y 10 × 12 = 120: doce decenas."
       }
     ],
-    "summary": "Entre los cayos, del 5 al 8, usamos patrones y dobles para no adivinar.",
+    "summary": "Entre los cayos y el manglar usamos patrones y dobles, y el orden no cambia el producto.",
     "weekRecap": "Esta semana seguimos con: Tablas del 5 al 16. Lee cada parte con calma y prueba la actividad.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una hilera de 7 cayos. Pon 6 botes en cada cayo. Escribe al lado: 7 × 6 = 42. Comprueba contando de 6 en 6 hasta 42.",
+    "imageBandInstruction": "Dibuja una hilera de 7 cayos de Morrocoy. Pon 6 botes en cada cayo. Escribe al lado: 7 × 6 = 42. Deja una caja vacía para comprobar 6 en 6.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -55,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -90,7 +90,7 @@
         "column": 1,
         "line": 6,
         "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 7,
@@ -104,21 +104,21 @@
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Ayer subiste al bote rumbo a Morrocoy"
+        "text": "La clase pasada viste Morrocoy de lejos:"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "y viste que las tablas son piezas."
+        "text": "4 × 6 = 24 y 13 × 4 = 52."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Hoy visitas los cayos del 5 al 8."
+        "text": "Hoy te acercas a los cayos y al manglar."
       },
       {
         "index": 11,
@@ -145,36 +145,36 @@
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "Cada cayo de la hilera tiene 5 botes."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "¿Cuántos hay en 1, 2, 3 y 4 cayos?"
+        "text": "Cada cayo de la hilera tiene 5 botes."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cuántos hay en 1, 2, 3 y 4 cayos?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
@@ -187,50 +187,50 @@
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 2: Un patrón en la tabla del 5"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Un patrón en la tabla del 5"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "lesson",
-        "text": "Cuentas 5, 10, 15 y 20: terminan"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "en 0 o en 5. Eso es un patrón,"
+        "text": "Cuentas 5, 10, 15 y 20: terminan"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "una regla que se repite."
+        "text": "en 0 o en 5. Eso es un patrón,"
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "En 12 cayos hay 5 × 12 = 60 botes."
+        "text": "una regla que se repite."
       },
       {
         "index": 27,
@@ -257,50 +257,50 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "lesson",
-        "text": "En 7 cayos hay 6 botes en cada cayo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "¿Cuántos botes hay en total?"
+        "text": "En 7 cayos hay 6 botes en cada cayo."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cuántos botes hay en total?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "heading",
-        "text": "Punto 3: Un problema con la tabla del 6"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
@@ -313,85 +313,85 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "lesson",
-        "text": "Son siete grupos de seis: 7 × 6."
+        "kind": "heading",
+        "text": "Punto 3: Un problema con la tabla del 6"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "lesson",
-        "text": "Piensa 3 × 7 = 21 y dóblalo:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "21 + 21 = 42 botes."
+        "text": "Son siete grupos de seis: 7 × 6."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "Comprueba: 6 × 7 también da 42."
+        "text": "Piensa 3 × 7 = 21 y dóblalo:"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "21 + 21 = 42 botes."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "Si 4 cayos con 6 botes dan 24 botes,"
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "¿cuántos botes dan 8 cayos con 6?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si 4 cayos con 6 botes dan 24 botes,"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "¿cuántos botes dan 8 cayos con 6?"
       },
       {
         "index": 50,
@@ -404,57 +404,57 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "heading",
-        "text": "Punto 4: Dobles para el 8"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "lesson",
-        "text": "El 8 es el doble del 4."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Dobla el producto: 24 + 24 = 48."
+        "kind": "heading",
+        "text": "Punto 4: Dobles para el 8"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "lesson",
-        "text": "Entonces 8 × 6 = 48 botes."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 8 es el doble del 4."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Dobla el producto: 24 + 24 = 48."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Entonces 8 × 6 = 48 botes."
       },
       {
         "index": 59,
@@ -468,42 +468,42 @@
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "Imagina 7 cayos con 8 botes cada uno."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "¿Cómo compruebas cuántos botes son?"
+        "text": "________________________________________"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En el manglar hay 9 filas de 8 plantas."
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "heading",
-        "text": "Punto 5: La tabla del 7 con dobles"
+        "kind": "lesson",
+        "text": "¿Y 8 filas de 9 plantas, da otro total?"
       },
       {
         "index": 66,
@@ -517,21 +517,21 @@
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "Dobla 7 × 4 = 28: 28 + 28 = 56."
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Otra forma: 7 × 7 = 49 y 49 + 7 = 56."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "Entonces 7 × 8 = 56 botes."
+        "kind": "heading",
+        "text": "Punto 5: El orden no cambia el producto"
       },
       {
         "index": 70,
@@ -545,42 +545,42 @@
         "column": 2,
         "line": 19,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Da lo mismo: 9 × 8 = 72 y 8 × 9 = 72."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Son las mismas plantas al revés."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si sabes 8 × 9, ya sabes 9 × 8."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: un guía dice"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "que 12 cayos de 5 botes son 50. ¿Cierto?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 77,
@@ -600,111 +600,99 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "heading",
-        "text": "Punto 6: Comprueba, no adivines"
+        "kind": "lesson",
+        "text": "Una pregunta con truco: en el manglar"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "hay 8 grupos de 10 plantas. ¿80 u 800?"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "lesson",
-        "text": "5 × 10 = 50, y faltan 2 cayos de 5."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
         "kind": "lesson",
-        "text": "2 × 5 = 10, y 50 + 10 = 60 botes."
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "lesson",
-        "text": "Nunca adivines: usa un doble o un patrón."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Multiplicar por 10"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Son 80: ocho decenas."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una decena es un grupo de 10."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿En qué terminan los productos del 5?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Y 10 × 12 = 120: doce decenas."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) En 2 o en 7",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) En 3 o en 8",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) En 1 o en 9",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) En 0 o en 5",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -718,8 +706,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuánto es 5 × 12?",
-        "questionId": "d2-q2",
+        "text": "¿En qué terminan los productos del 5?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -733,32 +721,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) 50",
-        "questionId": "d2-q2"
+        "text": "A) En 2 o en 7",
+        "questionId": "d2-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) 60",
-        "questionId": "d2-q2"
+        "text": "B) En 3 o en 8",
+        "questionId": "d2-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) 55",
-        "questionId": "d2-q2"
+        "text": "C) En 1 o en 9",
+        "questionId": "d2-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) 17",
-        "questionId": "d2-q2"
+        "text": "D) En 0 o en 5",
+        "questionId": "d2-q1"
       },
       {
         "index": 99,
@@ -772,8 +760,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuántos botes hay en 7 cayos de 6?",
-        "questionId": "d2-q3",
+        "text": "¿Qué es un patrón?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -787,40 +775,40 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) 36",
-        "questionId": "d2-q3"
+        "text": "A) Un número solo",
+        "questionId": "d2-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) 13",
-        "questionId": "d2-q3"
+        "text": "B) Una regla que se repite",
+        "questionId": "d2-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) 42",
-        "questionId": "d2-q3"
+        "text": "C) Un tipo de bote",
+        "questionId": "d2-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) 76",
-        "questionId": "d2-q3"
+        "text": "D) Un signo de resta",
+        "questionId": "d2-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "Si 3 × 7 = 21, ¿cuánto es 6 × 7?",
-        "questionId": "d2-q4",
+        "text": "¿Cuántos botes hay en 7 cayos de 6?",
+        "questionId": "d2-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -834,32 +822,32 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) 27",
-        "questionId": "d2-q4"
+        "text": "A) 36",
+        "questionId": "d2-q3"
       },
       {
         "index": 107,
         "column": 3,
         "line": 3,
         "kind": "option",
-        "text": "B) 28",
-        "questionId": "d2-q4"
+        "text": "B) 13",
+        "questionId": "d2-q3"
       },
       {
         "index": 108,
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) 24",
-        "questionId": "d2-q4"
+        "text": "C) 42",
+        "questionId": "d2-q3"
       },
       {
         "index": 109,
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) 42",
-        "questionId": "d2-q4"
+        "text": "D) 76",
+        "questionId": "d2-q3"
       },
       {
         "index": 110,
@@ -873,8 +861,8 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "¿Cuánto es 8 × 6?",
-        "questionId": "d2-q5",
+        "text": "Si 3 × 7 = 21, ¿cuánto es 6 × 7?",
+        "questionId": "d2-q4",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -888,32 +876,32 @@
         "column": 3,
         "line": 8,
         "kind": "option",
-        "text": "A) 14",
-        "questionId": "d2-q5"
+        "text": "A) 27",
+        "questionId": "d2-q4"
       },
       {
         "index": 113,
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) 48",
-        "questionId": "d2-q5"
+        "text": "B) 28",
+        "questionId": "d2-q4"
       },
       {
         "index": 114,
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) 42",
-        "questionId": "d2-q5"
+        "text": "C) 24",
+        "questionId": "d2-q4"
       },
       {
         "index": 115,
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) 54",
-        "questionId": "d2-q5"
+        "text": "D) 42",
+        "questionId": "d2-q4"
       },
       {
         "index": 116,
@@ -927,8 +915,8 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿Cuánto es 7 × 8?",
-        "questionId": "d2-q6",
+        "text": "¿Cuánto es 8 × 6?",
+        "questionId": "d2-q5",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -942,32 +930,32 @@
         "column": 3,
         "line": 14,
         "kind": "option",
-        "text": "A) 56",
-        "questionId": "d2-q6"
+        "text": "A) 14",
+        "questionId": "d2-q5"
       },
       {
         "index": 119,
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) 15",
-        "questionId": "d2-q6"
+        "text": "B) 48",
+        "questionId": "d2-q5"
       },
       {
         "index": 120,
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) 49",
-        "questionId": "d2-q6"
+        "text": "C) 42",
+        "questionId": "d2-q5"
       },
       {
         "index": 121,
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) 63",
-        "questionId": "d2-q6"
+        "text": "D) 54",
+        "questionId": "d2-q5"
       },
       {
         "index": 122,
@@ -981,8 +969,8 @@
         "column": 3,
         "line": 19,
         "kind": "question",
-        "text": "¿Qué es un patrón?",
-        "questionId": "d2-q7",
+        "text": "Si 9 × 8 = 72, ¿cuánto es 8 × 9?",
+        "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -996,32 +984,32 @@
         "column": 3,
         "line": 20,
         "kind": "option",
-        "text": "A) Un número solo",
-        "questionId": "d2-q7"
+        "text": "A) 72",
+        "questionId": "d2-q6"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) Un tipo de bote",
-        "questionId": "d2-q7"
+        "text": "B) 17",
+        "questionId": "d2-q6"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) Una regla que se repite",
-        "questionId": "d2-q7"
+        "text": "C) 64",
+        "questionId": "d2-q6"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) Un signo de resta",
-        "questionId": "d2-q7"
+        "text": "D) 81",
+        "questionId": "d2-q6"
       },
       {
         "index": 128,
@@ -1035,8 +1023,8 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "Si 7 × 7 = 49, ¿cuánto es 7 × 8?",
-        "questionId": "d2-q8",
+        "text": "¿Cuánto valen ocho decenas?",
+        "questionId": "d2-q7",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -1050,32 +1038,32 @@
         "column": 3,
         "line": 26,
         "kind": "option",
-        "text": "A) 56",
-        "questionId": "d2-q8"
+        "text": "A) 8",
+        "questionId": "d2-q7"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
         "kind": "option",
-        "text": "B) 55",
-        "questionId": "d2-q8"
+        "text": "B) 800",
+        "questionId": "d2-q7"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
         "kind": "option",
-        "text": "C) 57",
-        "questionId": "d2-q8"
+        "text": "C) 80",
+        "questionId": "d2-q7"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
         "kind": "option",
-        "text": "D) 42",
-        "questionId": "d2-q8"
+        "text": "D) 88",
+        "questionId": "d2-q7"
       },
       {
         "index": 134,
@@ -1127,7 +1115,7 @@
         "column": 3,
         "line": 35,
         "kind": "question",
-        "text": "Resuelve 7 × 8 con un doble. Escribe los",
+        "text": "Explica por qué 10 × 8 vale 80 y no 800.",
         "questionId": "d2-w2",
         "questionType": "write",
         "gutter": {
@@ -1141,8 +1129,8 @@
         "index": 140,
         "column": 3,
         "line": 36,
-        "kind": "lesson",
-        "text": "pasos.",
+        "kind": "answerLine",
+        "text": "",
         "questionId": "d2-w2"
       },
       {
@@ -1157,21 +1145,13 @@
         "index": 142,
         "column": 3,
         "line": 38,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 143,
         "column": 3,
         "line": 39,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
         "kind": "question",
         "text": "Dibuja 7 cayos con 6 botes y escribe 7 × 6.",
         "questionId": "d2-w3",
@@ -1182,6 +1162,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
       },
       {
         "index": 145,
@@ -1195,23 +1183,15 @@
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w3"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 148,
-        "column": 3,
-        "line": 44,
         "kind": "question",
-        "text": "Dibuja la flecha del doble: de 4 × 6 a 8 × 6.",
+        "text": "Dibuja 8 grupos de 10 plantas: 8 × 10 = 80.",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1220,6 +1200,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
       },
       {
         "index": 149,
@@ -1233,9 +1221,8 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
@@ -1255,36 +1242,36 @@
         "index": 153,
         "column": 3,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "imageInstruction",
+        "text": "Dibuja una hilera de 7 cayos de Morrocoy."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja una hilera de 7 cayos. Pon 6 botes"
+        "text": "Pon 6 botes en cada cayo. Escribe al lado:"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "en cada cayo. Escribe al lado: 7 × 6 = 42."
+        "text": "7 × 6 = 42. Deja una caja vacía para"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Comprueba contando de 6 en 6 hasta 42."
+        "text": "comprobar 6 en 6."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d2-q1",
@@ -1300,26 +1287,26 @@
         "answer": "En 0 o en 5",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuánto es 5 × 12?",
+        "prompt": "¿Qué es un patrón?",
         "choices": [
-          "50",
-          "60",
-          "55",
-          "17"
+          "Un número solo",
+          "Una regla que se repite",
+          "Un tipo de bote",
+          "Un signo de resta"
         ],
-        "answer": "60",
+        "answer": "Una regla que se repite",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1335,9 +1322,9 @@
         ],
         "answer": "42",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1354,8 +1341,8 @@
         "answer": "42",
         "slot": {
           "column": 3,
-          "line": 1,
-          "index": 105
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1372,40 +1359,22 @@
         "answer": "48",
         "slot": {
           "column": 3,
-          "line": 7,
-          "index": 111
+          "line": 13,
+          "index": 117
         }
       },
       {
         "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuánto es 7 × 8?",
+        "prompt": "Si 9 × 8 = 72, ¿cuánto es 8 × 9?",
         "choices": [
-          "56",
-          "15",
-          "49",
-          "63"
+          "72",
+          "17",
+          "64",
+          "81"
         ],
-        "answer": "56",
-        "slot": {
-          "column": 3,
-          "line": 13,
-          "index": 117
-        }
-      },
-      {
-        "id": "d2-q7",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué es un patrón?",
-        "choices": [
-          "Un número solo",
-          "Un tipo de bote",
-          "Una regla que se repite",
-          "Un signo de resta"
-        ],
-        "answer": "Una regla que se repite",
+        "answer": "72",
         "slot": {
           "column": 3,
           "line": 19,
@@ -1413,17 +1382,17 @@
         }
       },
       {
-        "id": "d2-q8",
+        "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "Si 7 × 7 = 49, ¿cuánto es 7 × 8?",
+        "prompt": "¿Cuánto valen ocho decenas?",
         "choices": [
-          "56",
-          "55",
-          "57",
-          "42"
+          "8",
+          "800",
+          "80",
+          "88"
         ],
-        "answer": "56",
+        "answer": "80",
         "slot": {
           "column": 3,
           "line": 25,
@@ -1445,7 +1414,7 @@
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Resuelve 7 × 8 con un doble. Escribe los pasos.",
+        "prompt": "Explica por qué 10 × 8 vale 80 y no 800.",
         "slot": {
           "column": 3,
           "line": 35,
@@ -1461,21 +1430,21 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 40,
-          "index": 144
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja la flecha del doble: de 4 × 6 a 8 × 6.",
+        "prompt": "Dibuja 8 grupos de 10 plantas: 8 × 10 = 80.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 44,
-          "index": 148
+          "line": 43,
+          "index": 147
         }
       }
     ]

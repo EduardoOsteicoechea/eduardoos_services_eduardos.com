@@ -14,41 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nAyer viste que una frontera separa un país de otro. Cerca del Roraima se juntan tres países. Hoy sigues mirando cada lado de Venezuela."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nLa clase pasada viste que una frontera separa países y que el Roraima queda cerca de Brasil y Guyana."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Arriba y abajo",
-        "body": "Pon el mapa sobre la mesa del Roraima. ¿Qué vecino va arriba y cuál abajo?\n\nArriba, al norte, está el mar Caribe. Abajo, al sur, está Brasil. El mar también es un límite: allí termina la tierra y empieza el agua."
+        "heading": "Punto 2: Cruzar la frontera",
+        "body": "Bajas del Roraima y cruzas hacia el sur. ¿A qué país llegas? ¿Y si vas al este?\n\nAl sur llegas a Brasil. Al este llegas a Guyana. Al oeste, Colombia; al norte, el mar."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Derecha e izquierda",
-        "body": "Cerca del Roraima está Guyana. ¿Queda a la derecha o a la izquierda?\n\nGuyana queda a la derecha, al este. Colombia queda a la izquierda, al oeste. Un truco: el sol sale por el este."
+        "heading": "Punto 3: El extremo norte",
+        "body": "Ahora sube al Roraima y mira al norte. ¿Cuál es el lugar más lejano hacia allá?\n\nUn punto extremo es el lugar más lejano en una dirección. El del norte es Cabo San Román, en la península de Paraguaná, junto al mar."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Vecinos de tierra y de agua",
-        "body": "Una pregunta con truco: ¿el mar Caribe es un país vecino, como Brasil?\n\nNo: el mar Caribe es agua, no un país. Brasil y Guyana, vecinos del Roraima, y Colombia son vecinos de tierra. El mar Caribe es el vecino de agua."
+        "heading": "Punto 4: El extremo sur",
+        "body": "Desde el Roraima bajas hasta Brasil. ¿Qué marca el extremo sur?\n\nEs el nacimiento del río Ararí. El nacimiento de un río es el lugar donde empieza. Queda cerca de Brasil."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cruzar la frontera",
-        "body": "Bajas del Roraima y cruzas al sur. ¿A qué país llegas? ¿Y al este?\n\nAl sur llegas a Brasil. Al este llegas a Guyana. Al oeste de Venezuela está Colombia. Al norte no cruzas: te espera el mar."
+        "heading": "Punto 5: El extremo este",
+        "body": "Al este, cerca de Guyana, se juntan dos ríos. ¿Cómo se llama ese lugar?\n\nUn lugar donde se juntan dos ríos se llama confluencia. El extremo este es la confluencia de Barima y Mururuma."
       },
       {
         "id": "p6",
-        "heading": "Punto 6: Dilo con orden",
-        "body": "Un reto: dile a tu familia los cuatro lados con su vecino. ¿En qué orden?\n\nFronteras: Mar Caribe norte, Brasil sur, Guyana este, Colombia oeste. Dilos siempre: norte, sur, este, oeste."
+        "heading": "Punto 6: El extremo oeste",
+        "body": "Y al oeste, cerca de Colombia, ¿qué crees que marca el último extremo?\n\nTambién es un nacimiento: el del río Intermedio. Los cuatro puntos son las esquinas del marco del país."
       }
     ],
-    "summary": "Cada lado de Venezuela tiene su vecino, y el Roraima queda cerca de Brasil y Guyana.",
+    "summary": "Los cuatro puntos extremos son las esquinas del marco de Venezuela; cada uno es un solo lugar.",
     "memoryPhrase": "Fronteras: **Mar Caribe** norte, **Brasil** sur, **Guyana** este, **Colombia** oeste. Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana.",
     "weekRecap": "Fronteras: Caribe, Brasil, Guyana, Colombia. Regiones: Central, Oriental, Occidental, Andes, Llanos, Guayana.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja a Venezuela en el centro. Pon una flecha hacia cada lado. Escribe el vecino en cada flecha. Dibuja el Roraima, una mesa plana.",
+    "imageBandInstruction": "Dibuja el contorno de Venezuela. Marca cuatro puntos, uno por extremo. Escribe el nombre junto a cada punto. Une los puntos: es el marco del país.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -56,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -76,50 +76,50 @@
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
         "column": 1,
         "line": 5,
-        "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Ayer viste que una frontera separa"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "un país de otro. Cerca del Roraima"
+        "text": "La clase pasada viste que una frontera"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "se juntan tres países. Hoy sigues"
+        "text": "separa países y que el Roraima queda"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "mirando cada lado de Venezuela."
+        "text": "cerca de Brasil y Guyana."
       },
       {
         "index": 11,
@@ -146,50 +146,50 @@
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "Pon el mapa sobre la mesa del Roraima."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "¿Qué vecino va arriba y cuál abajo?"
+        "text": "Bajas del Roraima y cruzas hacia el sur."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿A qué país llegas? ¿Y si vas al este?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 2: Arriba y abajo"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -202,85 +202,85 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Arriba, al norte, está el mar Caribe."
+        "kind": "heading",
+        "text": "Punto 2: Cruzar la frontera"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "lesson",
-        "text": "Abajo, al sur, está Brasil."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "El mar también es un límite: allí"
+        "text": "Al sur llegas a Brasil."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "termina la tierra y empieza el agua."
+        "text": "Al este llegas a Guyana."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Al oeste, Colombia; al norte, el mar."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
         "kind": "lesson",
-        "text": "Cerca del Roraima está Guyana. ¿Queda"
+        "text": "________________________________________"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "lesson",
-        "text": "a la derecha o a la izquierda?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Ahora sube al Roraima y mira al norte."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "¿Cuál es el lugar más lejano hacia allá?"
       },
       {
         "index": 34,
@@ -293,85 +293,85 @@
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "heading",
-        "text": "Punto 3: Derecha e izquierda"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Guyana queda a la derecha, al este."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "lesson",
-        "text": "Colombia queda a la izquierda, al oeste."
+        "kind": "heading",
+        "text": "Punto 3: El extremo norte"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "lesson",
-        "text": "Un truco: el sol sale por el este."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un punto extremo es el lugar más lejano"
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "en una dirección. El del norte es"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Cabo San Román, en la península"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "de Paraguaná, junto al mar."
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿el mar Caribe"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "es un país vecino, como Brasil?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 47,
@@ -391,43 +391,43 @@
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "heading",
-        "text": "Punto 4: Vecinos de tierra y de agua"
+        "kind": "lesson",
+        "text": "Desde el Roraima bajas hasta Brasil."
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué marca el extremo sur?"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "No: el mar Caribe es agua, no un país."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
         "kind": "lesson",
-        "text": "Brasil y Guyana, vecinos del Roraima,"
+        "text": "________________________________________"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "lesson",
-        "text": "y Colombia son vecinos de tierra."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "El mar Caribe es el vecino de agua."
+        "kind": "heading",
+        "text": "Punto 4: El extremo sur"
       },
       {
         "index": 55,
@@ -441,42 +441,42 @@
         "column": 2,
         "line": 4,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Es el nacimiento del río Ararí."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "El nacimiento de un río es el lugar"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "donde empieza. Queda cerca de Brasil."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "lesson",
-        "text": "Bajas del Roraima y cruzas al sur."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "¿A qué país llegas? ¿Y al este?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 62,
@@ -496,43 +496,43 @@
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "heading",
-        "text": "Punto 5: Cruzar la frontera"
+        "kind": "lesson",
+        "text": "Al este, cerca de Guyana, se juntan"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "dos ríos. ¿Cómo se llama ese lugar?"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "Al sur llegas a Brasil."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "Al este llegas a Guyana."
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "Al oeste de Venezuela está Colombia."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "lesson",
-        "text": "Al norte no cruzas: te espera el mar."
+        "kind": "heading",
+        "text": "Punto 5: El extremo este"
       },
       {
         "index": 70,
@@ -546,42 +546,42 @@
         "column": 2,
         "line": 19,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Un lugar donde se juntan dos ríos"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "se llama confluencia. El extremo este"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "es la confluencia de Barima y Mururuma."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "lesson",
-        "text": "Un reto: dile a tu familia los cuatro"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
         "kind": "lesson",
-        "text": "lados con su vecino. ¿En qué orden?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 77,
@@ -601,111 +601,99 @@
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "heading",
-        "text": "Punto 6: Dilo con orden"
+        "kind": "lesson",
+        "text": "Y al oeste, cerca de Colombia, ¿qué"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "crees que marca el último extremo?"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "lesson",
-        "text": "Fronteras: Mar Caribe norte, Brasil sur,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
         "kind": "lesson",
-        "text": "Guyana este, Colombia oeste."
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "lesson",
-        "text": "Dilos siempre: norte, sur, este, oeste."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: El extremo oeste"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "También es un nacimiento: el del"
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "río Intermedio. Los cuatro puntos"
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué vecino queda arriba, al norte?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "son las esquinas del marco del país."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Brasil",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Guyana",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Colombia",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) El mar Caribe",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -719,8 +707,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué vecino queda abajo, al sur?",
-        "questionId": "d2-q2",
+        "text": "Si bajas del Roraima al sur, ¿adónde llegas?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -734,32 +722,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) Colombia",
-        "questionId": "d2-q2"
+        "text": "A) A Guyana",
+        "questionId": "d2-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Brasil",
-        "questionId": "d2-q2"
+        "text": "B) A Colombia",
+        "questionId": "d2-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Guyana",
-        "questionId": "d2-q2"
+        "text": "C) Al mar Caribe",
+        "questionId": "d2-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) El mar Caribe",
-        "questionId": "d2-q2"
+        "text": "D) A Brasil",
+        "questionId": "d2-q1"
       },
       {
         "index": 99,
@@ -773,8 +761,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué vecino queda al este?",
-        "questionId": "d2-q3",
+        "text": "¿Qué es un punto extremo?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -788,40 +776,40 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Colombia",
-        "questionId": "d2-q3"
+        "text": "A) Toda la frontera",
+        "questionId": "d2-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Brasil",
-        "questionId": "d2-q3"
+        "text": "B) El lugar más lejano en una dirección",
+        "questionId": "d2-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Guyana",
-        "questionId": "d2-q3"
+        "text": "C) Un tepuy",
+        "questionId": "d2-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) El mar Caribe",
-        "questionId": "d2-q3"
+        "text": "D) Una región",
+        "questionId": "d2-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "¿Qué vecino queda al oeste?",
-        "questionId": "d2-q4",
+        "text": "¿Cuál es el punto extremo norte?",
+        "questionId": "d2-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -835,32 +823,32 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) Guyana",
-        "questionId": "d2-q4"
+        "text": "A) Nacimiento del río Ararí",
+        "questionId": "d2-q3"
       },
       {
         "index": 107,
         "column": 3,
         "line": 3,
         "kind": "option",
-        "text": "B) Brasil",
-        "questionId": "d2-q4"
+        "text": "B) Nacimiento del río Intermedio",
+        "questionId": "d2-q3"
       },
       {
         "index": 108,
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) El mar Caribe",
-        "questionId": "d2-q4"
+        "text": "C) Cabo San Román",
+        "questionId": "d2-q3"
       },
       {
         "index": 109,
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) Colombia",
-        "questionId": "d2-q4"
+        "text": "D) Caracas",
+        "questionId": "d2-q3"
       },
       {
         "index": 110,
@@ -874,8 +862,8 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "¿Por qué el mar Caribe no es un país?",
-        "questionId": "d2-q5",
+        "text": "¿Cuál es el punto extremo sur?",
+        "questionId": "d2-q4",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -889,32 +877,32 @@
         "column": 3,
         "line": 8,
         "kind": "option",
-        "text": "A) Porque está muy lejos",
-        "questionId": "d2-q5"
+        "text": "A) Cabo San Román",
+        "questionId": "d2-q4"
       },
       {
         "index": 113,
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) Porque es agua, no un país",
-        "questionId": "d2-q5"
+        "text": "B) Barima y Mururuma",
+        "questionId": "d2-q4"
       },
       {
         "index": 114,
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) Porque es muy pequeño",
-        "questionId": "d2-q5"
+        "text": "C) El mar Caribe",
+        "questionId": "d2-q4"
       },
       {
         "index": 115,
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) Porque está al sur",
-        "questionId": "d2-q5"
+        "text": "D) Nacimiento del río Ararí",
+        "questionId": "d2-q4"
       },
       {
         "index": 116,
@@ -928,8 +916,8 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿Por dónde sale el sol, según el truco?",
-        "questionId": "d2-q6",
+        "text": "¿Qué es una confluencia?",
+        "questionId": "d2-q5",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -943,32 +931,32 @@
         "column": 3,
         "line": 14,
         "kind": "option",
-        "text": "A) Por el este",
-        "questionId": "d2-q6"
+        "text": "A) Una montaña alta",
+        "questionId": "d2-q5"
       },
       {
         "index": 119,
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) Por el oeste",
-        "questionId": "d2-q6"
+        "text": "B) Donde se juntan dos ríos",
+        "questionId": "d2-q5"
       },
       {
         "index": 120,
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) Por el norte",
-        "questionId": "d2-q6"
+        "text": "C) Una ciudad grande",
+        "questionId": "d2-q5"
       },
       {
         "index": 121,
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) Por el sur",
-        "questionId": "d2-q6"
+        "text": "D) Un tipo de frontera",
+        "questionId": "d2-q5"
       },
       {
         "index": 122,
@@ -982,8 +970,8 @@
         "column": 3,
         "line": 19,
         "kind": "question",
-        "text": "¿Cuál es un vecino de tierra?",
-        "questionId": "d2-q7",
+        "text": "¿Cuál es el punto extremo este?",
+        "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -997,32 +985,32 @@
         "column": 3,
         "line": 20,
         "kind": "option",
-        "text": "A) El mar Caribe",
-        "questionId": "d2-q7"
+        "text": "A) Confluencia de Barima y Mururuma",
+        "questionId": "d2-q6"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) Un río",
-        "questionId": "d2-q7"
+        "text": "B) Cabo San Román",
+        "questionId": "d2-q6"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) Brasil",
-        "questionId": "d2-q7"
+        "text": "C) Río Ararí",
+        "questionId": "d2-q6"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) Un tepuy",
-        "questionId": "d2-q7"
+        "text": "D) Río Intermedio",
+        "questionId": "d2-q6"
       },
       {
         "index": 128,
@@ -1036,9 +1024,9 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "¿En qué orden dices los lados?",
-        "questionId": "d2-q8",
-        "questionType": "mcq",
+        "text": "Explica con tus palabras qué es un punto",
+        "questionId": "d2-w1",
+        "questionType": "write",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1050,93 +1038,39 @@
         "index": 130,
         "column": 3,
         "line": 26,
-        "kind": "option",
-        "text": "A) Norte, sur, este, oeste",
-        "questionId": "d2-q8"
+        "kind": "lesson",
+        "text": "extremo.",
+        "questionId": "d2-w1"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
-        "kind": "option",
-        "text": "B) Oeste, este, sur, norte",
-        "questionId": "d2-q8"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
-        "kind": "option",
-        "text": "C) Sur, norte, oeste, este",
-        "questionId": "d2-q8"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "option",
-        "text": "D) Este, oeste, norte, sur",
-        "questionId": "d2-q8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 135,
-        "column": 3,
-        "line": 31,
         "kind": "question",
-        "text": "Cuenta a alguien los cuatro vecinos en",
-        "questionId": "d2-w1",
-        "questionType": "write",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
-        "kind": "lesson",
-        "text": "orden.",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 137,
-        "column": 3,
-        "line": 33,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 138,
-        "column": 3,
-        "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w1"
-      },
-      {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "question",
-        "text": "Explica por qué el mar Caribe no es un país.",
+        "text": "Escribe los cuatro puntos extremos y su",
         "questionId": "d2-w2",
         "questionType": "write",
         "gutter": {
@@ -1147,12 +1081,66 @@
         }
       },
       {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "lesson",
+        "text": "lado.",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "question",
+        "text": "Dibuja a Venezuela con un punto en cada",
+        "questionId": "d2-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "lesson",
+        "text": "extremo.",
+        "questionId": "d2-w3"
+      },
+      {
         "index": 141,
         "column": 3,
         "line": 37,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d2-w2"
+        "questionId": "d2-w3"
       },
       {
         "index": 142,
@@ -1160,7 +1148,7 @@
         "line": 38,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d2-w2"
+        "questionId": "d2-w3"
       },
       {
         "index": 143,
@@ -1174,8 +1162,8 @@
         "column": 3,
         "line": 40,
         "kind": "question",
-        "text": "Dibuja una cruz con los cuatro lados y su",
-        "questionId": "d2-w3",
+        "text": "Dibuja dos ríos que se juntan y rotula la",
+        "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
           "role": "question",
@@ -1189,8 +1177,8 @@
         "column": 3,
         "line": 41,
         "kind": "lesson",
-        "text": "vecino.",
-        "questionId": "d2-w3"
+        "text": "confluencia.",
+        "questionId": "d2-w4"
       },
       {
         "index": 146,
@@ -1198,7 +1186,7 @@
         "line": 42,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d2-w3"
+        "questionId": "d2-w4"
       },
       {
         "index": 147,
@@ -1206,7 +1194,7 @@
         "line": 43,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d2-w3"
+        "questionId": "d2-w4"
       },
       {
         "index": 148,
@@ -1219,106 +1207,77 @@
         "index": 149,
         "column": 3,
         "line": 45,
-        "kind": "question",
-        "text": "Dibuja el Roraima con flechas a Brasil y",
-        "questionId": "d2-w4",
-        "questionType": "schematic",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "lesson",
-        "text": "Guyana.",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d2-w4"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja a Venezuela en el centro. Pon una"
+        "text": "Dibuja el contorno de Venezuela. Marca"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "flecha hacia cada lado. Escribe el vecino"
+        "text": "cuatro puntos, uno por extremo. Escribe el"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "en cada flecha. Dibuja el Roraima, una"
+        "text": "nombre junto a cada punto. Une los"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "mesa plana."
+        "text": "puntos: es el marco del país."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 10,
     "questions": [
       {
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué vecino queda arriba, al norte?",
+        "prompt": "Si bajas del Roraima al sur, ¿adónde llegas?",
         "choices": [
-          "Brasil",
-          "Guyana",
-          "Colombia",
-          "El mar Caribe"
+          "A Guyana",
+          "A Colombia",
+          "Al mar Caribe",
+          "A Brasil"
         ],
-        "answer": "El mar Caribe",
-        "slot": {
-          "column": 2,
-          "line": 36,
-          "index": 88
-        }
-      },
-      {
-        "id": "d2-q2",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué vecino queda abajo, al sur?",
-        "choices": [
-          "Colombia",
-          "Brasil",
-          "Guyana",
-          "El mar Caribe"
-        ],
-        "answer": "Brasil",
+        "answer": "A Brasil",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1326,17 +1285,17 @@
         }
       },
       {
-        "id": "d2-q3",
+        "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué vecino queda al este?",
+        "prompt": "¿Qué es un punto extremo?",
         "choices": [
-          "Colombia",
-          "Brasil",
-          "Guyana",
-          "El mar Caribe"
+          "Toda la frontera",
+          "El lugar más lejano en una dirección",
+          "Un tepuy",
+          "Una región"
         ],
-        "answer": "Guyana",
+        "answer": "El lugar más lejano en una dirección",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1344,17 +1303,17 @@
         }
       },
       {
-        "id": "d2-q4",
+        "id": "d2-q3",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué vecino queda al oeste?",
+        "prompt": "¿Cuál es el punto extremo norte?",
         "choices": [
-          "Guyana",
-          "Brasil",
-          "El mar Caribe",
-          "Colombia"
+          "Nacimiento del río Ararí",
+          "Nacimiento del río Intermedio",
+          "Cabo San Román",
+          "Caracas"
         ],
-        "answer": "Colombia",
+        "answer": "Cabo San Román",
         "slot": {
           "column": 3,
           "line": 1,
@@ -1362,17 +1321,17 @@
         }
       },
       {
-        "id": "d2-q5",
+        "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Por qué el mar Caribe no es un país?",
+        "prompt": "¿Cuál es el punto extremo sur?",
         "choices": [
-          "Porque está muy lejos",
-          "Porque es agua, no un país",
-          "Porque es muy pequeño",
-          "Porque está al sur"
+          "Cabo San Román",
+          "Barima y Mururuma",
+          "El mar Caribe",
+          "Nacimiento del río Ararí"
         ],
-        "answer": "Porque es agua, no un país",
+        "answer": "Nacimiento del río Ararí",
         "slot": {
           "column": 3,
           "line": 7,
@@ -1380,17 +1339,17 @@
         }
       },
       {
-        "id": "d2-q6",
+        "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Por dónde sale el sol, según el truco?",
+        "prompt": "¿Qué es una confluencia?",
         "choices": [
-          "Por el este",
-          "Por el oeste",
-          "Por el norte",
-          "Por el sur"
+          "Una montaña alta",
+          "Donde se juntan dos ríos",
+          "Una ciudad grande",
+          "Un tipo de frontera"
         ],
-        "answer": "Por el este",
+        "answer": "Donde se juntan dos ríos",
         "slot": {
           "column": 3,
           "line": 13,
@@ -1398,17 +1357,17 @@
         }
       },
       {
-        "id": "d2-q7",
+        "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuál es un vecino de tierra?",
+        "prompt": "¿Cuál es el punto extremo este?",
         "choices": [
-          "El mar Caribe",
-          "Un río",
-          "Brasil",
-          "Un tepuy"
+          "Confluencia de Barima y Mururuma",
+          "Cabo San Román",
+          "Río Ararí",
+          "Río Intermedio"
         ],
-        "answer": "Brasil",
+        "answer": "Confluencia de Barima y Mururuma",
         "slot": {
           "column": 3,
           "line": 19,
@@ -1416,17 +1375,10 @@
         }
       },
       {
-        "id": "d2-q8",
+        "id": "d2-w1",
         "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿En qué orden dices los lados?",
-        "choices": [
-          "Norte, sur, este, oeste",
-          "Oeste, este, sur, norte",
-          "Sur, norte, oeste, este",
-          "Este, oeste, norte, sur"
-        ],
-        "answer": "Norte, sur, este, oeste",
+        "type": "write",
+        "prompt": "Explica con tus palabras qué es un punto extremo.",
         "slot": {
           "column": 3,
           "line": 25,
@@ -1434,51 +1386,40 @@
         }
       },
       {
-        "id": "d2-w1",
-        "originDay": 2,
-        "type": "write",
-        "prompt": "Cuenta a alguien los cuatro vecinos en orden.",
-        "slot": {
-          "column": 3,
-          "line": 31,
-          "index": 135
-        }
-      },
-      {
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Explica por qué el mar Caribe no es un país.",
+        "prompt": "Escribe los cuatro puntos extremos y su lado.",
         "slot": {
           "column": 3,
-          "line": 36,
-          "index": 140
+          "line": 30,
+          "index": 134
         }
       },
       {
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja una cruz con los cuatro lados y su vecino.",
+        "prompt": "Dibuja a Venezuela con un punto en cada extremo.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 40,
-          "index": 144
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja el Roraima con flechas a Brasil y Guyana.",
+        "prompt": "Dibuja dos ríos que se juntan y rotula la confluencia.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 45,
-          "index": 149
+          "line": 40,
+          "index": 144
         }
       }
     ]

@@ -1,0 +1,1463 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 1,
+  "day": 2,
+  "level": 6,
+  "subject": "fin",
+  "locale": "es",
+  "title": "El trabajo es un regalo para servir",
+  "lesson": {
+    "kind": "deepen",
+    "focusPoint": 1,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nViste que todo es de Dios y que tú eres mayordomo, como quien cuida las matas de cacao de Chuao."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: El trabajo es un regalo",
+        "body": "¿El trabajo es un castigo o un regalo? Piensa en quien cuida el cacao.\n\nDios dio trabajo al hombre en el huerto antes de que existiera el pecado. Por eso el trabajo es bueno."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: Trabajar es servir",
+        "body": "Cuando cuidas el cacao, ¿a quién estás sirviendo con tu trabajo?\n\nTrabaja de corazón, como para Dios. Así sirves también a tu prójimo, que es la persona que está cerca."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: Mi trabajo es una vocación",
+        "body": "El chocolate de Chuao, ¿lo hace una sola persona?\n\nMuchas manos lo hacen: alguien siembra, alguien cosecha, fermenta y seca. Vocación es el llamado de Dios a servir."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Producir valor para otros",
+        "body": "Si haces algo útil para un vecino, ¿por qué querría pagarte?\n\nTe paga porque tu trabajo le sirve. Los dos ganan: él recibe ayuda y tú recibes un pago justo."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Práctica económica de hoy",
+        "body": "Hoy gana con permiso de mamá o papá. ¿Qué trabajo útil puedes hacer?\n\nHaz una tarea extra con pago acordado. Ejemplo inventado: 2 monedas por ordenar la sala. Anota lo que ganaste."
+      }
+    ],
+    "summary": "El trabajo es un regalo de Dios para servir a otros, y mi esfuerzo útil puede ganar un pago justo.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "quizIntegrated": true,
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1",
+    "imageBandInstruction": "Dibuja la ruta del cacao de Chuao: mata, mazorca, semillas secas y chocolate. Debajo, un registro: Qué hice, Gané, y una caja vacía para anotar tu pago.",
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste la clase pasada?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "heading",
+        "text": "Punto 1: Repaso de la clase pasada"
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Viste que todo es de Dios y que tú"
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "lesson",
+        "text": "eres mayordomo, como quien cuida"
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "las matas de cacao de Chuao."
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "lesson",
+        "text": "¿El trabajo es un castigo o un regalo?"
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Piensa en quien cuida el cacao."
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "heading",
+        "text": "Punto 2: El trabajo es un regalo"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Dios dio trabajo al hombre en el huerto"
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "antes de que existiera el pecado."
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "Por eso el trabajo es bueno."
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Cuando cuidas el cacao, ¿a quién"
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "estás sirviendo con tu trabajo?"
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "heading",
+        "text": "Punto 3: Trabajar es servir"
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "Trabaja de corazón, como para Dios."
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "lesson",
+        "text": "Así sirves también a tu prójimo,"
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "lesson",
+        "text": "que es la persona que está cerca."
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "El chocolate de Chuao, ¿lo hace"
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "una sola persona?"
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "heading",
+        "text": "Punto 4: Mi trabajo es una vocación"
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "lesson",
+        "text": "Muchas manos lo hacen: alguien siembra,"
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "lesson",
+        "text": "alguien cosecha, fermenta y seca."
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Vocación es el llamado de Dios a servir."
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "lesson",
+        "text": "Si haces algo útil para un vecino,"
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "¿por qué querría pagarte?"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "heading",
+        "text": "Punto 5: Producir valor para otros"
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Te paga porque tu trabajo le sirve."
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "lesson",
+        "text": "Los dos ganan: él recibe ayuda"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "lesson",
+        "text": "y tú recibes un pago justo."
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Hoy gana con permiso de mamá o papá."
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "lesson",
+        "text": "¿Qué trabajo útil puedes hacer?"
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "heading",
+        "text": "Punto 6: Práctica económica de hoy"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "lesson",
+        "text": "Haz una tarea extra con pago acordado."
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "lesson",
+        "text": "Ejemplo inventado: 2 monedas por ordenar"
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "lesson",
+        "text": "la sala. Anota lo que ganaste."
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿El trabajo existía antes del pecado?",
+        "questionId": "d2-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) No, vino después",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) Solo existía para reyes",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) Nadie lo sabe",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) Sí, Dios lo dio en el huerto",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Cómo se debe trabajar, según la clase?",
+        "questionId": "d2-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) Sin ganas",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) De corazón, como para Dios",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) Solo por dinero",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) A escondidas",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "question",
+        "text": "¿Quién es tu prójimo?",
+        "questionId": "d2-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "option",
+        "text": "A) Solo tu mascota",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Nadie",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) La persona que está cerca",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Solo un extraño lejano",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Qué es una vocación?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Un juego de mesa",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Un tipo de cacao",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Un día de descanso",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Un llamado de Dios a servir",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "El chocolate de Chuao, ¿quién lo hace?",
+        "questionId": "d2-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "option",
+        "text": "A) Una sola persona",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "B) Muchas manos",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "C) Nadie",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "D) Solo los niños",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "question",
+        "text": "¿Por qué te paga un vecino?",
+        "questionId": "d2-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "option",
+        "text": "A) Tu trabajo le sirve",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "B) Porque sí",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "C) Por miedo",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "D) Por lástima",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "question",
+        "text": "En un buen intercambio, ¿quién gana?",
+        "questionId": "d2-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "option",
+        "text": "A) Solo el que paga",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "option",
+        "text": "B) Solo el que cobra",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "option",
+        "text": "C) Los dos",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "option",
+        "text": "D) Nadie",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "question",
+        "text": "Escribe qué hiciste y cuánto ganaste hoy.",
+        "questionId": "d2-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "question",
+        "text": "Cuenta con tus palabras por qué trabajar es",
+        "questionId": "d2-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "lesson",
+        "text": "servir.",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "question",
+        "text": "Dibuja la ruta del cacao: de la mata al",
+        "questionId": "d2-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "lesson",
+        "text": "chocolate.",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "question",
+        "text": "Dibuja un esquema: tú, tu trabajo y quien te",
+        "questionId": "d2-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "lesson",
+        "text": "paga.",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja la ruta del cacao de Chuao: mata,"
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "mazorca, semillas secas y chocolate."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Debajo, un registro: Qué hice, Gané, y una"
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "caja vacía para anotar tu pago."
+      }
+    ]
+  },
+  "quiz": {
+    "questionCount": 11,
+    "questions": [
+      {
+        "id": "d2-q1",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿El trabajo existía antes del pecado?",
+        "choices": [
+          "No, vino después",
+          "Solo existía para reyes",
+          "Nadie lo sabe",
+          "Sí, Dios lo dio en el huerto"
+        ],
+        "answer": "Sí, Dios lo dio en el huerto",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d2-q2",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cómo se debe trabajar, según la clase?",
+        "choices": [
+          "Sin ganas",
+          "De corazón, como para Dios",
+          "Solo por dinero",
+          "A escondidas"
+        ],
+        "answer": "De corazón, como para Dios",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d2-q3",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Quién es tu prójimo?",
+        "choices": [
+          "Solo tu mascota",
+          "Nadie",
+          "La persona que está cerca",
+          "Solo un extraño lejano"
+        ],
+        "answer": "La persona que está cerca",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
+        "id": "d2-q4",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué es una vocación?",
+        "choices": [
+          "Un juego de mesa",
+          "Un tipo de cacao",
+          "Un día de descanso",
+          "Un llamado de Dios a servir"
+        ],
+        "answer": "Un llamado de Dios a servir",
+        "slot": {
+          "column": 3,
+          "line": 7,
+          "index": 111
+        }
+      },
+      {
+        "id": "d2-q5",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "El chocolate de Chuao, ¿quién lo hace?",
+        "choices": [
+          "Una sola persona",
+          "Muchas manos",
+          "Nadie",
+          "Solo los niños"
+        ],
+        "answer": "Muchas manos",
+        "slot": {
+          "column": 3,
+          "line": 13,
+          "index": 117
+        }
+      },
+      {
+        "id": "d2-q6",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Por qué te paga un vecino?",
+        "choices": [
+          "Tu trabajo le sirve",
+          "Porque sí",
+          "Por miedo",
+          "Por lástima"
+        ],
+        "answer": "Tu trabajo le sirve",
+        "slot": {
+          "column": 3,
+          "line": 19,
+          "index": 123
+        }
+      },
+      {
+        "id": "d2-q7",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "En un buen intercambio, ¿quién gana?",
+        "choices": [
+          "Solo el que paga",
+          "Solo el que cobra",
+          "Los dos",
+          "Nadie"
+        ],
+        "answer": "Los dos",
+        "slot": {
+          "column": 3,
+          "line": 25,
+          "index": 129
+        }
+      },
+      {
+        "id": "d2-w1",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Escribe qué hiciste y cuánto ganaste hoy.",
+        "slot": {
+          "column": 3,
+          "line": 31,
+          "index": 135
+        }
+      },
+      {
+        "id": "d2-w2",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Cuenta con tus palabras por qué trabajar es servir.",
+        "slot": {
+          "column": 3,
+          "line": 35,
+          "index": 139
+        }
+      },
+      {
+        "id": "d2-w3",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Dibuja la ruta del cacao: de la mata al chocolate.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 40,
+          "index": 144
+        }
+      },
+      {
+        "id": "d2-w4",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Dibuja un esquema: tú, tu trabajo y quien te paga.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 45,
+          "index": 149
+        }
+      }
+    ]
+  },
+  "media": [],
+  "mppe": {
+    "objectives": [
+      {
+        "id": "fin-w1-d2-01",
+        "label": "Trabajo con ganas para servir a Dios y a otros."
+      }
+    ]
+  }
+}

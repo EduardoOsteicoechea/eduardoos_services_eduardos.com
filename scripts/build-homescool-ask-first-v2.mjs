@@ -86,7 +86,10 @@ function stamp() {
 const COPY_CUE = "Escribe aqu\u00ed lo que aprendiste:";
 /** Reflection / copy line (a row of underscores, one slot). Must fit the 59 mm text width. */
 const DASH = "_".repeat(40);
-export const OPENING = "\u00bfQu\u00e9 aprendiste ayer?";
+// v3 (3 days per subject, not daily): "ayer" would be false, so the opening speaks of the last class.
+export const OPENING = "\u00bfQu\u00e9 aprendiste la clase pasada?";
+/** v3: the copy space after every "Escribe aqui lo que aprendiste:" is TWO dash rows. */
+const COPY_ROWS = 2;
 
 /**
  * One continuous ask-first narrative (docs: homescool-class-method-v2.mdc).
@@ -123,7 +126,7 @@ function buildLesson(c, extra = 0) {
     pushWrapped(out, u.a);
     out.push(blank());
     out.push(line(COPY_CUE));
-    out.push(line(DASH));
+    for (let k = 0; k < COPY_ROWS; k++) out.push(line(DASH));
     out.push(blank());
   });
   return out;
@@ -249,10 +252,52 @@ function pointsFrom(c) {
   });
 }
 
+/**
+ * v3 day shape: d1 intro, d2 deepen (focusPoint 1), d3 deepen (focusPoint 2). Only d1..d3 exist.
+ */
+function kindFor(day) {
+  if (day === 1) return { kind: "intro", focusPoint: null };
+  return { kind: "deepen", focusPoint: day - 1 };
+}
+
+/** Minimal valid document for a class that has no live JSON yet (e.g. the new "fin" subject). */
+function skeleton(c) {
+  const m = c.key.match(/^(.+)-c3-w(\d)-d(\d)$/);
+  if (!m) throw new Error(`bad key ${c.key}`);
+  if (!c.title) throw new Error(`${c.key}: new class needs c.title`);
+  const day = Number(m[3]);
+  return {
+    format: "eoschool",
+    version: 1,
+    cycle: 3,
+    week: Number(m[2]),
+    day,
+    level: 6,
+    subject: m[1],
+    locale: c.locale || "es",
+    title: c.title,
+    lesson: { ...kindFor(day), points: [], summary: "" },
+    quiz: { questionCount: 0, questions: [] },
+    media: [],
+    supportUrl: c.supportUrl || undefined,
+    mppe: c.mppe ? { objectives: c.mppe } : undefined,
+  };
+}
+
 function build(c, doc) {
   const m = c.key.match(/-d(\d)$/);
   const day = Number(m[1]);
   const problems = [];
+  if (day > 3) problems.push(`DAY>3: v3 has only d1..d3 (${c.key})`);
+  // Optional per-class overrides: the 3-day split re-topics some days.
+  if (c.title) doc.title = c.title;
+  if (c.supportUrl) doc.supportUrl = c.supportUrl;
+  if (c.mppe) doc.mppe = { objectives: c.mppe };
+  if (c.memoryPhrase) doc.lesson.memoryPhrase = c.memoryPhrase;
+  if (c.weekRecap) doc.lesson.weekRecap = c.weekRecap;
+  if (c.priorDayRecap) doc.lesson.priorDayRecap = c.priorDayRecap;
+  Object.assign(doc.lesson, kindFor(day));
+  doc.day = day;
 
   const allBlocks = quizBlocks(c, day);
   // Image-band instruction: one bold paragraph wrapped to the column; K = its line count (max 6).
@@ -369,7 +414,8 @@ let fail = 0;
 for (const c of classes) {
   const week = c.key.match(/-w(\d)-/)[1];
   const file = path.join(root, `week${week}`, `${c.key}-l6.eoschool.json`);
-  const doc = JSON.parse(fs.readFileSync(file, "utf8"));
+  const isNew = !fs.existsSync(file);
+  const doc = isNew ? skeleton(c) : JSON.parse(fs.readFileSync(file, "utf8"));
   const r = build(c, doc);
   if (r.problems.length) {
     fail++;
@@ -383,7 +429,7 @@ for (const c of classes) {
     const archiveDir = path.join(root, `week${week}`, "archive");
     fs.mkdirSync(archiveDir, { recursive: true });
     const bak = path.join(archiveDir, `${c.key}-l6.pre-askfirst-${stamp()}.eoschool.json`);
-    if (!fs.existsSync(bak)) fs.copyFileSync(file, bak);
+    if (!isNew && !fs.existsSync(bak)) fs.copyFileSync(file, bak);
     fs.writeFileSync(file, JSON.stringify(doc, null, 2) + "\n", "utf8");
   }
 }

@@ -1,0 +1,1468 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 2,
+  "day": 1,
+  "level": 6,
+  "subject": "ing",
+  "locale": "en",
+  "title": "Spanish verb times: one word or two?",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Punto 1: Repaso de ayer",
+        "body": "¿Qué aprendiste ayer?\n\nViste verbos como cantar, comer, vivir. Terminan en -ar, -er o -ir. Hoy suben al teleférico de Mérida. Sube por tramos, con estaciones."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: El final dice cuándo",
+        "body": "Cantas en el teleférico de Mérida. ¿Cómo dices «cantar» ahora y ayer?\n\nCada estación es un momento. Ahora dices «canto»; ayer, «canté». Mañana dirás «cantaré». La raíz «cant-» se queda igual."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: Más formas de una palabra",
+        "body": "Mira «cantaba» y «cantaría». ¿Cuándo crees que pasa cada una?\n\n«Cantaba» es pasado que sigue abierto. «Cantaría» es lo que harías si pudieras. Una palabra: canto / cantaba / canté / cantaré / cantaría."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: Dos tramos con haber",
+        "body": "El teleférico sube por tramos. También «he cantado» va en dos. ¿Cuáles son?\n\nPrimer tramo: «he», la ayudante «haber». Segundo: «cantado», el participio. Dos palabras: ayudante haber + forma de lo ya hecho (he cantado)."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: El participio no cambia",
+        "body": "Una pregunta con truco: si todos comen, ¿«hemos comido» o «hemos comidos»?\n\nSe dice «hemos comido». El participio (cantado, comido, vivido) no cambia, aunque sean muchos. Solo cambia la ayudante: he, has, ha."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Las pistas del momento",
+        "body": "Terminaste de subir. ¿Dices «ayer subí» o «ya he subido»? ¿Qué pista ayuda?\n\n«Ayer» cierra el momento: «subí». «Ya» deja vivo el resultado: «he subido». Escucha la pista antes de elegir una palabra o dos."
+      }
+    ],
+    "summary": "El verbo dice cuándo pasa algo, con una palabra (canté) o con dos (he cantado), como estaciones del teleférico.",
+    "memoryPhrase": "One word: **canto / cantaba / canté / cantaré / cantaría**. Two words: helper **haber** + already-done form (**he cantado**).",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "imageBandInstruction": "Dibuja el teleférico de Mérida subiendo. Pon estaciones: ayer, ahora, mañana. Escribe canté, canto y cantaré en ellas. Dibuja a alguien cantando en una.",
+    "quizIntegrated": true,
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste ayer?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "heading",
+        "text": "Punto 1: Repaso de ayer"
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Viste verbos como cantar, comer, vivir."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Terminan en -ar, -er o -ir."
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Hoy suben al teleférico de Mérida."
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "lesson",
+        "text": "Sube por tramos, con estaciones."
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "lesson",
+        "text": "Cantas en el teleférico de Mérida."
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "¿Cómo dices «cantar» ahora y ayer?"
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "heading",
+        "text": "Punto 2: El final dice cuándo"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Cada estación es un momento."
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "Ahora dices «canto»; ayer, «canté»."
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "Mañana dirás «cantaré»."
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "lesson",
+        "text": "La raíz «cant-» se queda igual."
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Mira «cantaba» y «cantaría». ¿Cuándo"
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "crees que pasa cada una?"
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "heading",
+        "text": "Punto 3: Más formas de una palabra"
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "«Cantaba» es pasado que sigue abierto."
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "lesson",
+        "text": "«Cantaría» es lo que harías si pudieras."
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "lesson",
+        "text": "Una palabra: canto / cantaba / canté /"
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "lesson",
+        "text": "cantaré / cantaría."
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "El teleférico sube por tramos. También"
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "«he cantado» va en dos. ¿Cuáles son?"
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "heading",
+        "text": "Punto 4: Dos tramos con haber"
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "lesson",
+        "text": "Primer tramo: «he», la ayudante «haber»."
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "lesson",
+        "text": "Segundo: «cantado», el participio."
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Dos palabras: ayudante haber + forma"
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "lesson",
+        "text": "de lo ya hecho (he cantado)."
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "lesson",
+        "text": "Una pregunta con truco: si todos comen,"
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "¿«hemos comido» o «hemos comidos»?"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "heading",
+        "text": "Punto 5: El participio no cambia"
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Se dice «hemos comido»."
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "lesson",
+        "text": "El participio (cantado, comido, vivido)"
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "lesson",
+        "text": "no cambia, aunque sean muchos."
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Solo cambia la ayudante: he, has, ha."
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Terminaste de subir. ¿Dices «ayer subí»"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "lesson",
+        "text": "o «ya he subido»? ¿Qué pista ayuda?"
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "heading",
+        "text": "Punto 6: Las pistas del momento"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "lesson",
+        "text": "«Ayer» cierra el momento: «subí»."
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "lesson",
+        "text": "«Ya» deja vivo el resultado: «he subido»."
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "lesson",
+        "text": "Escucha la pista antes de elegir"
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "lesson",
+        "text": "una palabra o dos."
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "¿Cómo dices «cantar» ahora?",
+        "questionId": "d1-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) canto",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) canté",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) cantaré",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) cantaría",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Cuál forma habla de ayer?",
+        "questionId": "d1-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) canto",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) cantaré",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) cantaría",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) canté",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "question",
+        "text": "¿Qué parte de «cantar» no cambia?",
+        "questionId": "d1-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "option",
+        "text": "A) El final",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) La raíz «cant-»",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Todo",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) Nada",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Cuál es el participio de «cantar»?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) cantaba",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) cantaré",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) cantado",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) canto",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "En «he cantado», ¿cuál es la ayudante?",
+        "questionId": "d1-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "option",
+        "text": "A) cantado",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "B) cant-",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "C) canto",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "D) he",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "question",
+        "text": "¿Cuál frase está bien dicha?",
+        "questionId": "d1-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "option",
+        "text": "A) Hemos comidos.",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "B) Hemos comido.",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "C) He comidos.",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "D) Hemos comer.",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "question",
+        "text": "¿Qué frase deja el resultado vivo?",
+        "questionId": "d1-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "option",
+        "text": "A) Ya he subido.",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "option",
+        "text": "B) Ayer subí.",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "option",
+        "text": "C) Subiré mañana.",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "option",
+        "text": "D) Subiría.",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "question",
+        "text": "Escribe tres formas de «cantar» de una",
+        "questionId": "d1-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "lesson",
+        "text": "palabra.",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "question",
+        "text": "Explica qué hace «he» en «he cantado».",
+        "questionId": "d1-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "question",
+        "text": "Dibuja el teleférico con canté, canto y",
+        "questionId": "d1-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "lesson",
+        "text": "cantaré.",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "question",
+        "text": "Dibuja «he» y «cantado» como dos tramos.",
+        "questionId": "d1-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja el teleférico de Mérida subiendo."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Pon estaciones: ayer, ahora, mañana."
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Escribe canté, canto y cantaré en ellas."
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "Dibuja a alguien cantando en una."
+      }
+    ],
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1"
+  },
+  "quiz": {
+    "questionCount": 11,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cómo dices «cantar» ahora?",
+        "choices": [
+          "canto",
+          "canté",
+          "cantaré",
+          "cantaría"
+        ],
+        "answer": "canto",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuál forma habla de ayer?",
+        "choices": [
+          "canto",
+          "cantaré",
+          "cantaría",
+          "canté"
+        ],
+        "answer": "canté",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué parte de «cantar» no cambia?",
+        "choices": [
+          "El final",
+          "La raíz «cant-»",
+          "Todo",
+          "Nada"
+        ],
+        "answer": "La raíz «cant-»",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuál es el participio de «cantar»?",
+        "choices": [
+          "cantaba",
+          "cantaré",
+          "cantado",
+          "canto"
+        ],
+        "answer": "cantado",
+        "slot": {
+          "column": 3,
+          "line": 7,
+          "index": 111
+        }
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "En «he cantado», ¿cuál es la ayudante?",
+        "choices": [
+          "cantado",
+          "cant-",
+          "canto",
+          "he"
+        ],
+        "answer": "he",
+        "slot": {
+          "column": 3,
+          "line": 13,
+          "index": 117
+        }
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuál frase está bien dicha?",
+        "choices": [
+          "Hemos comidos.",
+          "Hemos comido.",
+          "He comidos.",
+          "Hemos comer."
+        ],
+        "answer": "Hemos comido.",
+        "slot": {
+          "column": 3,
+          "line": 19,
+          "index": 123
+        }
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué frase deja el resultado vivo?",
+        "choices": [
+          "Ya he subido.",
+          "Ayer subí.",
+          "Subiré mañana.",
+          "Subiría."
+        ],
+        "answer": "Ya he subido.",
+        "slot": {
+          "column": 3,
+          "line": 25,
+          "index": 129
+        }
+      },
+      {
+        "id": "d1-w1",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Escribe tres formas de «cantar» de una palabra.",
+        "slot": {
+          "column": 3,
+          "line": 31,
+          "index": 135
+        }
+      },
+      {
+        "id": "d1-w2",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Explica qué hace «he» en «he cantado».",
+        "slot": {
+          "column": 3,
+          "line": 36,
+          "index": 140
+        }
+      },
+      {
+        "id": "d1-w3",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Dibuja el teleférico con canté, canto y cantaré.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 40,
+          "index": 144
+        }
+      },
+      {
+        "id": "d1-w4",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Dibuja «he» y «cantado» como dos tramos.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 45,
+          "index": 149
+        }
+      }
+    ]
+  },
+  "media": [],
+  "supportUrl": "https://www.youtube.com/watch?v=yqvey43rDj8",
+  "mppe": {
+    "objectives": [
+      {
+        "id": "len-lec-06",
+        "label": "I build history sentences with Spanish time words."
+      },
+      {
+        "id": "len-lec-05",
+        "label": "I read one-word vs two-word tenses aloud."
+      }
+    ]
+  }
+}

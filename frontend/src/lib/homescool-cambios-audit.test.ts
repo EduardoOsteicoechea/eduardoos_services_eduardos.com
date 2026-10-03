@@ -58,14 +58,14 @@ function isLetterV2(doc: EoschoolDocument): boolean {
 describe("cambios audit — published ciclo3 week1–2 pack", () => {
   const docs = loadPublishedDocs();
 
-  it("publishes exactly 120 level-6 classes", () => {
-    expect(docs).toHaveLength(120);
+  it("publishes exactly 74 level-6 classes (3-day v3: 11 subjects x 3 d + pro 1 d + fin x 3 = 37 per week)", () => {
+    expect(docs).toHaveLength(74);
     expect(docs.every((d) => d.cycle === 3 && d.level === 6 && (d.week === 1 || d.week === 2))).toBe(
       true,
     );
   });
 
-  it("uses canonical subject order teb…pro as 1–12", () => {
+  it("uses canonical subject order teb…fin as 1–13", () => {
     expect([...HOMESCOOL_SUBJECTS]).toEqual([
       "teb",
       "exe",
@@ -79,14 +79,16 @@ describe("cambios audit — published ciclo3 week1–2 pack", () => {
       "lat",
       "cie",
       "pro",
+      "fin",
     ]);
     expect(HOMESCOOL_SUBJECT_CLASS_NO.teb).toBe(1);
     expect(HOMESCOOL_SUBJECT_CLASS_NO.pro).toBe(12);
+    expect(HOMESCOOL_SUBJECT_CLASS_NO.fin).toBe(13);
     expect(subjectClassNumber("cie")).toBe(11);
   });
 
-  it("requires supportUrl on every class", () => {
-    const missing = docs.filter((d) => !String(d.supportUrl || "").trim());
+  it("requires supportUrl on every class except fin", () => {
+    const missing = docs.filter((d) => d.subject !== "fin" && !String(d.supportUrl || "").trim());
     expect(missing.map((d) => `${d.subject}-w${d.week}-d${d.day}`)).toEqual([]);
   });
 

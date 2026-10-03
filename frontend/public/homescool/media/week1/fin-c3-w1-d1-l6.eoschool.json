@@ -1,0 +1,1462 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 1,
+  "day": 1,
+  "level": 6,
+  "subject": "fin",
+  "locale": "es",
+  "title": "Todo es de Dios y yo lo cuido",
+  "lesson": {
+    "kind": "intro",
+    "focusPoint": null,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nYa sabes que el dinero sirve para comprar cosas y que se gana trabajando. Hoy preguntamos de quién es todo."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: Dios es el dueño de todo",
+        "body": "En Chuao, junto al mar Caribe, crece el cacao. ¿De quién son esas matas?\n\nEl Salmo 24 enseña que la tierra es del Señor y todo lo que hay en ella. Las matas de cacao también son suyas."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: Yo soy mayordomo",
+        "body": "Si Dios es el dueño, ¿quién cuida las matas de cacao de Chuao?\n\nUn mayordomo cuida lo que es de otro. Dios puso al hombre en el huerto para cuidarlo, como en Génesis 2."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: El dinero es una herramienta",
+        "body": "Una pregunta con truco: ¿el dinero es bueno o es malo?\n\nEl dinero no es malo ni es mi dueño. Es una herramienta, como una pala. Sirve para vivir, dar y ayudar."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: Los tres frascos",
+        "body": "Si vendes cacao y recibes monedas, ¿qué puedes hacer con ellas?\n\nUn frasco es para dar con alegría. Otro es para ahorrar para una meta. El tercero es para gastar con sabiduría."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Práctica económica de hoy",
+        "body": "Hoy ahorra de verdad, con permiso de mamá o papá. ¿Cómo puedes hacerlo?\n\nApaga una luz que no usas o lleva merienda de casa. Si ahorras monedas, anótalas en tu registro."
+      }
+    ],
+    "summary": "Todo es de Dios; yo soy su mayordomo y uso el dinero para dar, ahorrar y gastar bien.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "quizIntegrated": true,
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1",
+    "imageBandInstruction": "Dibuja tres frascos: dar, ahorrar, gastar. Debajo, una tabla con columnas: Fecha, Qué hice, Gané, Ahorré, vacía. Al fondo, una mata de cacao de Chuao.",
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste la clase pasada?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "heading",
+        "text": "Punto 1: Repaso de la clase pasada"
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Ya sabes que el dinero sirve para"
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "lesson",
+        "text": "comprar cosas y que se gana trabajando."
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Hoy preguntamos de quién es todo."
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "lesson",
+        "text": "En Chuao, junto al mar Caribe, crece"
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "el cacao. ¿De quién son esas matas?"
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "heading",
+        "text": "Punto 2: Dios es el dueño de todo"
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "El Salmo 24 enseña que la tierra es"
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "del Señor y todo lo que hay en ella."
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "lesson",
+        "text": "Las matas de cacao también son suyas."
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "Si Dios es el dueño, ¿quién cuida"
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "lesson",
+        "text": "las matas de cacao de Chuao?"
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "heading",
+        "text": "Punto 3: Yo soy mayordomo"
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "Un mayordomo cuida lo que es de otro."
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "lesson",
+        "text": "Dios puso al hombre en el huerto"
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "lesson",
+        "text": "para cuidarlo, como en Génesis 2."
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿el dinero"
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "es bueno o es malo?"
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "heading",
+        "text": "Punto 4: El dinero es una herramienta"
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "lesson",
+        "text": "El dinero no es malo ni es mi dueño."
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "lesson",
+        "text": "Es una herramienta, como una pala."
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Sirve para vivir, dar y ayudar."
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "lesson",
+        "text": "Si vendes cacao y recibes monedas,"
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "¿qué puedes hacer con ellas?"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "heading",
+        "text": "Punto 5: Los tres frascos"
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Un frasco es para dar con alegría."
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "lesson",
+        "text": "Otro es para ahorrar para una meta."
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "lesson",
+        "text": "El tercero es para gastar con sabiduría."
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Hoy ahorra de verdad, con permiso de"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "lesson",
+        "text": "mamá o papá. ¿Cómo puedes hacerlo?"
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "heading",
+        "text": "Punto 6: Práctica económica de hoy"
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "lesson",
+        "text": "Apaga una luz que no usas o lleva"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "lesson",
+        "text": "merienda de casa. Si ahorras monedas,"
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "lesson",
+        "text": "anótalas en tu registro."
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "Según el Salmo 24, ¿de quién es la tierra?",
+        "questionId": "d1-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) Del Señor",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) De quien la compra",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) Del más fuerte",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) De nadie",
+        "questionId": "d1-q1"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Qué es un mayordomo?",
+        "questionId": "d1-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) Quien manda sobre todo",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) Quien guarda todo para sí",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) Quien vende cacao",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) Quien cuida lo que es de otro",
+        "questionId": "d1-q2"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "question",
+        "text": "¿Qué mar queda junto a Chuao?",
+        "questionId": "d1-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "option",
+        "text": "A) El océano Pacífico",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) El mar Caribe",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) El mar Rojo",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) El lago de Maracaibo",
+        "questionId": "d1-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Cómo es el dinero, según la clase?",
+        "questionId": "d1-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Un dueño",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Un juguete",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Una herramienta",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Un secreto",
+        "questionId": "d1-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Para qué sirve el frasco de dar?",
+        "questionId": "d1-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "option",
+        "text": "A) Para comprar golosinas",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "B) Para esconder monedas",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "C) Para pedir prestado",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "D) Para dar con alegría",
+        "questionId": "d1-q5"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "question",
+        "text": "¿Para qué sirve el frasco de ahorrar?",
+        "questionId": "d1-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "option",
+        "text": "A) Para gastar todo hoy",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "B) Para una meta",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "C) Para perder monedas",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "D) Para presumir",
+        "questionId": "d1-q6"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "question",
+        "text": "¿Qué haces con una luz que no usas?",
+        "questionId": "d1-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "option",
+        "text": "A) La apagas para ahorrar",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "option",
+        "text": "B) La dejas prendida",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "option",
+        "text": "C) La enciendes más",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "option",
+        "text": "D) La tapas",
+        "questionId": "d1-q7"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "question",
+        "text": "Escribe qué hiciste y cuánto ganaste o",
+        "questionId": "d1-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "lesson",
+        "text": "ahorraste hoy.",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "question",
+        "text": "Cuenta con tus palabras de quién es todo.",
+        "questionId": "d1-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "question",
+        "text": "Dibuja tres frascos: dar, ahorrar y gastar.",
+        "questionId": "d1-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja un esquema: Dios dueño, tú",
+        "questionId": "d1-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "lesson",
+        "text": "mayordomo.",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja tres frascos: dar, ahorrar, gastar."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Debajo, una tabla con columnas: Fecha,"
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "Qué hice, Gané, Ahorré, vacía. Al fondo, una"
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "mata de cacao de Chuao."
+      }
+    ]
+  },
+  "quiz": {
+    "questionCount": 11,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Según el Salmo 24, ¿de quién es la tierra?",
+        "choices": [
+          "Del Señor",
+          "De quien la compra",
+          "Del más fuerte",
+          "De nadie"
+        ],
+        "answer": "Del Señor",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué es un mayordomo?",
+        "choices": [
+          "Quien manda sobre todo",
+          "Quien guarda todo para sí",
+          "Quien vende cacao",
+          "Quien cuida lo que es de otro"
+        ],
+        "answer": "Quien cuida lo que es de otro",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué mar queda junto a Chuao?",
+        "choices": [
+          "El océano Pacífico",
+          "El mar Caribe",
+          "El mar Rojo",
+          "El lago de Maracaibo"
+        ],
+        "answer": "El mar Caribe",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cómo es el dinero, según la clase?",
+        "choices": [
+          "Un dueño",
+          "Un juguete",
+          "Una herramienta",
+          "Un secreto"
+        ],
+        "answer": "Una herramienta",
+        "slot": {
+          "column": 3,
+          "line": 7,
+          "index": 111
+        }
+      },
+      {
+        "id": "d1-q5",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Para qué sirve el frasco de dar?",
+        "choices": [
+          "Para comprar golosinas",
+          "Para esconder monedas",
+          "Para pedir prestado",
+          "Para dar con alegría"
+        ],
+        "answer": "Para dar con alegría",
+        "slot": {
+          "column": 3,
+          "line": 13,
+          "index": 117
+        }
+      },
+      {
+        "id": "d1-q6",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Para qué sirve el frasco de ahorrar?",
+        "choices": [
+          "Para gastar todo hoy",
+          "Para una meta",
+          "Para perder monedas",
+          "Para presumir"
+        ],
+        "answer": "Para una meta",
+        "slot": {
+          "column": 3,
+          "line": 19,
+          "index": 123
+        }
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué haces con una luz que no usas?",
+        "choices": [
+          "La apagas para ahorrar",
+          "La dejas prendida",
+          "La enciendes más",
+          "La tapas"
+        ],
+        "answer": "La apagas para ahorrar",
+        "slot": {
+          "column": 3,
+          "line": 25,
+          "index": 129
+        }
+      },
+      {
+        "id": "d1-w1",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Escribe qué hiciste y cuánto ganaste o ahorraste hoy.",
+        "slot": {
+          "column": 3,
+          "line": 31,
+          "index": 135
+        }
+      },
+      {
+        "id": "d1-w2",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Cuenta con tus palabras de quién es todo.",
+        "slot": {
+          "column": 3,
+          "line": 36,
+          "index": 140
+        }
+      },
+      {
+        "id": "d1-w3",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Dibuja tres frascos: dar, ahorrar y gastar.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 40,
+          "index": 144
+        }
+      },
+      {
+        "id": "d1-w4",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Dibuja un esquema: Dios dueño, tú mayordomo.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
+      }
+    ]
+  },
+  "media": [],
+  "mppe": {
+    "objectives": [
+      {
+        "id": "fin-w1-d1-01",
+        "label": "Cuido con alegría lo que Dios me confía."
+      }
+    ]
+  }
+}

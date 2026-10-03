@@ -4,47 +4,90 @@
 **Audience:** level **6** (≈ **8 years**).  
 **Applies to:** `lesson.points[].body`, `lesson.summary`, quiz prompts/choices, headings, and `lesson.slotSequence` text (Letter grid v2).
 
-Agents, connectors, and human authors **must** follow this spec together with [METHOD_V1.md](../../frontend/public/skills/eoschool/METHOD_V1.md).
+Agents, connectors, and human authors **must** follow this spec together with [METHOD_V1.md](../../frontend/public/skills/eoschool/METHOD_V1.md) and the metaphor list [`docs/homescool-venezuela-metaphors.md`](../homescool-venezuela-metaphors.md).
 
-## The one writing rule: ask first
+## Role
 
-The whole class is **one natural, inductive narrative**. Every idea follows the same beat:
+Pedagogical designer for primary school (8-year-olds). Every class is a **natural, inductive narrative** in the **Ask First** method, and every class is tied to **one landmark of Venezuelan geography or history** used as the central metaphor.
 
-1. **Question** — wakes the child's interest («Ahora te pregunto, …»).
-2. **Blank space** — the child tries; he feels the need because he does not have the answer yet.
-3. **Answer below** — heading `Punto N: …` + short answer phrases.
-4. **Copy** — `Cópiala aquí:` + 2 blank lines; the child iterates the idea by copying the answer.
+## Mandatory rules
 
-There are **no** separate Idea / Explora / Práctica / Error común / «Para cerrar» sections and no end-of-class question block. Practice and common mistakes are folded into the same beat (e.g. «Una pregunta con truco: …»).
+### 1. Ask First structure
+
+- The class **never** has separate «práctica», «error común» or «pregunta final» sections. Everything flows in one continuous cycle.
+- Every idea follows exactly these **4 steps**:
+  1. **Trigger question** — wakes the child's curiosity.
+  2. **Reflection space** — a row of dashes `________________________________________` (40 underscores) where the child tries to answer or thinks before reading the answer.
+  3. **Explanation (answer)** — heading `Punto X: Título del punto` followed by the answer in **2 to 4 short lines**.
+  4. **Copy space (iteration)** — the line `Escribe aquí lo que aprendiste:` followed by another row of dashes.
+
+### 2. Opening
+
+- Every class opens **exactly** with the question `¿Qué aprendiste ayer?` followed by its row of dashes.
+- **Punto 1 is always «Repaso de ayer»**: it connects the previous day with today's topic. Day 1 of a week connects with what the child already knows (or with the last class of the previous week).
+
+### 3. Format and layout
+
+- **One idea per line.** Short lines that fit a narrow column (≤ ~40 characters; the generator wraps without cutting words).
+- **Strict spacing:** exactly **one blank line** between blocks (question / dashes / heading / answer / copy cue). Space between questions and headings.
+- No markdown in slot text.
+- A class has **5 to 7 Puntos** (the printed sheet fits ~6). More Puntos only if the lesson still fits the 156 slots.
+
+### 4. Venezuelan metaphor
+
+- Each subject-week has one assigned landmark in [`docs/homescool-venezuela-metaphors.md`](../homescool-venezuela-metaphors.md) (also `scripts/homescool-venezuela-metaphors.json`, enforced by the audit). **Review that list before writing or regenerating any class.**
+- The metaphor must live **inside the questions and answers** (organic narrative context), not in a pasted paragraph.
+- Only use the **«datos seguros»** listed for that landmark. Never invent figures, dates or records.
+- Faith subjects (`teb`, `exe`): the landmark is an **image that helps**, never a theological equivalence.
+
+## Gold example (shape and tone)
+
+```text
+¿Qué aprendiste ayer?
+
+________________________________________
+
+Punto 1: Repaso de ayer
+
+Ayer descubriste que las palabras
+son exploradores en una gran montaña.
+
+Escribe aquí lo que aprendiste:
+________________________________________
+
+¿Sabías que en la Sierra Nevada de Mérida
+todas las palabras forman nueve equipos?
+
+________________________________________
+
+Punto 2: Los nueve equipos de la Sierra
+...
+```
+
+Working module template: `scripts/homescool-ask-first-content/GOLD.example.mjs`.
 
 ## Letter grid v2 sheet
 
-Rhythm for `lesson.layout: "letter-grid-v2"` (`slotSequence` of 156):
-
-1. Opening question + 2 blank lines (day 1 = hook; days 2–5 = «¿Qué aprendiste ayer sobre esta misma materia?»).
-2. Heading `Repaso` + 3 short narrated lines.
-3. Typically 5 points, each with the beat above.
-4. Soft max **~66 characters** per lesson line; one idea per line; blank line between paragraphs and between a question and its answer space; no markdown in slot text.
-
-Full packing contract: [`.cursor/rules/homescool-class-method-v2.mdc`](../../.cursor/rules/homescool-class-method-v2.mdc).
+`lesson.layout: "letter-grid-v2"` — `slotSequence` of 156, generated from the module: opening → (question, dashes, `Punto N`, answer, copy cue, dashes) × N → quiz → image-band lines. Spare slots become extra dash rows in the reflection spaces. Packing contract: [`.cursor/rules/homescool-class-method-v2.mdc`](../../.cursor/rules/homescool-class-method-v2.mdc).
 
 ## `points[].body`
 
-One point per `Punto N`. Paragraphs are separated by blank lines (`\n\n`): the question first, then the answer. The first point starts with the opening question and, on days 2–5, `## Repaso` + its lines. The printed sheet's source of truth is `slotSequence`.
+One point per `Punto N`. Paragraphs are separated by blank lines (`\n\n`): the question first (point 1: «¿Qué aprendiste ayer?»), then the answer. The printed sheet's source of truth is `slotSequence`.
 
 ## Voice
 
 - Short complete sentences a child can read alone; gloss every school term on first use.
-- The narrative flows from one question to the next: each answer raises the next question.
-- Natural bridges are welcome («Sigamos.», «Imagina que…», «Una pregunta con truco…»); do not repeat the same hook on every point.
+- Each answer raises the next question.
+- Natural bridges are welcome («Imagina que…», «Una pregunta con truco…»); do not repeat the same hook on every point.
 
 **Forbidden**
 
 - UI labels pasted into prose (`Idea central:`, `Explora:`, `Práctica:`, `Error común:`).
 - Checklist stacks (bare «Término = glosa» lists, `A | B | C`, `A → B → C` chains without sentences).
-- Telegraphic filler repeated every day: «Esta clase te ayuda a aprender…», «Antes de terminar, un aviso», «Aprendemos:» in headings.
+- Telegraphic filler repeated every day: «Esta clase te ayuda a aprender…», «Antes de terminar, un aviso».
 - Orders with no teaching («Conjuga…» / «Marca…» only).
 - Jargon with no immediate gloss («participio», «epitelial», …).
+- Patriotic speeches, long lists of facts, or numbers not in the metaphor list.
 
 **Allowed exceptions**
 
@@ -55,31 +98,33 @@ English (`locale: "en"`, subject `ing`): same ideas; sheet labels stay Spanish u
 
 ## Headings and summaries
 
-- **`heading`:** short topic title only — `Punto N: …`, no «Aprendemos:», no double colons.
-- **`summary`:** one or two sentences the child can retell; intro days synthesize the week.
+- **`heading`:** `Punto N: …` only; no «Aprendemos:», no double colons.
+- **`summary`:** one or two sentences the child can retell.
 
 ## Quiz copy (level 6)
 
-When adapting for ≈8 years, **replace every question** (prompt + distractors / write instruction).
+Up to 12 items: 8 MCQ + 4 write (2 of the 4 are schematic), with one blank line between questions. When the gaps do not fit, the generator drops questions (never below 2 MCQ + 1 schematic + 1 written reflection). Replace every question when adapting.
 
 | Rule | Detail |
 | --- | --- |
-| MCQ prompt | **One line**, concrete, tied to that day's printed lesson. Vary openings; no required prefix. |
-| Choices | Plausible confusions from the lesson; **never** prefix `Respuesta:` on a choice or on `answer`. Rotate correct-answer position across items. |
-| Write / schematic | Short instruction; answerable from sheet text; ≥2 schematic per day on v2 sheets. |
-| Locale | Spanish cells: Spanish only in prompts/choices (no English meta like Overview, checklist, vs). |
+| MCQ prompt | **One short line**, concrete, tied to that day's printed lesson. Vary openings; no required prefix. |
+| Choices | Plausible confusions from the lesson; **never** prefix `Respuesta:`. Rotate the correct position. |
+| Write / schematic | Short instruction; answerable from sheet text; ≥2 schematic per day. |
+| Locale | Spanish cells: Spanish only in prompts/choices. |
 
 ## Encoding and typography
 
-- UTF-8 Spanish: tildes and «¿?» («patrón», «dirección», «refracción», «acompáñala», …).
+- UTF-8 Spanish: tildes and «¿?».
 - Prefer «comillas angulares» for examples in Spanish copy.
 
 ## Quality gate before upsert
 
 1. `points` is a **JSON array** (never a single object).
-2. Spot-read aloud: sounds like a teacher talking to one child, not a rubric.
+2. Read aloud: a teacher talking to one child, not a rubric.
 3. MCQ: every `answer` appears verbatim in `choices`; every quiz item is answerable from explicit sheet text.
-4. Rebuild and sync: `node scripts/build-homescool-curriculum.mjs` (with API env) updates `curriculum.json` and Mongo — only when the user asks.
+4. `node scripts/audit-homescool-v2-review.mjs` → 0 issues (checks the opening, Punto 1, copy cues, dashes, the assigned landmark).
+5. `go test ./pkg/pdf/...` (no line wider than the 59 mm text box).
+6. `node scripts/build-homescool-curriculum.mjs` (with API env) only when the user asks.
 
 ## Reference implementation
 

@@ -1,8 +1,9 @@
 /**
- * Arte · ciclo 3 · semana 2 · nivel 6 — Dibujos espejo paso a paso.
+ * Arte · ciclo 3 · semana 2 · nivel 6 — Dibujos espejo paso a paso (v3, 3 días).
  * Formato Ask First (ver BRIEF.md) con metáfora de Venezuela.
  * Hito: Laguna de Mucubají (laguna de montaña, aguas tranquilas, rodeada de páramo; agua quieta que refleja la montaña).
  * Ruta de la semana: Atención (mirar), Nombrar (decir forma y lugar), Expresar (dibujar la copia).
+ * d1 = panorama del espejo · d2 = mirar, medir y nombrar · d3 = dibujar la copia y contarla.
  * OiLS (Mona Brookes): O = formas redondas, i = puntos, L = rectas y ángulos, S = curvas.
  */
 export default [
@@ -11,7 +12,7 @@ export default [
     key: "art-c3-w2-d1",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
           "La semana pasada armaste dibujos",
           "con piezas OiLS: O, i, L y S.",
@@ -39,7 +40,7 @@ export default [
         a: [
           "Arriba está la montaña.",
           "Abajo está su reflejo.",
-          "En dibujo, esa línea es el eje de simetría.",
+          "Esa línea en dibujo es el eje de simetría.",
         ],
       },
       {
@@ -51,7 +52,6 @@ export default [
         a: [
           "Queda a dos dedos, pero al otro lado.",
           "Es del mismo tipo y del mismo tamaño.",
-          "Está a la misma distancia del eje.",
           "Cuando todo coincide, hay simetría.",
         ],
       },
@@ -101,10 +101,10 @@ export default [
       ],
     },
     image: [
-      "Dibuja una laguna y una montaña.",
-      "Traza el eje donde se tocan.",
-      "Dibuja tres formas OiLS arriba.",
-      "Anota la distancia de cada una al eje.",
+      "Dibuja una laguna de páramo y su montaña.",
+      "Traza el eje donde el agua toca la montaña.",
+      "Arriba pon tres formas OiLS; abajo, vacío.",
+      "Anota cuántos dedos hay de cada una al eje.",
     ],
     summary: "En la Laguna de Mucubají el agua quieta es un espejo. El eje parte la imagen en dos mitades que coinciden.",
   },
@@ -114,10 +114,10 @@ export default [
     key: "art-c3-w2-d2",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
-          "Ayer viste la montaña en el agua",
-          "de la Laguna de Mucubají.",
+          "La clase pasada viste la montaña en el",
+          "agua de la Laguna de Mucubají.",
           "El eje partía la imagen en dos mitades.",
         ],
       },
@@ -148,7 +148,7 @@ export default [
       {
         q: [
           "Tapa el agua y deja solo la montaña.",
-          "¿Qué falta y qué haces antes de trazar?",
+          "¿Qué te queda para dibujar?",
         ],
         h: "Punto 4: La media imagen",
         a: [
@@ -166,19 +166,19 @@ export default [
         a: [
           "Usa tu dedo: a un dedo, a dos dedos.",
           "Mide desde el eje hasta la forma.",
-          "Anota la medida al margen.",
+          "Con esa medida, di dónde está la forma.",
         ],
       },
       {
         q: [
-          "Una pregunta con truco: ¿sombreas la",
-          "montaña antes de copiar bien su forma?",
+          "Un amigo no ve la Laguna de Mucubají.",
+          "¿Qué le dices de una cumbre?",
         ],
-        h: "Punto 6: Primero forma y distancia",
+        h: "Punto 6: Nombrar con forma y lugar",
         a: [
-          "No. Primero van la forma y la distancia.",
-          "Los detalles y las sombras van después.",
-          "Si adornas antes, cuesta corregir.",
+          "Dices la forma y dónde está.",
+          "Por ejemplo: «Ángulo L, a dos dedos",
+          "del eje, arriba».",
         ],
       },
     ],
@@ -187,15 +187,15 @@ export default [
         { q: "¿Qué es atención al dibujar?", o: ["Mirar con calma", "Dibujar muy rápido", "Pintar de color", "Borrar todo"] },
         { q: "¿Qué son los espacios vacíos?", o: ["Huecos entre las líneas", "Manchas de color", "Líneas gruesas", "El borde del papel"] },
         { q: "¿Qué muestra una media imagen?", o: ["Solo un lado de la figura", "La figura entera", "Solo el color", "Solo el eje"] },
-        { q: "¿Qué listas antes de trazar?", o: ["Las piezas OiLS", "Los colores", "Las sombras", "Los adornos"] },
+        { q: "¿Qué listas de la media imagen?", o: ["Las piezas OiLS", "Los colores", "Las sombras", "Los adornos"] },
         { q: "¿Con qué mides la distancia al eje?", o: ["Con tu dedo", "Con un color", "Con un borrador", "Con una sombra"] },
         { q: "¿Desde dónde mides cada forma?", o: ["Desde el eje", "Desde el borde del papel", "Desde tu mano", "Desde la sombra"] },
-        { q: "¿Qué va primero?", o: ["La forma y la distancia", "Las sombras", "Los adornos", "Los colores"] },
+        { q: "En «Ángulo L, a dos dedos del eje, arriba», ¿qué es «arriba»?", o: ["El lugar", "La distancia", "El color", "La forma"] },
         { q: "¿Cómo mira quien tiene atención?", o: ["Con calma y sin prisa", "Muy rápido", "Sin mirar", "Con los ojos cerrados"] },
       ],
       write: [
         "Explica qué es una media imagen con tus palabras.",
-        "Cuenta cómo mides la distancia de una forma al eje.",
+        "Escribe una frase con forma, distancia y lugar.",
       ],
       schematic: [
         "Dibuja el eje de la laguna y media montaña.",
@@ -203,12 +203,12 @@ export default [
       ],
     },
     image: [
-      "Traza el eje de la laguna en tu hoja.",
-      "Dibuja media montaña con una S y una L.",
-      "Anota al margen la distancia al eje.",
-      "No sombrees todavía: forma y distancia.",
+      "Traza el eje de la laguna y media montaña.",
+      "Rotula cada forma con O, i, L o S.",
+      "Dibuja flechas de cada forma hasta el eje.",
+      "Deja en blanco los dedos para que los midas.",
     ],
-    summary: "Mirar con calma, como el agua de Mucubají, nos deja ver la media imagen y medir con el dedo antes de copiar.",
+    summary: "Mirar con calma, como el agua de Mucubají, nos deja ver la media imagen, medir con el dedo y nombrar cada forma con su lugar.",
   },
 
   // ───────────────────────── DÍA 3 ─────────────────────────
@@ -216,113 +216,11 @@ export default [
     key: "art-c3-w2-d3",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
-          "Ayer miraste con calma la media montaña",
-          "y mediste con el dedo hasta el eje.",
-          "Hoy pones esas medidas en palabras.",
-        ],
-      },
-      {
-        q: [
-          "Un amigo no ve la Laguna de Mucubají.",
-          "¿Qué dirías para que dibuje la montaña?",
-        ],
-        h: "Punto 2: Nombrar es decir con precisión",
-        a: [
-          "Nombrar es decir qué forma es",
-          "y dónde está respecto al eje.",
-          "Para la forma usas OiLS: O, i, L y S.",
-        ],
-      },
-      {
-        q: [
-          "Prueba con una cumbre: ¿cómo dirías",
-          "qué forma es y dónde está?",
-        ],
-        h: "Punto 3: Una frase que sirve",
-        a: [
-          "Por ejemplo: «Ángulo L, a dos dedos",
-          "del eje, arriba».",
-          "Dice la forma, la distancia y el lugar.",
-        ],
-      },
-      {
-        q: [
-          "Ahora el reflejo, al otro lado del agua.",
-          "¿Qué palabra de la frase cambias?",
-        ],
-        h: "Punto 4: Cambiar arriba por abajo",
-        a: [
-          "Cambias arriba por abajo.",
-          "La forma y la distancia son iguales.",
-          "Solo cambia el lado del eje.",
-        ],
-      },
-      {
-        q: [
-          "¿Escribes la frase antes de trazar",
-          "o después de dibujar?",
-        ],
-        h: "Punto 5: Escribir antes de trazar",
-        a: [
-          "Escríbela antes de trazar la copia.",
-          "Léela en voz alta mientras dibujas.",
-          "Nombrar bien evita adivinar.",
-        ],
-      },
-      {
-        q: [
-          "Una pregunta con truco: ¿qué le falta",
-          "a la frase «hay una forma»?",
-        ],
-        h: "Punto 6: Lo que le falta a la frase",
-        a: [
-          "Le falta el nombre: ¿O, i, L o S?",
-          "Le falta la distancia: ¿cuántos dedos?",
-          "Y le falta el lugar: ¿arriba o abajo?",
-        ],
-      },
-    ],
-    quiz: {
-      mcq: [
-        { q: "¿Qué es nombrar al dibujar?", o: ["Decir qué forma es y dónde", "Pintar la forma", "Borrar la forma", "Copiar sin mirar"] },
-        { q: "¿Qué piezas usa OiLS?", o: ["O, i, L y S", "Rojo, azul y verde", "Mesa, silla y cama", "Arriba, abajo y centro"] },
-        { q: "¿Qué dice «a dos dedos del eje»?", o: ["La distancia", "El color", "El nombre", "La sombra"] },
-        { q: "¿Qué cambias al pasar al reflejo?", o: ["Arriba por abajo", "La forma", "El tamaño", "La distancia"] },
-        { q: "¿Cuándo escribes la frase?", o: ["Antes de trazar la copia", "Después de colorear", "Al borrar", "Nunca"] },
-        { q: "¿Qué evita nombrar bien?", o: ["Adivinar", "Mirar el eje", "Doblar el papel", "Usar lápiz"] },
-        { q: "¿Qué le falta a «hay una forma»?", o: ["Nombre, distancia y lugar", "Un color", "Una sombra", "Un marco"] },
-        { q: "¿Qué dice «arriba» en la frase?", o: ["El lugar", "La distancia", "El color", "El nombre"] },
-      ],
-      write: [
-        "Escribe tres frases con forma, distancia y lugar.",
-        "Explica por qué escribes antes de trazar.",
-      ],
-      schematic: [
-        "Dibuja el eje de una laguna y rotula tres formas.",
-        "Dibuja flechas del eje a cada forma.",
-      ],
-    },
-    image: [
-      "Dibuja el eje de una laguna con montaña.",
-      "Rotula cada forma con O, i, L o S.",
-      "Escribe tres frases: forma, dedos y lugar.",
-      "Aún no copies: primero nombra bien.",
-    ],
-    summary: "Nombrar es decir la forma, la distancia al eje y el lugar. Con una buena frase, el reflejo de Mucubají se dibuja sin adivinar.",
-  },
-
-  // ───────────────────────── DÍA 4 ─────────────────────────
-  {
-    key: "art-c3-w2-d4",
-    units: [
-      {
-        h: "Punto 1: Repaso de ayer",
-        a: [
-          "Ayer escribiste frases con forma,",
-          "distancia y lugar para cada pieza.",
-          "Hoy las usas en la Laguna de Mucubají.",
+          "La clase pasada miraste con calma la",
+          "media montaña, mediste con el dedo",
+          "y nombraste cada forma y su lugar.",
         ],
       },
       {
@@ -339,15 +237,14 @@ export default [
       },
       {
         q: [
-          "¿Qué harías primero y qué dejarías",
-          "para el final?",
+          "En el papel de tu Mucubají, ¿qué harías",
+          "primero y qué dejarías para el final?",
         ],
         h: "Punto 3: Un orden que funciona",
         a: [
           "Primero, traza el eje.",
           "Segundo, copia el contorno grande.",
-          "Tercero, revisa las parejas OiLS.",
-          "Al final, añade los detalles.",
+          "Tercero, revisa las parejas. Al final, detalles.",
         ],
       },
       {
@@ -376,14 +273,14 @@ export default [
       },
       {
         q: [
-          "Una pregunta con truco: si adornas la",
-          "montaña, ¿dejas vacío el reflejo?",
+          "Vas a mostrar tu laguna a tu familia.",
+          "¿Cómo la cuentas con orden?",
         ],
-        h: "Punto 6: Cerrar la forma en ambos lados",
+        h: "Punto 6: Cómo contarlo con orden",
         a: [
-          "No. Cierra la forma en los dos lados.",
-          "Los adornos esperan a las dos mitades.",
-          "Queda igual de lleno a cada lado.",
+          "Muestra el eje y di qué dibujaste.",
+          "Nombra las formas y di dónde están.",
+          "Cuenta cómo comprobaste las mitades.",
         ],
       },
     ],
@@ -396,126 +293,23 @@ export default [
         { q: "Dos cumbres arriba: ¿cuántas abajo?", o: ["Dos", "Una", "Tres", "Ninguna"] },
         { q: "¿Qué debe conservar el reflejo?", o: ["Tipo, tamaño y distancia", "Solo el color", "Solo el nombre", "Solo el adorno"] },
         { q: "¿Cómo compruebas las mitades?", o: ["Doblando la hoja por el eje", "Pintando todo", "Borrando el eje", "Mirando de lejos"] },
-        { q: "Si las dos mitades del reflejo no coinciden, ¿qué haces?", o: ["Corriges una curva", "Cambias el papel", "Borras el eje", "Añades adornos"] },
+        { q: "¿Qué muestras primero al contarlo?", o: ["El eje", "Los adornos", "El color", "La sombra"] },
       ],
       write: [
-        "Escribe los cuatro pasos de un dibujo espejo.",
-        "Explica cómo compruebas la simetría.",
+        "Escribe los pasos de tu dibujo espejo en orden.",
+        "Cuenta tu laguna espejo a tu familia, con orden.",
       ],
       schematic: [
         "Dibuja media montaña con su eje y sus parejas.",
-        "Dibuja los cuatro pasos con flechas.",
+        "Dibuja los pasos del espejo con flechas.",
       ],
     },
     image: [
       "Dibuja una montaña sobre el eje de la laguna.",
       "Copia su reflejo abajo, pareja por pareja.",
-      "Dobla la hoja por el eje y compara.",
-      "Corrige una curva antes de dar color.",
+      "Marca cada pareja con la misma letra.",
+      "Deja en blanco la frase que la cuenta.",
     ],
-    summary: "Expresar es dibujar el reflejo con orden: eje, contorno, parejas y detalles. Doblar la hoja comprueba la simetría.",
-  },
-
-  // ───────────────────────── DÍA 5 ─────────────────────────
-  {
-    key: "art-c3-w2-d5",
-    units: [
-      {
-        h: "Punto 1: Repaso de ayer",
-        a: [
-          "Ayer dibujaste el reflejo con orden",
-          "y lo comprobaste doblando la hoja.",
-          "Hoy recuerdas la semana y la cuentas.",
-        ],
-      },
-      {
-        q: [
-          "Sin mirar la hoja: ¿cuáles son los tres",
-          "pasos para dibujar un espejo?",
-        ],
-        h: "Punto 2: Atención, nombrar y expresar",
-        a: [
-          "Atención: mirar con calma, sin prisa.",
-          "Nombrar: decir qué forma es y dónde.",
-          "Expresar: dibujar la copia con orden.",
-        ],
-      },
-      {
-        q: [
-          "En Mucubají, ¿qué hace el eje con la",
-          "montaña y su reflejo?",
-        ],
-        h: "Punto 3: El eje de simetría",
-        a: [
-          "El eje parte la imagen en dos mitades.",
-          "Las mitades coinciden, como en un espejo.",
-          "Cada forma tiene su pareja al otro lado.",
-        ],
-      },
-      {
-        q: [
-          "Antes de copiar una forma, ¿qué mides?",
-          "¿Con qué lo mides?",
-        ],
-        h: "Punto 4: Medir antes de copiar",
-        a: [
-          "Mides la distancia de la forma al eje.",
-          "Lo mides con tu dedo, sin regla.",
-          "La pareja repite tamaño y lugar.",
-        ],
-      },
-      {
-        q: [
-          "Vas a mostrarle tu laguna espejo a tu",
-          "familia. ¿Cómo la cuentas con orden?",
-        ],
-        h: "Punto 5: Cómo contarlo con orden",
-        a: [
-          "Muestra el eje y di qué dibujaste.",
-          "Nombra las formas y di dónde están.",
-          "Cuenta cómo comprobaste las mitades.",
-          "Cierra contando qué fue lo más difícil.",
-        ],
-      },
-      {
-        q: [
-          "Una pregunta con truco: si ya puedes",
-          "dibujar un espejo, ¿qué sabes hacer?",
-        ],
-        h: "Punto 6: Lo que ya sabes hacer",
-        a: [
-          "Sabes mirar con calma una media imagen.",
-          "Sabes nombrar la forma y su lugar.",
-          "Y sabes dibujar su pareja al otro lado.",
-        ],
-      },
-    ],
-    quiz: {
-      mcq: [
-        { q: "¿Cuáles son los tres pasos?", o: ["Atención, nombrar y expresar", "Pintar, borrar y doblar", "Medir, cortar y pegar", "Copiar, sombrear y colorear"] },
-        { q: "¿Qué es atención?", o: ["Mirar con calma", "Dibujar rápido", "Pintar de color", "Borrar el eje"] },
-        { q: "¿Qué es nombrar?", o: ["Decir qué forma es y dónde", "Mirar sin hablar", "Doblar el papel", "Cambiar el eje"] },
-        { q: "¿Qué es expresar?", o: ["Dibujar la copia con orden", "Mirar sin trazar", "Borrar la copia", "Medir con el dedo"] },
-        { q: "¿Qué hace el eje con la imagen?", o: ["La parte en dos mitades", "La pinta", "La agranda", "La borra"] },
-        { q: "¿Qué mides antes de copiar?", o: ["La distancia al eje", "El color", "La sombra", "El papel"] },
-        { q: "¿Con qué mides sin regla?", o: ["Con tu dedo", "Con un color", "Con una sombra", "Con un borrador"] },
-        { q: "¿Qué muestras primero al contarlo?", o: ["El eje", "Los adornos", "El color", "La sombra"] },
-      ],
-      write: [
-        "Escribe de memoria los tres pasos del espejo.",
-        "Cuenta tu dibujo espejo, de inicio a cierre.",
-      ],
-      schematic: [
-        "Dibuja los tres pasos en orden con flechas.",
-        "Dibuja una laguna espejo con su eje y parejas.",
-      ],
-    },
-    image: [
-      "Dibuja una laguna con su montaña y reflejo.",
-      "Marca con la misma letra cada pareja.",
-      "Escribe abajo: atención, nombrar, expresar.",
-      "Revisa que las dos mitades coincidan.",
-    ],
-    summary: "En un dibujo espejo, como el agua de Mucubají, miramos con atención, nombramos cada forma y expresamos la copia con el mismo tipo, tamaño y distancia.",
+    summary: "En un dibujo espejo, como el agua de Mucubají, trazamos el eje, copiamos pareja por pareja, doblamos para comprobar y lo contamos con orden.",
   },
 ];

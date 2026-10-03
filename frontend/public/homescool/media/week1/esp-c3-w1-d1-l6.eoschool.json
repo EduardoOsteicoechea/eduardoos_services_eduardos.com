@@ -14,28 +14,28 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nYa sabes hablar y contar lo que ves. Usas palabras para pedir y nombrar. Hoy las exploras, como quien sube la Sierra Nevada de Mérida."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nYa sabes hablar y contar lo que ves. Hoy exploras tus palabras, como quien sube la Sierra Nevada de Mérida."
       },
       {
         "id": "p2",
         "heading": "Punto 2: Cada palabra tiene su trabajo",
-        "body": "Para subir al Pico Bolívar, ¿todos los exploradores hacen el mismo trabajo?\n\nNo, cada explorador tiene su trabajo. Las palabras también son un equipo. Cada una hace un trabajo distinto en la oración. Hay nueve clases."
+        "body": "Para subir al Pico Bolívar, ¿todos los exploradores hacen el mismo trabajo?\n\nNo, cada explorador tiene su trabajo. Las palabras son un equipo igual: hay nueve clases, y cada una trabaja."
       },
       {
         "id": "p3",
         "heading": "Punto 3: Nombrar, actuar y reemplazar",
-        "body": "Mira: «Sofía sube. Ella mira el pico.» ¿Qué hace cada palabra del equipo?\n\nSustantivos: «Sofía» y «pico» nombran. Verbos: «sube» y «mira» dicen qué hace. Pronombre: «ella» ocupa el lugar de Sofía, para no repetir su nombre."
+        "body": "«Sofía sube. Ella mira el pico.» ¿Qué hace cada palabra del equipo?\n\nSustantivos: «Sofía» y «pico» nombran. Verbos: «sube» y «mira» dicen qué hacen. Pronombre: «ella» reemplaza a Sofía."
       },
       {
         "id": "p4",
         "heading": "Punto 4: Describir",
-        "body": "En la sierra hay lagunas frías. ¿Qué palabras dicen cuál y cómo es la laguna?\n\n«La laguna fría»: «la» es un artículo, y «fría» es un adjetivo: dice cómo es. El adverbio dice cómo pasa algo: «Sofía sube despacio»."
+        "body": "En la sierra hay lagunas frías. ¿Qué palabras dicen cuál y cómo es la laguna?\n\n«La» es artículo y «fría» es adjetivo: dice cómo es la laguna. «Sube despacio»: «despacio» es adverbio."
       },
       {
         "id": "p5",
         "heading": "Punto 5: Unir y sentir",
-        "body": "«Sofía sube con Luis y mira el pico.» ¿Qué hacen «con», «y» y «¡Uy!»?\n\n«Y» es una conjunción: une dos ideas. «Con» es una preposición: relaciona. La interjección muestra emoción de golpe, como «¡Uy!» o «¡Bravo!»."
+        "body": "«Sofía sube con Luis y mira el pico.» ¿Qué hacen «con» y «y»? ¿Y «¡Uy!»?\n\n«Y» es conjunción: une dos ideas. «Con» es preposición: relaciona palabras. «¡Uy!» es interjección: emoción de golpe."
       },
       {
         "id": "p6",
@@ -47,7 +47,7 @@
     "memoryPhrase": "**Sustantivo**, **pronombre**, **verbo**, **adverbio**, **conjunción**, **interjección**, **preposición**, **adjetivo**, **artículo**.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una cumbre con nueve exploradores. Escribe en cada uno una clase de palabra. Añade un ejemplo corto junto a cada uno. Revisa que estén las nueve clases.",
+    "imageBandInstruction": "Dibuja la Sierra Nevada con nueve exploradores. Rotula la clase de palabra de cada uno y deja un espacio vacío para que escribas un ejemplo corto.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -55,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -90,7 +90,7 @@
         "column": 1,
         "line": 6,
         "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 7,
@@ -111,35 +111,35 @@
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "Usas palabras para pedir y nombrar."
+        "text": "Hoy exploras tus palabras, como quien"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Hoy las exploras, como quien sube"
+        "text": "sube la Sierra Nevada de Mérida."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "la Sierra Nevada de Mérida."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -187,120 +187,120 @@
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Cada palabra tiene su trabajo"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "heading",
-        "text": "Punto 2: Cada palabra tiene su trabajo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No, cada explorador tiene su trabajo."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "No, cada explorador tiene su trabajo."
+        "text": "Las palabras son un equipo igual:"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "Las palabras también son un equipo."
+        "text": "hay nueve clases, y cada una trabaja."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "Cada una hace un trabajo distinto"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "en la oración. Hay nueve clases."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Sofía sube. Ella mira el pico.»"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Mira: «Sofía sube. Ella mira el pico.»"
+        "text": "¿Qué hace cada palabra del equipo?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "¿Qué hace cada palabra del equipo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 3: Nombrar, actuar y reemplazar"
       },
       {
         "index": 37,
@@ -313,85 +313,85 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "heading",
-        "text": "Punto 3: Nombrar, actuar y reemplazar"
+        "kind": "lesson",
+        "text": "Sustantivos: «Sofía» y «pico» nombran."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Verbos: «sube» y «mira» dicen qué hacen."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Sustantivos: «Sofía» y «pico» nombran."
+        "text": "Pronombre: «ella» reemplaza a Sofía."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "Verbos: «sube» y «mira» dicen qué hace."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "Pronombre: «ella» ocupa el lugar"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
         "kind": "lesson",
-        "text": "de Sofía, para no repetir su nombre."
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "En la sierra hay lagunas frías. ¿Qué"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "palabras dicen cuál y cómo es la laguna?"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "En la sierra hay lagunas frías. ¿Qué"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "palabras dicen cuál y cómo es la laguna?"
+        "text": "________________________________________"
       },
       {
         "index": 50,
@@ -404,64 +404,64 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 4: Describir"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«La» es artículo y «fría» es adjetivo:"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "heading",
-        "text": "Punto 4: Describir"
+        "kind": "lesson",
+        "text": "dice cómo es la laguna."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Sube despacio»: «despacio» es adverbio."
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "lesson",
-        "text": "«La laguna fría»: «la» es un artículo,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "y «fría» es un adjetivo: dice cómo es."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "El adverbio dice cómo pasa algo:"
+        "text": "________________________________________"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "«Sofía sube despacio»."
+        "text": "________________________________________"
       },
       {
         "index": 60,
@@ -475,14 +475,14 @@
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "«Sofía sube con Luis y mira el pico.»"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "¿Qué hacen «con» y «y»? ¿Y «¡Uy!»?"
       },
       {
         "index": 63,
@@ -496,77 +496,77 @@
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "«Sofía sube con Luis y mira el pico.»"
+        "text": "________________________________________"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "¿Qué hacen «con», «y» y «¡Uy!»?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Unir y sentir"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Y» es conjunción: une dos ideas."
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "heading",
-        "text": "Punto 5: Unir y sentir"
+        "kind": "lesson",
+        "text": "«Con» es preposición: relaciona palabras."
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«¡Uy!» es interjección: emoción de golpe."
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "lesson",
-        "text": "«Y» es una conjunción: une dos ideas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
         "kind": "lesson",
-        "text": "«Con» es una preposición: relaciona."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
         "kind": "lesson",
-        "text": "La interjección muestra emoción"
+        "text": "________________________________________"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "de golpe, como «¡Uy!» o «¡Bravo!»."
+        "text": "________________________________________"
       },
       {
         "index": 75,
@@ -580,14 +580,14 @@
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "El equipo de la Sierra Nevada ya subió."
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "¿Cuántas clases de palabras lo forman?"
       },
       {
         "index": 78,
@@ -601,98 +601,98 @@
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "El equipo de la Sierra Nevada ya subió."
+        "text": "________________________________________"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "lesson",
-        "text": "¿Cuántas clases de palabras lo forman?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Las nueve clases"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Son nueve clases de palabras:"
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "heading",
-        "text": "Punto 6: Las nueve clases"
+        "kind": "lesson",
+        "text": "Sustantivo, pronombre, verbo, adverbio,"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "conjunción, interjección, preposición,"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "Son nueve clases de palabras:"
+        "text": "adjetivo, artículo."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "lesson",
-        "text": "Sustantivo, pronombre, verbo, adverbio,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
         "kind": "lesson",
-        "text": "conjunción, interjección, preposición,"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
         "kind": "lesson",
-        "text": "adjetivo, artículo."
+        "text": "________________________________________"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 93,
@@ -892,7 +892,7 @@
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) Ocupa el lugar de Sofía",
+        "text": "C) Reemplaza a Sofía",
         "questionId": "d1-q4"
       },
       {
@@ -1023,9 +1023,9 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "Escribe una oración con un sustantivo y un",
-        "questionId": "d1-w1",
-        "questionType": "write",
+        "text": "¿Qué clase de palabra es «con»?",
+        "questionId": "d1-q7",
+        "questionType": "mcq",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1037,37 +1037,91 @@
         "index": 130,
         "column": 3,
         "line": 26,
-        "kind": "lesson",
-        "text": "verbo.",
-        "questionId": "d1-w1"
+        "kind": "option",
+        "text": "A) Preposición",
+        "questionId": "d1-q7"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
+        "kind": "option",
+        "text": "B) Conjunción",
+        "questionId": "d1-q7"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
+        "kind": "option",
+        "text": "C) Interjección",
+        "questionId": "d1-q7"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Artículo",
+        "questionId": "d1-q7"
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "question",
+        "text": "Escribe una oración con un sustantivo y un",
+        "questionId": "d1-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "lesson",
+        "text": "verbo.",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
         "kind": "question",
         "text": "Cuenta con tus palabras qué hace un",
         "questionId": "d1-w2",
@@ -1080,40 +1134,40 @@
         }
       },
       {
-        "index": 135,
+        "index": 141,
         "column": 3,
-        "line": 31,
+        "line": 37,
         "kind": "lesson",
         "text": "pronombre.",
         "questionId": "d1-w2"
       },
       {
-        "index": 136,
+        "index": 142,
         "column": 3,
-        "line": 32,
+        "line": 38,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w2"
       },
       {
-        "index": 137,
+        "index": 143,
         "column": 3,
-        "line": 33,
+        "line": 39,
         "kind": "answerLine",
         "text": "",
         "questionId": "d1-w2"
       },
       {
-        "index": 138,
+        "index": 144,
         "column": 3,
-        "line": 34,
+        "line": 40,
         "kind": "blank",
         "text": ""
       },
       {
-        "index": 139,
+        "index": 145,
         "column": 3,
-        "line": 35,
+        "line": 41,
         "kind": "question",
         "text": "Dibuja una sierra con tres grupos de",
         "questionId": "d1-w3",
@@ -1126,80 +1180,28 @@
         }
       },
       {
-        "index": 140,
+        "index": 146,
         "column": 3,
-        "line": 36,
+        "line": 42,
         "kind": "lesson",
         "text": "palabras.",
         "questionId": "d1-w3"
       },
       {
-        "index": 141,
-        "column": 3,
-        "line": 37,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 142,
-        "column": 3,
-        "line": 38,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w3"
-      },
-      {
-        "index": 143,
-        "column": 3,
-        "line": 39,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "question",
-        "text": "Dibuja «la laguna fría» y rotula cada palabra.",
-        "questionId": "d1-w4",
-        "questionType": "schematic",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
-      },
-      {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
-      },
-      {
-        "index": 146,
-        "column": 3,
-        "line": 42,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w4"
-      },
-      {
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
       },
       {
         "index": 148,
         "column": 3,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
       },
       {
         "index": 149,
@@ -1212,57 +1214,67 @@
         "index": 150,
         "column": 3,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "question",
+        "text": "Dibuja «la laguna fría» y rotula cada palabra.",
+        "questionId": "d1-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 151,
         "column": 3,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
       },
       {
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "imageInstruction",
-        "text": "Dibuja una cumbre con nueve"
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "exploradores. Escribe en cada uno una"
+        "text": "Dibuja la Sierra Nevada con nueve"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "clase de palabra. Añade un ejemplo corto"
+        "text": "exploradores. Rotula la clase de palabra"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "junto a cada uno. Revisa que estén las"
+        "text": "de cada uno y deja un espacio vacío para"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "nueve clases."
+        "text": "que escribas un ejemplo corto."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 10,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d1-q1",
@@ -1326,10 +1338,10 @@
         "choices": [
           "Dice cómo sube",
           "Une dos ideas",
-          "Ocupa el lugar de Sofía",
+          "Reemplaza a Sofía",
           "Muestra emoción"
         ],
-        "answer": "Ocupa el lugar de Sofía",
+        "answer": "Reemplaza a Sofía",
         "slot": {
           "column": 3,
           "line": 7,
@@ -1373,14 +1385,32 @@
         }
       },
       {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué clase de palabra es «con»?",
+        "choices": [
+          "Preposición",
+          "Conjunción",
+          "Interjección",
+          "Artículo"
+        ],
+        "answer": "Preposición",
+        "slot": {
+          "column": 3,
+          "line": 25,
+          "index": 129
+        }
+      },
+      {
         "id": "d1-w1",
         "originDay": 1,
         "type": "write",
         "prompt": "Escribe una oración con un sustantivo y un verbo.",
         "slot": {
           "column": 3,
-          "line": 25,
-          "index": 129
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1390,8 +1420,8 @@
         "prompt": "Cuenta con tus palabras qué hace un pronombre.",
         "slot": {
           "column": 3,
-          "line": 30,
-          "index": 134
+          "line": 36,
+          "index": 140
         }
       },
       {
@@ -1403,8 +1433,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 35,
-          "index": 139
+          "line": 41,
+          "index": 145
         }
       },
       {
@@ -1416,8 +1446,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 40,
-          "index": 144
+          "line": 46,
+          "index": 150
         }
       }
     ]

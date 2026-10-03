@@ -1,5 +1,5 @@
 ---
-description: Homescool / eoschool lesson and quiz copy — narrative voice for level 6 (~8 years)
+description: Homescool / eoschool lesson and quiz copy — narrative voice for level 6 (~8 years), Ask First + metáfora de Venezuela
 globs:
   - frontend/public/homescool/**/*.eoschool.json
   - frontend/public/homescool/curriculum.json
@@ -8,6 +8,8 @@ globs:
   - scripts/build-homescool-curriculum.mjs
   - scripts/build-homescool-ask-first-v2.mjs
   - scripts/homescool-ask-first-content/**
+  - scripts/homescool-venezuela-metaphors.json
+  - docs/homescool-venezuela-metaphors.md
   - docs/specs/009-homescool-narrative-language.md
 ---
 
@@ -17,22 +19,28 @@ When authoring or revising **Homescool** `.eoschool` JSON (level **6**, ≈ **8 
 
 **[`docs/specs/009-homescool-narrative-language.md`](../../docs/specs/009-homescool-narrative-language.md)**
 
-Also keep [`METHOD_V1.md`](../../frontend/public/skills/eoschool/METHOD_V1.md) pedagogy (intro/deepen/review, quiz counts, dual storage) and [`homescool-class-method-v2.mdc`](homescool-class-method-v2.mdc) for the **Letter grid v2** printed sheet.
+and **always review the landmark list first:**
 
-## Letter grid v2 (printed sheet — canonical for new rewrites)
+**[`docs/homescool-venezuela-metaphors.md`](../../docs/homescool-venezuela-metaphors.md)** (machine mirror: `scripts/homescool-venezuela-metaphors.json`).
 
-Authority: **class-method-v2** ask-first rhythm on `lesson.slotSequence`:
+Also keep [`METHOD_V1.md`](../../frontend/public/skills/eoschool/METHOD_V1.md) pedagogy (cycle/week/day/level/subject, quiz counts, dual storage) and [`homescool-class-method-v2.mdc`](homescool-class-method-v2.mdc) for the **Letter grid v2** printed sheet.
 
-**pregunta → espacio en blanco → respuesta corta → `Cópiala aquí:` + 2 líneas**
+## Role
 
-- Opening + Repaso (3 lines); typically **5** points per class.  
-- **Do not** require `Práctica: Ahora te toca a ti.` or `Error común:` as separate sheet blocks — fold practice/mistakes into the same beat.  
-- MCQ: one-line prompts; **do not** require the prefix «Elige la respuesta correcta.».  
-- Soft limit **≤ 66** characters per lesson line for column width.
+Pedagogical designer for primary education (8-year-olds). Natural, inductive narrative in the **Ask First** method; each class tied to **one landmark of Venezuelan geography or history** as the central metaphor.
+
+## The rules (short form)
+
+1. **Ask First, 4 steps per idea:** trigger question → reflection row of dashes (`________________________________________`) → `Punto N: Título` + answer in 2–4 short lines → `Escribe aquí lo que aprendiste:` + row of dashes.
+2. **No** separate «práctica», «error común» or «pregunta final» sections. One continuous cycle.
+3. **Opening:** exactly `¿Qué aprendiste ayer?`. **Punto 1 = «Repaso de ayer»** (connects yesterday with today).
+4. **Layout:** one idea per short line (≤ ~40 characters); exactly one blank line between blocks; 5–7 Puntos.
+5. **Metaphor:** the subject-week's landmark from the list, woven into questions and answers; only its «datos seguros».
 
 ## Non-negotiables (all surfaces)
 
-- Voice ≈ 8 years; short complete sentences; gloss school terms on first use.  
-- **Never** forbidden boilerplate in spec 009 (including «Antes de terminar, un aviso», «Esta clase te ayuda a aprender…», `Respuesta:` on MCQ choices).  
-- Adapt quizzes by **replacing** questions, not only prefixes.  
+- Voice ≈ 8 years; short complete sentences; gloss school terms on first use.
+- **Never** the forbidden boilerplate in spec 009 (including «Antes de terminar, un aviso», «Esta clase te ayuda a aprender…», `Respuesta:` on MCQ choices).
+- Adapt quizzes by **replacing** questions, not only prefixes.
+- Faith subjects: the landmark is an image («es como…»), never a theological equivalence.
 - After cell edits for publish: `node scripts/build-homescool-curriculum.mjs` only when the user asks.

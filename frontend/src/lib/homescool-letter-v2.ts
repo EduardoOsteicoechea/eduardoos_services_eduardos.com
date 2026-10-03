@@ -80,9 +80,18 @@ function buildImagesBand(doc: EoschoolDocument): HTMLElement {
   const band = el("div", "homescool-letter-v2__images");
   const img = el("img", "homescool-letter-v2__practice") as HTMLImageElement;
   img.alt = "Práctica visual";
-  img.src = `/homescool/media/week${doc.week}/practice-images/${doc.subject}-c3-w${doc.week}-practice.jpg`;
+  const base = `/homescool/media/week${doc.week}/practice-images/${doc.subject}-c3-w${doc.week}`;
+  // v3: one image per class; fall back to the legacy per-subject-week image.
+  const legacySrc = `${base}-practice.jpg`;
+  img.src = `${base}-d${doc.day}-practice.jpg`;
   img.loading = "lazy";
+  let triedLegacy = false;
   img.onerror = () => {
+    if (!triedLegacy) {
+      triedLegacy = true;
+      img.src = legacySrc;
+      return;
+    }
     img.remove();
     const fallback = el("p", "homescool-letter-v2__images-fallback");
     fallback.textContent =

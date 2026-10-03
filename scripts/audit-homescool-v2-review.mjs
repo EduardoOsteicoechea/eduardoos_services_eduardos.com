@@ -52,7 +52,9 @@ function genericMcqPattern(q) {
 
 for (const week of weeks) {
   const dir = path.join(root, `week${week}`);
-  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith("-l6.eoschool.json"))) {
+  const onlyIdx = process.argv.indexOf("--only");
+  const only = onlyIdx >= 0 ? process.argv.slice(onlyIdx + 1) : [];
+  for (const name of fs.readdirSync(dir).filter((f) => f.endsWith("-l6.eoschool.json") && (!only.length || only.some((k) => f.startsWith(k))))) {
     const fp = path.join(dir, name);
     const doc = JSON.parse(fs.readFileSync(fp, "utf8"));
     const rel = `week${week}/${name}`;
@@ -63,7 +65,7 @@ for (const week of weeks) {
     if (L.v2Flow !== true) fileIssues.push({ sev: "med", code: "v2Flow" });
     if (!L.imageBandInstruction?.trim()) fileIssues.push({ sev: "high", code: "imageBandInstruction" });
 
-    if (!doc.supportUrl?.trim()) fileIssues.push({ sev: "high", code: "supportUrl" });
+    if (!doc.supportUrl?.trim() && doc.subject !== "fin") fileIssues.push({ sev: "high", code: "supportUrl" });
     if (memSubjects.has(doc.subject) && !L.memoryPhrase?.trim()) {
       fileIssues.push({ sev: "high", code: "memoryPhrase" });
     }
@@ -85,13 +87,29 @@ for (const week of weeks) {
     const body = allText(doc);
     const day = doc.day;
 
-    // Every class opens with exactly «¿Qué aprendiste ayer?» and Punto 1 is «Repaso de ayer».
-    if (!body.includes("¿Qué aprendiste ayer?") || /sobre esta misma materia/i.test(body)) {
+    // v3: every class opens with exactly «¿Qué aprendiste la clase pasada?» and Punto 1 is «Repaso de la clase pasada».
+    if (!body.includes("¿Qué aprendiste la clase pasada?") || /aprendiste ayer|sobre esta misma materia/i.test(body)) {
       fileIssues.push({ sev: "high", code: "ayerQuestion" });
     }
     const pts = L.points || [];
-    if (!/^Punto 1: Repaso de ayer/i.test(pts[0]?.heading || "")) {
+    if (!/^Punto 1: Repaso de la clase pasada/i.test(pts[0]?.heading || "")) {
       fileIssues.push({ sev: "high", code: "punto1Repaso" });
+    }
+    // v3: only d1..d3 (pro: d1 only); lesson kind per day.
+    if (day > (doc.subject === "pro" ? 1 : 3)) fileIssues.push({ sev: "high", code: "dayBeyondV3", detail: String(day) });
+    {
+      const wantKind = day === 1 ? "intro" : "deepen";
+      if (L.kind !== wantKind) fileIssues.push({ sev: "high", code: "lessonKind", detail: String(L.kind) });
+      if (day >= 2 && L.focusPoint !== day - 1) fileIssues.push({ sev: "high", code: "focusPoint", detail: String(L.focusPoint) });
+    }
+    // fin: daily economic practice is mandatory.
+    if (doc.subject === "fin") {
+      if (!pts.some((p) => /^Punto \d+: Pr[aá]ctica econ[oó]mica de hoy/i.test(p.heading || ""))) {
+        fileIssues.push({ sev: "high", code: "finPractica" });
+      }
+      if (!qs.some((q) => q.type === "write" && !q.schematic && /ganaste|ahorraste|ganas|ahorras/i.test(q.prompt || ""))) {
+        fileIssues.push({ sev: "high", code: "finRegistro" });
+      }
     }
     if (pts.length < 5 || pts.length > 7) {
       fileIssues.push({ sev: "high", code: "puntoCount", detail: String(pts.length) });
@@ -119,7 +137,16 @@ for (const week of weeks) {
       const cues = sl.filter((s) => s.text === "Escribe aquí lo que aprendiste:").length;
       const dashes = sl.filter((s) => /^_{40}$/.test(s.text || "")).length;
       if (cues !== pts.length) fileIssues.push({ sev: "high", code: "copyCue", detail: cues + "/" + pts.length });
-      if (dashes < pts.length * 2) fileIssues.push({ sev: "high", code: "dashRows", detail: String(dashes) });
+      // v3: one try-first row (at least) + TWO copy rows per Punto.
+      if (dashes < pts.length * 3) fileIssues.push({ sev: "high", code: "dashRows", detail: String(dashes) });
+      const dashRe = /^_{40}$/;
+      sl.forEach((s, i) => {
+        if (s.text === "Escribe aquí lo que aprendiste:") {
+          if (!dashRe.test(sl[i + 1]?.text || "") || !dashRe.test(sl[i + 2]?.text || "")) {
+            fileIssues.push({ sev: "high", code: "copyRowsTwo", detail: "slot " + s.index });
+          }
+        }
+      });
     }
 
     const slots = L.slotSequence || doc.slotSequence;
@@ -407,7 +434,9 @@ for (const week of weeks) {
     }
 
     const arch = path.join(dir, "archive", name.replace(".eoschool.json", ".pre-v2-20261002.eoschool.json"));
-    if (!fs.existsSync(arch)) fileIssues.push({ sev: "med", code: "noBackup" });
+    if (!fs.existsSync(arch)) {
+      if (doc.subject !== "fin") fileIssues.push({ sev: "med", code: "noBackup" });
+    }
     else {
       const old = JSON.parse(fs.readFileSync(arch, "utf8"));
       if (old.supportUrl && doc.supportUrl && old.supportUrl !== doc.supportUrl) {
@@ -448,8 +477,7 @@ console.log(
       filesWithOnlyStructuralBlockers: onlyBlockers.length,
       issueCounts,
       examples: blocked
-        .filter((f) => f.issues.some((i) => i.code === "genericQuiz"))
-        .slice(0, 5)
+        .slice(0, 15)
         .map((f) => ({ file: f.rel, issues: f.issues })),
     },
     null,

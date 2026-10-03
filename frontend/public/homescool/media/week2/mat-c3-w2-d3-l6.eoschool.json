@@ -14,41 +14,41 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nAyer contaste botes: 6 × 7 = 42 y 8 × 6 = 48. Hoy entras al manglar de Morrocoy, del 9 al 12."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nLa clase pasada, en los cayos y el manglar, hallaste 7 × 6 = 42 y 8 × 9 = 72. Hoy pisas la playa y cuentas el recorrido."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: El orden no cambia el producto",
-        "body": "Un manglar imaginario tiene 9 filas de 8 plantas. ¿Y 8 filas de 9, da otro total?\n\nDa lo mismo: 9 × 8 = 72 y 8 × 9 = 72. Son las mismas plantas al revés. Si sabes 8 × 9, ya sabes 9 × 8."
+        "heading": "Punto 2: El 13 se parte en 10 y 3",
+        "body": "Imagina 13 toallas en la playa. Cada una tiene 5 niños. ¿Cuántos son?\n\nParte el 13 en 10 y 3. 10 × 5 = 50 y 3 × 5 = 15. 50 + 15 = 65 niños."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Multiplicar por 10",
-        "body": "En el manglar imagina 8 grupos de 10 plantas. ¿Son 80 o son 800?\n\nSon 80: ocho decenas. Una decena es un grupo de 10. Ocho decenas valen 80, no 800. Y 10 × 12 = 120: doce decenas."
+        "heading": "Punto 3: El 14 y el 16 son dobles",
+        "body": "En la orilla hay 14 botes con 7 niños. Si 7 × 7 = 49, ¿cómo hallas 14 × 7?\n\nEl 14 es el doble de 7: 49 + 49 = 98. El 16 es el doble de 8. Si 8 × 6 = 48, entonces 16 × 6 = 96."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Los productos del 11",
-        "body": "Piensa en 11 filas de 11 plantas. ¿Seguirá repitiéndose el dígito?\n\nHasta 11 × 9 = 99 el dígito se repite. Pero 11 × 11 = 121, no 111. Para 12 × 11, suma 12 × 10 = 120 y 12 × 1 = 12: 120 + 12 = 132."
+        "heading": "Punto 4: El 15 es tres veces el 5",
+        "body": "En la playa hay 15 toallas con 8 niños cada una. Pista: 15 es tres veces 5.\n\nPrimero 5 × 8 = 40. Tres veces 40: 40 + 40 + 40 = 120. Entonces 15 × 8 = 120 niños."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: El 12 se parte en 10 y 2",
-        "body": "¿Cómo usas la tabla del 10 y la del 2 para hallar 12 filas de 12 plantas?\n\nParte uno de los 12 en 10 y 2. 12 × 10 = 120 y 12 × 2 = 24. 120 + 24 = 144 plantas."
+        "heading": "Punto 5: Multiplicar con bolívares",
+        "body": "Pagas 5.000 bolívares por 5 helados de 800 cada uno. ¿Cuánto te devuelven?\n\n5 × 800 = 4.000 bolívares. Luego restas: 5.000 − 4.000 = 1.000. Te devuelven 1.000 bolívares."
       },
       {
         "id": "p6",
-        "heading": "Punto 6: Un problema de manglar",
-        "body": "Imagina 12 botes que entran al manglar, con 9 turistas cada uno. ¿Cuántos son?\n\nSon doce grupos de nueve: 12 × 9. Parte el 12: 10 × 9 = 90 y 2 × 9 = 18. 90 + 18 = 108 turistas. Comprueba: 9 × 12 también da 108."
+        "heading": "Punto 6: Cuenta tu recorrido en orden",
+        "body": "Un amigo no vino a Morrocoy. ¿Cómo le cuentas, en orden, lo que aprendiste?\n\nPrimero di la cuenta: 7 × 8. Luego el truco: 49 + 7 = 56. Recorre cayos, manglar y playa."
       }
     ],
-    "summary": "En el manglar el orden no cambia el producto, y el 12 se parte en 10 y 2.",
+    "summary": "En la playa el 13 se parte en 10 y 3, el 14 y el 16 son dobles y el 15 es tres veces 5.",
     "weekRecap": "Esta semana seguimos con: Tablas del 5 al 16. Lee cada parte con calma y prueba la actividad.",
     "priorDayRecap": "Ayer practicaste patrones y dobles en las tablas del 5 al 8. Hoy pasamos al bloque del 9 al 12, siempre con grupos iguales y comprobaciones.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un manglar con 8 filas. En cada fila pon 10 plantas. Escribe al lado: 8 × 10 = 80. Rotula «ocho decenas» y «80 plantas».",
+    "imageBandInstruction": "Dibuja una playa de Morrocoy con 13 toallas. Pon 5 niños en cada toalla. Escribe al lado: 13 × 5 = 65. Rotula las cajas 10 × 5 y 3 × 5.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -56,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -91,7 +91,7 @@
         "column": 1,
         "line": 6,
         "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 7,
@@ -105,21 +105,21 @@
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Ayer contaste botes: 6 × 7 = 42"
+        "text": "La clase pasada, en los cayos y el manglar,"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "y 8 × 6 = 48. Hoy entras al manglar"
+        "text": "hallaste 7 × 6 = 42 y 8 × 9 = 72."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "de Morrocoy, del 9 al 12."
+        "text": "Hoy pisas la playa y cuentas el recorrido."
       },
       {
         "index": 11,
@@ -146,50 +146,50 @@
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "Un manglar imaginario tiene 9 filas de 8"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "plantas. ¿Y 8 filas de 9, da otro total?"
+        "text": "Imagina 13 toallas en la playa."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cada una tiene 5 niños. ¿Cuántos son?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 2: El orden no cambia el producto"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 21,
@@ -202,64 +202,64 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Da lo mismo: 9 × 8 = 72 y 8 × 9 = 72."
+        "kind": "heading",
+        "text": "Punto 2: El 13 se parte en 10 y 3"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "lesson",
-        "text": "Son las mismas plantas al revés."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Si sabes 8 × 9, ya sabes 9 × 8."
+        "text": "Parte el 13 en 10 y 3."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "10 × 5 = 50 y 3 × 5 = 15."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "50 + 15 = 65 niños."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
         "kind": "lesson",
-        "text": "En el manglar imagina 8 grupos de 10"
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
         "kind": "lesson",
-        "text": "plantas. ¿Son 80 o son 800?"
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -273,77 +273,77 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "En la orilla hay 14 botes con 7 niños."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Si 7 × 7 = 49, ¿cómo hallas 14 × 7?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "heading",
-        "text": "Punto 3: Multiplicar por 10"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
         "kind": "lesson",
-        "text": "Son 80: ocho decenas."
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Una decena es un grupo de 10."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "lesson",
-        "text": "Ocho decenas valen 80, no 800."
+        "kind": "heading",
+        "text": "Punto 3: El 14 y el 16 son dobles"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "lesson",
-        "text": "Y 10 × 12 = 120: doce decenas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 14 es el doble de 7: 49 + 49 = 98."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "El 16 es el doble de 8."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Si 8 × 6 = 48, entonces 16 × 6 = 96."
       },
       {
         "index": 43,
@@ -357,42 +357,42 @@
         "column": 1,
         "line": 44,
         "kind": "lesson",
-        "text": "Piensa en 11 filas de 11 plantas."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "¿Seguirá repitiéndose el dígito?"
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "En la playa hay 15 toallas con 8 niños"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "heading",
-        "text": "Punto 4: Los productos del 11"
+        "kind": "lesson",
+        "text": "cada una. Pista: 15 es tres veces 5."
       },
       {
         "index": 50,
@@ -406,28 +406,28 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Hasta 11 × 9 = 99 el dígito se repite."
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
         "kind": "lesson",
-        "text": "Pero 11 × 11 = 121, no 111."
+        "text": "________________________________________"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "lesson",
-        "text": "Para 12 × 11, suma 12 × 10 = 120"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "y 12 × 1 = 12: 120 + 12 = 132."
+        "kind": "heading",
+        "text": "Punto 4: El 15 es tres veces el 5"
       },
       {
         "index": 55,
@@ -441,42 +441,42 @@
         "column": 2,
         "line": 4,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Primero 5 × 8 = 40."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Tres veces 40: 40 + 40 + 40 = 120."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Entonces 15 × 8 = 120 niños."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "lesson",
-        "text": "¿Cómo usas la tabla del 10 y la del 2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "para hallar 12 filas de 12 plantas?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 62,
@@ -496,85 +496,85 @@
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "heading",
-        "text": "Punto 5: El 12 se parte en 10 y 2"
+        "kind": "lesson",
+        "text": "Pagas 5.000 bolívares por 5 helados de"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "800 cada uno. ¿Cuánto te devuelven?"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "Parte uno de los 12 en 10 y 2."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "12 × 10 = 120 y 12 × 2 = 24."
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "120 + 24 = 144 plantas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Multiplicar con bolívares"
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "5 × 800 = 4.000 bolívares."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Luego restas: 5.000 − 4.000 = 1.000."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
         "kind": "lesson",
-        "text": "Imagina 12 botes que entran al manglar,"
+        "text": "Te devuelven 1.000 bolívares."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "lesson",
-        "text": "con 9 turistas cada uno. ¿Cuántos son?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 76,
@@ -587,125 +587,113 @@
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "heading",
-        "text": "Punto 6: Un problema de manglar"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un amigo no vino a Morrocoy. ¿Cómo le"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
         "kind": "lesson",
-        "text": "Son doce grupos de nueve: 12 × 9."
+        "text": "cuentas, en orden, lo que aprendiste?"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "lesson",
-        "text": "Parte el 12: 10 × 9 = 90 y 2 × 9 = 18."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
         "kind": "lesson",
-        "text": "90 + 18 = 108 turistas."
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "lesson",
-        "text": "Comprueba: 9 × 12 también da 108."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Cuenta tu recorrido en orden"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Primero di la cuenta: 7 × 8."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Luego el truco: 49 + 7 = 56."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Cuánto es 12 × 12?",
-        "questionId": "d3-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Recorre cayos, manglar y playa."
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) 121",
-        "questionId": "d3-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) 144",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) 122",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) 24",
-        "questionId": "d3-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -719,8 +707,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuánto es 10 × 8?",
-        "questionId": "d3-q2",
+        "text": "¿Cuánto es 13 × 5?",
+        "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -734,32 +722,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) 800",
-        "questionId": "d3-q2"
+        "text": "A) 18",
+        "questionId": "d3-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) 18",
-        "questionId": "d3-q2"
+        "text": "B) 65",
+        "questionId": "d3-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) 80",
-        "questionId": "d3-q2"
+        "text": "C) 53",
+        "questionId": "d3-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) 90",
-        "questionId": "d3-q2"
+        "text": "D) 55",
+        "questionId": "d3-q1"
       },
       {
         "index": 99,
@@ -773,8 +761,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cuánto valen ocho decenas?",
-        "questionId": "d3-q3",
+        "text": "¿Cuánto es 14 × 7?",
+        "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -788,40 +776,40 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) 8",
-        "questionId": "d3-q3"
+        "text": "A) 21",
+        "questionId": "d3-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) 800",
-        "questionId": "d3-q3"
+        "text": "B) 49",
+        "questionId": "d3-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) 88",
-        "questionId": "d3-q3"
+        "text": "C) 98",
+        "questionId": "d3-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) 80",
-        "questionId": "d3-q3"
+        "text": "D) 84",
+        "questionId": "d3-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "¿Cuánto es 11 × 11?",
-        "questionId": "d3-q4",
+        "text": "Si 8 × 6 = 48, ¿cuánto es 16 × 6?",
+        "questionId": "d3-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -835,32 +823,32 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) 111",
-        "questionId": "d3-q4"
+        "text": "A) 22",
+        "questionId": "d3-q3"
       },
       {
         "index": 107,
         "column": 3,
         "line": 3,
         "kind": "option",
-        "text": "B) 121",
-        "questionId": "d3-q4"
+        "text": "B) 86",
+        "questionId": "d3-q3"
       },
       {
         "index": 108,
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) 22",
-        "questionId": "d3-q4"
+        "text": "C) 106",
+        "questionId": "d3-q3"
       },
       {
         "index": 109,
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) 110",
-        "questionId": "d3-q4"
+        "text": "D) 96",
+        "questionId": "d3-q3"
       },
       {
         "index": 110,
@@ -874,8 +862,8 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "¿Cuánto es 12 × 11?",
-        "questionId": "d3-q5",
+        "text": "¿Cuánto es 15 × 8?",
+        "questionId": "d3-q4",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -889,32 +877,32 @@
         "column": 3,
         "line": 8,
         "kind": "option",
-        "text": "A) 132",
-        "questionId": "d3-q5"
+        "text": "A) 23",
+        "questionId": "d3-q4"
       },
       {
         "index": 113,
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) 122",
-        "questionId": "d3-q5"
+        "text": "B) 120",
+        "questionId": "d3-q4"
       },
       {
         "index": 114,
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) 123",
-        "questionId": "d3-q5"
+        "text": "C) 110",
+        "questionId": "d3-q4"
       },
       {
         "index": 115,
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) 144",
-        "questionId": "d3-q5"
+        "text": "D) 130",
+        "questionId": "d3-q4"
       },
       {
         "index": 116,
@@ -928,8 +916,8 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿Cuántos turistas son 12 × 9?",
-        "questionId": "d3-q6",
+        "text": "El 14 es el doble de ¿qué número?",
+        "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -943,32 +931,32 @@
         "column": 3,
         "line": 14,
         "kind": "option",
-        "text": "A) 90",
-        "questionId": "d3-q6"
+        "text": "A) 7",
+        "questionId": "d3-q5"
       },
       {
         "index": 119,
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) 21",
-        "questionId": "d3-q6"
+        "text": "B) 5",
+        "questionId": "d3-q5"
       },
       {
         "index": 120,
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) 108",
-        "questionId": "d3-q6"
+        "text": "C) 6",
+        "questionId": "d3-q5"
       },
       {
         "index": 121,
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) 118",
-        "questionId": "d3-q6"
+        "text": "D) 4",
+        "questionId": "d3-q5"
       },
       {
         "index": 122,
@@ -982,8 +970,8 @@
         "column": 3,
         "line": 19,
         "kind": "question",
-        "text": "Si 9 × 8 = 72, ¿cuánto es 8 × 9?",
-        "questionId": "d3-q7",
+        "text": "¿Cuánto cuestan 5 helados de 800?",
+        "questionId": "d3-q6",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -997,32 +985,32 @@
         "column": 3,
         "line": 20,
         "kind": "option",
-        "text": "A) 72",
-        "questionId": "d3-q7"
+        "text": "A) 4.800 bolívares",
+        "questionId": "d3-q6"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) 17",
-        "questionId": "d3-q7"
+        "text": "B) 400 bolívares",
+        "questionId": "d3-q6"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) 64",
-        "questionId": "d3-q7"
+        "text": "C) 4.000 bolívares",
+        "questionId": "d3-q6"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) 81",
-        "questionId": "d3-q7"
+        "text": "D) 805 bolívares",
+        "questionId": "d3-q6"
       },
       {
         "index": 128,
@@ -1036,8 +1024,8 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "¿Qué es una decena?",
-        "questionId": "d3-q8",
+        "text": "De 5.000 pagas 4.000. ¿Cuánto devuelven?",
+        "questionId": "d3-q7",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -1051,32 +1039,32 @@
         "column": 3,
         "line": 26,
         "kind": "option",
-        "text": "A) Un grupo de 100",
-        "questionId": "d3-q8"
+        "text": "A) 1.000 bolívares",
+        "questionId": "d3-q7"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
         "kind": "option",
-        "text": "B) Un grupo de 2",
-        "questionId": "d3-q8"
+        "text": "B) 9.000 bolívares",
+        "questionId": "d3-q7"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
         "kind": "option",
-        "text": "C) Un solo bote",
-        "questionId": "d3-q8"
+        "text": "C) 500 bolívares",
+        "questionId": "d3-q7"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
         "kind": "option",
-        "text": "D) Un grupo de 10",
-        "questionId": "d3-q8"
+        "text": "D) 4.000 bolívares",
+        "questionId": "d3-q7"
       },
       {
         "index": 134,
@@ -1090,7 +1078,7 @@
         "column": 3,
         "line": 31,
         "kind": "question",
-        "text": "Explica por qué 10 × 8 vale 80 y no 800.",
+        "text": "Explica cómo hallas 14 × 7 con 7 × 7 = 49.",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1128,7 +1116,7 @@
         "column": 3,
         "line": 35,
         "kind": "question",
-        "text": "Resuelve 12 × 9 partiendo el 12 en 10 y 2.",
+        "text": "Cuenta a un amigo cómo hallas 7 × 8.",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1166,7 +1154,7 @@
         "column": 3,
         "line": 39,
         "kind": "question",
-        "text": "Dibuja 12 × 9 en dos cajas: 10 × 9 y 2 × 9.",
+        "text": "Dibuja 13 × 5 en dos cajas: 10 × 5 y 3 × 5.",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1204,7 +1192,7 @@
         "column": 3,
         "line": 43,
         "kind": "question",
-        "text": "Dibuja 8 grupos de 10 plantas: 8 × 10 = 80.",
+        "text": "Dibuja 5 helados de 800 y escribe el total.",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1255,67 +1243,49 @@
         "index": 153,
         "column": 3,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "imageInstruction",
+        "text": "Dibuja una playa de Morrocoy con 13"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Dibuja un manglar con 8 filas. En cada fila"
+        "text": "toallas. Pon 5 niños en cada toalla. Escribe"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "pon 10 plantas. Escribe al lado: 8 × 10 = 80."
+        "text": "al lado: 13 × 5 = 65. Rotula las cajas 10 × 5 y"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Rotula «ocho decenas» y «80 plantas»."
+        "text": "3 × 5."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuánto es 12 × 12?",
+        "prompt": "¿Cuánto es 13 × 5?",
         "choices": [
-          "121",
-          "144",
-          "122",
-          "24"
-        ],
-        "answer": "144",
-        "slot": {
-          "column": 2,
-          "line": 36,
-          "index": 88
-        }
-      },
-      {
-        "id": "d3-q2",
-        "originDay": 3,
-        "type": "mcq",
-        "prompt": "¿Cuánto es 10 × 8?",
-        "choices": [
-          "800",
           "18",
-          "80",
-          "90"
+          "65",
+          "53",
+          "55"
         ],
-        "answer": "80",
+        "answer": "65",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1323,17 +1293,17 @@
         }
       },
       {
-        "id": "d3-q3",
+        "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuánto valen ocho decenas?",
+        "prompt": "¿Cuánto es 14 × 7?",
         "choices": [
-          "8",
-          "800",
-          "88",
-          "80"
+          "21",
+          "49",
+          "98",
+          "84"
         ],
-        "answer": "80",
+        "answer": "98",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1341,17 +1311,17 @@
         }
       },
       {
-        "id": "d3-q4",
+        "id": "d3-q3",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuánto es 11 × 11?",
+        "prompt": "Si 8 × 6 = 48, ¿cuánto es 16 × 6?",
         "choices": [
-          "111",
-          "121",
           "22",
-          "110"
+          "86",
+          "106",
+          "96"
         ],
-        "answer": "121",
+        "answer": "96",
         "slot": {
           "column": 3,
           "line": 1,
@@ -1359,17 +1329,17 @@
         }
       },
       {
-        "id": "d3-q5",
+        "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuánto es 12 × 11?",
+        "prompt": "¿Cuánto es 15 × 8?",
         "choices": [
-          "132",
-          "122",
-          "123",
-          "144"
+          "23",
+          "120",
+          "110",
+          "130"
         ],
-        "answer": "132",
+        "answer": "120",
         "slot": {
           "column": 3,
           "line": 7,
@@ -1377,17 +1347,17 @@
         }
       },
       {
-        "id": "d3-q6",
+        "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cuántos turistas son 12 × 9?",
+        "prompt": "El 14 es el doble de ¿qué número?",
         "choices": [
-          "90",
-          "21",
-          "108",
-          "118"
+          "7",
+          "5",
+          "6",
+          "4"
         ],
-        "answer": "108",
+        "answer": "7",
         "slot": {
           "column": 3,
           "line": 13,
@@ -1395,17 +1365,17 @@
         }
       },
       {
-        "id": "d3-q7",
+        "id": "d3-q6",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "Si 9 × 8 = 72, ¿cuánto es 8 × 9?",
+        "prompt": "¿Cuánto cuestan 5 helados de 800?",
         "choices": [
-          "72",
-          "17",
-          "64",
-          "81"
+          "4.800 bolívares",
+          "400 bolívares",
+          "4.000 bolívares",
+          "805 bolívares"
         ],
-        "answer": "72",
+        "answer": "4.000 bolívares",
         "slot": {
           "column": 3,
           "line": 19,
@@ -1413,17 +1383,17 @@
         }
       },
       {
-        "id": "d3-q8",
+        "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué es una decena?",
+        "prompt": "De 5.000 pagas 4.000. ¿Cuánto devuelven?",
         "choices": [
-          "Un grupo de 100",
-          "Un grupo de 2",
-          "Un solo bote",
-          "Un grupo de 10"
+          "1.000 bolívares",
+          "9.000 bolívares",
+          "500 bolívares",
+          "4.000 bolívares"
         ],
-        "answer": "Un grupo de 10",
+        "answer": "1.000 bolívares",
         "slot": {
           "column": 3,
           "line": 25,
@@ -1434,7 +1404,7 @@
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Explica por qué 10 × 8 vale 80 y no 800.",
+        "prompt": "Explica cómo hallas 14 × 7 con 7 × 7 = 49.",
         "slot": {
           "column": 3,
           "line": 31,
@@ -1445,7 +1415,7 @@
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Resuelve 12 × 9 partiendo el 12 en 10 y 2.",
+        "prompt": "Cuenta a un amigo cómo hallas 7 × 8.",
         "slot": {
           "column": 3,
           "line": 35,
@@ -1456,7 +1426,7 @@
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja 12 × 9 en dos cajas: 10 × 9 y 2 × 9.",
+        "prompt": "Dibuja 13 × 5 en dos cajas: 10 × 5 y 3 × 5.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
@@ -1469,7 +1439,7 @@
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja 8 grupos de 10 plantas: 8 × 10 = 80.",
+        "prompt": "Dibuja 5 helados de 800 y escribe el total.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

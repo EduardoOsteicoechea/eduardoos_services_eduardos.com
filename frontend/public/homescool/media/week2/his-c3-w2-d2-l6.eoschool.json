@@ -14,8 +14,8 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nAyer ordenaste dos fechas: 1498 y 1499. En 1498 el barco de Colón llegó a Paria. Hoy volvemos a esa costa a buscar datos."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nLa clase pasada ordenaste dos fechas: 1498 y 1499. En 1498 el barco de Colón llegó a Paria. Hoy vamos a mirar de cerca esa costa."
       },
       {
         "id": "p2",
@@ -35,12 +35,12 @@
       {
         "id": "p5",
         "heading": "Punto 5: Quién ya vivía allí",
-        "body": "¿Quién estaba ya en esa costa cuando el barco asomó por el mar?\n\nYa vivían pueblos originarios, como los que conociste antes. El barco no llegó a una costa vacía. Contar bien la historia los incluye."
+        "body": "¿Quién estaba ya en esa costa cuando el barco asomó por el mar?\n\nYa vivían pueblos originarios, como los que conociste antes. El barco no llegó a una costa vacía."
       },
       {
         "id": "p6",
         "heading": "Punto 6: No mezcles las fechas",
-        "body": "Una pregunta con truco: ¿Colón llegó a Paria en 1492 o en 1498?\n\nFue en 1498, en su tercer viaje. 1492 fue su primer viaje, a islas del Caribe. Recuerda: tercer viaje, 1498, Paria."
+        "body": "Una pregunta con truco: ¿Colón llegó a Paria en 1492 o en 1498?\n\nFue en 1498, en su tercer viaje. 1492 fue su primer viaje, a islas del Caribe."
       }
     ],
     "summary": "En 1498 Colón llegó a Paria, en tierra firme, donde ya vivían pueblos originarios.",
@@ -48,7 +48,7 @@
     "weekRecap": "Viajes: Colón 1498 llega a Paria; 1499 otras expediciones; ruta de Paria a La Guajira. Esta semana estudiamos los primeros viajes españoles a Venezuela con mapas, relatos y respeto por los pueblos de la costa.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un periódico con tu titular. Pon quién, cuándo y dónde: Paria, 1498. Dibuja un barco que llega a la costa. Añade personas que ya vivían allí.",
+    "imageBandInstruction": "Dibuja un periódico con tu titular: quién, cuándo y dónde, Colón, 1498, Paria. Dibuja un barco que llega a la costa y personas que ya vivían allí.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -56,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -76,50 +76,50 @@
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 5,
         "column": 1,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La clase pasada ordenaste dos fechas:"
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Ayer ordenaste dos fechas: 1498 y 1499."
+        "text": "1498 y 1499. En 1498 el barco de Colón"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "En 1498 el barco de Colón llegó a Paria."
+        "text": "llegó a Paria. Hoy vamos a mirar"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Hoy volvemos a esa costa a buscar datos."
+        "text": "de cerca esa costa."
       },
       {
         "index": 11,
@@ -146,36 +146,36 @@
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "Eres reportero en la costa de Paria."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "¿Qué datos pondrías en un titular?"
+        "text": "Eres reportero en la costa de Paria."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué datos pondrías en un titular?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
@@ -258,36 +258,36 @@
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "lesson",
-        "text": "Pasó hace muchísimo tiempo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "¿Dónde buscas datos de ese viaje?"
+        "text": "Pasó hace muchísimo tiempo."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Dónde buscas datos de ese viaje?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
@@ -370,43 +370,43 @@
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "El barco de Colón tocó Paria."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "¿Qué diferencia hay entre isla"
+        "text": "El barco de Colón tocó Paria."
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "y tierra firme?"
+        "text": "¿Qué diferencia hay entre isla"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "y tierra firme?"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 52,
@@ -482,36 +482,36 @@
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "¿Quién estaba ya en esa costa"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "cuando el barco asomó por el mar?"
+        "text": "¿Quién estaba ya en esa costa"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "cuando el barco asomó por el mar?"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
@@ -566,22 +566,22 @@
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "lesson",
-        "text": "Contar bien la historia los incluye."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 77,
@@ -671,22 +671,22 @@
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "lesson",
-        "text": "Recuerda: tercer viaje, 1498, Paria."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 92,
@@ -1244,28 +1244,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un periódico con tu titular. Pon"
+        "text": "Dibuja un periódico con tu titular: quién,"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "quién, cuándo y dónde: Paria, 1498. Dibuja"
+        "text": "cuándo y dónde, Colón, 1498, Paria. Dibuja"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "un barco que llega a la costa. Añade"
+        "text": "un barco que llega a la costa y personas"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "personas que ya vivían allí."
+        "text": "que ya vivían allí."
       }
     ],
     "packOrder": "column-major-sequential",

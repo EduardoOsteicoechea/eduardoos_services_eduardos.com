@@ -1,0 +1,1462 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 2,
+  "day": 2,
+  "level": 6,
+  "subject": "fin",
+  "locale": "es",
+  "title": "Intercambio y precio justo",
+  "lesson": {
+    "kind": "deepen",
+    "focusPoint": 1,
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nLa clase pasada viste que querer mucho y tener poco se llama escasez. Por eso eliges, como en el puerto de La Guaira."
+      },
+      {
+        "id": "p2",
+        "heading": "Punto 2: El trueque",
+        "body": "Tú tienes manzanas y tu amigo tiene pan. Los dos quieren lo del otro. ¿Qué hacen?\n\nCambian una cosa por otra. Eso es trueque. En el puerto de La Guaira pasa en grande: llegan productos y salen productos."
+      },
+      {
+        "id": "p3",
+        "heading": "Punto 3: Los dos ganan",
+        "body": "Nadie te obliga a cambiar tus manzanas. ¿Por qué lo harías?\n\nCambias porque prefieres el pan. Tu amigo cambia porque prefiere la fruta. En un buen intercambio los dos ganan."
+      },
+      {
+        "id": "p4",
+        "heading": "Punto 4: El dinero ayuda",
+        "body": "¿Y si tu amigo quiere tus manzanas, pero tú no quieres su pan?\n\nAhí sirve el dinero. Todos lo aceptan. Vendes tus manzanas y compras lo que ocupas. Así no buscas a alguien que quiera lo tuyo."
+      },
+      {
+        "id": "p5",
+        "heading": "Punto 5: El precio justo",
+        "body": "Quieres vender limonada. ¿Cuánto debes cobrar para que sea un precio justo?\n\nEjemplo inventado: materiales 3 monedas y tu trabajo 2. El precio justo es 5. Dios quiere pesas y precios justos (Levítico 19:35)."
+      },
+      {
+        "id": "p6",
+        "heading": "Punto 6: Práctica económica de hoy",
+        "body": "¿Qué trabajo útil puedes ofrecer hoy a alguien que conoces?\n\nCon permiso de papá o mamá, ofrece un servicio o un producto pequeño a alguien conocido. Cobra un precio justo y anota lo que ganaste."
+      }
+    ],
+    "summary": "En un buen intercambio los dos ganan, y un precio justo suma lo que cuestan los materiales y mi trabajo.",
+    "layout": "letter-grid-v2",
+    "v2Flow": true,
+    "quizIntegrated": true,
+    "packOrder": "column-major-sequential",
+    "method": "ask-first-v1",
+    "imageBandInstruction": "Dibuja un barco en el puerto de La Guaira. Al lado dibuja una mesa con dos cosas que se cambian. Abajo haz una tabla: Qué ofrecí, Precio y Cuánto gané. Déjala vacía.",
+    "slotSequence": [
+      {
+        "index": 1,
+        "column": 1,
+        "line": 1,
+        "kind": "opening",
+        "text": "¿Qué aprendiste la clase pasada?"
+      },
+      {
+        "index": 2,
+        "column": 1,
+        "line": 2,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 3,
+        "column": 1,
+        "line": 3,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 4,
+        "column": 1,
+        "line": 4,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 5,
+        "column": 1,
+        "line": 5,
+        "kind": "heading",
+        "text": "Punto 1: Repaso de la clase pasada"
+      },
+      {
+        "index": 6,
+        "column": 1,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 7,
+        "column": 1,
+        "line": 7,
+        "kind": "lesson",
+        "text": "La clase pasada viste que querer mucho"
+      },
+      {
+        "index": 8,
+        "column": 1,
+        "line": 8,
+        "kind": "lesson",
+        "text": "y tener poco se llama escasez."
+      },
+      {
+        "index": 9,
+        "column": 1,
+        "line": 9,
+        "kind": "lesson",
+        "text": "Por eso eliges, como en el puerto de La"
+      },
+      {
+        "index": 10,
+        "column": 1,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Guaira."
+      },
+      {
+        "index": 11,
+        "column": 1,
+        "line": 11,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 12,
+        "column": 1,
+        "line": 12,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 13,
+        "column": 1,
+        "line": 13,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 14,
+        "column": 1,
+        "line": 14,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 15,
+        "column": 1,
+        "line": 15,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 16,
+        "column": 1,
+        "line": 16,
+        "kind": "lesson",
+        "text": "Tú tienes manzanas y tu amigo tiene pan."
+      },
+      {
+        "index": 17,
+        "column": 1,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Los dos quieren lo del otro. ¿Qué hacen?"
+      },
+      {
+        "index": 18,
+        "column": 1,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 19,
+        "column": 1,
+        "line": 19,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 20,
+        "column": 1,
+        "line": 20,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 21,
+        "column": 1,
+        "line": 21,
+        "kind": "heading",
+        "text": "Punto 2: El trueque"
+      },
+      {
+        "index": 22,
+        "column": 1,
+        "line": 22,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 23,
+        "column": 1,
+        "line": 23,
+        "kind": "lesson",
+        "text": "Cambian una cosa por otra. Eso es trueque."
+      },
+      {
+        "index": 24,
+        "column": 1,
+        "line": 24,
+        "kind": "lesson",
+        "text": "En el puerto de La Guaira pasa en grande:"
+      },
+      {
+        "index": 25,
+        "column": 1,
+        "line": 25,
+        "kind": "lesson",
+        "text": "llegan productos y salen productos."
+      },
+      {
+        "index": 26,
+        "column": 1,
+        "line": 26,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 27,
+        "column": 1,
+        "line": 27,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 28,
+        "column": 1,
+        "line": 28,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 29,
+        "column": 1,
+        "line": 29,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 30,
+        "column": 1,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 31,
+        "column": 1,
+        "line": 31,
+        "kind": "lesson",
+        "text": "Nadie te obliga a cambiar tus manzanas."
+      },
+      {
+        "index": 32,
+        "column": 1,
+        "line": 32,
+        "kind": "lesson",
+        "text": "¿Por qué lo harías?"
+      },
+      {
+        "index": 33,
+        "column": 1,
+        "line": 33,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 34,
+        "column": 1,
+        "line": 34,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 35,
+        "column": 1,
+        "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 36,
+        "column": 1,
+        "line": 36,
+        "kind": "heading",
+        "text": "Punto 3: Los dos ganan"
+      },
+      {
+        "index": 37,
+        "column": 1,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 38,
+        "column": 1,
+        "line": 38,
+        "kind": "lesson",
+        "text": "Cambias porque prefieres el pan."
+      },
+      {
+        "index": 39,
+        "column": 1,
+        "line": 39,
+        "kind": "lesson",
+        "text": "Tu amigo cambia porque prefiere la fruta."
+      },
+      {
+        "index": 40,
+        "column": 1,
+        "line": 40,
+        "kind": "lesson",
+        "text": "En un buen intercambio los dos ganan."
+      },
+      {
+        "index": 41,
+        "column": 1,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 42,
+        "column": 1,
+        "line": 42,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 43,
+        "column": 1,
+        "line": 43,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 44,
+        "column": 1,
+        "line": 44,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 45,
+        "column": 1,
+        "line": 45,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 46,
+        "column": 1,
+        "line": 46,
+        "kind": "lesson",
+        "text": "¿Y si tu amigo quiere tus manzanas,"
+      },
+      {
+        "index": 47,
+        "column": 1,
+        "line": 47,
+        "kind": "lesson",
+        "text": "pero tú no quieres su pan?"
+      },
+      {
+        "index": 48,
+        "column": 1,
+        "line": 48,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 49,
+        "column": 1,
+        "line": 49,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 50,
+        "column": 1,
+        "line": 50,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 51,
+        "column": 1,
+        "line": 51,
+        "kind": "heading",
+        "text": "Punto 4: El dinero ayuda"
+      },
+      {
+        "index": 52,
+        "column": 1,
+        "line": 52,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 53,
+        "column": 2,
+        "line": 1,
+        "kind": "lesson",
+        "text": "Ahí sirve el dinero. Todos lo aceptan."
+      },
+      {
+        "index": 54,
+        "column": 2,
+        "line": 2,
+        "kind": "lesson",
+        "text": "Vendes tus manzanas y compras lo que"
+      },
+      {
+        "index": 55,
+        "column": 2,
+        "line": 3,
+        "kind": "lesson",
+        "text": "ocupas."
+      },
+      {
+        "index": 56,
+        "column": 2,
+        "line": 4,
+        "kind": "lesson",
+        "text": "Así no buscas a alguien que quiera lo tuyo."
+      },
+      {
+        "index": 57,
+        "column": 2,
+        "line": 5,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 58,
+        "column": 2,
+        "line": 6,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 59,
+        "column": 2,
+        "line": 7,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 60,
+        "column": 2,
+        "line": 8,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 61,
+        "column": 2,
+        "line": 9,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 62,
+        "column": 2,
+        "line": 10,
+        "kind": "lesson",
+        "text": "Quieres vender limonada. ¿Cuánto debes"
+      },
+      {
+        "index": 63,
+        "column": 2,
+        "line": 11,
+        "kind": "lesson",
+        "text": "cobrar para que sea un precio justo?"
+      },
+      {
+        "index": 64,
+        "column": 2,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 65,
+        "column": 2,
+        "line": 13,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 66,
+        "column": 2,
+        "line": 14,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 67,
+        "column": 2,
+        "line": 15,
+        "kind": "heading",
+        "text": "Punto 5: El precio justo"
+      },
+      {
+        "index": 68,
+        "column": 2,
+        "line": 16,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 69,
+        "column": 2,
+        "line": 17,
+        "kind": "lesson",
+        "text": "Ejemplo inventado: materiales 3 monedas"
+      },
+      {
+        "index": 70,
+        "column": 2,
+        "line": 18,
+        "kind": "lesson",
+        "text": "y tu trabajo 2. El precio justo es 5."
+      },
+      {
+        "index": 71,
+        "column": 2,
+        "line": 19,
+        "kind": "lesson",
+        "text": "Dios quiere pesas y precios justos (Levítico"
+      },
+      {
+        "index": 72,
+        "column": 2,
+        "line": 20,
+        "kind": "lesson",
+        "text": "19:35)."
+      },
+      {
+        "index": 73,
+        "column": 2,
+        "line": 21,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 74,
+        "column": 2,
+        "line": 22,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 75,
+        "column": 2,
+        "line": 23,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 76,
+        "column": 2,
+        "line": 24,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 77,
+        "column": 2,
+        "line": 25,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 78,
+        "column": 2,
+        "line": 26,
+        "kind": "lesson",
+        "text": "¿Qué trabajo útil puedes ofrecer hoy"
+      },
+      {
+        "index": 79,
+        "column": 2,
+        "line": 27,
+        "kind": "lesson",
+        "text": "a alguien que conoces?"
+      },
+      {
+        "index": 80,
+        "column": 2,
+        "line": 28,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 81,
+        "column": 2,
+        "line": 29,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 82,
+        "column": 2,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 83,
+        "column": 2,
+        "line": 31,
+        "kind": "heading",
+        "text": "Punto 6: Práctica económica de hoy"
+      },
+      {
+        "index": 84,
+        "column": 2,
+        "line": 32,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 85,
+        "column": 2,
+        "line": 33,
+        "kind": "lesson",
+        "text": "Con permiso de papá o mamá, ofrece un"
+      },
+      {
+        "index": 86,
+        "column": 2,
+        "line": 34,
+        "kind": "lesson",
+        "text": "servicio"
+      },
+      {
+        "index": 87,
+        "column": 2,
+        "line": 35,
+        "kind": "lesson",
+        "text": "o un producto pequeño a alguien conocido."
+      },
+      {
+        "index": 88,
+        "column": 2,
+        "line": 36,
+        "kind": "lesson",
+        "text": "Cobra un precio justo y anota lo que ganaste."
+      },
+      {
+        "index": 89,
+        "column": 2,
+        "line": 37,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 90,
+        "column": 2,
+        "line": 38,
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
+      },
+      {
+        "index": 91,
+        "column": 2,
+        "line": 39,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 92,
+        "column": 2,
+        "line": 40,
+        "kind": "lesson",
+        "text": "________________________________________"
+      },
+      {
+        "index": 93,
+        "column": 2,
+        "line": 41,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 94,
+        "column": 2,
+        "line": 42,
+        "kind": "question",
+        "text": "Cambiar una cosa por otra se llama…",
+        "questionId": "d2-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 95,
+        "column": 2,
+        "line": 43,
+        "kind": "option",
+        "text": "A) escasez",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 96,
+        "column": 2,
+        "line": 44,
+        "kind": "option",
+        "text": "B) deuda",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 97,
+        "column": 2,
+        "line": 45,
+        "kind": "option",
+        "text": "C) meta",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 98,
+        "column": 2,
+        "line": 46,
+        "kind": "option",
+        "text": "D) trueque",
+        "questionId": "d2-q1"
+      },
+      {
+        "index": 99,
+        "column": 2,
+        "line": 47,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 100,
+        "column": 2,
+        "line": 48,
+        "kind": "question",
+        "text": "¿Qué sale y entra por el puerto?",
+        "questionId": "d2-q2",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 101,
+        "column": 2,
+        "line": 49,
+        "kind": "option",
+        "text": "A) Solo gente",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 102,
+        "column": 2,
+        "line": 50,
+        "kind": "option",
+        "text": "B) Productos",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 103,
+        "column": 2,
+        "line": 51,
+        "kind": "option",
+        "text": "C) Solo nubes",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 104,
+        "column": 2,
+        "line": 52,
+        "kind": "option",
+        "text": "D) Nada",
+        "questionId": "d2-q2"
+      },
+      {
+        "index": 105,
+        "column": 3,
+        "line": 1,
+        "kind": "question",
+        "text": "En un buen intercambio, ¿quién gana?",
+        "questionId": "d2-q3",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 106,
+        "column": 3,
+        "line": 2,
+        "kind": "option",
+        "text": "A) Solo uno",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 107,
+        "column": 3,
+        "line": 3,
+        "kind": "option",
+        "text": "B) Nadie",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 108,
+        "column": 3,
+        "line": 4,
+        "kind": "option",
+        "text": "C) Los dos",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 109,
+        "column": 3,
+        "line": 5,
+        "kind": "option",
+        "text": "D) El que grita",
+        "questionId": "d2-q3"
+      },
+      {
+        "index": 110,
+        "column": 3,
+        "line": 6,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 111,
+        "column": 3,
+        "line": 7,
+        "kind": "question",
+        "text": "¿Por qué cambias tus manzanas por pan?",
+        "questionId": "d2-q4",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 112,
+        "column": 3,
+        "line": 8,
+        "kind": "option",
+        "text": "A) Porque te obligan",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 113,
+        "column": 3,
+        "line": 9,
+        "kind": "option",
+        "text": "B) Porque no sirven",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 114,
+        "column": 3,
+        "line": 10,
+        "kind": "option",
+        "text": "C) Por nada",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 115,
+        "column": 3,
+        "line": 11,
+        "kind": "option",
+        "text": "D) Porque prefieres el pan",
+        "questionId": "d2-q4"
+      },
+      {
+        "index": 116,
+        "column": 3,
+        "line": 12,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 117,
+        "column": 3,
+        "line": 13,
+        "kind": "question",
+        "text": "¿Para qué sirve el dinero en un cambio?",
+        "questionId": "d2-q5",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 118,
+        "column": 3,
+        "line": 14,
+        "kind": "option",
+        "text": "A) Nadie lo acepta",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 119,
+        "column": 3,
+        "line": 15,
+        "kind": "option",
+        "text": "B) Todos lo aceptan",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 120,
+        "column": 3,
+        "line": 16,
+        "kind": "option",
+        "text": "C) Solo adorna",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 121,
+        "column": 3,
+        "line": 17,
+        "kind": "option",
+        "text": "D) Se come",
+        "questionId": "d2-q5"
+      },
+      {
+        "index": 122,
+        "column": 3,
+        "line": 18,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 123,
+        "column": 3,
+        "line": 19,
+        "kind": "question",
+        "text": "En la limonada, ¿cuánto es el precio justo?",
+        "questionId": "d2-q6",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "option",
+        "text": "A) 5 monedas",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 125,
+        "column": 3,
+        "line": 21,
+        "kind": "option",
+        "text": "B) 2 monedas",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 126,
+        "column": 3,
+        "line": 22,
+        "kind": "option",
+        "text": "C) 3 monedas",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 127,
+        "column": 3,
+        "line": 23,
+        "kind": "option",
+        "text": "D) 10 monedas",
+        "questionId": "d2-q6"
+      },
+      {
+        "index": 128,
+        "column": 3,
+        "line": 24,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 129,
+        "column": 3,
+        "line": 25,
+        "kind": "question",
+        "text": "El precio justo suma materiales y…",
+        "questionId": "d2-q7",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "option",
+        "text": "A) tu suerte",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 131,
+        "column": 3,
+        "line": 27,
+        "kind": "option",
+        "text": "B) un regalo",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 132,
+        "column": 3,
+        "line": 28,
+        "kind": "option",
+        "text": "C) tu trabajo",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 133,
+        "column": 3,
+        "line": 29,
+        "kind": "option",
+        "text": "D) una deuda",
+        "questionId": "d2-q7"
+      },
+      {
+        "index": 134,
+        "column": 3,
+        "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
+        "kind": "question",
+        "text": "Escribe qué ofreciste hoy y cuánto ganaste.",
+        "questionId": "d2-w1",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 137,
+        "column": 3,
+        "line": 33,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w1"
+      },
+      {
+        "index": 138,
+        "column": 3,
+        "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
+        "kind": "question",
+        "text": "Cuenta con tus palabras qué es un precio",
+        "questionId": "d2-w2",
+        "questionType": "write",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "lesson",
+        "text": "justo.",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 141,
+        "column": 3,
+        "line": 37,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 142,
+        "column": 3,
+        "line": 38,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
+      },
+      {
+        "index": 143,
+        "column": 3,
+        "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "question",
+        "text": "Dibuja un trueque: dos personas y dos cosas.",
+        "questionId": "d2-w3",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 146,
+        "column": 3,
+        "line": 42,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
+      },
+      {
+        "index": 147,
+        "column": 3,
+        "line": 43,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 148,
+        "column": 3,
+        "line": 44,
+        "kind": "question",
+        "text": "Dibuja una suma: materiales + trabajo =",
+        "questionId": "d2-w4",
+        "questionType": "schematic",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
+      },
+      {
+        "index": 149,
+        "column": 3,
+        "line": 45,
+        "kind": "lesson",
+        "text": "precio.",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 150,
+        "column": 3,
+        "line": 46,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 151,
+        "column": 3,
+        "line": 47,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
+      },
+      {
+        "index": 152,
+        "column": 3,
+        "line": 48,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 153,
+        "column": 3,
+        "line": 49,
+        "kind": "imageInstruction",
+        "text": "Dibuja un barco en el puerto de La Guaira."
+      },
+      {
+        "index": 154,
+        "column": 3,
+        "line": 50,
+        "kind": "imageInstruction",
+        "text": "Al lado dibuja una mesa con dos cosas que"
+      },
+      {
+        "index": 155,
+        "column": 3,
+        "line": 51,
+        "kind": "imageInstruction",
+        "text": "se cambian. Abajo haz una tabla: Qué"
+      },
+      {
+        "index": 156,
+        "column": 3,
+        "line": 52,
+        "kind": "imageInstruction",
+        "text": "ofrecí, Precio y Cuánto gané. Déjala vacía."
+      }
+    ]
+  },
+  "quiz": {
+    "questionCount": 11,
+    "questions": [
+      {
+        "id": "d2-q1",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "Cambiar una cosa por otra se llama…",
+        "choices": [
+          "escasez",
+          "deuda",
+          "meta",
+          "trueque"
+        ],
+        "answer": "trueque",
+        "slot": {
+          "column": 2,
+          "line": 42,
+          "index": 94
+        }
+      },
+      {
+        "id": "d2-q2",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué sale y entra por el puerto?",
+        "choices": [
+          "Solo gente",
+          "Productos",
+          "Solo nubes",
+          "Nada"
+        ],
+        "answer": "Productos",
+        "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d2-q3",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "En un buen intercambio, ¿quién gana?",
+        "choices": [
+          "Solo uno",
+          "Nadie",
+          "Los dos",
+          "El que grita"
+        ],
+        "answer": "Los dos",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
+        "id": "d2-q4",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Por qué cambias tus manzanas por pan?",
+        "choices": [
+          "Porque te obligan",
+          "Porque no sirven",
+          "Por nada",
+          "Porque prefieres el pan"
+        ],
+        "answer": "Porque prefieres el pan",
+        "slot": {
+          "column": 3,
+          "line": 7,
+          "index": 111
+        }
+      },
+      {
+        "id": "d2-q5",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Para qué sirve el dinero en un cambio?",
+        "choices": [
+          "Nadie lo acepta",
+          "Todos lo aceptan",
+          "Solo adorna",
+          "Se come"
+        ],
+        "answer": "Todos lo aceptan",
+        "slot": {
+          "column": 3,
+          "line": 13,
+          "index": 117
+        }
+      },
+      {
+        "id": "d2-q6",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "En la limonada, ¿cuánto es el precio justo?",
+        "choices": [
+          "5 monedas",
+          "2 monedas",
+          "3 monedas",
+          "10 monedas"
+        ],
+        "answer": "5 monedas",
+        "slot": {
+          "column": 3,
+          "line": 19,
+          "index": 123
+        }
+      },
+      {
+        "id": "d2-q7",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "El precio justo suma materiales y…",
+        "choices": [
+          "tu suerte",
+          "un regalo",
+          "tu trabajo",
+          "una deuda"
+        ],
+        "answer": "tu trabajo",
+        "slot": {
+          "column": 3,
+          "line": 25,
+          "index": 129
+        }
+      },
+      {
+        "id": "d2-w1",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Escribe qué ofreciste hoy y cuánto ganaste.",
+        "slot": {
+          "column": 3,
+          "line": 31,
+          "index": 135
+        }
+      },
+      {
+        "id": "d2-w2",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Cuenta con tus palabras qué es un precio justo.",
+        "slot": {
+          "column": 3,
+          "line": 35,
+          "index": 139
+        }
+      },
+      {
+        "id": "d2-w3",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Dibuja un trueque: dos personas y dos cosas.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 40,
+          "index": 144
+        }
+      },
+      {
+        "id": "d2-w4",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Dibuja una suma: materiales + trabajo = precio.",
+        "schematic": true,
+        "slotQuestionType": "schematic",
+        "slot": {
+          "column": 3,
+          "line": 44,
+          "index": 148
+        }
+      }
+    ]
+  },
+  "media": [],
+  "mppe": {
+    "objectives": [
+      {
+        "id": "fin-w2-d2-01",
+        "label": "Entiendo que en un buen intercambio los dos ganan, y pongo un precio justo a mi trabajo."
+      }
+    ]
+  }
+}

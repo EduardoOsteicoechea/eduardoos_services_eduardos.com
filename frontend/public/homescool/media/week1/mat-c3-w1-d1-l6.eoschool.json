@@ -14,39 +14,34 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nYa sabes sumar el mismo número, como 5 + 5 + 5. Hoy lo harás más corto, en el archipiélago Los Roques."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nYa sabes sumar el mismo número, como 5 + 5 + 5. Hoy lo harás más corto, en el archipiélago Los Roques."
       },
       {
         "id": "p2",
         "heading": "Punto 2: Grupos iguales",
-        "body": "Imagina que en Los Roques hay 3 cayos con 4 palmeras cada uno. ¿Cuántas son?\n\nUn cayo es una isla pequeña. Cada cayo es un grupo de 4 palmeras. 4 + 4 + 4 = 12. Multiplicar es sumar grupos iguales: 3 × 4 = 12."
+        "body": "Los Roques tiene cayos, islas pequeñas. ¿Cuántas palmeras hay en 3 cayos de 4?\n\nCada cayo es un grupo de 4 palmeras. 4 + 4 + 4 = 12. Multiplicar es sumar grupos iguales: 3 × 4 = 12."
       },
       {
         "id": "p3",
         "heading": "Punto 3: Factores y producto",
-        "body": "En 3 × 4 = 12 hay 3 cayos de 4 palmeras. ¿Cómo se llaman el 3, el 4 y el 12?\n\nEl 3 y el 4 son los factores: los números que se multiplican. El 12 es el producto, el resultado. El 3 cuenta grupos; el 4, cuántos hay."
+        "body": "En 3 × 4 = 12 hay 3 cayos de 4 palmeras. ¿Cómo se llaman el 3, el 4 y el 12?\n\nEl 3 y el 4 son los factores: el 3 cuenta cayos y el 4 palmeras. El 12 es el producto, el resultado."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Tablas del 1 al 4",
-        "body": "Imagina 1 cayo con 9 gaviotas. ¿Cuánto es 1 × 9? ¿Y cómo sacas 2 × 6 y 4 × 6?\n\nLa tabla del 1 deja igual: 1 × 9 = 9. La del 2 es el doble: 2 × 6 = 12. La del 4 es el doble del doble: 4 × 6 = 24, porque 12 + 12 = 24."
+        "heading": "Punto 4: Cada tabla tiene su truco",
+        "body": "Hay 12 tablas, del 1 al 12. ¿Hay trucos para contar cayos de Los Roques rápido?\n\nEl 1 deja igual: 1 × 9 = 9. El 2 dobla: 2 × 6 = 12. El 5 termina en 0 o 5: 5 × 6 = 30. El 10 añade un cero: 10 × 8 = 80."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Tablas del 5 al 8",
-        "body": "Imagina 6 cayos con 5 tortugas cada uno. Cuenta de 5 en 5. ¿En qué terminas?\n\nEl 5 termina en 0 o en 5: 6 × 5 = 30. El 6 es el doble del 3: 3 × 5 = 15, y el doble de 15 es 30. El 8 es el doble del 4: 8 × 5 = 40."
-      },
-      {
-        "id": "p6",
-        "heading": "Punto 6: Tablas del 9 al 12",
-        "body": "Imagina 12 cayos con 7 palmeras cada uno. ¿Cómo lo haces con la del 10 y la del 2?\n\nParte el 12 en 10 y 2: 10 × 7 = 70 y 2 × 7 = 14. 70 + 14 = 84, así que 12 × 7 = 84. Y la del 10 añade un cero: 10 × 8 = 80."
+        "heading": "Punto 5: No sumes los factores",
+        "body": "Pedro dice que 3 × 4 = 7, porque suma 3 + 4. ¿Tiene razón con sus cayos?\n\nNo. Sumó 3 + 4, pero multiplicar es juntar tres cayos de cuatro palmeras. 4 + 4 + 4 = 12, así que 3 × 4 = 12."
       }
     ],
     "summary": "Multiplicar es sumar grupos iguales, como cayos de Los Roques con las mismas palmeras.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un mapa con 4 cayos de Los Roques. Pon 5 palmeras en cada cayo. Escribe 5 + 5 + 5 + 5 y rotula 4 × 5 = 20. Revisa que todos los cayos sean iguales.",
+    "imageBandInstruction": "Dibuja 4 cayos de Los Roques en un mapa. Pon 5 palmeras en cada cayo igual. Rotula 4 grupos de 5 y escribe 5+5+5+5. Deja vacío el producto de 4 × 5.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -54,7 +49,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -81,197 +76,197 @@
         "index": 5,
         "column": 1,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
-        "kind": "lesson",
-        "text": "Ya sabes sumar el mismo número,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "como 5 + 5 + 5. Hoy lo harás más"
+        "text": "Ya sabes sumar el mismo número,"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "corto, en el archipiélago Los Roques."
+        "text": "como 5 + 5 + 5. Hoy lo harás más"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "corto, en el archipiélago Los Roques."
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
         "kind": "lesson",
-        "text": "Imagina que en Los Roques hay 3 cayos"
+        "text": "________________________________________"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "lesson",
-        "text": "con 4 palmeras cada uno. ¿Cuántas son?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Los Roques tiene cayos, islas pequeñas."
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "¿Cuántas palmeras hay en 3 cayos de 4?"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "heading",
-        "text": "Punto 2: Grupos iguales"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "lesson",
-        "text": "Un cayo es una isla pequeña."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "lesson",
-        "text": "Cada cayo es un grupo de 4 palmeras."
+        "kind": "heading",
+        "text": "Punto 2: Grupos iguales"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "lesson",
-        "text": "4 + 4 + 4 = 12. Multiplicar es sumar"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "grupos iguales: 3 × 4 = 12."
+        "text": "Cada cayo es un grupo de 4 palmeras."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "4 + 4 + 4 = 12. Multiplicar es sumar"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "grupos iguales: 3 × 4 = 12."
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "En 3 × 4 = 12 hay 3 cayos de 4 palmeras."
+        "text": "________________________________________"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "¿Cómo se llaman el 3, el 4 y el 12?"
+        "text": "________________________________________"
       },
       {
         "index": 33,
@@ -285,14 +280,14 @@
         "column": 1,
         "line": 34,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "En 3 × 4 = 12 hay 3 cayos de 4 palmeras."
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "¿Cómo se llaman el 3, el 4 y el 12?"
       },
       {
         "index": 36,
@@ -305,64 +300,64 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "heading",
-        "text": "Punto 3: Factores y producto"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "El 3 y el 4 son los factores:"
+        "text": "________________________________________"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "los números que se multiplican."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "El 12 es el producto, el resultado."
+        "kind": "heading",
+        "text": "Punto 3: Factores y producto"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "lesson",
-        "text": "El 3 cuenta grupos; el 4, cuántos hay."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 3 y el 4 son los factores:"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "el 3 cuenta cayos y el 4 palmeras."
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "El 12 es el producto, el resultado."
       },
       {
         "index": 46,
@@ -376,42 +371,42 @@
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "Imagina 1 cayo con 9 gaviotas. ¿Cuánto"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "es 1 × 9? ¿Y cómo sacas 2 × 6 y 4 × 6?"
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Hay 12 tablas, del 1 al 12. ¿Hay trucos"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "para contar cayos de Los Roques rápido?"
       },
       {
         "index": 53,
@@ -424,92 +419,92 @@
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "heading",
-        "text": "Punto 4: Tablas del 1 al 4"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
         "kind": "lesson",
-        "text": "La tabla del 1 deja igual: 1 × 9 = 9."
+        "text": "________________________________________"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "lesson",
-        "text": "La del 2 es el doble: 2 × 6 = 12."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "lesson",
-        "text": "La del 4 es el doble del doble:"
+        "kind": "heading",
+        "text": "Punto 4: Cada tabla tiene su truco"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "lesson",
-        "text": "4 × 6 = 24, porque 12 + 12 = 24."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 1 deja igual: 1 × 9 = 9."
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "El 2 dobla: 2 × 6 = 12."
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "El 5 termina en 0 o 5: 5 × 6 = 30."
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El 10 añade un cero: 10 × 8 = 80."
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "lesson",
-        "text": "Imagina 6 cayos con 5 tortugas cada uno."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "Cuenta de 5 en 5. ¿En qué terminas?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 67,
@@ -529,43 +524,43 @@
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "heading",
-        "text": "Punto 5: Tablas del 5 al 8"
+        "kind": "lesson",
+        "text": "Pedro dice que 3 × 4 = 7, porque suma"
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "3 + 4. ¿Tiene razón con sus cayos?"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "lesson",
-        "text": "El 5 termina en 0 o en 5: 6 × 5 = 30."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
         "kind": "lesson",
-        "text": "El 6 es el doble del 3: 3 × 5 = 15,"
+        "text": "________________________________________"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
         "kind": "lesson",
-        "text": "y el doble de 15 es 30."
+        "text": "________________________________________"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "El 8 es el doble del 4: 8 × 5 = 40."
+        "text": "________________________________________"
       },
       {
         "index": 75,
@@ -578,36 +573,36 @@
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "heading",
+        "text": "Punto 5: No sumes los factores"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "No. Sumó 3 + 4, pero multiplicar es"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "Imagina 12 cayos con 7 palmeras cada uno."
+        "text": "juntar tres cayos de cuatro palmeras."
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
         "kind": "lesson",
-        "text": "¿Cómo lo haces con la del 10 y la del 2?"
+        "text": "4 + 4 + 4 = 12, así que 3 × 4 = 12."
       },
       {
         "index": 81,
@@ -621,21 +616,21 @@
         "column": 2,
         "line": 30,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "heading",
-        "text": "Punto 6: Tablas del 9 al 12"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 85,
@@ -648,50 +643,62 @@
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "lesson",
-        "text": "Parte el 12 en 10 y 2:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "lesson",
-        "text": "10 × 7 = 70 y 2 × 7 = 14."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "lesson",
-        "text": "70 + 14 = 84, así que 12 × 7 = 84."
+        "kind": "question",
+        "text": "¿Cuánto es 3 × 4?",
+        "questionId": "d1-q1",
+        "questionType": "mcq",
+        "gutter": {
+          "role": "question",
+          "background": "#aaa",
+          "border": "#fff",
+          "text": "#fff"
+        }
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "lesson",
-        "text": "Y la del 10 añade un cero: 10 × 8 = 80."
+        "kind": "option",
+        "text": "A) 12",
+        "questionId": "d1-q1"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "B) 7",
+        "questionId": "d1-q1"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "option",
+        "text": "C) 34",
+        "questionId": "d1-q1"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "option",
+        "text": "D) 16",
+        "questionId": "d1-q1"
       },
       {
         "index": 93,
@@ -705,8 +712,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Cuánto es 3 × 4?",
-        "questionId": "d1-q1",
+        "text": "¿Cómo se llama el resultado de multiplicar?",
+        "questionId": "d1-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -720,32 +727,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) 12",
-        "questionId": "d1-q1"
+        "text": "A) Factor",
+        "questionId": "d1-q2"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) 7",
-        "questionId": "d1-q1"
+        "text": "B) Sumando",
+        "questionId": "d1-q2"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) 34",
-        "questionId": "d1-q1"
+        "text": "C) Resto",
+        "questionId": "d1-q2"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) 16",
-        "questionId": "d1-q1"
+        "text": "D) Producto",
+        "questionId": "d1-q2"
       },
       {
         "index": 99,
@@ -759,8 +766,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cómo se llama el resultado?",
-        "questionId": "d1-q2",
+        "text": "En 3 × 4, ¿qué cuenta el 3?",
+        "questionId": "d1-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -774,40 +781,40 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Factor",
-        "questionId": "d1-q2"
+        "text": "A) Las palmeras",
+        "questionId": "d1-q3"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Sumando",
-        "questionId": "d1-q2"
+        "text": "B) Los cayos",
+        "questionId": "d1-q3"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Resto",
-        "questionId": "d1-q2"
+        "text": "C) El producto",
+        "questionId": "d1-q3"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Producto",
-        "questionId": "d1-q2"
+        "text": "D) La suma",
+        "questionId": "d1-q3"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "En 3 × 4, ¿qué cuenta el 3?",
-        "questionId": "d1-q3",
+        "text": "¿Cuánto es 2 × 6?",
+        "questionId": "d1-q4",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -821,32 +828,32 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) Cuántos hay en cada uno",
-        "questionId": "d1-q3"
+        "text": "A) 8",
+        "questionId": "d1-q4"
       },
       {
         "index": 107,
         "column": 3,
         "line": 3,
         "kind": "option",
-        "text": "B) Cuántos grupos hay",
-        "questionId": "d1-q3"
+        "text": "B) 26",
+        "questionId": "d1-q4"
       },
       {
         "index": 108,
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) El producto",
-        "questionId": "d1-q3"
+        "text": "C) 12",
+        "questionId": "d1-q4"
       },
       {
         "index": 109,
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) La suma de ambos",
-        "questionId": "d1-q3"
+        "text": "D) 10",
+        "questionId": "d1-q4"
       },
       {
         "index": 110,
@@ -860,8 +867,8 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "Si 2 × 6 = 12, ¿cuánto es 4 × 6?",
-        "questionId": "d1-q4",
+        "text": "¿En qué terminan los productos del 5?",
+        "questionId": "d1-q5",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -875,32 +882,32 @@
         "column": 3,
         "line": 8,
         "kind": "option",
-        "text": "A) 18",
-        "questionId": "d1-q4"
+        "text": "A) En 2 o en 7",
+        "questionId": "d1-q5"
       },
       {
         "index": 113,
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) 16",
-        "questionId": "d1-q4"
+        "text": "B) En 3 o en 8",
+        "questionId": "d1-q5"
       },
       {
         "index": 114,
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) 24",
-        "questionId": "d1-q4"
+        "text": "C) En 1 o en 9",
+        "questionId": "d1-q5"
       },
       {
         "index": 115,
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) 10",
-        "questionId": "d1-q4"
+        "text": "D) En 0 o en 5",
+        "questionId": "d1-q5"
       },
       {
         "index": 116,
@@ -914,8 +921,8 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿En qué terminan los productos del 5?",
-        "questionId": "d1-q5",
+        "text": "¿Cuánto es 10 × 8?",
+        "questionId": "d1-q6",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -929,32 +936,32 @@
         "column": 3,
         "line": 14,
         "kind": "option",
-        "text": "A) En 2 o en 7",
-        "questionId": "d1-q5"
+        "text": "A) 18",
+        "questionId": "d1-q6"
       },
       {
         "index": 119,
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) En 3 o en 8",
-        "questionId": "d1-q5"
+        "text": "B) 80",
+        "questionId": "d1-q6"
       },
       {
         "index": 120,
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) En 1 o en 9",
-        "questionId": "d1-q5"
+        "text": "C) 800",
+        "questionId": "d1-q6"
       },
       {
         "index": 121,
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) En 0 o en 5",
-        "questionId": "d1-q5"
+        "text": "D) 88",
+        "questionId": "d1-q6"
       },
       {
         "index": 122,
@@ -968,8 +975,8 @@
         "column": 3,
         "line": 19,
         "kind": "question",
-        "text": "¿Cuánto es 8 × 5?",
-        "questionId": "d1-q6",
+        "text": "¿Cuánto es 1 × 9?",
+        "questionId": "d1-q7",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -983,32 +990,32 @@
         "column": 3,
         "line": 20,
         "kind": "option",
-        "text": "A) 13",
-        "questionId": "d1-q6"
+        "text": "A) 9",
+        "questionId": "d1-q7"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) 40",
-        "questionId": "d1-q6"
+        "text": "B) 10",
+        "questionId": "d1-q7"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) 35",
-        "questionId": "d1-q6"
+        "text": "C) 1",
+        "questionId": "d1-q7"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) 45",
-        "questionId": "d1-q6"
+        "text": "D) 19",
+        "questionId": "d1-q7"
       },
       {
         "index": 128,
@@ -1022,8 +1029,8 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "¿Cuánto es 12 × 7?",
-        "questionId": "d1-q7",
+        "text": "Pedro sumó 3 + 4. ¿Cuánto es 3 × 4?",
+        "questionId": "d1-q8",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -1037,32 +1044,32 @@
         "column": 3,
         "line": 26,
         "kind": "option",
-        "text": "A) 84",
-        "questionId": "d1-q7"
+        "text": "A) 7",
+        "questionId": "d1-q8"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
         "kind": "option",
-        "text": "B) 19",
-        "questionId": "d1-q7"
+        "text": "B) 10",
+        "questionId": "d1-q8"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
         "kind": "option",
-        "text": "C) 74",
-        "questionId": "d1-q7"
+        "text": "C) 12",
+        "questionId": "d1-q8"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
         "kind": "option",
-        "text": "D) 94",
-        "questionId": "d1-q7"
+        "text": "D) 43",
+        "questionId": "d1-q8"
       },
       {
         "index": 134,
@@ -1198,7 +1205,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja 12 × 7 en dos cajas: 10 × 7 y 2 × 7.",
+        "text": "Dibuja 2 cayos con 6 palmeras: 2 × 6.",
         "questionId": "d1-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1243,35 +1250,35 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un mapa con 4 cayos de Los"
+        "text": "Dibuja 4 cayos de Los Roques en un mapa."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Roques. Pon 5 palmeras en cada cayo."
+        "text": "Pon 5 palmeras en cada cayo igual. Rotula"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Escribe 5 + 5 + 5 + 5 y rotula 4 × 5 = 20. Revisa"
+        "text": "4 grupos de 5 y escribe 5+5+5+5. Deja vacío"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "que todos los cayos sean iguales."
+        "text": "el producto de 4 × 5."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 11,
+    "questionCount": 12,
     "questions": [
       {
         "id": "d1-q1",
@@ -1287,15 +1294,15 @@
         "answer": "12",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 36,
+          "index": 88
         }
       },
       {
         "id": "d1-q2",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cómo se llama el resultado?",
+        "prompt": "¿Cómo se llama el resultado de multiplicar?",
         "choices": [
           "Factor",
           "Sumando",
@@ -1305,8 +1312,8 @@
         "answer": "Producto",
         "slot": {
           "column": 2,
-          "line": 48,
-          "index": 100
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1315,34 +1322,34 @@
         "type": "mcq",
         "prompt": "En 3 × 4, ¿qué cuenta el 3?",
         "choices": [
-          "Cuántos hay en cada uno",
-          "Cuántos grupos hay",
+          "Las palmeras",
+          "Los cayos",
           "El producto",
-          "La suma de ambos"
+          "La suma"
         ],
-        "answer": "Cuántos grupos hay",
+        "answer": "Los cayos",
         "slot": {
-          "column": 3,
-          "line": 1,
-          "index": 105
+          "column": 2,
+          "line": 48,
+          "index": 100
         }
       },
       {
         "id": "d1-q4",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Si 2 × 6 = 12, ¿cuánto es 4 × 6?",
+        "prompt": "¿Cuánto es 2 × 6?",
         "choices": [
-          "18",
-          "16",
-          "24",
+          "8",
+          "26",
+          "12",
           "10"
         ],
-        "answer": "24",
+        "answer": "12",
         "slot": {
           "column": 3,
-          "line": 7,
-          "index": 111
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1359,22 +1366,40 @@
         "answer": "En 0 o en 5",
         "slot": {
           "column": 3,
-          "line": 13,
-          "index": 117
+          "line": 7,
+          "index": 111
         }
       },
       {
         "id": "d1-q6",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuánto es 8 × 5?",
+        "prompt": "¿Cuánto es 10 × 8?",
         "choices": [
-          "13",
-          "40",
-          "35",
-          "45"
+          "18",
+          "80",
+          "800",
+          "88"
         ],
-        "answer": "40",
+        "answer": "80",
+        "slot": {
+          "column": 3,
+          "line": 13,
+          "index": 117
+        }
+      },
+      {
+        "id": "d1-q7",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Cuánto es 1 × 9?",
+        "choices": [
+          "9",
+          "10",
+          "1",
+          "19"
+        ],
+        "answer": "9",
         "slot": {
           "column": 3,
           "line": 19,
@@ -1382,17 +1407,17 @@
         }
       },
       {
-        "id": "d1-q7",
+        "id": "d1-q8",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "¿Cuánto es 12 × 7?",
+        "prompt": "Pedro sumó 3 + 4. ¿Cuánto es 3 × 4?",
         "choices": [
-          "84",
-          "19",
-          "74",
-          "94"
+          "7",
+          "10",
+          "12",
+          "43"
         ],
-        "answer": "84",
+        "answer": "12",
         "slot": {
           "column": 3,
           "line": 25,
@@ -1438,7 +1463,7 @@
         "id": "d1-w4",
         "originDay": 1,
         "type": "write",
-        "prompt": "Dibuja 12 × 7 en dos cajas: 10 × 7 y 2 × 7.",
+        "prompt": "Dibuja 2 cayos con 6 palmeras: 2 × 6.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

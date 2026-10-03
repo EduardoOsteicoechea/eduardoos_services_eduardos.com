@@ -16,8 +16,8 @@ func TestPublishedHomescoolPackPassesServerValidation(t *testing.T) {
 		}
 		files = append(files, m...)
 	}
-	if len(files) != 120 {
-		t.Fatalf("expected 120 published classes, got %d", len(files))
+	if len(files) != 74 {
+		t.Fatalf("expected 74 published (3-day v3) classes, got %d", len(files))
 	}
 	for _, f := range files {
 		raw, err := os.ReadFile(f)

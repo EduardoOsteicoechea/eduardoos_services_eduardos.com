@@ -14,40 +14,40 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nYa sabes ordenar tu día: primero te levantas y después desayunas. Hoy te guían los petroglifos: dibujos grabados en rocas por pueblos antiguos."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nYa sabes ordenar tu día: primero te levantas y después desayunas. Hoy te guían los petroglifos de roca."
       },
       {
         "id": "p2",
         "heading": "Punto 2: La línea pone orden",
-        "body": "Imagina muchos dibujos en una roca. ¿Cómo sabrías qué pasó primero?\n\nUna línea de tiempo pone los hechos en orden: primero lo más antiguo, después lo más reciente. Es como una fila: cada hecho espera su turno."
+        "body": "Imagina muchos dibujos en una roca. ¿Cómo sabrías qué pasó primero?\n\nUna línea de tiempo pone los hechos en orden: lo más antiguo va primero. Es como una fila: cada hecho espera."
       },
       {
         "id": "p3",
         "heading": "Punto 3: Los hitos",
-        "body": "Tienes dos fotos de tu abuelo: de niño y de señor. ¿Cuál va primero?\n\nVa primero la foto del abuelo niño. Un hito es un hecho importante que ayuda a recordar una época. Un petroglifo es como un hito en piedra."
+        "body": "Tienes dos fotos de tu abuelo: de niño y de señor. ¿Cuál va primero?\n\nVa primero la foto del abuelo niño. Un hito es un hecho importante que ayuda a recordar una época."
       },
       {
         "id": "p4",
         "heading": "Punto 4: El mapa y la línea",
-        "body": "Hay petroglifos en varias zonas del país. ¿Qué dice dónde: mapa o línea?\n\nEl mapa muestra dónde está algo. La línea de tiempo muestra cuándo pasó. Con las dos no mezclas lugares y épocas."
+        "body": "Hay petroglifos en varias zonas del país. ¿Qué dice dónde: mapa o línea?\n\nEl mapa muestra dónde está algo. La línea muestra cuándo pasó. Con las dos no mezclas lugares y épocas."
       },
       {
         "id": "p5",
         "heading": "Punto 5: Dos clases de información",
-        "body": "Un petroglifo viene de una roca; Génesis, de un libro. ¿Se anotan igual?\n\nNo se anotan igual: son dos fuentes, lugares de donde viene lo que sabes. La historia antigua estudia pueblos; Génesis es un relato de la Biblia."
+        "body": "Un petroglifo viene de una roca; Génesis, de un libro. ¿Se anotan igual?\n\nNo: son dos fuentes, lugares de donde viene lo que sabes. La historia antigua estudia pueblos. Génesis es un relato."
       },
       {
         "id": "p6",
         "heading": "Punto 6: Cada fuente con su etiqueta",
-        "body": "Una pregunta con truco: ¿pondrías historia y Génesis en el mismo punto?\n\nNo: cada una lleva su etiqueta. Orden antiguo: primero el relato, después el mapa. Recuerda: Babel, sumerios (Tigris y Éufrates), y otros pueblos del mundo antiguo."
+        "body": "Una pregunta con truco: ¿pondrías historia y Génesis en el mismo punto?\n\nOrden antiguo: primero el relato, después el mapa. Recuerda: Babel, sumerios (Tigris y Éufrates), y otros pueblos del mundo antiguo."
       }
     ],
     "summary": "Una línea de tiempo pone los hechos en orden, el mapa dice dónde y cada fuente lleva su etiqueta.",
     "memoryPhrase": "Orden antiguo: primero el relato, después el mapa. Recuerda: **Babel**, **sumerios** (Tigris y Éufrates), y otros pueblos del mundo antiguo.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una roca con dos petroglifos. Numera cuál grabaron primero y cuál después, como en una línea de tiempo. Rotula cada dibujo con una palabra.",
+    "imageBandInstruction": "Dibuja una roca con dos petroglifos. Numera cuál grabaron primero y cuál después, como en una línea de tiempo. Deja vacío el rótulo de cada dibujo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -55,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -90,7 +90,7 @@
         "column": 1,
         "line": 6,
         "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 7,
@@ -118,28 +118,28 @@
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Hoy te guían los petroglifos: dibujos"
+        "text": "Hoy te guían los petroglifos de roca."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "grabados en rocas por pueblos antiguos."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -187,120 +187,120 @@
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: La línea pone orden"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "heading",
-        "text": "Punto 2: La línea pone orden"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una línea de tiempo pone los hechos"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Una línea de tiempo pone los hechos"
+        "text": "en orden: lo más antiguo va primero."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
         "kind": "lesson",
-        "text": "en orden: primero lo más antiguo,"
+        "text": "Es como una fila: cada hecho espera."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "después lo más reciente. Es como"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "una fila: cada hecho espera su turno."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Tienes dos fotos de tu abuelo: de niño"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "Tienes dos fotos de tu abuelo: de niño"
+        "text": "y de señor. ¿Cuál va primero?"
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "lesson",
-        "text": "y de señor. ¿Cuál va primero?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 3: Los hitos"
       },
       {
         "index": 37,
@@ -313,85 +313,85 @@
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "heading",
-        "text": "Punto 3: Los hitos"
+        "kind": "lesson",
+        "text": "Va primero la foto del abuelo niño."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un hito es un hecho importante que"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Va primero la foto del abuelo niño."
+        "text": "ayuda a recordar una época."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "Un hito es un hecho importante que"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "ayuda a recordar una época. Un"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
         "kind": "lesson",
-        "text": "petroglifo es como un hito en piedra."
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Hay petroglifos en varias zonas del"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "país. ¿Qué dice dónde: mapa o línea?"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Hay petroglifos en varias zonas del"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "país. ¿Qué dice dónde: mapa o línea?"
+        "text": "________________________________________"
       },
       {
         "index": 50,
@@ -404,99 +404,99 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 4: El mapa y la línea"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "El mapa muestra dónde está algo."
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "heading",
-        "text": "Punto 4: El mapa y la línea"
+        "kind": "lesson",
+        "text": "La línea muestra cuándo pasó."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Con las dos no mezclas lugares y épocas."
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "lesson",
-        "text": "El mapa muestra dónde está algo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "La línea de tiempo muestra cuándo pasó."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "Con las dos no mezclas lugares y épocas."
+        "text": "________________________________________"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Un petroglifo viene de una roca;"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Génesis, de un libro. ¿Se anotan igual?"
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "lesson",
-        "text": "Un petroglifo viene de una roca;"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "Génesis, de un libro. ¿Se anotan igual?"
+        "text": "________________________________________"
       },
       {
         "index": 65,
@@ -509,8 +509,8 @@
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 5: Dos clases de información"
       },
       {
         "index": 67,
@@ -523,85 +523,85 @@
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "heading",
-        "text": "Punto 5: Dos clases de información"
+        "kind": "lesson",
+        "text": "No: son dos fuentes, lugares de donde"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "viene lo que sabes. La historia antigua"
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
         "kind": "lesson",
-        "text": "No se anotan igual: son dos fuentes,"
+        "text": "estudia pueblos. Génesis es un relato."
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
-        "kind": "lesson",
-        "text": "lugares de donde viene lo que sabes."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
         "kind": "lesson",
-        "text": "La historia antigua estudia pueblos;"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
         "kind": "lesson",
-        "text": "Génesis es un relato de la Biblia."
+        "text": "________________________________________"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Una pregunta con truco: ¿pondrías"
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "historia y Génesis en el mismo punto?"
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿pondrías"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
         "kind": "lesson",
-        "text": "historia y Génesis en el mismo punto?"
+        "text": "________________________________________"
       },
       {
         "index": 80,
@@ -614,8 +614,8 @@
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 6: Cada fuente con su etiqueta"
       },
       {
         "index": 82,
@@ -628,71 +628,71 @@
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "heading",
-        "text": "Punto 6: Cada fuente con su etiqueta"
+        "kind": "lesson",
+        "text": "Orden antiguo: primero el relato,"
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "después el mapa. Recuerda: Babel,"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
         "kind": "lesson",
-        "text": "No: cada una lleva su etiqueta."
+        "text": "sumerios (Tigris y Éufrates), y otros"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "Orden antiguo: primero el relato,"
+        "text": "pueblos del mundo antiguo."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "lesson",
-        "text": "después el mapa. Recuerda: Babel,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
         "kind": "lesson",
-        "text": "sumerios (Tigris y Éufrates), y otros"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
         "kind": "lesson",
-        "text": "pueblos del mundo antiguo."
+        "text": "________________________________________"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 93,
@@ -1266,7 +1266,7 @@
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Rotula cada dibujo con una palabra."
+        "text": "Deja vacío el rótulo de cada dibujo."
       }
     ],
     "packOrder": "column-major-sequential",

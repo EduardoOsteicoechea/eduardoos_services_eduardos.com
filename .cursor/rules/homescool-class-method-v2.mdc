@@ -1,74 +1,81 @@
 ---
-description: Homescool clase v2 — Letter 156 slots, ritmo pregunta→espacio→respuesta→copiar
-globs: frontend/public/homescool/media/**/*.eoschool.json,.cursor/skills/eoschool/**,docs/specs/009-homescool-narrative-language.md,frontend/src/lib/homescool*.ts
+description: Homescool clase v2 — Letter 156 slots, Ask First (pregunta → guiones → Punto → copia) con metáfora venezolana
+globs: frontend/public/homescool/media/**/*.eoschool.json,.cursor/skills/eoschool/**,docs/specs/009-homescool-narrative-language.md,docs/homescool-venezuela-metaphors.md,scripts/homescool-ask-first-content/**,frontend/src/lib/homescool*.ts
 alwaysApply: false
 ---
 
-# Homescool class method v2 (Letter grid + ask-first)
+# Homescool class method v2 (Letter grid + Ask First + metáfora de Venezuela)
 
-**Canonical for new Letter-grid rewrites** (printed sheet / `lesson.slotSequence`).  
-Supersedes Idea→Explora→`Práctica:`→`Error común:` **on the v2 sheet**.
+**Canonical for Letter-grid rewrites** (printed sheet / `lesson.slotSequence`).  
+Full prose rules: [`docs/specs/009-homescool-narrative-language.md`](../../docs/specs/009-homescool-narrative-language.md).  
+**Before writing or regenerating any class, review** [`docs/homescool-venezuela-metaphors.md`](../../docs/homescool-venezuela-metaphors.md) (mirror: `scripts/homescool-venezuela-metaphors.json`, enforced by the audit).
 
-**Still authoritative:** [`eoschool-method-v1.mdc`](eoschool-method-v1.mdc) (cycle/week/day/level/subject, 12 quiz, `supportUrl`, `memoryPhrase`), [`homescool-letter-grid-v2.mdc`](homescool-letter-grid-v2.mdc) (mm + **156** slots).  
-Voice ≈ **8 years** — see [`homescool-narrative-language.mdc`](homescool-narrative-language.mdc) § Letter grid v2.
+Still authoritative: [`eoschool-method-v1.mdc`](eoschool-method-v1.mdc) (cycle/week/day/level/subject, 12 quiz, `supportUrl`, `memoryPhrase`), [`homescool-letter-grid-v2.mdc`](homescool-letter-grid-v2.mdc) (mm + **156** slots).  
+Voice ≈ **8 years** — see [`homescool-narrative-language.mdc`](homescool-narrative-language.mdc).
 
-**Pilot / generator:** `scripts/build-homescool-ask-first-v2.mjs` + `scripts/homescool-ask-first-content/*.mjs`.
+**Generator:** `scripts/build-homescool-ask-first-v2.mjs` + `scripts/homescool-ask-first-content/{subj}-c3-w{N}.mjs`. Template: `GOLD.example.mjs`.
 
 ## Physical layout
 
-One US Letter **v2** sheet = **exactly 156** ContentSlots (52 × 3 × 3.5 mm). No overflow page.
-
-**Fill order (column-major):** col 1 lines 1→52, then col 2, then col 3.  
-Stream: **lesson → quiz (12×[1+4] + blanks between questions) → `imageInstruction` (K at col 3 end)**.  
-Leftover lesson slots go into **answer blanks**, not a dead hole before the quiz.
-
-**Headings:** `blank` before + `heading` + `blank` after.  
-**Quiz:** no gutter boxes; no dotted `….` on `answerLine`; blank between question blocks; ≥2 schematic.  
-MCQ prompts: **one line**, varied wording — **do not** force the prefix «Elige la respuesta correcta.».
+One US Letter **v2** sheet = **exactly 156** ContentSlots (52 × 3, column-major). No overflow page.  
+Stream: **lesson → quiz (up to 12 items, blank line between them; min 2 MCQ + 1 schematic + 1 reflection) → `imageInstruction` (K lines at col 3 end)**.  
+Spare lesson slots become **extra dash rows** in the reflection spaces (never a dead hole before the quiz).
 
 ## Sheet rhythm (mandatory)
 
-### Opening
+Every class is **one continuous Ask First narrative** — no «práctica», «error común» or «pregunta final» sections.
 
-1. **Days 2–5:** `¿Qué aprendiste ayer sobre esta misma materia?` + **2** blank answer lines.  
-2. **Day 1:** age-appropriate hook (not theory dump) + **2** blanks.  
-3. Heading **`Repaso`** + **exactly 3** short narrated lines (child can retell / copy upward into the opening blanks when useful).
+### Opening and Punto 1
 
-### Each teaching point (typically **5** per class)
+1. First slot (`opening`): exactly **`¿Qué aprendiste ayer?`** — every day, including day 1.
+2. blank → row of dashes (`________________________________________`, 40 underscores) → blank.
+3. Heading **`Punto 1: Repaso de ayer`** → blank → 2–4 short lines that connect yesterday with today.  
+   Day 1 connects with what the child already knows or with the last class of the previous week.
+4. blank → **`Escribe aquí lo que aprendiste:`** → row of dashes → blank.
 
-Same beat every time:
+### Each following idea (Puntos 2…N; 5 to 7 Puntos per class, usually 6)
 
-1. **Question** — prefer `Ahora te pregunto, …` (or a concrete puzzle / «pregunta con truco»).  
-2. **Blank lines** for the child’s first try (share leftover slots across points).  
-3. Heading **`Punto N: título`** + short answer phrases underneath.  
-4. Label **`Cópiala aquí:`** + **2** blank lines to copy the answer.
+Exactly 4 steps, **one blank line between blocks**:
 
-Practice and common mistakes are **not** separate `Práctica:` / `Error común:` blocks — fold them into the same question→space→answer→copy rhythm (e.g. «Una pregunta con truco: …»).
+1. **Trigger question** (1–2 short lines) that wakes curiosity, set inside the Venezuelan metaphor.
+2. blank → **row of dashes** (reflection space) → blank.
+3. **`Punto N: Título`** (heading) → blank → answer in 2–4 short lines.
+4. blank → **`Escribe aquí lo que aprendiste:`** → row of dashes → blank.
 
-### Close of lesson body
+The generator adds the dashes, the blanks and the cue; the content module only carries `q`, `h`, `a`.
 
-- Optional short **summary** lines if they fit.  
-- Col 3 ends with **K** `imageInstruction` lines (= `lesson.imageBandInstruction`).  
-- Then quiz.
+## Venezuelan metaphor (mandatory)
+
+- Each subject-week has one landmark (geography or history) from `docs/homescool-venezuela-metaphors.md`.
+- It lives **inside the questions and answers**, not as a pasted paragraph.
+- Only the **«datos seguros»** of that list; never invent figures, dates or records.
+- `teb`/`exe`: the landmark is an image («es como…»), never a theological equivalence.
+- New landmark? Add it to the list (with safe facts) and to `scripts/homescool-venezuela-metaphors.json` first.
 
 ## Line craft
 
-- One idea per slot; prefer **≤ 66** characters (column fit).  
-- No markdown (`**`, `##`) in `slotSequence.text`.  
-- No boilerplate («Sigamos juntos», «Esta clase te ayuda…», «Para cerrar…» as filler dump).  
+- One idea per slot; **≤ ~40 characters**. The generator wraps by real Raleway 8 pt widths and never cuts words.
+- No markdown (`**`, `##`) in `slotSequence.text`.
+- No boilerplate («Sigamos juntos», «Esta clase te ayuda…», «Para cerrar…»).
 - Every quiz item answerable from **explicit** sheet text.
+- Quiz and image band after the lesson: 8 MCQ + 4 write (2 schematic), image instruction wrapped to ≤ 6 lines.
 
 ## Carried from v1
 
-- `memoryPhrase` on esp/ing/lat/his/LT/geo/cie; `supportUrl` every class.  
-- Subject order: `teb exe LT his geo art mat esp ing lat cie pro`.  
-- Quiz counts: **8 mcq + 4 write** (write includes schematic).  
-- Backup before rewrite: `week{N}/archive/{basename}.pre-askfirst-{YYYYMMDD}.eoschool.json` (or dated equivalent).  
+- `memoryPhrase` on esp/ing/lat/his/LT/geo/cie; `supportUrl` every class.
+- Subject order: `teb exe LT his geo art mat esp ing lat cie pro`.
+- Backup before rewrite: `week{N}/archive/{basename}.pre-askfirst-{YYYYMMDD}.eoschool.json` (never overwritten).
 - No upsert / commit / push unless the user asks.
+
+## Checks
+
+`node scripts/audit-homescool-v2-review.mjs` (opening, Punto 1, copy cues, dashes, landmark, quiz) and `go test ./pkg/pdf/...` (no line wider than the 59 mm text box).
 
 ## Forbidden
 
-- Opening with theory before the reflective / hook question.  
-- Parallel equal-height quiz bands across columns.  
-- Requiring Idea→Explora→Práctica→Error común labels on the **v2 printed sheet**.  
+- Opening with anything other than `¿Qué aprendiste ayer?`.
+- Theory before the question; answers before the child's reflection row.
+- Separate practice / common-mistake / final-question sections.
+- Parallel equal-height quiz bands across columns.
 - Quiz that needs facts not printed on the sheet.
+- A metaphor that is only decoration, or that uses facts not in the list.

@@ -45,8 +45,8 @@ for (const f of files) {
   classes.push({ key, source, ...doc });
 }
 
-if (classes.length !== 120) {
-  throw new Error(`expected 120 published classes (60×2 weeks), got ${classes.length}`);
+if (classes.length !== 74) {
+  throw new Error(`expected 74 published classes (37×2 weeks, 3-day v3), got ${classes.length}`);
 }
 
 const out = {

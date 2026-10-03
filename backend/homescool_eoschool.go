@@ -18,7 +18,7 @@ const (
 
 // Canonical subject codes / menu order (METHOD_V1 + cambios/1). LT is case-sensitive.
 var eoschoolSubjects = []string{
-	"teb", "exe", "LT", "his", "geo", "art", "mat", "esp", "ing", "lat", "cie", "pro",
+	"teb", "exe", "LT", "his", "geo", "art", "mat", "esp", "ing", "lat", "cie", "pro", "fin",
 }
 
 var eoschoolSubjectSet = func() map[string]struct{} {

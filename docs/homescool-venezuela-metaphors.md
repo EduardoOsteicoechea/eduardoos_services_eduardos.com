@@ -36,6 +36,10 @@ Los 5 días de la misma materia-semana comparten el hito; cada día puede usar u
 | `pro` | El disco que parece guiñar | Salto Ángel | Una gota que parece lupa | Cascada de La Llovizna |
 | `teb` | Redención: de Génesis a la nueva tierra | Río Orinoco (del nacimiento al mar) | Génesis: creación, diluvio, promesa | Los Llanos (lluvia y sequía) |
 
+## Finanzas (`fin`, v3)
+
+Los hitos de `fin` y sus datos seguros están en [`homescool-finanzas.md`](homescool-finanzas.md): **S1 El cacao de Chuao**, **S2 El puerto de La Guaira**. Con el método v3 cada materia-semana tiene **3 días** (no 5) y `pro` 1 día; el hito se comparte en esos días y cada día usa una parte distinta.
+
 ## Banco de hitos y datos seguros
 
 | Hito | Dónde | Datos seguros (usar solo estos) | Imágenes útiles |

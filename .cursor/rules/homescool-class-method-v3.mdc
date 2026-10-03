@@ -1,0 +1,70 @@
+---
+description: Homescool método v3 — 3 días por materia, 13 materias (finanzas), dos líneas de copia, imagen derivada de la indicación de la clase
+globs: frontend/public/homescool/media/**/*.eoschool.json,.cursor/skills/eoschool/**,scripts/homescool-ask-first-content/**,scripts/build-homescool-ask-first-v2.mjs,docs/homescool-*.md,frontend/src/lib/homescool*.ts,backend/homescool*.go
+alwaysApply: false
+---
+
+# Homescool método v3 (3 días · 13 materias)
+
+**Prevalece sobre [`homescool-class-method-v2.mdc`](homescool-class-method-v2.mdc)** en todo lo que contradiga. Lo demás de v2 (Ask First, 156 slots, metáfora venezolana, voz de 8 años, 40 caracteres por línea, quiz, auditoría) sigue vigente.
+
+## 1. Materias y días
+
+- **13 materias**, orden de menú: `teb exe LT his geo art mat esp ing lat cie pro fin` (`fin` = Finanzas, n.º 13).
+- Cada materia se ve **3 veces por semana**: `d1`, `d2`, `d3`. Ya no existen `d4` ni `d5`.
+- **`pro` (proyecto) es un único día por semana**: solo `d1`.
+- Total por semana: 11 materias × 3 + `pro` 1 + `fin` 3 = **37 clases**; semanas 1–2 = **74 clases**.
+- Archivo: `week{N}/{subj}-c3-w{N}-d{D}-l6.eoschool.json` (D = 1..3; `pro` solo D = 1).
+
+## 2. Enfoque progresivo (mismo tema y nivel de 8 años)
+
+| Día | `lesson.kind` | `focusPoint` | Qué hace |
+| --- | --- | --- | --- |
+| d1 | `intro` | `null` | Panorama del tema de la semana: qué es y cómo se ve. |
+| d2 | `deepen` | `1` | Se acerca a **una parte** del tema y la entiende bien. |
+| d3 | `deepen` | `2` | La parte **más enfocada**: aplica, practica y cuenta lo aprendido. Cierra la semana (hace de repaso y de exposición). |
+
+- El tema, el hito venezolano y los datos de la semana se **conservan**; solo se reparten en 3 días en lugar de 5 y cada día es más estrecho que el anterior.
+- No se agregan temas nuevos ni se sube/baja el nivel del niño.
+- `quiz.questions[].originDay` = el día de la clase.
+
+## 3. Apertura (ya no es «ayer»)
+
+Como la materia no se ve a diario:
+
+- Primer slot: exactamente **`¿Qué aprendiste la clase pasada?`**.
+- `Punto 1`: **`Punto 1: Repaso de la clase pasada`**. En `d1` de la semana 1 conecta con lo que el niño ya sabe; en `d1` de la semana 2 con la semana 1.
+- Constantes únicas en el generador (`OPENING`) y la auditoría.
+
+## 4. Espacio de copia: dos líneas
+
+Después de cada `Escribe aquí lo que aprendiste:` van **dos** filas de guiones (40 `_`), no una. Cambia el presupuesto: **5 a 6 Puntos** por clase (7 solo si caben); respuestas de 2–3 líneas, preguntas de 1–2.
+
+## 5. Finanzas (`fin`) — materia 13
+
+Detalle completo: [`docs/homescool-finanzas.md`](../../docs/homescool-finanzas.md).
+
+- **Postura protestante reformada** (soberanía de Dios, mayordomía, vocación, trabajo como servicio a Dios y al prójimo, Escritura como regla) **más los mejores principios de economía** (escasez, costo de oportunidad, intercambio voluntario, valor, ahorro, interés, deuda prudente, producir valor para otros), en lenguaje de 8 años.
+- Objetivo: **educación para el trabajo** (finanzas y trabajo al niño).
+- **Práctica económica diaria obligatoria** en cada clase: un `Punto N: Práctica económica de hoy` con una acción real que **gana dinero o ahorra dinero** (tareas con pago, venta pequeña, servicio a vecinos, ahorrar en casa, meta de ahorro). Se registra en un `write` del quiz («escribe qué hiciste y cuánto ganaste o ahorraste») y en el dibujo de la banda de imágenes (registro/tabla por completar).
+- Citas bíblicas exactas o parafraseadas **sin comillas**; nunca doctrina inventada; no prometer riqueza («teología de la prosperidad» está excluida); el dinero es herramienta, no dueño.
+- Metáfora venezolana propia (ver doc de metáforas): semana 1 **El cacao de Chuao**; semana 2 **El puerto de La Guaira**.
+
+## 6. Imagen de la clase
+
+- Cada clase lleva su **indicación de imagen** al final (`lesson.imageBandInstruction`, 4 líneas).
+- **Esa indicación es la fuente** del prompt de generación: ver [`homescool-letter-practice-images-v2.mdc`](homescool-letter-practice-images-v2.mdc) (sección «Prompt desde la indicación de la clase»). Una imagen **por clase** (74), no una por materia-semana.
+- Nombre: `practice-images/{subj}-c3-w{N}-d{D}-practice.jpg`. Si no existe, se usa la imagen antigua por materia-semana como respaldo.
+
+## 7. Archivo y plataforma
+
+- Las clases `d4`/`d5` (y `pro` `d2`–`d5`) se mueven a `week{N}/archive/{key}-l6.pre-3day-{YYYYMMDD}.eoschool.json` (nunca se borran los respaldos).
+- En la plataforma se borran esos materiales solo **después** de subir las 74 nuevas.
+- Tras cualquier cambio de conteo: actualizar los tests (`74`, 13 materias), `scripts/build-homescool-curriculum.mjs` y `curriculum.json`.
+
+## Prohibido
+
+- Volver a 5 días o a «¿Qué aprendiste ayer?».
+- Una sola línea de copia.
+- Clases `fin` sin práctica económica diaria, o con promesas de riqueza.
+- Imágenes cuyo prompt no salga de la indicación de la clase.

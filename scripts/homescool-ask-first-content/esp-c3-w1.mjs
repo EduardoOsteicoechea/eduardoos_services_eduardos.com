@@ -1,21 +1,21 @@
 /**
- * Español · ciclo 3 · semana 1 · nivel 6 — "Las nueve clases de palabras".
- * Formato Ask First (pregunta -> espacio -> Punto N -> copia) con la metáfora de
- * la Sierra Nevada de Mérida (datos seguros: Pico Bolívar, frailejones, lagunas frías,
- * neblina, equipos que suben juntos). El generador pone apertura, guiones y frases de copia.
+ * Español · ciclo 3 · semana 1 · nivel 6 — "Las nueve clases de palabras" (v3, 3 días).
+ * Hito: Sierra Nevada de Mérida (datos seguros: Pico Bolívar, frailejones, lagunas frías, neblina,
+ * equipos que suben juntos).
+ * d1 = panorama de las nueve clases; d2 = nombre, verbo, pronombre y quien acompaña, de cerca;
+ * d3 = adverbio, conjunción, preposición, interjección y contar lo aprendido (cierra la semana).
  */
 export default [
-  // ───────────────────────── DÍA 1 ─────────────────────────
+  // ───────────────────────── DÍA 1 · panorama ─────────────────────────
   {
     key: "esp-c3-w1-d1",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
           "Ya sabes hablar y contar lo que ves.",
-          "Usas palabras para pedir y nombrar.",
-          "Hoy las exploras, como quien sube",
-          "la Sierra Nevada de Mérida.",
+          "Hoy exploras tus palabras, como quien",
+          "sube la Sierra Nevada de Mérida.",
         ],
       },
       {
@@ -26,22 +26,20 @@ export default [
         h: "Punto 2: Cada palabra tiene su trabajo",
         a: [
           "No, cada explorador tiene su trabajo.",
-          "Las palabras también son un equipo.",
-          "Cada una hace un trabajo distinto",
-          "en la oración. Hay nueve clases.",
+          "Las palabras son un equipo igual:",
+          "hay nueve clases, y cada una trabaja.",
         ],
       },
       {
         q: [
-          "Mira: «Sofía sube. Ella mira el pico.»",
+          "«Sofía sube. Ella mira el pico.»",
           "¿Qué hace cada palabra del equipo?",
         ],
         h: "Punto 3: Nombrar, actuar y reemplazar",
         a: [
           "Sustantivos: «Sofía» y «pico» nombran.",
-          "Verbos: «sube» y «mira» dicen qué hace.",
-          "Pronombre: «ella» ocupa el lugar",
-          "de Sofía, para no repetir su nombre.",
+          "Verbos: «sube» y «mira» dicen qué hacen.",
+          "Pronombre: «ella» reemplaza a Sofía.",
         ],
       },
       {
@@ -51,23 +49,21 @@ export default [
         ],
         h: "Punto 4: Describir",
         a: [
-          "«La laguna fría»: «la» es un artículo,",
-          "y «fría» es un adjetivo: dice cómo es.",
-          "El adverbio dice cómo pasa algo:",
-          "«Sofía sube despacio».",
+          "«La» es artículo y «fría» es adjetivo:",
+          "dice cómo es la laguna.",
+          "«Sube despacio»: «despacio» es adverbio.",
         ],
       },
       {
         q: [
           "«Sofía sube con Luis y mira el pico.»",
-          "¿Qué hacen «con», «y» y «¡Uy!»?",
+          "¿Qué hacen «con» y «y»? ¿Y «¡Uy!»?",
         ],
         h: "Punto 5: Unir y sentir",
         a: [
-          "«Y» es una conjunción: une dos ideas.",
-          "«Con» es una preposición: relaciona.",
-          "La interjección muestra emoción",
-          "de golpe, como «¡Uy!» o «¡Bravo!».",
+          "«Y» es conjunción: une dos ideas.",
+          "«Con» es preposición: relaciona palabras.",
+          "«¡Uy!» es interjección: emoción de golpe.",
         ],
       },
       {
@@ -89,7 +85,7 @@ export default [
         { q: "¿Cuántas clases de palabras hay?", o: ["Nueve", "Cinco", "Siete", "Doce"] },
         { q: "En «Sofía sube», ¿cuál es el verbo?", o: ["sube", "Sofía", "ella", "pico"] },
         { q: "¿Qué clase de palabra es «pico»?", o: ["Sustantivo", "Verbo", "Adverbio", "Pronombre"] },
-        { q: "¿Qué hace el pronombre «ella»?", o: ["Ocupa el lugar de Sofía", "Dice cómo sube", "Une dos ideas", "Muestra emoción"] },
+        { q: "¿Qué hace el pronombre «ella»?", o: ["Reemplaza a Sofía", "Dice cómo sube", "Une dos ideas", "Muestra emoción"] },
         { q: "En «la laguna fría», ¿qué es «fría»?", o: ["Adjetivo", "Artículo", "Verbo", "Preposición"] },
         { q: "En «sube despacio», ¿qué es «despacio»?", o: ["Adverbio", "Adjetivo", "Sustantivo", "Conjunción"] },
         { q: "¿Qué clase de palabra es «con»?", o: ["Preposición", "Conjunción", "Interjección", "Artículo"] },
@@ -105,24 +101,24 @@ export default [
       ],
     },
     image: [
-      "Dibuja una cumbre con nueve exploradores.",
-      "Escribe en cada uno una clase de palabra.",
-      "Añade un ejemplo corto junto a cada uno.",
-      "Revisa que estén las nueve clases.",
+      "Dibuja la Sierra Nevada con nueve",
+      "exploradores. Rotula la clase de palabra",
+      "de cada uno y deja un espacio vacío",
+      "para que escribas un ejemplo corto.",
     ],
     summary: "Las palabras son un equipo de nueve clases y cada una hace su trabajo, como los exploradores de la Sierra Nevada.",
   },
 
-  // ───────────────────────── DÍA 2 ─────────────────────────
+  // ───────────────────────── DÍA 2 · de cerca ─────────────────────────
   {
     key: "esp-c3-w1-d2",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
-          "Ayer viste que cada palabra tiene",
-          "su propio trabajo, como cada",
-          "explorador en la Sierra Nevada.",
+          "La clase pasada viste las nueve clases",
+          "de palabras, como un equipo que sube",
+          "la Sierra Nevada. Hoy miras de cerca.",
         ],
       },
       {
@@ -176,14 +172,14 @@ export default [
       },
       {
         q: [
-          "Una pregunta con truco: «ser» y «estar»,",
-          "¿son nombres o son verbos?",
+          "Ves un pico en la neblina. ¿Qué dos",
+          "palabras dicen cuál es y cómo es?",
         ],
-        h: "Punto 6: Cuidado con las palabras cortas",
+        h: "Punto 6: Artículo y adjetivo acompañan",
         a: [
-          "Son verbos, aunque sean cortos.",
-          "«Soy andino» y «estoy en la cima»",
-          "dicen quién eres y dónde estás.",
+          "Dices «el pico alto».",
+          "«El» es un artículo: dice cuál pico.",
+          "«Alto» es un adjetivo: dice cómo es.",
         ],
       },
     ],
@@ -192,11 +188,11 @@ export default [
         { q: "¿Cuál es un nombre propio?", o: ["Pico Bolívar", "montaña", "laguna", "nieve"] },
         { q: "¿Cuál es un nombre común?", o: ["montaña", "Pico Bolívar", "Mérida", "Sofía"] },
         { q: "«El frailejón alto», ¿cómo va en plural?", o: ["los frailejones altos", "los frailejón alto", "el frailejones altos", "los frailejones alto"] },
-        { q: "Si hablas de varios niños, ¿qué pasa con el artículo, el nombre y el adjetivo?", o: ["Todas pasan a plural", "Solo cambia el nombre", "Ninguna cambia", "Solo cambia el adjetivo"] },
+        { q: "Si hay varios frailejones, ¿qué pasa?", o: ["Todas las palabras van en plural", "Solo cambia el nombre", "Ninguna palabra cambia", "Solo cambia el adjetivo"] },
         { q: "¿Qué parte del verbo «subo» no cambia?", o: ["sub-", "-o", "yo", "-es"] },
-        { q: "¿Cómo dices «ella» con el verbo subir?", o: ["ella sube", "ella subo", "ella subes", "ella subimos"] },
         { q: "¿Qué palabra ocupa el lugar de Sofía?", o: ["Ella", "Nieve", "Monte", "Sube"] },
-        { q: "«Soy» y «estoy», ¿son nombres o verbos?", o: ["Verbos", "Nombres", "Pronombres", "Adjetivos"] },
+        { q: "En «el pico alto», ¿qué es «alto»?", o: ["Adjetivo", "Artículo", "Verbo", "Pronombre"] },
+        { q: "En «el pico alto», ¿qué es «el»?", o: ["Artículo", "Adjetivo", "Verbo", "Sustantivo"] },
       ],
       write: [
         "Escribe un nombre común y uno propio de tu barrio.",
@@ -210,129 +206,34 @@ export default [
     image: [
       "Dibuja una montaña con tres cumbres.",
       "En cada cumbre escribe una palabra distinta:",
-      "un nombre, un verbo y un pronombre.",
-      "Revisa que cada palabra haga su trabajo.",
+      "un nombre, un verbo y un pronombre. Deja",
+      "un espacio vacío para añadir otro ejemplo.",
     ],
-    summary: "En la Sierra Nevada cada palabra tiene su trabajo: nombrar, actuar o reemplazar.",
+    summary: "En la Sierra Nevada cada palabra tiene su trabajo: nombrar, actuar, reemplazar y acompañar.",
   },
 
-  // ───────────────────────── DÍA 3 ─────────────────────────
+  // ───────────────────────── DÍA 3 · lo más enfocado y contarlo ─────────────────────────
   {
     key: "esp-c3-w1-d3",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
-          "Ayer viste que el sustantivo nombra,",
-          "el verbo actúa y el pronombre reemplaza.",
-          "Hoy describes lo que ves en la sierra.",
+          "La clase pasada viste cómo trabajan",
+          "el nombre, el verbo y el pronombre.",
+          "Hoy completas el equipo y lo cuentas.",
         ],
       },
       {
         q: [
-          "Ves un pico en la neblina. ¿Qué dos",
-          "palabras dicen cuál es y cómo es?",
+          "Un equipo sube la Sierra Nevada.",
+          "¿Cómo dices que sube sin prisa?",
         ],
-        h: "Punto 2: Artículo y adjetivo acompañan",
+        h: "Punto 2: El adverbio dice cómo",
         a: [
-          "Dices «el pico alto».",
-          "«El» es un artículo: dice cuál pico.",
-          "«Alto» es un adjetivo: dice cómo es.",
-          "Los dos van junto al sustantivo.",
-        ],
-      },
-      {
-        q: [
-          "Un equipo sube la Sierra Nevada. Ordena:",
-          "«sube / equipo / el / despacio».",
-        ],
-        h: "Punto 3: El orden de las palabras",
-        a: [
-          "Sale: «El equipo sube despacio.»",
-          "El artículo va antes del sustantivo.",
-          "El verbo dice qué hace el equipo,",
-          "y «despacio» cuenta cómo sube.",
-        ],
-      },
-      {
-        q: [
-          "Compara «sube despacio» y «sube rápido».",
-          "¿Qué palabra cambió y cuál no?",
-        ],
-        h: "Punto 4: El adverbio cambia el detalle",
-        a: [
-          "El verbo «sube» se queda igual.",
-          "Cambia el adverbio: dice cómo sube.",
-          "También dice cuándo o dónde:",
-          "«ayer», «hoy», «cerca», «arriba».",
-        ],
-      },
-      {
-        q: [
-          "Y si digo «la laguna muy fría»,",
-          "¿qué hace la palabra «muy»?",
-        ],
-        h: "Punto 5: La palabra «muy»",
-        a: [
-          "«Muy» es un adverbio: hace más fuerte",
-          "a «fría», como en «muy fría».",
-          "También acompaña a otro adverbio:",
-          "«muy despacio».",
-        ],
-      },
-      {
-        q: [
-          "Con truco: ¿se dice «equipo rápido» o",
-          "«equipo rápidamente»?",
-        ],
-        h: "Punto 6: Cada palabra en su lugar",
-        a: [
-          "Se dice «equipo rápido».",
-          "«Rápido» es un adjetivo: describe al equipo.",
-          "«Rápidamente» es un adverbio",
-          "y va con el verbo: «sube rápidamente».",
-        ],
-      },
-    ],
-    quiz: {
-      mcq: [
-        { q: "En «el pico alto», ¿cuál es el artículo?", o: ["el", "pico", "alto", "en"] },
-        { q: "En «el pico alto», ¿cuál es el adjetivo?", o: ["alto", "el", "pico", "en"] },
-        { q: "¿Qué dice un adjetivo?", o: ["Cómo es el sustantivo", "Qué hace el sustantivo", "Quién habla", "Dónde termina la oración"] },
-        { q: "¿Cuál oración está bien ordenada?", o: ["El equipo sube despacio.", "Sube el despacio equipo.", "Equipo el despacio sube.", "Despacio sube equipo el."] },
-        { q: "En «sube rápido», ¿cuál es el adverbio?", o: ["rápido", "sube", "el", "equipo"] },
-        { q: "¿Qué clase de palabra es «hoy»?", o: ["Adverbio", "Adjetivo", "Artículo", "Verbo"] },
-        { q: "¿Cuál frase está bien dicha?", o: ["Sube rápidamente.", "Equipo rápidamente.", "Rápidamente pico.", "Sube pico."] },
-        { q: "¿Qué hace «muy» en «muy fría»?", o: ["Hace más fuerte a «fría»", "Nombra la laguna", "Dice dónde está", "Une dos ideas"] },
-      ],
-      write: [
-        "Describe tu mochila con un artículo y un adjetivo.",
-        "Escribe dos oraciones que cambien un adverbio.",
-      ],
-      schematic: [
-        "Dibuja «el equipo sube despacio» y rotula cada palabra.",
-        "Dibuja un esquema: artículo, adjetivo y adverbio.",
-      ],
-    },
-    image: [
-      "Dibuja un equipo subiendo la Sierra Nevada.",
-      "Escribe un artículo y un adjetivo del pico.",
-      "Añade un adverbio que diga cómo sube.",
-      "Rotula cada palabra con su clase.",
-    ],
-    summary: "El artículo y el adjetivo acompañan al sustantivo; el adverbio dice cómo, cuándo o dónde pasa algo.",
-  },
-
-  // ───────────────────────── DÍA 4 ─────────────────────────
-  {
-    key: "esp-c3-w1-d4",
-    units: [
-      {
-        h: "Punto 1: Repaso de ayer",
-        a: [
-          "Ayer describiste la sierra con",
-          "artículos, adjetivos y adverbios.",
-          "Hoy vas a unir ideas en la Sierra Nevada.",
+          "Dices «El equipo sube despacio».",
+          "«Despacio» es un adverbio: dice cómo.",
+          "Otros dicen cuándo o dónde: «hoy».",
         ],
       },
       {
@@ -340,12 +241,11 @@ export default [
           "Quieres decir «subo» y «hace frío».",
           "¿Qué palabra pones en medio?",
         ],
-        h: "Punto 2: La conjunción une ideas",
+        h: "Punto 3: La conjunción une ideas",
         a: [
           "Dices: «Subo, pero hace frío.»",
-          "«Pero» es una conjunción: une dos ideas.",
+          "«Pero» es una conjunción: une ideas.",
           "«Y» suma ideas y «o» da a escoger.",
-          "«Pero» muestra que una idea choca.",
         ],
       },
       {
@@ -353,25 +253,11 @@ export default [
           "Completa: «Sofía sube ___ su mamá».",
           "¿Qué cambia con «con»? ¿Y con «sin»?",
         ],
-        h: "Punto 3: La preposición relaciona",
+        h: "Punto 4: La preposición relaciona",
         a: [
           "«Con su mamá»: suben juntas.",
           "«Sin su mamá»: Sofía sube sola.",
-          "«Con» y «sin» son preposiciones:",
-          "relacionan las palabras entre sí.",
-        ],
-      },
-      {
-        q: [
-          "Imagina un frailejón y la neblina. ¿Dónde",
-          "puede estar? Dilo con tres palabras.",
-        ],
-        h: "Punto 4: Las preposiciones dicen dónde",
-        a: [
-          "Puede estar «en la neblina»,",
-          "«bajo la neblina» o «sobre la neblina».",
-          "«En», «bajo» y «sobre» son preposiciones.",
-          "Cambia la preposición y cambia el lugar.",
+          "«Con» y «sin» son preposiciones.",
         ],
       },
       {
@@ -383,104 +269,7 @@ export default [
         a: [
           "Dices «¡Guau!»: es una interjección.",
           "Muestra una emoción de golpe.",
-          "Otras son «¡Uy!», «¡Bravo!» y «¡Eh!».",
-          "Se escribe entre signos de exclamación.",
-        ],
-      },
-      {
-        q: [
-          "Escribes un cartel para los exploradores.",
-          "¿Qué palabras unen y dicen dónde?",
-        ],
-        h: "Punto 6: Un cartel con propósito",
-        a: [
-          "«Lleva abrigo y sube con tu equipo.»",
-          "Aquí «y» une dos acciones,",
-          "y «con» dice con quién subes.",
-          "Un cartel sirve para avisar algo.",
-        ],
-      },
-    ],
-    quiz: {
-      mcq: [
-        { q: "¿Qué clase de palabra es «pero»?", o: ["Conjunción", "Preposición", "Interjección", "Adverbio"] },
-        { q: "Completa: «Subo, ___ hace frío».", o: ["pero", "en", "¡uy!", "con"] },
-        { q: "¿Qué palabra da a escoger?", o: ["o", "y", "pero", "¡Guau!"] },
-        { q: "En «con su mamá», ¿qué es «con»?", o: ["Preposición", "Conjunción", "Verbo", "Adjetivo"] },
-        { q: "«Sin su mamá» quiere decir…", o: ["Sofía sube sola.", "Suben juntas.", "Sofía se duerme.", "Sofía llama a su mamá."] },
-        { q: "¿Cuál es una interjección?", o: ["¡Guau!", "sobre", "pero", "neblina"] },
-        { q: "¿Cómo se escribe una interjección?", o: ["Entre signos de exclamación", "Entre comillas", "Sin ningún signo", "Con puntos suspensivos"] },
-        { q: "¿Qué palabra suma dos ideas?", o: ["y", "o", "sin", "¡Eh!"] },
-      ],
-      write: [
-        "Escribe una oración con «pero» y otra con «o».",
-        "Explica qué cambia entre «con» y «sin».",
-      ],
-      schematic: [
-        "Dibuja un esquema: conjunción, preposición e interjección.",
-        "Dibuja tu cartel de tres reglas y rotula.",
-      ],
-    },
-    image: [
-      "Dibuja a dos exploradores en la sierra.",
-      "Escribe lo que dice cada uno: una interjección.",
-      "Añade un cartel con «y», «pero» u «o».",
-      "Rotula una preposición de lugar.",
-    ],
-    summary: "La conjunción une, la preposición relaciona y la interjección muestra una emoción.",
-  },
-
-  // ───────────────────────── DÍA 5 ─────────────────────────
-  {
-    key: "esp-c3-w1-d5",
-    units: [
-      {
-        h: "Punto 1: Repaso de ayer",
-        a: [
-          "Ayer viste tres trabajos de palabras:",
-          "unir, relacionar y sentir.",
-          "Hoy recuerdas las nueve y las cuentas",
-          "como una expedición a la Sierra Nevada.",
-        ],
-      },
-      {
-        q: [
-          "Sin mirar la hoja, ¿cuáles son las nueve",
-          "clases del equipo de la Sierra Nevada?",
-        ],
-        h: "Punto 2: Las nueve clases",
-        a: [
-          "Son nueve clases de palabras:",
-          "Sustantivo, pronombre, verbo, adverbio,",
-          "conjunción, interjección, preposición,",
-          "adjetivo, artículo.",
-        ],
-      },
-      {
-        q: [
-          "Si repartes al equipo en tres grupos,",
-          "¿qué trabajo hace cada grupo?",
-        ],
-        h: "Punto 3: Tres grupos de palabras",
-        a: [
-          "Nombrar y actuar: sustantivo, verbo,",
-          "pronombre. Describir: adjetivo,",
-          "artículo, adverbio. Unir y sentir:",
-          "conjunción, preposición, interjección.",
-        ],
-      },
-      {
-        q: [
-          "«¡Uy! La niña alegre sube hoy y ella",
-          "mira con Luis.» ¿Cuántas clases hay?",
-        ],
-        h: "Punto 4: Una oración con las nueve",
-        a: [
-          "«¡Uy!» es interjección; «la», artículo;",
-          "«niña», sustantivo; «alegre», adjetivo;",
-          "«sube», verbo; «hoy», adverbio;",
-          "«y», conjunción; «ella», pronombre;",
-          "«con», preposición. Están las nueve.",
+          "Va entre signos de exclamación.",
         ],
       },
       {
@@ -488,54 +277,42 @@ export default [
           "Vuelves de la Sierra Nevada y cuentas",
           "lo aprendido. ¿Cómo lo ordenas?",
         ],
-        h: "Punto 5: Cómo contarlo con orden",
+        h: "Punto 6: Cómo contarlo con orden",
         a: [
           "Inicio: saluda y di de qué hablas.",
-          "Medio: da dos o tres ejemplos tuyos.",
-          "Cierre: di «gracias» al terminar.",
-          "Si pides algo, di «por favor».",
-        ],
-      },
-      {
-        q: [
-          "Un explorador no solo dice su nombre.",
-          "¿Qué más debes saber de cada palabra?",
-        ],
-        h: "Punto 6: Saber qué trabajo hace",
-        a: [
-          "No basta con la lista.",
-          "Debes saber qué trabajo hace",
-          "cada palabra, como cada explorador.",
-          "Pregúntate: ¿qué hace aquí esta palabra?",
+          "Medio: nombra las nueve clases:",
+          "Sustantivo, pronombre, verbo, adverbio,",
+          "conjunción, interjección, preposición,",
+          "adjetivo, artículo. Cierre: di gracias.",
         ],
       },
     ],
     quiz: {
       mcq: [
+        { q: "En «El equipo sube despacio», ¿cuál es el adverbio?", o: ["despacio", "sube", "equipo", "el"] },
+        { q: "¿Qué clase de palabra es «hoy»?", o: ["Adverbio", "Adjetivo", "Artículo", "Verbo"] },
+        { q: "¿Qué clase de palabra es «pero»?", o: ["Conjunción", "Preposición", "Interjección", "Adverbio"] },
+        { q: "¿Qué palabra suma dos ideas?", o: ["y", "o", "sin", "¡Guau!"] },
+        { q: "En «con su mamá», ¿qué es «con»?", o: ["Preposición", "Conjunción", "Verbo", "Adjetivo"] },
+        { q: "«Sin su mamá» quiere decir…", o: ["Sofía sube sola.", "Suben juntas.", "Sofía se duerme.", "Sofía llama a su mamá."] },
+        { q: "¿Cuál es una interjección?", o: ["¡Guau!", "sobre", "pero", "neblina"] },
         { q: "¿Cuántas clases de palabras hay?", o: ["Nueve", "Cinco", "Siete", "Doce"] },
-        { q: "¿Qué grupo describe?", o: ["Adjetivo, artículo, adverbio", "Sustantivo, verbo, pronombre", "Conjunción e interjección", "Verbo, adverbio, conjunción"] },
-        { q: "¿Qué grupo une y siente?", o: ["Conjunción, preposición, interjección", "Adjetivo, artículo, adverbio", "Sustantivo, verbo, pronombre", "Artículo, verbo, pronombre"] },
-        { q: "En la oración de hoy, ¿qué es «ella»?", o: ["Pronombre", "Sustantivo", "Adverbio", "Artículo"] },
-        { q: "En la oración de hoy, ¿qué es «hoy»?", o: ["Adverbio", "Adjetivo", "Verbo", "Conjunción"] },
-        { q: "En la oración de hoy, ¿qué es «con»?", o: ["Preposición", "Conjunción", "Pronombre", "Interjección"] },
-        { q: "En la oración de hoy, ¿qué es «alegre»?", o: ["Adjetivo", "Sustantivo", "Adverbio", "Verbo"] },
-        { q: "¿Cuál es la interjección de hoy?", o: ["¡Uy!", "Luis", "mira", "y"] },
       ],
       write: [
-        "Escribe de memoria las nueve clases.",
-        "Cuenta qué trabajo hace cada grupo.",
+        "Escribe una oración con «pero» y otra con «hoy».",
+        "Cuenta con orden las nueve clases de palabras.",
       ],
       schematic: [
-        "Dibuja los tres grupos y sus clases.",
-        "Dibuja una oración tuya y rotula cada palabra.",
+        "Dibuja un esquema: conjunción, preposición e interjección.",
+        "Dibuja a una amiga contando las nueve clases.",
       ],
     },
     image: [
-      "Dibuja la Sierra Nevada con nueve cumbres.",
-      "Escribe en cada una una clase de palabra.",
-      "Añade un ejemplo corto en cada cumbre.",
-      "Revisa que no falte ninguna de las nueve.",
+      "Dibuja dos exploradores en la sierra.",
+      "Uno dice una interjección y el otro un",
+      "cartel con «y», «pero» u «o». Deja en",
+      "blanco un adverbio y una preposición.",
     ],
-    summary: "Las nueve clases de palabras se agrupan por su trabajo: nombrar y actuar, describir, unir y sentir.",
+    summary: "El adverbio, la conjunción, la preposición y la interjección completan las nueve clases, y puedes contarlas con orden.",
   },
 ];

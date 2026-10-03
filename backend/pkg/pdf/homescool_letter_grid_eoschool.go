@@ -43,6 +43,8 @@ func homescoolSubjectLabel(code string) string {
 		return "Ciencias"
 	case "pro":
 		return "Proyecto"
+	case "fin":
+		return "Finanzas"
 	default:
 		if code == "" {
 			return "Materia"
@@ -492,13 +494,22 @@ func resolveHomescoolMediaPath(rel string) (string, error) {
 	return "", fmt.Errorf("homescool media not found: %s", rel)
 }
 
+func practiceImageRelPathDay(subject string, week, day int) string {
+	return fmt.Sprintf("week%d/practice-images/%s-c3-w%d-d%d-practice.jpg", week, subject, week, day)
+}
+
 func practiceImageRelPath(subject string, week int) string {
 	return fmt.Sprintf("week%d/practice-images/%s-c3-w%d-practice.jpg", week, subject, week)
 }
 
 // AttachHomescoolPracticeImage embeds week practice JPEG when present on disk.
-func AttachHomescoolPracticeImage(page HCLetterPageInk, subject string, week int) HCLetterPageInk {
-	imgPath, err := resolveHomescoolMediaPath(practiceImageRelPath(subject, week))
+func AttachHomescoolPracticeImage(page HCLetterPageInk, subject string, week, day int) HCLetterPageInk {
+	// v3: one image per class (`{subject}-c3-w{N}-d{D}-practice.jpg`); falls back to the
+	// legacy per-subject-week image until the per-class set is generated.
+	imgPath, err := resolveHomescoolMediaPath(practiceImageRelPathDay(subject, week, day))
+	if err != nil {
+		imgPath, err = resolveHomescoolMediaPath(practiceImageRelPath(subject, week))
+	}
 	if err != nil {
 		return page
 	}
@@ -535,7 +546,7 @@ func LoadHCLetterPageWithPracticeImage(eoschoolRel string) (HCLetterPageInk, err
 	if err := json.Unmarshal(raw, &doc); err != nil {
 		return HCLetterPageInk{}, err
 	}
-	return AttachHomescoolPracticeImage(page, doc.Subject, doc.Week), nil
+	return AttachHomescoolPracticeImage(page, doc.Subject, doc.Week, doc.Day), nil
 }
 
 func fitOneLineInk(text string, sizePt, maxWidthPt float64, bold bool) string {

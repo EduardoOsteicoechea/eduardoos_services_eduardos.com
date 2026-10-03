@@ -14,8 +14,8 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nAyer viste el panorama de Génesis, como una llanura vista desde lejos. Hoy te quedas en la creación."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nLa clase pasada viste el panorama de Génesis, como una llanura vista desde lejos. Hoy te acercas a la creación y la caída."
       },
       {
         "id": "p2",
@@ -25,7 +25,7 @@
       {
         "id": "p3",
         "heading": "Punto 3: Los siete días",
-        "body": "Recorre los Llanos de río a horizonte. ¿En qué orden cuenta Génesis todo?\n\nPrimero vino la luz, el día uno. Las personas llegaron el día seis. El día siete Dios descansó."
+        "body": "Recorre los Llanos de río a horizonte. ¿En qué orden cuenta Génesis la creación?\n\nPrimero vino la luz, el día uno. Las personas llegaron el día seis. El día siete Dios descansó."
       },
       {
         "id": "p4",
@@ -34,20 +34,20 @@
       },
       {
         "id": "p5",
-        "heading": "Punto 5: El día de descanso",
-        "body": "Imagina una tarde calma en los Llanos. ¿Dios descansó el día siete cansado?\n\nNo descansó por estar cansado. Fue un día de descanso santo, un modelo de descanso y adoración. Es como una tarde de calma en el Llano."
+        "heading": "Punto 5: La caída",
+        "body": "En la sequía, el suelo de los Llanos se seca. ¿Qué se rompió con la caída?\n\nAdán y Eva desobedecieron a Dios. Pecado es romper la confianza en Dios. Es como el suelo seco: algo falta."
       },
       {
         "id": "p6",
-        "heading": "Punto 6: Cuidar y dar gracias",
-        "body": "Si la lluvia llena de agua los Llanos, ¿qué le dices a Dios por lo que hizo?\n\nPuedes cuidar plantas, animales y personas. Y puedes dar gracias a Dios. La creación abre la historia, y sigue."
+        "heading": "Punto 6: Por qué hay dolor",
+        "body": "Una pregunta con truco: ¿el mal estuvo desde el principio en el mundo?\n\nNo. Primero Dios hizo un mundo bueno. La caída ayuda a explicar el dolor. Y aun así puedes dar gracias a Dios."
       }
     ],
-    "summary": "Dios hizo un mundo bueno, creó al ser humano a su imagen y dejó un día de descanso santo.",
+    "summary": "Dios hizo un mundo bueno y creó al ser humano a su imagen; la caída trajo el pecado.",
     "weekRecap": "Hoy seguimos el relato de Génesis: creación, caída, diluvio, promesa y patriarcas.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja una llanura con ríos y pastizal. Añade una persona que cuida lo creado. Rotula tres cosas con la palabra buena. Escribe arriba una frase de gracias.",
+    "imageBandInstruction": "Dibuja una llanura con ríos y pastizal. Añade una persona que cuida lo creado. Rotula tres cosas con la palabra buena. A un lado dibuja suelo seco: la caída.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -55,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -82,85 +82,85 @@
         "index": 5,
         "column": 1,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
-        "kind": "lesson",
-        "text": "Ayer viste el panorama de Génesis,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "como una llanura vista desde lejos."
+        "text": "La clase pasada viste el panorama"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Hoy te quedas en la creación."
+        "text": "de Génesis, como una llanura"
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "vista desde lejos."
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Hoy te acercas a la creación y la caída."
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
         "kind": "lesson",
-        "text": "Mira los ríos y el pastizal del Llano."
+        "text": "________________________________________"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "Dios llamó bueno lo que hizo. ¿Por qué?"
+        "text": "________________________________________"
       },
       {
         "index": 17,
@@ -174,105 +174,105 @@
         "column": 1,
         "line": 18,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Mira los ríos y el pastizal del Llano."
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Dios llamó bueno lo que hizo. ¿Por qué?"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 2: Bueno es más que bonito"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
         "kind": "lesson",
-        "text": "Bueno significa completo y como Dios"
+        "text": "________________________________________"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "lesson",
-        "text": "lo quería, no solo bonito."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
-        "kind": "lesson",
-        "text": "Es como una llanura con agua y pasto:"
+        "kind": "heading",
+        "text": "Punto 2: Bueno es más que bonito"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "lesson",
-        "text": "todo está en su lugar y sirve."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Bueno significa completo y como Dios"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "lo quería, no solo bonito."
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Es como una llanura con agua y pasto:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "todo está en su lugar y sirve."
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "lesson",
-        "text": "Recorre los Llanos de río a horizonte."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
         "kind": "lesson",
-        "text": "¿En qué orden cuenta Génesis todo?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 33,
@@ -292,36 +292,36 @@
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "heading",
-        "text": "Punto 3: Los siete días"
+        "kind": "lesson",
+        "text": "Recorre los Llanos de río a horizonte."
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿En qué orden cuenta Génesis la creación?"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Primero vino la luz, el día uno."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
         "kind": "lesson",
-        "text": "Las personas llegaron el día seis."
+        "text": "________________________________________"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "El día siete Dios descansó."
+        "text": "________________________________________"
       },
       {
         "index": 40,
@@ -334,36 +334,36 @@
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "heading",
+        "text": "Punto 3: Los siete días"
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Primero vino la luz, el día uno."
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
         "kind": "lesson",
-        "text": "Alguien mira los Llanos y piensa"
+        "text": "Las personas llegaron el día seis."
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "en cuidarlos. ¿A quién hizo Dios así?"
+        "text": "El día siete Dios descansó."
       },
       {
         "index": 46,
@@ -377,21 +377,21 @@
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "heading",
-        "text": "Punto 4: A imagen de Dios"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 50,
@@ -405,49 +405,49 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Dios hizo al ser humano a su imagen."
+        "text": "Alguien mira los Llanos y piensa"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
         "kind": "lesson",
-        "text": "Eso es una dignidad especial."
+        "text": "en cuidarlos. ¿A quién hizo Dios así?"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "lesson",
-        "text": "También es la tarea de cuidar lo creado,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
         "kind": "lesson",
-        "text": "como quien cuida su llanura."
+        "text": "________________________________________"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 4: A imagen de Dios"
       },
       {
         "index": 58,
@@ -461,28 +461,28 @@
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "Imagina una tarde calma en los Llanos."
+        "text": "Dios hizo al ser humano a su imagen."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "¿Dios descansó el día siete cansado?"
+        "text": "Eso es una dignidad especial."
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "También es la tarea de cuidar lo creado,"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "como quien cuida su llanura."
       },
       {
         "index": 63,
@@ -495,43 +495,43 @@
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "heading",
-        "text": "Punto 5: El día de descanso"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
         "kind": "lesson",
-        "text": "No descansó por estar cansado."
+        "text": "________________________________________"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "lesson",
-        "text": "Fue un día de descanso santo,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
         "kind": "lesson",
-        "text": "un modelo de descanso y adoración."
+        "text": "En la sequía, el suelo de los Llanos"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
         "kind": "lesson",
-        "text": "Es como una tarde de calma en el Llano."
+        "text": "se seca. ¿Qué se rompió con la caída?"
       },
       {
         "index": 70,
@@ -545,7 +545,7 @@
         "column": 2,
         "line": 19,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 72,
@@ -565,200 +565,176 @@
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "lesson",
-        "text": "Si la lluvia llena de agua los Llanos,"
+        "kind": "heading",
+        "text": "Punto 5: La caída"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "lesson",
-        "text": "¿qué le dices a Dios por lo que hizo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Adán y Eva desobedecieron a Dios."
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Pecado es romper la confianza en Dios."
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es como el suelo seco: algo falta."
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "heading",
-        "text": "Punto 6: Cuidar y dar gracias"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
         "kind": "lesson",
-        "text": "Puedes cuidar plantas, animales"
+        "text": "________________________________________"
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
         "kind": "lesson",
-        "text": "y personas. Y puedes dar gracias a Dios."
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "lesson",
-        "text": "La creación abre la historia, y sigue."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿el mal estuvo"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "desde el principio en el mundo?"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué dijo Dios de lo que hizo?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Que era feo",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Que era viejo",
-        "questionId": "d2-q1"
+        "kind": "heading",
+        "text": "Punto 6: Por qué hay dolor"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) Que era pequeño",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Que era bueno",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "No. Primero Dios hizo un mundo bueno."
       },
       {
         "index": 93,
         "column": 2,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La caída ayuda a explicar el dolor."
       },
       {
         "index": 94,
         "column": 2,
         "line": 42,
-        "kind": "question",
-        "text": "¿Qué significa «bueno»?",
-        "questionId": "d2-q2",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Y aun así puedes dar gracias a Dios."
       },
       {
         "index": 95,
         "column": 2,
         "line": 43,
-        "kind": "option",
-        "text": "A) Solo bonito",
-        "questionId": "d2-q2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
-        "kind": "option",
-        "text": "B) Completo y como Dios lo quería",
-        "questionId": "d2-q2"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
-        "kind": "option",
-        "text": "C) Solo grande",
-        "questionId": "d2-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
-        "kind": "option",
-        "text": "D) Sin personas",
-        "questionId": "d2-q2"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 99,
@@ -772,8 +748,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué vino el día uno?",
-        "questionId": "d2-q3",
+        "text": "¿Qué dijo Dios de lo que hizo?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -787,40 +763,40 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Las personas",
-        "questionId": "d2-q3"
+        "text": "A) Que era feo",
+        "questionId": "d2-q1"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) El descanso",
-        "questionId": "d2-q3"
+        "text": "B) Que era viejo",
+        "questionId": "d2-q1"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) La luz",
-        "questionId": "d2-q3"
+        "text": "C) Que era pequeño",
+        "questionId": "d2-q1"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) El arca",
-        "questionId": "d2-q3"
+        "text": "D) Que era bueno",
+        "questionId": "d2-q1"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "¿Qué día llegaron las personas?",
-        "questionId": "d2-q4",
+        "text": "¿Qué significa «bueno»?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -834,32 +810,32 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) El día uno",
-        "questionId": "d2-q4"
+        "text": "A) Solo bonito",
+        "questionId": "d2-q2"
       },
       {
         "index": 107,
         "column": 3,
         "line": 3,
         "kind": "option",
-        "text": "B) El día siete",
-        "questionId": "d2-q4"
+        "text": "B) Completo y como Dios lo quería",
+        "questionId": "d2-q2"
       },
       {
         "index": 108,
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) El día dos",
-        "questionId": "d2-q4"
+        "text": "C) Solo grande",
+        "questionId": "d2-q2"
       },
       {
         "index": 109,
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) El día seis",
-        "questionId": "d2-q4"
+        "text": "D) Sin personas",
+        "questionId": "d2-q2"
       },
       {
         "index": 110,
@@ -873,8 +849,8 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "¿Qué hizo Dios el día siete?",
-        "questionId": "d2-q5",
+        "text": "¿Qué vino el día uno?",
+        "questionId": "d2-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -888,32 +864,32 @@
         "column": 3,
         "line": 8,
         "kind": "option",
-        "text": "A) Hizo el arca",
-        "questionId": "d2-q5"
+        "text": "A) Las personas",
+        "questionId": "d2-q3"
       },
       {
         "index": 113,
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) Descansó",
-        "questionId": "d2-q5"
+        "text": "B) El descanso",
+        "questionId": "d2-q3"
       },
       {
         "index": 114,
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) Hizo la luz",
-        "questionId": "d2-q5"
+        "text": "C) La luz",
+        "questionId": "d2-q3"
       },
       {
         "index": 115,
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) Cerró el mar",
-        "questionId": "d2-q5"
+        "text": "D) El arca",
+        "questionId": "d2-q3"
       },
       {
         "index": 116,
@@ -927,8 +903,8 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿Cómo hizo Dios al ser humano?",
-        "questionId": "d2-q6",
+        "text": "¿Qué día llegaron las personas?",
+        "questionId": "d2-q4",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -942,32 +918,32 @@
         "column": 3,
         "line": 14,
         "kind": "option",
-        "text": "A) A su imagen",
-        "questionId": "d2-q6"
+        "text": "A) El día uno",
+        "questionId": "d2-q4"
       },
       {
         "index": 119,
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) Sin propósito",
-        "questionId": "d2-q6"
+        "text": "B) El día siete",
+        "questionId": "d2-q4"
       },
       {
         "index": 120,
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) Como un río",
-        "questionId": "d2-q6"
+        "text": "C) El día dos",
+        "questionId": "d2-q4"
       },
       {
         "index": 121,
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) Sin tarea",
-        "questionId": "d2-q6"
+        "text": "D) El día seis",
+        "questionId": "d2-q4"
       },
       {
         "index": 122,
@@ -981,8 +957,8 @@
         "column": 3,
         "line": 19,
         "kind": "question",
-        "text": "¿Qué tarea recibió el ser humano?",
-        "questionId": "d2-q7",
+        "text": "¿Qué hizo Dios el día siete?",
+        "questionId": "d2-q5",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -996,32 +972,32 @@
         "column": 3,
         "line": 20,
         "kind": "option",
-        "text": "A) Romper lo creado",
-        "questionId": "d2-q7"
+        "text": "A) Hizo el arca",
+        "questionId": "d2-q5"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) Olvidar lo creado",
-        "questionId": "d2-q7"
+        "text": "B) Descansó",
+        "questionId": "d2-q5"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) Cuidar lo creado",
-        "questionId": "d2-q7"
+        "text": "C) Hizo la luz",
+        "questionId": "d2-q5"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) Vender lo creado",
-        "questionId": "d2-q7"
+        "text": "D) Cerró el mar",
+        "questionId": "d2-q5"
       },
       {
         "index": 128,
@@ -1035,8 +1011,8 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "¿Cómo es el día de descanso?",
-        "questionId": "d2-q8",
+        "text": "¿Cómo hizo Dios al ser humano?",
+        "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -1050,32 +1026,32 @@
         "column": 3,
         "line": 26,
         "kind": "option",
-        "text": "A) Santo",
-        "questionId": "d2-q8"
+        "text": "A) A su imagen",
+        "questionId": "d2-q6"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
         "kind": "option",
-        "text": "B) De diluvio",
-        "questionId": "d2-q8"
+        "text": "B) Sin propósito",
+        "questionId": "d2-q6"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
         "kind": "option",
-        "text": "C) De viaje",
-        "questionId": "d2-q8"
+        "text": "C) Como un río",
+        "questionId": "d2-q6"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
         "kind": "option",
-        "text": "D) De guerra",
-        "questionId": "d2-q8"
+        "text": "D) Sin tarea",
+        "questionId": "d2-q6"
       },
       {
         "index": 134,
@@ -1211,7 +1187,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja una persona: imagen de Dios y cuidar.",
+        "text": "Haz dos columnas: lluvia con vida, sequía sin.",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1270,21 +1246,21 @@
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Rotula tres cosas con la palabra buena."
+        "text": "Rotula tres cosas con la palabra buena. A"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Escribe arriba una frase de gracias."
+        "text": "un lado dibuja suelo seco: la caída."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 10,
     "questions": [
       {
         "id": "d2-q1",
@@ -1300,8 +1276,8 @@
         "answer": "Que era bueno",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1317,9 +1293,9 @@
         ],
         "answer": "Completo y como Dios lo quería",
         "slot": {
-          "column": 2,
-          "line": 42,
-          "index": 94
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1335,9 +1311,9 @@
         ],
         "answer": "La luz",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1354,8 +1330,8 @@
         "answer": "El día seis",
         "slot": {
           "column": 3,
-          "line": 1,
-          "index": 105
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1372,8 +1348,8 @@
         "answer": "Descansó",
         "slot": {
           "column": 3,
-          "line": 7,
-          "index": 111
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1388,42 +1364,6 @@
           "Sin tarea"
         ],
         "answer": "A su imagen",
-        "slot": {
-          "column": 3,
-          "line": 13,
-          "index": 117
-        }
-      },
-      {
-        "id": "d2-q7",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué tarea recibió el ser humano?",
-        "choices": [
-          "Romper lo creado",
-          "Olvidar lo creado",
-          "Cuidar lo creado",
-          "Vender lo creado"
-        ],
-        "answer": "Cuidar lo creado",
-        "slot": {
-          "column": 3,
-          "line": 19,
-          "index": 123
-        }
-      },
-      {
-        "id": "d2-q8",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Cómo es el día de descanso?",
-        "choices": [
-          "Santo",
-          "De diluvio",
-          "De viaje",
-          "De guerra"
-        ],
-        "answer": "Santo",
         "slot": {
           "column": 3,
           "line": 25,
@@ -1469,7 +1409,7 @@
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja una persona: imagen de Dios y cuidar.",
+        "prompt": "Haz dos columnas: lluvia con vida, sequía sin.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

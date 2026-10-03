@@ -7,48 +7,48 @@
   "level": 6,
   "subject": "lat",
   "locale": "es",
-  "title": "Latín: palabras cortas que muestran relaciones",
+  "title": "Latín: in, apud, per y sine",
   "lesson": {
     "kind": "deepen",
     "focusPoint": 1,
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nAyer conociste seis palabras-puente. Cada una une dos ideas con una relación. Hoy miras solo dos: in y apud."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nLa clase pasada conociste seis palabras-puente de Maracaibo. Hoy miras cuatro: in, apud, per y sine."
       },
       {
         "id": "p2",
         "heading": "Punto 2: In responde ¿en dónde?",
-        "body": "Un barco navega en el Lago de Maracaibo. ¿Qué pregunta responde «in»?\n\n«In» responde: ¿en dónde? In lacu es «en el lago». In aqua es «en el agua». In ponte es «en el puente»."
+        "body": "Un barco navega en el Lago de Maracaibo. ¿Qué pregunta responde «in»?\n\n«In» responde: ¿en dónde? In lacu es «en el lago». In ponte es «en el puente»."
       },
       {
         "id": "p3",
         "heading": "Punto 3: Apud responde ¿con quién?",
-        "body": "Dos amigos cruzan el puente juntos. ¿Qué pregunta responde «apud»?\n\n«Apud» responde: ¿con quién? Apud amicos es «con los amigos». Apud magistrum es «con el maestro». «Apud» habla de compañía o cercanía."
+        "body": "Dos amigos cruzan el puente juntos. ¿Qué pregunta responde «apud»?\n\n«Apud» responde: ¿con quién? Apud amicos es «con los amigos». Apud magistrum es «con el maestro»."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Estar en o estar junto",
-        "body": "Si quieres decir «junto al lago», ¿usas «in» o «apud»?\n\nUsas «apud»: estás cerca del lago. Apud lacum es «junto al lago». In lacu es «en el lago». Cambiar la palabra cambia la historia."
+        "heading": "Punto 4: Per marca el camino",
+        "body": "Cruzas el lago por el puente. ¿Cómo dirías «por el puente»?\n\n«Per» dice por dónde pasas. Per pontem es «por el puente». Per lacum es «por el lago»."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: Cambia quién, no la relación",
-        "body": "Con truco: ¿«apud magistrum» y «apud amicos» muestran lo mismo?\n\nSí: en las dos estás con alguien. Cambió la compañía: maestro o amigos. «Apud» sigue marcando compañía."
+        "heading": "Punto 5: Sine marca lo que falta",
+        "body": "Ahora imagina que no hay puente. ¿Cómo dirías «sin puente»?\n\n«Sine» es «sin» y dice que algo falta. Sine ponte es «sin puente». Sine nave es «sin barco»."
       },
       {
         "id": "p6",
-        "heading": "Punto 6: Elige primero la relación",
-        "body": "Arma dos frases: «en la escuela» y «con el maestro». ¿Cómo quedan?\n\n«En la escuela» es «in schola». «Con el maestro» es «apud magistrum». Primero elige: ¿lugar o compañía? Luego escoge entre in y apud."
+        "heading": "Punto 6: Quitar el puente",
+        "body": "Una pregunta con truco: ¿«per pontem» y «sine ponte» dicen lo mismo?\n\nNo. Con «per» pasas de una orilla a la otra. Con «sine» falta el puente. Primero elige: ¿camino o falta?"
       }
     ],
-    "summary": "«In» dice en dónde estás; «apud» dice con quién o junto a qué estás.",
+    "summary": "«In» dice dónde, «apud» con quién, «per» por dónde y «sine» lo que falta.",
     "memoryPhrase": "**in** = en · **apud** = con · **per** = por · **sine** = sin · **a/ab** = de · **de** = de.",
     "weekRecap": "in = en · apud = con · per = por · sine = sin · a/ab = de · de = de. Relaciones de lugar, compañía, camino y origen.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un lago con un barco en el agua. Rotula el barco: in lacu. Dibuja amigos junto al lago: apud lacum. Escribe qué significa cada rótulo.",
+    "imageBandInstruction": "Dibuja un lago con un barco: in lacu. Dibuja amigos cruzando un puente: apud amicos y per pontem. Deja una línea vacía bajo cada rótulo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -56,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -76,99 +76,99 @@
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 5,
         "column": 1,
         "line": 5,
-        "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "lesson",
-        "text": "Ayer conociste seis palabras-puente."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Cada una une dos ideas con una relación."
+        "text": "La clase pasada conociste seis"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "Hoy miras solo dos: in y apud."
+        "text": "palabras-puente de Maracaibo."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Hoy miras cuatro: in, apud, per y sine."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
         "kind": "lesson",
-        "text": "Un barco navega en el Lago de Maracaibo."
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "¿Qué pregunta responde «in»?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Un barco navega en el Lago de Maracaibo."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "¿Qué pregunta responde «in»?"
       },
       {
         "index": 18,
@@ -181,85 +181,85 @@
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "heading",
-        "text": "Punto 2: In responde ¿en dónde?"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "lesson",
-        "text": "«In» responde: ¿en dónde?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "In lacu es «en el lago»."
+        "kind": "heading",
+        "text": "Punto 2: In responde ¿en dónde?"
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "lesson",
-        "text": "In aqua es «en el agua»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "In ponte es «en el puente»."
+        "text": "«In» responde: ¿en dónde?"
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "In lacu es «en el lago»."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "In ponte es «en el puente»."
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
         "kind": "lesson",
-        "text": "Dos amigos cruzan el puente juntos."
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
         "kind": "lesson",
-        "text": "¿Qué pregunta responde «apud»?"
+        "text": "________________________________________"
       },
       {
         "index": 31,
@@ -273,77 +273,77 @@
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Dos amigos cruzan el puente juntos."
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué pregunta responde «apud»?"
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "heading",
-        "text": "Punto 3: Apud responde ¿con quién?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
         "kind": "lesson",
-        "text": "«Apud» responde: ¿con quién?"
+        "text": "________________________________________"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Apud amicos es «con los amigos»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "lesson",
-        "text": "Apud magistrum es «con el maestro»."
+        "kind": "heading",
+        "text": "Punto 3: Apud responde ¿con quién?"
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "lesson",
-        "text": "«Apud» habla de compañía o cercanía."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Apud» responde: ¿con quién?"
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Apud amicos es «con los amigos»."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Apud magistrum es «con el maestro»."
       },
       {
         "index": 43,
@@ -357,42 +357,42 @@
         "column": 1,
         "line": 44,
         "kind": "lesson",
-        "text": "Si quieres decir «junto al lago»,"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
         "kind": "lesson",
-        "text": "¿usas «in» o «apud»?"
+        "text": "________________________________________"
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cruzas el lago por el puente."
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "heading",
-        "text": "Punto 4: Estar en o estar junto"
+        "kind": "lesson",
+        "text": "¿Cómo dirías «por el puente»?"
       },
       {
         "index": 50,
@@ -406,28 +406,28 @@
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "Usas «apud»: estás cerca del lago."
+        "text": "________________________________________"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
         "kind": "lesson",
-        "text": "Apud lacum es «junto al lago»."
+        "text": "________________________________________"
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "lesson",
-        "text": "In lacu es «en el lago»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "lesson",
-        "text": "Cambiar la palabra cambia la historia."
+        "kind": "heading",
+        "text": "Punto 4: Per marca el camino"
       },
       {
         "index": 55,
@@ -441,42 +441,42 @@
         "column": 2,
         "line": 4,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "«Per» dice por dónde pasas."
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Per pontem es «por el puente»."
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Per lacum es «por el lago»."
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
-        "kind": "lesson",
-        "text": "Con truco: ¿«apud magistrum» y"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
         "kind": "lesson",
-        "text": "«apud amicos» muestran lo mismo?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 62,
@@ -496,85 +496,85 @@
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "heading",
-        "text": "Punto 5: Cambia quién, no la relación"
+        "kind": "lesson",
+        "text": "Ahora imagina que no hay puente."
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Cómo dirías «sin puente»?"
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "lesson",
-        "text": "Sí: en las dos estás con alguien."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "Cambió la compañía: maestro o amigos."
+        "text": "________________________________________"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "«Apud» sigue marcando compañía."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Sine marca lo que falta"
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "«Sine» es «sin» y dice que algo falta."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sine ponte es «sin puente»."
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
         "kind": "lesson",
-        "text": "Arma dos frases: «en la escuela»"
+        "text": "Sine nave es «sin barco»."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "lesson",
-        "text": "y «con el maestro». ¿Cómo quedan?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 76,
@@ -587,125 +587,113 @@
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "heading",
-        "text": "Punto 6: Elige primero la relación"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿«per pontem»"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
         "kind": "lesson",
-        "text": "«En la escuela» es «in schola»."
+        "text": "y «sine ponte» dicen lo mismo?"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "lesson",
-        "text": "«Con el maestro» es «apud magistrum»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
         "kind": "lesson",
-        "text": "Primero elige: ¿lugar o compañía?"
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "lesson",
-        "text": "Luego escoge entre in y apud."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: Quitar el puente"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "No. Con «per» pasas de una orilla"
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "a la otra. Con «sine» falta el puente."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿Qué pregunta responde «in»?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Primero elige: ¿camino o falta?"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) ¿Con quién?",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) ¿Desde dónde?",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) ¿Acerca de qué?",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) ¿En dónde?",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -719,8 +707,8 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Qué pregunta responde «apud»?",
-        "questionId": "d2-q2",
+        "text": "¿Qué pregunta responde «in»?",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -734,32 +722,32 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) ¿En dónde?",
-        "questionId": "d2-q2"
+        "text": "A) ¿Con quién?",
+        "questionId": "d2-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) ¿Con quién?",
-        "questionId": "d2-q2"
+        "text": "B) ¿Por dónde pasas?",
+        "questionId": "d2-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) ¿Desde dónde?",
-        "questionId": "d2-q2"
+        "text": "C) ¿Qué falta?",
+        "questionId": "d2-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) ¿Acerca de qué?",
-        "questionId": "d2-q2"
+        "text": "D) ¿En dónde?",
+        "questionId": "d2-q1"
       },
       {
         "index": 99,
@@ -773,8 +761,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué significa «in lacu»?",
-        "questionId": "d2-q3",
+        "text": "¿Qué pregunta responde «apud»?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -788,40 +776,40 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Junto al lago",
-        "questionId": "d2-q3"
+        "text": "A) ¿En dónde?",
+        "questionId": "d2-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Sin lago",
-        "questionId": "d2-q3"
+        "text": "B) ¿Con quién?",
+        "questionId": "d2-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) En el lago",
-        "questionId": "d2-q3"
+        "text": "C) ¿Por dónde pasas?",
+        "questionId": "d2-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Por el lago",
-        "questionId": "d2-q3"
+        "text": "D) ¿Qué falta?",
+        "questionId": "d2-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "¿Qué significa «apud lacum»?",
-        "questionId": "d2-q4",
+        "text": "¿Qué significa «in lacu»?",
+        "questionId": "d2-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -835,8 +823,8 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) En el lago",
-        "questionId": "d2-q4"
+        "text": "A) Con el lago",
+        "questionId": "d2-q3"
       },
       {
         "index": 107,
@@ -844,23 +832,23 @@
         "line": 3,
         "kind": "option",
         "text": "B) Sin lago",
-        "questionId": "d2-q4"
+        "questionId": "d2-q3"
       },
       {
         "index": 108,
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) Por el lago",
-        "questionId": "d2-q4"
+        "text": "C) En el lago",
+        "questionId": "d2-q3"
       },
       {
         "index": 109,
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) Junto al lago",
-        "questionId": "d2-q4"
+        "text": "D) Por el lago",
+        "questionId": "d2-q3"
       },
       {
         "index": 110,
@@ -875,7 +863,7 @@
         "line": 7,
         "kind": "question",
         "text": "¿Qué significa «apud magistrum»?",
-        "questionId": "d2-q5",
+        "questionId": "d2-q4",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -890,31 +878,31 @@
         "line": 8,
         "kind": "option",
         "text": "A) En el maestro",
-        "questionId": "d2-q5"
+        "questionId": "d2-q4"
       },
       {
         "index": 113,
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) Con el maestro",
-        "questionId": "d2-q5"
+        "text": "B) Sin maestro",
+        "questionId": "d2-q4"
       },
       {
         "index": 114,
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) Sin maestro",
-        "questionId": "d2-q5"
+        "text": "C) Por el maestro",
+        "questionId": "d2-q4"
       },
       {
         "index": 115,
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) Por el maestro",
-        "questionId": "d2-q5"
+        "text": "D) Con el maestro",
+        "questionId": "d2-q4"
       },
       {
         "index": 116,
@@ -928,8 +916,8 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿Cómo se dice «en la escuela»?",
-        "questionId": "d2-q6",
+        "text": "¿Qué significa «per pontem»?",
+        "questionId": "d2-q5",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -943,32 +931,32 @@
         "column": 3,
         "line": 14,
         "kind": "option",
-        "text": "A) in schola",
-        "questionId": "d2-q6"
+        "text": "A) Sin puente",
+        "questionId": "d2-q5"
       },
       {
         "index": 119,
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) apud scholam",
-        "questionId": "d2-q6"
+        "text": "B) Por el puente",
+        "questionId": "d2-q5"
       },
       {
         "index": 120,
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) per scholam",
-        "questionId": "d2-q6"
+        "text": "C) En el puente",
+        "questionId": "d2-q5"
       },
       {
         "index": 121,
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) sine schola",
-        "questionId": "d2-q6"
+        "text": "D) Con el puente",
+        "questionId": "d2-q5"
       },
       {
         "index": 122,
@@ -982,8 +970,8 @@
         "column": 3,
         "line": 19,
         "kind": "question",
-        "text": "¿Qué marca «apud»?",
-        "questionId": "d2-q7",
+        "text": "¿Qué significa «sine nave»?",
+        "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -997,32 +985,32 @@
         "column": 3,
         "line": 20,
         "kind": "option",
-        "text": "A) Estar dentro de un lugar",
-        "questionId": "d2-q7"
+        "text": "A) Sin barco",
+        "questionId": "d2-q6"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) Un camino",
-        "questionId": "d2-q7"
+        "text": "B) Con barco",
+        "questionId": "d2-q6"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) Compañía o cercanía",
-        "questionId": "d2-q7"
+        "text": "C) Por el barco",
+        "questionId": "d2-q6"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) Un tema",
-        "questionId": "d2-q7"
+        "text": "D) En el barco",
+        "questionId": "d2-q6"
       },
       {
         "index": 128,
@@ -1036,8 +1024,8 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "¿Qué significa «in ponte»?",
-        "questionId": "d2-q8",
+        "text": "¿Qué marca «per»?",
+        "questionId": "d2-q7",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -1051,32 +1039,32 @@
         "column": 3,
         "line": 26,
         "kind": "option",
-        "text": "A) En el puente",
-        "questionId": "d2-q8"
+        "text": "A) Algo que falta",
+        "questionId": "d2-q7"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
         "kind": "option",
-        "text": "B) Con el puente",
-        "questionId": "d2-q8"
+        "text": "B) Con quién estás",
+        "questionId": "d2-q7"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
         "kind": "option",
-        "text": "C) Sin puente",
-        "questionId": "d2-q8"
+        "text": "C) Por dónde pasas",
+        "questionId": "d2-q7"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
         "kind": "option",
-        "text": "D) Por el puente",
-        "questionId": "d2-q8"
+        "text": "D) Dónde estás",
+        "questionId": "d2-q7"
       },
       {
         "index": 134,
@@ -1090,7 +1078,7 @@
         "column": 3,
         "line": 31,
         "kind": "question",
-        "text": "Escribe dos frases con «in» y dos con",
+        "text": "Escribe una frase con «in» y otra con",
         "questionId": "d2-w1",
         "questionType": "write",
         "gutter": {
@@ -1136,7 +1124,7 @@
         "column": 3,
         "line": 36,
         "kind": "question",
-        "text": "Cuenta cuándo usas «in» y cuándo «apud».",
+        "text": "Cuenta cuándo usas «per» y cuándo «sine».",
         "questionId": "d2-w2",
         "questionType": "write",
         "gutter": {
@@ -1174,7 +1162,7 @@
         "column": 3,
         "line": 40,
         "kind": "question",
-        "text": "Dibuja el lago y rotula «in lacu».",
+        "text": "Dibuja un barco en el lago y rotula «in lacu».",
         "questionId": "d2-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1212,7 +1200,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja amigos junto al lago y rotula «apud",
+        "text": "Dibuja dos orillas sin puente y rotula «sine",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1227,7 +1215,7 @@
         "column": 3,
         "line": 45,
         "kind": "lesson",
-        "text": "lacum».",
+        "text": "ponte».",
         "questionId": "d2-w4"
       },
       {
@@ -1258,35 +1246,35 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja un lago con un barco en el agua."
+        "text": "Dibuja un lago con un barco: in lacu. Dibuja"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Rotula el barco: in lacu. Dibuja amigos"
+        "text": "amigos cruzando un puente: apud amicos"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "junto al lago: apud lacum. Escribe qué"
+        "text": "y per pontem. Deja una línea vacía bajo"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "significa cada rótulo."
+        "text": "cada rótulo."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 12,
+    "questionCount": 11,
     "questions": [
       {
         "id": "d2-q1",
@@ -1295,15 +1283,15 @@
         "prompt": "¿Qué pregunta responde «in»?",
         "choices": [
           "¿Con quién?",
-          "¿Desde dónde?",
-          "¿Acerca de qué?",
+          "¿Por dónde pasas?",
+          "¿Qué falta?",
           "¿En dónde?"
         ],
         "answer": "¿En dónde?",
         "slot": {
           "column": 2,
-          "line": 36,
-          "index": 88
+          "line": 42,
+          "index": 94
         }
       },
       {
@@ -1314,14 +1302,14 @@
         "choices": [
           "¿En dónde?",
           "¿Con quién?",
-          "¿Desde dónde?",
-          "¿Acerca de qué?"
+          "¿Por dónde pasas?",
+          "¿Qué falta?"
         ],
         "answer": "¿Con quién?",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1330,30 +1318,12 @@
         "type": "mcq",
         "prompt": "¿Qué significa «in lacu»?",
         "choices": [
-          "Junto al lago",
+          "Con el lago",
           "Sin lago",
           "En el lago",
           "Por el lago"
         ],
         "answer": "En el lago",
-        "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
-        }
-      },
-      {
-        "id": "d2-q4",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué significa «apud lacum»?",
-        "choices": [
-          "En el lago",
-          "Sin lago",
-          "Por el lago",
-          "Junto al lago"
-        ],
-        "answer": "Junto al lago",
         "slot": {
           "column": 3,
           "line": 1,
@@ -1361,15 +1331,15 @@
         }
       },
       {
-        "id": "d2-q5",
+        "id": "d2-q4",
         "originDay": 2,
         "type": "mcq",
         "prompt": "¿Qué significa «apud magistrum»?",
         "choices": [
           "En el maestro",
-          "Con el maestro",
           "Sin maestro",
-          "Por el maestro"
+          "Por el maestro",
+          "Con el maestro"
         ],
         "answer": "Con el maestro",
         "slot": {
@@ -1379,17 +1349,17 @@
         }
       },
       {
-        "id": "d2-q6",
+        "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cómo se dice «en la escuela»?",
+        "prompt": "¿Qué significa «per pontem»?",
         "choices": [
-          "in schola",
-          "apud scholam",
-          "per scholam",
-          "sine schola"
+          "Sin puente",
+          "Por el puente",
+          "En el puente",
+          "Con el puente"
         ],
-        "answer": "in schola",
+        "answer": "Por el puente",
         "slot": {
           "column": 3,
           "line": 13,
@@ -1397,17 +1367,17 @@
         }
       },
       {
-        "id": "d2-q7",
+        "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué marca «apud»?",
+        "prompt": "¿Qué significa «sine nave»?",
         "choices": [
-          "Estar dentro de un lugar",
-          "Un camino",
-          "Compañía o cercanía",
-          "Un tema"
+          "Sin barco",
+          "Con barco",
+          "Por el barco",
+          "En el barco"
         ],
-        "answer": "Compañía o cercanía",
+        "answer": "Sin barco",
         "slot": {
           "column": 3,
           "line": 19,
@@ -1415,17 +1385,17 @@
         }
       },
       {
-        "id": "d2-q8",
+        "id": "d2-q7",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué significa «in ponte»?",
+        "prompt": "¿Qué marca «per»?",
         "choices": [
-          "En el puente",
-          "Con el puente",
-          "Sin puente",
-          "Por el puente"
+          "Algo que falta",
+          "Con quién estás",
+          "Por dónde pasas",
+          "Dónde estás"
         ],
-        "answer": "En el puente",
+        "answer": "Por dónde pasas",
         "slot": {
           "column": 3,
           "line": 25,
@@ -1436,7 +1406,7 @@
         "id": "d2-w1",
         "originDay": 2,
         "type": "write",
-        "prompt": "Escribe dos frases con «in» y dos con «apud».",
+        "prompt": "Escribe una frase con «in» y otra con «apud».",
         "slot": {
           "column": 3,
           "line": 31,
@@ -1447,7 +1417,7 @@
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Cuenta cuándo usas «in» y cuándo «apud».",
+        "prompt": "Cuenta cuándo usas «per» y cuándo «sine».",
         "slot": {
           "column": 3,
           "line": 36,
@@ -1458,7 +1428,7 @@
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja el lago y rotula «in lacu».",
+        "prompt": "Dibuja un barco en el lago y rotula «in lacu».",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
@@ -1471,7 +1441,7 @@
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja amigos junto al lago y rotula «apud lacum».",
+        "prompt": "Dibuja dos orillas sin puente y rotula «sine ponte».",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

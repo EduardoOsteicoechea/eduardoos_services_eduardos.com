@@ -14,8 +14,8 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nAyer supiste que la Gran Sabana es una región y que cada estado tiene su capital. Hoy sales de Caracas y caminas hacia el mar."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nLa clase pasada supiste que la Gran Sabana es una región y que cada estado tiene su capital. Hoy visitas cada capital más de cerca."
       },
       {
         "id": "p2",
@@ -24,31 +24,31 @@
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Montañas y mar",
-        "body": "Sales de Caracas hacia el mar Caribe. ¿Qué hay en medio del camino?\n\nHay montañas: Caracas está en un valle. Al otro lado está el mar: La Guaira. En la Gran Sabana las montañas son tepuyes, de cima plana."
+        "heading": "Punto 3: La Guaira, estado con puerto",
+        "body": "Sales de Caracas hacia el mar. ¿Qué hay en La Guaira para los barcos?\n\nHay un puerto, donde llegan los barcos. En Maiquetía está el aeropuerto. La Guaira es una franja junto al mar."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: Un estado con puerto",
-        "body": "¿Qué crees que hay en La Guaira para que lleguen los barcos y los aviones?\n\nHay un puerto, donde llegan los barcos. En Maiquetía está el aeropuerto. La Guaira es una franja junto al mar."
-      },
-      {
-        "id": "p5",
-        "heading": "Punto 5: Un nombre repetido",
+        "heading": "Punto 4: Un nombre repetido",
         "body": "Una pregunta con truco: ¿la capital de La Guaira es Maiquetía?\n\nNo. La capital es La Guaira, igual que el estado. Maiquetía es otra ciudad del estado, famosa por su aeropuerto."
       },
       {
+        "id": "p5",
+        "heading": "Punto 5: Los Teques y Maracay",
+        "body": "Tierra adentro están Miranda y Aragua. ¿Cuál capital queda arriba, como un tepuy, y cuál abajo, como la sabana?\n\nLos Teques, de Miranda, va arriba, en las montañas cerca de Caracas. Maracay, de Aragua, va abajo, en un valle junto al lago de Valencia."
+      },
+      {
         "id": "p6",
-        "heading": "Punto 6: Dilo como guía",
-        "body": "Haz de guía como en la Gran Sabana. Di los cuatro pares en orden.\n\nDistrito Capital—Caracas. La Guaira—La Guaira. Miranda—Los Teques. Aragua—Maracay. Di primero el estado y luego la capital."
+        "heading": "Punto 6: No las mezcles",
+        "body": "Alguien dice que Maracay es la capital de Miranda. ¿Qué le respondes?\n\nNo. Maracay es la capital de Aragua. La de Miranda es Los Teques. Pregúntate: ¿capital de qué estado?"
       }
     ],
-    "summary": "Caracas guía a todo el país; La Guaira es un estado de costa con puerto y su capital se llama igual.",
+    "summary": "Caracas guía al país; La Guaira tiene puerto; Los Teques va en el cerro y Maracay en el valle.",
     "memoryPhrase": "**Distrito Capital**—Caracas · **La Guaira**—La Guaira · **Miranda**—Los Teques · **Aragua**—Maracay.",
     "weekRecap": "Distrito Capital—Caracas; La Guaira—La Guaira; Miranda—Los Teques; Aragua—Maracay. Cuatro pares de la Región Central en la espiral hacia los 24 estados de Venezuela.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja el mar Caribe arriba del recuadro. Debajo, una franja de costa con un puerto. Más abajo, montañas y un valle con Caracas. Al lado, un tepuy de la Gran Sabana.",
+    "imageBandInstruction": "Dibuja el mar Caribe arriba, con un puerto. Debajo, montañas con Los Teques en lo alto. Abajo, un valle con Maracay y un lago. Al lado, un tepuy de la Gran Sabana.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -56,7 +56,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -84,7 +84,7 @@
         "column": 1,
         "line": 5,
         "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 6,
@@ -98,28 +98,28 @@
         "column": 1,
         "line": 7,
         "kind": "lesson",
-        "text": "Ayer supiste que la Gran Sabana es"
+        "text": "La clase pasada supiste que la Gran"
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "una región y que cada estado tiene"
+        "text": "Sabana es una región y que cada estado"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "su capital. Hoy sales de Caracas"
+        "text": "tiene su capital. Hoy visitas cada"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "y caminas hacia el mar."
+        "text": "capital más de cerca."
       },
       {
         "index": 11,
@@ -146,134 +146,134 @@
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "lesson",
-        "text": "Los tepuyes te orientan en la sabana."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "¿Qué ciudad orienta a todo el país?"
+        "text": "Los tepuyes te orientan en la sabana."
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué ciudad orienta a todo el país?"
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "heading",
-        "text": "Punto 2: Caracas, capital del país"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 21,
         "column": 1,
         "line": 21,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 2: Caracas, capital del país"
       },
       {
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "lesson",
-        "text": "Es Caracas, en el Distrito Capital."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
         "kind": "lesson",
-        "text": "Allí está el gobierno de todo el país."
+        "text": "Es Caracas, en el Distrito Capital."
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "Es como un tepuy que todos ven."
+        "text": "Allí está el gobierno de todo el país."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Es como un tepuy que todos ven."
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
         "kind": "lesson",
-        "text": "Sales de Caracas hacia el mar Caribe."
+        "text": "________________________________________"
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
-        "kind": "lesson",
-        "text": "¿Qué hay en medio del camino?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Sales de Caracas hacia el mar. ¿Qué hay"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "en La Guaira para los barcos?"
       },
       {
         "index": 33,
@@ -286,8 +286,8 @@
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "heading",
-        "text": "Punto 3: Montañas y mar"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 35,
@@ -300,85 +300,85 @@
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "Hay montañas: Caracas está en un valle."
+        "kind": "heading",
+        "text": "Punto 3: La Guaira, estado con puerto"
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "lesson",
-        "text": "Al otro lado está el mar: La Guaira."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
         "kind": "lesson",
-        "text": "En la Gran Sabana las montañas"
+        "text": "Hay un puerto, donde llegan los barcos."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
         "kind": "lesson",
-        "text": "son tepuyes, de cima plana."
+        "text": "En Maiquetía está el aeropuerto."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La Guaira es una franja junto al mar."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
         "kind": "lesson",
-        "text": "¿Qué crees que hay en La Guaira para"
+        "text": "________________________________________"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "lesson",
-        "text": "que lleguen los barcos y los aviones?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿la capital de"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "La Guaira es Maiquetía?"
       },
       {
         "index": 48,
@@ -391,8 +391,8 @@
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "heading",
-        "text": "Punto 4: Un estado con puerto"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 50,
@@ -405,43 +405,43 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "Hay un puerto, donde llegan los barcos."
+        "kind": "heading",
+        "text": "Punto 4: Un nombre repetido"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "lesson",
-        "text": "En Maiquetía está el aeropuerto."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
         "kind": "lesson",
-        "text": "La Guaira es una franja junto al mar."
+        "text": "No. La capital es La Guaira,"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "igual que el estado."
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Maiquetía es otra ciudad del estado,"
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "famosa por su aeropuerto."
       },
       {
         "index": 57,
@@ -455,77 +455,77 @@
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿la capital de"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "La Guaira es Maiquetía?"
+        "text": "________________________________________"
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Tierra adentro están Miranda y Aragua."
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "heading",
-        "text": "Punto 5: Un nombre repetido"
+        "kind": "lesson",
+        "text": "¿Cuál capital queda arriba, como un"
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "tepuy, y cuál abajo, como la sabana?"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "No. La capital es La Guaira,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
         "kind": "lesson",
-        "text": "igual que el estado."
+        "text": "________________________________________"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "lesson",
-        "text": "Maiquetía es otra ciudad del estado,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "lesson",
-        "text": "famosa por su aeropuerto."
+        "kind": "heading",
+        "text": "Punto 5: Los Teques y Maracay"
       },
       {
         "index": 69,
@@ -539,42 +539,42 @@
         "column": 2,
         "line": 18,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Los Teques, de Miranda, va arriba,"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "en las montañas cerca de Caracas."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Maracay, de Aragua, va abajo,"
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
         "kind": "lesson",
-        "text": "Haz de guía como en la Gran Sabana."
+        "text": "en un valle junto al lago de Valencia."
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "lesson",
-        "text": "Di los cuatro pares en orden."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 76,
@@ -587,125 +587,113 @@
         "index": 77,
         "column": 2,
         "line": 25,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "heading",
-        "text": "Punto 6: Dilo como guía"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Alguien dice que Maracay es la capital"
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
         "kind": "lesson",
-        "text": "Distrito Capital—Caracas."
+        "text": "de Miranda. ¿Qué le respondes?"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "lesson",
-        "text": "La Guaira—La Guaira."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 82,
         "column": 2,
         "line": 30,
         "kind": "lesson",
-        "text": "Miranda—Los Teques. Aragua—Maracay."
+        "text": "________________________________________"
       },
       {
         "index": 83,
         "column": 2,
         "line": 31,
-        "kind": "lesson",
-        "text": "Di primero el estado y luego la capital."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 6: No las mezcles"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "No. Maracay es la capital de Aragua."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La de Miranda es Los Teques."
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "question",
-        "text": "¿En qué lugar está Caracas?",
-        "questionId": "d2-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "Pregúntate: ¿capital de qué estado?"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "option",
-        "text": "A) Miranda",
-        "questionId": "d2-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "option",
-        "text": "B) Aragua",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "option",
-        "text": "C) La Guaira",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "option",
-        "text": "D) Distrito Capital",
-        "questionId": "d2-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 93,
@@ -720,7 +708,7 @@
         "line": 42,
         "kind": "question",
         "text": "¿Qué ciudad es la capital del país?",
-        "questionId": "d2-q2",
+        "questionId": "d2-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -735,31 +723,31 @@
         "line": 43,
         "kind": "option",
         "text": "A) Los Teques",
-        "questionId": "d2-q2"
+        "questionId": "d2-q1"
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) Caracas",
-        "questionId": "d2-q2"
+        "text": "B) Maracay",
+        "questionId": "d2-q1"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) Maracay",
-        "questionId": "d2-q2"
+        "text": "C) La Guaira",
+        "questionId": "d2-q1"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) La Guaira",
-        "questionId": "d2-q2"
+        "text": "D) Caracas",
+        "questionId": "d2-q1"
       },
       {
         "index": 99,
@@ -773,8 +761,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué hay entre Caracas y el mar?",
-        "questionId": "d2-q3",
+        "text": "¿Qué hay en La Guaira para los barcos?",
+        "questionId": "d2-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -788,40 +776,40 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Un desierto",
-        "questionId": "d2-q3"
+        "text": "A) Un tepuy",
+        "questionId": "d2-q2"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Nieve",
-        "questionId": "d2-q3"
+        "text": "B) Un puerto",
+        "questionId": "d2-q2"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Montañas",
-        "questionId": "d2-q3"
+        "text": "C) Un valle",
+        "questionId": "d2-q2"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Una sabana",
-        "questionId": "d2-q3"
+        "text": "D) Una cueva",
+        "questionId": "d2-q2"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "¿Cómo son los tepuyes?",
-        "questionId": "d2-q4",
+        "text": "¿Dónde está el aeropuerto de hoy?",
+        "questionId": "d2-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -835,32 +823,32 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) Muy bajos",
-        "questionId": "d2-q4"
+        "text": "A) En Maracay",
+        "questionId": "d2-q3"
       },
       {
         "index": 107,
         "column": 3,
         "line": 3,
         "kind": "option",
-        "text": "B) Sin cima",
-        "questionId": "d2-q4"
+        "text": "B) En Los Teques",
+        "questionId": "d2-q3"
       },
       {
         "index": 108,
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) De hielo",
-        "questionId": "d2-q4"
+        "text": "C) En Maiquetía",
+        "questionId": "d2-q3"
       },
       {
         "index": 109,
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) De cima plana",
-        "questionId": "d2-q4"
+        "text": "D) En Caracas",
+        "questionId": "d2-q3"
       },
       {
         "index": 110,
@@ -874,8 +862,8 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "¿Qué hay en La Guaira para los barcos?",
-        "questionId": "d2-q5",
+        "text": "¿Cuál es la capital del estado La Guaira?",
+        "questionId": "d2-q4",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -889,32 +877,32 @@
         "column": 3,
         "line": 8,
         "kind": "option",
-        "text": "A) Un tepuy",
-        "questionId": "d2-q5"
+        "text": "A) Maiquetía",
+        "questionId": "d2-q4"
       },
       {
         "index": 113,
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) Un puerto",
-        "questionId": "d2-q5"
+        "text": "B) Caracas",
+        "questionId": "d2-q4"
       },
       {
         "index": 114,
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) Un valle",
-        "questionId": "d2-q5"
+        "text": "C) Maracay",
+        "questionId": "d2-q4"
       },
       {
         "index": 115,
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) Una cueva",
-        "questionId": "d2-q5"
+        "text": "D) La Guaira",
+        "questionId": "d2-q4"
       },
       {
         "index": 116,
@@ -928,8 +916,8 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿Dónde está el aeropuerto de hoy?",
-        "questionId": "d2-q6",
+        "text": "¿Cuál es la capital de Miranda?",
+        "questionId": "d2-q5",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -943,32 +931,32 @@
         "column": 3,
         "line": 14,
         "kind": "option",
-        "text": "A) En Maiquetía",
-        "questionId": "d2-q6"
+        "text": "A) Maracay",
+        "questionId": "d2-q5"
       },
       {
         "index": 119,
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "B) En Maracay",
-        "questionId": "d2-q6"
+        "text": "B) Los Teques",
+        "questionId": "d2-q5"
       },
       {
         "index": 120,
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) En Los Teques",
-        "questionId": "d2-q6"
+        "text": "C) Caracas",
+        "questionId": "d2-q5"
       },
       {
         "index": 121,
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) En Caracas",
-        "questionId": "d2-q6"
+        "text": "D) La Guaira",
+        "questionId": "d2-q5"
       },
       {
         "index": 122,
@@ -982,8 +970,8 @@
         "column": 3,
         "line": 19,
         "kind": "question",
-        "text": "¿Cuál es la capital de La Guaira?",
-        "questionId": "d2-q7",
+        "text": "¿Cuál es la capital de Aragua?",
+        "questionId": "d2-q6",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -997,32 +985,32 @@
         "column": 3,
         "line": 20,
         "kind": "option",
-        "text": "A) Maiquetía",
-        "questionId": "d2-q7"
+        "text": "A) Maracay",
+        "questionId": "d2-q6"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) Caracas",
-        "questionId": "d2-q7"
+        "text": "B) Los Teques",
+        "questionId": "d2-q6"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) La Guaira",
-        "questionId": "d2-q7"
+        "text": "C) Caracas",
+        "questionId": "d2-q6"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) Maracay",
-        "questionId": "d2-q7"
+        "text": "D) La Guaira",
+        "questionId": "d2-q6"
       },
       {
         "index": 128,
@@ -1082,7 +1070,7 @@
         "column": 3,
         "line": 30,
         "kind": "question",
-        "text": "Cuenta qué hay en La Guaira junto al mar.",
+        "text": "Explica cómo no mezclar Los Teques y",
         "questionId": "d2-w2",
         "questionType": "write",
         "gutter": {
@@ -1096,8 +1084,8 @@
         "index": 135,
         "column": 3,
         "line": 31,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "Maracay.",
         "questionId": "d2-w2"
       },
       {
@@ -1112,15 +1100,23 @@
         "index": 137,
         "column": 3,
         "line": 33,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w2"
       },
       {
         "index": 138,
         "column": 3,
         "line": 34,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 139,
+        "column": 3,
+        "line": 35,
         "kind": "question",
-        "text": "Dibuja el mar, las montañas y Caracas en",
+        "text": "Dibuja el mar, el puerto de La Guaira y",
         "questionId": "d2-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1131,19 +1127,11 @@
         }
       },
       {
-        "index": 139,
-        "column": 3,
-        "line": 35,
-        "kind": "lesson",
-        "text": "orden.",
-        "questionId": "d2-w3"
-      },
-      {
         "index": 140,
         "column": 3,
         "line": 36,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "Caracas.",
         "questionId": "d2-w3"
       },
       {
@@ -1158,15 +1146,23 @@
         "index": 142,
         "column": 3,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w3"
       },
       {
         "index": 143,
         "column": 3,
         "line": 39,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
         "kind": "question",
-        "text": "Dibuja La Guaira como una franja junto al",
+        "text": "Dibuja un cerro con Los Teques y un valle",
         "questionId": "d2-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1177,19 +1173,11 @@
         }
       },
       {
-        "index": 144,
-        "column": 3,
-        "line": 40,
-        "kind": "lesson",
-        "text": "mar.",
-        "questionId": "d2-w4"
-      },
-      {
         "index": 145,
         "column": 3,
         "line": 41,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "con Maracay.",
         "questionId": "d2-w4"
       },
       {
@@ -1204,8 +1192,9 @@
         "index": 147,
         "column": 3,
         "line": 43,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d2-w4"
       },
       {
         "index": 148,
@@ -1239,72 +1228,54 @@
         "index": 152,
         "column": 3,
         "line": 48,
-        "kind": "imageInstruction",
-        "text": "Dibuja el mar Caribe arriba del recuadro."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 153,
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Debajo, una franja de costa con un puerto."
+        "text": "Dibuja el mar Caribe arriba, con un puerto."
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "Más abajo, montañas y un valle con"
+        "text": "Debajo, montañas con Los Teques en lo"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "Caracas. Al lado, un tepuy de la Gran"
+        "text": "alto. Abajo, un valle con Maracay y un lago."
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "Sabana."
+        "text": "Al lado, un tepuy de la Gran Sabana."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 11,
+    "questionCount": 10,
     "questions": [
       {
         "id": "d2-q1",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿En qué lugar está Caracas?",
-        "choices": [
-          "Miranda",
-          "Aragua",
-          "La Guaira",
-          "Distrito Capital"
-        ],
-        "answer": "Distrito Capital",
-        "slot": {
-          "column": 2,
-          "line": 36,
-          "index": 88
-        }
-      },
-      {
-        "id": "d2-q2",
-        "originDay": 2,
-        "type": "mcq",
         "prompt": "¿Qué ciudad es la capital del país?",
         "choices": [
           "Los Teques",
-          "Caracas",
           "Maracay",
-          "La Guaira"
+          "La Guaira",
+          "Caracas"
         ],
         "answer": "Caracas",
         "slot": {
@@ -1314,43 +1285,7 @@
         }
       },
       {
-        "id": "d2-q3",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Qué hay entre Caracas y el mar?",
-        "choices": [
-          "Un desierto",
-          "Nieve",
-          "Montañas",
-          "Una sabana"
-        ],
-        "answer": "Montañas",
-        "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
-        }
-      },
-      {
-        "id": "d2-q4",
-        "originDay": 2,
-        "type": "mcq",
-        "prompt": "¿Cómo son los tepuyes?",
-        "choices": [
-          "Muy bajos",
-          "Sin cima",
-          "De hielo",
-          "De cima plana"
-        ],
-        "answer": "De cima plana",
-        "slot": {
-          "column": 3,
-          "line": 1,
-          "index": 105
-        }
-      },
-      {
-        "id": "d2-q5",
+        "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
         "prompt": "¿Qué hay en La Guaira para los barcos?",
@@ -1362,23 +1297,59 @@
         ],
         "answer": "Un puerto",
         "slot": {
+          "column": 2,
+          "line": 48,
+          "index": 100
+        }
+      },
+      {
+        "id": "d2-q3",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Dónde está el aeropuerto de hoy?",
+        "choices": [
+          "En Maracay",
+          "En Los Teques",
+          "En Maiquetía",
+          "En Caracas"
+        ],
+        "answer": "En Maiquetía",
+        "slot": {
+          "column": 3,
+          "line": 1,
+          "index": 105
+        }
+      },
+      {
+        "id": "d2-q4",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Cuál es la capital del estado La Guaira?",
+        "choices": [
+          "Maiquetía",
+          "Caracas",
+          "Maracay",
+          "La Guaira"
+        ],
+        "answer": "La Guaira",
+        "slot": {
           "column": 3,
           "line": 7,
           "index": 111
         }
       },
       {
-        "id": "d2-q6",
+        "id": "d2-q5",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Dónde está el aeropuerto de hoy?",
+        "prompt": "¿Cuál es la capital de Miranda?",
         "choices": [
-          "En Maiquetía",
-          "En Maracay",
-          "En Los Teques",
-          "En Caracas"
+          "Maracay",
+          "Los Teques",
+          "Caracas",
+          "La Guaira"
         ],
-        "answer": "En Maiquetía",
+        "answer": "Los Teques",
         "slot": {
           "column": 3,
           "line": 13,
@@ -1386,17 +1357,17 @@
         }
       },
       {
-        "id": "d2-q7",
+        "id": "d2-q6",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Cuál es la capital de La Guaira?",
+        "prompt": "¿Cuál es la capital de Aragua?",
         "choices": [
-          "Maiquetía",
+          "Maracay",
+          "Los Teques",
           "Caracas",
-          "La Guaira",
-          "Maracay"
+          "La Guaira"
         ],
-        "answer": "La Guaira",
+        "answer": "Maracay",
         "slot": {
           "column": 3,
           "line": 19,
@@ -1418,7 +1389,7 @@
         "id": "d2-w2",
         "originDay": 2,
         "type": "write",
-        "prompt": "Cuenta qué hay en La Guaira junto al mar.",
+        "prompt": "Explica cómo no mezclar Los Teques y Maracay.",
         "slot": {
           "column": 3,
           "line": 30,
@@ -1429,26 +1400,26 @@
         "id": "d2-w3",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja el mar, las montañas y Caracas en orden.",
+        "prompt": "Dibuja el mar, el puerto de La Guaira y Caracas.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 34,
-          "index": 138
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d2-w4",
         "originDay": 2,
         "type": "write",
-        "prompt": "Dibuja La Guaira como una franja junto al mar.",
+        "prompt": "Dibuja un cerro con Los Teques y un valle con Maracay.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 39,
-          "index": 143
+          "line": 40,
+          "index": 144
         }
       }
     ]

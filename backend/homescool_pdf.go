@@ -46,7 +46,7 @@ func buildEoschoolLetterV2PDF(raw []byte, doc EoschoolDocument) ([]byte, error) 
 	if err != nil {
 		return nil, err
 	}
-	page = pdf.AttachHomescoolPracticeImage(page, doc.Subject, doc.Week)
+	page = pdf.AttachHomescoolPracticeImage(page, doc.Subject, doc.Week, doc.Day)
 	return pdf.BuildHomescoolLetterGridPDF([]pdf.HCLetterPageInk{page})
 }
 

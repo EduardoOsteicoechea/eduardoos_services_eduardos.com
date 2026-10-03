@@ -1,9 +1,12 @@
 /**
  * Historia · ciclo 3 · semana 1 · nivel 6 — "Los primeros pueblos de Venezuela".
- * Formato Ask First v2 con metáfora venezolana.
+ * Formato Ask First v3 (3 días) con metáfora venezolana.
  * Hito: Palafitos de la Laguna de Sinamaica (Zulia): casas levantadas sobre el agua con palos.
  * Datos seguros usados: pueblos añú, casas sobre el agua con palos (palafitos), canoas,
  * vivir con el entorno. Nada más.
+ *
+ * Reparto: d1 = panorama (quiénes y dónde); d2 = Andes y ríos de cerca (Timotocuicas, Caribes, Arawacos);
+ * d3 = los Wayús, cómo se guarda el saber y contar los cuatro pueblos con orden.
  *
  * Nota de hechos: los Timotocuicas se ubican en los Andes venezolanos. Caribes y Arawacos:
  * costas y ríos. Wayús: La Guajira. Los añú NO se cuentan entre los cuatro pueblos guía.
@@ -14,7 +17,7 @@ export default [
     key: "his-c3-w1-d1",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
           "Ya conoces montañas, ríos y costas",
           "de Venezuela. Hoy preguntas quién",
@@ -42,8 +45,7 @@ export default [
         a: [
           "No vivían igual: cada pueblo tenía",
           "su lugar, su lengua y sus costumbres.",
-          "Los palafitos de Sinamaica son casas",
-          "levantadas sobre el agua con palos.",
+          "Un palafito es una casa sobre el agua.",
         ],
       },
       {
@@ -81,7 +83,6 @@ export default [
           "Lo sabemos por objetos antiguos,",
           "como vasijas de barro, y por relatos",
           "que van de padres a hijos.",
-          "Los estudiamos con respeto.",
         ],
       },
     ],
@@ -119,11 +120,11 @@ export default [
     key: "his-c3-w1-d2",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
-          "Ayer viste que cada pueblo tenía",
-          "su lugar. Los añú de Sinamaica viven",
-          "sobre el agua; hoy subes a los Andes.",
+          "La clase pasada viste a los cuatro",
+          "pueblos y su lugar. Desde Sinamaica",
+          "hoy subes a los Andes y bajas a los ríos.",
         ],
       },
       {
@@ -131,24 +132,11 @@ export default [
           "Un palafito se sostiene con palos.",
           "¿Cómo sostener la tierra en la montaña?",
         ],
-        h: "Punto 2: Sembrar en las montañas",
+        h: "Punto 2: Terrazas para sembrar",
         a: [
           "Los Timotocuicas vivían en los Andes.",
-          "Allí hacían terrazas: escalones planos",
-          "en la montaña. Así la tierra quedaba",
-          "firme y se podía sembrar.",
-        ],
-      },
-      {
-        q: [
-          "En la montaña hace frío. ¿Qué crees",
-          "que se cultivaba allá arriba?",
-        ],
-        h: "Punto 3: Qué cultivaban",
-        a: [
-          "Cultivaban maíz y papa, entre otros.",
-          "Un cultivo es una planta sembrada",
-          "para comer.",
+          "Hacían terrazas: escalones planos",
+          "en la montaña, para sembrar maíz y papa.",
         ],
       },
       {
@@ -156,12 +144,11 @@ export default [
           "En Sinamaica una casa necesita palos",
           "firmes. ¿Y una aldea, quién la guía?",
         ],
-        h: "Punto 4: Un jefe llamado cacique",
+        h: "Punto 3: Un jefe llamado cacique",
         a: [
           "Cada comunidad tenía un jefe llamado",
           "cacique. Guiaba al pueblo y ayudaba",
-          "a decidir. Esa forma de organizarse",
-          "se llama cacicazgo.",
+          "a decidir. Eso se llama cacicazgo.",
         ],
       },
       {
@@ -169,7 +156,7 @@ export default [
           "Los añú viven en palafitos. Si tu aldea",
           "no tiene algo, ¿cómo lo consigues?",
         ],
-        h: "Punto 5: El trueque",
+        h: "Punto 4: El trueque",
         a: [
           "Con el trueque se cambia una cosa",
           "por otra, sin dinero. Los pueblos",
@@ -178,27 +165,39 @@ export default [
       },
       {
         q: [
-          "Pregunta con truco: ¿vivían en la costa",
-          "los Timotocuicas, o en la montaña?",
+          "En la Laguna de Sinamaica hay canoas.",
+          "¿Cómo viajas por el agua sin puentes?",
         ],
-        h: "Punto 6: Cuidado con el lugar",
+        h: "Punto 5: Viajar en canoa",
         a: [
-          "Vivían en la montaña, en los Andes.",
-          "Los palafitos están en el Zulia.",
-          "Une cada pueblo con su lugar.",
+          "Caribes y Arawacos usaban canoas",
+          "en ríos y costas. La canoa es una barca",
+          "hecha de un tronco.",
+        ],
+      },
+      {
+        q: [
+          "Una pregunta con truco: ¿quién sembraba",
+          "yuca y quién pescaba en la costa?",
+        ],
+        h: "Punto 6: La yuca y la pesca",
+        a: [
+          "Los Arawacos sembraban yuca, una raíz",
+          "que se come cocida. Los Caribes",
+          "pescaban en la costa y en los ríos.",
         ],
       },
     ],
     quiz: {
       mcq: [
-        { q: "¿Dónde vivían los Timotocuicas?", o: ["En los Andes", "En La Guajira", "En la costa", "En una isla"] },
         { q: "¿Qué es una terraza?", o: ["Un escalón plano en la montaña", "Una canoa grande", "Un tejido", "Un idioma"] },
-        { q: "¿Para qué servían las terrazas?", o: ["Para sembrar con tierra firme", "Para pescar", "Para navegar", "Para tejer"] },
         { q: "¿Qué cultivaban los Timotocuicas?", o: ["Maíz y papa", "Solo pescado", "Solo cabras", "Solo yuca"] },
-        { q: "¿Con qué se sostiene un palafito?", o: ["Con palos", "Con velas", "Con nieve", "Con terrazas"] },
         { q: "¿Cómo se llamaba el jefe de una aldea?", o: ["Cacique", "Pescador", "Tejedor", "Navegante"] },
-        { q: "Varias aldeas guiadas por un jefe: ¿cómo se llama esa forma de organizarse?", o: ["Cacicazgo", "Trueque", "Terraza", "Cultivo"] },
+        { q: "¿Cómo se llama guiarse con un cacique?", o: ["Cacicazgo", "Trueque", "Terraza", "Cultivo"] },
         { q: "¿Qué es el trueque?", o: ["Cambiar una cosa por otra", "Comprar con dinero", "Tejer una hamaca", "Dibujar en piedra"] },
+        { q: "¿Qué es una canoa?", o: ["Una barca hecha de un tronco", "Una hamaca tejida", "Un mapa antiguo", "Un jefe de aldea"] },
+        { q: "¿Qué sembraban los Arawacos?", o: ["Yuca", "Trigo", "Uvas", "Arroz"] },
+        { q: "¿Qué hacían los Caribes en la costa?", o: ["Pescaban", "Criaban cabras", "Hacían terrazas", "Tejían hamacas"] },
       ],
       write: [
         "Escribe qué cultivaban los Timotocuicas y dónde.",
@@ -206,16 +205,16 @@ export default [
       ],
       schematic: [
         "Dibuja una montaña con terrazas y rotula qué se siembra.",
-        "Dibuja el trueque entre dos aldeas.",
+        "Dibuja una canoa en un río con yuca y peces.",
       ],
     },
     image: [
       "Dibuja una montaña con terrazas",
       "y rotula el maíz y la papa.",
-      "Al lado, dibuja un palafito sobre palos",
-      "y escribe Sinamaica. Añade un cacique.",
+      "Al lado, dibuja una canoa en un río",
+      "con yuca y peces, y un palafito.",
     ],
-    summary: "Los Timotocuicas vivían en los Andes, hacían terrazas y tenían caciques. Cambiaban cosas con el trueque.",
+    summary: "Los Timotocuicas hacían terrazas en los Andes y tenían caciques. Caribes y Arawacos usaban canoas.",
   },
 
   // ───────────────────────── DÍA 3 ─────────────────────────
@@ -223,144 +222,23 @@ export default [
     key: "his-c3-w1-d3",
     units: [
       {
-        h: "Punto 1: Repaso de ayer",
+        h: "Punto 1: Repaso de la clase pasada",
         a: [
-          "Ayer conociste a los Timotocuicas:",
-          "terrazas, maíz, papa y caciques.",
-          "Hoy bajas al agua, como en Sinamaica.",
-        ],
-      },
-      {
-        q: [
-          "En la Laguna de Sinamaica hay canoas.",
-          "¿Cómo viajas por el agua sin puentes?",
-        ],
-        h: "Punto 2: Viajar en canoa",
-        a: [
-          "Caribes y Arawacos usaban canoas",
-          "en ríos y costas. La canoa es una barca",
-          "hecha de un tronco. Con ella pescaban",
-          "y visitaban otras aldeas.",
-        ],
-      },
-      {
-        q: [
-          "Los palafitos están junto al agua.",
-          "¿Qué se puede sembrar cerca de un río?",
-        ],
-        h: "Punto 3: La yuca y la pesca",
-        a: [
-          "Los Arawacos sembraban yuca, una raíz",
-          "que se come cocida. Los Caribes",
-          "pescaban en la costa y en los ríos.",
-          "Con las canoas cambiaban alimentos.",
-        ],
-      },
-      {
-        q: [
-          "Antes de los libros, ¿cómo enseñaban",
-          "los abuelos lo que sabían?",
-        ],
-        h: "Punto 4: Saber que se cuenta",
-        a: [
-          "Lo enseñaban hablando: con historias",
-          "y canciones. A eso se le llama",
-          "tradición oral. Los niños escuchaban",
-          "y repetían para no olvidar.",
-        ],
-      },
-      {
-        q: [
-          "¿Y si quieres dejar un mensaje para",
-          "siempre? ¿Dónde lo dibujarías?",
-        ],
-        h: "Punto 5: Dibujos en la piedra",
-        a: [
-          "Muchos pueblos grababan dibujos",
-          "en rocas. Se llaman petroglifos.",
-          "Hay petroglifos en distintos lugares",
-          "de Venezuela: mensajes muy antiguos.",
-        ],
-      },
-      {
-        q: [
-          "Una pregunta con truco: ¿los Caribes",
-          "son de cuentos o un pueblo real?",
-        ],
-        h: "Punto 6: Un pueblo real",
-        a: [
-          "Los Caribes fueron un pueblo real,",
-          "con cultura propia. Se conocían por",
-          "navegar en canoa y pescar en la costa.",
-          "Respétalos, como a la gente de Sinamaica.",
-        ],
-      },
-    ],
-    quiz: {
-      mcq: [
-        { q: "¿Qué es una canoa?", o: ["Una barca hecha de un tronco", "Una hamaca tejida", "Un mapa antiguo", "Un jefe de aldea"] },
-        { q: "¿Qué sembraban los Arawacos?", o: ["Yuca", "Trigo", "Uvas", "Arroz"] },
-        { q: "¿Qué hacían los Caribes en la costa?", o: ["Pescaban", "Criaban cabras", "Hacían terrazas", "Tejían hamacas"] },
-        { q: "¿Cómo enseñaban los abuelos sin libros?", o: ["Hablando, con historias y canciones", "Con computadoras", "Con cartas", "Con televisión"] },
-        { q: "¿Cómo se llama contar saberes hablando?", o: ["Tradición oral", "Cacicazgo", "Trueque", "Terraza"] },
-        { q: "¿Qué son los petroglifos?", o: ["Dibujos grabados en rocas", "Barcos de madera", "Mapas de papel", "Telas tejidas"] },
-        { q: "¿Los Caribes fueron un pueblo real?", o: ["Sí, con cultura propia", "No, son de cuentos", "Fue un solo guerrero", "Eran los españoles"] },
-        { q: "¿Para qué usaban canoas estos pueblos?", o: ["Para viajar por ríos y costas", "Para sembrar en montañas", "Para criar animales", "Para tejer"] },
-      ],
-      write: [
-        "Escribe dos cosas que hacían Caribes y Arawacos.",
-        "Explica con tus palabras qué es la tradición oral.",
-      ],
-      schematic: [
-        "Dibuja una canoa en un río con yuca y peces.",
-        "Dibuja un petroglifo con un mensaje sencillo.",
-      ],
-    },
-    image: [
-      "Dibuja una canoa en un río o laguna.",
-      "Rotula la canoa, la yuca y los peces.",
-      "Al fondo dibuja un palafito: Sinamaica.",
-      "Inventa un petroglifo y su mensaje.",
-    ],
-    summary: "Caribes y Arawacos usaban canoas en ríos y costas. Enseñaban hablando y grababan petroglifos.",
-  },
-
-  // ───────────────────────── DÍA 4 ─────────────────────────
-  {
-    key: "his-c3-w1-d4",
-    units: [
-      {
-        h: "Punto 1: Repaso de ayer",
-        a: [
-          "Ayer viste canoas, yuca y petroglifos,",
-          "como las canoas de Sinamaica.",
-          "Hoy conoces un pueblo de tierra seca.",
+          "La clase pasada viste terrazas, caciques,",
+          "trueque y canoas, como las de Sinamaica.",
+          "Hoy conoces a los Wayús y lo ordenas todo.",
         ],
       },
       {
         q: [
           "Los añú viven con el agua de la laguna.",
-          "¿Quién vive donde hay sol y poca agua?",
+          "¿Quién vive donde hay sol y poco agua?",
         ],
         h: "Punto 2: La Guajira",
         a: [
-          "Ese lugar existe: se llama La Guajira.",
-          "Está en el noroccidente, junto al mar.",
-          "Es seca y con mucho viento.",
-          "Allí viven los Wayús, o wayúu.",
-        ],
-      },
-      {
-        q: [
-          "Con poca hierba, ¿qué animales crees",
-          "que se pueden criar?",
-        ],
-        h: "Punto 3: Pastores del desierto",
-        a: [
-          "Los Wayús crían cabras y ovejas.",
-          "Cuidar animales se llama pastoreo.",
-          "Los trajeron los españoles. Los Wayús",
-          "los hicieron parte de su vida.",
+          "Ese lugar se llama La Guajira. Es seco,",
+          "con mucho viento, junto al mar.",
+          "Allí viven los Wayús y crían cabras.",
         ],
       },
       {
@@ -368,88 +246,43 @@ export default [
           "Si no tienes cama, ¿cómo podrías dormir?",
           "Pista: es algo que se cuelga.",
         ],
-        h: "Punto 4: El chinchorro",
+        h: "Punto 3: El chinchorro",
         a: [
           "Los Wayús tejen chinchorros:",
           "hamacas hechas a mano para dormir.",
           "Tejer es entrelazar hilos y hacer tela.",
-          "Cada diseño tejido tiene significado.",
         ],
       },
       {
         q: [
-          "¿Crees que los Wayús aceptaron que otros",
-          "mandaran en su tierra?",
+          "¿Los Wayús aceptaron que otros mandaran",
+          "en su tierra? ¿Y su cultura sigue hoy?",
         ],
-        h: "Punto 5: Defender su tierra",
+        h: "Punto 4: Resistir y seguir vivos",
         a: [
-          "Los Wayús defendieron su territorio",
-          "por mucho tiempo. Eso es resistencia:",
-          "no rendirse ante lo que se impone.",
-          "Sus familias se organizaban en clanes.",
+          "Defendieron su territorio mucho tiempo.",
+          "Eso es resistencia: no rendirse.",
+          "Hoy siguen tejiendo y hablando su idioma.",
         ],
       },
       {
         q: [
-          "Los palafitos de Sinamaica se ven hoy.",
-          "¿La cultura wayúu quedó en el pasado?",
+          "Sin libros, ¿cómo guardaban sus saberes?",
+          "¿Y cómo dejabas un mensaje para siempre?",
         ],
-        h: "Punto 6: Una memoria viva",
+        h: "Punto 5: Hablar y grabar",
         a: [
-          "Sigue viva: los Wayús hablan su idioma",
-          "y tejen hoy. Se llama wayuunaiki.",
-          "Como los palafitos, que se ven hoy,",
-          "una cultura que sigue es memoria viva.",
-        ],
-      },
-    ],
-    quiz: {
-      mcq: [
-        { q: "¿Dónde viven los Wayús?", o: ["En La Guajira", "En los Andes", "En un río", "Sobre la laguna"] },
-        { q: "¿Cómo es La Guajira?", o: ["Seca y con mucho viento", "Fría y con nieve", "Llena de selva", "Siempre inundada"] },
-        { q: "¿Qué es el pastoreo?", o: ["Cuidar animales", "Dibujar mapas", "Navegar en canoa", "Cambiar cosas"] },
-        { q: "¿Qué es un chinchorro?", o: ["Una hamaca hecha a mano", "Una canoa", "Un tipo de mapa", "Un jefe"] },
-        { q: "¿Qué significa tejer?", o: ["Entrelazar hilos y hacer tela", "Grabar en una roca", "Navegar la costa", "Sembrar yuca"] },
-        { q: "¿Qué hicieron los Wayús con su tierra?", o: ["La defendieron mucho tiempo", "La abandonaron", "Nunca se opusieron", "Se hicieron navegantes"] },
-        { q: "¿Cómo se llama el idioma de los Wayús?", o: ["Wayuunaiki", "Latín", "Inglés", "Francés"] },
-        { q: "¿Qué es la memoria viva?", o: ["Una cultura que sigue hoy", "Un libro antiguo", "Un dibujo en piedra", "Una canoa"] },
-      ],
-      write: [
-        "Escribe tres cosas que hacen los Wayús.",
-        "Explica qué es la resistencia con tus palabras.",
-      ],
-      schematic: [
-        "Dibuja un esquema: La Guajira, cabras y chinchorro.",
-        "Dibuja un chinchorro colgado y sus partes.",
-      ],
-    },
-    image: [
-      "Dibuja La Guajira: sol, viento y cabras.",
-      "Dibuja un chinchorro entre dos postes.",
-      "Rotula: La Guajira, cabras y chinchorro.",
-      "Al lado, dibuja un palafito: Sinamaica.",
-    ],
-    summary: "Los Wayús viven en La Guajira, crían cabras, tejen chinchorros y defendieron su tierra. Su cultura sigue viva.",
-  },
-
-  // ───────────────────────── DÍA 5 ─────────────────────────
-  {
-    key: "his-c3-w1-d5",
-    units: [
-      {
-        h: "Punto 1: Repaso de ayer",
-        a: [
-          "Ayer viste a los Wayús en La Guajira.",
-          "Hoy ordenas los cuatro pueblos,",
-          "con Sinamaica de guía.",
+          "Enseñaban hablando, con historias y",
+          "canciones: es la tradición oral. Y grababan",
+          "dibujos en rocas, los petroglifos.",
         ],
       },
       {
         q: [
-          "Un palafito se sostiene con palos.",
-          "¿Quiénes fueron los primeros habitantes?",
+          "Vas a contarlo en casa, con inicio,",
+          "medio y final. ¿Con qué frase empiezas?",
         ],
-        h: "Punto 2: Los cuatro pueblos",
+        h: "Punto 6: Cómo contarlo con orden",
         a: [
           "Los primeros habitantes de Venezuela",
           "antes de la llegada de Colón fueron",
@@ -457,71 +290,21 @@ export default [
           "Arawacos y Wayús.",
         ],
       },
-      {
-        q: [
-          "Sinamaica está en el Zulia. ¿Dónde",
-          "vivía cada uno de los cuatro pueblos?",
-        ],
-        h: "Punto 3: Cada pueblo, su lugar",
-        a: [
-          "Timotocuicas: Andes, terrazas y maíz.",
-          "Caribes y Arawacos: ríos, canoas, yuca.",
-          "Wayús: La Guajira, cabras y chinchorros.",
-        ],
-      },
-      {
-        q: [
-          "¿Qué tenían en común estos pueblos?",
-          "Piensa en jefes, trueque y mensajes.",
-        ],
-        h: "Punto 4: Lo que compartían",
-        a: [
-          "Tenían jefes, como los caciques.",
-          "Cambiaban cosas con el trueque.",
-          "Enseñaban hablando y grababan",
-          "petroglifos en las rocas.",
-        ],
-      },
-      {
-        q: [
-          "Vas a contarle esto a alguien en casa.",
-          "¿Empiezas por Sinamaica o por Colón?",
-        ],
-        h: "Punto 5: Cómo contarlo con orden",
-        a: [
-          "Un relato tiene inicio, medio y final.",
-          "Inicio: «Venezuela ya tenía pueblos».",
-          "Medio: los cuatro pueblos y un dato.",
-          "Final: por qué hay que respetarlos.",
-        ],
-      },
-      {
-        q: [
-          "Con decir «Sinamaica» no la conoces.",
-          "¿Basta con repetir los cuatro nombres?",
-        ],
-        h: "Punto 6: Saber más que nombres",
-        a: [
-          "No basta con los nombres.",
-          "Hay que saber dónde y cómo vivía",
-          "cada pueblo. Así cuentas con respeto.",
-        ],
-      },
     ],
     quiz: {
       mcq: [
-        { q: "¿Cuántos pueblos ordenaste hoy?", o: ["Cuatro", "Dos", "Seis", "Nueve"] },
-        { q: "¿Quiénes vivían en los Andes?", o: ["Timotocuicas", "Wayús", "Caribes", "Arawacos"] },
-        { q: "¿Quiénes viven en La Guajira?", o: ["Wayús", "Timotocuicas", "Arawacos", "Caribes"] },
-        { q: "¿Quiénes usaban canoas en ríos?", o: ["Caribes y Arawacos", "Solo Timotocuicas", "Solo Wayús", "Nadie"] },
-        { q: "¿Qué se hacía para cambiar cosas?", o: ["Trueque", "Cacicazgo", "Pastoreo", "Petroglifo"] },
-        { q: "¿Qué jefes guiaban a la comunidad?", o: ["Los caciques", "Los pescadores", "Los tejedores", "Los pastores"] },
+        { q: "¿Dónde viven los Wayús?", o: ["En La Guajira", "En los Andes", "En un río", "Sobre la laguna"] },
+        { q: "¿Cómo es La Guajira?", o: ["Seca y con mucho viento", "Fría y con nieve", "Llena de selva", "Siempre inundada"] },
+        { q: "¿Qué es un chinchorro?", o: ["Una hamaca hecha a mano", "Una canoa", "Un tipo de mapa", "Un jefe"] },
+        { q: "¿Qué hicieron los Wayús con su tierra?", o: ["La defendieron mucho tiempo", "La abandonaron", "Nunca se opusieron", "Se hicieron navegantes"] },
+        { q: "¿Cómo enseñaban los abuelos sin libros?", o: ["Hablando, con historias y canciones", "Con computadoras", "Con cartas", "Con televisión"] },
+        { q: "¿Qué son los petroglifos?", o: ["Dibujos grabados en rocas", "Barcos de madera", "Mapas de papel", "Telas tejidas"] },
         { q: "¿Qué partes tiene un relato?", o: ["Inicio, medio y final", "Solo nombres", "Solo dibujos", "Solo fechas"] },
-        { q: "¿Qué hay que saber además de nombres?", o: ["Dónde y cómo vivía cada pueblo", "Solo una fecha", "Solo los colores", "Nada más"] },
+        { q: "¿Quiénes vivían en los Andes?", o: ["Timotocuicas", "Wayús", "Caribes", "Arawacos"] },
       ],
       write: [
         "Escribe los cuatro pueblos y dónde vivían.",
-        "Cuenta con tus palabras cómo vivía un pueblo.",
+        "Cuenta con tus palabras cómo vivían los Wayús.",
       ],
       schematic: [
         "Dibuja un mapa con los cuatro pueblos.",
@@ -531,9 +314,9 @@ export default [
     image: [
       "Dibuja un mapa con montañas, costa,",
       "ríos y desierto. Rotula cada pueblo.",
-      "Añade un palafito en Sinamaica, Zulia.",
-      "Revisa que estén los cuatro pueblos.",
+      "Añade un chinchorro y un palafito",
+      "en Sinamaica. Revisa los cuatro pueblos.",
     ],
-    summary: "Timotocuicas, Caribes, Arawacos y Wayús vivían en lugares distintos. Cuéntalos con inicio, medio y final.",
+    summary: "Los Wayús viven en La Guajira y resisten. Timotocuicas, Caribes, Arawacos y Wayús vivían en lugares distintos.",
   },
 ];

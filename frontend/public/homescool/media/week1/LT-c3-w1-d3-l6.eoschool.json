@@ -14,42 +14,42 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nAyer pusiste cada hito en su línea. Mesopotamia está entre el Tigris y el Éufrates. Hoy llegan dos nombres nuevos, como dos petroglifos en la misma roca."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\nLa clase pasada separaste Babel y los sumerios en dos líneas. Hoy sumas más pueblos, como más petroglifos en la roca."
       },
       {
         "id": "p2",
-        "heading": "Punto 2: Babel y los sumerios",
-        "body": "Hoy hay dos nombres nuevos: Babel y los sumerios. ¿Son lo mismo?\n\nNo los mezclamos: vienen de fuentes distintas. Babel aparece en Génesis. Los sumerios se estudian con historia y con el mapa. Cada uno, en su línea."
+        "heading": "Punto 2: Más pueblos en la línea",
+        "body": "Tu línea tiene solo dos nombres. ¿Qué harías para contar el mundo antiguo?\n\nAñade otros pueblos del mundo antiguo. Cada pueblo nuevo va en la línea y en el mapa, como un petroglifo más."
       },
       {
         "id": "p3",
-        "heading": "Punto 3: Dónde vivían los sumerios",
-        "body": "Los sumerios fueron un pueblo, como el que grabó petroglifos. ¿Dónde vivían?\n\nVivían en Mesopotamia, entre el Tigris y el Éufrates. Un pueblo es gente con costumbres propias. Escribían con marcas de cuña en barro: el cuneiforme."
+        "heading": "Punto 3: Cuatro lugares en el mapa",
+        "body": "Mira el mapa. ¿Dónde crees que quedan Egipto, India, Creta y Grecia?\n\nEgipto queda en África, junto al Nilo. India queda en el sur de Asia. Creta es una isla del Mediterráneo. Grecia queda en el sur de Europa."
       },
       {
         "id": "p4",
-        "heading": "Punto 4: La ficha de Babel",
-        "body": "Haz una ficha de Babel, como un rótulo junto a un petroglifo. ¿Qué escribes?\n\nLa ficha lleva una frase y una etiqueta. Frase: el relato cuenta de una ciudad, una torre y de lenguas que se volvieron distintas. Etiqueta: «Génesis»."
+        "heading": "Punto 4: Antes o después",
+        "body": "Llega un pueblo nuevo a tu línea. ¿Qué le preguntas sobre el tiempo?\n\nPreguntas: ¿va antes o después de lo que ya marcaste? Los sumerios vivieron mucho antes que los griegos."
       },
       {
         "id": "p5",
-        "heading": "Punto 5: La ficha de los sumerios",
-        "body": "Ahora la ficha de los sumerios. ¿Qué etiqueta lleva? ¿Y qué frase pondrías?\n\nFrase: los sumerios vivieron en Mesopotamia. Etiqueta: «historia». Añade un dibujo de los dos ríos, como un petroglifo junto al rótulo."
+        "heading": "Punto 5: Contar con orden",
+        "body": "Eres guía junto a un petroglifo y lees tu línea en voz alta. ¿Cómo la cuentas?\n\nOrden antiguo: primero el relato, después el mapa. Recuerda: Babel, sumerios (Tigris y Éufrates), y otros pueblos del mundo antiguo."
       },
       {
         "id": "p6",
-        "heading": "Punto 6: No mezclar",
-        "body": "Una pregunta con truco: ¿Babel es una ciudad de los sumerios?\n\nLa lección presenta a Babel como un relato de Génesis. No decimos que sea una ciudad sumeria. Si los juntas, explica por qué o sepáralos en pistas."
+        "heading": "Punto 6: Resumir en tres frases",
+        "body": "¿Basta con repetir una lista de nombres? ¿Qué más necesitas de cada uno?\n\nNo basta. Di qué es una línea de tiempo, por qué hay dos fuentes y un ejemplo: Babel o los sumerios."
       }
     ],
-    "summary": "Babel viene de Génesis y los sumerios, de la historia; cada uno lleva su ficha y su etiqueta.",
+    "summary": "Cada pueblo nuevo va en la línea (antes o después) y en el mapa, y la semana se cuenta en tres frases.",
     "memoryPhrase": "Orden antiguo: primero el relato, después el mapa. Recuerda: **Babel**, **sumerios** (Tigris y Éufrates), y otros pueblos del mundo antiguo.",
     "weekRecap": "Orden: primero el relato, después el mapa. Babel, sumerios (Tigris y Éufrates) y otros pueblos.",
     "priorDayRecap": "Ayer dibujaste líneas paralelas para historia y Génesis.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja dos fichas pequeñas lado a lado. En una escribe «Babel» y su etiqueta. En la otra escribe «sumerios» y la suya. Dibuja un petroglifo y ponle rótulo.",
+    "imageBandInstruction": "Dibuja un mapa con cuatro lugares: Egipto, India, Creta y Grecia. Debajo, una línea con un petroglifo. Deja vacíos los nombres para llenarlos.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -57,7 +57,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -77,120 +77,120 @@
         "index": 4,
         "column": 1,
         "line": 4,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 5,
         "column": 1,
         "line": 5,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 6,
         "column": 1,
         "line": 6,
-        "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 7,
         "column": 1,
         "line": 7,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "La clase pasada separaste Babel y los"
       },
       {
         "index": 8,
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Ayer pusiste cada hito en su línea."
+        "text": "sumerios en dos líneas. Hoy sumas más"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "Mesopotamia está entre el Tigris y el"
+        "text": "pueblos, como más petroglifos en la roca."
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
-        "kind": "lesson",
-        "text": "Éufrates. Hoy llegan dos nombres nuevos,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
         "kind": "lesson",
-        "text": "como dos petroglifos en la misma roca."
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 14,
         "column": 1,
         "line": 14,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 15,
         "column": 1,
         "line": 15,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Tu línea tiene solo dos nombres. ¿Qué"
       },
       {
         "index": 16,
         "column": 1,
         "line": 16,
         "kind": "lesson",
-        "text": "Hoy hay dos nombres nuevos: Babel y los"
+        "text": "harías para contar el mundo antiguo?"
       },
       {
         "index": 17,
         "column": 1,
         "line": 17,
-        "kind": "lesson",
-        "text": "sumerios. ¿Son lo mismo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 18,
         "column": 1,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 19,
         "column": 1,
         "line": 19,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 20,
         "column": 1,
         "line": 20,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 2: Más pueblos en la línea"
       },
       {
         "index": 21,
@@ -203,85 +203,85 @@
         "index": 22,
         "column": 1,
         "line": 22,
-        "kind": "heading",
-        "text": "Punto 2: Babel y los sumerios"
+        "kind": "lesson",
+        "text": "Añade otros pueblos del mundo antiguo."
       },
       {
         "index": 23,
         "column": 1,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Cada pueblo nuevo va en la línea y"
       },
       {
         "index": 24,
         "column": 1,
         "line": 24,
         "kind": "lesson",
-        "text": "No los mezclamos: vienen de fuentes"
+        "text": "en el mapa, como un petroglifo más."
       },
       {
         "index": 25,
         "column": 1,
         "line": 25,
-        "kind": "lesson",
-        "text": "distintas. Babel aparece en Génesis."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 26,
         "column": 1,
         "line": 26,
         "kind": "lesson",
-        "text": "Los sumerios se estudian con historia"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 27,
         "column": 1,
         "line": 27,
         "kind": "lesson",
-        "text": "y con el mapa. Cada uno, en su línea."
+        "text": "________________________________________"
       },
       {
         "index": 28,
         "column": 1,
         "line": 28,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 29,
         "column": 1,
         "line": 29,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 30,
         "column": 1,
         "line": 30,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Mira el mapa. ¿Dónde crees que quedan"
       },
       {
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Egipto, India, Creta y Grecia?"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Los sumerios fueron un pueblo, como el"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "que grabó petroglifos. ¿Dónde vivían?"
+        "text": "________________________________________"
       },
       {
         "index": 34,
@@ -294,106 +294,106 @@
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 3: Cuatro lugares en el mapa"
       },
       {
         "index": 36,
         "column": 1,
         "line": 36,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Egipto queda en África, junto al Nilo."
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "heading",
-        "text": "Punto 3: Dónde vivían los sumerios"
+        "kind": "lesson",
+        "text": "India queda en el sur de Asia."
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Creta es una isla del Mediterráneo."
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
         "kind": "lesson",
-        "text": "Vivían en Mesopotamia, entre el Tigris"
+        "text": "Grecia queda en el sur de Europa."
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
-        "kind": "lesson",
-        "text": "y el Éufrates. Un pueblo es gente con"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "costumbres propias. Escribían con marcas"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
         "kind": "lesson",
-        "text": "de cuña en barro: el cuneiforme."
+        "text": "________________________________________"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Llega un pueblo nuevo a tu línea. ¿Qué"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "le preguntas sobre el tiempo?"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
-        "kind": "lesson",
-        "text": "Haz una ficha de Babel, como un rótulo"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
         "kind": "lesson",
-        "text": "junto a un petroglifo. ¿Qué escribes?"
+        "text": "________________________________________"
       },
       {
         "index": 50,
@@ -406,64 +406,64 @@
         "index": 51,
         "column": 1,
         "line": 51,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 4: Antes o después"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Preguntas: ¿va antes o después de lo"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "heading",
-        "text": "Punto 4: La ficha de Babel"
+        "kind": "lesson",
+        "text": "que ya marcaste? Los sumerios vivieron"
       },
       {
         "index": 55,
         "column": 2,
         "line": 3,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "mucho antes que los griegos."
       },
       {
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "lesson",
-        "text": "La ficha lleva una frase y una etiqueta."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
         "kind": "lesson",
-        "text": "Frase: el relato cuenta de una ciudad,"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "una torre y de lenguas que se volvieron"
+        "text": "________________________________________"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "distintas. Etiqueta: «Génesis»."
+        "text": "________________________________________"
       },
       {
         "index": 60,
@@ -477,14 +477,14 @@
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Eres guía junto a un petroglifo y lees"
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "tu línea en voz alta. ¿Cómo la cuentas?"
       },
       {
         "index": 63,
@@ -498,119 +498,119 @@
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "Ahora la ficha de los sumerios. ¿Qué"
+        "text": "________________________________________"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
-        "kind": "lesson",
-        "text": "etiqueta lleva? ¿Y qué frase pondrías?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 66,
         "column": 2,
         "line": 14,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 5: Contar con orden"
       },
       {
         "index": 67,
         "column": 2,
         "line": 15,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Orden antiguo: primero el relato,"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "heading",
-        "text": "Punto 5: La ficha de los sumerios"
+        "kind": "lesson",
+        "text": "después el mapa. Recuerda: Babel,"
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "sumerios (Tigris y Éufrates), y otros"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
         "kind": "lesson",
-        "text": "Frase: los sumerios vivieron en"
+        "text": "pueblos del mundo antiguo."
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "lesson",
-        "text": "Mesopotamia. Etiqueta: «historia»."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
         "kind": "lesson",
-        "text": "Añade un dibujo de los dos ríos, como"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
         "kind": "lesson",
-        "text": "un petroglifo junto al rótulo."
+        "text": "________________________________________"
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "¿Basta con repetir una lista de nombres?"
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué más necesitas de cada uno?"
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Una pregunta con truco: ¿Babel es una"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
         "kind": "lesson",
-        "text": "ciudad de los sumerios?"
+        "text": "________________________________________"
       },
       {
         "index": 81,
@@ -623,8 +623,8 @@
         "index": 82,
         "column": 2,
         "line": 30,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "heading",
+        "text": "Punto 6: Resumir en tres frases"
       },
       {
         "index": 83,
@@ -637,64 +637,64 @@
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "heading",
-        "text": "Punto 6: No mezclar"
+        "kind": "lesson",
+        "text": "No basta. Di qué es una línea de tiempo,"
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "por qué hay dos fuentes y un ejemplo:"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
         "kind": "lesson",
-        "text": "La lección presenta a Babel como un"
+        "text": "Babel o los sumerios."
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
-        "kind": "lesson",
-        "text": "relato de Génesis. No decimos que sea"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
         "kind": "lesson",
-        "text": "una ciudad sumeria. Si los juntas,"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
         "kind": "lesson",
-        "text": "explica por qué o sepáralos en pistas."
+        "text": "________________________________________"
       },
       {
         "index": 90,
         "column": 2,
         "line": 38,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 91,
         "column": 2,
         "line": 39,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 93,
@@ -708,7 +708,7 @@
         "column": 2,
         "line": 42,
         "kind": "question",
-        "text": "¿Dónde aparece Babel?",
+        "text": "¿Qué haces con un pueblo nuevo?",
         "questionId": "d3-q1",
         "questionType": "mcq",
         "gutter": {
@@ -723,7 +723,7 @@
         "column": 2,
         "line": 43,
         "kind": "option",
-        "text": "A) En un mapa de ríos",
+        "text": "A) Lo borras",
         "questionId": "d3-q1"
       },
       {
@@ -731,7 +731,7 @@
         "column": 2,
         "line": 44,
         "kind": "option",
-        "text": "B) En el relato de Génesis",
+        "text": "B) Lo pones en la línea y el mapa",
         "questionId": "d3-q1"
       },
       {
@@ -739,7 +739,7 @@
         "column": 2,
         "line": 45,
         "kind": "option",
-        "text": "C) En una tabla",
+        "text": "C) Lo escondes",
         "questionId": "d3-q1"
       },
       {
@@ -747,7 +747,7 @@
         "column": 2,
         "line": 46,
         "kind": "option",
-        "text": "D) En un libro de cocina",
+        "text": "D) Lo mezclas con Babel",
         "questionId": "d3-q1"
       },
       {
@@ -762,7 +762,7 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Cómo se estudian los sumerios?",
+        "text": "¿Dónde queda Egipto?",
         "questionId": "d3-q2",
         "questionType": "mcq",
         "gutter": {
@@ -777,7 +777,7 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Con un cuento",
+        "text": "A) En Europa",
         "questionId": "d3-q2"
       },
       {
@@ -785,7 +785,7 @@
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Con una canción",
+        "text": "B) En una isla",
         "questionId": "d3-q2"
       },
       {
@@ -793,7 +793,7 @@
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Con historia y con el mapa",
+        "text": "C) En África, junto al Nilo",
         "questionId": "d3-q2"
       },
       {
@@ -801,7 +801,7 @@
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) Con un juego",
+        "text": "D) En América",
         "questionId": "d3-q2"
       },
       {
@@ -809,7 +809,7 @@
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "¿Dónde vivían los sumerios?",
+        "text": "¿Qué es Creta?",
         "questionId": "d3-q3",
         "questionType": "mcq",
         "gutter": {
@@ -824,7 +824,7 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) En una isla",
+        "text": "A) Un río de Asia",
         "questionId": "d3-q3"
       },
       {
@@ -832,7 +832,7 @@
         "column": 3,
         "line": 3,
         "kind": "option",
-        "text": "B) En el Sahara",
+        "text": "B) Un pueblo sumerio",
         "questionId": "d3-q3"
       },
       {
@@ -840,7 +840,7 @@
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) En la selva",
+        "text": "C) Una montaña",
         "questionId": "d3-q3"
       },
       {
@@ -848,7 +848,7 @@
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) En Mesopotamia",
+        "text": "D) Una isla del Mediterráneo",
         "questionId": "d3-q3"
       },
       {
@@ -863,7 +863,7 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "¿Entre qué ríos vivían?",
+        "text": "¿Dónde queda India?",
         "questionId": "d3-q4",
         "questionType": "mcq",
         "gutter": {
@@ -878,7 +878,7 @@
         "column": 3,
         "line": 8,
         "kind": "option",
-        "text": "A) Nilo y Congo",
+        "text": "A) En el norte de África",
         "questionId": "d3-q4"
       },
       {
@@ -886,7 +886,7 @@
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) Tigris y Éufrates",
+        "text": "B) En el sur de Asia",
         "questionId": "d3-q4"
       },
       {
@@ -894,7 +894,7 @@
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) Orinoco y Amazonas",
+        "text": "C) En el sur de Europa",
         "questionId": "d3-q4"
       },
       {
@@ -902,7 +902,7 @@
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) Rin y Sena",
+        "text": "D) En Mesopotamia",
         "questionId": "d3-q4"
       },
       {
@@ -917,7 +917,7 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿Cómo se llama la escritura de cuña de los",
+        "text": "¿Qué pregunta sirve para el tiempo?",
         "questionId": "d3-q5",
         "questionType": "mcq",
         "gutter": {
@@ -931,8 +931,8 @@
         "index": 118,
         "column": 3,
         "line": 14,
-        "kind": "lesson",
-        "text": "sumerios?",
+        "kind": "option",
+        "text": "A) ¿Va antes o después?",
         "questionId": "d3-q5"
       },
       {
@@ -940,7 +940,7 @@
         "column": 3,
         "line": 15,
         "kind": "option",
-        "text": "A) Cuneiforme",
+        "text": "B) ¿De qué color es?",
         "questionId": "d3-q5"
       },
       {
@@ -948,7 +948,7 @@
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "B) Alfabeto latino",
+        "text": "C) ¿Cuánto pesa?",
         "questionId": "d3-q5"
       },
       {
@@ -956,30 +956,22 @@
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "C) Dibujo animado",
+        "text": "D) ¿Cómo suena?",
         "questionId": "d3-q5"
       },
       {
         "index": 122,
         "column": 3,
         "line": 18,
-        "kind": "option",
-        "text": "D) Código postal",
-        "questionId": "d3-q5"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 123,
         "column": 3,
         "line": 19,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 124,
-        "column": 3,
-        "line": 20,
         "kind": "question",
-        "text": "¿Qué lleva una ficha?",
+        "text": "¿Quiénes vivieron antes que los griegos?",
         "questionId": "d3-q6",
         "questionType": "mcq",
         "gutter": {
@@ -990,11 +982,19 @@
         }
       },
       {
+        "index": 124,
+        "column": 3,
+        "line": 20,
+        "kind": "option",
+        "text": "A) Los astronautas",
+        "questionId": "d3-q6"
+      },
+      {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "A) Solo un número",
+        "text": "B) Los piratas",
         "questionId": "d3-q6"
       },
       {
@@ -1002,7 +1002,7 @@
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "B) Solo un color",
+        "text": "C) Los sumerios",
         "questionId": "d3-q6"
       },
       {
@@ -1010,30 +1010,22 @@
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "C) Una frase y una etiqueta",
+        "text": "D) Los vikingos",
         "questionId": "d3-q6"
       },
       {
         "index": 128,
         "column": 3,
         "line": 24,
-        "kind": "option",
-        "text": "D) Un nombre sin frase",
-        "questionId": "d3-q6"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 129,
         "column": 3,
         "line": 25,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 130,
-        "column": 3,
-        "line": 26,
         "kind": "question",
-        "text": "¿Qué etiqueta lleva Babel?",
+        "text": "¿Qué va primero en el orden antiguo?",
         "questionId": "d3-q7",
         "questionType": "mcq",
         "gutter": {
@@ -1044,11 +1036,19 @@
         }
       },
       {
+        "index": 130,
+        "column": 3,
+        "line": 26,
+        "kind": "option",
+        "text": "A) El relato",
+        "questionId": "d3-q7"
+      },
+      {
         "index": 131,
         "column": 3,
         "line": 27,
         "kind": "option",
-        "text": "A) Génesis",
+        "text": "B) El mapa",
         "questionId": "d3-q7"
       },
       {
@@ -1056,7 +1056,7 @@
         "column": 3,
         "line": 28,
         "kind": "option",
-        "text": "B) Historia",
+        "text": "C) La torre",
         "questionId": "d3-q7"
       },
       {
@@ -1064,30 +1064,22 @@
         "column": 3,
         "line": 29,
         "kind": "option",
-        "text": "C) Mapa",
+        "text": "D) El resumen",
         "questionId": "d3-q7"
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
-        "kind": "option",
-        "text": "D) Río",
-        "questionId": "d3-q7"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 135,
         "column": 3,
         "line": 31,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 136,
-        "column": 3,
-        "line": 32,
         "kind": "question",
-        "text": "Escribe la frase y la etiqueta de Babel.",
+        "text": "Escribe tu resumen de tres frases.",
         "questionId": "d3-w1",
         "questionType": "write",
         "gutter": {
@@ -1096,6 +1088,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 136,
+        "column": 3,
+        "line": 32,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w1"
       },
       {
         "index": 137,
@@ -1109,23 +1109,15 @@
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 140,
-        "column": 3,
-        "line": 36,
         "kind": "question",
-        "text": "Explica por qué van en pistas distintas.",
+        "text": "Explica qué significa «antes o después».",
         "questionId": "d3-w2",
         "questionType": "write",
         "gutter": {
@@ -1134,6 +1126,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d3-w2"
       },
       {
         "index": 141,
@@ -1147,23 +1147,15 @@
         "index": 142,
         "column": 3,
         "line": 38,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d3-w2"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 143,
         "column": 3,
         "line": 39,
-        "kind": "blank",
-        "text": ""
-      },
-      {
-        "index": 144,
-        "column": 3,
-        "line": 40,
         "kind": "question",
-        "text": "Dibuja las fichas de Babel y de sumerios.",
+        "text": "Dibuja un mapa con Egipto, India, Creta y",
         "questionId": "d3-w3",
         "questionType": "schematic",
         "gutter": {
@@ -1172,6 +1164,14 @@
           "border": "#fff",
           "text": "#fff"
         }
+      },
+      {
+        "index": 144,
+        "column": 3,
+        "line": 40,
+        "kind": "lesson",
+        "text": "Grecia.",
+        "questionId": "d3-w3"
       },
       {
         "index": 145,
@@ -1201,7 +1201,7 @@
         "column": 3,
         "line": 44,
         "kind": "question",
-        "text": "Dibuja Mesopotamia con el Tigris y el",
+        "text": "Dibuja una línea con Babel, sumerios y otro",
         "questionId": "d3-w4",
         "questionType": "schematic",
         "gutter": {
@@ -1216,7 +1216,7 @@
         "column": 3,
         "line": 45,
         "kind": "lesson",
-        "text": "Éufrates.",
+        "text": "pueblo.",
         "questionId": "d3-w4"
       },
       {
@@ -1247,28 +1247,28 @@
         "column": 3,
         "line": 49,
         "kind": "imageInstruction",
-        "text": "Dibuja dos fichas pequeñas lado a lado. En"
+        "text": "Dibuja un mapa con cuatro lugares: Egipto,"
       },
       {
         "index": 154,
         "column": 3,
         "line": 50,
         "kind": "imageInstruction",
-        "text": "una escribe «Babel» y su etiqueta. En la"
+        "text": "India, Creta y Grecia. Debajo, una línea con"
       },
       {
         "index": 155,
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "otra escribe «sumerios» y la suya. Dibuja"
+        "text": "un petroglifo. Deja vacíos los nombres para"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "un petroglifo y ponle rótulo."
+        "text": "llenarlos."
       }
     ],
     "packOrder": "column-major-sequential",
@@ -1281,14 +1281,14 @@
         "id": "d3-q1",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Dónde aparece Babel?",
+        "prompt": "¿Qué haces con un pueblo nuevo?",
         "choices": [
-          "En un mapa de ríos",
-          "En el relato de Génesis",
-          "En una tabla",
-          "En un libro de cocina"
+          "Lo borras",
+          "Lo pones en la línea y el mapa",
+          "Lo escondes",
+          "Lo mezclas con Babel"
         ],
-        "answer": "En el relato de Génesis",
+        "answer": "Lo pones en la línea y el mapa",
         "slot": {
           "column": 2,
           "line": 42,
@@ -1299,14 +1299,14 @@
         "id": "d3-q2",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cómo se estudian los sumerios?",
+        "prompt": "¿Dónde queda Egipto?",
         "choices": [
-          "Con un cuento",
-          "Con una canción",
-          "Con historia y con el mapa",
-          "Con un juego"
+          "En Europa",
+          "En una isla",
+          "En África, junto al Nilo",
+          "En América"
         ],
-        "answer": "Con historia y con el mapa",
+        "answer": "En África, junto al Nilo",
         "slot": {
           "column": 2,
           "line": 48,
@@ -1317,14 +1317,14 @@
         "id": "d3-q3",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Dónde vivían los sumerios?",
+        "prompt": "¿Qué es Creta?",
         "choices": [
-          "En una isla",
-          "En el Sahara",
-          "En la selva",
-          "En Mesopotamia"
+          "Un río de Asia",
+          "Un pueblo sumerio",
+          "Una montaña",
+          "Una isla del Mediterráneo"
         ],
-        "answer": "En Mesopotamia",
+        "answer": "Una isla del Mediterráneo",
         "slot": {
           "column": 3,
           "line": 1,
@@ -1335,14 +1335,14 @@
         "id": "d3-q4",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Entre qué ríos vivían?",
+        "prompt": "¿Dónde queda India?",
         "choices": [
-          "Nilo y Congo",
-          "Tigris y Éufrates",
-          "Orinoco y Amazonas",
-          "Rin y Sena"
+          "En el norte de África",
+          "En el sur de Asia",
+          "En el sur de Europa",
+          "En Mesopotamia"
         ],
-        "answer": "Tigris y Éufrates",
+        "answer": "En el sur de Asia",
         "slot": {
           "column": 3,
           "line": 7,
@@ -1353,14 +1353,14 @@
         "id": "d3-q5",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Cómo se llama la escritura de cuña de los sumerios?",
+        "prompt": "¿Qué pregunta sirve para el tiempo?",
         "choices": [
-          "Cuneiforme",
-          "Alfabeto latino",
-          "Dibujo animado",
-          "Código postal"
+          "¿Va antes o después?",
+          "¿De qué color es?",
+          "¿Cuánto pesa?",
+          "¿Cómo suena?"
         ],
-        "answer": "Cuneiforme",
+        "answer": "¿Va antes o después?",
         "slot": {
           "column": 3,
           "line": 13,
@@ -1371,78 +1371,78 @@
         "id": "d3-q6",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué lleva una ficha?",
+        "prompt": "¿Quiénes vivieron antes que los griegos?",
         "choices": [
-          "Solo un número",
-          "Solo un color",
-          "Una frase y una etiqueta",
-          "Un nombre sin frase"
+          "Los astronautas",
+          "Los piratas",
+          "Los sumerios",
+          "Los vikingos"
         ],
-        "answer": "Una frase y una etiqueta",
+        "answer": "Los sumerios",
         "slot": {
           "column": 3,
-          "line": 20,
-          "index": 124
+          "line": 19,
+          "index": 123
         }
       },
       {
         "id": "d3-q7",
         "originDay": 3,
         "type": "mcq",
-        "prompt": "¿Qué etiqueta lleva Babel?",
+        "prompt": "¿Qué va primero en el orden antiguo?",
         "choices": [
-          "Génesis",
-          "Historia",
-          "Mapa",
-          "Río"
+          "El relato",
+          "El mapa",
+          "La torre",
+          "El resumen"
         ],
-        "answer": "Génesis",
+        "answer": "El relato",
         "slot": {
           "column": 3,
-          "line": 26,
-          "index": 130
+          "line": 25,
+          "index": 129
         }
       },
       {
         "id": "d3-w1",
         "originDay": 3,
         "type": "write",
-        "prompt": "Escribe la frase y la etiqueta de Babel.",
+        "prompt": "Escribe tu resumen de tres frases.",
         "slot": {
           "column": 3,
-          "line": 32,
-          "index": 136
+          "line": 31,
+          "index": 135
         }
       },
       {
         "id": "d3-w2",
         "originDay": 3,
         "type": "write",
-        "prompt": "Explica por qué van en pistas distintas.",
+        "prompt": "Explica qué significa «antes o después».",
         "slot": {
           "column": 3,
-          "line": 36,
-          "index": 140
+          "line": 35,
+          "index": 139
         }
       },
       {
         "id": "d3-w3",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja las fichas de Babel y de sumerios.",
+        "prompt": "Dibuja un mapa con Egipto, India, Creta y Grecia.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 40,
-          "index": 144
+          "line": 39,
+          "index": 143
         }
       },
       {
         "id": "d3-w4",
         "originDay": 3,
         "type": "write",
-        "prompt": "Dibuja Mesopotamia con el Tigris y el Éufrates.",
+        "prompt": "Dibuja una línea con Babel, sumerios y otro pueblo.",
         "schematic": true,
         "slotQuestionType": "schematic",
         "slot": {

@@ -19,14 +19,14 @@ describe("homescool curriculum", () => {
     expect(data.version).toBe(1);
     expect(data.level).toBe(6);
     expect(data.description).toContain("≈8 años");
-    expect(data.classes).toHaveLength(120);
+    expect(data.classes).toHaveLength(74);
     expect(data.classCount).toBe(data.classes.length);
     const keys = new Set(data.classes.map((c) => c.key));
     expect(keys.size).toBe(data.classes.length);
     expect(data.classes.every((c) => c.cycle === 3 && (c.week === 1 || c.week === 2))).toBe(true);
     expect(data.classes.every((c) => c.level === 6)).toBe(true);
-    expect(data.classes.filter((c) => c.week === 1)).toHaveLength(60);
-    expect(data.classes.filter((c) => c.week === 2)).toHaveLength(60);
+    expect(data.classes.filter((c) => c.week === 1)).toHaveLength(37);
+    expect(data.classes.filter((c) => c.week === 2)).toHaveLength(37);
     expect(data.classes.some((c) => c.source?.includes("/pilot/"))).toBe(false);
     expect(keys.has("c3-w1-d1-l6-mat")).toBe(true);
     expect(keys.has("c3-w2-d1-l6-mat")).toBe(true);

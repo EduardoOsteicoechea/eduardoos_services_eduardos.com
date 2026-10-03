@@ -14,8 +14,8 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Punto 1: Repaso de ayer",
-        "body": "¿Qué aprendiste ayer?\n\nYa sabes que «en la caja» y «con la caja» cuentan cosas distintas. Esas palabras cortas son como puentes: unen dos ideas, como en Maracaibo."
+        "heading": "Punto 1: Repaso de la clase pasada",
+        "body": "¿Qué aprendiste la clase pasada?\n\n«En la caja» y «con la caja» cuentan cosas distintas. Esas palabras cortas son como puentes que unen dos ideas."
       },
       {
         "id": "p2",
@@ -47,7 +47,7 @@
     "memoryPhrase": "**in** = en · **apud** = con · **per** = por · **sine** = sin · **a/ab** = de · **de** = de.",
     "layout": "letter-grid-v2",
     "v2Flow": true,
-    "imageBandInstruction": "Dibuja un puente entre dos orillas. Rotula el puente: per pontem. Dibuja una barca en el agua: in aqua. Escribe qué significa cada rótulo.",
+    "imageBandInstruction": "Dibuja un puente entre dos orillas. Rotula el puente: per pontem. Dibuja una barca en el agua: in aqua. Deja una línea vacía bajo cada rótulo.",
     "quizIntegrated": true,
     "slotSequence": [
       {
@@ -55,7 +55,7 @@
         "column": 1,
         "line": 1,
         "kind": "opening",
-        "text": "¿Qué aprendiste ayer?"
+        "text": "¿Qué aprendiste la clase pasada?"
       },
       {
         "index": 2,
@@ -90,7 +90,7 @@
         "column": 1,
         "line": 6,
         "kind": "heading",
-        "text": "Punto 1: Repaso de ayer"
+        "text": "Punto 1: Repaso de la clase pasada"
       },
       {
         "index": 7,
@@ -104,42 +104,42 @@
         "column": 1,
         "line": 8,
         "kind": "lesson",
-        "text": "Ya sabes que «en la caja» y"
+        "text": "«En la caja» y «con la caja» cuentan"
       },
       {
         "index": 9,
         "column": 1,
         "line": 9,
         "kind": "lesson",
-        "text": "«con la caja» cuentan cosas distintas."
+        "text": "cosas distintas. Esas palabras cortas"
       },
       {
         "index": 10,
         "column": 1,
         "line": 10,
         "kind": "lesson",
-        "text": "Esas palabras cortas son como puentes:"
+        "text": "son como puentes que unen dos ideas."
       },
       {
         "index": 11,
         "column": 1,
         "line": 11,
-        "kind": "lesson",
-        "text": "unen dos ideas, como en Maracaibo."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 12,
         "column": 1,
         "line": 12,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 13,
         "column": 1,
         "line": 13,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "________________________________________"
       },
       {
         "index": 14,
@@ -264,36 +264,36 @@
         "index": 31,
         "column": 1,
         "line": 31,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 32,
         "column": 1,
         "line": 32,
-        "kind": "lesson",
-        "text": "Un niño está «en el agua» del lago."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 33,
         "column": 1,
         "line": 33,
         "kind": "lesson",
-        "text": "Otro va «con los amigos» por el puente."
+        "text": "Un niño está «en el agua» del lago."
       },
       {
         "index": 34,
         "column": 1,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Otro va «con los amigos» por el puente."
       },
       {
         "index": 35,
         "column": 1,
         "line": 35,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 36,
@@ -306,127 +306,127 @@
         "index": 37,
         "column": 1,
         "line": 37,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 38,
         "column": 1,
         "line": 38,
-        "kind": "heading",
-        "text": "Punto 3: In y apud"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 39,
         "column": 1,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "heading",
+        "text": "Punto 3: In y apud"
       },
       {
         "index": 40,
         "column": 1,
         "line": 40,
-        "kind": "lesson",
-        "text": "En latín son dos palabras distintas."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 41,
         "column": 1,
         "line": 41,
         "kind": "lesson",
-        "text": "«In» es «en»: in aqua, en el agua."
+        "text": "En latín son dos palabras distintas."
       },
       {
         "index": 42,
         "column": 1,
         "line": 42,
         "kind": "lesson",
-        "text": "«Apud» es «con»: apud amicos,"
+        "text": "«In» es «en»: in aqua, en el agua."
       },
       {
         "index": 43,
         "column": 1,
         "line": 43,
         "kind": "lesson",
-        "text": "con los amigos."
+        "text": "«Apud» es «con»: apud amicos,"
       },
       {
         "index": 44,
         "column": 1,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "con los amigos."
       },
       {
         "index": 45,
         "column": 1,
         "line": 45,
-        "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 46,
         "column": 1,
         "line": 46,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 47,
         "column": 1,
         "line": 47,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 48,
         "column": 1,
         "line": 48,
         "kind": "lesson",
-        "text": "Una pregunta con truco: ¿«por el puente»"
+        "text": "________________________________________"
       },
       {
         "index": 49,
         "column": 1,
         "line": 49,
-        "kind": "lesson",
-        "text": "y «sin puente» dicen lo mismo?"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 50,
         "column": 1,
         "line": 50,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Una pregunta con truco: ¿«por el puente»"
       },
       {
         "index": 51,
         "column": 1,
         "line": 51,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "y «sin puente» dicen lo mismo?"
       },
       {
         "index": 52,
         "column": 1,
         "line": 52,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 53,
         "column": 2,
         "line": 1,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 54,
         "column": 2,
         "line": 2,
-        "kind": "heading",
-        "text": "Punto 4: Per y sine"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 55,
@@ -439,71 +439,71 @@
         "index": 56,
         "column": 2,
         "line": 4,
-        "kind": "lesson",
-        "text": "No. «Per» es «por»: per pontem,"
+        "kind": "heading",
+        "text": "Punto 4: Per y sine"
       },
       {
         "index": 57,
         "column": 2,
         "line": 5,
-        "kind": "lesson",
-        "text": "por el puente."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 58,
         "column": 2,
         "line": 6,
         "kind": "lesson",
-        "text": "«Sine» es «sin»: sine ponte,"
+        "text": "No. «Per» es «por»: per pontem,"
       },
       {
         "index": 59,
         "column": 2,
         "line": 7,
         "kind": "lesson",
-        "text": "sin puente."
+        "text": "por el puente."
       },
       {
         "index": 60,
         "column": 2,
         "line": 8,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«Sine» es «sin»: sine ponte,"
       },
       {
         "index": 61,
         "column": 2,
         "line": 9,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "sin puente."
       },
       {
         "index": 62,
         "column": 2,
         "line": 10,
-        "kind": "lesson",
-        "text": "________________________________________"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 63,
         "column": 2,
         "line": 11,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 64,
         "column": 2,
         "line": 12,
         "kind": "lesson",
-        "text": "¿Y si alguien llega desde la orilla?"
+        "text": "________________________________________"
       },
       {
         "index": 65,
         "column": 2,
         "line": 13,
         "kind": "lesson",
-        "text": "¿Y si cuentas algo acerca del puente?"
+        "text": "________________________________________"
       },
       {
         "index": 66,
@@ -517,105 +517,105 @@
         "column": 2,
         "line": 15,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "¿Y si alguien llega desde la orilla?"
       },
       {
         "index": 68,
         "column": 2,
         "line": 16,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Y si cuentas algo acerca del puente?"
       },
       {
         "index": 69,
         "column": 2,
         "line": 17,
-        "kind": "heading",
-        "text": "Punto 5: A/ab y de"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 70,
         "column": 2,
         "line": 18,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 71,
         "column": 2,
         "line": 19,
         "kind": "lesson",
-        "text": "«A/ab» dice de dónde viene algo:"
+        "text": "________________________________________"
       },
       {
         "index": 72,
         "column": 2,
         "line": 20,
-        "kind": "lesson",
-        "text": "a ripa, desde la orilla."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 73,
         "column": 2,
         "line": 21,
-        "kind": "lesson",
-        "text": "«De» dice el tema: de ponte,"
+        "kind": "heading",
+        "text": "Punto 5: A/ab y de"
       },
       {
         "index": 74,
         "column": 2,
         "line": 22,
-        "kind": "lesson",
-        "text": "acerca del puente."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 75,
         "column": 2,
         "line": 23,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "«A/ab» dice de dónde viene algo:"
       },
       {
         "index": 76,
         "column": 2,
         "line": 24,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "a ripa, desde la orilla."
       },
       {
         "index": 77,
         "column": 2,
         "line": 25,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "«De» dice el tema: de ponte,"
       },
       {
         "index": 78,
         "column": 2,
         "line": 26,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "acerca del puente."
       },
       {
         "index": 79,
         "column": 2,
         "line": 27,
-        "kind": "lesson",
-        "text": "Ya tienes seis palabras-puente."
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 80,
         "column": 2,
         "line": 28,
         "kind": "lesson",
-        "text": "¿Qué preguntas antes de traducir?"
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 81,
         "column": 2,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 82,
@@ -635,43 +635,43 @@
         "index": 84,
         "column": 2,
         "line": 32,
-        "kind": "heading",
-        "text": "Punto 6: Primero la relación"
+        "kind": "lesson",
+        "text": "Ya tienes seis palabras-puente."
       },
       {
         "index": 85,
         "column": 2,
         "line": 33,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "¿Qué preguntas antes de traducir?"
       },
       {
         "index": 86,
         "column": 2,
         "line": 34,
-        "kind": "lesson",
-        "text": "Pregunta: ¿dónde, con quién,"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 87,
         "column": 2,
         "line": 35,
         "kind": "lesson",
-        "text": "por dónde o de dónde? Luego traduce."
+        "text": "________________________________________"
       },
       {
         "index": 88,
         "column": 2,
         "line": 36,
-        "kind": "lesson",
-        "text": "in = en · apud = con · per = por ·"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 89,
         "column": 2,
         "line": 37,
-        "kind": "lesson",
-        "text": "sine = sin · a/ab = de · de = de."
+        "kind": "heading",
+        "text": "Punto 6: Primero la relación"
       },
       {
         "index": 90,
@@ -685,68 +685,56 @@
         "column": 2,
         "line": 39,
         "kind": "lesson",
-        "text": "Escribe aquí lo que aprendiste:"
+        "text": "Pregunta: ¿dónde, con quién,"
       },
       {
         "index": 92,
         "column": 2,
         "line": 40,
         "kind": "lesson",
-        "text": "________________________________________"
+        "text": "por dónde o de dónde? Luego traduce."
       },
       {
         "index": 93,
         "column": 2,
         "line": 41,
-        "kind": "blank",
-        "text": ""
+        "kind": "lesson",
+        "text": "in = en · apud = con · per = por ·"
       },
       {
         "index": 94,
         "column": 2,
         "line": 42,
-        "kind": "question",
-        "text": "¿Qué une el puente de Maracaibo?",
-        "questionId": "d1-q1",
-        "questionType": "mcq",
-        "gutter": {
-          "role": "question",
-          "background": "#aaa",
-          "border": "#fff",
-          "text": "#fff"
-        }
+        "kind": "lesson",
+        "text": "sine = sin · a/ab = de · de = de."
       },
       {
         "index": 95,
         "column": 2,
         "line": 43,
-        "kind": "option",
-        "text": "A) Las dos orillas del lago",
-        "questionId": "d1-q1"
+        "kind": "blank",
+        "text": ""
       },
       {
         "index": 96,
         "column": 2,
         "line": 44,
-        "kind": "option",
-        "text": "B) Dos mares",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "Escribe aquí lo que aprendiste:"
       },
       {
         "index": 97,
         "column": 2,
         "line": 45,
-        "kind": "option",
-        "text": "C) Dos ríos",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 98,
         "column": 2,
         "line": 46,
-        "kind": "option",
-        "text": "D) Dos montañas",
-        "questionId": "d1-q1"
+        "kind": "lesson",
+        "text": "________________________________________"
       },
       {
         "index": 99,
@@ -760,8 +748,8 @@
         "column": 2,
         "line": 48,
         "kind": "question",
-        "text": "¿Qué significa «in aqua»?",
-        "questionId": "d1-q2",
+        "text": "¿Qué une el puente de Maracaibo?",
+        "questionId": "d1-q1",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -775,40 +763,40 @@
         "column": 2,
         "line": 49,
         "kind": "option",
-        "text": "A) Con el agua",
-        "questionId": "d1-q2"
+        "text": "A) Las dos orillas del lago",
+        "questionId": "d1-q1"
       },
       {
         "index": 102,
         "column": 2,
         "line": 50,
         "kind": "option",
-        "text": "B) Sin agua",
-        "questionId": "d1-q2"
+        "text": "B) Dos mares",
+        "questionId": "d1-q1"
       },
       {
         "index": 103,
         "column": 2,
         "line": 51,
         "kind": "option",
-        "text": "C) Por el agua",
-        "questionId": "d1-q2"
+        "text": "C) Dos ríos",
+        "questionId": "d1-q1"
       },
       {
         "index": 104,
         "column": 2,
         "line": 52,
         "kind": "option",
-        "text": "D) En el agua",
-        "questionId": "d1-q2"
+        "text": "D) Dos montañas",
+        "questionId": "d1-q1"
       },
       {
         "index": 105,
         "column": 3,
         "line": 1,
         "kind": "question",
-        "text": "¿Qué significa «apud amicos»?",
-        "questionId": "d1-q3",
+        "text": "¿Qué significa «in aqua»?",
+        "questionId": "d1-q2",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -822,32 +810,32 @@
         "column": 3,
         "line": 2,
         "kind": "option",
-        "text": "A) En los amigos",
-        "questionId": "d1-q3"
+        "text": "A) Con el agua",
+        "questionId": "d1-q2"
       },
       {
         "index": 107,
         "column": 3,
         "line": 3,
         "kind": "option",
-        "text": "B) Con los amigos",
-        "questionId": "d1-q3"
+        "text": "B) Sin agua",
+        "questionId": "d1-q2"
       },
       {
         "index": 108,
         "column": 3,
         "line": 4,
         "kind": "option",
-        "text": "C) Sin amigos",
-        "questionId": "d1-q3"
+        "text": "C) Por el agua",
+        "questionId": "d1-q2"
       },
       {
         "index": 109,
         "column": 3,
         "line": 5,
         "kind": "option",
-        "text": "D) Por los amigos",
-        "questionId": "d1-q3"
+        "text": "D) En el agua",
+        "questionId": "d1-q2"
       },
       {
         "index": 110,
@@ -861,8 +849,8 @@
         "column": 3,
         "line": 7,
         "kind": "question",
-        "text": "¿Qué significa «per pontem»?",
-        "questionId": "d1-q4",
+        "text": "¿Qué significa «apud amicos»?",
+        "questionId": "d1-q3",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -876,32 +864,32 @@
         "column": 3,
         "line": 8,
         "kind": "option",
-        "text": "A) Sin puente",
-        "questionId": "d1-q4"
+        "text": "A) En los amigos",
+        "questionId": "d1-q3"
       },
       {
         "index": 113,
         "column": 3,
         "line": 9,
         "kind": "option",
-        "text": "B) En el puente",
-        "questionId": "d1-q4"
+        "text": "B) Con los amigos",
+        "questionId": "d1-q3"
       },
       {
         "index": 114,
         "column": 3,
         "line": 10,
         "kind": "option",
-        "text": "C) Por el puente",
-        "questionId": "d1-q4"
+        "text": "C) Sin amigos",
+        "questionId": "d1-q3"
       },
       {
         "index": 115,
         "column": 3,
         "line": 11,
         "kind": "option",
-        "text": "D) Con el puente",
-        "questionId": "d1-q4"
+        "text": "D) Por los amigos",
+        "questionId": "d1-q3"
       },
       {
         "index": 116,
@@ -915,8 +903,8 @@
         "column": 3,
         "line": 13,
         "kind": "question",
-        "text": "¿Qué significa «sine ponte»?",
-        "questionId": "d1-q5",
+        "text": "¿Qué significa «per pontem»?",
+        "questionId": "d1-q4",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -930,8 +918,8 @@
         "column": 3,
         "line": 14,
         "kind": "option",
-        "text": "A) Por el puente",
-        "questionId": "d1-q5"
+        "text": "A) Sin puente",
+        "questionId": "d1-q4"
       },
       {
         "index": 119,
@@ -939,23 +927,23 @@
         "line": 15,
         "kind": "option",
         "text": "B) En el puente",
-        "questionId": "d1-q5"
+        "questionId": "d1-q4"
       },
       {
         "index": 120,
         "column": 3,
         "line": 16,
         "kind": "option",
-        "text": "C) Con el puente",
-        "questionId": "d1-q5"
+        "text": "C) Por el puente",
+        "questionId": "d1-q4"
       },
       {
         "index": 121,
         "column": 3,
         "line": 17,
         "kind": "option",
-        "text": "D) Sin puente",
-        "questionId": "d1-q5"
+        "text": "D) Con el puente",
+        "questionId": "d1-q4"
       },
       {
         "index": 122,
@@ -969,8 +957,8 @@
         "column": 3,
         "line": 19,
         "kind": "question",
-        "text": "¿Qué significa «a ripa»?",
-        "questionId": "d1-q6",
+        "text": "¿Qué significa «sine ponte»?",
+        "questionId": "d1-q5",
         "questionType": "mcq",
         "gutter": {
           "role": "question",
@@ -984,32 +972,32 @@
         "column": 3,
         "line": 20,
         "kind": "option",
-        "text": "A) Acerca de la orilla",
-        "questionId": "d1-q6"
+        "text": "A) Por el puente",
+        "questionId": "d1-q5"
       },
       {
         "index": 125,
         "column": 3,
         "line": 21,
         "kind": "option",
-        "text": "B) Desde la orilla",
-        "questionId": "d1-q6"
+        "text": "B) En el puente",
+        "questionId": "d1-q5"
       },
       {
         "index": 126,
         "column": 3,
         "line": 22,
         "kind": "option",
-        "text": "C) Sin orilla",
-        "questionId": "d1-q6"
+        "text": "C) Con el puente",
+        "questionId": "d1-q5"
       },
       {
         "index": 127,
         "column": 3,
         "line": 23,
         "kind": "option",
-        "text": "D) Por la orilla",
-        "questionId": "d1-q6"
+        "text": "D) Sin puente",
+        "questionId": "d1-q5"
       },
       {
         "index": 128,
@@ -1023,9 +1011,9 @@
         "column": 3,
         "line": 25,
         "kind": "question",
-        "text": "Cuenta con tus palabras qué une el puente",
-        "questionId": "d1-w1",
-        "questionType": "write",
+        "text": "¿Qué significa «a ripa»?",
+        "questionId": "d1-q6",
+        "questionType": "mcq",
         "gutter": {
           "role": "question",
           "background": "#aaa",
@@ -1037,40 +1025,48 @@
         "index": 130,
         "column": 3,
         "line": 26,
-        "kind": "lesson",
-        "text": "de Maracaibo.",
-        "questionId": "d1-w1"
+        "kind": "option",
+        "text": "A) Acerca de la orilla",
+        "questionId": "d1-q6"
       },
       {
         "index": 131,
         "column": 3,
         "line": 27,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
+        "kind": "option",
+        "text": "B) Desde la orilla",
+        "questionId": "d1-q6"
       },
       {
         "index": 132,
         "column": 3,
         "line": 28,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w1"
+        "kind": "option",
+        "text": "C) Sin orilla",
+        "questionId": "d1-q6"
       },
       {
         "index": 133,
         "column": 3,
         "line": 29,
-        "kind": "blank",
-        "text": ""
+        "kind": "option",
+        "text": "D) Por la orilla",
+        "questionId": "d1-q6"
       },
       {
         "index": 134,
         "column": 3,
         "line": 30,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 135,
+        "column": 3,
+        "line": 31,
         "kind": "question",
-        "text": "Escribe «por el puente» y «sin puente» en",
-        "questionId": "d1-w2",
+        "text": "Cuenta con tus palabras qué une el puente",
+        "questionId": "d1-w1",
         "questionType": "write",
         "gutter": {
           "role": "question",
@@ -1080,20 +1076,12 @@
         }
       },
       {
-        "index": 135,
-        "column": 3,
-        "line": 31,
-        "kind": "lesson",
-        "text": "latín.",
-        "questionId": "d1-w2"
-      },
-      {
         "index": 136,
         "column": 3,
         "line": 32,
-        "kind": "answerLine",
-        "text": "",
-        "questionId": "d1-w2"
+        "kind": "lesson",
+        "text": "de Maracaibo.",
+        "questionId": "d1-w1"
       },
       {
         "index": 137,
@@ -1101,19 +1089,27 @@
         "line": 33,
         "kind": "answerLine",
         "text": "",
-        "questionId": "d1-w2"
+        "questionId": "d1-w1"
       },
       {
         "index": 138,
         "column": 3,
         "line": 34,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w1"
       },
       {
         "index": 139,
         "column": 3,
         "line": 35,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 140,
+        "column": 3,
+        "line": 36,
         "kind": "question",
         "text": "Dibuja un puente entre dos orillas y rotula",
         "questionId": "d1-w3",
@@ -1126,19 +1122,11 @@
         }
       },
       {
-        "index": 140,
-        "column": 3,
-        "line": 36,
-        "kind": "lesson",
-        "text": "«per pontem».",
-        "questionId": "d1-w3"
-      },
-      {
         "index": 141,
         "column": 3,
         "line": 37,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "«per pontem».",
         "questionId": "d1-w3"
       },
       {
@@ -1153,13 +1141,21 @@
         "index": 143,
         "column": 3,
         "line": 39,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w3"
       },
       {
         "index": 144,
         "column": 3,
         "line": 40,
+        "kind": "blank",
+        "text": ""
+      },
+      {
+        "index": 145,
+        "column": 3,
+        "line": 41,
         "kind": "question",
         "text": "Dibuja una tabla con las seis palabras y su",
         "questionId": "d1-w4",
@@ -1172,19 +1168,11 @@
         }
       },
       {
-        "index": 145,
-        "column": 3,
-        "line": 41,
-        "kind": "lesson",
-        "text": "significado.",
-        "questionId": "d1-w4"
-      },
-      {
         "index": 146,
         "column": 3,
         "line": 42,
-        "kind": "answerLine",
-        "text": "",
+        "kind": "lesson",
+        "text": "significado.",
         "questionId": "d1-w4"
       },
       {
@@ -1199,8 +1187,9 @@
         "index": 148,
         "column": 3,
         "line": 44,
-        "kind": "blank",
-        "text": ""
+        "kind": "answerLine",
+        "text": "",
+        "questionId": "d1-w4"
       },
       {
         "index": 149,
@@ -1249,21 +1238,21 @@
         "column": 3,
         "line": 51,
         "kind": "imageInstruction",
-        "text": "el agua: in aqua. Escribe qué significa cada"
+        "text": "el agua: in aqua. Deja una línea vacía bajo"
       },
       {
         "index": 156,
         "column": 3,
         "line": 52,
         "kind": "imageInstruction",
-        "text": "rótulo."
+        "text": "cada rótulo."
       }
     ],
     "packOrder": "column-major-sequential",
     "method": "ask-first-v1"
   },
   "quiz": {
-    "questionCount": 10,
+    "questionCount": 9,
     "questions": [
       {
         "id": "d1-q1",
@@ -1279,8 +1268,8 @@
         "answer": "Las dos orillas del lago",
         "slot": {
           "column": 2,
-          "line": 42,
-          "index": 94
+          "line": 48,
+          "index": 100
         }
       },
       {
@@ -1296,9 +1285,9 @@
         ],
         "answer": "En el agua",
         "slot": {
-          "column": 2,
-          "line": 48,
-          "index": 100
+          "column": 3,
+          "line": 1,
+          "index": 105
         }
       },
       {
@@ -1315,8 +1304,8 @@
         "answer": "Con los amigos",
         "slot": {
           "column": 3,
-          "line": 1,
-          "index": 105
+          "line": 7,
+          "index": 111
         }
       },
       {
@@ -1333,8 +1322,8 @@
         "answer": "Por el puente",
         "slot": {
           "column": 3,
-          "line": 7,
-          "index": 111
+          "line": 13,
+          "index": 117
         }
       },
       {
@@ -1351,8 +1340,8 @@
         "answer": "Sin puente",
         "slot": {
           "column": 3,
-          "line": 13,
-          "index": 117
+          "line": 19,
+          "index": 123
         }
       },
       {
@@ -1369,8 +1358,8 @@
         "answer": "Desde la orilla",
         "slot": {
           "column": 3,
-          "line": 19,
-          "index": 123
+          "line": 25,
+          "index": 129
         }
       },
       {
@@ -1380,19 +1369,8 @@
         "prompt": "Cuenta con tus palabras qué une el puente de Maracaibo.",
         "slot": {
           "column": 3,
-          "line": 25,
-          "index": 129
-        }
-      },
-      {
-        "id": "d1-w2",
-        "originDay": 1,
-        "type": "write",
-        "prompt": "Escribe «por el puente» y «sin puente» en latín.",
-        "slot": {
-          "column": 3,
-          "line": 30,
-          "index": 134
+          "line": 31,
+          "index": 135
         }
       },
       {
@@ -1404,8 +1382,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 35,
-          "index": 139
+          "line": 36,
+          "index": 140
         }
       },
       {
@@ -1417,8 +1395,8 @@
         "slotQuestionType": "schematic",
         "slot": {
           "column": 3,
-          "line": 40,
-          "index": 144
+          "line": 41,
+          "index": 145
         }
       }
     ]

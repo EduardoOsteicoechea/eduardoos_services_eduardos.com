@@ -1,5 +1,5 @@
 /**
- * Canonical Homescool subject order and class numbers (menu 1–12).
+ * Canonical Homescool subject order and class numbers (menu 1–13).
  * Order matches `cambios/1_orden_de_clases` and homescool-materials.mdc.
  */
 
@@ -16,6 +16,7 @@ export const HOMESCOOL_SUBJECTS = [
   "lat",
   "cie",
   "pro",
+  "fin",
 ] as const;
 
 export type HomescoolSubject = (typeof HOMESCOOL_SUBJECTS)[number];
@@ -34,11 +35,13 @@ export const HOMESCOOL_SUBJECT_CLASS_NO: Record<HomescoolSubject, number> = {
   lat: 10,
   cie: 11,
   pro: 12,
+  fin: 13,
 };
 
 /** Short labels on DHS subject chips (e.g. `ing`, `LinT`). */
 export const HOMESCOOL_SUBJECT_CHIP_LABELS: Record<HomescoolSubject, string> = {
   pro: "proy",
+  fin: "fin",
   esp: "esp",
   ing: "ing",
   lat: "lat",
@@ -66,10 +69,11 @@ export const HOMESCOOL_SUBJECT_LABELS: Record<HomescoolSubject, string> = {
   lat: "Latín",
   cie: "Ciencias",
   pro: "Proyecto",
+  fin: "Finanzas",
 };
 
 /**
- * No subjects paused: full menu 1–12 (teb…pro).
+ * No subjects paused: full menu 1–13 (teb…fin).
  * Keep the array for callers that filter; leave empty until a future pause.
  */
 export const HOMESCOOL_SUBJECTS_PAUSED = [] as const;
