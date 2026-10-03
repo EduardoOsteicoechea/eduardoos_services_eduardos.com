@@ -125,9 +125,9 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 				"writeSemantics": "POST upserts by cycle+week+day+level+subject. confirmOverwrite:true required. Level 6 only in v1.",
 				"postBody":       `{"confirmOverwrite":true,"material":{"format":"eoschool","version":1,"cycle":1,"week":1,"day":1,"level":6,"subject":"mat","locale":"es","title":"Tablas…","lesson":{"kind":"intro","points":[{"id":"p1","heading":"…","body":"…"},{"id":"p2","heading":"…","body":"…"},{"id":"p3","heading":"…","body":"…"}],"summary":"…"},"quiz":{"questionCount":7,"questions":[…]},"media":[]}}`,
 				"fields": map[string]string{
-					"format": "eoschool", "version": "1", "cycle": "1|2|3", "week": "1–24", "day": "1–5",
-					"level": "6 (v1)", "subject": "mat|esp|ing|his|lat|LT|geo|cie|art|pro|teb|exe",
-					"lesson": "intro|deepen|review per METHOD_V1", "quiz": "7×day questions",
+					"format": "eoschool", "version": "1", "cycle": "1|2|3", "week": "1–24", "day": "1–3 (pro only d1)",
+					"level": "6 (v1)", "subject": "teb|exe|LT|his|geo|art|mat|esp|ing|lat|cie|pro|fin",
+					"lesson": "d1 intro; d2/d3 deepen (method v3)", "quiz": "letter quiz on the same sheet (slotSequence)",
 				},
 				"subjects":        eoschoolSubjects,
 				"viewUrlTemplate": "{BASE}/homescool/material?id={materialId}",

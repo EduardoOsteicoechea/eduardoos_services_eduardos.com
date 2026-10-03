@@ -84,15 +84,18 @@ func homescoolValidateMaterialMeta(m *HomescoolMaterial) error {
 		if m.Week < 1 || m.Week > 24 {
 			return fmt.Errorf("week must be 1–24")
 		}
-		if m.Day < 1 || m.Day > 5 {
-			return fmt.Errorf("day must be 1–5")
+		if m.Day < 1 || m.Day > 3 {
+			return fmt.Errorf("day must be 1–3")
 		}
 		if m.Level != eoschoolLevelV1 {
 			return fmt.Errorf("level must be %d in method v1", eoschoolLevelV1)
 		}
 		m.Subject = eoschoolNormalizeSubject(m.Subject)
 		if !eoschoolSubjectOK(m.Subject) {
-			return fmt.Errorf("subject must be one of the 12 method v1 codes")
+			return fmt.Errorf("subject must be one of the 13 method v3 codes")
+		}
+		if strings.EqualFold(m.Subject, "pro") && m.Day != 1 {
+			return fmt.Errorf("pro is only allowed on day 1")
 		}
 		m.Title = strings.TrimSpace(m.Title)
 		if m.Title == "" {
