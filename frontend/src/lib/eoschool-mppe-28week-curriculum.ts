@@ -20,9 +20,9 @@ export type BibleChapterRef = {
 
 export type BibleDay = {
   dayInPlan: number;
-  genEster: BibleChapterRef;
-  jobMal: BibleChapterRef;
-  nt: BibleChapterRef;
+  genEster: BibleChapterRef[];
+  jobMal: BibleChapterRef[];
+  nt: BibleChapterRef[];
 };
 
 export type BibleBlock = {
@@ -35,6 +35,8 @@ export type BibleTrackReport = {
   chaptersReadInPlan: number;
   chaptersNotCovered: number;
   completesCanonIn28Weeks: boolean;
+  maxChaptersPerDay: number;
+  daysWithTwoOrMore: number;
 };
 
 export type CurriculumBlock = {
@@ -60,8 +62,9 @@ export type Mppe28WeekCurriculum = {
     identityObjectives: number;
     counts: { lenLearnings: number; matLearnings: number; cieLearnings: number };
     bible: {
+      canon: string;
       readingDays: number;
-      chaptersPerDay: number;
+      defaultMaxPerTrackPerDay: number;
       tracks: {
         genEster: BibleTrackReport;
         jobMal: BibleTrackReport;

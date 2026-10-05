@@ -44,14 +44,22 @@ const areaDefs = [
 
   <section class="product-dash eoschool-curriculum">
     <p class="lede">
-      {meta.weeks} semanas · bloque 1 = 2 días, bloque 2 = 3 días ({bibleMeta.readingDays} días de lectura bíblica). Cada día: 1 cap.
-      Génesis–Ester, 1 Job–Malaquías, 1 NT. Cada bloque además: Identidad, Lenguaje, Matemáticas y Ciencias.
+      {meta.weeks} semanas · bloque 1 = 2 días, bloque 2 = 3 días ({bibleMeta.readingDays} días de lectura bíblica). Cada día: tres
+      pistas (Gén–Ester, Job–Mal, NT), con 1–2 capítulos por pista cuando basta. Cada bloque además: Biblia, Identidad, Lenguaje,
+      Matemáticas y Ciencias.
     </p>
     <p class="lede eoschool-curriculum__bible-report">
-      Biblia en 28 semanas: {bibleMeta.tracks.genEster.chaptersReadInPlan} de {bibleMeta.tracks.genEster.totalChapters} caps.
-      (Gén–Ester), {bibleMeta.tracks.jobMal.chaptersReadInPlan} de {bibleMeta.tracks.jobMal.totalChapters} (Job–Mal),{" "}
-      {bibleMeta.tracks.nt.chaptersReadInPlan} de {bibleMeta.tracks.nt.totalChapters} (NT). No coincide la Biblia entera en 140
-      días a 1 capítulo por pista; el plan avanza en orden desde el inicio de cada pista.
+      {bibleMeta.canon}: {bibleMeta.tracks.genEster.totalChapters}+{bibleMeta.tracks.jobMal.totalChapters}+
+      {bibleMeta.tracks.nt.totalChapters} capítulos en {bibleMeta.readingDays} días. NT hasta{" "}
+      {bibleMeta.tracks.nt.maxChaptersPerDay} cap./día; AT hasta {bibleMeta.tracks.genEster.maxChaptersPerDay} cap./día por pista.
+      Cobertura: Gén–Ester {bibleMeta.tracks.genEster.chaptersReadInPlan}/{bibleMeta.tracks.genEster.totalChapters}, Job–Mal{" "}
+      {bibleMeta.tracks.jobMal.chaptersReadInPlan}/{bibleMeta.tracks.jobMal.totalChapters}, NT {bibleMeta.tracks.nt.chaptersReadInPlan}/
+      {bibleMeta.tracks.nt.totalChapters}
+      {bibleMeta.tracks.genEster.completesCanonIn28Weeks &&
+      bibleMeta.tracks.jobMal.completesCanonIn28Weeks &&
+      bibleMeta.tracks.nt.completesCanonIn28Weeks
+        ? " (Biblia completa en 28 semanas)."
+        : "."}
     </p>
 
     <nav class="eoschool-curriculum__index" data-curriculum-index aria-label="Índice por semana">

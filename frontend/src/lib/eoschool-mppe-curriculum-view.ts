@@ -97,8 +97,27 @@ function formatChapterRef(ref: BibleChapterRef): string {
   return `${ref.book} ${ref.chapter}`;
 }
 
+function formatChapterList(refs: BibleChapterRef[]): string {
+  if (!refs.length) return "—";
+  if (refs.length === 1) return formatChapterRef(refs[0]);
+  const first = refs[0];
+  const last = refs[refs.length - 1];
+  if (first.book === last.book) {
+    return `${first.book} ${first.chapter}–${last.chapter}`;
+  }
+  return refs.map(formatChapterRef).join(", ");
+}
+
+function edgeRef(refs: BibleChapterRef[]): BibleChapterRef | null {
+  return refs.length ? refs[0] : null;
+}
+
+function lastRef(refs: BibleChapterRef[]): BibleChapterRef | null {
+  return refs.length ? refs[refs.length - 1] : null;
+}
+
 function bibleDayLine(day: BibleDay): string {
-  return `Día ${day.dayInPlan}: ${formatChapterRef(day.genEster)} · ${formatChapterRef(day.jobMal)} · ${formatChapterRef(day.nt)}`;
+  return `Día ${day.dayInPlan}: ${formatChapterList(day.genEster)} · ${formatChapterList(day.jobMal)} · ${formatChapterList(day.nt)}`;
 }
 
 export function bibleGroups(block: CurriculumBlock): SubjectObjectiveGroup[] {
@@ -106,7 +125,7 @@ export function bibleGroups(block: CurriculumBlock): SubjectObjectiveGroup[] {
   return [
     {
       objective:
-        "Lectura diaria en tres bloques: 1 capítulo de Génesis–Ester, 1 de Job–Malaquías y 1 del Nuevo Testamento.",
+        "Lectura diaria (protestante reformado): Génesis–Ester, Job–Malaquías y NT. Hasta 2 cap./día por pista cuando basta; en AT hasta 4 cap./día en esa pista si hace falta.",
       learnings: days.map(bibleDayLine),
     },
   ];
@@ -117,8 +136,15 @@ function weekBibleSummary(week: CurriculumWeek): string {
   if (!days.length) return "—";
   const first = days[0];
   const last = days[days.length - 1];
+  const ge0 = edgeRef(first.genEster);
+  const ge1 = lastRef(last.genEster);
+  const jm0 = edgeRef(first.jobMal);
+  const jm1 = lastRef(last.jobMal);
+  const nt0 = edgeRef(first.nt);
+  const nt1 = lastRef(last.nt);
+  if (!ge0 || !ge1 || !jm0 || !jm1 || !nt0 || !nt1) return "—";
   return compact(
-    `${shortRef(first.genEster)}→${shortRef(last.genEster)} · ${shortRef(first.jobMal)}→${shortRef(last.jobMal)} · ${shortRef(first.nt)}→${shortRef(last.nt)}`,
+    `${shortRef(ge0)}→${shortRef(ge1)} · ${shortRef(jm0)}→${shortRef(jm1)} · ${shortRef(nt0)}→${shortRef(nt1)}`,
   );
 }
 

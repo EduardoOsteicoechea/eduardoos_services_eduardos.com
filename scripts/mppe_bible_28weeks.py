@@ -1,13 +1,22 @@
-"""28-week Bible reading plan: 5 school days/week × 3 chapters/day (Gén–Ester, Job–Mal, NT)."""
+"""28-week Bible reading — canon protestante reformado (66 libros, sin deuterocanónicos).
+
+Cada día escolar: tres pistas (Génesis–Ester, Job–Malaquías, NT).
+Por pista: 1 capítulo/día por defecto; 2 cuando haga falta para cerrar el NT en 140 días.
+En AT, si 2 no alcanza, se sube hasta el mínimo entero necesario (máx. 4 cap./día en esa pista).
+"""
 
 from __future__ import annotations
 
+import math
 from typing import TypedDict
 
 WEEKS = 28
 DAYS_PER_WEEK = 5
 READING_DAYS = WEEKS * DAYS_PER_WEEK
+DEFAULT_MAX_PER_DAY = 2
+OT_CEILING_PER_DAY = 4
 
+# Protestante reformado: mismo conteo de capítulos que la tradición hebrea + NT de 27 libros.
 GEN_ESTER: tuple[tuple[str, int], ...] = (
     ("Génesis", 50),
     ("Éxodo", 40),
@@ -91,19 +100,30 @@ class ChapterRef(TypedDict):
 
 class BibleDay(TypedDict):
     dayInPlan: int
-    genEster: ChapterRef
-    jobMal: ChapterRef
-    nt: ChapterRef
+    genEster: list[ChapterRef]
+    jobMal: list[ChapterRef]
+    nt: list[ChapterRef]
 
 
 class BibleBlock(TypedDict):
     days: list[BibleDay]
 
 
+class TrackReport(TypedDict):
+    name: str
+    totalChapters: int
+    chaptersReadInPlan: int
+    chaptersNotCovered: int
+    completesCanonIn28Weeks: bool
+    maxChaptersPerDay: int
+    daysWithTwoOrMore: int
+
+
 class BibleReport(TypedDict):
+    canon: str
     readingDays: int
-    chaptersPerDay: int
-    tracks: dict[str, dict[str, int | str]]
+    defaultMaxPerTrackPerDay: int
+    tracks: dict[str, TrackReport]
 
 
 def _flatten(books: tuple[tuple[str, int], ...]) -> list[ChapterRef]:
@@ -118,42 +138,94 @@ def _total_chapters(books: tuple[tuple[str, int], ...]) -> int:
     return sum(n for _, n in books)
 
 
-def bible_report() -> BibleReport:
-    ge_total = _total_chapters(GEN_ESTER)
-    jm_total = _total_chapters(JOB_MAL)
-    nt_total = _total_chapters(NEW_TESTAMENT)
-    slots = READING_DAYS
+def _per_day_cap(total: int, days: int, prefer_max: int, hard_ceiling: int) -> int:
+    need = math.ceil(total / days) if days else total
+    if need <= prefer_max:
+        return prefer_max
+    return min(hard_ceiling, need)
 
-    def track(name: str, total: int) -> dict[str, int | str]:
-        covered = min(slots, total)
-        return {
-            "name": name,
-            "totalChapters": total,
-            "chaptersReadInPlan": covered,
-            "chaptersNotCovered": max(0, total - covered),
-            "completesCanonIn28Weeks": total <= slots,
-        }
 
+def _schedule_track(
+    flat: list[ChapterRef],
+    days: int,
+    prefer_max: int,
+    hard_ceiling: int,
+) -> tuple[list[list[ChapterRef]], TrackReport]:
+    total = len(flat)
+    cap = _per_day_cap(total, days, prefer_max, hard_ceiling)
+    capacity = days * cap
+
+    if total <= days:
+        counts = [1 if i < total else 0 for i in range(days)]
+    elif total <= capacity:
+        doubles = total - days
+        counts = [1] * days
+        for i in range(doubles):
+            counts[i % days] += 1
+    else:
+        counts = [cap] * days
+        assigned = cap * days
+        if assigned < total:
+            counts = [cap] * days
+
+    schedule: list[list[ChapterRef]] = []
+    idx = 0
+    for count in counts:
+        chunk = flat[idx : idx + count] if count else []
+        idx += count
+        schedule.append(chunk)
+
+    read = min(total, idx)
+    days_multi = sum(1 for c in counts if c >= 2)
+
+    report: TrackReport = {
+        "name": "",
+        "totalChapters": total,
+        "chaptersReadInPlan": read,
+        "chaptersNotCovered": max(0, total - read),
+        "completesCanonIn28Weeks": read >= total,
+        "maxChaptersPerDay": cap,
+        "daysWithTwoOrMore": days_multi,
+    }
+    return schedule, report
+
+
+def bible_report_from_schedules(
+    ge_sched: list[list[ChapterRef]],
+    jm_sched: list[list[ChapterRef]],
+    nt_sched: list[list[ChapterRef]],
+    ge_rep: TrackReport,
+    jm_rep: TrackReport,
+    nt_rep: TrackReport,
+) -> BibleReport:
+    ge_rep["name"] = "Génesis–Ester"
+    jm_rep["name"] = "Job–Malaquías"
+    nt_rep["name"] = "Nuevo Testamento"
     return {
-        "readingDays": slots,
-        "chaptersPerDay": 3,
+        "canon": "Protestante reformado (66 libros)",
+        "readingDays": READING_DAYS,
+        "defaultMaxPerTrackPerDay": DEFAULT_MAX_PER_DAY,
         "tracks": {
-            "genEster": track("Génesis–Ester", ge_total),
-            "jobMal": track("Job–Malaquías", jm_total),
-            "nt": track("Nuevo Testamento", nt_total),
+            "genEster": ge_rep,
+            "jobMal": jm_rep,
+            "nt": nt_rep,
         },
     }
 
 
 def build_bible_blocks_for_weeks() -> tuple[list[list[BibleBlock]], BibleReport]:
-    ge = _flatten(GEN_ESTER)
-    jm = _flatten(JOB_MAL)
-    nt = _flatten(NEW_TESTAMENT)
-    report = bible_report()
+    ge_flat = _flatten(GEN_ESTER)
+    jm_flat = _flatten(JOB_MAL)
+    nt_flat = _flatten(NEW_TESTAMENT)
+
+    ge_sched, ge_rep = _schedule_track(ge_flat, READING_DAYS, DEFAULT_MAX_PER_DAY, OT_CEILING_PER_DAY)
+    jm_sched, jm_rep = _schedule_track(jm_flat, READING_DAYS, DEFAULT_MAX_PER_DAY, OT_CEILING_PER_DAY)
+    nt_sched, nt_rep = _schedule_track(nt_flat, READING_DAYS, DEFAULT_MAX_PER_DAY, DEFAULT_MAX_PER_DAY)
+
+    report = bible_report_from_schedules(ge_sched, jm_sched, nt_sched, ge_rep, jm_rep, nt_rep)
 
     day_index = 0
     all_week_blocks: list[list[BibleBlock]] = []
-
     for _week in range(WEEKS):
         week_blocks: list[BibleBlock] = []
         for _block_num, num_days in ((1, 2), (2, 3)):
@@ -164,9 +236,9 @@ def build_bible_blocks_for_weeks() -> tuple[list[list[BibleBlock]], BibleReport]
                 block_days.append(
                     {
                         "dayInPlan": day_index + 1,
-                        "genEster": ge[day_index],
-                        "jobMal": jm[day_index],
-                        "nt": nt[day_index],
+                        "genEster": ge_sched[day_index],
+                        "jobMal": jm_sched[day_index],
+                        "nt": nt_sched[day_index],
                     }
                 )
                 day_index += 1
@@ -177,14 +249,16 @@ def build_bible_blocks_for_weeks() -> tuple[list[list[BibleBlock]], BibleReport]
 
 
 def print_bible_report(report: BibleReport) -> None:
-    print("Bible 28-week plan")
-    print(f"  reading days: {report['readingDays']} (5 per week)")
-    print(f"  chapters per day (3 tracks): {report['chaptersPerDay']}")
-    for key, track in report["tracks"].items():
+    print(f"Bible 28-week plan ({report['canon']})")
+    print(f"  reading days: {report['readingDays']}")
+    print(f"  default max per track/day: {report['defaultMaxPerTrackPerDay']}")
+    for track in report["tracks"].values():
         print(
-            f"  {track['name']}: {track['totalChapters']} caps total, "
-            f"{track['chaptersReadInPlan']} read in plan, "
-            f"{track['chaptersNotCovered']} not covered, "
+            f"  {track['name']}: {track['totalChapters']} caps, "
+            f"read {track['chaptersReadInPlan']}, "
+            f"uncovered {track['chaptersNotCovered']}, "
+            f"max/day {track['maxChaptersPerDay']}, "
+            f"days>={2} {track['daysWithTwoOrMore']}, "
             f"complete={track['completesCanonIn28Weeks']}"
         )
 
