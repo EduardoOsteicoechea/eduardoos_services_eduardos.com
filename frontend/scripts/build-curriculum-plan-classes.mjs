@@ -1,5 +1,5 @@
 /**
- * Generates eoschool class JSON for MPPE plan days from eoschool-mppe-40week-curriculum.json
+ * DEPRECATED — Homescool eoschool per-subject files. Use build-mppe-day-sheets.mjs instead.
  *
  * Run: node frontend/scripts/build-curriculum-plan-classes.mjs
  * Optional: node frontend/scripts/build-curriculum-plan-classes.mjs 1 50  (inclusive range)

@@ -1,0 +1,62 @@
+---
+description: MPPE requirements curriculum route — independent from Homescool eoschool METHOD; own JSON + letter PDF
+globs:
+  - frontend/src/pages/eoschool/requirements/curriculum/**
+  - frontend/src/lib/mppe-curriculum*.ts
+  - frontend/src/lib/eoschool-curriculum*.ts
+  - frontend/src/lib/eoschool-mppe-40week-curriculum.*
+  - frontend/src/lib/eoschool-mppe-curriculum-view.ts
+  - frontend/public/eoschool/requirements/curriculum/**
+  - frontend/scripts/build-mppe-day-sheets.mjs
+  - frontend/scripts/build-40week-mppe-curriculum.mjs
+  - backend/eoschool_mppe_curriculum*.go
+  - backend/eoschool_curriculum_progress*.go
+  - backend/pkg/pdf/mppe_curriculum_day.go
+alwaysApply: false
+---
+
+# MPPE requirements curriculum (`/eoschool/requirements/curriculum`)
+
+This route is a **separate product surface** from Homescool workspace classes. Do **not** apply `homescool-class-method-v*`, letter-grid `slotSequence`, or `.eoschool` Homescool documents here unless the user explicitly asks to merge products.
+
+## Authority
+
+1. **MPPE Venezuela (3.er grado)** — marco, consulta de contenidos, plan 40 semanas / 200 días: `ministerio_de_educacion_de_venezuela/`, `eoschool-mppe-40week-curriculum.json`.
+2. **Homescool / eoschool METHOD** applies only to `/homescool/*` and published `.eoschool` media — not to this route.
+
+## Day content format (required)
+
+Static JSON per plan day:
+
+- Path: `frontend/public/eoschool/requirements/curriculum/day-sheets/d{N}.mppe-day.json`
+- `format`: `"mppe-curriculum-day"` (not `"eoschool"`)
+- Five sections `bib | ide | len | mat | cie`, each with:
+  - `objective` (objetivo MPPE / unidad)
+  - `learning` (aprendizaje específico del día)
+  - `activities` (plainificación 3.er grado — corta, accionable)
+
+Regenerate: `node frontend/scripts/build-mppe-day-sheets.mjs` (after `build-40week-mppe-curriculum.mjs` if the plan changed).
+
+Manifest: `day-sheets-manifest.json` (not `plan-classes-manifest.json` / not per-subject `.eoschool.json`).
+
+## UI
+
+- **Card:** solo aprendizaje(s); **modal:** objetivo + aprendizaje específico.
+- **PDF:** una sola hoja carta con **5 tarjetas** (rejilla 3+2), tipografía **9 pt** títulos de tarjeta, **8 pt** cuerpo — generada por el API MPPE, no por `/api/homescool/preview`.
+
+## API
+
+- `POST /api/eoschool/curriculum/day-preview` — body = full `mppe-curriculum-day` JSON → PDF base64 (5 cards).
+- Progress Mongo: `/api/eoschool/curriculum/progress*` (por niño; default Elías).
+
+## Forbidden on this route
+
+- Generating or requiring Homescool `lesson.kind`, `quiz`, `slotSequence`, or `layout: letter-grid-v2` for MPPE day sheets.
+- Using `POST /api/homescool/preview` for the curriculum day modal PDF.
+- Copying Homescool week themes as the spine instead of the 40-week MPPE plan data.
+
+## When editing
+
+1. Subdivide saberes según el plan 40×200, no hardcodear 28 semanas.
+2. Keep activities age-appropriate (3.er grado).
+3. After JSON changes, rebuild day sheets and smoke-test PDF preview + modal.

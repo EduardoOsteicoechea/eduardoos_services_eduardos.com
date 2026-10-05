@@ -1,23 +1,17 @@
 import { showErrorModal } from "./error-modal";
-import type { EoschoolDocument } from "./homescool";
+import { downloadPdfBytes, renderHomescoolPdfPreview } from "./homescool-pdf-preview";
+import type { CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
 import {
-  downloadPdfBytes,
-  fetchHomescoolPdfPreview,
-  renderHomescoolPdfPreview,
-} from "./homescool-pdf-preview";
-import { planDayManifest, type CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
+  fetchMppeDaySheet,
+  type MppeCurriculumDaySection,
+  type MppeCurriculumDaySheet,
+} from "./mppe-curriculum-day-sheet";
+import { fetchMppeDayPdfPreview } from "./mppe-curriculum-pdf-preview";
 import { mustLog } from "./dev-log";
 
-type LoadedClass = {
-  sectionId: CurriculumPlanSectionId;
-  label: string;
-  doc: EoschoolDocument;
-  jsonUrl: string;
-};
-
-let classCache: Map<string, LoadedClass> = new Map();
+let sheetCache: Map<number, MppeCurriculumDaySheet> = new Map();
 let activePdfBytes: Uint8Array | null = null;
-let activePdfName = "clase.pdf";
+let activePdfName = "dia-mppe.pdf";
 
 function parsePlanDay(card: HTMLElement): number {
   const raw = card.dataset.planDay;
@@ -25,64 +19,79 @@ function parsePlanDay(card: HTMLElement): number {
   return Number.isFinite(n) ? n : 0;
 }
 
-async function fetchClassJson(url: string): Promise<EoschoolDocument> {
-  const res = await fetch(url, { credentials: "same-origin" });
-  if (!res.ok) {
-    throw new Error(`No se pudo cargar la clase (${res.status}).`);
-  }
-  return (await res.json()) as EoschoolDocument;
+async function loadDaySheet(planDay: number): Promise<MppeCurriculumDaySheet | null> {
+  const hit = sheetCache.get(planDay);
+  if (hit) return hit;
+  const sheet = await fetchMppeDaySheet(planDay);
+  if (sheet) sheetCache.set(planDay, sheet);
+  return sheet;
 }
 
-async function ensurePlanDayClasses(planDay: number): Promise<LoadedClass[]> {
-  const manifest = await planDayManifest(planDay);
-  if (!manifest) return [];
-
-  const out: LoadedClass[] = [];
-  for (const section of manifest.sections) {
-    const cacheKey = section.jsonUrl;
-    const hit = classCache.get(cacheKey);
-    if (hit) {
-      out.push(hit);
-      continue;
+function renderSectionContent(target: HTMLElement, section: MppeCurriculumDaySection | undefined): void {
+  target.replaceChildren();
+  if (!section) return;
+  const block = document.createElement("div");
+  block.className = "eoschool-curriculum__objective-block";
+  const obj = document.createElement("p");
+  obj.className = "eoschool-curriculum__objective";
+  const objLabel = document.createElement("span");
+  objLabel.className = "eoschool-curriculum__objective-label";
+  objLabel.textContent = "Objetivo";
+  obj.append(objLabel, document.createTextNode(section.objective));
+  block.append(obj);
+  const learnWrap = document.createElement("div");
+  learnWrap.className = "eoschool-curriculum__specific-learning";
+  const learnLabel = document.createElement("p");
+  learnLabel.className = "eoschool-curriculum__learning-label";
+  learnLabel.textContent = "Aprendizaje específico";
+  learnWrap.append(learnLabel);
+  const p = document.createElement("p");
+  p.className = "eoschool-curriculum__learnings";
+  p.textContent = section.learning;
+  learnWrap.append(p);
+  if (section.activities?.length) {
+    const actLabel = document.createElement("p");
+    actLabel.className = "eoschool-curriculum__learning-label";
+    actLabel.textContent = "Actividades";
+    learnWrap.append(actLabel);
+    const ul = document.createElement("ul");
+    ul.className = "eoschool-curriculum__learnings";
+    for (const act of section.activities) {
+      const li = document.createElement("li");
+      li.textContent = act;
+      ul.append(li);
     }
-    const doc = await fetchClassJson(section.jsonUrl);
-    const loaded: LoadedClass = {
-      sectionId: section.sectionId,
-      label: section.label,
-      doc,
-      jsonUrl: section.jsonUrl,
-    };
-    classCache.set(cacheKey, loaded);
-    out.push(loaded);
+    learnWrap.append(ul);
   }
-  return out;
+  block.append(learnWrap);
+  target.append(block);
 }
 
-function setModalSectionContent(modal: HTMLElement, card: HTMLElement, sectionId: CurriculumPlanSectionId): void {
-  const source = card.querySelector<HTMLElement>(`[data-curriculum-section="${sectionId}"]`);
+function setModalSectionContent(
+  modal: HTMLElement,
+  card: HTMLElement,
+  sectionId: CurriculumPlanSectionId,
+  sheet: MppeCurriculumDaySheet | null,
+): void {
   const target = modal.querySelector<HTMLElement>("[data-curriculum-modal-section-content]");
   if (!target) return;
+  const fromSheet = sheet?.sections.find((s) => s.id === sectionId);
+  if (fromSheet) {
+    renderSectionContent(target, fromSheet);
+    return;
+  }
+  const source = card.querySelector<HTMLElement>(`[data-curriculum-section="${sectionId}"]`);
   if (source) {
     const clone =
       source.querySelector(".eoschool-curriculum__subject-detail") ??
       source.querySelector(".eoschool-curriculum__subject-body");
-    if (clone) {
-      target.replaceChildren(clone.cloneNode(true));
-    } else {
-      target.textContent = "";
-      const inner = source.cloneNode(true) as HTMLElement;
-      inner.querySelectorAll("[data-curriculum-section-check]").forEach((el) => el.remove());
-      target.append(inner);
-    }
+    if (clone) target.replaceChildren(clone.cloneNode(true));
   } else {
     target.textContent = "";
   }
 }
 
-async function showSectionPdf(
-  modal: HTMLElement,
-  loaded: LoadedClass | undefined,
-): Promise<void> {
+async function showDayPdf(modal: HTMLElement, sheet: MppeCurriculumDaySheet | null): Promise<void> {
   const host = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf]");
   const empty = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf-empty]");
   const downloadBtn = modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-download]");
@@ -92,31 +101,32 @@ async function showSectionPdf(
   activePdfBytes = null;
   if (downloadBtn) downloadBtn.disabled = true;
 
-  if (!loaded) {
-    if (empty) empty.hidden = false;
+  if (!sheet) {
+    if (empty) {
+      empty.hidden = false;
+      empty.textContent = "Hoja del día en preparación.";
+    }
     return;
   }
   if (empty) empty.hidden = true;
 
-  const preview = await fetchHomescoolPdfPreview(loaded.doc);
+  const preview = await fetchMppeDayPdfPreview(sheet);
   if (!preview.ok || !preview.pdfBytes) {
     showErrorModal({
-      message: preview.error ?? "No se pudo generar la vista previa PDF.",
+      message: preview.error ?? "No se pudo generar la hoja PDF del día.",
       requestId: preview.requestId,
     });
     if (empty) {
       empty.hidden = false;
       empty.textContent =
-        "No se pudo generar el PDF. Si estás autenticado con Homescool, reintenta; un 401/403 no cierra la sesión.";
+        "No se pudo generar el PDF (5 materias en una hoja). Inicia sesión con acceso Homescool para la vista previa.";
     }
     return;
   }
 
   activePdfBytes = preview.pdfBytes;
-  const safeTitle = loaded.doc.title.replace(/[^\w\sáéíóúñ-]/gi, "").trim() || "clase";
-  activePdfName = `${safeTitle}.pdf`;
+  activePdfName = `dia-${sheet.planDay}-mppe.pdf`;
   if (downloadBtn) downloadBtn.disabled = false;
-
   await renderHomescoolPdfPreview(host, preview.pdfBytes);
 }
 
@@ -141,31 +151,32 @@ function openModal(card: HTMLElement): void {
   document.body.classList.add("eoschool-curriculum-modal-open");
 
   const tabs = modal.querySelectorAll<HTMLButtonElement>("[data-curriculum-modal-tab]");
-  let classes: LoadedClass[] = [];
-  const classesPromise = planDay ? ensurePlanDayClasses(planDay) : Promise.resolve([]);
+  let sheet: MppeCurriculumDaySheet | null = null;
 
-  classesPromise
+  const loadPromise = planDay ? loadDaySheet(planDay) : Promise.resolve(null);
+
+  loadPromise
     .then((loaded) => {
-      classes = loaded;
+      sheet = loaded;
       tabs.forEach((tab) => {
         const sid = tab.dataset.curriculumModalTab as CurriculumPlanSectionId;
-        const hasClass = loaded.some((c) => c.sectionId === sid);
+        const has = loaded?.sections.some((s) => s.id === sid) ?? false;
         tab.disabled = false;
-        tab.classList.toggle("eoschool-curriculum-modal__tab--no-class", !hasClass);
+        tab.classList.toggle("eoschool-curriculum-modal__tab--no-class", !has);
       });
-      const first = loaded[0]?.sectionId ?? "bib";
-      activateTab(modal, card, first, loaded);
+      void showDayPdf(modal, loaded);
+      activateTab(modal, card, "bib", loaded);
     })
     .catch((err: unknown) => {
       showErrorModal({
-        message: err instanceof Error ? err.message : "No se pudieron cargar las clases del día.",
+        message: err instanceof Error ? err.message : "No se pudo cargar la hoja del día.",
       });
     });
 
   tabs.forEach((tab) => {
     tab.onclick = () => {
       const sid = tab.dataset.curriculumModalTab as CurriculumPlanSectionId;
-      activateTab(modal, card, sid, classes);
+      activateTab(modal, card, sid, sheet);
     };
   });
 }
@@ -174,17 +185,14 @@ function activateTab(
   modal: HTMLElement,
   card: HTMLElement,
   sectionId: CurriculumPlanSectionId,
-  classes: LoadedClass[],
+  sheet: MppeCurriculumDaySheet | null,
 ): void {
   modal.querySelectorAll<HTMLButtonElement>("[data-curriculum-modal-tab]").forEach((tab) => {
     const active = tab.dataset.curriculumModalTab === sectionId;
     tab.setAttribute("aria-selected", active ? "true" : "false");
     tab.classList.toggle("eoschool-curriculum-modal__tab--active", active);
   });
-
-  setModalSectionContent(modal, card, sectionId);
-  const loaded = classes.find((c) => c.sectionId === sectionId);
-  void showSectionPdf(modal, loaded);
+  setModalSectionContent(modal, card, sectionId, sheet);
 }
 
 export function initCurriculumDayModal(root: HTMLElement | null): void {
