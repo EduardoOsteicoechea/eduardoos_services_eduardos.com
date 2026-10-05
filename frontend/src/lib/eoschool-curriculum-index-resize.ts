@@ -1,20 +1,31 @@
 const RESIZABLE_COLS = ["bib", "ide", "len", "mat"] as const;
 type ResizableCol = (typeof RESIZABLE_COLS)[number];
 
-const STORAGE_KEY = "eoschool-curriculum-index-widths";
+const STORAGE_KEY = "eoschool-curriculum-index-widths-v2";
 const MIN_WIDTH_REM = 3.5;
 const MAX_WIDTH_REM = 48;
-const DEFAULT_WIDTH_REM = 8;
 
 function readRootRem(): number {
   const px = parseFloat(getComputedStyle(document.documentElement).fontSize);
   return Number.isFinite(px) && px > 0 ? px : 16;
 }
 
-function parseColRem(root: HTMLElement, col: ResizableCol): number {
+function columnCell(root: HTMLElement, col: ResizableCol): HTMLElement | null {
+  const head = root.querySelector(".eoschool-curriculum__index-head");
+  if (!head) return null;
+  const handle = head.querySelector<HTMLElement>(`[data-resize-col="${col}"]`);
+  return handle?.closest<HTMLElement>(".eoschool-curriculum__index-cell") ?? null;
+}
+
+function readColumnRem(root: HTMLElement, col: ResizableCol): number {
   const raw = getComputedStyle(root).getPropertyValue(`--idx-${col}`).trim();
+  if (raw.endsWith("fr")) {
+    const cell = columnCell(root, col);
+    if (cell) return cell.getBoundingClientRect().width / readRootRem();
+    return 8;
+  }
   const value = parseFloat(raw);
-  return Number.isFinite(value) ? value : DEFAULT_WIDTH_REM;
+  return Number.isFinite(value) ? value : 8;
 }
 
 function readStorage(): Partial<Record<ResizableCol, number>> {
@@ -31,7 +42,10 @@ function readStorage(): Partial<Record<ResizableCol, number>> {
 function writeStorage(root: HTMLElement): void {
   const payload: Partial<Record<ResizableCol, number>> = {};
   for (const col of RESIZABLE_COLS) {
-    payload[col] = parseColRem(root, col);
+    const raw = getComputedStyle(root).getPropertyValue(`--idx-${col}`).trim();
+    if (raw.endsWith("rem")) {
+      payload[col] = parseFloat(raw);
+    }
   }
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -55,8 +69,12 @@ function startResize(ev: PointerEvent, root: HTMLElement, col: ResizableCol, han
   handle.setPointerCapture(ev.pointerId);
 
   const startX = ev.clientX;
-  const startRem = parseColRem(root, col);
+  const startRem = readColumnRem(root, col);
   const rootRem = readRootRem();
+
+  if (getComputedStyle(root).getPropertyValue(`--idx-${col}`).trim().endsWith("fr")) {
+    root.style.setProperty(`--idx-${col}`, `${startRem}rem`);
+  }
 
   const onMove = (moveEv: PointerEvent) => {
     const deltaRem = (moveEv.clientX - startX) / rootRem;
