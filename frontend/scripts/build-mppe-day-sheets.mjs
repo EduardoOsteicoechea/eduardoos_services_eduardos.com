@@ -71,58 +71,232 @@ function sameRefs(a, b) {
   return a[0].id === b[0].id;
 }
 
-function activitiesForSection(sectionId, planDay, week, refs, prevRefs) {
-  const d = ((planDay - 1) % 5) + 1;
-  if (sectionId === "bib") {
-    return ["Lee las tres pistas con calma.", "Subraya una idea para compartir en familia."];
-  }
+/** Rotates templates by calendar week (40) and school day in week (1–5). */
+function activityVariantIndex(week, dayInWeek, poolSize) {
+  const w = Math.max(1, week | 0);
+  const d = Math.min(5, Math.max(1, dayInWeek | 0));
+  return ((w - 1) * 5 + (d - 1)) % poolSize;
+}
 
-  const learning = primaryLearning(refs);
-  const objective = objectiveFromRefs(refs);
-  const continuing = sameRefs(refs, prevRefs);
+function activityCtx(planDay, week, refs, prevRefs, extra = {}) {
+  const dayInWeek = ((planDay - 1) % 5) + 1;
+  const learning = extra.learning ?? primaryLearning(refs);
+  const objective = extra.objective ?? objectiveFromRefs(refs);
+  const continuing = extra.continuing ?? sameRefs(refs, prevRefs);
+  return {
+    planDay,
+    week,
+    dayInWeek,
+    learning,
+    objective,
+    continuing,
+    clip,
+    ...extra,
+  };
+}
+
+const BIB_WEEKLY = [
+  ["Lee las tres pistas en voz alta, con pausas.", "Anota una palabra nueva y su significado."],
+  ["Lee en silencio y marca un versículo favorito.", "Comparte en familia por qué te llamó la atención."],
+  ["Lee por turnos (adulto/niño) cada pista.", "Dibuja un símbolo que resuma la lectura del día."],
+  ["Relee solo la pista del NT y resume en 2 frases.", "Ora o agradece por una enseñanza del pasaje."],
+  ["Busca una promesa o mandato en la lectura.", "Escribe cómo aplicarlo hoy en el colegio o casa."],
+  ["Subraya nombres y lugares en cada pista.", "Ubica en un mapa mental (libro → idea)."],
+  ["Lee con entonación (preguntas, órdenes, relatos).", "Graba tu voz leyendo un versículo corto."],
+  ["Compara una idea entre las tres pistas.", "Escribe una pregunta para investigar mañana."],
+];
+
+const IDE_WEEKLY = [
+  (c) => [
+    c.continuing
+      ? `Semana ${c.week}: repasa «${c.clip(c.ideTitle, 65)}» con un ejemplo local.`
+      : `Presenta el eje: ${c.clip(c.ideTitle, 65)}.`,
+    "Mapa mental: persona, comunidad y país.",
+  ],
+  (c) => [
+    `Investiga con un adulto un hecho sobre ${c.clip(c.ideTitle, 55)}.`,
+    "Redacta 3 líneas: ayer / hoy / qué puedo hacer yo.",
+  ],
+  (c) => [
+    `Dramatiza una escena breve ligada a ${c.clip(c.ideTitle, 55)}.`,
+    "Lista derechos y deberes que aparecen en la escena.",
+  ],
+  (c) => [
+    `Collage o dibujo sobre ${c.clip(c.ideTitle, 55)} (revista o boceto).`,
+    "Explica tu collage en 4 frases orales.",
+  ],
+  (c) => [
+    `Entrevista a un familiar: ¿qué recuerda de ${c.clip(c.ideTitle, 45)}?`,
+    "Escribe la cita más importante de la entrevista.",
+  ],
+  (c) => [
+    `Compara dos regiones de Venezuela relacionadas con ${c.clip(c.ideTitle, 40)}.`,
+    "Tabla: similitudes y diferencias (3 filas).",
+  ],
+  (c) => [
+    `Cartel en hoja carta: valores de ${c.clip(c.ideTitle, 50)}.`,
+    "Presenta el cartel en 1 minuto.",
+  ],
+  (c) => [
+    `Lee una noticia corta y conéctala con ${c.clip(c.ideTitle, 45)}.`,
+    "Opina: ¿por qué importa para los niños?",
+  ],
+];
+
+const LEN_WEEKLY = [
+  (c) => [
+    c.continuing
+      ? `Semana ${c.week} — repaso oral: ${c.clip(c.learning, 85)}.`
+      : `Texto nuevo (papel o digital) sobre: ${c.clip(c.learning, 85)}.`,
+    "Subraya 5 palabras clave y ordénalas por importancia.",
+  ],
+  (c) => [
+    `Dictado de 6–8 palabras del tema «${c.clip(c.objective, 50)}».`,
+    "Corrige, copia la versión final y relee.",
+  ],
+  (c) => [
+    `Inventa un título creativo para un texto de ${c.clip(c.learning, 70)}.`,
+    "Escribe el párrafo inicial (4–5 líneas).",
+  ],
+  (c) => [
+    `Juego de roles: explica ${c.clip(c.learning, 75)} a un compañero imaginario.`,
+    "Anota dos preguntas que te haría el oyente.",
+  ],
+  (c) => [
+    `Organizador gráfico (inicio–nudo–desenlace) del aprendizaje.`,
+    "Completa con palabras del texto trabajado.",
+  ],
+  (c) => [
+    `Busca sinónimos/antónimos de 4 palabras del tema.`,
+    "Úsalos en oraciones propias.",
+  ],
+  (c) => [
+    `Escribe una carta corta aplicando: ${c.clip(c.learning, 70)}.`,
+    "Incluye saludo, cuerpo y despedida.",
+  ],
+  (c) => [
+    `Secuencia de instrucciones (3 pasos) sobre ${c.clip(c.objective, 50)}.`,
+    "Intercambia con un adulto: ¿se entiende?",
+  ],
+];
+
+const MAT_WEEKLY = [
+  (c) => [
+    c.continuing
+      ? `Semana ${c.week}: 4 ejercicios de ${c.clip(c.learning, 80)} en el cuaderno.`
+      : `Concreto: modela ${c.clip(c.learning, 80)} con fichas o dibujos.`,
+    `Unidad «${c.clip(c.objective, 55)}»: explica un ejemplo del entorno.`,
+  ],
+  (c) => [
+    `Problema del día (2 pasos) sobre ${c.clip(c.learning, 75)}.`,
+    "Dibuja el procedimiento, no solo el resultado.",
+  ],
+  (c) => [
+    `Estimación rápida antes de calcular (${c.clip(c.objective, 45)}).`,
+    "Compara estimación vs resultado real.",
+  ],
+  (c) => [
+    `Crea 3 preguntas tipo quiz para un compañero.`,
+    "Resuélvelas tú y verifica.",
+  ],
+  (c) => [
+    `Geoplano o cuadrícula: representa ${c.clip(c.learning, 65)}.`,
+    "Describe oralmente qué dibujaste.",
+  ],
+  (c) => [
+    `Patrón numérico o geométrico (5 elementos) del tema.`,
+    "Predice el siguiente elemento y justifica.",
+  ],
+  (c) => [
+    `Mide objetos de la casa (regla o palmos) y registra.`,
+    `Relaciona medidas con ${c.clip(c.learning, 60)}.`,
+  ],
+  (c) => [
+    `Explica en voz alta el error de un ejercicio «falso».`,
+    "Corrige el ejercicio y muestra el procedimiento.",
+  ],
+];
+
+const CIE_WEEKLY = [
+  (c) => [
+    c.continuing
+      ? `Semana ${c.week}: observa de nuevo ${c.clip(c.learning, 80)}.`
+      : `Salida al patio/balcón: observa ${c.clip(c.learning, 80)}.`,
+    `Registro: dibujo + 2 datos de «${c.clip(c.objective, 50)}».`,
+  ],
+  (c) => [
+    `Experimento simple o demostración segura del tema.`,
+    "Anota materiales, pasos y qué ocurrió.",
+  ],
+  (c) => [
+    `Clasifica 6 imágenes o tarjetas según ${c.clip(c.objective, 50)}.`,
+    "Justifica una clasificación difícil.",
+  ],
+  (c) => [
+    `Investiga con un adulto un dato sobre Venezuela.`,
+    "Relaciónalo con el aprendizaje del día.",
+  ],
+  (c) => [
+    `Diagrama de causa y efecto del fenómeno estudiado.`,
+    "Añade una causa más que investigar.",
+  ],
+  (c) => [
+    `Bitácora: ¿qué cambió entre ayer y hoy en tu observación?`,
+    "Escribe una hipótesis sencilla.",
+  ],
+  (c) => [
+    `Maqueta o esquema en cartulina del concepto clave.`,
+    "Etiqueta las partes con vocabulario nuevo.",
+  ],
+  (c) => [
+    `Preguntas científicas: escribe 3 «por qué» o «cómo».`,
+    "Elige una y busca respuesta con un libro o adulto.",
+  ],
+];
+
+function pickWeekly(pool, week, dayInWeek) {
+  const i = activityVariantIndex(week, dayInWeek, pool.length);
+  return pool[i];
+}
+
+function activitiesForSection(sectionId, planDay, week, refs, prevRefs) {
+  const dayInWeek = ((planDay - 1) % 5) + 1;
+
+  if (sectionId === "bib") {
+    const pair = pickWeekly(BIB_WEEKLY, week, dayInWeek);
+    return [...pair];
+  }
 
   if (sectionId === "ide") {
-    const ideTitle = refs?.title ?? objective;
+    const ideTitle = refs?.title ?? objectiveFromRefs(refs);
     const ideContinuing =
-      prevRefs && prevRefs.title === refs?.title && (refs?.learnings?.[0] ?? "") === (prevRefs?.learnings?.[0] ?? "");
-    return [
-      ideContinuing
-        ? `Repasa «${clip(ideTitle, 70)}» con un ejemplo venezolano del día a día.`
-        : `Presenta el foco de identidad: ${clip(ideTitle, 70)}.`,
-      "Escribe dos frases: qué significa para ti y qué puedes hacer en tu comunidad.",
-    ];
+      prevRefs &&
+      prevRefs.title === refs?.title &&
+      (refs?.learnings?.[0] ?? "") === (prevRefs?.learnings?.[0] ?? "");
+    const ctx = activityCtx(planDay, week, refs, prevRefs, {
+      ideTitle,
+      continuing: ideContinuing,
+      objective: ideTitle,
+      learning: (refs?.learnings ?? []).join(" ") || ideTitle,
+    });
+    const fn = pickWeekly(IDE_WEEKLY, week, dayInWeek);
+    return fn(ctx);
   }
+
+  const ctx = activityCtx(planDay, week, refs, prevRefs);
 
   if (sectionId === "len") {
-    const prompts = [
-      continuing
-        ? `Vuelve a practicar: ${clip(learning, 90)} (lectura o escucha breve).`
-        : `Lee o escucha un texto corto ligado a: ${clip(learning, 90)}.`,
-      d <= 2 ? "Subraya palabras clave y ordénalas en el cuaderno." : "Redacta 4–6 líneas usando lo trabajado.",
-    ];
-    return prompts;
+    return pickWeekly(LEN_WEEKLY, week, dayInWeek)(ctx);
   }
-
   if (sectionId === "mat") {
-    return [
-      continuing
-        ? `Consolida en el cuaderno: ${clip(learning, 90)} (3 ejercicios).`
-        : `Explora con material concreto: ${clip(learning, 90)}.`,
-      `Unidad MPPE: ${clip(objective, 60)}. Explica un ejemplo con dibujo o esquema.`,
-    ];
+    return pickWeekly(MAT_WEEKLY, week, dayInWeek)(ctx);
   }
-
   if (sectionId === "cie") {
-    return [
-      continuing
-        ? `Profundiza la observación sobre: ${clip(learning, 90)}.`
-        : `Observa el entorno y relaciona: ${clip(learning, 90)}.`,
-      `Tema: ${clip(objective, 60)}. Registra dibujo + dos preguntas que te surjan.`,
-    ];
+    return pickWeekly(CIE_WEEKLY, week, dayInWeek)(ctx);
   }
 
   return [
-    `Día ${planDay} (semana ${week}, 3.er grado): ${clip(learning, 80)}.`,
+    `Semana ${week}, día ${dayInWeek}: ${clip(ctx.learning, 80)}.`,
     "Cierra con una frase: «Hoy aprendí…».",
   ];
 }

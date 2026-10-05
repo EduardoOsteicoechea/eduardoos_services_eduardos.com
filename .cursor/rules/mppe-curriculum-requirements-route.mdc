@@ -33,7 +33,7 @@ Static JSON per plan day:
 - Five sections `bib | ide | len | mat | cie`, each with:
   - `objective` (objetivo MPPE / unidad)
   - `learning` (aprendizaje específico del día)
-  - `activities` (plainificación 3.er grado — corta, accionable)
+  - `activities` (plainificación 3.er grado — 2 ítems; rotan por **semana + día 1–5** vía `build-mppe-day-sheets.mjs`, aunque el aprendizaje se repita)
 
 Regenerate: `node frontend/scripts/build-40week-mppe-curriculum.mjs` then `node frontend/scripts/build-mppe-day-sheets.mjs`. Days with no new mat/cie/len aprendizaje **repeat the previous day's refs** (forward-fill in the 40-week builder).
 
