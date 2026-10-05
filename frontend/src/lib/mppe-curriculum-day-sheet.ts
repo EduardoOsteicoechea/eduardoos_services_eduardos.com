@@ -7,6 +7,12 @@ export type MppeCurriculumDaySection = {
   label: string;
   objective: string;
   learning: string;
+  /** Meta observable para el niño («Al terminar puedes…»). */
+  canDo?: string;
+  mode?: "directo" | "apalancado" | "fragmentado";
+  activityKind?: string;
+  minutesEstimate?: number;
+  topicShort?: string;
   activities: string[];
 };
 

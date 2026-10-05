@@ -73,6 +73,12 @@ describe("MPPE day sheets (200 días)", () => {
         ) {
           failures.push(`d${planDay} ${section.id}: empty learning`);
         }
+        if (!section.canDo?.trim() || !/al terminar puedes/i.test(section.canDo)) {
+          failures.push(`d${planDay} ${section.id}: missing canDo`);
+        }
+        if (section.objective.includes(" · ") && /(.+ · )\1/.test(section.objective)) {
+          failures.push(`d${planDay} ${section.id}: duplicated objective segment`);
+        }
         for (const act of section.activities ?? []) {
           for (const defect of activityIntegrityDefects(act)) {
             failures.push(`d${planDay} ${section.id}: ${defect}: ${act.slice(0, 80)}`);

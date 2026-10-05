@@ -90,6 +90,20 @@ function renderSectionContent(target: HTMLElement, section: MppeCurriculumDaySec
     root.append(learnBlock);
   }
 
+  const canDo = section.canDo?.trim();
+  if (canDo) {
+    const metaBlock = document.createElement("div");
+    metaBlock.className = "mppe-day-sheet__block";
+    const metaLabel = document.createElement("p");
+    metaLabel.className = "mppe-day-sheet__label";
+    metaLabel.textContent = "Meta del día:";
+    const metaBody = document.createElement("p");
+    metaBody.className = "mppe-day-sheet__text";
+    metaBody.textContent = canDo;
+    metaBlock.append(metaLabel, metaBody);
+    root.append(metaBlock);
+  }
+
   const acts = (section.activities ?? []).map((a) => a.trim()).filter(Boolean);
   if (acts.length) {
     const actBlock = document.createElement("div");

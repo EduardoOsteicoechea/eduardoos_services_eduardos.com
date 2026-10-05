@@ -7,6 +7,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  buildSectionPack,
+  dedupeObjectiveTitle,
+  qaDaySheet,
+  SAMPLE_DAYS,
+} from "./mppe-day-activity-engine.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const curriculumPath = path.join(__dirname, "..", "src", "lib", "eoschool-mppe-40week-curriculum.json");
@@ -231,215 +237,35 @@ function activityCtx(planDay, week, refs, prevRefs, extra = {}) {
   };
 }
 
-const BIB_WEEKLY = [
-  ["Lee las tres pistas en voz alta, con pausas.", "Anota una palabra nueva y su significado."],
-  ["Lee en silencio y marca un versículo favorito.", "Comparte en familia por qué te llamó la atención."],
-  ["Lee por turnos (adulto/niño) cada pista.", "Dibuja un símbolo que resuma la lectura del día."],
-  ["Relee solo la pista del NT y resume en 2 frases.", "Ora o agradece por una enseñanza del pasaje."],
-  ["Busca una promesa o mandato en la lectura.", "Escribe cómo aplicarlo hoy en el colegio o casa."],
-  ["Subraya nombres y lugares en cada pista.", "Ubica en un mapa mental (libro → idea)."],
-  ["Lee con entonación (preguntas, órdenes, relatos).", "Graba tu voz leyendo un versículo corto."],
-  ["Compara una idea entre las tres pistas.", "Escribe una pregunta para investigar mañana."],
-];
-
-const IDE_WEEKLY = [
-  (c) => [
-    c.effectiveContinuing
-      ? `Semana ${c.week}: repasa «${c.clip(c.ideTitle, 65)}» con un ejemplo local.`
-      : `Presenta el eje: ${c.clip(c.ideTitle, 65)}.`,
-    `Mapa mental de «${c.clip(c.ideTitle, 50)}»: persona, comunidad y país.`,
-  ],
-  (c) => [
-    `Investiga con un adulto un hecho sobre ${c.clip(c.ideTitle, 55)}.`,
-    "Redacta 3 líneas: ayer / hoy / qué puedo hacer yo.",
-  ],
-  (c) => [
-    `Dramatiza una escena breve ligada a ${c.clip(c.ideTitle, 55)}.`,
-    "Lista derechos y deberes que aparecen en la escena.",
-  ],
-  (c) => [
-    `Collage o dibujo sobre ${c.clip(c.ideTitle, 55)} (revista o boceto).`,
-    "Explica tu collage en 4 frases orales.",
-  ],
-  (c) => [
-    `Entrevista a un familiar: ¿qué recuerda de ${c.clip(c.ideTitle, 45)}?`,
-    "Escribe la cita más importante de la entrevista.",
-  ],
-  (c) => [
-    `Compara dos regiones de Venezuela relacionadas con ${c.clip(c.ideTitle, 40)}.`,
-    "Tabla: similitudes y diferencias (3 filas).",
-  ],
-  (c) => [
-    `Cartel en hoja carta: valores de ${c.clip(c.ideTitle, 50)}.`,
-    "Presenta el cartel en 1 minuto.",
-  ],
-  (c) => [
-    `Lee una noticia corta y conéctala con ${c.clip(c.ideTitle, 45)}.`,
-    "Opina: ¿por qué importa para los niños?",
-  ],
-];
-
-const LEN_WEEKLY = [
-  (c) => [
-    c.effectiveContinuing
-      ? `Semana ${c.week} — repaso oral del tema: ${c.learn(80)}.`
-      : `Lee un texto (papel o digital) y practica: ${c.learn(80)}.`,
-    "Subraya 5 palabras clave y ordénalas por importancia.",
-  ],
-  (c) => [
-    `Dictado de 6–8 palabras del tema «${c.obj(50)}».`,
-    "Corrige, copia la versión final y relee.",
-  ],
-  (c) => [
-    `Inventa un título creativo para un texto sobre ${c.learn(65)}.`,
-    "Escribe el párrafo inicial (4–5 líneas).",
-  ],
-  (c) => [
-    `Juego de roles: explica a un compañero imaginario cómo ${c.learn(70)}.`,
-    "Anota dos preguntas que te haría el oyente.",
-  ],
-  (c) => [
-    `Organizador gráfico (inicio–nudo–desenlace) del texto sobre ${c.learn(65)}.`,
-    "Completa con palabras del texto trabajado.",
-  ],
-  (c) => [
-    `Busca sinónimos/antónimos de 4 palabras de «${c.obj(45)}».`,
-    "Úsalos en oraciones propias.",
-  ],
-  (c) => [
-    `Escribe una carta corta donde demuestres: ${c.learn(65)}.`,
-    "Incluye saludo, cuerpo y despedida.",
-  ],
-  (c) => [
-    `Redacta 3 instrucciones claras sobre el tema del día («${c.obj(42)}»).`,
-    "Intercambia con un adulto: ¿se entiende?",
-  ],
-];
-
-const MAT_WEEKLY = [
-  (c) => [
-    c.effectiveContinuing
-      ? `Semana ${c.week}: 4 ejercicios en el cuaderno de «${c.obj(40)}».`
-      : `Con fichas o dibujos, practica ${c.learn(75)}.`,
-    `Unidad «${c.obj(55)}»: explica un ejemplo de tu casa o barrio.`,
-  ],
-  (c) => [
-    `Problema del día (2 pasos) de «${c.obj(40)}»: ${c.learn(55)}.`,
-    "Dibuja el procedimiento, no solo el resultado.",
-  ],
-  (c) => [
-    `Estimación rápida antes de calcular (tema: ${c.obj(45)}).`,
-    "Compara estimación vs resultado real.",
-  ],
-  (c) => [
-    `Inventa 2 enunciados de «${c.obj(45)}» para practicar ${c.learn(50)}.`,
-    "Resuélvelos y explica cada paso en el cuaderno.",
-  ],
-  (c) => [
-    `Geoplano o cuadrícula: dibuja una situación donde ${c.learn(60)}.`,
-    "Describe oralmente qué representaste.",
-  ],
-  (c) => [
-    `Patrón numérico o geométrico (5 elementos) de «${c.obj(40)}».`,
-    "Predice el siguiente elemento y justifica.",
-  ],
-  (c) => [
-    `Mide objetos de la casa (regla o palmos) y registra.`,
-    `Usa las medidas para practicar ${c.learn(55)}.`,
-  ],
-  (c) => [
-    `Completa un procedimiento a medias de «${c.obj(40)}» y corrígelo.`,
-    `Comprueba en el cuaderno que lograste ${c.learn(60)}.`,
-  ],
-];
-
-const CIE_WEEKLY = [
-  (c) => [
-    c.effectiveContinuing
-      ? `Semana ${c.week}: vuelve a observar algo de «${c.obj(45)}».`
-      : `En patio o balcón, observa algo relacionado con «${c.obj(45)}».`,
-    `Registro: dibujo + 2 datos; escribe qué observaste sobre ${c.learn(55)}.`,
-  ],
-  (c) => [
-    `Demostración o experiencia segura sobre «${c.obj(50)}».`,
-    `Anota materiales, pasos y qué aprendiste sobre ${c.learn(55)}.`,
-  ],
-  (c) => [
-    `Clasifica 6 imágenes o tarjetas de «${c.obj(50)}».`,
-    `Justifica una clasificación usando: ${c.learn(50)}.`,
-  ],
-  (c) => [
-    `Investiga con un adulto un dato de Venezuela sobre «${c.obj(45)}».`,
-    `Relaciónalo con: ${c.learn(55)}.`,
-  ],
-  (c) => [
-    `Diagrama de causa y efecto de «${c.obj(45)}».`,
-    `Añade una causa más ligada a ${c.learn(50)}.`,
-  ],
-  (c) => [
-    c.isWeekStart
-      ? `Bitácora: primera observación de la semana sobre «${c.obj(45)}».`
-      : `Bitácora: observa de nuevo «${c.obj(40)}» y anota un cambio.`,
-    `Hipótesis sencilla sobre ${c.learn(55)}.`,
-  ],
-  (c) => [
-    `Maqueta o esquema de «${c.obj(50)}» en cartulina.`,
-    `Etiqueta partes según ${c.learn(50)}.`,
-  ],
-  (c) => [
-    `Escribe 3 preguntas «por qué» o «cómo» sobre «${c.obj(45)}».`,
-    "Responde una pregunta con un libro o un adulto; anota dos frases.",
-  ],
-];
-
-function pickWeekly(pool, week, dayInWeek) {
-  const i = activityVariantIndex(week, dayInWeek, pool.length);
-  return pool[i];
-}
-
-function activitiesForSection(sectionId, planDay, week, refs, prevRefs) {
-  const dayInWeek = ((planDay - 1) % 5) + 1;
-
-  if (sectionId === "bib") {
-    const pair = pickWeekly(BIB_WEEKLY, week, dayInWeek);
-    return [...pair];
+function emitSectionActivities(sectionId, planDay, week, refs, prevRefs, extra = {}) {
+  const ctx = activityCtx(planDay, week, refs, prevRefs, extra);
+  const pack = buildSectionPack(sectionId, {
+    planDay,
+    week,
+    learning: ctx.learning,
+    learningPhrase: ctx.learningActivity,
+    objective: ctx.objective,
+    ideTitle: extra.ideTitle,
+    finalizeActivity,
+  });
+  const qaFails = qaDaySheet({
+    planDay,
+    sections: [
+      {
+        id: sectionId,
+        learning: ctx.learning,
+        canDo: pack.canDo,
+        mode: pack.mode,
+        activityKind: pack.kind,
+        minutesEstimate: pack.minutesEstimate,
+        activities: pack.activities,
+      },
+    ],
+  });
+  if (qaFails.length) {
+    console.warn(`QA warn d${planDay} ${sectionId}:`, qaFails.map((f) => f.cause).join(", "));
   }
-
-  if (sectionId === "ide") {
-    const ideTitle = refs?.title ?? objectiveFromRefs(refs) ?? "Identidad";
-    const dayInWeek = ((planDay - 1) % 5) + 1;
-    const ideContinuing =
-      planDay > 1 &&
-      dayInWeek > 1 &&
-      prevRefs &&
-      prevRefs.title === refs?.title &&
-      (refs?.learnings?.[0] ?? "") === (prevRefs?.learnings?.[0] ?? "");
-    const ctx = activityCtx(planDay, week, refs, prevRefs, {
-      ideTitle,
-      continuing: ideContinuing,
-      objective: ideTitle,
-      learning: (refs?.learnings ?? []).join(" ") || ideTitle,
-    });
-    const fn = pickWeekly(IDE_WEEKLY, week, dayInWeek);
-    return fn(ctx);
-  }
-
-  const ctx = activityCtx(planDay, week, refs, prevRefs);
-
-  if (sectionId === "len") {
-    return pickWeekly(LEN_WEEKLY, week, dayInWeek)(ctx);
-  }
-  if (sectionId === "mat") {
-    return pickWeekly(MAT_WEEKLY, week, dayInWeek)(ctx);
-  }
-  if (sectionId === "cie") {
-    return pickWeekly(CIE_WEEKLY, week, dayInWeek)(ctx);
-  }
-
-  return [
-    `Semana ${week}, día ${dayInWeek}: ${clip(ctx.learning, 80)}.`,
-    "Cierra con una frase: «Hoy aprendí…».",
-  ];
+  return pack;
 }
 
 function requireRefsField(sectionId, planDay, value) {
@@ -458,44 +284,56 @@ function buildDaySheet(planDay, weeks, prevBlock) {
     `NT: ${formatTrack(bibleDay.nt)}`,
   ].join(" · ");
 
+  const ideTitle = dedupeObjectiveTitle(ide.title ?? "Identidad");
+  const ideLearning = (ide.learnings ?? []).join(" ") || (ide.contenidos ?? []).join("; ") || "—";
+
+  const bibPack = emitSectionActivities("bib", planDay, mppeWeek, null, null);
+  const idePack = emitSectionActivities("ide", planDay, mppeWeek, block.identity, prevBlock?.identity, {
+    ideTitle,
+    objective: ideTitle,
+    learning: ideLearning,
+  });
+  const lenPack = emitSectionActivities("len", planDay, mppeWeek, block.len, prevBlock?.len);
+  const matPack = emitSectionActivities("mat", planDay, mppeWeek, block.mat, prevBlock?.mat);
+  const ciePack = emitSectionActivities("cie", planDay, mppeWeek, block.cie, prevBlock?.cie);
+
+  const sectionFromPack = (id, label, objective, learning, pack) => ({
+    id,
+    label,
+    objective,
+    learning,
+    canDo: pack.canDo,
+    mode: pack.mode,
+    activityKind: pack.kind,
+    minutesEstimate: pack.minutesEstimate,
+    topicShort: pack.topicShort,
+    activities: pack.activities,
+  });
+
   const sections = [
-    {
-      id: "bib",
-      label: "Biblia",
-      objective: "Lectura bíblica diaria (tres pistas)",
-      learning: bibLearn,
-      activities: activitiesForSection("bib", planDay, mppeWeek, null, null).map(finalizeActivity),
-    },
-    {
-      id: "ide",
-      label: "Identidad",
-      objective: ide.title ?? "Identidad",
-      learning: (ide.learnings ?? []).join(" ") || (ide.contenidos ?? []).join("; ") || "—",
-      activities: activitiesForSection("ide", planDay, mppeWeek, block.identity, prevBlock?.identity).map(
-        finalizeActivity,
-      ),
-    },
-    {
-      id: "len",
-      label: "Prácticas del Lenguaje",
-      objective: requireRefsField("len", planDay, objectiveFromRefs(block.len)),
-      learning: requireRefsField("len", planDay, primaryLearning(block.len)),
-      activities: activitiesForSection("len", planDay, mppeWeek, block.len, prevBlock?.len).map(finalizeActivity),
-    },
-    {
-      id: "mat",
-      label: "Matemáticas",
-      objective: requireRefsField("mat", planDay, objectiveFromRefs(block.mat)),
-      learning: requireRefsField("mat", planDay, primaryLearning(block.mat)),
-      activities: activitiesForSection("mat", planDay, mppeWeek, block.mat, prevBlock?.mat).map(finalizeActivity),
-    },
-    {
-      id: "cie",
-      label: "Ciencias Naturales",
-      objective: requireRefsField("cie", planDay, objectiveFromRefs(block.cie)),
-      learning: requireRefsField("cie", planDay, primaryLearning(block.cie)),
-      activities: activitiesForSection("cie", planDay, mppeWeek, block.cie, prevBlock?.cie).map(finalizeActivity),
-    },
+    sectionFromPack("bib", "Biblia", "Lectura bíblica diaria (tres pistas)", bibLearn, bibPack),
+    sectionFromPack("ide", "Identidad", ideTitle, ideLearning, idePack),
+    sectionFromPack(
+      "len",
+      "Prácticas del Lenguaje",
+      requireRefsField("len", planDay, dedupeObjectiveTitle(objectiveFromRefs(block.len))),
+      requireRefsField("len", planDay, primaryLearning(block.len)),
+      lenPack,
+    ),
+    sectionFromPack(
+      "mat",
+      "Matemáticas",
+      requireRefsField("mat", planDay, dedupeObjectiveTitle(objectiveFromRefs(block.mat))),
+      requireRefsField("mat", planDay, primaryLearning(block.mat)),
+      matPack,
+    ),
+    sectionFromPack(
+      "cie",
+      "Ciencias Naturales",
+      requireRefsField("cie", planDay, dedupeObjectiveTitle(objectiveFromRefs(block.cie))),
+      requireRefsField("cie", planDay, primaryLearning(block.cie)),
+      ciePack,
+    ),
   ];
 
   return {
@@ -531,7 +369,7 @@ for (let planDay = 1; planDay <= total; planDay++) {
 const manifest = {
   format: "mppe-curriculum-day-manifest",
   version: 2,
-  contentRevision: 5,
+  contentRevision: 7,
   grade: "3er grado",
   totalPlanDays: total,
   planDays: manifestDays,
@@ -542,3 +380,22 @@ fs.writeFileSync(
   "utf8",
 );
 console.log("Wrote", total, "MPPE day sheets to", outDir);
+
+const sampleFailures = [];
+for (const planDay of SAMPLE_DAYS) {
+  const file = path.join(outDir, `d${planDay}.mppe-day.json`);
+  const sheet = JSON.parse(fs.readFileSync(file, "utf8"));
+  sampleFailures.push(...qaDaySheet(sheet));
+}
+const sampleChecks = SAMPLE_DAYS.length * 5;
+const samplePass = sampleChecks > 0 ? 1 - sampleFailures.length / sampleChecks : 1;
+console.log(
+  `QA sample (${SAMPLE_DAYS.length} days): ${(samplePass * 100).toFixed(1)}% pass; failures=${sampleFailures.length}`,
+);
+if (sampleFailures.length && sampleFailures.length <= 30) {
+  for (const f of sampleFailures) console.warn(`  d${f.planDay} ${f.section}: ${f.cause}`);
+}
+if (samplePass < 0.95) {
+  console.error("Sample QA below 95% — fix engine before publishing.");
+  process.exitCode = 1;
+}
