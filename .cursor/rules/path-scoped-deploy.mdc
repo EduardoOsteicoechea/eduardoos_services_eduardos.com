@@ -1,0 +1,40 @@
+---
+description: Path-scoped VPS deploy — FE-only stays fast; no API restart or heavy pack sync unless those paths changed
+alwaysApply: true
+---
+
+# Path-scoped VPS deploy
+
+Site Deploy workflows (`.github/workflows/deploy.yml`) must gate CI steps by **changed paths**. Do not rebuild, upload, or restart unused slices on every push to `main`.
+
+## Required scopes
+
+| Scope | Paths (example) | CI must |
+| --- | --- | --- |
+| Frontend | `frontend/**` | Build Astro + rsync `frontend/dist/` → `/var/www/<domain>/html/` only |
+| Backend | `backend/**` except heavy data packs | `go test`, Linux AMD64 `api`, release switch, **restart API** + health check |
+| Data packs | e.g. `backend/.data/calvin-institutes-paragraphs/**` | rsync that pack only; **no** API restart unless backend code also changed |
+
+If none of those paths changed (docs, rules, workflow-only fixes that do not need a release), skip SSH uploads and restarts — job may exit after scope resolution.
+
+Manual **`workflow_dispatch`**: deploy all scopes (full rebuild).
+
+## Detection
+
+- Prefer `git diff --name-only $BEFORE $AFTER` (checkout `fetch-depth: 0`) with an explicit `case` on paths.
+- Do **not** rely on `dorny/paths-filter` negation patterns with default `predicate-quantifier: some` — `!path/**` falsely matches unrelated files.
+- Order matters: match pack paths **before** the broad `backend/*` branch.
+
+## Agent rules when editing deploy.yml
+
+- Keep FE-only pushes fast: no Go setup/tests/compile, no pack rsync, no `systemctl restart`.
+- Never reintroduce unconditional Calvin (or other large pack) sync on every deploy.
+- Never restart the API when only frontend or only a static data pack changed.
+- Align new site deploys with this pattern (see `github-vps-deploy-secrets.mdc` for SSH secret names).
+
+```text
+❌ BAD: every main push → npm build + go test + calvin rsync + systemctl restart
+✅ GOOD: frontend-only → npm build + rsync html/
+✅ GOOD: backend-only → go test/build + release + restart
+✅ GOOD: calvin-pack-only → rsync pack (no restart)
+```
