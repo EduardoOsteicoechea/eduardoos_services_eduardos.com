@@ -19,35 +19,51 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
-
-      - name: Detect changed paths
-        id: filter
-        uses: dorny/paths-filter@v3
         with:
-          filters: |
-            frontend:
-              - 'frontend/**'
-            backend:
-              - 'backend/**'
-              - '!backend/.data/calvin-institutes-paragraphs/**'
-            calvin:
-              - 'backend/.data/calvin-institutes-paragraphs/**'
+          fetch-depth: 0
 
       - name: Resolve deploy scope
         id: scope
         run: |
           set -euo pipefail
+          frontend=false
+          backend=false
+          calvin=false
+
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "frontend=true" >> "$GITHUB_OUTPUT"
-            echo "backend=true" >> "$GITHUB_OUTPUT"
-            echo "calvin=true" >> "$GITHUB_OUTPUT"
+            frontend=true
+            backend=true
+            calvin=true
             echo "Deploy scope (manual): frontend + backend + calvin"
-            exit 0
+          else
+            BEFORE="${{ github.event.before }}"
+            AFTER="${{ github.sha }}"
+            if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+              frontend=true
+              backend=true
+              calvin=true
+              echo "Deploy scope (no base commit): frontend + backend + calvin"
+            else
+              CHANGED="$(git diff --name-only "$BEFORE" "$AFTER" || true)"
+              while IFS= read -r f; do
+                [ -z "$f" ] && continue
+                case "$f" in
+                  frontend/*) frontend=true ;;
+                  backend/.data/calvin-institutes-paragraphs/*) calvin=true ;;
+                  backend/*) backend=true ;;
+                esac
+              done <<< "$CHANGED"
+              echo "Changed paths:"
+              printf '%s\n' "$CHANGED"
+              echo "Deploy scope: frontend=${frontend} backend=${backend} calvin=${calvin}"
+            fi
           fi
-          echo "frontend=${{ steps.filter.outputs.frontend }}" >> "$GITHUB_OUTPUT"
-          echo "backend=${{ steps.filter.outputs.backend }}" >> "$GITHUB_OUTPUT"
-          echo "calvin=${{ steps.filter.outputs.calvin }}" >> "$GITHUB_OUTPUT"
-          echo "Deploy scope: frontend=${{ steps.filter.outputs.frontend }} backend=${{ steps.filter.outputs.backend }} calvin=${{ steps.filter.outputs.calvin }}"
+
+          {
+            echo "frontend=${frontend}"
+            echo "backend=${backend}"
+            echo "calvin=${calvin}"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Set up Node
         if: steps.scope.outputs.frontend == 'true'
