@@ -67,6 +67,76 @@ function clip(text, max = 100) {
   return `${t.slice(0, max - 1)}…`;
 }
 
+/** Official MPPE «aprendizaje» → short phrase for student activities (imperative-friendly). */
+function learningActivityPhrase(learning) {
+  let t = String(learning ?? "").replace(/\s+/g, " ").trim().replace(/\.+$/, "");
+  if (!t) return "";
+
+  const exact = {
+    "Se orienta espacialmente": "orientarte en el espacio (puntos de referencia y direcciones)",
+    "Ejecuta secuencias de acciones interpretando textos instruccionales":
+      "seguir paso a paso las instrucciones de un texto",
+  };
+  if (exact[t]) return exact[t];
+
+  if (/alimentación saludable/i.test(t) && /grupos de alimentos/i.test(t)) {
+    return "los grupos de alimentos y qué hace saludable una comida";
+  }
+
+  let m = t.match(/^Comprende\s+(.+)$/i);
+  if (m) {
+    let rest = m[1];
+    rest = rest.replace(/^qué es\s+/i, "");
+    rest = rest.replace(/\s+e\s+identifica\s+/i, "; identifica ");
+    rest = rest.replace(/\s+y\s+identifica\s+/i, "; identifica ");
+    t = rest.charAt(0).toLowerCase() + rest.slice(1);
+    return t;
+  }
+
+  m = t.match(/^Reconoce\s+(?:la importancia de\s+)?(.+)$/i);
+  if (m) {
+    const rest = m[1].charAt(0).toLowerCase() + m[1].slice(1);
+    return rest;
+  }
+
+  m = t.match(/^Conoce\s+(.+)$/i);
+  if (m) {
+    let rest = m[1];
+    const cut = rest.search(/:\s/);
+    if (cut > 0 && cut < 72) rest = rest.slice(0, cut);
+    t = rest.charAt(0).toLowerCase() + rest.slice(1);
+    return t;
+  }
+
+  const verbToInfinitive = [
+    [/^Ejecuta\s+/i, "seguir "],
+    [/^Registra\s+/i, "registrar "],
+    [/^Acude\s+/i, "buscar información "],
+    [/^Escribe,?\s+en forma convencional,\s+/i, "escribir "],
+    [/^Escribe,?\s+/i, "escribir "],
+    [/^Identifica\s+/i, "identificar "],
+    [/^Interpreta\s+/i, "interpretar "],
+    [/^Lee\s+/i, "leer "],
+    [/^Resuelve\s+/i, "resolver "],
+    [/^Utiliza\s+/i, "usar "],
+    [/^Clasifica\s+/i, "clasificar "],
+    [/^Describe\s+/i, "describir "],
+    [/^Compara\s+/i, "comparar "],
+    [/^Analiza\s+/i, "analizar "],
+    [/^Elabora\s+/i, "elaborar "],
+    [/^Explica\s+/i, "explicar "],
+    [/^Aplica\s+/i, "aplicar "],
+  ];
+  for (const [re, repl] of verbToInfinitive) {
+    if (re.test(t)) {
+      t = t.replace(re, repl);
+      break;
+    }
+  }
+  if (/^[a-záéíóúñ]/.test(t)) return t;
+  return t.charAt(0).toLowerCase() + t.slice(1);
+}
+
 function sameRefs(a, b) {
   if (!a?.length || !b?.length) return false;
   return a[0].id === b[0].id;
@@ -88,6 +158,7 @@ function activityCtx(planDay, week, refs, prevRefs, extra = {}) {
   const effectiveContinuing = continuing && !isWeekStart;
   const learning = extra.learning ?? primaryLearning(refs) ?? "";
   const objective = extra.objective ?? objectiveFromRefs(refs) ?? "";
+  const learningActivity = learningActivityPhrase(learning);
   return {
     planDay,
     week,
@@ -96,9 +167,13 @@ function activityCtx(planDay, week, refs, prevRefs, extra = {}) {
     isPlanStart: planDay === 1,
     learning,
     objective,
+    learningActivity,
     continuing,
     effectiveContinuing,
     clip,
+    /** Aprendizaje redactado para actividades (no el enunciado oficial del MPPE). */
+    learn: (max) => clip(learningActivity || learning, max),
+    obj: (max) => clip(objective, max),
     ...extra,
   };
 }
@@ -154,36 +229,36 @@ const IDE_WEEKLY = [
 const LEN_WEEKLY = [
   (c) => [
     c.effectiveContinuing
-      ? `Semana ${c.week} — repaso oral: ${c.clip(c.learning, 85)}.`
-      : `Texto nuevo (papel o digital) sobre: ${c.clip(c.learning, 85)}.`,
+      ? `Semana ${c.week} — repaso oral del tema: ${c.learn(80)}.`
+      : `Lee un texto (papel o digital) y practica: ${c.learn(80)}.`,
     "Subraya 5 palabras clave y ordénalas por importancia.",
   ],
   (c) => [
-    `Dictado de 6–8 palabras del tema «${c.clip(c.objective, 50)}».`,
+    `Dictado de 6–8 palabras del tema «${c.obj(50)}».`,
     "Corrige, copia la versión final y relee.",
   ],
   (c) => [
-    `Inventa un título creativo para un texto de ${c.clip(c.learning, 70)}.`,
+    `Inventa un título creativo para un texto sobre ${c.learn(65)}.`,
     "Escribe el párrafo inicial (4–5 líneas).",
   ],
   (c) => [
-    `Juego de roles: explica ${c.clip(c.learning, 75)} a un compañero imaginario.`,
+    `Juego de roles: explica a un compañero imaginario cómo ${c.learn(70)}.`,
     "Anota dos preguntas que te haría el oyente.",
   ],
   (c) => [
-    `Organizador gráfico (inicio–nudo–desenlace) sobre: ${c.clip(c.learning, 75)}.`,
+    `Organizador gráfico (inicio–nudo–desenlace) del texto sobre ${c.learn(65)}.`,
     "Completa con palabras del texto trabajado.",
   ],
   (c) => [
-    `Busca sinónimos/antónimos de 4 palabras del tema.`,
+    `Busca sinónimos/antónimos de 4 palabras de «${c.obj(45)}».`,
     "Úsalos en oraciones propias.",
   ],
   (c) => [
-    `Escribe una carta corta aplicando: ${c.clip(c.learning, 70)}.`,
+    `Escribe una carta corta donde demuestres: ${c.learn(65)}.`,
     "Incluye saludo, cuerpo y despedida.",
   ],
   (c) => [
-    `Secuencia de instrucciones (3 pasos) sobre ${c.clip(c.objective, 50)}.`,
+    `Redacta una secuencia de 3 instrucciones sobre ${c.obj(50)}.`,
     "Intercambia con un adulto: ¿se entiende?",
   ],
 ];
@@ -191,76 +266,76 @@ const LEN_WEEKLY = [
 const MAT_WEEKLY = [
   (c) => [
     c.effectiveContinuing
-      ? `Semana ${c.week}: 4 ejercicios de ${c.clip(c.learning, 80)} en el cuaderno.`
-      : `Concreto: modela ${c.clip(c.learning, 80)} con fichas o dibujos.`,
-    `Unidad «${c.clip(c.objective, 55)}»: explica un ejemplo del entorno.`,
+      ? `Semana ${c.week}: 4 ejercicios en el cuaderno de «${c.obj(40)}» (${c.learn(50)}).`
+      : `Con fichas o dibujos, practica ${c.learn(75)}.`,
+    `Unidad «${c.obj(55)}»: explica un ejemplo de tu casa o barrio.`,
   ],
   (c) => [
-    `Problema del día (2 pasos) sobre ${c.clip(c.learning, 75)}.`,
+    `Problema del día (2 pasos) de «${c.obj(40)}»: ${c.learn(55)}.`,
     "Dibuja el procedimiento, no solo el resultado.",
   ],
   (c) => [
-    `Estimación rápida antes de calcular (${c.clip(c.objective, 45)}).`,
+    `Estimación rápida antes de calcular (tema: ${c.obj(45)}).`,
     "Compara estimación vs resultado real.",
   ],
   (c) => [
-    `Inventa 2 enunciados de práctica de «${c.clip(c.objective, 45)}» (aplica: ${c.clip(c.learning, 55)}).`,
+    `Inventa 2 enunciados de «${c.obj(45)}» para practicar ${c.learn(50)}.`,
     "Resuélvelos y explica cada paso en el cuaderno.",
   ],
   (c) => [
-    `Geoplano o cuadrícula: representa ${c.clip(c.learning, 65)}.`,
-    "Describe oralmente qué dibujaste.",
+    `Geoplano o cuadrícula: dibuja una situación donde ${c.learn(60)}.`,
+    "Describe oralmente qué representaste.",
   ],
   (c) => [
-    `Patrón numérico o geométrico (5 elementos) del tema.`,
+    `Patrón numérico o geométrico (5 elementos) de «${c.obj(40)}».`,
     "Predice el siguiente elemento y justifica.",
   ],
   (c) => [
     `Mide objetos de la casa (regla o palmos) y registra.`,
-    `Relaciona medidas con ${c.clip(c.learning, 60)}.`,
+    `Usa las medidas para practicar ${c.learn(55)}.`,
   ],
   (c) => [
-    `Completa un procedimiento a medias de «${c.clip(c.objective, 40)}» y corrígelo.`,
-    `Comprueba que tu solución cumple: ${c.clip(c.learning, 65)}`,
+    `Completa un procedimiento a medias de «${c.obj(40)}» y corrígelo.`,
+    `Comprueba en el cuaderno que lograste ${c.learn(60)}.`,
   ],
 ];
 
 const CIE_WEEKLY = [
   (c) => [
     c.effectiveContinuing
-      ? `Semana ${c.week}: observa de nuevo ${c.clip(c.learning, 80)}.`
-      : `Salida al patio/balcón: observa ${c.clip(c.learning, 80)}.`,
-    `Registro: dibujo + 2 datos de «${c.clip(c.objective, 50)}».`,
+      ? `Semana ${c.week}: vuelve a observar algo de «${c.obj(45)}» (${c.learn(55)}).`
+      : `En patio o balcón, observa algo relacionado con «${c.obj(45)}».`,
+    `Registro: dibujo + 2 datos; escribe qué observaste sobre ${c.learn(55)}.`,
   ],
   (c) => [
-    `Demostración o experiencia segura sobre «${c.clip(c.objective, 50)}».`,
-    `Anota materiales, pasos y cómo se relaciona con: ${c.clip(c.learning, 60)}.`,
+    `Demostración o experiencia segura sobre «${c.obj(50)}».`,
+    `Anota materiales, pasos y qué aprendiste sobre ${c.learn(55)}.`,
   ],
   (c) => [
-    `Clasifica 6 imágenes o tarjetas según ${c.clip(c.objective, 50)}.`,
-    "Justifica una clasificación difícil.",
+    `Clasifica 6 imágenes o tarjetas de «${c.obj(50)}».`,
+    `Justifica una clasificación usando: ${c.learn(50)}.`,
   ],
   (c) => [
-    `Investiga con un adulto un dato sobre Venezuela.`,
-    "Relaciónalo con el aprendizaje del día.",
+    `Investiga con un adulto un dato de Venezuela sobre «${c.obj(45)}».`,
+    `Relaciónalo con: ${c.learn(55)}.`,
   ],
   (c) => [
-    `Diagrama de causa y efecto del fenómeno estudiado.`,
-    "Añade una causa más que investigar.",
+    `Diagrama de causa y efecto de «${c.obj(45)}».`,
+    `Añade una causa más ligada a ${c.learn(50)}.`,
   ],
   (c) => [
     c.isWeekStart
-      ? `Bitácora: primera observación de la semana sobre «${c.clip(c.objective, 45)}».`
-      : `Bitácora: observa de nuevo «${c.clip(c.objective, 40)}» y anota un cambio.`,
-    `Hipótesis sencilla ligada a: ${c.clip(c.learning, 60)}.`,
+      ? `Bitácora: primera observación de la semana sobre «${c.obj(45)}».`
+      : `Bitácora: observa de nuevo «${c.obj(40)}» y anota un cambio.`,
+    `Hipótesis sencilla sobre ${c.learn(55)}.`,
   ],
   (c) => [
-    `Maqueta o esquema de «${c.clip(c.objective, 50)}» en cartulina.`,
-    `Etiqueta partes usando ideas de: ${c.clip(c.learning, 55)}.`,
+    `Maqueta o esquema de «${c.obj(50)}» en cartulina.`,
+    `Etiqueta partes según ${c.learn(50)}.`,
   ],
   (c) => [
-    `Escribe 3 preguntas «por qué» o «cómo» sobre «${c.clip(c.objective, 45)}».`,
-    `Responde una con libro o adulto, aplicando: ${c.clip(c.learning, 55)}.`,
+    `Escribe 3 preguntas «por qué» o «cómo» sobre «${c.obj(45)}».`,
+    `Responde una con libro o adulto (${c.learn(50)}).`,
   ],
 ];
 
@@ -401,7 +476,7 @@ for (let planDay = 1; planDay <= total; planDay++) {
 const manifest = {
   format: "mppe-curriculum-day-manifest",
   version: 2,
-  contentRevision: 3,
+  contentRevision: 4,
   grade: "3er grado",
   totalPlanDays: total,
   planDays: manifestDays,

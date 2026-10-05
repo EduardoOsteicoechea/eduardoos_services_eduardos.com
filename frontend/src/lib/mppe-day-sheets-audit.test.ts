@@ -21,6 +21,16 @@ const GENERIC_ACTIVITY_PATTERNS = [
   /^Maqueta o esquema en cartulina del concepto clave\./i,
 ];
 
+/** Pasting the official MPPE sentence into an activity (sounds unnatural). */
+const AWKWARD_ACTIVITY_PATTERNS = [
+  /\bobserva Comprende\b/i,
+  /\bmodela Se orienta\b/i,
+  /\bsobre: Ejecuta\b/i,
+  /\baplicando: Reconoce\b/i,
+  /\bRelaciónalo con el aprendizaje del día\./i,
+  /\bsobre: Registra por escrito\b/i,
+];
+
 describe("MPPE day sheets (200 días)", () => {
   it("has no placeholder objectives, learnings, or stub activities", () => {
     const failures: string[] = [];
@@ -52,9 +62,12 @@ describe("MPPE day sheets (200 días)", () => {
           for (const re of STUB_PATTERNS) {
             if (re.test(act)) failures.push(`d${planDay} ${section.id}: stub activity`);
           }
-          if (section.id === "mat" || section.id === "cie") {
+          if (section.id === "mat" || section.id === "cie" || section.id === "len") {
             for (const re of GENERIC_ACTIVITY_PATTERNS) {
               if (re.test(act)) failures.push(`d${planDay} ${section.id}: generic activity`);
+            }
+            for (const re of AWKWARD_ACTIVITY_PATTERNS) {
+              if (re.test(act)) failures.push(`d${planDay} ${section.id}: awkward activity wording`);
             }
           }
           if (planDay === 1 && /\b(repasa|ayer|día anterior)\b/i.test(act) && !/grados anteriores/i.test(act)) {
