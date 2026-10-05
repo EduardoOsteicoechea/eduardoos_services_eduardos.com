@@ -20,19 +20,17 @@ function writeDone(done: Set<string>): void {
   }
 }
 
-function blockComplete(blockEl: HTMLElement, done: Set<string>): boolean {
-  const dayCards = blockEl.querySelectorAll<HTMLElement>("[data-curriculum-day]");
-  if (!dayCards.length) return false;
-  return [...dayCards].every((card) => {
-    const id = card.dataset.curriculumDay;
-    return id ? done.has(id) : false;
-  });
+function daysInWeek(weekEl: HTMLElement): HTMLElement[] {
+  return [...weekEl.querySelectorAll<HTMLElement>("[data-curriculum-day]")];
 }
 
 function weekComplete(weekEl: HTMLElement, done: Set<string>): boolean {
-  const blocks = weekEl.querySelectorAll<HTMLElement>("[data-curriculum-block]");
-  if (!blocks.length) return false;
-  return [...blocks].every((block) => blockComplete(block, done));
+  const days = daysInWeek(weekEl);
+  if (!days.length) return false;
+  return days.every((card) => {
+    const id = card.dataset.curriculumDay;
+    return id ? done.has(id) : false;
+  });
 }
 
 function applyProgress(root: HTMLElement, done: Set<string>): void {
@@ -45,28 +43,27 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
     if (input) input.checked = checked;
   });
 
-  root.querySelectorAll<HTMLElement>("[data-curriculum-block]").forEach((block) => {
-    const complete = blockComplete(block, done);
-    block.classList.toggle("eoschool-curriculum__block--done", complete);
-    const status = block.querySelector("[data-curriculum-block-status]");
-    if (status) {
-      const total = block.querySelectorAll("[data-curriculum-day]").length;
-      const n = [...block.querySelectorAll("[data-curriculum-day]")].filter((c) => {
-        const id = c.getAttribute("data-curriculum-day");
-        return id && done.has(id);
-      }).length;
-      status.textContent = complete ? "Bloque completado" : `${n}/${total} días`;
-    }
-  });
-
   root.querySelectorAll<HTMLElement>("[data-curriculum-week]").forEach((week) => {
+    const dayCards = daysInWeek(week);
+    const doneCount = dayCards.filter((c) => {
+      const id = c.dataset.curriculumDay;
+      return id && done.has(id);
+    }).length;
+    const total = dayCards.length;
     const complete = weekComplete(week, done);
+
     week.classList.toggle("eoschool-curriculum__week--done", complete);
     week.classList.toggle("product-dash__card--done", complete);
+
     const status = week.querySelector("[data-curriculum-week-status]");
     if (status) {
-      status.textContent = complete ? "Semana completada" : "";
+      if (complete) {
+        status.textContent = "Semana completada";
+      } else {
+        status.textContent = `${doneCount}/${total} días`;
+      }
     }
+
   });
 }
 
