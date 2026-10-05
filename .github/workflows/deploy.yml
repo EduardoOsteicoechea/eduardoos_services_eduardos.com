@@ -28,41 +28,38 @@ jobs:
           set -euo pipefail
           frontend=false
           backend=false
-          calvin=false
 
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             frontend=true
             backend=true
-            calvin=true
-            echo "Deploy scope (manual): frontend + backend + calvin"
+            echo "Deploy scope (manual): frontend + backend"
           else
             BEFORE="${{ github.event.before }}"
             AFTER="${{ github.sha }}"
             if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
               frontend=true
               backend=true
-              calvin=true
-              echo "Deploy scope (no base commit): frontend + backend + calvin"
+              echo "Deploy scope (no base commit): frontend + backend"
             else
               CHANGED="$(git diff --name-only "$BEFORE" "$AFTER" || true)"
               while IFS= read -r f; do
                 [ -z "$f" ] && continue
                 case "$f" in
                   frontend/*) frontend=true ;;
-                  backend/.data/calvin-institutes-paragraphs/*) calvin=true ;;
+                  # Calvin Institutes pack is frozen on the VPS — never sync or treat as backend.
+                  backend/.data/calvin-institutes-paragraphs/*) ;;
                   backend/*) backend=true ;;
                 esac
               done <<< "$CHANGED"
               echo "Changed paths:"
               printf '%s\n' "$CHANGED"
-              echo "Deploy scope: frontend=${frontend} backend=${backend} calvin=${calvin}"
+              echo "Deploy scope: frontend=${frontend} backend=${backend}"
             fi
           fi
 
           {
             echo "frontend=${frontend}"
             echo "backend=${backend}"
-            echo "calvin=${calvin}"
           } >> "$GITHUB_OUTPUT"
 
       - name: Set up Node
@@ -98,7 +95,7 @@ jobs:
         run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o api .
 
       - name: Configure SSH
-        if: steps.scope.outputs.frontend == 'true' || steps.scope.outputs.backend == 'true' || steps.scope.outputs.calvin == 'true'
+        if: steps.scope.outputs.frontend == 'true' || steps.scope.outputs.backend == 'true'
         env:
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
           VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
@@ -169,22 +166,6 @@ jobs:
             backend/evoice-worker/ \
             "${VPS_USER}@${VPS_HOST}:${RELEASE}/evoice-worker/"
           ${RSH} "${VPS_USER}@${VPS_HOST}" "chmod +x '${RELEASE}/api' && ln -sfn '${RELEASE}' '/opt/apps/${APP}/current.tmp' && mv -Tf '/opt/apps/${APP}/current.tmp' '/opt/apps/${APP}/current'"
-
-      - name: Upload Calvin Institutes paragraph pack
-        if: steps.scope.outputs.calvin == 'true'
-        env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
-          VPS_PORT: ${{ secrets.VPS_PORT }}
-        run: |
-          set -euo pipefail
-          PORT="${VPS_PORT:-22}"
-          RSH="ssh -i ${SSH_KEY_PATH} -p ${PORT} -o IdentitiesOnly=yes -o BatchMode=yes -o PreferredAuthentications=publickey -o UserKnownHostsFile=${SSH_KNOWN_HOSTS_PATH} -o StrictHostKeyChecking=yes"
-          test -f backend/.data/calvin-institutes-paragraphs/index.json
-          ${RSH} "${VPS_USER}@${VPS_HOST}" "mkdir -p '/var/www/${SITE}/data'"
-          rsync -az --delete -e "${RSH}" \
-            backend/.data/calvin-institutes-paragraphs/ \
-            "${VPS_USER}@${VPS_HOST}:/var/www/${SITE}/data/calvin-institutes-paragraphs/"
 
       - name: Restart API and verify health
         if: steps.scope.outputs.backend == 'true'

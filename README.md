@@ -419,10 +419,11 @@ Pushes to `main` and manual **workflow_dispatch** run `.github/workflows/deploy.
 | Scope | When | What |
 | --- | --- | --- |
 | Frontend | `frontend/**` changed | `npm ci` / `npm run build`, rsync `frontend/dist/` → `/var/www/eduardoos.com/html/` (`--delete`) |
-| Backend | `backend/**` changed (except Calvin pack) | `go test`, Linux AMD64 `api` build, release switch under `/opt/apps/eduardoos/releases/<git-sha>/`, restart `eduardoos-api.service`, health check on `:8081` |
-| Calvin pack | `backend/.data/calvin-institutes-paragraphs/**` changed | rsync pack → `/var/www/eduardoos.com/data/calvin-institutes-paragraphs/` (no API restart) |
+| Backend | `backend/**` changed (except frozen Calvin pack) | `go test`, Linux AMD64 `api` build, release switch under `/opt/apps/eduardoos/releases/<git-sha>/`, restart `eduardoos-api.service`, health check on `:8081` |
 
-Manual **workflow_dispatch** deploys all three scopes. SSH uses `VPS_SSH_KEY` + `VPS_KNOWN_HOSTS` only when at least one scope runs.
+The Calvin Institutes paragraph pack under `backend/.data/calvin-institutes-paragraphs/` is **frozen on the VPS** (`/var/www/eduardoos.com/data/calvin-institutes-paragraphs/`). Deploy never rsyncs it; changes to that path alone do not trigger a release.
+
+Manual **workflow_dispatch** deploys frontend + backend. SSH uses `VPS_SSH_KEY` + `VPS_KNOWN_HOSTS` only when at least one scope runs.
 
 Source, `node_modules`, `.git`, `.env` files, and credentials are never uploaded.
 
