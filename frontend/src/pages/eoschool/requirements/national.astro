@@ -1,0 +1,196 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../../layouts/Layout.astro";
+import { MPPE_NATIONAL_REQUIREMENTS } from "../../../lib/eoschool-mppe-national-requirements";
+
+const { areas } = MPPE_NATIONAL_REQUIREMENTS;
+---
+
+<Layout
+  title="Requisitos nacionales MPPE"
+  description="Objetivos generales y aprendizajes esperados de tercer grado según la consulta curricular del MPPE (Venezuela)."
+  page="eoschool-requirements-national"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/homescool" data-route title="Homescool" aria-label="Homescool">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">school</span></span>
+      Homescool
+    </a>
+    <a class="dhs-action" href="/eoschool/revision" data-route title="Revisión eoschool" aria-label="Revisión eoschool">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">grading</span></span>
+      Revisión
+    </a>
+  </Fragment>
+
+  <h1 class="page-title-sr">Requisitos nacionales MPPE</h1>
+
+  <section class="product-dash eoschool-req-dash">
+    <p class="lede">
+      Referencia compilada de las propuestas de contenidos del MPPE (consulta curricular). Cada área corresponde a un
+      documento de consulta; la segunda sección lista los aprendizajes esperados de tercer grado.
+    </p>
+
+    <div class="eoschool-req-stack">
+      {
+        areas.map((area) => (
+          <article class="product-dash__card eoschool-req-card">
+            <header class="product-dash__card-head">
+              <h2 class="product-dash__card-title">{area.title}</h2>
+              <p class="product-dash__card-desc">{area.pdf}</p>
+            </header>
+
+            <section class="eoschool-req-subsection" aria-labelledby={`mppe-general-${area.id}`}>
+              <h3 class="eoschool-req-subsection__title" id={`mppe-general-${area.id}`}>Objetivos generales</h3>
+              <ul class="eoschool-req-list">
+                {area.general.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </section>
+
+            <section class="eoschool-req-subsection" aria-labelledby={`mppe-g3-${area.id}`}>
+              <h3 class="eoschool-req-subsection__title" id={`mppe-g3-${area.id}`}>Objetivos de tercer grado</h3>
+              {area.grade3 ? (
+                <ul class="eoschool-req-list">
+                  {area.grade3.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              ) : (
+                area.grade3Groups?.map((group) => (
+                  <div class="eoschool-req-group">
+                    <h4 class="eoschool-req-group__title">{group.title}</h4>
+                    <ul class="eoschool-req-list">
+                      {group.items.map((item) => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              )}
+            </section>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .eoschool-req-dash {
+    cursor: default;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .eoschool-req-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    min-width: 0;
+    width: 100%;
+  }
+
+  .eoschool-req-card {
+    cursor: default;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 0;
+    box-sizing: border-box;
+    align-items: stretch;
+  }
+
+  .eoschool-req-card:hover,
+  .eoschool-req-card:focus-visible {
+    transform: none;
+  }
+
+  .eoschool-req-card .product-dash__card-head {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .eoschool-req-card .product-dash__card-title,
+  .eoschool-req-card .product-dash__card-desc {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .eoschool-req-subsection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    width: 100%;
+    min-width: 0;
+  }
+
+  .eoschool-req-subsection + .eoschool-req-subsection {
+    margin-block-start: var(--rail-gap);
+    padding-block-start: var(--space-padding);
+    border-block-start: var(--border-width) solid var(--color-border);
+  }
+
+  .eoschool-req-subsection__title {
+    margin: 0;
+    font-size: var(--font-size-md);
+    font-weight: 650;
+    overflow-wrap: anywhere;
+  }
+
+  .eoschool-req-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    min-width: 0;
+  }
+
+  .eoschool-req-group + .eoschool-req-group {
+    margin-block-start: var(--space-padding);
+    padding-block-start: var(--space-padding);
+    border-block-start: var(--border-width) solid var(--color-border);
+  }
+
+  .eoschool-req-group__title {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+    color: var(--color-muted);
+    overflow-wrap: anywhere;
+  }
+
+  .eoschool-req-list {
+    margin: 0;
+    padding-inline-start: 1rem;
+    font-size: var(--font-size-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .eoschool-req-list li {
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+  }
+
+  @media (max-width: 47.999rem) {
+    .eoschool-req-dash .lede {
+      font-size: var(--font-size-sm);
+    }
+
+    .eoschool-req-list {
+      padding-inline-start: 0.875rem;
+    }
+
+    .eoschool-req-subsection__title {
+      font-size: var(--font-size-sm);
+    }
+  }
+</style>
