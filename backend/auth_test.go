@@ -759,6 +759,12 @@ func TestLoginSucceedsWithExpiredRefreshCookie(t *testing.T) {
 	if csrfBody["csrf"] == "" {
 		t.Fatal("missing guest csrf after expired refresh")
 	}
+	// Racing GET /auth/csrf must not wipe auth cookies (curriculum PDF preview race).
+	for _, c := range csrfRec.Result().Cookies() {
+		if (c.Name == app.refreshCookieName() || c.Name == app.accessCookieName()) && c.MaxAge < 0 {
+			t.Fatalf("mintCSRF must not clear %s on dead refresh", c.Name)
+		}
+	}
 
 	login := httptest.NewRequest(http.MethodPost, "/api/auth/login", bytes.NewBufferString(`{"identifier":"member@eduardoos.com","password":"correct-horse-battery"}`))
 	login.Header.Set("Content-Type", "application/json")

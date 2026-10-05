@@ -253,6 +253,15 @@ func safeSchemaMigrations() []schemaMigration {
 				{Collection: colEpamAuthors, Keys: bson.D{{Key: "user_id", Value: 1}, {Key: "author_id", Value: 1}}, Unique: true},
 			},
 		},
+		{
+			ID:          "014_eoschool_curriculum_progress",
+			Description: "Create eoschool MPPE curriculum progress collection (one doc per owner+student)",
+			Collections: []string{colEoschoolCurriculumProgress},
+			Indexes: []indexSpec{
+				{Collection: colEoschoolCurriculumProgress, Keys: bson.D{{Key: "owner_user_id", Value: 1}, {Key: "student_key", Value: 1}}, Unique: true},
+				{Collection: colEoschoolCurriculumProgress, Keys: bson.D{{Key: "owner_user_id", Value: 1}, {Key: "updated_at", Value: -1}}},
+			},
+		},
 	}
 }
 

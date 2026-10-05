@@ -5,10 +5,7 @@ import {
   fetchHomescoolPdfPreview,
   renderHomescoolPdfPreview,
 } from "./homescool-pdf-preview";
-import {
-  planDayManifest,
-  type CurriculumPlanSectionId,
-} from "./eoschool-curriculum-plan-classes";
+import { planDayManifest, type CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
 import { mustLog } from "./dev-log";
 
 type LoadedClass = {
@@ -37,7 +34,7 @@ async function fetchClassJson(url: string): Promise<EoschoolDocument> {
 }
 
 async function ensurePlanDayClasses(planDay: number): Promise<LoadedClass[]> {
-  const manifest = planDayManifest(planDay);
+  const manifest = await planDayManifest(planDay);
   if (!manifest) return [];
 
   const out: LoadedClass[] = [];
@@ -66,7 +63,9 @@ function setModalSectionContent(modal: HTMLElement, card: HTMLElement, sectionId
   const target = modal.querySelector<HTMLElement>("[data-curriculum-modal-section-content]");
   if (!target) return;
   if (source) {
-    const clone = source.querySelector(".eoschool-curriculum__subject-body");
+    const clone =
+      source.querySelector(".eoschool-curriculum__subject-detail") ??
+      source.querySelector(".eoschool-curriculum__subject-body");
     if (clone) {
       target.replaceChildren(clone.cloneNode(true));
     } else {
@@ -108,7 +107,7 @@ async function showSectionPdf(
     if (empty) {
       empty.hidden = false;
       empty.textContent =
-        "Inicia sesión con acceso a Homescool para generar y descargar el PDF de la clase.";
+        "No se pudo generar el PDF. Si estás autenticado con Homescool, reintenta; un 401/403 no cierra la sesión.";
     }
     return;
   }

@@ -17,6 +17,7 @@ var safeMessages = map[string]string{
 	"invite_session_expired":         "This invite session expired. Reload the invite link to continue.",
 	"invalid_credentials":            "Sign-in failed.",
 	"forbidden":                      "The request was rejected.",
+	"csrf_invalid":                   "Security check failed. Try again.",
 	"rate_limited":                   "Too many attempts. Try later.",
 	"conflict":                       "That username is already taken.",
 	"payload_too_large":              "That file is too large.",

@@ -1,26 +1,12 @@
 import { CURRICULUM_SECTION_IDS, type CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
-
-const SECTIONS_STORAGE_KEY = "eoschool-curriculum-sections-done";
-
-function readSectionsDone(): Set<string> {
-  try {
-    const raw = localStorage.getItem(SECTIONS_STORAGE_KEY);
-    if (!raw) return new Set();
-    const parsed = JSON.parse(raw) as unknown;
-    if (!Array.isArray(parsed)) return new Set();
-    return new Set(parsed.filter((id) => typeof id === "string"));
-  } catch {
-    return new Set();
-  }
-}
-
-function writeSectionsDone(done: Set<string>): void {
-  try {
-    localStorage.setItem(SECTIONS_STORAGE_KEY, JSON.stringify([...done]));
-  } catch {
-    /* ignore */
-  }
-}
+import {
+  DEFAULT_CURRICULUM_STUDENT_KEY,
+  fetchCurriculumProgress,
+  patchCurriculumSection,
+  type CurriculumStudent,
+} from "./eoschool-curriculum-api";
+import { showErrorModal } from "./error-modal";
+import { mustLog } from "./dev-log";
 
 export function sectionProgressKey(dayId: string, sectionId: CurriculumPlanSectionId): string {
   return `${dayId}:${sectionId}`;
@@ -77,16 +63,84 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
   });
 }
 
-export function initCurriculumProgress(root: HTMLElement | null): void {
+function formatStudentBanner(student: CurriculumStudent): string {
+  return `Progreso de ${student.displayName} (${student.age} años, ${student.grade})`;
+}
+
+function setStudentBanner(
+  root: HTMLElement,
+  student: CurriculumStudent | null,
+  mode: "remote" | "guest" | "hidden",
+): void {
+  const el = root.querySelector<HTMLElement>("[data-curriculum-student-banner]");
+  if (!el) return;
+  if (mode === "hidden") {
+    el.hidden = true;
+    el.textContent = "";
+    el.removeAttribute("data-curriculum-persist");
+    return;
+  }
+  if (mode === "guest") {
+    el.textContent =
+      "Invitado: los checks no se guardan. Inicia sesión con Homescool para persistir el progreso de Elías.";
+    el.hidden = false;
+    el.dataset.curriculumPersist = "guest";
+    return;
+  }
+  if (!student) {
+    el.hidden = true;
+    el.textContent = "";
+    return;
+  }
+  el.textContent = formatStudentBanner(student);
+  el.hidden = false;
+  el.dataset.curriculumPersist = "remote";
+}
+
+export async function initCurriculumProgress(root: HTMLElement | null): Promise<void> {
   if (!root) return;
 
-  const done = readSectionsDone();
+  const done = new Set<string>();
+  let studentKey = DEFAULT_CURRICULUM_STUDENT_KEY;
+  let persistRemote = false;
+
+  try {
+    const loaded = await fetchCurriculumProgress(studentKey);
+    if (loaded.ok) {
+      persistRemote = true;
+      studentKey = loaded.data.student.studentKey;
+      loaded.data.sectionsDone.forEach((key) => done.add(key));
+      setStudentBanner(root, loaded.data.student, "remote");
+      if (mustLog) {
+        console.log("[curriculum.progress] loaded", {
+          count: done.size,
+          studentKey,
+          requestId: undefined,
+        });
+      }
+    } else {
+      // 401/403: guest or no Homescool access — not a logout signal.
+      setStudentBanner(root, null, "guest");
+      if (mustLog) {
+        console.log("[curriculum.progress] guest_or_denied", {
+          status: loaded.status,
+          requestId: loaded.requestId,
+        });
+      }
+    }
+  } catch (err) {
+    setStudentBanner(root, null, "guest");
+    showErrorModal({
+      message: err instanceof Error ? err.message : "No se pudo cargar el progreso del currículo.",
+    });
+  }
+
   applyProgress(root, done);
 
   if (root.dataset.progressBound === "true") return;
   root.dataset.progressBound = "true";
 
-  root.addEventListener("change", (ev) => {
+  root.addEventListener("change", async (ev) => {
     const target = ev.target;
     if (!(target instanceof HTMLInputElement) || !target.matches("[data-curriculum-section-check]")) return;
     const sectionEl = target.closest<HTMLElement>("[data-curriculum-section]");
@@ -95,9 +149,40 @@ export function initCurriculumProgress(root: HTMLElement | null): void {
     const sectionId = sectionEl?.dataset.curriculumSection as CurriculumPlanSectionId | undefined;
     if (!dayId || !sectionId) return;
     const key = sectionProgressKey(dayId, sectionId);
+    const prev = done.has(key);
     if (target.checked) done.add(key);
     else done.delete(key);
-    writeSectionsDone(done);
     applyProgress(root, done);
+
+    if (!persistRemote) {
+      // Optimistic local-only for guests; do not confuse with session loss.
+      return;
+    }
+
+    try {
+      const data = await patchCurriculumSection({
+        studentKey,
+        dayId,
+        sectionId,
+        completed: target.checked,
+      });
+      done.clear();
+      data.sectionsDone.forEach((k) => done.add(k));
+      setStudentBanner(root, data.student, "remote");
+      applyProgress(root, done);
+    } catch (err) {
+      if (prev) done.add(key);
+      else done.delete(key);
+      target.checked = prev;
+      applyProgress(root, done);
+      const requestId =
+        err && typeof err === "object" && "requestId" in err
+          ? String((err as { requestId?: string }).requestId || "")
+          : "";
+      showErrorModal({
+        message: err instanceof Error ? err.message : "No se pudo guardar el progreso.",
+        requestId: requestId || undefined,
+      });
+    }
   });
 }

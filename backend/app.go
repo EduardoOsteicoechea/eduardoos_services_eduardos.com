@@ -53,6 +53,7 @@ type App struct {
 	evoiceJobs       *evoiceJobStore
 	homescool        HomescoolStore
 	progress         HomescoolProgressStore
+	eoschoolCurriculum EoschoolCurriculumProgressStore
 	progressFS       *homescoolProgressFS
 	eoproject        eoprojectStore
 	eoprojectFS      *eoprojectFS
@@ -113,8 +114,9 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		scrib:            openScribStore(store),
 		pamphlet:         openPamphletStore(store, cfg.MediaRoot),
 		homescool:        openHomescoolStore(store, cfg.MediaRoot),
-		progress:         newHomescoolProgressStore(store),
-		progressFS:       newHomescoolProgressFS(cfg.MediaRoot),
+		progress:           newHomescoolProgressStore(store),
+		eoschoolCurriculum: newEoschoolCurriculumProgressStore(store),
+		progressFS:         newHomescoolProgressFS(cfg.MediaRoot),
 		eoproject:        newEoprojectStoreFromDataStore(store),
 		eoprojectFS:      newEoprojectFS(cfg.EoprojectMediaRoot),
 		mailer:           smtpMailer{cfg: cfg},
@@ -383,6 +385,9 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("DELETE /api/homescool/progress/photos/{photoId}", a.deleteHomescoolProgressPhotoHandler)
 	mux.HandleFunc("GET /api/homescool/progress/photos/{photoId}/{variant}", a.getHomescoolProgressPhotoHandler)
 	mux.HandleFunc("GET /api/homescool/web-assets/{name}", a.getHomescoolWebAssetHandler)
+	mux.HandleFunc("GET /api/eoschool/curriculum/students", a.listEoschoolCurriculumStudentsHandler)
+	mux.HandleFunc("GET /api/eoschool/curriculum/progress", a.getEoschoolCurriculumProgressHandler)
+	mux.HandleFunc("PATCH /api/eoschool/curriculum/progress/sections", a.patchEoschoolCurriculumSectionHandler)
 
 	a.registerEvoiceRoutes(mux)
 	a.registerEoprojectRoutes(mux)

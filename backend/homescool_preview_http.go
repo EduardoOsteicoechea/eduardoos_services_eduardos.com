@@ -16,7 +16,7 @@ func (a *App) postHomescoolPreviewHandler(w http.ResponseWriter, r *http.Request
 	a.mustLogf(r, "homescool.preview.enter")
 	if !a.validOrigin(r) || !a.validCSRF(r) {
 		a.mustLogf(r, "homescool.preview.csrf_or_origin")
-		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		a.writeSafeError(w, r, http.StatusForbidden, "csrf_invalid")
 		return
 	}
 	user, _, ok := a.requireHomescoolMaterialsAccess(w, r)

@@ -288,9 +288,10 @@ func (a *App) mintCSRF(w http.ResponseWriter, r *http.Request) string {
 			_ = a.store.UpdateSession(r.Context(), sess)
 			return token
 		}
-		// Stale refresh must not keep winning over guest csrfbind on the next login.
-		a.clearCookie(w, a.refreshCookieName())
-		a.clearCookie(w, a.accessCookieName())
+		// Do NOT clear access/refresh here. A concurrent /auth/refresh may have just
+		// rotated the cookie; wiping it from a racing GET /auth/csrf logs the user out
+		// (Homescool curriculum PDF preview is a common trigger). Dead refresh still
+		// falls through to guest csrfbind; login/refresh/logout own cookie clears.
 	}
 	token := randomID(16)
 	hash := a.hashOpaque("csrf", token)
@@ -373,7 +374,7 @@ func (a *App) requireUnsafe(w http.ResponseWriter, r *http.Request) bool {
 			slog.Bool("csrf_ok", csrfOK),
 			slog.String("csrf_reason", a.csrfFailureReason(r)),
 		)
-		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		a.writeSafeError(w, r, http.StatusForbidden, "csrf_invalid")
 		return false
 	}
 	a.logAuthDebug(r, "require_unsafe_ok",

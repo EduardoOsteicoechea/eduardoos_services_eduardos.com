@@ -103,8 +103,8 @@ func TestSafeMigrationsAreIdempotent(t *testing.T) {
 	if err := applySchemaMigrations(ctx, log, applier, "test", safeSchemaMigrations(), false, ""); err != nil {
 		t.Fatalf("second apply: %v", err)
 	}
-	if len(applier.records) != 11 {
-		t.Fatalf("expected eleven migration records, got %d", len(applier.records))
+	if len(applier.records) != 12 {
+		t.Fatalf("expected twelve migration records, got %d", len(applier.records))
 	}
 	if applier.records["001_initial_auth_schema"].Checksum == "" {
 		t.Fatal("missing checksum")
@@ -124,8 +124,8 @@ func TestSafeMigrationsAreIdempotent(t *testing.T) {
 
 func TestIndexDefinitionsMatchContract(t *testing.T) {
 	migrations := safeSchemaMigrations()
-	if len(migrations) != 11 {
-		t.Fatalf("expected eleven safe migrations, got %d", len(migrations))
+	if len(migrations) != 12 {
+		t.Fatalf("expected twelve safe migrations, got %d", len(migrations))
 	}
 	m := migrations[0]
 	assertUnique := func(collection, field string) {
@@ -167,7 +167,7 @@ func TestIndexDefinitionsMatchContract(t *testing.T) {
 	if !ok || !resetHash.Unique {
 		t.Fatal("reset OTP hash must be unique")
 	}
-	required := []string{colUsers, colSessions, colEmailOTPs, colResetOTPs, colEntitlements, colAPIKeys}
+	required := []string{colUsers, colSessions, colEmailOTPs, colResetOTPs, colEntitlements, colAPIKeys, colEoschoolCurriculumProgress}
 	have := map[string]bool{}
 	for _, mig := range migrations {
 		for _, name := range mig.Collections {
@@ -178,6 +178,18 @@ func TestIndexDefinitionsMatchContract(t *testing.T) {
 		if !have[name] {
 			t.Fatalf("missing collection %s", name)
 		}
+	}
+	var foundOwnerStudent bool
+	for _, mig := range migrations {
+		for _, idx := range mig.Indexes {
+			if idx.Collection == colEoschoolCurriculumProgress && idx.Unique && len(idx.Keys) >= 2 &&
+				idx.Keys[0].Key == "owner_user_id" && idx.Keys[1].Key == "student_key" {
+				foundOwnerStudent = true
+			}
+		}
+	}
+	if !foundOwnerStudent {
+		t.Fatal("missing unique (owner_user_id, student_key) on eoschool_curriculum_progress")
 	}
 	if len(destructiveSchemaMigrations()) != 0 {
 		t.Fatal("destructive migrations must not ship without an explicit operator command")

@@ -496,8 +496,11 @@ export async function apiSend<T>(
       response.status === 403 &&
       isUnsafe(method) &&
       !opts.skipCsrfRetry &&
-      data.error === "forbidden"
+      (data.error === "csrf_invalid" || data.error === "forbidden")
     ) {
+      // Prefer csrf_invalid (CSRF/origin). Legacy handlers still emit forbidden for
+      // the same case; entitlement denials also use forbidden — one CSRF remint is
+      // harmless there and must never clear cookies or flip chrome to guest.
       sessionLog("api.forbidden_retry_csrf", { path, method, error: data.error });
       resetCsrfMemory();
       return apiSend<T>(path, init, { ...opts, skipCsrfRetry: true, forceCsrfRefresh: true });
@@ -1117,7 +1120,11 @@ export async function uploadFileWithProgress<T = APIErrorBody>(
       xhr.send(body);
     });
 
-    if (result.status === 403 && !forceCsrf && result.data.error === "forbidden") {
+    if (
+      result.status === 403 &&
+      !forceCsrf &&
+      (result.data.error === "csrf_invalid" || result.data.error === "forbidden")
+    ) {
       resetCsrfMemory();
       return attempt(true);
     }

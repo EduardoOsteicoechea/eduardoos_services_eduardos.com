@@ -64,6 +64,7 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 			"invalid_request":                "Bad material meta or empty html.",
 			"unauthorized":                   "Missing/invalid Bearer API key.",
 			"forbidden":                      "Missing api and/or product entitlement.",
+			"csrf_invalid":                   "Cookie-session CSRF/origin check failed (browser UI).",
 			"rate_limited":                   "Over 60 req/min for this key.",
 		},
 		"payloadSchema": map[string]any{
@@ -133,6 +134,15 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 				"viewUrlTemplate": "{BASE}/homescool/material?id={materialId}",
 				"connector":       "https://github.com/EduardoOsteicoechea/eduardoos-eoschool-connector — clone as .eoschool/",
 				"methodDoc":       "/skills/eoschool/METHOD_V1.md",
+				"sessionCurriculumProgress": map[string]any{
+					"notes": "Browser cookie session + Homescool entitlement (not API key). Default student Elías Osteicoechea (elias-osteicoechea).",
+					"routes": []map[string]any{
+						{"method": http.MethodGet, "path": "/api/eoschool/curriculum/progress", "auth": "cookie", "summary": "GET progress ?studentKey=", "requirements": "session + homescool"},
+						{"method": http.MethodPatch, "path": "/api/eoschool/curriculum/progress/sections", "auth": "cookie+csrf", "summary": "Toggle section done", "body": `{"studentKey":"elias-osteicoechea","dayId":"d1","sectionId":"bib","completed":true}`},
+						{"method": http.MethodGet, "path": "/api/eoschool/curriculum/students", "auth": "cookie", "summary": "List students for owner"},
+						{"method": http.MethodPost, "path": "/api/homescool/preview", "auth": "cookie+csrf", "summary": "PDF preview from eoschool JSON body"},
+					},
+				},
 			},
 			"epam": map[string]any{
 				"description":    "Pamphlet / EPAM JSON documents (same shape as the EPAM editor and .epam files).",

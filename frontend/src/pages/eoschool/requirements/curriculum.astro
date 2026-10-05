@@ -1,7 +1,7 @@
 ---
 import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../../layouts/Layout.astro";
-import { MPPE_28WEEK_CURRICULUM } from "../../../lib/eoschool-mppe-28week-curriculum";
+import { MPPE_40WEEK_CURRICULUM } from "../../../lib/eoschool-mppe-40week-curriculum";
 import {
   bibleGroupsForDay,
   buildWeekIndexRow,
@@ -9,7 +9,7 @@ import {
   identityGroups,
 } from "../../../lib/eoschool-mppe-curriculum-view";
 
-const { meta, weeks } = MPPE_28WEEK_CURRICULUM;
+const { meta, weeks } = MPPE_40WEEK_CURRICULUM;
 const indexRows = weeks.map(buildWeekIndexRow);
 
 const bibleMeta = meta.bible;
@@ -23,8 +23,8 @@ const areaDefs = [
 ---
 
 <Layout
-  title="Currículo MPPE 28 semanas"
-  description="Plan de 28 semanas: lectura bíblica diaria (Gén–Ester, Job–Mal, NT), 14 objetivos de Identidad y saberes MPPE en 56 bloques."
+  title="Currículo MPPE 40 semanas"
+  description="Planificación 3er grado: 40 semanas, 200 días escolares, lectura bíblica diaria y saberes MPPE (Identidad, Lenguaje, Matemáticas, Ciencias) con clases eoschool."
   page="eoschool-requirements-curriculum"
   robots="noindex,nofollow"
   showPageTitle={false}
@@ -40,14 +40,16 @@ const areaDefs = [
     </a>
   </Fragment>
 
-  <h1 class="page-title-sr">Currículo MPPE 28 semanas</h1>
+  <h1 class="page-title-sr">Currículo MPPE 40 semanas</h1>
 
   <section class="product-dash eoschool-curriculum page-span-all" data-curriculum-progress>
     <p class="lede">
-      {meta.weeks} semanas · bloque 1 = 2 días, bloque 2 = 3 días ({bibleMeta.readingDays} días de lectura bíblica). Cada día: tres
-      pistas (Gén–Ester, Job–Mal, NT), con 1–2 capítulos por pista cuando basta. Cada bloque además: Biblia, Identidad, Lenguaje,
-      Matemáticas y Ciencias.
+      {meta.grade ?? "3er grado"} · {meta.weeks} semanas × {meta.daysPerWeek ?? 5} días = {meta.totalPlanDays ?? bibleMeta.readingDays}{" "}
+      días escolares. Cada día: lectura bíblica (tres pistas) más Identidad, Lenguaje, Matemáticas y Ciencias subdivididos en el plan.
+      Abre un día para ver objetivo, aprendizaje y clase PDF.
     </p>
+    <p class="eoschool-curriculum__student" data-curriculum-student-banner hidden></p>
+
     <p class="lede eoschool-curriculum__bible-report">
       {bibleMeta.canon}: {bibleMeta.tracks.genEster.totalChapters}+{bibleMeta.tracks.jobMal.totalChapters}+
       {bibleMeta.tracks.nt.totalChapters} capítulos en {bibleMeta.readingDays} días. NT hasta{" "}
@@ -55,11 +57,7 @@ const areaDefs = [
       Cobertura: Gén–Ester {bibleMeta.tracks.genEster.chaptersReadInPlan}/{bibleMeta.tracks.genEster.totalChapters}, Job–Mal{" "}
       {bibleMeta.tracks.jobMal.chaptersReadInPlan}/{bibleMeta.tracks.jobMal.totalChapters}, NT {bibleMeta.tracks.nt.chaptersReadInPlan}/
       {bibleMeta.tracks.nt.totalChapters}
-      {bibleMeta.tracks.genEster.completesCanonIn28Weeks &&
-      bibleMeta.tracks.jobMal.completesCanonIn28Weeks &&
-      bibleMeta.tracks.nt.completesCanonIn28Weeks
-        ? " (Biblia completa en 28 semanas)."
-        : "."}
+      {meta.totalPlanDays === 200 ? " (Plan 40 semanas · 200 días escolares · 3er grado)." : "."}
     </p>
 
     <nav class="eoschool-curriculum__index" data-curriculum-index aria-label="Índice por semana">
@@ -105,7 +103,7 @@ const areaDefs = [
       </div>
       {
         indexRows.map((row) => (
-          <a class="eoschool-curriculum__index-row" href={`#week-${row.week}`} data-route>
+          <a class="eoschool-curriculum__index-row" href={`#week-${row.week}`}>
             <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--sem eoschool-curriculum__index-week">
               S{row.week}
             </span>
@@ -189,7 +187,18 @@ const areaDefs = [
                                 {area.label}
                               </h4>
                             </div>
-                            <div class="eoschool-curriculum__subject-body">
+                            <div class="eoschool-curriculum__subject-body eoschool-curriculum__subject-body--card">
+                              {groups.some((g) => g.learnings.length) ? (
+                                <ul class="eoschool-curriculum__learnings eoschool-curriculum__learnings--card">
+                                  {groups.flatMap((group) =>
+                                    group.learnings.map((learning) => <li>{learning}</li>),
+                                  )}
+                                </ul>
+                              ) : (
+                                <p class="eoschool-curriculum__empty">—</p>
+                              )}
+                            </div>
+                            <div class="eoschool-curriculum__subject-detail" hidden>
                               {groups.map((group) => (
                                 <div class="eoschool-curriculum__objective-block">
                                   <p class="eoschool-curriculum__objective">
@@ -197,11 +206,14 @@ const areaDefs = [
                                     {group.objective}
                                   </p>
                                   {group.learnings.length ? (
-                                    <ol class="eoschool-curriculum__learnings">
-                                      {group.learnings.map((learning) => (
-                                        <li>{learning}</li>
-                                      ))}
-                                    </ol>
+                                    <div class="eoschool-curriculum__specific-learning">
+                                      <p class="eoschool-curriculum__learning-label">Aprendizaje específico</p>
+                                      <ol class="eoschool-curriculum__learnings">
+                                        {group.learnings.map((learning) => (
+                                          <li>{learning}</li>
+                                        ))}
+                                      </ol>
+                                    </div>
                                   ) : null}
                                 </div>
                               ))}
@@ -284,7 +296,7 @@ const areaDefs = [
   function bootCurriculumChrome() {
     const root = document.querySelector("[data-curriculum-progress]");
     initCurriculumIndexResize(document.querySelector("[data-curriculum-index]"));
-    initCurriculumProgress(root);
+    void initCurriculumProgress(root);
     initCurriculumDayModal(root);
   }
 
@@ -296,6 +308,13 @@ const areaDefs = [
   .eoschool-curriculum {
     min-width: 0;
     max-width: 100%;
+  }
+
+  .eoschool-curriculum__student {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+    color: var(--color-text);
   }
 
   .eoschool-curriculum__bible-report {
@@ -613,6 +632,31 @@ const areaDefs = [
     font-weight: 650;
     color: var(--color-muted);
     margin-block-end: 0.25rem;
+  }
+
+  .eoschool-curriculum__learning-label {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    font-weight: 650;
+    color: var(--color-muted);
+  }
+
+  .eoschool-curriculum__specific-learning {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum__learnings--card {
+    margin: 0;
+    padding-inline-start: 1rem;
+    list-style: disc;
+  }
+
+  .eoschool-curriculum__empty {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
   }
 
   .eoschool-curriculum__learnings {

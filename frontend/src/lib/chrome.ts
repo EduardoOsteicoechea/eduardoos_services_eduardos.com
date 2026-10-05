@@ -378,6 +378,7 @@ function plainUserBlockedPath(pathname: string): boolean {
   if (
     path.startsWith("/scrib") ||
     path.startsWith("/homescool") ||
+    path.startsWith("/eoschool") ||
     path.startsWith("/documents/pamphlet") ||
     path.startsWith("/evoice") ||
     path.startsWith("/eoproject") ||
