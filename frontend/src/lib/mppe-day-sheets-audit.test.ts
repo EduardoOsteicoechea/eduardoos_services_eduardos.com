@@ -12,6 +12,15 @@ const STUB_PATTERNS = [
   /Introduce el objetivo y repasa/i,
 ];
 
+/** Generic templates that do not name the day’s objective or learning. */
+const GENERIC_ACTIVITY_PATTERNS = [
+  /ejercicio «falso»/i,
+  /^Preguntas científicas: escribe 3/i,
+  /^Experimento simple o demostración segura del tema\./i,
+  /^Crea 3 preguntas tipo quiz/i,
+  /^Maqueta o esquema en cartulina del concepto clave\./i,
+];
+
 describe("MPPE day sheets (200 días)", () => {
   it("has no placeholder objectives, learnings, or stub activities", () => {
     const failures: string[] = [];
@@ -42,6 +51,11 @@ describe("MPPE day sheets (200 días)", () => {
         for (const act of section.activities ?? []) {
           for (const re of STUB_PATTERNS) {
             if (re.test(act)) failures.push(`d${planDay} ${section.id}: stub activity`);
+          }
+          if (section.id === "mat" || section.id === "cie") {
+            for (const re of GENERIC_ACTIVITY_PATTERNS) {
+              if (re.test(act)) failures.push(`d${planDay} ${section.id}: generic activity`);
+            }
           }
           if (planDay === 1 && /\b(repasa|ayer|día anterior)\b/i.test(act) && !/grados anteriores/i.test(act)) {
             failures.push(`d${planDay} ${section.id}: illogical review on first plan day`);

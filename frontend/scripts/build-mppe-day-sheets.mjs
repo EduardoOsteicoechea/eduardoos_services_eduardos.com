@@ -119,7 +119,7 @@ const IDE_WEEKLY = [
     c.effectiveContinuing
       ? `Semana ${c.week}: repasa «${c.clip(c.ideTitle, 65)}» con un ejemplo local.`
       : `Presenta el eje: ${c.clip(c.ideTitle, 65)}.`,
-    "Mapa mental: persona, comunidad y país.",
+    `Mapa mental de «${c.clip(c.ideTitle, 50)}»: persona, comunidad y país.`,
   ],
   (c) => [
     `Investiga con un adulto un hecho sobre ${c.clip(c.ideTitle, 55)}.`,
@@ -171,7 +171,7 @@ const LEN_WEEKLY = [
     "Anota dos preguntas que te haría el oyente.",
   ],
   (c) => [
-    `Organizador gráfico (inicio–nudo–desenlace) del aprendizaje.`,
+    `Organizador gráfico (inicio–nudo–desenlace) sobre: ${c.clip(c.learning, 75)}.`,
     "Completa con palabras del texto trabajado.",
   ],
   (c) => [
@@ -204,8 +204,8 @@ const MAT_WEEKLY = [
     "Compara estimación vs resultado real.",
   ],
   (c) => [
-    `Crea 3 preguntas tipo quiz para un compañero.`,
-    "Resuélvelas tú y verifica.",
+    `Inventa 2 enunciados de práctica de «${c.clip(c.objective, 45)}» (aplica: ${c.clip(c.learning, 55)}).`,
+    "Resuélvelos y explica cada paso en el cuaderno.",
   ],
   (c) => [
     `Geoplano o cuadrícula: representa ${c.clip(c.learning, 65)}.`,
@@ -220,8 +220,8 @@ const MAT_WEEKLY = [
     `Relaciona medidas con ${c.clip(c.learning, 60)}.`,
   ],
   (c) => [
-    `Explica en voz alta el error de un ejercicio «falso».`,
-    "Corrige el ejercicio y muestra el procedimiento.",
+    `Completa un procedimiento a medias de «${c.clip(c.objective, 40)}» y corrígelo.`,
+    `Comprueba que tu solución cumple: ${c.clip(c.learning, 65)}`,
   ],
 ];
 
@@ -233,8 +233,8 @@ const CIE_WEEKLY = [
     `Registro: dibujo + 2 datos de «${c.clip(c.objective, 50)}».`,
   ],
   (c) => [
-    `Experimento simple o demostración segura del tema.`,
-    "Anota materiales, pasos y qué ocurrió.",
+    `Demostración o experiencia segura sobre «${c.clip(c.objective, 50)}».`,
+    `Anota materiales, pasos y cómo se relaciona con: ${c.clip(c.learning, 60)}.`,
   ],
   (c) => [
     `Clasifica 6 imágenes o tarjetas según ${c.clip(c.objective, 50)}.`,
@@ -250,17 +250,17 @@ const CIE_WEEKLY = [
   ],
   (c) => [
     c.isWeekStart
-      ? "Bitácora: primera observación de la semana sobre el tema."
-      : "Bitácora: ¿qué cambió desde la última clase en tu observación?",
-    "Escribe una hipótesis sencilla.",
+      ? `Bitácora: primera observación de la semana sobre «${c.clip(c.objective, 45)}».`
+      : `Bitácora: observa de nuevo «${c.clip(c.objective, 40)}» y anota un cambio.`,
+    `Hipótesis sencilla ligada a: ${c.clip(c.learning, 60)}.`,
   ],
   (c) => [
-    `Maqueta o esquema en cartulina del concepto clave.`,
-    "Etiqueta las partes con vocabulario nuevo.",
+    `Maqueta o esquema de «${c.clip(c.objective, 50)}» en cartulina.`,
+    `Etiqueta partes usando ideas de: ${c.clip(c.learning, 55)}.`,
   ],
   (c) => [
-    `Preguntas científicas: escribe 3 «por qué» o «cómo».`,
-    "Elige una y busca respuesta con un libro o adulto.",
+    `Escribe 3 preguntas «por qué» o «cómo» sobre «${c.clip(c.objective, 45)}».`,
+    `Responde una con libro o adulto, aplicando: ${c.clip(c.learning, 55)}.`,
   ],
 ];
 
@@ -401,7 +401,7 @@ for (let planDay = 1; planDay <= total; planDay++) {
 const manifest = {
   format: "mppe-curriculum-day-manifest",
   version: 2,
-  contentRevision: 2,
+  contentRevision: 3,
   grade: "3er grado",
   totalPlanDays: total,
   planDays: manifestDays,
