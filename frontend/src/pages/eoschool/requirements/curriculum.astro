@@ -3,6 +3,7 @@ import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../../layouts/Layout.astro";
 import { MPPE_28WEEK_CURRICULUM } from "../../../lib/eoschool-mppe-28week-curriculum";
 import {
+  bibleGroups,
   buildWeekIndexRow,
   groupLearningRefs,
   identityGroups,
@@ -11,17 +12,19 @@ import {
 const { meta, weeks } = MPPE_28WEEK_CURRICULUM;
 const indexRows = weeks.map(buildWeekIndexRow);
 
+const bibleMeta = meta.bible;
 const areaDefs = [
-  { num: 1, label: "Identidad", kind: "identity" as const },
-  { num: 2, label: "Prácticas del Lenguaje", kind: "len" as const },
-  { num: 3, label: "Matemáticas", kind: "mat" as const },
-  { num: 4, label: "Ciencias Naturales", kind: "cie" as const },
+  { num: 1, label: "Biblia", kind: "bible" as const },
+  { num: 2, label: "Identidad", kind: "identity" as const },
+  { num: 3, label: "Prácticas del Lenguaje", kind: "len" as const },
+  { num: 4, label: "Matemáticas", kind: "mat" as const },
+  { num: 5, label: "Ciencias Naturales", kind: "cie" as const },
 ];
 ---
 
 <Layout
   title="Currículo MPPE 28 semanas"
-  description="Plan de 28 semanas: 14 objetivos de Identidad (2 por semana) y saberes de Lenguaje, Matemáticas y Ciencias repartidos en 56 bloques."
+  description="Plan de 28 semanas: lectura bíblica diaria (Gén–Ester, Job–Mal, NT), 14 objetivos de Identidad y saberes MPPE en 56 bloques."
   page="eoschool-requirements-curriculum"
   robots="noindex,nofollow"
   showPageTitle={false}
@@ -41,26 +44,68 @@ const areaDefs = [
 
   <section class="product-dash eoschool-curriculum">
     <p class="lede">
-      {meta.weeks} semanas · bloque 1 = 2 días, bloque 2 = 3 días. Cada bloque: Identidad, Lenguaje, Matemáticas y Ciencias
-      (objetivo + aprendizajes requeridos).
+      {meta.weeks} semanas · bloque 1 = 2 días, bloque 2 = 3 días ({bibleMeta.readingDays} días de lectura bíblica). Cada día: 1 cap.
+      Génesis–Ester, 1 Job–Malaquías, 1 NT. Cada bloque además: Identidad, Lenguaje, Matemáticas y Ciencias.
+    </p>
+    <p class="lede eoschool-curriculum__bible-report">
+      Biblia en 28 semanas: {bibleMeta.tracks.genEster.chaptersReadInPlan} de {bibleMeta.tracks.genEster.totalChapters} caps.
+      (Gén–Ester), {bibleMeta.tracks.jobMal.chaptersReadInPlan} de {bibleMeta.tracks.jobMal.totalChapters} (Job–Mal),{" "}
+      {bibleMeta.tracks.nt.chaptersReadInPlan} de {bibleMeta.tracks.nt.totalChapters} (NT). No coincide la Biblia entera en 140
+      días a 1 capítulo por pista; el plan avanza en orden desde el inicio de cada pista.
     </p>
 
-    <nav class="eoschool-curriculum__index" aria-label="Índice por semana">
+    <nav class="eoschool-curriculum__index" data-curriculum-index aria-label="Índice por semana">
       <div class="eoschool-curriculum__index-head">
-        <span>Sem</span>
-        <span>Identidad</span>
-        <span>Leng</span>
-        <span>Mat</span>
-        <span>Cienc</span>
+        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--sem">Sem</span>
+        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
+          Bibl
+          <button
+            type="button"
+            class="eoschool-curriculum__index-resizer"
+            data-resize-col="bib"
+            aria-label="Ajustar ancho de columna Biblia"
+          ></button>
+        </span>
+        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
+          Identidad
+          <button
+            type="button"
+            class="eoschool-curriculum__index-resizer"
+            data-resize-col="ide"
+            aria-label="Ajustar ancho de columna Identidad"
+          ></button>
+        </span>
+        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
+          Leng
+          <button
+            type="button"
+            class="eoschool-curriculum__index-resizer"
+            data-resize-col="len"
+            aria-label="Ajustar ancho de columna Lenguaje"
+          ></button>
+        </span>
+        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
+          Mat
+          <button
+            type="button"
+            class="eoschool-curriculum__index-resizer"
+            data-resize-col="mat"
+            aria-label="Ajustar ancho de columna Matemáticas"
+          ></button>
+        </span>
+        <span class="eoschool-curriculum__index-cell">Cienc</span>
       </div>
       {
         indexRows.map((row) => (
           <a class="eoschool-curriculum__index-row" href={`#week-${row.week}`} data-route>
-            <span class="eoschool-curriculum__index-week">S{row.week}</span>
-            <span>{row.ide}</span>
-            <span>{row.len}</span>
-            <span>{row.mat}</span>
-            <span>{row.cie}</span>
+            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--sem eoschool-curriculum__index-week">
+              S{row.week}
+            </span>
+            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.bib}</span>
+            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.ide}</span>
+            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.len}</span>
+            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.mat}</span>
+            <span class="eoschool-curriculum__index-cell">{row.cie}</span>
           </a>
         ))
       }
@@ -87,11 +132,13 @@ const areaDefs = [
 
                   {areaDefs.map((area) => {
                     const groups =
-                      area.kind === "identity"
-                        ? identityGroups(block)
-                        : groupLearningRefs(
-                            area.kind === "len" ? block.len : area.kind === "mat" ? block.mat : block.cie,
-                          );
+                      area.kind === "bible"
+                        ? bibleGroups(block)
+                        : area.kind === "identity"
+                          ? identityGroups(block)
+                          : groupLearningRefs(
+                              area.kind === "len" ? block.len : area.kind === "mat" ? block.mat : block.cie,
+                            );
                     return (
                       <div class="eoschool-curriculum__subject">
                         <h4 class="eoschool-curriculum__subject-title">
@@ -124,13 +171,33 @@ const areaDefs = [
   </section>
 </Layout>
 
+<script>
+  import { initCurriculumIndexResize } from "../../../lib/eoschool-curriculum-index-resize";
+
+  function bootCurriculumIndexResize() {
+    initCurriculumIndexResize(document.querySelector("[data-curriculum-index]"));
+  }
+
+  bootCurriculumIndexResize();
+  document.addEventListener("astro:page-load", bootCurriculumIndexResize);
+</script>
+
 <style>
   .eoschool-curriculum {
     min-width: 0;
     max-width: 100%;
   }
 
+  .eoschool-curriculum__bible-report {
+    color: var(--color-muted);
+  }
+
   .eoschool-curriculum__index {
+    --idx-bib: 7rem;
+    --idx-ide: 7rem;
+    --idx-len: 7rem;
+    --idx-mat: 7rem;
+    --idx-grid: 2.25rem var(--idx-bib) var(--idx-ide) var(--idx-len) var(--idx-mat) minmax(4rem, 1fr);
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -139,16 +206,60 @@ const areaDefs = [
     border-radius: var(--border-radius);
     overflow: hidden;
     margin-block-end: var(--space-padding);
+    width: 100%;
+    min-width: 0;
   }
 
   .eoschool-curriculum__index-head,
   .eoschool-curriculum__index-row {
     display: grid;
-    grid-template-columns: 2.25rem 1fr 1fr 1fr 1fr;
-    gap: var(--rail-gap);
-    align-items: start;
-    padding: 0.375rem var(--space-padding);
+    grid-template-columns: var(--idx-grid);
+    column-gap: 0;
+    align-items: stretch;
+    padding-block: 0.375rem;
+    padding-inline: var(--space-padding);
     min-width: 0;
+    width: 100%;
+  }
+
+  .eoschool-curriculum__index-cell {
+    min-width: 0;
+    padding-inline: var(--rail-gap);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .eoschool-curriculum__index-cell--sem {
+    padding-inline-start: 0;
+    flex-shrink: 0;
+  }
+
+  .eoschool-curriculum__index-cell--bordered {
+    border-inline-end: var(--border-width) solid var(--color-border);
+  }
+
+  .eoschool-curriculum__index-head .eoschool-curriculum__index-cell {
+    position: relative;
+  }
+
+  .eoschool-curriculum__index-resizer {
+    position: absolute;
+    inset-block: -0.375rem;
+    inset-inline-end: 0;
+    width: 0.5rem;
+    transform: translateX(50%);
+    padding: 0;
+    border: 0;
+    margin: 0;
+    cursor: col-resize;
+    background: transparent;
+    touch-action: none;
+    z-index: 2;
+  }
+
+  .eoschool-curriculum__index-resizer:hover,
+  .eoschool-curriculum__index-resizer:focus-visible {
+    background: color-mix(in srgb, var(--color-accent) 35%, transparent);
   }
 
   .eoschool-curriculum__index-head {
@@ -284,8 +395,6 @@ const areaDefs = [
     font-size: var(--font-size-xs);
     font-weight: 650;
     color: var(--color-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.04rem;
     margin-block-end: 0.25rem;
   }
 
@@ -323,7 +432,7 @@ const areaDefs = [
 
     .eoschool-curriculum__index-head,
     .eoschool-curriculum__index-row {
-      min-width: 30rem;
+      min-width: min(100%, 28rem);
     }
 
     .eoschool-curriculum__learnings {

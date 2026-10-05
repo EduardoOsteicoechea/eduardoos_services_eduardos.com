@@ -13,9 +13,34 @@ export type CurriculumIdentityBlock = {
   learnings: string[];
 };
 
+export type BibleChapterRef = {
+  book: string;
+  chapter: number;
+};
+
+export type BibleDay = {
+  dayInPlan: number;
+  genEster: BibleChapterRef;
+  jobMal: BibleChapterRef;
+  nt: BibleChapterRef;
+};
+
+export type BibleBlock = {
+  days: BibleDay[];
+};
+
+export type BibleTrackReport = {
+  name: string;
+  totalChapters: number;
+  chaptersReadInPlan: number;
+  chaptersNotCovered: number;
+  completesCanonIn28Weeks: boolean;
+};
+
 export type CurriculumBlock = {
   block: number;
   days: number;
+  bible: BibleBlock;
   identity: CurriculumIdentityBlock;
   len: CurriculumLearningRef[];
   mat: CurriculumLearningRef[];
@@ -34,6 +59,15 @@ export type Mppe28WeekCurriculum = {
     totalBlocks: number;
     identityObjectives: number;
     counts: { lenLearnings: number; matLearnings: number; cieLearnings: number };
+    bible: {
+      readingDays: number;
+      chaptersPerDay: number;
+      tracks: {
+        genEster: BibleTrackReport;
+        jobMal: BibleTrackReport;
+        nt: BibleTrackReport;
+      };
+    };
   };
   weeks: CurriculumWeek[];
 };

@@ -7,7 +7,16 @@ import json
 import re
 from pathlib import Path
 
+
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS = Path(__file__).resolve().parent
+import sys
+
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
+from mppe_text_normalize import normalize_mppe_prose, normalize_string_list
+
 MARCO = ROOT / "ministerio_de_educacion_de_venezuela" / "marco_programatico_mppe_y_tercer_grado.md"
 OUT = ROOT / "frontend" / "src" / "lib" / "eoschool-mppe-national-requirements.json"
 
@@ -63,9 +72,12 @@ def parse_h3_components(chunk: str) -> list[dict]:
                 contenidos = list_after_heading(block, "#### Contenidos")
                 break
         if title and learnings:
-            unit: dict = {"title": title, "learnings": learnings}
+            unit: dict = {
+                "title": normalize_mppe_prose(title),
+                "learnings": normalize_string_list(learnings),
+            }
             if contenidos:
-                unit["contenidos"] = contenidos
+                unit["contenidos"] = normalize_string_list(contenidos)
             units.append(unit)
     return units
 
@@ -85,7 +97,13 @@ def parse_lenguaje_units(text: str) -> list[dict]:
             if len(parts) < 2 or parts[0].lower() == "contenido":
                 continue
             learnings = [p.strip() for p in re.split(r"<br>", parts[1]) if p.strip()]
-            units.append({"title": parts[0], "learnings": learnings, "axis": axis})
+            units.append(
+                {
+                    "title": normalize_mppe_prose(parts[0]),
+                    "learnings": normalize_string_list(learnings),
+                    "axis": axis,
+                }
+            )
     return units
 
 
@@ -127,6 +145,9 @@ def main() -> None:
             ),
         },
     ]
+    for area in areas:
+        area["general"] = normalize_string_list(area["general"])
+
     OUT.write_text(json.dumps({"areas": areas}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     for a in areas:
         n = sum(len(u["learnings"]) for u in a["grade3Units"])

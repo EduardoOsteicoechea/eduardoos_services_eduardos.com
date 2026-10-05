@@ -4,9 +4,15 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS = Path(__file__).resolve().parent
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+
+from mppe_bible_28weeks import build_bible_blocks_for_weeks, print_bible_report
 REQ = ROOT / "frontend" / "src" / "lib" / "eoschool-mppe-national-requirements.json"
 OUT = ROOT / "frontend" / "src" / "lib" / "eoschool-mppe-28week-curriculum.json"
 
@@ -94,16 +100,20 @@ def main() -> None:
     mat_buckets = spread_across_blocks(mat_items, BLOCKS)
     cie_buckets = spread_across_blocks(cie_items, BLOCKS)
 
+    bible_by_week, bible_report_data = build_bible_blocks_for_weeks()
+
     weeks: list[dict] = []
     for week in range(1, WEEKS + 1):
         blocks = []
-        for block_num, days in ((1, 2), (2, 3)):
+        bible_week = bible_by_week[week - 1]
+        for block_idx, (block_num, days) in enumerate(((1, 2), (2, 3))):
             block_index = (week - 1) * 2 + (block_num - 1)
             ide_idx = block_index % IDENTITY_OBJECTIVES
             blocks.append(
                 {
                     "block": block_num,
                     "days": days,
+                    "bible": bible_week[block_idx],
                     "identity": identity_objs[ide_idx],
                     "len": len_buckets[block_index],
                     "mat": mat_buckets[block_index],
@@ -123,12 +133,14 @@ def main() -> None:
                 "matLearnings": len(mat_items),
                 "cieLearnings": len(cie_items),
             },
+            "bible": bible_report_data,
         },
         "weeks": weeks,
     }
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("wrote", OUT)
     print("identity", len(identity_objs), "len/mat/cie", len(len_items), len(mat_items), len(cie_items))
+    print_bible_report(bible_report_data)
 
 
 if __name__ == "__main__":
