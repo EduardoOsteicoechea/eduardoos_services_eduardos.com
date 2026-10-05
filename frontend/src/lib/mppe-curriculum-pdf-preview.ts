@@ -49,3 +49,42 @@ export async function fetchMppeDayPdfPreview(sheet: MppeCurriculumDaySheet): Pro
     requestId,
   };
 }
+
+export type MppeWeekPreviewResponse = {
+  pdf_base64: string;
+  page_width_mm?: number;
+  page_height_mm?: number;
+  week?: number;
+  page_count?: number;
+};
+
+export async function fetchMppeWeekPdfPreview(sheets: MppeCurriculumDaySheet[]): Promise<{
+  ok: boolean;
+  pdfBytes?: Uint8Array;
+  error?: string;
+  requestId?: string;
+}> {
+  const { status, data, requestId } = await apiRequest<MppeWeekPreviewResponse>(
+    "/api/eoschool/curriculum/week-preview",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ days: sheets }),
+    },
+  );
+  if (status < 200 || status >= 300) {
+    return {
+      ok: false,
+      error: (data as { message?: string }).message ?? "No se pudo generar el PDF de la semana.",
+      requestId,
+    };
+  }
+  if (!data.pdf_base64) {
+    return { ok: false, error: "Respuesta sin PDF.", requestId };
+  }
+  return {
+    ok: true,
+    pdfBytes: base64ToBytes(data.pdf_base64),
+    requestId,
+  };
+}

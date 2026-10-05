@@ -125,3 +125,30 @@ func TestBuildMPPECurriculumDayPDFLongContentAndMeta(t *testing.T) {
 		t.Fatal("missing Actividad sugerida label")
 	}
 }
+
+func TestBuildMPPECurriculumDaysPDF(t *testing.T) {
+	doc := MPPECurriculumDayDoc{
+		PlanDay: 1,
+		Week:    1,
+		Grade:   "3er grado",
+		Title:   "Dia 1",
+		Sections: []MPPECurriculumDaySection{
+			{ID: "bib", Label: "Biblia", Objective: "Lectura", Learning: "Génesis", Activities: []string{"Lee"}},
+			{ID: "ide", Label: "Identidad", Objective: "Historia", Learning: "Venezuela"},
+			{ID: "len", Label: "Lenguaje", Objective: "Texto", Learning: "Pasos"},
+			{ID: "mat", Label: "Matemáticas", Objective: "Geo", Learning: "Orientación"},
+			{ID: "cie", Label: "Ciencias", Objective: "Salud", Learning: "Alimentos"},
+		},
+	}
+	doc2 := doc
+	doc2.PlanDay = 2
+	doc2.Title = "Dia 2"
+	raw, err := BuildMPPECurriculumDaysPDF([]MPPECurriculumDayDoc{doc, doc2})
+	if err != nil {
+		t.Fatal(err)
+	}
+	body := string(raw)
+	if !strings.Contains(body, "/Count 2") {
+		t.Fatal("expected two pages in PDF")
+	}
+}

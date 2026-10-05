@@ -119,15 +119,30 @@ const areaDefs = [
 
     <div class="eoschool-curriculum__weeks">
       {
-        weeks.map((weekPlan) => (
+        weeks.map((weekPlan) => {
+          const weekPlanDays = weekPlan.blocks
+            .flatMap((block) => (block.bible?.days ?? []).map((bibleDay) => bibleDay.dayInPlan))
+            .sort((a, b) => a - b);
+          return (
           <section
             class="product-dash__card eoschool-curriculum__week"
             id={`week-${weekPlan.week}`}
             data-curriculum-week={`w${weekPlan.week}`}
+            data-week={weekPlan.week}
+            data-week-plan-days={weekPlanDays.join(",")}
             aria-labelledby={`week-title-${weekPlan.week}`}
           >
             <div class="eoschool-curriculum__week-layout">
               <div class="eoschool-curriculum__week-rail">
+                <button
+                  class="icon-btn eoschool-curriculum__week-print"
+                  type="button"
+                  title={`Imprimir PDF de la semana ${weekPlan.week} (5 días)`}
+                  aria-label={`Imprimir PDF de la semana ${weekPlan.week}, cinco días`}
+                  data-curriculum-week-print
+                >
+                  <span class="material-symbols-outlined" aria-hidden="true">print</span>
+                </button>
                 <h2 class="eoschool-curriculum__week-title" id={`week-title-${weekPlan.week}`}>
                   Semana {weekPlan.week}
                 </h2>
@@ -229,7 +244,8 @@ const areaDefs = [
               </div>
             </div>
           </section>
-        ))
+          );
+        })
       }
     </div>
   </section>
@@ -298,12 +314,14 @@ const areaDefs = [
   import { initCurriculumIndexResize } from "../../../lib/eoschool-curriculum-index-resize";
   import { initCurriculumDayModal } from "../../../lib/eoschool-curriculum-day-modal";
   import { initCurriculumProgress } from "../../../lib/eoschool-curriculum-progress";
+  import { initCurriculumWeekPrint } from "../../../lib/eoschool-curriculum-week-print";
 
   function bootCurriculumChrome() {
     const root = document.querySelector("[data-curriculum-progress]");
     initCurriculumIndexResize(document.querySelector("[data-curriculum-index]"));
     void initCurriculumProgress(root);
     initCurriculumDayModal(root);
+    initCurriculumWeekPrint(root);
   }
 
   bootCurriculumChrome();
@@ -463,20 +481,31 @@ const areaDefs = [
   .eoschool-curriculum__week-rail {
     flex-shrink: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: var(--rail-gap);
     padding: var(--space-padding) var(--rail-gap);
     border-inline-end: var(--border-width) solid var(--color-border);
     min-width: 2rem;
   }
 
+  .eoschool-curriculum__week-print {
+    flex-shrink: 0;
+  }
+
   .eoschool-curriculum__week-title {
     margin: 0;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: var(--font-size-sm);
     font-weight: 650;
     line-height: 1;
     writing-mode: vertical-lr;
     text-orientation: mixed;
+    transform: rotate(180deg);
   }
 
   .eoschool-curriculum__week--done .eoschool-curriculum__week-title {

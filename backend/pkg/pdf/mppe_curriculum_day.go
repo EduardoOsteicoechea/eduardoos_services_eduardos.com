@@ -220,17 +220,7 @@ func planMPPECurriculumDayGrid(doc MPPECurriculumDayDoc, pageW, pageH, margin, g
 	return best
 }
 
-// BuildMPPECurriculumDayPDF renders 5 cards on one portrait letter page.
-func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
-	pageW := MmToPoints(EoschoolPageWidthMm)
-	pageH := MmToPoints(EoschoolPageHeightMm)
-	margin := MmToPoints(EoschoolMarginMm)
-	gap := MmToPoints(mppeDayCardGapMm)
-	pad := MmToPoints(mppeDayCardPadMm)
-
-	usableW := pageW - 2*margin
-	colW := (usableW - 2*gap) / 3
-
+func renderMPPECurriculumDayPageContent(doc MPPECurriculumDayDoc, pageW, pageH, margin, gap, colW, pad float64) string {
 	var sb strings.Builder
 	yTop := pageH - margin
 
@@ -363,20 +353,58 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 	for i, pos := range positions {
 		drawCard(pos[0], pos[1], secs[i], plan.rowHeights[pos[1]])
 	}
+	return sb.String()
+}
 
-	content := sb.String()
-	objs := [][]byte{
-		[]byte("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n"),
-		[]byte("2 0 obj\n<< /Type /Pages /Kids [5 0 R] /Count 1 >>\nendobj\n"),
-		[]byte("3 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>\nendobj\n"),
-		[]byte("4 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>\nendobj\n"),
-		[]byte(fmt.Sprintf(
-			"5 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 %.2f %.2f] /Contents 6 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>\nendobj\n",
-			pageW, pageH,
-		)),
-		buildStreamObject(6, content),
+// BuildMPPECurriculumDaysPDF renders one portrait letter page per day (shared fonts).
+func BuildMPPECurriculumDaysPDF(docs []MPPECurriculumDayDoc) ([]byte, error) {
+	if len(docs) == 0 {
+		return nil, fmt.Errorf("no days")
+	}
+	pageW := MmToPoints(EoschoolPageWidthMm)
+	pageH := MmToPoints(EoschoolPageHeightMm)
+	margin := MmToPoints(EoschoolMarginMm)
+	gap := MmToPoints(mppeDayCardGapMm)
+	pad := MmToPoints(mppeDayCardPadMm)
+	usableW := pageW - 2*margin
+	colW := (usableW - 2*gap) / 3
+
+	streams := make([]string, len(docs))
+	for i, doc := range docs {
+		streams[i] = renderMPPECurriculumDayPageContent(doc, pageW, pageH, margin, gap, colW, pad)
+	}
+
+	n := len(streams)
+	kids := make([]string, n)
+	for i := 0; i < n; i++ {
+		pageObj := 5 + 2*i
+		kids[i] = fmt.Sprintf("%d 0 R", pageObj)
+	}
+
+	var objs [][]byte
+	objs = append(objs, []byte("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n"))
+	objs = append(objs, []byte(fmt.Sprintf(
+		"2 0 obj\n<< /Type /Pages /Kids [%s] /Count %d >>\nendobj\n",
+		strings.Join(kids, " "), n,
+	)))
+	objs = append(objs, []byte("3 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>\nendobj\n"))
+	objs = append(objs, []byte("4 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>\nendobj\n"))
+
+	for i, content := range streams {
+		pageObj := 5 + 2*i
+		contentObj := 6 + 2*i
+		objs = append(objs, []byte(fmt.Sprintf(
+			"%d 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 %.2f %.2f] /Contents %d 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>\nendobj\n",
+			pageObj, pageW, pageH, contentObj,
+		)))
+		objs = append(objs, buildStreamObject(contentObj, content))
 	}
 	return assemblePDF(objs), nil
+}
+
+// BuildMPPECurriculumDayPDF renders 5 cards on one portrait letter page.
+func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
+	return BuildMPPECurriculumDaysPDF([]MPPECurriculumDayDoc{doc})
 }
 
 func trimLineEllipsis(s string) string {

@@ -389,6 +389,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/eoschool/curriculum/progress", a.getEoschoolCurriculumProgressHandler)
 	mux.HandleFunc("PATCH /api/eoschool/curriculum/progress/sections", a.patchEoschoolCurriculumSectionHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/day-preview", a.postEoschoolMPPECurriculumDayPreviewHandler)
+	mux.HandleFunc("POST /api/eoschool/curriculum/week-preview", a.postEoschoolMPPECurriculumWeekPreviewHandler)
 
 	a.registerEvoiceRoutes(mux)
 	a.registerEoprojectRoutes(mux)
