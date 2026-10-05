@@ -46,7 +46,7 @@ export async function fetchCurriculumStudents(): Promise<
   const { status, data, requestId } = await apiSend<CurriculumStudentsPayload>(STUDENTS_PATH, {
     method: "GET",
   });
-  if (status === 401 || status === 403) {
+  if (status === 401 || status === 403 || status === 404) {
     return { ok: false, status, requestId };
   }
   if (status < 200 || status >= 300) {

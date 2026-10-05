@@ -19,6 +19,8 @@ type eoschoolCurriculumSectionPatch struct {
 	Completed  bool   `json:"completed"`
 }
 
+// getEoschoolCurriculumProgressHandler returns owner-scoped section completion
+// for the MPPE curriculum UI (cookie session + Homescool entitlement).
 func (a *App) getEoschoolCurriculumProgressHandler(w http.ResponseWriter, r *http.Request) {
 	user, _, ok := a.requireHomescoolMaterialsAccess(w, r)
 	if !ok {
