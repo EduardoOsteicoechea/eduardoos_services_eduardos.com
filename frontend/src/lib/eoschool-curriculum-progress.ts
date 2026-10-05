@@ -51,15 +51,6 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
 
     week.classList.toggle("eoschool-curriculum__week--done", complete);
     week.classList.toggle("product-dash__card--done", complete);
-
-    const status = week.querySelector("[data-curriculum-week-status]");
-    if (status) {
-      if (complete) {
-        status.textContent = "Semana completada";
-      } else {
-        status.textContent = `${doneCount}/${total} días`;
-      }
-    }
   });
 }
 

@@ -126,12 +126,14 @@ const areaDefs = [
             data-curriculum-week={`w${weekPlan.week}`}
             aria-labelledby={`week-title-${weekPlan.week}`}
           >
-            <header class="product-dash__card-head eoschool-curriculum__week-head">
-              <h2 class="product-dash__card-title" id={`week-title-${weekPlan.week}`}>Semana {weekPlan.week}</h2>
-              <p class="eoschool-curriculum__week-status" data-curriculum-week-status aria-live="polite"></p>
-            </header>
+            <div class="eoschool-curriculum__week-layout">
+              <div class="eoschool-curriculum__week-rail">
+                <h2 class="eoschool-curriculum__week-title" id={`week-title-${weekPlan.week}`}>
+                  Semana {weekPlan.week}
+                </h2>
+              </div>
 
-            <div class="eoschool-curriculum__week-days">
+              <div class="eoschool-curriculum__week-days">
               {weekPlan.blocks
                 .flatMap((block) => (block.bible?.days ?? []).map((bibleDay) => ({ block, bibleDay })))
                 .sort((a, b) => a.bibleDay.dayInPlan - b.bibleDay.dayInPlan)
@@ -224,6 +226,7 @@ const areaDefs = [
                   </article>
                 );
               })}
+              </div>
             </div>
           </section>
         ))
@@ -440,6 +443,7 @@ const areaDefs = [
     min-height: 0;
     align-items: stretch;
     cursor: default;
+    padding: 0;
   }
 
   .eoschool-curriculum__week:hover,
@@ -447,20 +451,35 @@ const areaDefs = [
     transform: none;
   }
 
-  .eoschool-curriculum__week-head {
-    flex-direction: column;
-    align-items: flex-start;
+  .eoschool-curriculum__week-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
     width: 100%;
-    margin-block-end: var(--rail-gap);
+    min-width: 0;
+    min-height: 0;
   }
 
-  .eoschool-curriculum__week-status {
+  .eoschool-curriculum__week-rail {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-padding) var(--rail-gap);
+    border-inline-end: var(--border-width) solid var(--color-border);
+    min-width: 2rem;
+  }
+
+  .eoschool-curriculum__week-title {
     margin: 0;
-    font-size: var(--font-size-xs);
-    color: var(--color-muted);
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+    line-height: 1;
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
   }
 
-  .eoschool-curriculum__week--done .eoschool-curriculum__week-status {
+  .eoschool-curriculum__week--done .eoschool-curriculum__week-title {
     color: var(--color-ok);
   }
 
@@ -468,9 +487,10 @@ const areaDefs = [
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--rail-gap);
-    width: 100%;
+    flex: 1;
     min-width: 0;
     align-items: stretch;
+    padding: var(--space-padding);
   }
 
   .eoschool-curriculum__day-card {
