@@ -1,18 +1,20 @@
 /**
- * Generates eoschool class JSON for MPPE plan days 1–5 (5 sections each) from
- * frontend/src/lib/eoschool-mppe-28week-curriculum.json
+ * Generates eoschool class JSON for MPPE plan days from eoschool-mppe-40week-curriculum.json
  *
  * Run: node frontend/scripts/build-curriculum-plan-classes.mjs
+ * Optional: node frontend/scripts/build-curriculum-plan-classes.mjs 1 50  (inclusive range)
  */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const curriculumPath = path.join(__dirname, "..", "src", "lib", "eoschool-mppe-28week-curriculum.json");
+const curriculumPath = path.join(__dirname, "..", "src", "lib", "eoschool-mppe-40week-curriculum.json");
 const publicBase = path.join(__dirname, "..", "public", "eoschool", "requirements", "curriculum");
 
-const PLAN_DAYS = [1, 2, 3, 4, 5];
+const GRADE_LEVEL = 3;
+const CYCLE = 3;
+
 const SUBJECT_FILES = [
   { sectionId: "bib", file: "teb", subject: "teb" },
   { sectionId: "ide", file: "his", subject: "his" },
@@ -20,6 +22,16 @@ const SUBJECT_FILES = [
   { sectionId: "mat", file: "mat", subject: "mat" },
   { sectionId: "cie", file: "cie", subject: "cie" },
 ];
+
+function parsePlanDayRange(argv, totalDays) {
+  const a = Number.parseInt(argv[2] ?? "1", 10);
+  const b = Number.parseInt(argv[3] ?? String(totalDays), 10);
+  const start = Number.isFinite(a) ? Math.max(1, a) : 1;
+  const end = Number.isFinite(b) ? Math.min(totalDays, b) : totalDays;
+  const days = [];
+  for (let d = start; d <= end; d++) days.push(d);
+  return days;
+}
 
 function formatTrack(chapters) {
   if (!chapters?.length) return "";
@@ -49,25 +61,18 @@ function findPlanDay(weeks, dayInPlan) {
   return null;
 }
 
-/** @returns {{ day: number, kind: string, focusPoint: number | null }} */
 function homescoolDayMeta(planDay) {
-  switch (planDay) {
-    case 1:
-      return { day: 1, kind: "intro", focusPoint: null };
-    case 2:
-      return { day: 2, kind: "deepen", focusPoint: 1 };
-    case 3:
-      return { day: 3, kind: "deepen", focusPoint: 2 };
-    case 4:
-      return { day: 2, kind: "deepen", focusPoint: 1 };
-    case 5:
-      return { day: 3, kind: "deepen", focusPoint: 2 };
-    default:
-      return { day: 3, kind: "deepen", focusPoint: 2 };
-  }
+  const dayInWeek = ((planDay - 1) % 5) + 1;
+  if (dayInWeek === 1) return { day: 1, kind: "intro", focusPoint: null };
+  if (dayInWeek === 2) return { day: 2, kind: "deepen", focusPoint: 1 };
+  if (dayInWeek === 3) return { day: 3, kind: "deepen", focusPoint: 2 };
+  if (dayInWeek === 4) return { day: 2, kind: "deepen", focusPoint: 1 };
+  return { day: 3, kind: "deepen", focusPoint: 2 };
 }
 
-function quizBlock(homescoolDay) {
+function quizBlock(homescoolDay, prompts) {
+  const mcq1 = prompts?.mcq1 ?? "Elige la respuesta que mejor resume la clase de hoy.";
+  const mcq2 = prompts?.mcq2 ?? "¿Qué repasaste de la clase anterior?";
   return {
     questionCount: 4,
     questions: [
@@ -75,15 +80,15 @@ function quizBlock(homescoolDay) {
         id: `d${homescoolDay}-q1`,
         originDay: 1,
         type: "mcq",
-        prompt: "Elige la respuesta correcta según la clase.",
-        choices: ["Opción A", "Opción B", "Opción C", "Opción D"],
-        answer: "Opción A",
+        prompt: mcq1,
+        choices: ["Respuesta A", "Respuesta B", "Respuesta C", "Respuesta D"],
+        answer: "Respuesta A",
       },
       {
         id: `d${homescoolDay}-q2`,
         originDay: Math.min(2, homescoolDay),
         type: "mcq",
-        prompt: "¿Qué repasaste en la clase pasada?",
+        prompt: mcq2,
         choices: ["Lo de ayer", "Otra cosa", "Nada", "Solo dibujo"],
         answer: "Lo de ayer",
       },
@@ -91,33 +96,31 @@ function quizBlock(homescoolDay) {
         id: `d${homescoolDay}-q3`,
         originDay: homescoolDay,
         type: "write",
-        prompt: "Dibuja o esquematiza lo principal de hoy.",
+        prompt: prompts?.draw ?? "Dibuja o esquematiza lo principal de hoy.",
         schematic: true,
       },
       {
         id: `d${homescoolDay}-q4`,
         originDay: homescoolDay,
         type: "write",
-        prompt: "Escribe con tus palabras lo que aprendiste hoy.",
+        prompt: prompts?.write ?? "Escribe con tus palabras lo que aprendiste hoy.",
       },
     ],
   };
 }
 
-function baseDoc({ subject, planDay, mppeWeek, title, summary, points, homescoolDay, kind, focusPoint }) {
+function baseDoc({ subject, planDay, mppeWeek, title, summary, points, homescoolDay, kind, focusPoint, memoryPhrase }) {
   const lesson = { kind, points, summary };
-  if (kind === "intro") {
-    lesson.focusPoint = null;
-  } else {
-    lesson.focusPoint = focusPoint;
-  }
+  if (kind === "intro") lesson.focusPoint = null;
+  else lesson.focusPoint = focusPoint;
+  if (memoryPhrase) lesson.memoryPhrase = memoryPhrase;
   return {
     format: "eoschool",
     version: 1,
-    cycle: 3,
+    cycle: CYCLE,
     week: mppeWeek,
     day: homescoolDay,
-    level: 6,
+    level: GRADE_LEVEL,
     subject,
     locale: "es",
     title,
@@ -125,6 +128,35 @@ function baseDoc({ subject, planDay, mppeWeek, title, summary, points, homescool
     lesson,
     quiz: quizBlock(homescoolDay),
   };
+}
+
+function richPoints(areaLabel, refs, planDay) {
+  const primary = refs[0];
+  const heading = primary?.unitTitle || primary?.text || areaLabel;
+  const body = primary?.text || heading;
+  const axis = primary?.axis ? ` (${primary.axis})` : "";
+  return [
+    {
+      id: "p1",
+      heading: "Apertura — activar conocimientos",
+      body: `Hoy en ${areaLabel}${axis}: repasa en voz alta qué aprendiste ayer. Pregunta guía: ¿cómo se conecta con ${heading}?`,
+    },
+    {
+      id: "p2",
+      heading: "Exploración — concepto del día",
+      body: `${body}\n\nLee el enunciado dos veces. Subraya las palabras clave y explica con un ejemplo de la vida cotidiana (3er grado).`,
+    },
+    {
+      id: "p3",
+      heading: "Práctica guiada",
+      body: `Resuelve o redacta en tu cuaderno una actividad corta sobre: ${heading}. Si hay más ítems del plan (${refs.length}), elige uno adicional y complétalo.`,
+    },
+    {
+      id: "p4",
+      heading: "Cierre y metacognición",
+      body: `Completa: «Hoy aprendí que…» y «Me costó…». Plan día ${planDay} · semana ${Math.ceil(planDay / 5)}.`,
+    },
+  ];
 }
 
 function bibleDoc(planDay, ctx) {
@@ -141,9 +173,9 @@ function bibleDoc(planDay, ctx) {
     kind,
     focusPoint,
     title: `Día ${planDay} — Lectura bíblica`,
-    summary: `Plan 28 semanas · semana ${mppeWeek} · día ${planDay}.`,
+    summary: `Plan 40 semanas · semana ${mppeWeek} · día ${planDay}.`,
     points: [
-      { id: "p1", heading: "Pista Gén–Ester", body: `Lee: ${ge}.` },
+      { id: "p1", heading: "Pista Gén–Ester", body: `Lee con atención: ${ge}.` },
       { id: "p2", heading: "Pista Job–Mal", body: `Lee: ${jm}.` },
       { id: "p3", heading: "Pista Nuevo Testamento", body: `Lee: ${nt}.` },
     ],
@@ -155,7 +187,12 @@ function identityDoc(planDay, ctx) {
   const ide = block.identity ?? {};
   const learning = (ide.learnings ?? []).join(" ");
   const contenidos = (ide.contenidos ?? []).join("; ");
+  const focus = ide.weekFocus ?? ide.title ?? "Identidad";
   const { day, kind, focusPoint } = homescoolDayMeta(planDay);
+  const points = richPoints("Identidad", [{ unitTitle: ide.title, text: learning || focus }], planDay);
+  points[1].body = [learning, contenidos ? `Contenido de la semana: ${contenidos}.` : "", points[1].body]
+    .filter(Boolean)
+    .join("\n\n");
   return baseDoc({
     subject: "his",
     planDay,
@@ -164,28 +201,18 @@ function identityDoc(planDay, ctx) {
     kind,
     focusPoint,
     title: `Día ${planDay} — Identidad: ${ide.title ?? "Identidad"}`,
-    summary: learning || ide.title || "Identidad MPPE.",
-    points: [
-      {
-        id: "p1",
-        heading: ide.title ?? "Identidad",
-        body: [learning, contenidos ? `Contenidos: ${contenidos}.` : ""].filter(Boolean).join(" "),
-      },
-    ],
+    summary: learning || ide.title || "Identidad MPPE · 3er grado.",
+    points,
+    memoryPhrase: `Semana ${mppeWeek}: ${focus}`,
   });
 }
 
 function refsDoc(planDay, ctx, subject, areaLabel, refs) {
   const { mppeWeek } = ctx;
   const { day, kind, focusPoint } = homescoolDayMeta(planDay);
-  const points = (refs ?? []).map((r, i) => ({
-    id: `p${i + 1}`,
-    heading: r.unitTitle || r.axis || areaLabel,
-    body: r.text || r.unitTitle || "",
-  }));
-  if (!points.length) {
-    points.push({ id: "p1", heading: areaLabel, body: "Contenido del plan MPPE para este día." });
-  }
+  const list = refs?.length ? refs : [{ unitTitle: areaLabel, text: `Contenido MPPE del día ${planDay}.` }];
+  const points = richPoints(areaLabel, list, planDay);
+  const summary = list.map((r) => r.unitTitle || r.text).filter(Boolean).join(" · ");
   return baseDoc({
     subject,
     planDay,
@@ -194,8 +221,9 @@ function refsDoc(planDay, ctx, subject, areaLabel, refs) {
     kind,
     focusPoint,
     title: `Día ${planDay} — ${areaLabel}`,
-    summary: points.map((p) => p.heading).join(" · "),
+    summary,
     points,
+    memoryPhrase: list[0]?.text?.slice(0, 120) ?? summary.slice(0, 120),
   });
 }
 
@@ -211,7 +239,14 @@ function buildDayClasses(planDay, weeks) {
   };
 }
 
+if (!fs.existsSync(curriculumPath)) {
+  console.error("Missing", curriculumPath, "— run build-40week-mppe-curriculum.mjs first");
+  process.exit(1);
+}
+
 const curriculum = JSON.parse(fs.readFileSync(curriculumPath, "utf8"));
+const totalDays = curriculum.meta?.totalPlanDays ?? 200;
+const PLAN_DAYS = parsePlanDayRange(process.argv, totalDays);
 let total = 0;
 
 for (const planDay of PLAN_DAYS) {
@@ -225,11 +260,19 @@ for (const planDay of PLAN_DAYS) {
   }
 }
 
+const allPlanDays =
+  PLAN_DAYS.length >= totalDays
+    ? Array.from({ length: totalDays }, (_, i) => i + 1)
+    : PLAN_DAYS;
+
 const manifest = {
   format: "eoschool-curriculum-plan-classes",
-  version: 1,
-  planDays: PLAN_DAYS.map((planDay) => ({
+  version: 2,
+  grade: "3er grado",
+  totalPlanDays: totalDays,
+  planDays: allPlanDays.map((planDay) => ({
     planDay,
+    mppeWeek: Math.ceil(planDay / 5),
     basePath: `/eoschool/requirements/curriculum/plan-d${planDay}`,
     sections: SUBJECT_FILES.map(({ sectionId, file }) => ({
       sectionId,
@@ -237,10 +280,6 @@ const manifest = {
     })),
   })),
 };
-fs.writeFileSync(
-  path.join(publicBase, "plan-classes-manifest.json"),
-  `${JSON.stringify(manifest, null, 2)}\n`,
-  "utf8",
-);
+fs.writeFileSync(path.join(publicBase, "plan-classes-manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
 
-console.log("Wrote", total, "class files for plan days", PLAN_DAYS.join(", "));
+console.log("Wrote", total, "class files for plan days", PLAN_DAYS[0], "–", PLAN_DAYS[PLAN_DAYS.length - 1]);

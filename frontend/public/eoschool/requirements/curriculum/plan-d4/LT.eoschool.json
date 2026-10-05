@@ -4,7 +4,7 @@
   "cycle": 3,
   "week": 1,
   "day": 2,
-  "level": 6,
+  "level": 3,
   "subject": "LT",
   "locale": "es",
   "title": "Día 4 — Prácticas del Lenguaje",
@@ -14,17 +14,28 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Leer para conocer sobre la vida y obra de personajes destacados en diferentes áreas. (Biografías).",
-        "body": "Conoce datos y hechos fundamentales de la biografía de varios personajes destacados: Simón Bolívar, Simón Rodríguez; los epónimos de su estado, municipio e institución escolar (si es el caso); nombres y motivo de la fama de personajes destacados de su localidad."
+        "heading": "Apertura — activar conocimientos",
+        "body": "Hoy en Prácticas del Lenguaje (Escritura): repasa en voz alta qué aprendiste ayer. Pregunta guía: ¿cómo se conecta con Escribir ideas relevantes sobre temas leídos.?"
       },
       {
         "id": "p2",
-        "heading": "Escribir convencionalmente palabras que contienen sílabas indirectas (VC) y del grupo silábico CVC.",
-        "body": "Escribe, en forma convencional, palabras con sílabas indirectas (VC): antonio, asterisco, olmo, elsa, intriga, alto, usted…"
+        "heading": "Exploración — concepto del día",
+        "body": "Registra por escrito contenidos fundamentales sobre diversos temas, a partir de la lectura de textos.\n\nLee el enunciado dos veces. Subraya las palabras clave y explica con un ejemplo de la vida cotidiana (3er grado)."
+      },
+      {
+        "id": "p3",
+        "heading": "Práctica guiada",
+        "body": "Resuelve o redacta en tu cuaderno una actividad corta sobre: Escribir ideas relevantes sobre temas leídos.. Si hay más ítems del plan (1), elige uno adicional y complétalo."
+      },
+      {
+        "id": "p4",
+        "heading": "Cierre y metacognición",
+        "body": "Completa: «Hoy aprendí que…» y «Me costó…». Plan día 4 · semana 1."
       }
     ],
-    "summary": "Leer para conocer sobre la vida y obra de personajes destacados en diferentes áreas. (Biografías). · Escribir convencionalmente palabras que contienen sílabas indirectas (VC) y del grupo silábico CVC.",
-    "focusPoint": 1
+    "summary": "Escribir ideas relevantes sobre temas leídos.",
+    "focusPoint": 1,
+    "memoryPhrase": "Registra por escrito contenidos fundamentales sobre diversos temas, a partir de la lectura de textos."
   },
   "quiz": {
     "questionCount": 4,
@@ -33,20 +44,20 @@
         "id": "d2-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta según la clase.",
+        "prompt": "Elige la respuesta que mejor resume la clase de hoy.",
         "choices": [
-          "Opción A",
-          "Opción B",
-          "Opción C",
-          "Opción D"
+          "Respuesta A",
+          "Respuesta B",
+          "Respuesta C",
+          "Respuesta D"
         ],
-        "answer": "Opción A"
+        "answer": "Respuesta A"
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué repasaste en la clase pasada?",
+        "prompt": "¿Qué repasaste de la clase anterior?",
         "choices": [
           "Lo de ayer",
           "Otra cosa",

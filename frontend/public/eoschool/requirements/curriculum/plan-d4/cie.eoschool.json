@@ -4,7 +4,7 @@
   "cycle": 3,
   "week": 1,
   "day": 2,
-  "level": 6,
+  "level": 3,
   "subject": "cie",
   "locale": "es",
   "title": "Día 4 — Ciencias Naturales",
@@ -14,12 +14,28 @@
     "points": [
       {
         "id": "p1",
-        "heading": "Salud integral — La alimentación en Venezuela",
-        "body": "Comprende qué es una alimentación saludable e identifica los diferentes grupos de alimentos."
+        "heading": "Apertura — activar conocimientos",
+        "body": "Hoy en Ciencias Naturales: repasa en voz alta qué aprendiste ayer. Pregunta guía: ¿cómo se conecta con Salud integral — La alimentación en Venezuela?"
+      },
+      {
+        "id": "p2",
+        "heading": "Exploración — concepto del día",
+        "body": "Comprende qué es una alimentación saludable e identifica los diferentes grupos de alimentos.\n\nLee el enunciado dos veces. Subraya las palabras clave y explica con un ejemplo de la vida cotidiana (3er grado)."
+      },
+      {
+        "id": "p3",
+        "heading": "Práctica guiada",
+        "body": "Resuelve o redacta en tu cuaderno una actividad corta sobre: Salud integral — La alimentación en Venezuela. Si hay más ítems del plan (1), elige uno adicional y complétalo."
+      },
+      {
+        "id": "p4",
+        "heading": "Cierre y metacognición",
+        "body": "Completa: «Hoy aprendí que…» y «Me costó…». Plan día 4 · semana 1."
       }
     ],
     "summary": "Salud integral — La alimentación en Venezuela",
-    "focusPoint": 1
+    "focusPoint": 1,
+    "memoryPhrase": "Comprende qué es una alimentación saludable e identifica los diferentes grupos de alimentos."
   },
   "quiz": {
     "questionCount": 4,
@@ -28,20 +44,20 @@
         "id": "d2-q1",
         "originDay": 1,
         "type": "mcq",
-        "prompt": "Elige la respuesta correcta según la clase.",
+        "prompt": "Elige la respuesta que mejor resume la clase de hoy.",
         "choices": [
-          "Opción A",
-          "Opción B",
-          "Opción C",
-          "Opción D"
+          "Respuesta A",
+          "Respuesta B",
+          "Respuesta C",
+          "Respuesta D"
         ],
-        "answer": "Opción A"
+        "answer": "Respuesta A"
       },
       {
         "id": "d2-q2",
         "originDay": 2,
         "type": "mcq",
-        "prompt": "¿Qué repasaste en la clase pasada?",
+        "prompt": "¿Qué repasaste de la clase anterior?",
         "choices": [
           "Lo de ayer",
           "Otra cosa",

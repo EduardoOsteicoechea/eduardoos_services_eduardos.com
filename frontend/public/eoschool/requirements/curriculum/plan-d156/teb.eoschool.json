@@ -1,0 +1,78 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 32,
+  "day": 1,
+  "level": 3,
+  "subject": "teb",
+  "locale": "es",
+  "title": "Día 156 — Lectura bíblica",
+  "mppePlanDay": 156,
+  "lesson": {
+    "kind": "intro",
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Pista Gén–Ester",
+        "body": "Lee con atención: 1 Crónicas 1, 2."
+      },
+      {
+        "id": "p2",
+        "heading": "Pista Job–Mal",
+        "body": "Lee: Ezequiel 17, 18, 19."
+      },
+      {
+        "id": "p3",
+        "heading": "Pista Nuevo Testamento",
+        "body": "Lee: Tito 3."
+      }
+    ],
+    "summary": "Plan 40 semanas · semana 32 · día 156.",
+    "focusPoint": null
+  },
+  "quiz": {
+    "questionCount": 4,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta que mejor resume la clase de hoy.",
+        "choices": [
+          "Respuesta A",
+          "Respuesta B",
+          "Respuesta C",
+          "Respuesta D"
+        ],
+        "answer": "Respuesta A"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué repasaste de la clase anterior?",
+        "choices": [
+          "Lo de ayer",
+          "Otra cosa",
+          "Nada",
+          "Solo dibujo"
+        ],
+        "answer": "Lo de ayer"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Dibuja o esquematiza lo principal de hoy.",
+        "schematic": true
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Escribe con tus palabras lo que aprendiste hoy."
+      }
+    ]
+  }
+}

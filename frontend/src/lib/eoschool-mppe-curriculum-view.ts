@@ -4,7 +4,7 @@ import type {
   CurriculumBlock,
   CurriculumLearningRef,
   CurriculumWeek,
-} from "./eoschool-mppe-28week-curriculum";
+} from "./eoschool-mppe-40week-curriculum";
 
 export type SubjectObjectiveGroup = {
   objective: string;
@@ -153,13 +153,18 @@ function firstObjectiveLabel(groups: SubjectObjectiveGroup[]): string {
   return compact(`${g.objective}${extra}`);
 }
 
+function mergeAllBlockRefs(week: CurriculumWeek, key: "len" | "mat" | "cie"): CurriculumLearningRef[] {
+  return week.blocks.reduce((acc, block) => mergeRefs(acc, block[key] ?? []), [] as CurriculumLearningRef[]);
+}
+
 export function buildWeekIndexRow(week: CurriculumWeek): WeekIndexRow {
-  const [b1, b2] = week.blocks;
   const bib = weekBibleSummary(week);
-  const ide = compact([b1?.identity.title, b2?.identity.title].filter(Boolean).join(" · "));
-  const len = firstObjectiveLabel(groupLearningRefs(mergeRefs(b1?.len ?? [], b2?.len ?? [])));
-  const mat = firstObjectiveLabel(groupLearningRefs(mergeRefs(b1?.mat ?? [], b2?.mat ?? [])));
-  const cie = firstObjectiveLabel(groupLearningRefs(mergeRefs(b1?.cie ?? [], b2?.cie ?? [])));
+  const ide = compact(
+    [...new Set(week.blocks.map((b) => b.identity?.title).filter(Boolean))].join(" · "),
+  );
+  const len = firstObjectiveLabel(groupLearningRefs(mergeAllBlockRefs(week, "len")));
+  const mat = firstObjectiveLabel(groupLearningRefs(mergeAllBlockRefs(week, "mat")));
+  const cie = firstObjectiveLabel(groupLearningRefs(mergeAllBlockRefs(week, "cie")));
   return { week: week.week, bib, ide, len, mat, cie };
 }
 

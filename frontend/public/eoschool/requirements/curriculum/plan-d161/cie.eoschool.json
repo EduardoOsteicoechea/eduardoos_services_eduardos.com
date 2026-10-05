@@ -1,0 +1,84 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 33,
+  "day": 1,
+  "level": 3,
+  "subject": "cie",
+  "locale": "es",
+  "title": "Día 161 — Ciencias Naturales",
+  "mppePlanDay": 161,
+  "lesson": {
+    "kind": "intro",
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Apertura — activar conocimientos",
+        "body": "Hoy en Ciencias Naturales: repasa en voz alta qué aprendiste ayer. Pregunta guía: ¿cómo se conecta con Ciencias Naturales?"
+      },
+      {
+        "id": "p2",
+        "heading": "Exploración — concepto del día",
+        "body": "Contenido MPPE del día 161.\n\nLee el enunciado dos veces. Subraya las palabras clave y explica con un ejemplo de la vida cotidiana (3er grado)."
+      },
+      {
+        "id": "p3",
+        "heading": "Práctica guiada",
+        "body": "Resuelve o redacta en tu cuaderno una actividad corta sobre: Ciencias Naturales. Si hay más ítems del plan (1), elige uno adicional y complétalo."
+      },
+      {
+        "id": "p4",
+        "heading": "Cierre y metacognición",
+        "body": "Completa: «Hoy aprendí que…» y «Me costó…». Plan día 161 · semana 33."
+      }
+    ],
+    "summary": "Ciencias Naturales",
+    "focusPoint": null,
+    "memoryPhrase": "Contenido MPPE del día 161."
+  },
+  "quiz": {
+    "questionCount": 4,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta que mejor resume la clase de hoy.",
+        "choices": [
+          "Respuesta A",
+          "Respuesta B",
+          "Respuesta C",
+          "Respuesta D"
+        ],
+        "answer": "Respuesta A"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué repasaste de la clase anterior?",
+        "choices": [
+          "Lo de ayer",
+          "Otra cosa",
+          "Nada",
+          "Solo dibujo"
+        ],
+        "answer": "Lo de ayer"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Dibuja o esquematiza lo principal de hoy.",
+        "schematic": true
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Escribe con tus palabras lo que aprendiste hoy."
+      }
+    ]
+  }
+}

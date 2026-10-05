@@ -1,0 +1,78 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 37,
+  "day": 3,
+  "level": 3,
+  "subject": "teb",
+  "locale": "es",
+  "title": "Día 185 — Lectura bíblica",
+  "mppePlanDay": 185,
+  "lesson": {
+    "kind": "deepen",
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Pista Gén–Ester",
+        "body": "Lee con atención: 2 Crónicas 35, 36."
+      },
+      {
+        "id": "p2",
+        "heading": "Pista Job–Mal",
+        "body": "Lee: Jonás 2, 3."
+      },
+      {
+        "id": "p3",
+        "heading": "Pista Nuevo Testamento",
+        "body": "Lee: Apocalipsis 2, 3."
+      }
+    ],
+    "summary": "Plan 40 semanas · semana 37 · día 185.",
+    "focusPoint": 2
+  },
+  "quiz": {
+    "questionCount": 4,
+    "questions": [
+      {
+        "id": "d3-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta que mejor resume la clase de hoy.",
+        "choices": [
+          "Respuesta A",
+          "Respuesta B",
+          "Respuesta C",
+          "Respuesta D"
+        ],
+        "answer": "Respuesta A"
+      },
+      {
+        "id": "d3-q2",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué repasaste de la clase anterior?",
+        "choices": [
+          "Lo de ayer",
+          "Otra cosa",
+          "Nada",
+          "Solo dibujo"
+        ],
+        "answer": "Lo de ayer"
+      },
+      {
+        "id": "d3-q3",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Dibuja o esquematiza lo principal de hoy.",
+        "schematic": true
+      },
+      {
+        "id": "d3-q4",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Escribe con tus palabras lo que aprendiste hoy."
+      }
+    ]
+  }
+}

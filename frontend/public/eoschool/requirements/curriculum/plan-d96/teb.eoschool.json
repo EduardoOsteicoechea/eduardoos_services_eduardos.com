@@ -1,0 +1,78 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 20,
+  "day": 1,
+  "level": 3,
+  "subject": "teb",
+  "locale": "es",
+  "title": "Día 96 — Lectura bíblica",
+  "mppePlanDay": 96,
+  "lesson": {
+    "kind": "intro",
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Pista Gén–Ester",
+        "body": "Lee con atención: Josué 21, 22."
+      },
+      {
+        "id": "p2",
+        "heading": "Pista Job–Mal",
+        "body": "Lee: Eclesiastés 12; Cantares 1, 2."
+      },
+      {
+        "id": "p3",
+        "heading": "Pista Nuevo Testamento",
+        "body": "Lee: Romanos 8."
+      }
+    ],
+    "summary": "Plan 40 semanas · semana 20 · día 96.",
+    "focusPoint": null
+  },
+  "quiz": {
+    "questionCount": 4,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta que mejor resume la clase de hoy.",
+        "choices": [
+          "Respuesta A",
+          "Respuesta B",
+          "Respuesta C",
+          "Respuesta D"
+        ],
+        "answer": "Respuesta A"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué repasaste de la clase anterior?",
+        "choices": [
+          "Lo de ayer",
+          "Otra cosa",
+          "Nada",
+          "Solo dibujo"
+        ],
+        "answer": "Lo de ayer"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Dibuja o esquematiza lo principal de hoy.",
+        "schematic": true
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Escribe con tus palabras lo que aprendiste hoy."
+      }
+    ]
+  }
+}

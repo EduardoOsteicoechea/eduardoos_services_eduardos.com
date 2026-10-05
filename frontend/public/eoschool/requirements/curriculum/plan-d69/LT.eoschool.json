@@ -1,0 +1,84 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 14,
+  "day": 2,
+  "level": 3,
+  "subject": "LT",
+  "locale": "es",
+  "title": "Día 69 — Prácticas del Lenguaje",
+  "mppePlanDay": 69,
+  "lesson": {
+    "kind": "deepen",
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Apertura — activar conocimientos",
+        "body": "Hoy en Prácticas del Lenguaje: repasa en voz alta qué aprendiste ayer. Pregunta guía: ¿cómo se conecta con Prácticas del Lenguaje?"
+      },
+      {
+        "id": "p2",
+        "heading": "Exploración — concepto del día",
+        "body": "Contenido MPPE del día 69.\n\nLee el enunciado dos veces. Subraya las palabras clave y explica con un ejemplo de la vida cotidiana (3er grado)."
+      },
+      {
+        "id": "p3",
+        "heading": "Práctica guiada",
+        "body": "Resuelve o redacta en tu cuaderno una actividad corta sobre: Prácticas del Lenguaje. Si hay más ítems del plan (1), elige uno adicional y complétalo."
+      },
+      {
+        "id": "p4",
+        "heading": "Cierre y metacognición",
+        "body": "Completa: «Hoy aprendí que…» y «Me costó…». Plan día 69 · semana 14."
+      }
+    ],
+    "summary": "Prácticas del Lenguaje",
+    "focusPoint": 1,
+    "memoryPhrase": "Contenido MPPE del día 69."
+  },
+  "quiz": {
+    "questionCount": 4,
+    "questions": [
+      {
+        "id": "d2-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta que mejor resume la clase de hoy.",
+        "choices": [
+          "Respuesta A",
+          "Respuesta B",
+          "Respuesta C",
+          "Respuesta D"
+        ],
+        "answer": "Respuesta A"
+      },
+      {
+        "id": "d2-q2",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué repasaste de la clase anterior?",
+        "choices": [
+          "Lo de ayer",
+          "Otra cosa",
+          "Nada",
+          "Solo dibujo"
+        ],
+        "answer": "Lo de ayer"
+      },
+      {
+        "id": "d2-q3",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Dibuja o esquematiza lo principal de hoy.",
+        "schematic": true
+      },
+      {
+        "id": "d2-q4",
+        "originDay": 2,
+        "type": "write",
+        "prompt": "Escribe con tus palabras lo que aprendiste hoy."
+      }
+    ]
+  }
+}

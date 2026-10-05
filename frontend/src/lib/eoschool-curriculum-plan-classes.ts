@@ -1,4 +1,4 @@
-/** Static class JSON for MPPE plan days (days 1–5 pilot). */
+/** Plan-day class JSON manifest (loaded from public static file). */
 
 export type CurriculumPlanSectionId = "bib" | "ide" | "len" | "mat" | "cie";
 
@@ -22,35 +22,52 @@ const SECTION_LABELS: Record<CurriculumPlanSectionId, string> = {
   cie: "Ciencias Naturales",
 };
 
-const SECTION_FILES: { sectionId: CurriculumPlanSectionId; file: string }[] = [
-  { sectionId: "bib", file: "teb" },
-  { sectionId: "ide", file: "his" },
-  { sectionId: "len", file: "LT" },
-  { sectionId: "mat", file: "mat" },
-  { sectionId: "cie", file: "cie" },
-];
+const MANIFEST_URL = "/eoschool/requirements/curriculum/plan-classes-manifest.json";
 
-const PLAN_DAYS_WITH_CLASSES = [1, 2, 3, 4, 5] as const;
+let manifestCache: Map<number, CurriculumPlanDayManifest> | null = null;
+let manifestLoad: Promise<Map<number, CurriculumPlanDayManifest>> | null = null;
 
-function manifestForPlanDay(planDay: number): CurriculumPlanDayManifest {
-  const base = `/eoschool/requirements/curriculum/plan-d${planDay}`;
-  return {
-    planDay,
-    mppeWeek: 1,
-    sections: SECTION_FILES.map(({ sectionId, file }) => ({
-      sectionId,
-      label: SECTION_LABELS[sectionId],
-      jsonUrl: `${base}/${file}.eoschool.json`,
-    })),
-  };
+function mapFromManifest(raw: {
+  planDays?: Array<{
+    planDay: number;
+    mppeWeek?: number;
+    sections: Array<{ sectionId: CurriculumPlanSectionId; jsonUrl: string }>;
+  }>;
+}): Map<number, CurriculumPlanDayManifest> {
+  const map = new Map<number, CurriculumPlanDayManifest>();
+  for (const row of raw.planDays ?? []) {
+    map.set(row.planDay, {
+      planDay: row.planDay,
+      mppeWeek: row.mppeWeek ?? Math.ceil(row.planDay / 5),
+      sections: row.sections.map((s) => ({
+        sectionId: s.sectionId,
+        label: SECTION_LABELS[s.sectionId],
+        jsonUrl: s.jsonUrl,
+      })),
+    });
+  }
+  return map;
 }
 
-/** Plan day → ordered section class JSON (same order as curriculum areas 1–5). */
-export const CURRICULUM_PLAN_DAY_CLASSES: Partial<Record<number, CurriculumPlanDayManifest>> =
-  Object.fromEntries(PLAN_DAYS_WITH_CLASSES.map((d) => [d, manifestForPlanDay(d)]));
+export async function loadCurriculumPlanManifest(): Promise<Map<number, CurriculumPlanDayManifest>> {
+  if (manifestCache) return manifestCache;
+  if (!manifestLoad) {
+    manifestLoad = fetch(MANIFEST_URL, { credentials: "same-origin" })
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`Manifest ${res.status}`);
+        return mapFromManifest((await res.json()) as Parameters<typeof mapFromManifest>[0]);
+      })
+      .then((map) => {
+        manifestCache = map;
+        return map;
+      });
+  }
+  return manifestLoad;
+}
 
-export function planDayManifest(planDay: number): CurriculumPlanDayManifest | null {
-  return CURRICULUM_PLAN_DAY_CLASSES[planDay] ?? null;
+export async function planDayManifest(planDay: number): Promise<CurriculumPlanDayManifest | null> {
+  const map = await loadCurriculumPlanManifest();
+  return map.get(planDay) ?? null;
 }
 
 export const CURRICULUM_SECTION_IDS: CurriculumPlanSectionId[] = ["bib", "ide", "len", "mat", "cie"];
