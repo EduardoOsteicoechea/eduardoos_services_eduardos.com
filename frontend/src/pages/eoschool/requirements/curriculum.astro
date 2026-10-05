@@ -921,6 +921,55 @@ const areaDefs = [
     flex: 1;
   }
 
+  .mppe-day-sheet {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    min-width: 0;
+  }
+
+  .mppe-day-sheet__area {
+    margin: 0;
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .mppe-day-sheet__block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    min-width: 0;
+  }
+
+  .mppe-day-sheet__label {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .mppe-day-sheet__text {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .mppe-day-sheet__list {
+    margin: 0;
+    padding-inline-start: 1rem;
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    list-style: disc;
+    overflow-wrap: anywhere;
+  }
+
   .eoschool-curriculum-modal__pdf-empty {
     margin: 0;
     font-size: var(--font-size-sm);

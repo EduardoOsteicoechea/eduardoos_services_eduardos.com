@@ -370,7 +370,7 @@ function buildDaySheet(planDay, weeks, prevBlock) {
 
   return {
     format: "mppe-curriculum-day",
-    version: 1,
+    version: 2,
     planDay,
     week: mppeWeek,
     grade: "3er grado",
@@ -400,7 +400,8 @@ for (let planDay = 1; planDay <= total; planDay++) {
 
 const manifest = {
   format: "mppe-curriculum-day-manifest",
-  version: 1,
+  version: 2,
+  contentRevision: 2,
   grade: "3er grado",
   totalPlanDays: total,
   planDays: manifestDays,

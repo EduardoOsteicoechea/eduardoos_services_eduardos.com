@@ -22,37 +22,46 @@ export type MppeCurriculumDaySheet = {
 
 const MANIFEST_URL = "/eoschool/requirements/curriculum/day-sheets-manifest.json";
 
-let sheetUrlByDay: Map<number, string> | null = null;
-let manifestLoad: Promise<Map<number, string>> | null = null;
+type ManifestCache = {
+  revision: number;
+  urlByDay: Map<number, string>;
+};
 
-async function loadManifest(): Promise<Map<number, string>> {
-  if (sheetUrlByDay) return sheetUrlByDay;
+let manifestCache: ManifestCache | null = null;
+let manifestLoad: Promise<ManifestCache> | null = null;
+
+async function loadManifest(): Promise<ManifestCache> {
+  if (manifestCache) return manifestCache;
   if (!manifestLoad) {
-    manifestLoad = fetch(MANIFEST_URL, { credentials: "same-origin" })
+    manifestLoad = fetch(MANIFEST_URL, { credentials: "same-origin", cache: "no-store" })
       .then(async (res) => {
         if (!res.ok) throw new Error(`Manifiesto ${res.status}`);
         const raw = (await res.json()) as {
+          contentRevision?: number;
+          version?: number;
           planDays?: Array<{ planDay: number; jsonUrl: string }>;
         };
+        const revision = raw.contentRevision ?? raw.version ?? 1;
         const map = new Map<number, string>();
         for (const row of raw.planDays ?? []) {
           map.set(row.planDay, row.jsonUrl);
         }
-        return map;
+        return { revision, urlByDay: map };
       })
-      .then((map) => {
-        sheetUrlByDay = map;
-        return map;
+      .then((loaded) => {
+        manifestCache = loaded;
+        return loaded;
       });
   }
   return manifestLoad;
 }
 
 export async function fetchMppeDaySheet(planDay: number): Promise<MppeCurriculumDaySheet | null> {
-  const map = await loadManifest();
-  const url = map.get(planDay);
-  if (!url) return null;
-  const res = await fetch(url, { credentials: "same-origin" });
+  const { revision, urlByDay } = await loadManifest();
+  const base = urlByDay.get(planDay);
+  if (!base) return null;
+  const url = `${base}?v=${revision}`;
+  const res = await fetch(url, { credentials: "same-origin", cache: "no-store" });
   if (!res.ok) return null;
   return (await res.json()) as MppeCurriculumDaySheet;
 }

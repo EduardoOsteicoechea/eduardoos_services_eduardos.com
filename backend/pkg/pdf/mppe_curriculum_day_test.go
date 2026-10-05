@@ -31,4 +31,13 @@ func TestBuildMPPECurriculumDayPDF(t *testing.T) {
 	if !strings.Contains(string(raw), "Semana 1") {
 		t.Fatal("missing week meta line")
 	}
+	if !strings.Contains(string(raw), "Objetivo:") {
+		t.Fatal("missing Objetivo label")
+	}
+	if !strings.Contains(string(raw), "Aprendizajes:") {
+		t.Fatal("missing Aprendizajes label")
+	}
+	if !strings.Contains(string(raw), "Actividad sugerida:") {
+		t.Fatal("missing Actividad sugerida label")
+	}
 }

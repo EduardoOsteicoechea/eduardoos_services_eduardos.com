@@ -7,11 +7,12 @@ import (
 
 // MPPE curriculum day sheet: one US Letter page, five subject cards (3+2 grid).
 const (
-	mppeDayHeadingPt = 9.0
-	mppeDayBodyPt    = 8.0
-	mppeDayMetaPt    = 10.0
-	mppeDayCardGapMm = 3.0
-	mppeDayCardPadMm = 2.5
+	mppeDayAreaPt      = 11.0
+	mppeDayBodyPt      = 8.0
+	mppeDayMetaPt      = 10.0
+	mppeDayCardGapMm   = 3.0
+	mppeDayCardPadMm   = 3.0
+	mppeDaySectionGapF = 0.45
 )
 
 // MPPECurriculumDaySection is one of the five daily areas on the sheet.
@@ -33,45 +34,95 @@ type MPPECurriculumDayDoc struct {
 }
 
 type mppeDayLayout struct {
-	headingLH float64
+	areaLH    float64
 	bodyLH    float64
+	sectionGap float64
 	pad       float64
 	innerW    float64
 }
 
-func (l mppeDayLayout) wrappedBlockHeight(text string, maxLines int) float64 {
+func mppeSplitLearnings(learn string) []string {
+	learn = strings.TrimSpace(learn)
+	if learn == "" {
+		return nil
+	}
+	parts := strings.Split(learn, "·")
+	out := make([]string, 0, len(parts))
+	for _, p := range parts {
+		p = strings.TrimSpace(p)
+		if p != "" {
+			out = append(out, p)
+		}
+	}
+	if len(out) == 0 {
+		return []string{learn}
+	}
+	return out
+}
+
+func (l mppeDayLayout) wrappedLines(text string, maxLines int) []string {
 	text = strings.TrimSpace(text)
 	if text == "" {
-		return 0
+		return nil
 	}
 	lines := wrapPlain(toWinAnsi(text), l.innerW, mppeDayBodyPt)
 	if maxLines > 0 && len(lines) > maxLines {
 		lines = lines[:maxLines]
+		if len(lines) > 0 {
+			lines[len(lines)-1] = trimLineEllipsis(lines[len(lines)-1])
+		}
 	}
-	if len(lines) == 0 {
+	return lines
+}
+
+func (l mppeDayLayout) textBlockHeight(lineCount int) float64 {
+	if lineCount <= 0 {
 		return 0
 	}
-	return float64(len(lines))*l.bodyLH + l.bodyLH*0.3
+	return float64(lineCount)*l.bodyLH
 }
 
 func (l mppeDayLayout) measureCard(sec MPPECurriculumDaySection) float64 {
-	h := 2 * l.pad + l.headingLH
-	if obj := strings.TrimSpace(sec.Objective); obj != "" {
-		h += l.wrappedBlockHeight("Objetivo: "+obj, 3)
+	h := 2*l.pad + l.areaLH + l.sectionGap
+
+	obj := strings.TrimSpace(sec.Objective)
+	if obj != "" {
+		h += l.bodyLH + l.textBlockHeight(len(l.wrappedLines(obj, 4)))
+		h += l.sectionGap
 	}
-	if learn := strings.TrimSpace(sec.Learning); learn != "" {
-		h += l.wrappedBlockHeight("Aprendizaje: "+learn, 4)
+
+	learnings := mppeSplitLearnings(sec.Learning)
+	if len(learnings) > 0 {
+		h += l.bodyLH
+		for _, item := range learnings {
+			h += l.textBlockHeight(len(l.wrappedLines("- "+item, 3)))
+		}
+		h += l.sectionGap
 	}
+
+	acts := 0
 	for i, act := range sec.Activities {
 		if i >= 2 {
 			break
 		}
-		act = strings.TrimSpace(act)
-		if act == "" {
-			continue
+		if strings.TrimSpace(act) != "" {
+			acts++
 		}
-		h += l.wrappedBlockHeight("• "+act, 2)
 	}
+	if acts > 0 {
+		h += l.bodyLH
+		for i, act := range sec.Activities {
+			if i >= 2 {
+				break
+			}
+			act = strings.TrimSpace(act)
+			if act == "" {
+				continue
+			}
+			h += l.textBlockHeight(len(l.wrappedLines("- "+act, 3)))
+		}
+	}
+
 	return h
 }
 
@@ -86,13 +137,14 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 	usableW := pageW - 2*margin
 	colW := (usableW - 2*gap) / 3
 
-	headingLH := MmToPoints(3.8)
+	areaLH := MmToPoints(4.6)
 	bodyLH := MmToPoints(3.4)
 	layout := mppeDayLayout{
-		headingLH: headingLH,
-		bodyLH:    bodyLH,
-		pad:       pad,
-		innerW:    colW - 2*pad,
+		areaLH:     areaLH,
+		bodyLH:     bodyLH,
+		sectionGap: bodyLH * mppeDaySectionGapF,
+		pad:        pad,
+		innerW:     colW - 2*pad,
 	}
 
 	var sb strings.Builder
@@ -111,16 +163,16 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 		}
 	}
 
-	writeText := func(x, y, size float64, text string) {
+	writeText := func(font string, x, y, size float64, text string) {
 		text = strings.TrimSpace(toWinAnsi(text))
 		if text == "" {
 			return
 		}
-		sb.WriteString(fmt.Sprintf("BT /F1 %.2f Tf %.2f %.2f Td (%s) Tj ET\n",
-			size, x, y, escape(text)))
+		sb.WriteString(fmt.Sprintf("BT /%s %.2f Tf %.2f %.2f Td (%s) Tj ET\n",
+			font, size, x, y, escape(text)))
 	}
 
-	writeWrapped := func(x, y, maxW, size, lineH float64, text string, maxLines int) float64 {
+	writeWrapped := func(font string, x, y, maxW, size, lineH float64, text string, maxLines int) float64 {
 		lines := wrapPlain(toWinAnsi(text), maxW, size)
 		if maxLines > 0 && len(lines) > maxLines {
 			lines = lines[:maxLines]
@@ -130,16 +182,16 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 		}
 		curY := y
 		for _, line := range lines {
-			writeText(x, curY, size, line)
+			writeText(font, x, curY, size, line)
 			curY -= lineH
 		}
 		return curY
 	}
 
 	metaY := yTop - MmToPoints(5)
-	writeText(margin, metaY, mppeDayMetaPt, title)
+	writeText("F1", margin, metaY, mppeDayMetaPt, title)
 	if meta != "" {
-		writeText(margin, metaY-MmToPoints(5), mppeDayBodyPt, meta)
+		writeText("F1", margin, metaY-MmToPoints(5), mppeDayBodyPt, meta)
 	}
 
 	gridTop := metaY - MmToPoints(10)
@@ -154,7 +206,7 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 	for i := range positions {
 		cardHeights[i] = layout.measureCard(secs[i])
 	}
-	minCardH := headingLH + 2*pad + bodyLH
+	minCardH := areaLH + 2*pad + bodyLH*3
 	rowHeights := []float64{minCardH, minCardH}
 	for i, pos := range positions {
 		row := pos[1]
@@ -177,36 +229,57 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 		y := rowBottomY(row)
 		sb.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f re S\n", x, y, colW, cardH))
 
-		innerW := colW - 2*pad
 		tx := x + pad
-		ty := y + cardH - pad - headingLH
+		ty := y + cardH - pad - areaLH
 
 		label := toWinAnsi(strings.TrimSpace(sec.Label))
 		if label == "" {
 			label = toWinAnsi(sec.ID)
 		}
-		writeText(tx, ty, mppeDayHeadingPt, label)
-		ty -= headingLH
+		writeText("F2", tx, ty, mppeDayAreaPt, label)
+		ty -= areaLH + layout.sectionGap
 
 		obj := strings.TrimSpace(sec.Objective)
 		if obj != "" {
-			ty = writeWrapped(tx, ty, innerW, mppeDayBodyPt, bodyLH, "Objetivo: "+obj, 3)
-			ty -= bodyLH * 0.3
+			writeText("F2", tx, ty, mppeDayBodyPt, "Objetivo:")
+			ty -= bodyLH
+			ty = writeWrapped("F1", tx, ty, layout.innerW, mppeDayBodyPt, bodyLH, obj, 0)
+			ty -= layout.sectionGap
 		}
-		learn := strings.TrimSpace(sec.Learning)
-		if learn != "" {
-			ty = writeWrapped(tx, ty, innerW, mppeDayBodyPt, bodyLH, "Aprendizaje: "+learn, 4)
-			ty -= bodyLH * 0.3
+
+		learnings := mppeSplitLearnings(sec.Learning)
+		if len(learnings) > 0 {
+			writeText("F2", tx, ty, mppeDayBodyPt, "Aprendizajes:")
+			ty -= bodyLH
+			for _, item := range learnings {
+				ty = writeWrapped("F1", tx, ty, layout.innerW, mppeDayBodyPt, bodyLH, "- "+item, 0)
+			}
+			ty -= layout.sectionGap
 		}
+
+		hasAct := false
 		for i, act := range sec.Activities {
 			if i >= 2 {
 				break
 			}
-			act = strings.TrimSpace(act)
-			if act == "" {
-				continue
+			if strings.TrimSpace(act) != "" {
+				hasAct = true
+				break
 			}
-			ty = writeWrapped(tx, ty, innerW, mppeDayBodyPt, bodyLH, "• "+act, 2)
+		}
+		if hasAct {
+			writeText("F2", tx, ty, mppeDayBodyPt, "Actividad sugerida:")
+			ty -= bodyLH
+			for i, act := range sec.Activities {
+				if i >= 2 {
+					break
+				}
+				act = strings.TrimSpace(act)
+				if act == "" {
+					continue
+				}
+				ty = writeWrapped("F1", tx, ty, layout.innerW, mppeDayBodyPt, bodyLH, "- "+act, 0)
+			}
 		}
 	}
 
@@ -217,13 +290,14 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 	content := sb.String()
 	objs := [][]byte{
 		[]byte("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n"),
-		[]byte("2 0 obj\n<< /Type /Pages /Kids [4 0 R] /Count 1 >>\nendobj\n"),
+		[]byte("2 0 obj\n<< /Type /Pages /Kids [5 0 R] /Count 1 >>\nendobj\n"),
 		[]byte("3 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>\nendobj\n"),
+		[]byte("4 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>\nendobj\n"),
 		[]byte(fmt.Sprintf(
-			"4 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 %.2f %.2f] /Contents 5 0 R /Resources << /Font << /F1 3 0 R >> >> >>\nendobj\n",
+			"5 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 %.2f %.2f] /Contents 6 0 R /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> >>\nendobj\n",
 			pageW, pageH,
 		)),
-		buildStreamObject(5, content),
+		buildStreamObject(6, content),
 	}
 	return assemblePDF(objs), nil
 }

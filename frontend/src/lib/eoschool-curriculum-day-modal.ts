@@ -9,7 +9,7 @@ import {
 import { fetchMppeDayPdfPreview } from "./mppe-curriculum-pdf-preview";
 import { mustLog } from "./dev-log";
 
-let sheetCache: Map<number, MppeCurriculumDaySheet> = new Map();
+let sheetCache: Map<string, MppeCurriculumDaySheet> = new Map();
 let activePdfBytes: Uint8Array | null = null;
 let activePdfName = "dia-mppe.pdf";
 let pdfPreviewSeq = 0;
@@ -30,51 +30,85 @@ function parsePlanDay(card: HTMLElement): number {
 }
 
 async function loadDaySheet(planDay: number): Promise<MppeCurriculumDaySheet | null> {
-  const hit = sheetCache.get(planDay);
-  if (hit) return hit;
   const sheet = await fetchMppeDaySheet(planDay);
-  if (sheet) sheetCache.set(planDay, sheet);
+  if (!sheet) return null;
+  const key = `${sheet.version ?? 1}:${planDay}`;
+  const hit = sheetCache.get(key);
+  if (hit) return hit;
+  sheetCache.set(key, sheet);
   return sheet;
+}
+
+function splitLearnings(learning: string): string[] {
+  const parts = learning
+    .split("·")
+    .map((p) => p.trim())
+    .filter(Boolean);
+  return parts.length ? parts : learning.trim() ? [learning.trim()] : [];
 }
 
 function renderSectionContent(target: HTMLElement, section: MppeCurriculumDaySection | undefined): void {
   target.replaceChildren();
   if (!section) return;
-  const block = document.createElement("div");
-  block.className = "eoschool-curriculum__objective-block";
-  const obj = document.createElement("p");
-  obj.className = "eoschool-curriculum__objective";
-  const objLabel = document.createElement("span");
-  objLabel.className = "eoschool-curriculum__objective-label";
-  objLabel.textContent = "Objetivo";
-  obj.append(objLabel, document.createTextNode(section.objective));
-  block.append(obj);
-  const learnWrap = document.createElement("div");
-  learnWrap.className = "eoschool-curriculum__specific-learning";
-  const learnLabel = document.createElement("p");
-  learnLabel.className = "eoschool-curriculum__learning-label";
-  learnLabel.textContent = "Aprendizaje específico";
-  learnWrap.append(learnLabel);
-  const p = document.createElement("p");
-  p.className = "eoschool-curriculum__learnings";
-  p.textContent = section.learning;
-  learnWrap.append(p);
-  if (section.activities?.length) {
-    const actLabel = document.createElement("p");
-    actLabel.className = "eoschool-curriculum__learning-label";
-    actLabel.textContent = "Actividades";
-    learnWrap.append(actLabel);
+
+  const root = document.createElement("div");
+  root.className = "mppe-day-sheet";
+
+  const area = document.createElement("p");
+  area.className = "mppe-day-sheet__area";
+  area.textContent = section.label;
+  root.append(area);
+
+  if (section.objective?.trim()) {
+    const objBlock = document.createElement("div");
+    objBlock.className = "mppe-day-sheet__block";
+    const objLabel = document.createElement("p");
+    objLabel.className = "mppe-day-sheet__label";
+    objLabel.textContent = "Objetivo:";
+    const objBody = document.createElement("p");
+    objBody.className = "mppe-day-sheet__text";
+    objBody.textContent = section.objective;
+    objBlock.append(objLabel, objBody);
+    root.append(objBlock);
+  }
+
+  const learnItems = splitLearnings(section.learning);
+  if (learnItems.length) {
+    const learnBlock = document.createElement("div");
+    learnBlock.className = "mppe-day-sheet__block";
+    const learnLabel = document.createElement("p");
+    learnLabel.className = "mppe-day-sheet__label";
+    learnLabel.textContent = "Aprendizajes:";
     const ul = document.createElement("ul");
-    ul.className = "eoschool-curriculum__learnings";
-    for (const act of section.activities) {
+    ul.className = "mppe-day-sheet__list";
+    for (const item of learnItems) {
+      const li = document.createElement("li");
+      li.textContent = item;
+      ul.append(li);
+    }
+    learnBlock.append(learnLabel, ul);
+    root.append(learnBlock);
+  }
+
+  const acts = (section.activities ?? []).map((a) => a.trim()).filter(Boolean);
+  if (acts.length) {
+    const actBlock = document.createElement("div");
+    actBlock.className = "mppe-day-sheet__block";
+    const actLabel = document.createElement("p");
+    actLabel.className = "mppe-day-sheet__label";
+    actLabel.textContent = "Actividad sugerida:";
+    const ul = document.createElement("ul");
+    ul.className = "mppe-day-sheet__list";
+    for (const act of acts) {
       const li = document.createElement("li");
       li.textContent = act;
       ul.append(li);
     }
-    learnWrap.append(ul);
+    actBlock.append(actLabel, ul);
+    root.append(actBlock);
   }
-  block.append(learnWrap);
-  target.append(block);
+
+  target.append(root);
 }
 
 function setModalSectionContent(
