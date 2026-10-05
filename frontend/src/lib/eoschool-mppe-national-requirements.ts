@@ -1,8 +1,10 @@
 import raw from "./eoschool-mppe-national-requirements.json";
 
-export type MppeGrade3Group = {
+export type MppeGrade3Unit = {
   title: string;
-  items: string[];
+  learnings: string[];
+  contenidos?: string[];
+  axis?: string;
 };
 
 export type MppeNationalArea = {
@@ -10,8 +12,7 @@ export type MppeNationalArea = {
   title: string;
   pdf: string;
   general: string[];
-  grade3?: string[];
-  grade3Groups?: MppeGrade3Group[];
+  grade3Units: MppeGrade3Unit[];
 };
 
 export type MppeNationalRequirements = {
