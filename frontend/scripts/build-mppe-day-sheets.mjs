@@ -49,15 +49,16 @@ function findPlanDay(weeks, dayInPlan) {
 }
 
 function primaryLearning(refs) {
-  if (!refs?.length) return "Contenido del plan MPPE para este día.";
+  if (!refs?.length) return null;
   const r = refs[0];
-  return r.text || r.unitTitle || "—";
+  return (r.text || r.unitTitle || "").trim() || null;
 }
 
 function objectiveFromRefs(refs) {
-  if (!refs?.length) return "—";
+  if (!refs?.length) return null;
   const titles = [...new Set(refs.map((r) => r.unitTitle).filter(Boolean))];
-  return titles.join(" · ") || primaryLearning(refs);
+  const joined = titles.join(" · ").trim();
+  return joined || primaryLearning(refs);
 }
 
 function clip(text, max = 100) {
@@ -80,16 +81,23 @@ function activityVariantIndex(week, dayInWeek, poolSize) {
 
 function activityCtx(planDay, week, refs, prevRefs, extra = {}) {
   const dayInWeek = ((planDay - 1) % 5) + 1;
-  const learning = extra.learning ?? primaryLearning(refs);
-  const objective = extra.objective ?? objectiveFromRefs(refs);
-  const continuing = extra.continuing ?? sameRefs(refs, prevRefs);
+  const isWeekStart = dayInWeek === 1;
+  const sameAsPrev = extra.continuing ?? sameRefs(refs, prevRefs);
+  const continuing = planDay > 1 && Boolean(sameAsPrev);
+  /** Same aprendizaje as ayer, pero lunes = arranque de semana (no “repaso del viernes” en plantilla 0). */
+  const effectiveContinuing = continuing && !isWeekStart;
+  const learning = extra.learning ?? primaryLearning(refs) ?? "";
+  const objective = extra.objective ?? objectiveFromRefs(refs) ?? "";
   return {
     planDay,
     week,
     dayInWeek,
+    isWeekStart,
+    isPlanStart: planDay === 1,
     learning,
     objective,
     continuing,
+    effectiveContinuing,
     clip,
     ...extra,
   };
@@ -108,7 +116,7 @@ const BIB_WEEKLY = [
 
 const IDE_WEEKLY = [
   (c) => [
-    c.continuing
+    c.effectiveContinuing
       ? `Semana ${c.week}: repasa «${c.clip(c.ideTitle, 65)}» con un ejemplo local.`
       : `Presenta el eje: ${c.clip(c.ideTitle, 65)}.`,
     "Mapa mental: persona, comunidad y país.",
@@ -145,7 +153,7 @@ const IDE_WEEKLY = [
 
 const LEN_WEEKLY = [
   (c) => [
-    c.continuing
+    c.effectiveContinuing
       ? `Semana ${c.week} — repaso oral: ${c.clip(c.learning, 85)}.`
       : `Texto nuevo (papel o digital) sobre: ${c.clip(c.learning, 85)}.`,
     "Subraya 5 palabras clave y ordénalas por importancia.",
@@ -182,7 +190,7 @@ const LEN_WEEKLY = [
 
 const MAT_WEEKLY = [
   (c) => [
-    c.continuing
+    c.effectiveContinuing
       ? `Semana ${c.week}: 4 ejercicios de ${c.clip(c.learning, 80)} en el cuaderno.`
       : `Concreto: modela ${c.clip(c.learning, 80)} con fichas o dibujos.`,
     `Unidad «${c.clip(c.objective, 55)}»: explica un ejemplo del entorno.`,
@@ -219,7 +227,7 @@ const MAT_WEEKLY = [
 
 const CIE_WEEKLY = [
   (c) => [
-    c.continuing
+    c.effectiveContinuing
       ? `Semana ${c.week}: observa de nuevo ${c.clip(c.learning, 80)}.`
       : `Salida al patio/balcón: observa ${c.clip(c.learning, 80)}.`,
     `Registro: dibujo + 2 datos de «${c.clip(c.objective, 50)}».`,
@@ -241,7 +249,9 @@ const CIE_WEEKLY = [
     "Añade una causa más que investigar.",
   ],
   (c) => [
-    `Bitácora: ¿qué cambió entre ayer y hoy en tu observación?`,
+    c.isWeekStart
+      ? "Bitácora: primera observación de la semana sobre el tema."
+      : "Bitácora: ¿qué cambió desde la última clase en tu observación?",
     "Escribe una hipótesis sencilla.",
   ],
   (c) => [
@@ -268,8 +278,11 @@ function activitiesForSection(sectionId, planDay, week, refs, prevRefs) {
   }
 
   if (sectionId === "ide") {
-    const ideTitle = refs?.title ?? objectiveFromRefs(refs);
+    const ideTitle = refs?.title ?? objectiveFromRefs(refs) ?? "Identidad";
+    const dayInWeek = ((planDay - 1) % 5) + 1;
     const ideContinuing =
+      planDay > 1 &&
+      dayInWeek > 1 &&
       prevRefs &&
       prevRefs.title === refs?.title &&
       (refs?.learnings?.[0] ?? "") === (prevRefs?.learnings?.[0] ?? "");
@@ -301,6 +314,11 @@ function activitiesForSection(sectionId, planDay, week, refs, prevRefs) {
   ];
 }
 
+function requireRefsField(sectionId, planDay, value) {
+  if (value) return value;
+  throw new Error(`plan day ${planDay}: missing MPPE ${sectionId} objective/learning (regenerate 40-week plan)`);
+}
+
 function buildDaySheet(planDay, weeks, prevBlock) {
   const ctx = findPlanDay(weeks, planDay);
   if (!ctx) throw new Error(`missing plan day ${planDay}`);
@@ -330,22 +348,22 @@ function buildDaySheet(planDay, weeks, prevBlock) {
     {
       id: "len",
       label: "Prácticas del Lenguaje",
-      objective: objectiveFromRefs(block.len),
-      learning: primaryLearning(block.len),
+      objective: requireRefsField("len", planDay, objectiveFromRefs(block.len)),
+      learning: requireRefsField("len", planDay, primaryLearning(block.len)),
       activities: activitiesForSection("len", planDay, mppeWeek, block.len, prevBlock?.len),
     },
     {
       id: "mat",
       label: "Matemáticas",
-      objective: objectiveFromRefs(block.mat),
-      learning: primaryLearning(block.mat),
+      objective: requireRefsField("mat", planDay, objectiveFromRefs(block.mat)),
+      learning: requireRefsField("mat", planDay, primaryLearning(block.mat)),
       activities: activitiesForSection("mat", planDay, mppeWeek, block.mat, prevBlock?.mat),
     },
     {
       id: "cie",
       label: "Ciencias Naturales",
-      objective: objectiveFromRefs(block.cie),
-      learning: primaryLearning(block.cie),
+      objective: requireRefsField("cie", planDay, objectiveFromRefs(block.cie)),
+      learning: requireRefsField("cie", planDay, primaryLearning(block.cie)),
       activities: activitiesForSection("cie", planDay, mppeWeek, block.cie, prevBlock?.cie),
     },
   ];
