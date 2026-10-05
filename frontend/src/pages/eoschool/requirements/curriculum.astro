@@ -780,10 +780,6 @@ const areaDefs = [
     .eoschool-curriculum__day-body {
       max-height: 32rem;
     }
-
-    .eoschool-curriculum-modal__body {
-      grid-template-columns: 1fr;
-    }
   }
 
   .eoschool-curriculum-modal {
@@ -1019,7 +1015,37 @@ const areaDefs = [
   }
 
   .eoschool-curriculum-modal__pdf .homescool-pdf-stage__pages {
-    width: fit-content;
+    width: min(100%, fit-content);
     margin-inline: auto;
+  }
+
+  .eoschool-curriculum-modal__pdf .homescool-pdf-page {
+    max-width: 100%;
+  }
+
+  @media (max-width: 63.999rem) {
+    .eoschool-curriculum-modal {
+      padding: var(--rail-gap);
+    }
+
+    .eoschool-curriculum-modal__dialog {
+      width: min(100%, calc(100% - 2rem));
+      max-height: calc(100% - 2rem);
+    }
+
+    .eoschool-curriculum-modal__body {
+      grid-template-columns: 1fr;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .eoschool-curriculum-modal__panel--pdf {
+      min-height: 0;
+    }
+
+    .eoschool-curriculum-modal__pdf {
+      min-height: 16rem;
+      flex: 1 1 auto;
+    }
   }
 </style>

@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// MPPE curriculum day sheet: one US Letter page, five subject cards (3+2 grid).
+// MPPE curriculum day sheet: one US Letter portrait page (EoschoolPage*), 1 cm margins, five cards (3+2).
 const (
 	mppeDayAreaPt      = 11.0
 	mppeDayBodyPt      = 8.0

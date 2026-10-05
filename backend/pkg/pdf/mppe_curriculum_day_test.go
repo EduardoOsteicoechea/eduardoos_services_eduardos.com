@@ -1,6 +1,7 @@
 package pdf
 
 import (
+	"fmt"
 	"strings"
 	"testing"
 )
@@ -39,5 +40,12 @@ func TestBuildMPPECurriculumDayPDF(t *testing.T) {
 	}
 	if !strings.Contains(string(raw), "Actividad sugerida:") {
 		t.Fatal("missing Actividad sugerida label")
+	}
+	wantBox := fmt.Sprintf("%.2f %.2f", MmToPoints(EoschoolPageWidthMm), MmToPoints(EoschoolPageHeightMm))
+	if !strings.Contains(string(raw), wantBox) {
+		t.Fatalf("expected US Letter MediaBox %s", wantBox)
+	}
+	if EoschoolMarginMm != 10.0 {
+		t.Fatalf("expected 1 cm margin constant, got %v", EoschoolMarginMm)
 	}
 }

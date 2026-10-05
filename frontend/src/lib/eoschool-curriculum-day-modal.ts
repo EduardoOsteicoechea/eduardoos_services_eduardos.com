@@ -183,6 +183,8 @@ async function showDayPdf(modal: HTMLElement, sheet: MppeCurriculumDaySheet | nu
   try {
     await renderHomescoolPdfPreview(host, preview.pdfBytes, {
       fitWidth: true,
+      pageWidthMm: preview.pageWidthMm,
+      pageHeightMm: preview.pageHeightMm,
       isStale,
     });
   } catch (err: unknown) {

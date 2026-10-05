@@ -41,5 +41,11 @@ export async function fetchMppeDayPdfPreview(sheet: MppeCurriculumDaySheet): Pro
   if (!data.pdf_base64) {
     return { ok: false, error: "Respuesta sin PDF.", requestId };
   }
-  return { ok: true, pdfBytes: base64ToBytes(data.pdf_base64), requestId };
+  return {
+    ok: true,
+    pdfBytes: base64ToBytes(data.pdf_base64),
+    pageWidthMm: data.page_width_mm,
+    pageHeightMm: data.page_height_mm,
+    requestId,
+  };
 }

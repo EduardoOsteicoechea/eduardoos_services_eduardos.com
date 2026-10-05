@@ -146,12 +146,12 @@ export async function renderHomescoolPdfPreview(
       cssWidthPx = availW;
       cssHeightPx = availW / aspect;
     }
-  }
-  // Keep a readable floor so a collapsed stage never paints a stamp-sized sheet.
-  const minW = rootFontSizePx() * 32;
-  if (cssWidthPx < minW) {
-    cssWidthPx = minW;
-    cssHeightPx = minW / aspect;
+    // Readable floor when height-fitting (skip for fitWidth — narrow columns stay within host).
+    const minW = rootFontSizePx() * 32;
+    if (cssWidthPx < minW) {
+      cssWidthPx = minW;
+      cssHeightPx = minW / aspect;
+    }
   }
 
   const dpr = Math.min(3, Math.max(2, window.devicePixelRatio || 1));
