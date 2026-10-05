@@ -326,8 +326,13 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 
 func trimLineEllipsis(s string) string {
 	s = strings.TrimSpace(s)
-	if len(s) <= 3 {
-		return s + "..."
+	const max = 96
+	if len(s) <= max {
+		return s
 	}
-	return s[:len(s)-3] + "..."
+	cut := s[:max]
+	if i := strings.LastIndex(cut, " "); i > max/2 {
+		cut = cut[:i]
+	}
+	return strings.TrimSpace(cut) + "..."
 }

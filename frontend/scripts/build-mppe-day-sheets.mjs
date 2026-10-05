@@ -62,9 +62,52 @@ function objectiveFromRefs(refs) {
 }
 
 function clip(text, max = 100) {
+  return clipSmart(text, max);
+}
+
+/** Truncate without splitting words or leaving dangling «(», ««», etc. */
+function clipSmart(text, max = 100) {
   const t = String(text ?? "").replace(/\s+/g, " ").trim();
   if (t.length <= max) return t;
-  return `${t.slice(0, max - 1)}…`;
+  let cut = t.slice(0, max - 1).trimEnd();
+  const lastSpace = cut.lastIndexOf(" ");
+  if (lastSpace > Math.floor(max * 0.55)) cut = cut.slice(0, lastSpace);
+  for (const [open, close] of [["(", ")"], ["«", "»"]]) {
+    const o = cut.lastIndexOf(open);
+    const c = cut.lastIndexOf(close);
+    if (o > c) cut = cut.slice(0, o).trimEnd();
+  }
+  if (cut.endsWith("…")) return cut;
+  return `${cut}…`;
+}
+
+/** Títulos de objetivo MPPE (a menudo largos con paréntesis). */
+function clipObjective(text, max = 100) {
+  let t = String(text ?? "").replace(/\s+/g, " ").trim();
+  const paren = t.indexOf("(");
+  if (paren > 8 && paren < max) t = t.slice(0, paren).trim();
+  const dash = t.indexOf(" — ");
+  if (dash > 8 && dash < max) t = t.slice(0, dash).trim();
+  return clipSmart(t, max);
+}
+
+const ACTIVITY_MAX_CHARS = 118;
+
+function finalizeActivity(line) {
+  let t = clipSmart(String(line ?? ""), ACTIVITY_MAX_CHARS);
+  if (!t) return t;
+  let open = (t.match(/\(/g) ?? []).length;
+  let close = (t.match(/\)/g) ?? []).length;
+  while (open > close) {
+    const o = t.lastIndexOf("(");
+    if (o < 0) break;
+    t = t.slice(0, o).trimEnd();
+    open = (t.match(/\(/g) ?? []).length;
+    close = (t.match(/\)/g) ?? []).length;
+  }
+  t = t.replace(/\s+([.!?])/g, "$1");
+  if (!/[.!?…]$/.test(t)) t += ".";
+  return t;
 }
 
 /** Official MPPE «aprendizaje» → short phrase for student activities (imperative-friendly). */
@@ -73,14 +116,22 @@ function learningActivityPhrase(learning) {
   if (!t) return "";
 
   const exact = {
-    "Se orienta espacialmente": "orientarte en el espacio (puntos de referencia y direcciones)",
+    "Se orienta espacialmente": "orientarte en el espacio con puntos de referencia",
     "Ejecuta secuencias de acciones interpretando textos instruccionales":
       "seguir paso a paso las instrucciones de un texto",
   };
   if (exact[t]) return exact[t];
 
   if (/alimentación saludable/i.test(t) && /grupos de alimentos/i.test(t)) {
-    return "los grupos de alimentos y qué hace saludable una comida";
+    return "grupos de alimentos y comidas saludables";
+  }
+
+  if (/alimentación saludable/i.test(t) && /estado óptimo de salud/i.test(t)) {
+    return "una alimentación saludable y hábitos que cuidan tu salud";
+  }
+
+  if (/biografía de varios personajes/i.test(t)) {
+    return "datos clave de la biografía de un personaje destacado";
   }
 
   let m = t.match(/^Comprende\s+(.+)$/i);
@@ -133,8 +184,10 @@ function learningActivityPhrase(learning) {
       break;
     }
   }
-  if (/^[a-záéíóúñ]/.test(t)) return t;
-  return t.charAt(0).toLowerCase() + t.slice(1);
+  if (/^[a-záéíóúñ]/.test(t)) t = t;
+  else t = t.charAt(0).toLowerCase() + t.slice(1);
+  if (t.length > 72) t = clipSmart(t, 72);
+  return t;
 }
 
 function sameRefs(a, b) {
@@ -173,7 +226,7 @@ function activityCtx(planDay, week, refs, prevRefs, extra = {}) {
     clip,
     /** Aprendizaje redactado para actividades (no el enunciado oficial del MPPE). */
     learn: (max) => clip(learningActivity || learning, max),
-    obj: (max) => clip(objective, max),
+    obj: (max) => clipObjective(objective, max),
     ...extra,
   };
 }
@@ -258,7 +311,7 @@ const LEN_WEEKLY = [
     "Incluye saludo, cuerpo y despedida.",
   ],
   (c) => [
-    `Redacta una secuencia de 3 instrucciones sobre ${c.obj(50)}.`,
+    `Redacta 3 instrucciones claras sobre el tema del día («${c.obj(42)}»).`,
     "Intercambia con un adulto: ¿se entiende?",
   ],
 ];
@@ -266,7 +319,7 @@ const LEN_WEEKLY = [
 const MAT_WEEKLY = [
   (c) => [
     c.effectiveContinuing
-      ? `Semana ${c.week}: 4 ejercicios en el cuaderno de «${c.obj(40)}» (${c.learn(50)}).`
+      ? `Semana ${c.week}: 4 ejercicios en el cuaderno de «${c.obj(40)}».`
       : `Con fichas o dibujos, practica ${c.learn(75)}.`,
     `Unidad «${c.obj(55)}»: explica un ejemplo de tu casa o barrio.`,
   ],
@@ -303,7 +356,7 @@ const MAT_WEEKLY = [
 const CIE_WEEKLY = [
   (c) => [
     c.effectiveContinuing
-      ? `Semana ${c.week}: vuelve a observar algo de «${c.obj(45)}» (${c.learn(55)}).`
+      ? `Semana ${c.week}: vuelve a observar algo de «${c.obj(45)}».`
       : `En patio o balcón, observa algo relacionado con «${c.obj(45)}».`,
     `Registro: dibujo + 2 datos; escribe qué observaste sobre ${c.learn(55)}.`,
   ],
@@ -335,7 +388,7 @@ const CIE_WEEKLY = [
   ],
   (c) => [
     `Escribe 3 preguntas «por qué» o «cómo» sobre «${c.obj(45)}».`,
-    `Responde una con libro o adulto (${c.learn(50)}).`,
+    "Responde una pregunta con un libro o un adulto; anota dos frases.",
   ],
 ];
 
@@ -411,35 +464,37 @@ function buildDaySheet(planDay, weeks, prevBlock) {
       label: "Biblia",
       objective: "Lectura bíblica diaria (tres pistas)",
       learning: bibLearn,
-      activities: activitiesForSection("bib", planDay, mppeWeek, null, null),
+      activities: activitiesForSection("bib", planDay, mppeWeek, null, null).map(finalizeActivity),
     },
     {
       id: "ide",
       label: "Identidad",
       objective: ide.title ?? "Identidad",
       learning: (ide.learnings ?? []).join(" ") || (ide.contenidos ?? []).join("; ") || "—",
-      activities: activitiesForSection("ide", planDay, mppeWeek, block.identity, prevBlock?.identity),
+      activities: activitiesForSection("ide", planDay, mppeWeek, block.identity, prevBlock?.identity).map(
+        finalizeActivity,
+      ),
     },
     {
       id: "len",
       label: "Prácticas del Lenguaje",
       objective: requireRefsField("len", planDay, objectiveFromRefs(block.len)),
       learning: requireRefsField("len", planDay, primaryLearning(block.len)),
-      activities: activitiesForSection("len", planDay, mppeWeek, block.len, prevBlock?.len),
+      activities: activitiesForSection("len", planDay, mppeWeek, block.len, prevBlock?.len).map(finalizeActivity),
     },
     {
       id: "mat",
       label: "Matemáticas",
       objective: requireRefsField("mat", planDay, objectiveFromRefs(block.mat)),
       learning: requireRefsField("mat", planDay, primaryLearning(block.mat)),
-      activities: activitiesForSection("mat", planDay, mppeWeek, block.mat, prevBlock?.mat),
+      activities: activitiesForSection("mat", planDay, mppeWeek, block.mat, prevBlock?.mat).map(finalizeActivity),
     },
     {
       id: "cie",
       label: "Ciencias Naturales",
       objective: requireRefsField("cie", planDay, objectiveFromRefs(block.cie)),
       learning: requireRefsField("cie", planDay, primaryLearning(block.cie)),
-      activities: activitiesForSection("cie", planDay, mppeWeek, block.cie, prevBlock?.cie),
+      activities: activitiesForSection("cie", planDay, mppeWeek, block.cie, prevBlock?.cie).map(finalizeActivity),
     },
   ];
 
@@ -476,7 +531,7 @@ for (let planDay = 1; planDay <= total; planDay++) {
 const manifest = {
   format: "mppe-curriculum-day-manifest",
   version: 2,
-  contentRevision: 4,
+  contentRevision: 5,
   grade: "3er grado",
   totalPlanDays: total,
   planDays: manifestDays,

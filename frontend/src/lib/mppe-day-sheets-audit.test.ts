@@ -31,6 +31,21 @@ const AWKWARD_ACTIVITY_PATTERNS = [
   /\bsobre: Registra por escrito\b/i,
 ];
 
+function activityIntegrityDefects(act: string): string[] {
+  const defects: string[] = [];
+  if (act.length > 120) defects.push("too long");
+  if (/\w…\w/u.test(act)) defects.push("mid-word ellipsis");
+  if (/…{2,}/.test(act)) defects.push("double ellipsis");
+  const open = (act.match(/\(/g) ?? []).length;
+  const close = (act.match(/\)/g) ?? []).length;
+  if (open > close) defects.push("unclosed parenthesis");
+  if (/\(los\b/i.test(act) && close <= open && !act.includes("los niños")) {
+    if (!/\([^)]+\)/.test(act)) defects.push("dangling (los");
+  }
+  if (/«[^»]*…/.test(act) && !/«[^»]+»/.test(act)) defects.push("broken guillemet");
+  return defects;
+}
+
 describe("MPPE day sheets (200 días)", () => {
   it("has no placeholder objectives, learnings, or stub activities", () => {
     const failures: string[] = [];
@@ -59,6 +74,9 @@ describe("MPPE day sheets (200 días)", () => {
           failures.push(`d${planDay} ${section.id}: empty learning`);
         }
         for (const act of section.activities ?? []) {
+          for (const defect of activityIntegrityDefects(act)) {
+            failures.push(`d${planDay} ${section.id}: ${defect}: ${act.slice(0, 80)}`);
+          }
           for (const re of STUB_PATTERNS) {
             if (re.test(act)) failures.push(`d${planDay} ${section.id}: stub activity`);
           }
