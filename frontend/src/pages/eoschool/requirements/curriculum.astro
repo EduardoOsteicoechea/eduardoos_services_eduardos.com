@@ -490,8 +490,17 @@ const areaDefs = [
     min-width: 2rem;
   }
 
-  .eoschool-curriculum__week-print {
+  .eoschool-curriculum__week-print.icon-btn {
     flex-shrink: 0;
+    width: calc(var(--button-size) * 0.87);
+    height: calc(var(--button-size) * 0.87);
+    color: var(--color-button-fg);
+    background: var(--color-button-bg);
+  }
+
+  .eoschool-curriculum__week-print.icon-btn .material-symbols-outlined {
+    font-size: calc(var(--icon-size) * 0.87);
+    color: currentColor;
   }
 
   .eoschool-curriculum__week-title {
