@@ -1,7 +1,7 @@
 ---
 import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../../layouts/Layout.astro";
-import { MPPE_28WEEK_CURRICULUM } from "../../../lib/eoschool-mppe-28week-curriculum";
+import { MPPE_40WEEK_CURRICULUM } from "../../../lib/eoschool-mppe-40week-curriculum";
 import {
   bibleGroupsForDay,
   buildWeekIndexRow,
@@ -9,7 +9,7 @@ import {
   identityGroups,
 } from "../../../lib/eoschool-mppe-curriculum-view";
 
-const { meta, weeks } = MPPE_28WEEK_CURRICULUM;
+const { meta, weeks } = MPPE_40WEEK_CURRICULUM;
 const indexRows = weeks.map(buildWeekIndexRow);
 
 const bibleMeta = meta.bible;
@@ -23,8 +23,8 @@ const areaDefs = [
 ---
 
 <Layout
-  title="Currículo MPPE 28 semanas"
-  description="Plan de 28 semanas: lectura bíblica diaria (Gén–Ester, Job–Mal, NT), 14 objetivos de Identidad y saberes MPPE en 56 bloques."
+  title="Currículo MPPE 40 semanas"
+  description="Planificación 3er grado: 40 semanas, 200 días escolares, lectura bíblica diaria y saberes MPPE con clases eoschool."
   page="eoschool-requirements-curriculum"
   robots="noindex,nofollow"
   showPageTitle={false}
@@ -40,13 +40,13 @@ const areaDefs = [
     </a>
   </Fragment>
 
-  <h1 class="page-title-sr">Currículo MPPE 28 semanas</h1>
+  <h1 class="page-title-sr">Currículo MPPE 40 semanas</h1>
 
   <section class="product-dash eoschool-curriculum page-span-all" data-curriculum-progress>
     <p class="lede">
-      {meta.weeks} semanas · bloque 1 = 2 días, bloque 2 = 3 días ({bibleMeta.readingDays} días de lectura bíblica). Cada día: tres
-      pistas (Gén–Ester, Job–Mal, NT), con 1–2 capítulos por pista cuando basta. Cada bloque además: Biblia, Identidad, Lenguaje,
-      Matemáticas y Ciencias.
+      {meta.grade ?? "3er grado"} · {meta.weeks} semanas × {meta.daysPerWeek ?? 5} días = {meta.totalPlanDays ?? bibleMeta.readingDays}{" "}
+      días escolares. Cada día: lectura bíblica (tres pistas) más Identidad, Lenguaje, Matemáticas y Ciencias. Abre un día para ver
+      objetivo, aprendizaje y clase PDF.
     </p>
     <p class="eoschool-curriculum__student" data-curriculum-student-banner hidden></p>
 
@@ -57,11 +57,7 @@ const areaDefs = [
       Cobertura: Gén–Ester {bibleMeta.tracks.genEster.chaptersReadInPlan}/{bibleMeta.tracks.genEster.totalChapters}, Job–Mal{" "}
       {bibleMeta.tracks.jobMal.chaptersReadInPlan}/{bibleMeta.tracks.jobMal.totalChapters}, NT {bibleMeta.tracks.nt.chaptersReadInPlan}/
       {bibleMeta.tracks.nt.totalChapters}
-      {bibleMeta.tracks.genEster.completesCanonIn28Weeks &&
-      bibleMeta.tracks.jobMal.completesCanonIn28Weeks &&
-      bibleMeta.tracks.nt.completesCanonIn28Weeks
-        ? " (Biblia completa en 28 semanas)."
-        : "."}
+      {meta.totalPlanDays === 200 ? " (Plan 40 semanas · 200 días escolares · 3er grado)." : "."}
     </p>
 
     <nav class="eoschool-curriculum__index" data-curriculum-index aria-label="Índice por semana">

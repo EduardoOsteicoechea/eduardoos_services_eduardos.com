@@ -70,7 +70,7 @@ function formatStudentBanner(student: CurriculumStudent): string {
 function setStudentBanner(
   root: HTMLElement,
   student: CurriculumStudent | null,
-  mode: "remote" | "guest" | "hidden",
+  mode: "remote" | "guest" | "offline" | "hidden",
 ): void {
   const el = root.querySelector<HTMLElement>("[data-curriculum-student-banner]");
   if (!el) return;
@@ -78,6 +78,13 @@ function setStudentBanner(
     el.hidden = true;
     el.textContent = "";
     el.removeAttribute("data-curriculum-persist");
+    return;
+  }
+  if (mode === "offline") {
+    el.textContent =
+      "Progreso en el navegador: el API de currículo aún no está disponible en este entorno. Los checks no se guardan en la nube.";
+    el.hidden = false;
+    el.dataset.curriculumPersist = "local";
     return;
   }
   if (mode === "guest") {
@@ -118,6 +125,11 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
           requestId: undefined,
         });
       }
+    } else if (loaded.status === 404) {
+      setStudentBanner(root, null, "offline");
+      if (mustLog) {
+        console.log("[curriculum.progress] api_not_deployed", { requestId: loaded.requestId });
+      }
     } else {
       // 401/403: guest or no Homescool access — not a logout signal.
       setStudentBanner(root, null, "guest");
@@ -129,10 +141,10 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
       }
     }
   } catch (err) {
-    setStudentBanner(root, null, "guest");
-    showErrorModal({
-      message: err instanceof Error ? err.message : "No se pudo cargar el progreso del currículo.",
-    });
+    setStudentBanner(root, null, "offline");
+    if (mustLog) {
+      console.log("[curriculum.progress] load_error", err);
+    }
   }
 
   applyProgress(root, done);

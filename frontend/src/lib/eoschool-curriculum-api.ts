@@ -31,7 +31,7 @@ export async function fetchCurriculumProgress(
     `${PROGRESS_PATH}?${q}`,
     { method: "GET" },
   );
-  if (status === 401 || status === 403) {
+  if (status === 401 || status === 403 || status === 404) {
     return { ok: false, status, requestId };
   }
   if (status < 200 || status >= 300) {
