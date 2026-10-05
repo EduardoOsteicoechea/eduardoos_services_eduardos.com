@@ -20,6 +20,7 @@ type mppeCurriculumDaySheetJSON struct {
 		Label      string   `json:"label"`
 		Objective  string   `json:"objective"`
 		Learning   string   `json:"learning"`
+		CanDo      string   `json:"canDo"`
 		Activities []string `json:"activities"`
 	} `json:"sections"`
 }
@@ -47,6 +48,7 @@ func parseMPPECurriculumDaySheet(raw []byte) (pdf.MPPECurriculumDayDoc, error) {
 			Label:      strings.TrimSpace(s.Label),
 			Objective:  strings.TrimSpace(s.Objective),
 			Learning:   strings.TrimSpace(s.Learning),
+			CanDo:      strings.TrimSpace(s.CanDo),
 			Activities: s.Activities,
 		})
 	}
