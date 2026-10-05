@@ -518,7 +518,7 @@ const areaDefs = [
   .eoschool-curriculum__day-head {
     display: flex;
     flex-wrap: nowrap;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     gap: var(--rail-gap);
     width: 100%;
@@ -526,25 +526,34 @@ const areaDefs = [
     margin-block-end: var(--rail-gap);
     border-block-end: var(--border-width) solid var(--color-border);
     flex-shrink: 0;
+    min-height: 0;
   }
 
   .eoschool-curriculum__day-title {
     margin: 0;
     font-size: var(--font-size-sm);
     font-weight: 650;
+    line-height: 1;
     min-width: 0;
     flex: 1;
   }
 
   .eoschool-curriculum__day-open-hint {
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     flex-shrink: 0;
     color: var(--color-muted);
+    font-size: var(--font-size-sm);
+    line-height: 1;
+    height: 1em;
   }
 
-  .eoschool-curriculum__day-open-hint .material-symbols-outlined {
-    font-size: var(--icon-size);
+  .eoschool-curriculum__day-card .eoschool-curriculum__day-open-hint .material-symbols-outlined {
+    font-size: 1em;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
   }
 
   .eoschool-curriculum__subject-head {

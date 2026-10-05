@@ -105,14 +105,14 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 	meta := toWinAnsi(strings.TrimSpace(doc.Grade))
 	if doc.Week > 0 {
 		if meta != "" {
-			meta = fmt.Sprintf("Semana %d · %s", doc.Week, meta)
+			meta = toWinAnsi(fmt.Sprintf("Semana %d · %s", doc.Week, meta))
 		} else {
-			meta = fmt.Sprintf("Semana %d", doc.Week)
+			meta = toWinAnsi(fmt.Sprintf("Semana %d", doc.Week))
 		}
 	}
 
 	writeText := func(x, y, size float64, text string) {
-		text = strings.TrimSpace(text)
+		text = strings.TrimSpace(toWinAnsi(text))
 		if text == "" {
 			return
 		}

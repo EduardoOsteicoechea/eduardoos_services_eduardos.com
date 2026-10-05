@@ -25,4 +25,10 @@ func TestBuildMPPECurriculumDayPDF(t *testing.T) {
 	if !strings.HasPrefix(string(raw), "%PDF") {
 		t.Fatal("missing PDF header")
 	}
+	if strings.Contains(string(raw), "Ã") {
+		t.Fatal("PDF content stream contains UTF-8 mojibake (expected WinAnsi)")
+	}
+	if !strings.Contains(string(raw), "Semana 1") {
+		t.Fatal("missing week meta line")
+	}
 }
