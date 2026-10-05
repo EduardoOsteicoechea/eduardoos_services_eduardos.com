@@ -39,6 +39,13 @@ function base64ToBytes(b64: string): Uint8Array {
   return bytes;
 }
 
+/** pdf.js may detach the underlying buffer; keep a copy for download / re-open. */
+export function clonePdfBytes(pdfBytes: Uint8Array): Uint8Array {
+  const copy = new Uint8Array(pdfBytes.byteLength);
+  copy.set(pdfBytes);
+  return copy;
+}
+
 /** Measure the visible stage (not a hidden sheet host) so Letter fills the workspace. */
 function measurePreviewBox(host: HTMLElement): { widthPx: number; heightPx: number } {
   const stage = host.closest("[data-homescool-stage]") as HTMLElement | null;
@@ -114,9 +121,11 @@ export async function renderHomescoolPdfPreview(
   const pageHeightMm = opts?.pageHeightMm && opts.pageHeightMm > 0 ? opts.pageHeightMm : 279.4;
   const isStale = opts?.isStale ?? (() => false);
 
+  const renderData = clonePdfBytes(pdfBytes);
+
   let pdf: PDFDocumentProxy;
   try {
-    pdf = await getDocument({ data: pdfBytes }).promise;
+    pdf = await getDocument({ data: renderData }).promise;
   } catch (err) {
     if (mustLog) console.log("[homescool-pdf-preview] open.error", { err: String(err) });
     throw new Error("Could not open preview PDF.");

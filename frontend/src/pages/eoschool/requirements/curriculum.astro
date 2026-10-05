@@ -281,6 +281,10 @@ const areaDefs = [
           <p class="eoschool-curriculum-modal__pdf-empty" data-curriculum-modal-pdf-empty hidden>
             Clase en preparación para este día.
           </p>
+          <p class="eoschool-curriculum-modal__pdf-loading" data-curriculum-modal-pdf-loading hidden>
+            <span class="eoschool-curriculum-modal__pdf-spinner" aria-hidden="true"></span>
+            Generando PDF en el servidor…
+          </p>
           <div class="eoschool-curriculum-modal__pdf" data-curriculum-modal-pdf data-homescool-stage></div>
         </section>
       </div>
@@ -849,6 +853,36 @@ const areaDefs = [
     margin: 0;
     font-size: var(--font-size-sm);
     color: var(--color-muted);
+  }
+
+  .eoschool-curriculum-modal__pdf-loading {
+    display: flex;
+    align-items: center;
+    gap: var(--rail-gap);
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  .eoschool-curriculum-modal__pdf-spinner {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    border: var(--border-width) solid var(--color-border);
+    border-block-start-color: var(--color-accent);
+    border-radius: 50%;
+    animation: eoschool-curriculum-pdf-spin 0.9s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes eoschool-curriculum-pdf-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .eoschool-curriculum-modal__pdf[data-pdf-loading] {
+    opacity: 0.45;
+    pointer-events: none;
   }
 
   .eoschool-curriculum-modal__pdf {

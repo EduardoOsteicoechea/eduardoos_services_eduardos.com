@@ -1,5 +1,5 @@
 import { showErrorModal } from "./error-modal";
-import { downloadPdfBytes, renderHomescoolPdfPreview } from "./homescool-pdf-preview";
+import { clonePdfBytes, downloadPdfBytes, renderHomescoolPdfPreview } from "./homescool-pdf-preview";
 import type { CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
 import {
   fetchMppeDaySheet,
@@ -12,6 +12,16 @@ import { mustLog } from "./dev-log";
 let sheetCache: Map<number, MppeCurriculumDaySheet> = new Map();
 let activePdfBytes: Uint8Array | null = null;
 let activePdfName = "dia-mppe.pdf";
+let pdfPreviewSeq = 0;
+
+function setPdfPanelLoading(modal: HTMLElement, loading: boolean): void {
+  const loader = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf-loading]");
+  const downloadBtn = modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-download]");
+  const host = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf]");
+  if (loader) loader.hidden = !loading;
+  if (host) host.toggleAttribute("data-pdf-loading", loading);
+  if (downloadBtn && loading) downloadBtn.disabled = true;
+}
 
 function parsePlanDay(card: HTMLElement): number {
   const raw = card.dataset.planDay;
@@ -97,21 +107,29 @@ async function showDayPdf(modal: HTMLElement, sheet: MppeCurriculumDaySheet | nu
   const downloadBtn = modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-download]");
   if (!host) return;
 
+  const seq = ++pdfPreviewSeq;
+  const isStale = () => seq !== pdfPreviewSeq;
+
   host.replaceChildren();
   activePdfBytes = null;
-  if (downloadBtn) downloadBtn.disabled = true;
+  setPdfPanelLoading(modal, false);
 
   if (!sheet) {
     if (empty) {
       empty.hidden = false;
       empty.textContent = "Hoja del día en preparación.";
     }
+    if (downloadBtn) downloadBtn.disabled = true;
     return;
   }
   if (empty) empty.hidden = true;
+  setPdfPanelLoading(modal, true);
 
   const preview = await fetchMppeDayPdfPreview(sheet);
-  if (!preview.ok || !preview.pdfBytes) {
+  if (isStale()) return;
+
+  if (!preview.ok || !preview.pdfBytes?.byteLength) {
+    setPdfPanelLoading(modal, false);
     showErrorModal({
       message: preview.error ?? "No se pudo generar la hoja PDF del día.",
       requestId: preview.requestId,
@@ -121,16 +139,39 @@ async function showDayPdf(modal: HTMLElement, sheet: MppeCurriculumDaySheet | nu
       empty.textContent =
         "No se pudo generar el PDF (5 materias en una hoja). Inicia sesión con acceso Homescool para la vista previa.";
     }
+    if (downloadBtn) downloadBtn.disabled = true;
     return;
   }
 
-  activePdfBytes = preview.pdfBytes;
+  activePdfBytes = clonePdfBytes(preview.pdfBytes);
   activePdfName = `dia-${sheet.planDay}-mppe.pdf`;
-  if (downloadBtn) downloadBtn.disabled = false;
-  await renderHomescoolPdfPreview(host, preview.pdfBytes, { fitWidth: true });
+
+  try {
+    await renderHomescoolPdfPreview(host, preview.pdfBytes, {
+      fitWidth: true,
+      isStale,
+    });
+  } catch (err: unknown) {
+    if (!isStale()) {
+      setPdfPanelLoading(modal, false);
+      showErrorModal({
+        message: err instanceof Error ? err.message : "No se pudo mostrar la vista previa del PDF.",
+      });
+    }
+    if (!isStale() && activePdfBytes?.byteLength) {
+      if (downloadBtn) downloadBtn.disabled = false;
+    }
+    return;
+  }
+
+  if (isStale()) return;
+  setPdfPanelLoading(modal, false);
+  if (downloadBtn) downloadBtn.disabled = !activePdfBytes?.byteLength;
 }
 
 function closeModal(modal: HTMLElement): void {
+  pdfPreviewSeq += 1;
+  setPdfPanelLoading(modal, false);
   modal.hidden = true;
   document.body.classList.remove("eoschool-curriculum-modal-open");
   const host = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf]");
@@ -206,11 +247,10 @@ export function bindCurriculumDayModalShell(modal: HTMLElement): void {
   modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-download]")?.addEventListener("click", (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
-    if (!activePdfBytes?.byteLength) {
-      showErrorModal({ message: "El PDF aún no está listo. Espera la vista previa o vuelve a abrir el día." });
-      return;
-    }
-    downloadPdfBytes(activePdfBytes, activePdfName);
+    const btn = ev.currentTarget;
+    if (btn instanceof HTMLButtonElement && btn.disabled) return;
+    if (!activePdfBytes?.byteLength) return;
+    downloadPdfBytes(clonePdfBytes(activePdfBytes), activePdfName);
   });
 
   modal.addEventListener("click", (ev) => {
