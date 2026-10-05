@@ -1,0 +1,73 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 1,
+  "day": 1,
+  "level": 6,
+  "subject": "LT",
+  "locale": "es",
+  "title": "Día 1 — Prácticas del Lenguaje",
+  "mppePlanDay": 1,
+  "lesson": {
+    "kind": "intro",
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Leer para hacer… (Interpretar textos instruccionales).",
+        "body": "Ejecuta secuencias de acciones interpretando textos instruccionales."
+      },
+      {
+        "id": "p2",
+        "heading": "Escribir ideas relevantes sobre temas leídos.",
+        "body": "Registra por escrito contenidos fundamentales sobre diversos temas, a partir de la lectura de textos."
+      }
+    ],
+    "summary": "Leer para hacer… (Interpretar textos instruccionales). · Escribir ideas relevantes sobre temas leídos.",
+    "focusPoint": null
+  },
+  "quiz": {
+    "questionCount": 4,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta correcta según la clase.",
+        "choices": [
+          "Opción A",
+          "Opción B",
+          "Opción C",
+          "Opción D"
+        ],
+        "answer": "Opción A"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué repasaste en la clase pasada?",
+        "choices": [
+          "Lo de ayer",
+          "Otra cosa",
+          "Nada",
+          "Solo dibujo"
+        ],
+        "answer": "Lo de ayer"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Dibuja o esquematiza lo principal de hoy.",
+        "schematic": true
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Escribe con tus palabras lo que aprendiste hoy."
+      }
+    ]
+  }
+}

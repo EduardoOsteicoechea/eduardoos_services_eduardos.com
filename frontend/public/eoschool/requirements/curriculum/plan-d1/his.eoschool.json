@@ -1,0 +1,68 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 1,
+  "day": 1,
+  "level": 6,
+  "subject": "his",
+  "locale": "es",
+  "title": "Día 1 — Identidad: La Humanidad",
+  "mppePlanDay": 1,
+  "lesson": {
+    "kind": "intro",
+    "points": [
+      {
+        "id": "p1",
+        "heading": "La Humanidad",
+        "body": "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero. Contenidos: Pasado y presente; Períodos de la Historia de Venezuela; Comunicación humana en el tiempo; Las formas del conocimiento.."
+      }
+    ],
+    "summary": "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero.",
+    "focusPoint": null
+  },
+  "quiz": {
+    "questionCount": 4,
+    "questions": [
+      {
+        "id": "d1-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta correcta según la clase.",
+        "choices": [
+          "Opción A",
+          "Opción B",
+          "Opción C",
+          "Opción D"
+        ],
+        "answer": "Opción A"
+      },
+      {
+        "id": "d1-q2",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "¿Qué repasaste en la clase pasada?",
+        "choices": [
+          "Lo de ayer",
+          "Otra cosa",
+          "Nada",
+          "Solo dibujo"
+        ],
+        "answer": "Lo de ayer"
+      },
+      {
+        "id": "d1-q3",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Dibuja o esquematiza lo principal de hoy.",
+        "schematic": true
+      },
+      {
+        "id": "d1-q4",
+        "originDay": 1,
+        "type": "write",
+        "prompt": "Escribe con tus palabras lo que aprendiste hoy."
+      }
+    ]
+  }
+}

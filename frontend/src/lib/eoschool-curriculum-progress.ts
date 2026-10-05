@@ -1,8 +1,10 @@
-const STORAGE_KEY = "eoschool-curriculum-days-done";
+import { CURRICULUM_SECTION_IDS, type CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
 
-function readDone(): Set<string> {
+const SECTIONS_STORAGE_KEY = "eoschool-curriculum-sections-done";
+
+function readSectionsDone(): Set<string> {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(SECTIONS_STORAGE_KEY);
     if (!raw) return new Set();
     const parsed = JSON.parse(raw) as unknown;
     if (!Array.isArray(parsed)) return new Set();
@@ -12,45 +14,54 @@ function readDone(): Set<string> {
   }
 }
 
-function writeDone(done: Set<string>): void {
+function writeSectionsDone(done: Set<string>): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...done]));
+    localStorage.setItem(SECTIONS_STORAGE_KEY, JSON.stringify([...done]));
   } catch {
     /* ignore */
   }
+}
+
+export function sectionProgressKey(dayId: string, sectionId: CurriculumPlanSectionId): string {
+  return `${dayId}:${sectionId}`;
 }
 
 function daysInWeek(weekEl: HTMLElement): HTMLElement[] {
   return [...weekEl.querySelectorAll<HTMLElement>("[data-curriculum-day]")];
 }
 
-function weekComplete(weekEl: HTMLElement, done: Set<string>): boolean {
-  const days = daysInWeek(weekEl);
-  if (!days.length) return false;
-  return days.every((card) => {
-    const id = card.dataset.curriculumDay;
-    return id ? done.has(id) : false;
-  });
+function dayComplete(dayId: string, done: Set<string>): boolean {
+  return CURRICULUM_SECTION_IDS.every((sectionId) => done.has(sectionProgressKey(dayId, sectionId)));
 }
 
 function applyProgress(root: HTMLElement, done: Set<string>): void {
   root.querySelectorAll<HTMLElement>("[data-curriculum-day]").forEach((card) => {
-    const id = card.dataset.curriculumDay;
-    const checked = id ? done.has(id) : false;
-    card.classList.toggle("eoschool-curriculum__day-card--done", checked);
-    card.classList.toggle("product-dash__card--done", checked);
-    const input = card.querySelector<HTMLInputElement>("[data-curriculum-day-check]");
-    if (input) input.checked = checked;
+    const dayId = card.dataset.curriculumDay;
+    if (!dayId) return;
+
+    card.querySelectorAll<HTMLElement>("[data-curriculum-section]").forEach((sectionEl) => {
+      const sectionId = sectionEl.dataset.curriculumSection as CurriculumPlanSectionId | undefined;
+      if (!sectionId || !CURRICULUM_SECTION_IDS.includes(sectionId)) return;
+      const key = sectionProgressKey(dayId, sectionId);
+      const checked = done.has(key);
+      sectionEl.classList.toggle("eoschool-curriculum__subject--done", checked);
+      const input = sectionEl.querySelector<HTMLInputElement>("[data-curriculum-section-check]");
+      if (input) input.checked = checked;
+    });
+
+    const complete = dayComplete(dayId, done);
+    card.classList.toggle("eoschool-curriculum__day-card--done", complete);
+    card.classList.toggle("product-dash__card--done", complete);
   });
 
   root.querySelectorAll<HTMLElement>("[data-curriculum-week]").forEach((week) => {
     const dayCards = daysInWeek(week);
     const doneCount = dayCards.filter((c) => {
       const id = c.dataset.curriculumDay;
-      return id && done.has(id);
+      return id && dayComplete(id, done);
     }).length;
     const total = dayCards.length;
-    const complete = weekComplete(week, done);
+    const complete = total > 0 && doneCount === total;
 
     week.classList.toggle("eoschool-curriculum__week--done", complete);
     week.classList.toggle("product-dash__card--done", complete);
@@ -63,14 +74,13 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
         status.textContent = `${doneCount}/${total} días`;
       }
     }
-
   });
 }
 
 export function initCurriculumProgress(root: HTMLElement | null): void {
   if (!root) return;
 
-  const done = readDone();
+  const done = readSectionsDone();
   applyProgress(root, done);
 
   if (root.dataset.progressBound === "true") return;
@@ -78,13 +88,16 @@ export function initCurriculumProgress(root: HTMLElement | null): void {
 
   root.addEventListener("change", (ev) => {
     const target = ev.target;
-    if (!(target instanceof HTMLInputElement) || !target.matches("[data-curriculum-day-check]")) return;
+    if (!(target instanceof HTMLInputElement) || !target.matches("[data-curriculum-section-check]")) return;
+    const sectionEl = target.closest<HTMLElement>("[data-curriculum-section]");
     const card = target.closest<HTMLElement>("[data-curriculum-day]");
-    const id = card?.dataset.curriculumDay;
-    if (!id) return;
-    if (target.checked) done.add(id);
-    else done.delete(id);
-    writeDone(done);
+    const dayId = card?.dataset.curriculumDay;
+    const sectionId = sectionEl?.dataset.curriculumSection as CurriculumPlanSectionId | undefined;
+    if (!dayId || !sectionId) return;
+    const key = sectionProgressKey(dayId, sectionId);
+    if (target.checked) done.add(key);
+    else done.delete(key);
+    writeSectionsDone(done);
     applyProgress(root, done);
   });
 }

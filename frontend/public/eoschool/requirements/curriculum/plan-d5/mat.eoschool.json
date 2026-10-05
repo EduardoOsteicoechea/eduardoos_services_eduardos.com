@@ -1,0 +1,68 @@
+{
+  "format": "eoschool",
+  "version": 1,
+  "cycle": 3,
+  "week": 1,
+  "day": 3,
+  "level": 6,
+  "subject": "mat",
+  "locale": "es",
+  "title": "Día 5 — Matemáticas",
+  "mppePlanDay": 5,
+  "lesson": {
+    "kind": "deepen",
+    "points": [
+      {
+        "id": "p1",
+        "heading": "Geometría",
+        "body": "Se orienta espacialmente."
+      }
+    ],
+    "summary": "Geometría",
+    "focusPoint": 2
+  },
+  "quiz": {
+    "questionCount": 4,
+    "questions": [
+      {
+        "id": "d3-q1",
+        "originDay": 1,
+        "type": "mcq",
+        "prompt": "Elige la respuesta correcta según la clase.",
+        "choices": [
+          "Opción A",
+          "Opción B",
+          "Opción C",
+          "Opción D"
+        ],
+        "answer": "Opción A"
+      },
+      {
+        "id": "d3-q2",
+        "originDay": 2,
+        "type": "mcq",
+        "prompt": "¿Qué repasaste en la clase pasada?",
+        "choices": [
+          "Lo de ayer",
+          "Otra cosa",
+          "Nada",
+          "Solo dibujo"
+        ],
+        "answer": "Lo de ayer"
+      },
+      {
+        "id": "d3-q3",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Dibuja o esquematiza lo principal de hoy.",
+        "schematic": true
+      },
+      {
+        "id": "d3-q4",
+        "originDay": 3,
+        "type": "write",
+        "prompt": "Escribe con tus palabras lo que aprendiste hoy."
+      }
+    ]
+  }
+}
