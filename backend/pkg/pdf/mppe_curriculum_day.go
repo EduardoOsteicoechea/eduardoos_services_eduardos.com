@@ -25,11 +25,54 @@ type MPPECurriculumDaySection struct {
 
 // MPPECurriculumDayDoc is the MPPE requirements route payload (not Homescool eoschool).
 type MPPECurriculumDayDoc struct {
-	PlanDay int
-	Week    int
-	Grade   string
-	Title   string
+	PlanDay  int
+	Week     int
+	Grade    string
+	Title    string
 	Sections []MPPECurriculumDaySection
+}
+
+type mppeDayLayout struct {
+	headingLH float64
+	bodyLH    float64
+	pad       float64
+	innerW    float64
+}
+
+func (l mppeDayLayout) wrappedBlockHeight(text string, maxLines int) float64 {
+	text = strings.TrimSpace(text)
+	if text == "" {
+		return 0
+	}
+	lines := wrapPlain(toWinAnsi(text), l.innerW, mppeDayBodyPt)
+	if maxLines > 0 && len(lines) > maxLines {
+		lines = lines[:maxLines]
+	}
+	if len(lines) == 0 {
+		return 0
+	}
+	return float64(len(lines))*l.bodyLH + l.bodyLH*0.3
+}
+
+func (l mppeDayLayout) measureCard(sec MPPECurriculumDaySection) float64 {
+	h := 2 * l.pad + l.headingLH
+	if obj := strings.TrimSpace(sec.Objective); obj != "" {
+		h += l.wrappedBlockHeight("Objetivo: "+obj, 3)
+	}
+	if learn := strings.TrimSpace(sec.Learning); learn != "" {
+		h += l.wrappedBlockHeight("Aprendizaje: "+learn, 4)
+	}
+	for i, act := range sec.Activities {
+		if i >= 2 {
+			break
+		}
+		act = strings.TrimSpace(act)
+		if act == "" {
+			continue
+		}
+		h += l.wrappedBlockHeight("• "+act, 2)
+	}
+	return h
 }
 
 // BuildMPPECurriculumDayPDF renders 5 cards on one portrait letter page.
@@ -41,12 +84,16 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 	pad := MmToPoints(mppeDayCardPadMm)
 
 	usableW := pageW - 2*margin
-	usableH := pageH - 2*margin
 	colW := (usableW - 2*gap) / 3
-	rowH := (usableH - gap) / 2
 
 	headingLH := MmToPoints(3.8)
 	bodyLH := MmToPoints(3.4)
+	layout := mppeDayLayout{
+		headingLH: headingLH,
+		bodyLH:    bodyLH,
+		pad:       pad,
+		innerW:    colW - 2*pad,
+	}
 
 	var sb strings.Builder
 	yTop := pageH - margin
@@ -97,14 +144,42 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 
 	gridTop := metaY - MmToPoints(10)
 
-	drawCard := func(col, row int, sec MPPECurriculumDaySection) {
+	secs := doc.Sections
+	for len(secs) < 5 {
+		secs = append(secs, MPPECurriculumDaySection{})
+	}
+	positions := [][2]int{{0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}}
+
+	cardHeights := make([]float64, 5)
+	for i := range positions {
+		cardHeights[i] = layout.measureCard(secs[i])
+	}
+	minCardH := headingLH + 2*pad + bodyLH
+	rowHeights := []float64{minCardH, minCardH}
+	for i, pos := range positions {
+		row := pos[1]
+		if cardHeights[i] > rowHeights[row] {
+			rowHeights[row] = cardHeights[i]
+		}
+	}
+
+	rowBottomY := func(row int) float64 {
+		y := gridTop
+		for r := 0; r < row; r++ {
+			y -= rowHeights[r] + gap
+		}
+		y -= rowHeights[row]
+		return y
+	}
+
+	drawCard := func(col, row int, sec MPPECurriculumDaySection, cardH float64) {
 		x := margin + float64(col)*(colW+gap)
-		y := gridTop - float64(row)*(rowH+gap) - rowH
-		sb.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f re S\n", x, y, colW, rowH))
+		y := rowBottomY(row)
+		sb.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f re S\n", x, y, colW, cardH))
 
 		innerW := colW - 2*pad
 		tx := x + pad
-		ty := y + rowH - pad - headingLH
+		ty := y + cardH - pad - headingLH
 
 		label := toWinAnsi(strings.TrimSpace(sec.Label))
 		if label == "" {
@@ -135,13 +210,8 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 		}
 	}
 
-	secs := doc.Sections
-	for len(secs) < 5 {
-		secs = append(secs, MPPECurriculumDaySection{})
-	}
-	positions := [][2]int{{0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}}
 	for i, pos := range positions {
-		drawCard(pos[0], pos[1], secs[i])
+		drawCard(pos[0], pos[1], secs[i], rowHeights[pos[1]])
 	}
 
 	content := sb.String()

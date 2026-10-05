@@ -101,7 +101,14 @@ export async function fetchHomescoolPdfPreview(doc: EoschoolDocument): Promise<{
 export async function renderHomescoolPdfPreview(
   host: HTMLElement,
   pdfBytes: Uint8Array,
-  opts?: { pageWidthMm?: number; pageHeightMm?: number; seq?: number; isStale?: () => boolean },
+  opts?: {
+    pageWidthMm?: number;
+    pageHeightMm?: number;
+    seq?: number;
+    isStale?: () => boolean;
+    /** When true, scale to width only (do not stretch preview to stage height). */
+    fitWidth?: boolean;
+  },
 ): Promise<number> {
   const pageWidthMm = opts?.pageWidthMm && opts.pageWidthMm > 0 ? opts.pageWidthMm : 215.9;
   const pageHeightMm = opts?.pageHeightMm && opts.pageHeightMm > 0 ? opts.pageHeightMm : 279.4;
@@ -117,12 +124,19 @@ export async function renderHomescoolPdfPreview(
 
   const { widthPx: availW, heightPx: availH } = measurePreviewBox(host);
   const aspect = pageWidthMm / pageHeightMm; // ~0.773
-  // Fit Letter inside the stage: prefer height (tall page), then clamp by width.
-  let cssWidthPx = availH * aspect;
-  let cssHeightPx = availH;
-  if (cssWidthPx > availW) {
+  let cssWidthPx: number;
+  let cssHeightPx: number;
+  if (opts?.fitWidth) {
     cssWidthPx = availW;
     cssHeightPx = availW / aspect;
+  } else {
+    // Fit Letter inside the stage: prefer height (tall page), then clamp by width.
+    cssWidthPx = availH * aspect;
+    cssHeightPx = availH;
+    if (cssWidthPx > availW) {
+      cssWidthPx = availW;
+      cssHeightPx = availW / aspect;
+    }
   }
   // Keep a readable floor so a collapsed stage never paints a stamp-sized sheet.
   const minW = rootFontSizePx() * 32;

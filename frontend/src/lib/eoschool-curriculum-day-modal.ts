@@ -127,7 +127,7 @@ async function showDayPdf(modal: HTMLElement, sheet: MppeCurriculumDaySheet | nu
   activePdfBytes = preview.pdfBytes;
   activePdfName = `dia-${sheet.planDay}-mppe.pdf`;
   if (downloadBtn) downloadBtn.disabled = false;
-  await renderHomescoolPdfPreview(host, preview.pdfBytes);
+  await renderHomescoolPdfPreview(host, preview.pdfBytes, { fitWidth: true });
 }
 
 function closeModal(modal: HTMLElement): void {
@@ -195,20 +195,21 @@ function activateTab(
   setModalSectionContent(modal, card, sectionId, sheet);
 }
 
-export function initCurriculumDayModal(root: HTMLElement | null): void {
-  if (!root) return;
-  if (root.dataset.dayModalBound === "true") return;
-  root.dataset.dayModalBound = "true";
-
-  const modal = document.querySelector<HTMLElement>("[data-curriculum-day-modal]");
-  if (!modal) return;
+export function bindCurriculumDayModalShell(modal: HTMLElement): void {
+  if (modal.dataset.curriculumModalBound === "true") return;
+  modal.dataset.curriculumModalBound = "true";
 
   modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-close]")?.addEventListener("click", () => {
     closeModal(modal);
   });
 
-  modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-download]")?.addEventListener("click", () => {
-    if (!activePdfBytes) return;
+  modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-download]")?.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    if (!activePdfBytes?.byteLength) {
+      showErrorModal({ message: "El PDF aún no está listo. Espera la vista previa o vuelve a abrir el día." });
+      return;
+    }
     downloadPdfBytes(activePdfBytes, activePdfName);
   });
 
@@ -219,6 +220,15 @@ export function initCurriculumDayModal(root: HTMLElement | null): void {
   document.addEventListener("keydown", (ev) => {
     if (ev.key === "Escape" && !modal.hidden) closeModal(modal);
   });
+}
+
+export function initCurriculumDayModal(root: HTMLElement | null): void {
+  const modal = document.querySelector<HTMLElement>("[data-curriculum-day-modal]");
+  if (modal) bindCurriculumDayModalShell(modal);
+
+  if (!root) return;
+  if (root.dataset.dayModalBound === "true") return;
+  root.dataset.dayModalBound = "true";
 
   root.addEventListener("click", (ev) => {
     const target = ev.target;
