@@ -20,7 +20,37 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v4
 
+      - name: Detect changed paths
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            frontend:
+              - 'frontend/**'
+            backend:
+              - 'backend/**'
+              - '!backend/.data/calvin-institutes-paragraphs/**'
+            calvin:
+              - 'backend/.data/calvin-institutes-paragraphs/**'
+
+      - name: Resolve deploy scope
+        id: scope
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "frontend=true" >> "$GITHUB_OUTPUT"
+            echo "backend=true" >> "$GITHUB_OUTPUT"
+            echo "calvin=true" >> "$GITHUB_OUTPUT"
+            echo "Deploy scope (manual): frontend + backend + calvin"
+            exit 0
+          fi
+          echo "frontend=${{ steps.filter.outputs.frontend }}" >> "$GITHUB_OUTPUT"
+          echo "backend=${{ steps.filter.outputs.backend }}" >> "$GITHUB_OUTPUT"
+          echo "calvin=${{ steps.filter.outputs.calvin }}" >> "$GITHUB_OUTPUT"
+          echo "Deploy scope: frontend=${{ steps.filter.outputs.frontend }} backend=${{ steps.filter.outputs.backend }} calvin=${{ steps.filter.outputs.calvin }}"
+
       - name: Set up Node
+        if: steps.scope.outputs.frontend == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -28,26 +58,31 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Build Astro frontend
+        if: steps.scope.outputs.frontend == 'true'
         working-directory: frontend
         run: |
           npm ci
           npm run build
 
       - name: Set up Go
+        if: steps.scope.outputs.backend == 'true'
         uses: actions/setup-go@v5
         with:
           go-version: "1.23"
           cache: false
 
       - name: Run Go tests
+        if: steps.scope.outputs.backend == 'true'
         working-directory: backend
         run: go test ./...
 
       - name: Compile Linux AMD64 API
+        if: steps.scope.outputs.backend == 'true'
         working-directory: backend
         run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -o api .
 
       - name: Configure SSH
+        if: steps.scope.outputs.frontend == 'true' || steps.scope.outputs.backend == 'true' || steps.scope.outputs.calvin == 'true'
         env:
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
           VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
@@ -85,6 +120,7 @@ jobs:
           } >> "$GITHUB_ENV"
 
       - name: Upload frontend dist
+        if: steps.scope.outputs.frontend == 'true'
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
@@ -98,6 +134,7 @@ jobs:
             "${VPS_USER}@${VPS_HOST}:/var/www/${SITE}/html/"
 
       - name: Upload API binary and switch release
+        if: steps.scope.outputs.backend == 'true'
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
@@ -118,6 +155,7 @@ jobs:
           ${RSH} "${VPS_USER}@${VPS_HOST}" "chmod +x '${RELEASE}/api' && ln -sfn '${RELEASE}' '/opt/apps/${APP}/current.tmp' && mv -Tf '/opt/apps/${APP}/current.tmp' '/opt/apps/${APP}/current'"
 
       - name: Upload Calvin Institutes paragraph pack
+        if: steps.scope.outputs.calvin == 'true'
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
@@ -133,6 +171,7 @@ jobs:
             "${VPS_USER}@${VPS_HOST}:/var/www/${SITE}/data/calvin-institutes-paragraphs/"
 
       - name: Restart API and verify health
+        if: steps.scope.outputs.backend == 'true'
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}

@@ -414,19 +414,15 @@ Do not store MongoDB URIs or `.env` contents as frontend env vars. Keep database
 
 ## Deployment
 
-Pushes to `main` and manual **workflow_dispatch** run `.github/workflows/deploy.yml`. The job:
+Pushes to `main` and manual **workflow_dispatch** run `.github/workflows/deploy.yml`. The job detects path changes and only runs the matching slices:
 
-1. Checks out source.
-2. Builds the Astro frontend with `npm ci` and `npm run build`.
-3. Runs `go test ./...`.
-4. Compiles a Linux AMD64 binary named `api`.
-5. Authenticates with `VPS_SSH_KEY`.
-6. Verifies the host with `VPS_KNOWN_HOSTS`.
-7. rsyncs only `frontend/dist/` to `/var/www/eduardoos.com/html/` with `--delete`.
-8. Uploads only the `api` binary to `/opt/apps/eduardoos/releases/<git-sha>/api`.
-9. Atomically points `/opt/apps/eduardoos/current` at that release.
-10. Restarts `eduardoos-api.service`.
-11. Verifies `curl --fail http://127.0.0.1:8081/health` on the VPS.
+| Scope | When | What |
+| --- | --- | --- |
+| Frontend | `frontend/**` changed | `npm ci` / `npm run build`, rsync `frontend/dist/` → `/var/www/eduardoos.com/html/` (`--delete`) |
+| Backend | `backend/**` changed (except Calvin pack) | `go test`, Linux AMD64 `api` build, release switch under `/opt/apps/eduardoos/releases/<git-sha>/`, restart `eduardoos-api.service`, health check on `:8081` |
+| Calvin pack | `backend/.data/calvin-institutes-paragraphs/**` changed | rsync pack → `/var/www/eduardoos.com/data/calvin-institutes-paragraphs/` (no API restart) |
+
+Manual **workflow_dispatch** deploys all three scopes. SSH uses `VPS_SSH_KEY` + `VPS_KNOWN_HOSTS` only when at least one scope runs.
 
 Source, `node_modules`, `.git`, `.env` files, and credentials are never uploaded.
 
