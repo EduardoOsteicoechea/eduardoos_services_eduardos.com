@@ -52,6 +52,27 @@ function contiguousBuckets(items, n) {
   return buckets;
 }
 
+/** Empty plan days repeat the previous day's learnings (3.er grado continuity). */
+function forwardFillBuckets(buckets) {
+  const out = buckets.map((b) => (b.length ? b.map((r) => ({ ...r })) : []));
+  let last = [];
+  for (let i = 0; i < out.length; i++) {
+    if (out[i].length) {
+      last = out[i];
+    } else if (last.length) {
+      out[i] = last.map((r) => ({ ...r }));
+    }
+  }
+  const firstIdx = out.findIndex((b) => b.length);
+  if (firstIdx > 0) {
+    const seed = out[firstIdx];
+    for (let i = 0; i < firstIdx; i++) {
+      out[i] = seed.map((r) => ({ ...r }));
+    }
+  }
+  return out;
+}
+
 function collectUniqueRefs(planDays, key) {
   const seen = new Set();
   const out = [];
@@ -102,9 +123,9 @@ function build40WeekCurriculum(source) {
   const lenAll = collectUniqueRefs(planDays, "len");
   const matAll = collectUniqueRefs(planDays, "mat");
   const cieAll = collectUniqueRefs(planDays, "cie");
-  const lenBuckets = contiguousBuckets(lenAll, TOTAL_DAYS);
-  const matBuckets = contiguousBuckets(matAll, TOTAL_DAYS);
-  const cieBuckets = contiguousBuckets(cieAll, TOTAL_DAYS);
+  const lenBuckets = forwardFillBuckets(contiguousBuckets(lenAll, TOTAL_DAYS));
+  const matBuckets = forwardFillBuckets(contiguousBuckets(matAll, TOTAL_DAYS));
+  const cieBuckets = forwardFillBuckets(contiguousBuckets(cieAll, TOTAL_DAYS));
 
   const identities = collectIdentities(planDays);
   const weeks = [];

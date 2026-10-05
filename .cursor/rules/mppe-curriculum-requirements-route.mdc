@@ -35,7 +35,7 @@ Static JSON per plan day:
   - `learning` (aprendizaje específico del día)
   - `activities` (plainificación 3.er grado — corta, accionable)
 
-Regenerate: `node frontend/scripts/build-mppe-day-sheets.mjs` (after `build-40week-mppe-curriculum.mjs` if the plan changed).
+Regenerate: `node frontend/scripts/build-40week-mppe-curriculum.mjs` then `node frontend/scripts/build-mppe-day-sheets.mjs`. Days with no new mat/cie/len aprendizaje **repeat the previous day's refs** (forward-fill in the 40-week builder).
 
 Manifest: `day-sheets-manifest.json` (not `plan-classes-manifest.json` / not per-subject `.eoschool.json`).
 

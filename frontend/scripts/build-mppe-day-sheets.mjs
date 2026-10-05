@@ -60,20 +60,74 @@ function objectiveFromRefs(refs) {
   return titles.join(" · ") || primaryLearning(refs);
 }
 
-function activitiesForSection(sectionId, planDay, week) {
+function clip(text, max = 100) {
+  const t = String(text ?? "").replace(/\s+/g, " ").trim();
+  if (t.length <= max) return t;
+  return `${t.slice(0, max - 1)}…`;
+}
+
+function sameRefs(a, b) {
+  if (!a?.length || !b?.length) return false;
+  return a[0].id === b[0].id;
+}
+
+function activitiesForSection(sectionId, planDay, week, refs, prevRefs) {
   const d = ((planDay - 1) % 5) + 1;
-  const common = [
-    `Planificación día ${planDay} (semana ${week}, 3er grado).`,
-    d === 1 ? "Introduce el objetivo y repasa el día anterior." : "Profundiza con un ejemplo del entorno.",
-    "Cierra escribiendo una frase: «Hoy aprendí…».",
-  ];
   if (sectionId === "bib") {
     return ["Lee las tres pistas con calma.", "Subraya una idea para compartir en familia."];
   }
-  return common.slice(0, 2);
+
+  const learning = primaryLearning(refs);
+  const objective = objectiveFromRefs(refs);
+  const continuing = sameRefs(refs, prevRefs);
+
+  if (sectionId === "ide") {
+    const ideTitle = refs?.title ?? objective;
+    const ideContinuing =
+      prevRefs && prevRefs.title === refs?.title && (refs?.learnings?.[0] ?? "") === (prevRefs?.learnings?.[0] ?? "");
+    return [
+      ideContinuing
+        ? `Repasa «${clip(ideTitle, 70)}» con un ejemplo venezolano del día a día.`
+        : `Presenta el foco de identidad: ${clip(ideTitle, 70)}.`,
+      "Escribe dos frases: qué significa para ti y qué puedes hacer en tu comunidad.",
+    ];
+  }
+
+  if (sectionId === "len") {
+    const prompts = [
+      continuing
+        ? `Vuelve a practicar: ${clip(learning, 90)} (lectura o escucha breve).`
+        : `Lee o escucha un texto corto ligado a: ${clip(learning, 90)}.`,
+      d <= 2 ? "Subraya palabras clave y ordénalas en el cuaderno." : "Redacta 4–6 líneas usando lo trabajado.",
+    ];
+    return prompts;
+  }
+
+  if (sectionId === "mat") {
+    return [
+      continuing
+        ? `Consolida en el cuaderno: ${clip(learning, 90)} (3 ejercicios).`
+        : `Explora con material concreto: ${clip(learning, 90)}.`,
+      `Unidad MPPE: ${clip(objective, 60)}. Explica un ejemplo con dibujo o esquema.`,
+    ];
+  }
+
+  if (sectionId === "cie") {
+    return [
+      continuing
+        ? `Profundiza la observación sobre: ${clip(learning, 90)}.`
+        : `Observa el entorno y relaciona: ${clip(learning, 90)}.`,
+      `Tema: ${clip(objective, 60)}. Registra dibujo + dos preguntas que te surjan.`,
+    ];
+  }
+
+  return [
+    `Día ${planDay} (semana ${week}, 3.er grado): ${clip(learning, 80)}.`,
+    "Cierra con una frase: «Hoy aprendí…».",
+  ];
 }
 
-function buildDaySheet(planDay, weeks) {
+function buildDaySheet(planDay, weeks, prevBlock) {
   const ctx = findPlanDay(weeks, planDay);
   if (!ctx) throw new Error(`missing plan day ${planDay}`);
   const { mppeWeek, block, bibleDay } = ctx;
@@ -90,35 +144,35 @@ function buildDaySheet(planDay, weeks) {
       label: "Biblia",
       objective: "Lectura bíblica diaria (tres pistas)",
       learning: bibLearn,
-      activities: activitiesForSection("bib", planDay, mppeWeek),
+      activities: activitiesForSection("bib", planDay, mppeWeek, null, null),
     },
     {
       id: "ide",
       label: "Identidad",
       objective: ide.title ?? "Identidad",
       learning: (ide.learnings ?? []).join(" ") || (ide.contenidos ?? []).join("; ") || "—",
-      activities: activitiesForSection("ide", planDay, mppeWeek),
+      activities: activitiesForSection("ide", planDay, mppeWeek, block.identity, prevBlock?.identity),
     },
     {
       id: "len",
       label: "Prácticas del Lenguaje",
       objective: objectiveFromRefs(block.len),
       learning: primaryLearning(block.len),
-      activities: activitiesForSection("len", planDay, mppeWeek),
+      activities: activitiesForSection("len", planDay, mppeWeek, block.len, prevBlock?.len),
     },
     {
       id: "mat",
       label: "Matemáticas",
       objective: objectiveFromRefs(block.mat),
       learning: primaryLearning(block.mat),
-      activities: activitiesForSection("mat", planDay, mppeWeek),
+      activities: activitiesForSection("mat", planDay, mppeWeek, block.mat, prevBlock?.mat),
     },
     {
       id: "cie",
       label: "Ciencias Naturales",
       objective: objectiveFromRefs(block.cie),
       learning: primaryLearning(block.cie),
-      activities: activitiesForSection("cie", planDay, mppeWeek),
+      activities: activitiesForSection("cie", planDay, mppeWeek, block.cie, prevBlock?.cie),
     },
   ];
 
@@ -138,8 +192,11 @@ const total = curriculum.meta?.totalPlanDays ?? 200;
 fs.mkdirSync(outDir, { recursive: true });
 
 const manifestDays = [];
+let prevBlock = null;
 for (let planDay = 1; planDay <= total; planDay++) {
-  const sheet = buildDaySheet(planDay, curriculum.weeks);
+  const ctx = findPlanDay(curriculum.weeks, planDay);
+  const sheet = buildDaySheet(planDay, curriculum.weeks, prevBlock);
+  prevBlock = ctx?.block ?? prevBlock;
   const fileName = `d${planDay}.mppe-day.json`;
   fs.writeFileSync(path.join(outDir, fileName), `${JSON.stringify(sheet, null, 2)}\n`, "utf8");
   manifestDays.push({
