@@ -13,8 +13,9 @@ import (
 const (
 	mppeDayAreaPt         = 11.0
 	mppeDayMetaPt         = 10.0
-	mppeDayCardGapMm      = 3.0
-	mppeDayCardPadMm      = 3.0
+	mppeDayCardGapMm          = 3.0
+	mppeDayCardPadMm          = 3.0
+	mppeDayCardPadBottomExtraMm = 2.0 // extra inset below last line (measure ≡ draw)
 	mppeDayCanDoMaxLines  = 2
 	mppeDayHeaderBelowMm  = 10.0
 )
@@ -44,6 +45,7 @@ type mppeDayLayout struct {
 	bodyPt         float64
 	sectionGap     float64
 	pad            float64
+	padBottom      float64
 	innerW         float64
 	objMaxLines    int
 	bulletMaxLines int
@@ -108,7 +110,7 @@ func (l mppeDayLayout) textBlockHeight(lineCount int) float64 {
 }
 
 func (l mppeDayLayout) measureCard(sec MPPECurriculumDaySection) float64 {
-	h := 2*l.pad + l.areaLH + l.sectionGap
+	h := l.pad + l.padBottom + l.areaLH + l.sectionGap
 
 	obj := strings.TrimSpace(sec.Objective)
 	if obj != "" {
@@ -177,12 +179,14 @@ func planMPPECurriculumDayGrid(doc MPPECurriculumDayDoc, pageW, pageH, margin, g
 
 	for _, step := range mppeDayCompactionSteps {
 		bodyLH := MmToPoints(step.bodyLHmm)
+		padBottom := pad + MmToPoints(mppeDayCardPadBottomExtraMm)
 		layout := mppeDayLayout{
 			areaLH:         MmToPoints(step.areaLHmm),
 			bodyLH:         bodyLH,
 			bodyPt:         step.bodyPt,
 			sectionGap:     bodyLH * step.sectionGapF,
 			pad:            pad,
+			padBottom:      padBottom,
 			innerW:         colW - 2*pad,
 			objMaxLines:    step.objMaxLines,
 			bulletMaxLines: step.bulletMaxLines,
@@ -193,7 +197,7 @@ func planMPPECurriculumDayGrid(doc MPPECurriculumDayDoc, pageW, pageH, margin, g
 		for i := range positions {
 			cardHeights[i] = layout.measureCard(secs[i])
 		}
-		minCardH := layout.areaLH + 2*pad + bodyLH*2
+		minCardH := layout.areaLH + pad + padBottom + bodyLH*2
 		rowHeights := [2]float64{minCardH, minCardH}
 		for i, pos := range positions {
 			row := pos[1]
