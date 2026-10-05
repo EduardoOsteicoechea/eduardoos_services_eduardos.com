@@ -3,7 +3,7 @@ import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../../layouts/Layout.astro";
 import { MPPE_28WEEK_CURRICULUM } from "../../../lib/eoschool-mppe-28week-curriculum";
 import {
-  bibleGroups,
+  bibleGroupsForDay,
   buildWeekIndexRow,
   groupLearningRefs,
   identityGroups,
@@ -42,7 +42,7 @@ const areaDefs = [
 
   <h1 class="page-title-sr">Currículo MPPE 28 semanas</h1>
 
-  <section class="product-dash eoschool-curriculum">
+  <section class="product-dash eoschool-curriculum" data-curriculum-progress>
     <p class="lede">
       {meta.weeks} semanas · bloque 1 = 2 días, bloque 2 = 3 días ({bibleMeta.readingDays} días de lectura bíblica). Cada día: tres
       pistas (Gén–Ester, Job–Mal, NT), con 1–2 capítulos por pista cuando basta. Cada bloque además: Biblia, Identidad, Lenguaje,
@@ -125,50 +125,83 @@ const areaDefs = [
           <section
             class="product-dash__card eoschool-curriculum__week"
             id={`week-${weekPlan.week}`}
+            data-curriculum-week={`w${weekPlan.week}`}
             aria-labelledby={`week-title-${weekPlan.week}`}
           >
             <header class="product-dash__card-head eoschool-curriculum__week-head">
               <h2 class="product-dash__card-title" id={`week-title-${weekPlan.week}`}>Semana {weekPlan.week}</h2>
+              <p class="eoschool-curriculum__week-status" data-curriculum-week-status aria-live="polite"></p>
             </header>
 
             <div class="eoschool-curriculum__blocks">
               {weekPlan.blocks.map((block) => (
-                <article class="eoschool-curriculum__block" aria-labelledby={`w${weekPlan.week}-b${block.block}`}>
-                  <h3 class="eoschool-curriculum__block-title" id={`w${weekPlan.week}-b${block.block}`}>
-                    Bloque {block.block} · {block.days} días
-                  </h3>
+                <article
+                  class="eoschool-curriculum__block"
+                  data-curriculum-block={`w${weekPlan.week}-b${block.block}`}
+                  aria-labelledby={`w${weekPlan.week}-b${block.block}`}
+                >
+                  <header class="eoschool-curriculum__block-head">
+                    <h3 class="eoschool-curriculum__block-title" id={`w${weekPlan.week}-b${block.block}`}>
+                      Bloque {block.block} · {block.days} días
+                    </h3>
+                    <p class="eoschool-curriculum__block-status" data-curriculum-block-status>
+                      0/{block.days} días
+                    </p>
+                  </header>
 
-                  {areaDefs.map((area) => {
-                    const groups =
-                      area.kind === "bible"
-                        ? bibleGroups(block)
-                        : area.kind === "identity"
-                          ? identityGroups(block)
-                          : groupLearningRefs(
-                              area.kind === "len" ? block.len : area.kind === "mat" ? block.mat : block.cie,
+                  <div class="eoschool-curriculum__days">
+                    {(block.bible?.days ?? []).map((bibleDay) => {
+                      const dayId = `d${bibleDay.dayInPlan}`;
+                      return (
+                        <article
+                          class="product-dash__card eoschool-curriculum__day-card"
+                          data-curriculum-day={dayId}
+                        >
+                          <header class="eoschool-curriculum__day-head">
+                            <h4 class="eoschool-curriculum__day-title">Día {bibleDay.dayInPlan}</h4>
+                            <label class="eoschool-curriculum__day-check">
+                              <input type="checkbox" data-curriculum-day-check />
+                              <span>Día completado</span>
+                            </label>
+                          </header>
+
+                          {areaDefs.map((area) => {
+                            const groups =
+                              area.kind === "bible"
+                                ? bibleGroupsForDay(bibleDay)
+                                : area.kind === "identity"
+                                  ? identityGroups(block)
+                                  : groupLearningRefs(
+                                      area.kind === "len" ? block.len : area.kind === "mat" ? block.mat : block.cie,
+                                    );
+                            return (
+                              <div class="eoschool-curriculum__subject">
+                                <h5 class="eoschool-curriculum__subject-title">
+                                  <span class="eoschool-curriculum__subject-num">{area.num}.</span>
+                                  {area.label}
+                                </h5>
+                                {groups.map((group) => (
+                                  <div class="eoschool-curriculum__objective-block">
+                                    <p class="eoschool-curriculum__objective">
+                                      <span class="eoschool-curriculum__objective-label">Objetivo</span>
+                                      {group.objective}
+                                    </p>
+                                    {group.learnings.length ? (
+                                      <ol class="eoschool-curriculum__learnings">
+                                        {group.learnings.map((learning) => (
+                                          <li>{learning}</li>
+                                        ))}
+                                      </ol>
+                                    ) : null}
+                                  </div>
+                                ))}
+                              </div>
                             );
-                    return (
-                      <div class="eoschool-curriculum__subject">
-                        <h4 class="eoschool-curriculum__subject-title">
-                          <span class="eoschool-curriculum__subject-num">{area.num}.</span>
-                          {area.label}
-                        </h4>
-                        {groups.map((group) => (
-                          <div class="eoschool-curriculum__objective-block">
-                            <p class="eoschool-curriculum__objective">
-                              <span class="eoschool-curriculum__objective-label">Objetivo</span>
-                              {group.objective}
-                            </p>
-                            <ol class="eoschool-curriculum__learnings">
-                              {group.learnings.map((learning) => (
-                                <li>{learning}</li>
-                              ))}
-                            </ol>
-                          </div>
-                        ))}
-                      </div>
-                    );
-                  })}
+                          })}
+                        </article>
+                      );
+                    })}
+                  </div>
                 </article>
               ))}
             </div>
@@ -181,13 +214,15 @@ const areaDefs = [
 
 <script>
   import { initCurriculumIndexResize } from "../../../lib/eoschool-curriculum-index-resize";
+  import { initCurriculumProgress } from "../../../lib/eoschool-curriculum-progress";
 
-  function bootCurriculumIndexResize() {
+  function bootCurriculumChrome() {
     initCurriculumIndexResize(document.querySelector("[data-curriculum-index]"));
+    initCurriculumProgress(document.querySelector("[data-curriculum-progress]"));
   }
 
-  bootCurriculumIndexResize();
-  document.addEventListener("astro:page-load", bootCurriculumIndexResize);
+  bootCurriculumChrome();
+  document.addEventListener("astro:page-load", bootCurriculumChrome);
 </script>
 
 <style>
@@ -345,11 +380,97 @@ const areaDefs = [
     min-width: 0;
   }
 
+  .eoschool-curriculum__block--done {
+    border-color: var(--color-ok);
+  }
+
+  .eoschool-curriculum__block-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    width: 100%;
+  }
+
   .eoschool-curriculum__block-title {
     margin: 0;
     font-size: var(--font-size-md);
     font-weight: 650;
     overflow-wrap: anywhere;
+  }
+
+  .eoschool-curriculum__block-status,
+  .eoschool-curriculum__week-status {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+  }
+
+  .eoschool-curriculum__week--done .eoschool-curriculum__week-status {
+    color: var(--color-ok);
+  }
+
+  .eoschool-curriculum__days {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    width: 100%;
+    min-width: 0;
+  }
+
+  .eoschool-curriculum__day-card {
+    cursor: default;
+    align-items: stretch;
+    gap: var(--space-padding);
+    min-width: 0;
+  }
+
+  .eoschool-curriculum__day-card:hover,
+  .eoschool-curriculum__day-card:focus-visible {
+    transform: none;
+  }
+
+  .eoschool-curriculum__day-card--done,
+  .eoschool-curriculum__day-card.product-dash__card--done {
+    border-color: var(--color-ok);
+    background: color-mix(in srgb, var(--color-ok) 10%, var(--color-surface));
+  }
+
+  .eoschool-curriculum__week.product-dash__card--done {
+    border-color: var(--color-ok);
+    background: color-mix(in srgb, var(--color-ok) 6%, var(--color-surface));
+  }
+
+  .eoschool-curriculum__day-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--rail-gap);
+    width: 100%;
+    padding-block-end: var(--rail-gap);
+    border-block-end: var(--border-width) solid var(--color-border);
+  }
+
+  .eoschool-curriculum__day-title {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+  }
+
+  .eoschool-curriculum__day-check {
+    display: flex;
+    align-items: center;
+    gap: var(--rail-gap);
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+    cursor: pointer;
+  }
+
+  .eoschool-curriculum__day-check input {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    margin: 0;
+    accent-color: var(--color-ok);
   }
 
   .eoschool-curriculum__subject {
@@ -361,9 +482,10 @@ const areaDefs = [
     border-block-start: var(--border-width) solid var(--color-border);
   }
 
-  .eoschool-curriculum__subject:first-of-type {
+  .eoschool-curriculum__day-card > .eoschool-curriculum__subject:first-of-type {
     border-block-start: 0;
     padding-block-start: 0;
+    margin-block-start: var(--rail-gap);
   }
 
   .eoschool-curriculum__subject-title {
@@ -383,6 +505,11 @@ const areaDefs = [
     flex-direction: column;
     gap: var(--rail-gap);
     min-width: 0;
+    margin-block-start: var(--rail-gap);
+  }
+
+  .eoschool-curriculum__subject-title + .eoschool-curriculum__objective-block {
+    margin-block-start: var(--space-padding);
   }
 
   .eoschool-curriculum__objective-block + .eoschool-curriculum__objective-block {
@@ -407,7 +534,7 @@ const areaDefs = [
   }
 
   .eoschool-curriculum__learnings {
-    margin: 0;
+    margin: var(--rail-gap) 0 0 0;
     padding-inline-start: 1rem;
     display: flex;
     flex-direction: column;

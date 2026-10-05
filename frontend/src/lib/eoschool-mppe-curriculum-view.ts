@@ -116,17 +116,15 @@ function lastRef(refs: BibleChapterRef[]): BibleChapterRef | null {
   return refs.length ? refs[refs.length - 1] : null;
 }
 
-function bibleDayLine(day: BibleDay): string {
-  return `Día ${day.dayInPlan}: ${formatChapterList(day.genEster)} · ${formatChapterList(day.jobMal)} · ${formatChapterList(day.nt)}`;
-}
-
-export function bibleGroups(block: CurriculumBlock): SubjectObjectiveGroup[] {
-  const days = block.bible?.days ?? [];
+export function bibleGroupsForDay(day: BibleDay): SubjectObjectiveGroup[] {
   return [
     {
-      objective:
-        "Lectura diaria (protestante reformado): Génesis–Ester, Job–Malaquías y NT. Hasta 2 cap./día por pista cuando basta; en AT hasta 4 cap./día en esa pista si hace falta.",
-      learnings: days.map(bibleDayLine),
+      objective: "Lectura bíblica (tres pistas)",
+      learnings: [
+        `Gén–Ester: ${formatChapterList(day.genEster)}`,
+        `Job–Mal: ${formatChapterList(day.jobMal)}`,
+        `NT: ${formatChapterList(day.nt)}`,
+      ],
     },
   ];
 }
