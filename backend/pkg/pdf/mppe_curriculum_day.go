@@ -7,12 +7,14 @@ import (
 
 // MPPE curriculum day sheet: one US Letter portrait page (EoschoolPage*), 1 cm margins, five cards (3+2).
 const (
-	mppeDayAreaPt      = 11.0
-	mppeDayBodyPt      = 8.0
-	mppeDayMetaPt      = 10.0
-	mppeDayCardGapMm   = 3.0
-	mppeDayCardPadMm   = 3.0
-	mppeDaySectionGapF = 0.45
+	mppeDayAreaPt        = 11.0
+	mppeDayBodyPt        = 8.0
+	mppeDayMetaPt        = 10.0
+	mppeDayCardGapMm     = 3.0
+	mppeDayCardPadMm     = 3.0
+	mppeDaySectionGapF   = 0.45
+	mppeDayObjMaxLines   = 4
+	mppeDayBulletMaxLines = 3
 )
 
 // MPPECurriculumDaySection is one of the five daily areas on the sheet.
@@ -87,7 +89,7 @@ func (l mppeDayLayout) measureCard(sec MPPECurriculumDaySection) float64 {
 
 	obj := strings.TrimSpace(sec.Objective)
 	if obj != "" {
-		h += l.bodyLH + l.textBlockHeight(len(l.wrappedLines(obj, 4)))
+		h += l.bodyLH + l.textBlockHeight(len(l.wrappedLines(obj, mppeDayObjMaxLines)))
 		h += l.sectionGap
 	}
 
@@ -95,7 +97,7 @@ func (l mppeDayLayout) measureCard(sec MPPECurriculumDaySection) float64 {
 	if len(learnings) > 0 {
 		h += l.bodyLH
 		for _, item := range learnings {
-			h += l.textBlockHeight(len(l.wrappedLines("- "+item, 3)))
+			h += l.textBlockHeight(len(l.wrappedLines("- "+item, mppeDayBulletMaxLines)))
 		}
 		h += l.sectionGap
 	}
@@ -119,7 +121,7 @@ func (l mppeDayLayout) measureCard(sec MPPECurriculumDaySection) float64 {
 			if act == "" {
 				continue
 			}
-			h += l.textBlockHeight(len(l.wrappedLines("- "+act, 3)))
+			h += l.textBlockHeight(len(l.wrappedLines("- "+act, mppeDayBulletMaxLines)))
 		}
 	}
 
@@ -172,7 +174,7 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 			font, size, x, y, escape(text)))
 	}
 
-	writeWrapped := func(font string, x, y, maxW, size, lineH float64, text string, maxLines int) float64 {
+	writeWrapped := func(font string, x, y, maxW, size, lineH float64, text string, maxLines int, minY float64) float64 {
 		lines := wrapPlain(toWinAnsi(text), maxW, size)
 		if maxLines > 0 && len(lines) > maxLines {
 			lines = lines[:maxLines]
@@ -182,6 +184,9 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 		}
 		curY := y
 		for _, line := range lines {
+			if curY-lineH < minY {
+				break
+			}
 			writeText(font, x, curY, size, line)
 			curY -= lineH
 		}
@@ -215,6 +220,14 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 		}
 	}
 
+	maxGridH := gridTop - margin
+	totalGridH := rowHeights[0] + gap + rowHeights[1]
+	if totalGridH > maxGridH && totalGridH > 0 {
+		scale := maxGridH / totalGridH
+		rowHeights[0] *= scale
+		rowHeights[1] *= scale
+	}
+
 	rowBottomY := func(row int) float64 {
 		y := gridTop
 		for r := 0; r < row; r++ {
@@ -230,29 +243,35 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 		sb.WriteString(fmt.Sprintf("%.2f %.2f %.2f %.2f re S\n", x, y, colW, cardH))
 
 		tx := x + pad
+		minY := y + pad
 		ty := y + cardH - pad - areaLH
 
 		label := toWinAnsi(strings.TrimSpace(sec.Label))
 		if label == "" {
 			label = toWinAnsi(sec.ID)
 		}
-		writeText("F2", tx, ty, mppeDayAreaPt, label)
+		if ty >= minY {
+			writeText("F2", tx, ty, mppeDayAreaPt, label)
+		}
 		ty -= areaLH + layout.sectionGap
 
 		obj := strings.TrimSpace(sec.Objective)
-		if obj != "" {
+		if obj != "" && ty >= minY {
 			writeText("F2", tx, ty, mppeDayBodyPt, "Objetivo:")
 			ty -= bodyLH
-			ty = writeWrapped("F1", tx, ty, layout.innerW, mppeDayBodyPt, bodyLH, obj, 0)
+			ty = writeWrapped("F1", tx, ty, layout.innerW, mppeDayBodyPt, bodyLH, obj, mppeDayObjMaxLines, minY)
 			ty -= layout.sectionGap
 		}
 
 		learnings := mppeSplitLearnings(sec.Learning)
-		if len(learnings) > 0 {
+		if len(learnings) > 0 && ty >= minY {
 			writeText("F2", tx, ty, mppeDayBodyPt, "Aprendizajes:")
 			ty -= bodyLH
 			for _, item := range learnings {
-				ty = writeWrapped("F1", tx, ty, layout.innerW, mppeDayBodyPt, bodyLH, "- "+item, 0)
+				if ty < minY {
+					break
+				}
+				ty = writeWrapped("F1", tx, ty, layout.innerW, mppeDayBodyPt, bodyLH, "- "+item, mppeDayBulletMaxLines, minY)
 			}
 			ty -= layout.sectionGap
 		}
@@ -267,7 +286,7 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 				break
 			}
 		}
-		if hasAct {
+		if hasAct && ty >= minY {
 			writeText("F2", tx, ty, mppeDayBodyPt, "Actividad sugerida:")
 			ty -= bodyLH
 			for i, act := range sec.Activities {
@@ -278,7 +297,10 @@ func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 				if act == "" {
 					continue
 				}
-				ty = writeWrapped("F1", tx, ty, layout.innerW, mppeDayBodyPt, bodyLH, "- "+act, 0)
+				if ty < minY {
+					break
+				}
+				ty = writeWrapped("F1", tx, ty, layout.innerW, mppeDayBodyPt, bodyLH, "- "+act, mppeDayBulletMaxLines, minY)
 			}
 		}
 	}
