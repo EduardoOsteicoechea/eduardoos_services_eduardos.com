@@ -1,4 +1,4 @@
-import { apiSend, deleteJSON, uploadFile } from "./api";
+import { apiSend, deleteJSON, patchJSON, uploadFile } from "./api";
 import { DEFAULT_CURRICULUM_STUDENT_KEY } from "./eoschool-curriculum-api";
 import type { CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
 import { showErrorModal } from "./error-modal";
@@ -16,6 +16,7 @@ export type CurriculumMaterial = {
   role: CurriculumMaterialRole;
   kind: CurriculumMaterialKind;
   title?: string;
+  description?: string;
   url?: string;
   storageName?: string;
   thumbName?: string;
@@ -30,6 +31,7 @@ export type CurriculumMaterial = {
 
 const MATERIALS_PATH = "/eoschool/curriculum/materials";
 const MATERIALS_URL_PATH = "/eoschool/curriculum/materials/url";
+export const MAX_MATERIALS_PER_ROLE = 4;
 
 const ROLE_LABELS: Record<CurriculumMaterialRole, string> = {
   teacher_guide: "Guía docente",
@@ -41,6 +43,12 @@ const ROLES: CurriculumMaterialRole[] = ["teacher_guide", "child", "proof"];
 
 const FILE_ACCEPT =
   "image/jpeg,image/png,image/webp,audio/mpeg,audio/mp4,audio/wav,audio/ogg,audio/webm,.pdf,.odt,.docx,application/pdf";
+
+function errFromApi(message: string, requestId?: string): Error & { requestId?: string } {
+  const err = new Error(message) as Error & { requestId?: string };
+  err.requestId = requestId;
+  return err;
+}
 
 export async function fetchCurriculumMaterials(opts: {
   studentKey: string;
@@ -60,11 +68,7 @@ export async function fetchCurriculumMaterials(opts: {
     return [];
   }
   if (status < 200 || status >= 300) {
-    const err = new Error(data.message || "No se pudieron cargar los materiales.") as Error & {
-      requestId?: string;
-    };
-    err.requestId = requestId;
-    throw err;
+    throw errFromApi(data.message || "No se pudieron cargar los materiales.", requestId);
   }
   return data.materials ?? [];
 }
@@ -75,24 +79,28 @@ export async function uploadCurriculumMaterial(opts: {
   dayId: string;
   sectionId: string;
   role: CurriculumMaterialRole;
+  title?: string;
+  description?: string;
 }): Promise<CurriculumMaterial> {
+  const fields: Record<string, string> = {
+    studentKey: opts.studentKey,
+    dayId: opts.dayId,
+    sectionId: opts.sectionId,
+    role: opts.role,
+  };
+  if (opts.title?.trim()) fields.title = opts.title.trim();
+  if (opts.description?.trim()) fields.description = opts.description.trim();
   const { status, data, requestId } = await uploadFile<{ material: CurriculumMaterial }>(
     MATERIALS_PATH,
     opts.file,
     "file",
-    {
-      studentKey: opts.studentKey,
-      dayId: opts.dayId,
-      sectionId: opts.sectionId,
-      role: opts.role,
-    },
+    fields,
   );
+  if (status === 409) {
+    throw errFromApi(data.message || "Máximo 4 materiales por actividad.", requestId);
+  }
   if (status < 200 || status >= 300) {
-    const err = new Error(data.message || "No se pudo subir el archivo.") as Error & {
-      requestId?: string;
-    };
-    err.requestId = requestId;
-    throw err;
+    throw errFromApi(data.message || "No se pudo subir el archivo.", requestId);
   }
   return data.material;
 }
@@ -104,18 +112,32 @@ export async function addCurriculumMaterialURL(opts: {
   role: CurriculumMaterialRole;
   url: string;
   title?: string;
+  description?: string;
 }): Promise<CurriculumMaterial> {
   const { status, data, requestId } = await apiSend<{ material: CurriculumMaterial }>(MATERIALS_URL_PATH, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(opts),
   });
+  if (status === 409) {
+    throw errFromApi(data.message || "Máximo 4 materiales por actividad.", requestId);
+  }
   if (status < 200 || status >= 300) {
-    const err = new Error(data.message || "No se pudo guardar la URL.") as Error & {
-      requestId?: string;
-    };
-    err.requestId = requestId;
-    throw err;
+    throw errFromApi(data.message || "No se pudo guardar la URL.", requestId);
+  }
+  return data.material;
+}
+
+export async function patchCurriculumMaterial(
+  id: string,
+  opts: { title: string; description: string },
+): Promise<CurriculumMaterial> {
+  const { status, data, requestId } = await patchJSON<{ material: CurriculumMaterial }>(
+    `${MATERIALS_PATH}/${id}`,
+    opts,
+  );
+  if (status < 200 || status >= 300) {
+    throw errFromApi(data.message || "No se pudo guardar el material.", requestId);
   }
   return data.material;
 }
@@ -123,11 +145,7 @@ export async function addCurriculumMaterialURL(opts: {
 export async function deleteCurriculumMaterial(id: string): Promise<void> {
   const { status, data, requestId } = await deleteJSON<{ ok?: boolean }>(`${MATERIALS_PATH}/${id}`);
   if (status < 200 || status >= 300) {
-    const err = new Error(data.message || "No se pudo eliminar el material.") as Error & {
-      requestId?: string;
-    };
-    err.requestId = requestId;
-    throw err;
+    throw errFromApi(data.message || "No se pudo eliminar el material.", requestId);
   }
 }
 
@@ -147,6 +165,32 @@ function itemLabel(m: CurriculumMaterial): string {
   return m.originalName || m.storageName || m.id;
 }
 
+function showRequestError(err: unknown, fallback: string): void {
+  const requestId =
+    err && typeof err === "object" && "requestId" in err
+      ? String((err as { requestId?: string }).requestId || "")
+      : "";
+  showErrorModal({
+    message: err instanceof Error ? err.message : fallback,
+    requestId: requestId || undefined,
+  });
+}
+
+function readGroupMeta(group: Element | null): { title: string; description: string } {
+  const title =
+    group?.querySelector<HTMLInputElement>("[data-material-new-title]")?.value.trim() ?? "";
+  const description =
+    group?.querySelector<HTMLTextAreaElement>("[data-material-new-description]")?.value.trim() ?? "";
+  return { title, description };
+}
+
+function clearGroupMeta(group: Element | null): void {
+  const title = group?.querySelector<HTMLInputElement>("[data-material-new-title]");
+  const description = group?.querySelector<HTMLTextAreaElement>("[data-material-new-description]");
+  if (title) title.value = "";
+  if (description) description.value = "";
+}
+
 function renderMaterialItem(m: CurriculumMaterial, editable: boolean): HTMLElement {
   const li = document.createElement("li");
   li.className = "eoschool-curriculum-materials__item";
@@ -164,6 +208,8 @@ function renderMaterialItem(m: CurriculumMaterial, editable: boolean): HTMLEleme
   const meta = document.createElement("div");
   meta.className = "eoschool-curriculum-materials__meta";
 
+  const nameEl = document.createElement("p");
+  nameEl.className = "eoschool-curriculum-materials__name";
   if (m.kind === "url" && m.url) {
     const a = document.createElement("a");
     a.className = "eoschool-curriculum-materials__link";
@@ -171,7 +217,7 @@ function renderMaterialItem(m: CurriculumMaterial, editable: boolean): HTMLEleme
     a.target = "_blank";
     a.rel = "noopener noreferrer";
     a.textContent = itemLabel(m);
-    meta.append(a);
+    nameEl.append(a);
   } else if (m.fileUrl) {
     const a = document.createElement("a");
     a.className = "eoschool-curriculum-materials__link";
@@ -179,11 +225,17 @@ function renderMaterialItem(m: CurriculumMaterial, editable: boolean): HTMLEleme
     a.target = "_blank";
     a.rel = "noopener noreferrer";
     a.textContent = itemLabel(m);
-    meta.append(a);
+    nameEl.append(a);
   } else {
-    const span = document.createElement("span");
-    span.textContent = itemLabel(m);
-    meta.append(span);
+    nameEl.textContent = itemLabel(m);
+  }
+  meta.append(nameEl);
+
+  if (m.description?.trim()) {
+    const desc = document.createElement("p");
+    desc.className = "eoschool-curriculum-materials__desc";
+    desc.textContent = m.description.trim();
+    meta.append(desc);
   }
 
   const kind = document.createElement("span");
@@ -193,13 +245,67 @@ function renderMaterialItem(m: CurriculumMaterial, editable: boolean): HTMLEleme
   li.append(meta);
 
   if (editable) {
+    const actions = document.createElement("div");
+    actions.className = "eoschool-curriculum-materials__item-actions";
+
+    const edit = document.createElement("button");
+    edit.type = "button";
+    edit.className = "eoschool-curriculum-materials__edit";
+    edit.dataset.materialEdit = m.id;
+    edit.textContent = "Editar";
+    actions.append(edit);
+
     const del = document.createElement("button");
     del.type = "button";
     del.className = "eoschool-curriculum-materials__delete";
     del.dataset.materialDelete = m.id;
     del.setAttribute("aria-label", `Eliminar ${itemLabel(m)}`);
     del.textContent = "Eliminar";
-    li.append(del);
+    actions.append(del);
+
+    li.append(actions);
+
+    const form = document.createElement("div");
+    form.className = "eoschool-curriculum-materials__edit-form";
+    form.dataset.materialEditForm = m.id;
+    form.hidden = true;
+
+    const titleInput = document.createElement("input");
+    titleInput.type = "text";
+    titleInput.className = "eoschool-curriculum-materials__title";
+    titleInput.dataset.materialEditTitle = m.id;
+    titleInput.value = m.title?.trim() || itemLabel(m);
+    titleInput.placeholder = "Nombre";
+    titleInput.maxLength = 200;
+    titleInput.setAttribute("aria-label", "Nombre del material");
+
+    const descInput = document.createElement("textarea");
+    descInput.className = "eoschool-curriculum-materials__description";
+    descInput.dataset.materialEditDescription = m.id;
+    descInput.value = m.description?.trim() || "";
+    descInput.placeholder = "Descripción";
+    descInput.maxLength = 1000;
+    descInput.rows = 2;
+    descInput.setAttribute("aria-label", "Descripción del material");
+
+    const save = document.createElement("button");
+    save.type = "button";
+    save.className = "eoschool-curriculum-materials__save";
+    save.dataset.materialSave = m.id;
+    save.textContent = "Guardar";
+
+    const cancel = document.createElement("button");
+    cancel.type = "button";
+    cancel.className = "eoschool-curriculum-materials__cancel";
+    cancel.dataset.materialEditCancel = m.id;
+    cancel.textContent = "Cancelar";
+
+    const formActions = document.createElement("div");
+    formActions.className = "eoschool-curriculum-materials__url-row";
+    formActions.append(save, cancel);
+
+    form.append(titleInput, descInput, formActions);
+    li.append(form);
   }
 
   return li;
@@ -214,15 +320,17 @@ function renderRoleGroup(
   section.className = "eoschool-curriculum-materials__group";
   section.dataset.materialRole = role;
 
+  const forRole = items.filter((m) => m.role === role);
+  const atCap = forRole.length >= MAX_MATERIALS_PER_ROLE;
+
   const title = document.createElement("h4");
   title.className = "eoschool-curriculum-materials__group-title";
-  title.textContent = ROLE_LABELS[role];
+  title.textContent = `${ROLE_LABELS[role]} (${forRole.length}/${MAX_MATERIALS_PER_ROLE})`;
   section.append(title);
 
   const list = document.createElement("ul");
   list.className = "eoschool-curriculum-materials__list";
   list.dataset.materialList = role;
-  const forRole = items.filter((m) => m.role === role);
   if (!forRole.length) {
     const empty = document.createElement("li");
     empty.className = "eoschool-curriculum-materials__empty";
@@ -237,32 +345,57 @@ function renderRoleGroup(
     const actions = document.createElement("div");
     actions.className = "eoschool-curriculum-materials__actions";
 
-    const fileLabel = document.createElement("label");
-    fileLabel.className = "eoschool-curriculum-materials__file-label";
-    fileLabel.textContent = "Subir archivo";
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.accept = FILE_ACCEPT;
-    fileInput.dataset.materialFile = role;
-    fileInput.className = "eoschool-curriculum-materials__file";
-    fileLabel.append(fileInput);
-    actions.append(fileLabel);
+    if (atCap) {
+      const note = document.createElement("p");
+      note.className = "eoschool-curriculum-materials__status";
+      note.textContent = "Máximo 4 ítems en esta actividad.";
+      actions.append(note);
+    } else {
+      const titleInput = document.createElement("input");
+      titleInput.type = "text";
+      titleInput.className = "eoschool-curriculum-materials__title";
+      titleInput.dataset.materialNewTitle = role;
+      titleInput.placeholder = "Nombre";
+      titleInput.maxLength = 200;
+      titleInput.setAttribute("aria-label", `Nombre para ${ROLE_LABELS[role]}`);
 
-    const urlRow = document.createElement("div");
-    urlRow.className = "eoschool-curriculum-materials__url-row";
-    const urlInput = document.createElement("input");
-    urlInput.type = "url";
-    urlInput.placeholder = "https://…";
-    urlInput.dataset.materialUrl = role;
-    urlInput.className = "eoschool-curriculum-materials__url";
-    urlInput.setAttribute("aria-label", `URL para ${ROLE_LABELS[role]}`);
-    const urlBtn = document.createElement("button");
-    urlBtn.type = "button";
-    urlBtn.className = "eoschool-curriculum-materials__url-add";
-    urlBtn.dataset.materialUrlAdd = role;
-    urlBtn.textContent = "Añadir URL";
-    urlRow.append(urlInput, urlBtn);
-    actions.append(urlRow);
+      const descInput = document.createElement("textarea");
+      descInput.className = "eoschool-curriculum-materials__description";
+      descInput.dataset.materialNewDescription = role;
+      descInput.placeholder = "Descripción";
+      descInput.maxLength = 1000;
+      descInput.rows = 2;
+      descInput.setAttribute("aria-label", `Descripción para ${ROLE_LABELS[role]}`);
+
+      actions.append(titleInput, descInput);
+
+      const fileLabel = document.createElement("label");
+      fileLabel.className = "eoschool-curriculum-materials__file-label";
+      fileLabel.textContent = "Subir archivo";
+      const fileInput = document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = FILE_ACCEPT;
+      fileInput.dataset.materialFile = role;
+      fileInput.className = "eoschool-curriculum-materials__file";
+      fileLabel.append(fileInput);
+      actions.append(fileLabel);
+
+      const urlRow = document.createElement("div");
+      urlRow.className = "eoschool-curriculum-materials__url-row";
+      const urlInput = document.createElement("input");
+      urlInput.type = "url";
+      urlInput.placeholder = "https://…";
+      urlInput.dataset.materialUrl = role;
+      urlInput.className = "eoschool-curriculum-materials__url";
+      urlInput.setAttribute("aria-label", `URL para ${ROLE_LABELS[role]}`);
+      const urlBtn = document.createElement("button");
+      urlBtn.type = "button";
+      urlBtn.className = "eoschool-curriculum-materials__url-add";
+      urlBtn.dataset.materialUrlAdd = role;
+      urlBtn.textContent = "Añadir URL";
+      urlRow.append(urlInput, urlBtn);
+      actions.append(urlRow);
+    }
 
     section.append(actions);
   }
@@ -288,7 +421,9 @@ export function ensureMaterialsPanel(modal: HTMLElement): HTMLElement {
   body.dataset.curriculumMaterialsBody = "";
   panel.append(body);
 
-  const contentPanel = modal.querySelector(".eoschool-curriculum-modal__panel:not(.eoschool-curriculum-modal__panel--pdf)");
+  const contentPanel = modal.querySelector(
+    ".eoschool-curriculum-modal__panel:not(.eoschool-curriculum-modal__panel--pdf)",
+  );
   if (contentPanel) {
     contentPanel.append(panel);
   } else {
@@ -325,7 +460,9 @@ export async function loadCurriculumMaterialsPanel(
   body.replaceChildren();
   const loading = document.createElement("p");
   loading.className = "eoschool-curriculum-materials__status";
-  loading.textContent = editable ? "Cargando materiales…" : "Inicia sesión con Homescool para gestionar materiales.";
+  loading.textContent = editable
+    ? "Cargando materiales…"
+    : "Inicia sesión con Homescool para gestionar materiales.";
   body.append(loading);
 
   if (!editable) {
@@ -348,14 +485,7 @@ export async function loadCurriculumMaterialsPanel(
     status.className = "eoschool-curriculum-materials__status";
     status.textContent = err instanceof Error ? err.message : "No se pudieron cargar los materiales.";
     body.append(status);
-    const requestId =
-      err && typeof err === "object" && "requestId" in err
-        ? String((err as { requestId?: string }).requestId || "")
-        : "";
-    showErrorModal({
-      message: err instanceof Error ? err.message : "No se pudieron cargar los materiales.",
-      requestId: requestId || undefined,
-    });
+    showRequestError(err, "No se pudieron cargar los materiales.");
   }
 }
 
@@ -376,6 +506,8 @@ export function bindCurriculumMaterialsPanel(modal: HTMLElement, root: HTMLEleme
     const file = target.files?.[0];
     target.value = "";
     if (!role || !file || !activeCtx) return;
+    const group = target.closest("[data-material-role]");
+    const meta = readGroupMeta(group);
     try {
       await uploadCurriculumMaterial({
         file,
@@ -383,23 +515,57 @@ export function bindCurriculumMaterialsPanel(modal: HTMLElement, root: HTMLEleme
         dayId: activeCtx.dayId,
         sectionId: activeCtx.sectionId,
         role,
+        title: meta.title,
+        description: meta.description,
       });
+      clearGroupMeta(group);
       await refreshActivePanel(modal, root);
     } catch (err) {
-      const requestId =
-        err && typeof err === "object" && "requestId" in err
-          ? String((err as { requestId?: string }).requestId || "")
-          : "";
-      showErrorModal({
-        message: err instanceof Error ? err.message : "No se pudo subir el archivo.",
-        requestId: requestId || undefined,
-      });
+      showRequestError(err, "No se pudo subir el archivo.");
     }
   });
 
   modal.addEventListener("click", async (ev) => {
     const target = ev.target;
     if (!(target instanceof HTMLElement)) return;
+
+    const editBtn = target.closest<HTMLButtonElement>("[data-material-edit]");
+    if (editBtn) {
+      const id = editBtn.dataset.materialEdit;
+      if (!id) return;
+      const form = modal.querySelector<HTMLElement>(`[data-material-edit-form="${id}"]`);
+      if (form) form.hidden = !form.hidden;
+      return;
+    }
+
+    const cancelBtn = target.closest<HTMLButtonElement>("[data-material-edit-cancel]");
+    if (cancelBtn) {
+      const id = cancelBtn.dataset.materialEditCancel;
+      if (!id) return;
+      const form = modal.querySelector<HTMLElement>(`[data-material-edit-form="${id}"]`);
+      if (form) form.hidden = true;
+      return;
+    }
+
+    const saveBtn = target.closest<HTMLButtonElement>("[data-material-save]");
+    if (saveBtn) {
+      const id = saveBtn.dataset.materialSave;
+      if (!id) return;
+      const title =
+        modal.querySelector<HTMLInputElement>(`[data-material-edit-title="${id}"]`)?.value.trim() ??
+        "";
+      const description =
+        modal
+          .querySelector<HTMLTextAreaElement>(`[data-material-edit-description="${id}"]`)
+          ?.value.trim() ?? "";
+      try {
+        await patchCurriculumMaterial(id, { title, description });
+        await refreshActivePanel(modal, root);
+      } catch (err) {
+        showRequestError(err, "No se pudo guardar el material.");
+      }
+      return;
+    }
 
     const urlAdd = target.closest<HTMLButtonElement>("[data-material-url-add]");
     if (urlAdd) {
@@ -412,6 +578,7 @@ export function bindCurriculumMaterialsPanel(modal: HTMLElement, root: HTMLEleme
         showErrorModal({ message: "Escribe una URL https." });
         return;
       }
+      const meta = readGroupMeta(group);
       try {
         await addCurriculumMaterialURL({
           studentKey: activeCtx.studentKey,
@@ -419,18 +586,14 @@ export function bindCurriculumMaterialsPanel(modal: HTMLElement, root: HTMLEleme
           sectionId: activeCtx.sectionId,
           role,
           url,
+          title: meta.title,
+          description: meta.description,
         });
         if (urlInput) urlInput.value = "";
+        clearGroupMeta(group);
         await refreshActivePanel(modal, root);
       } catch (err) {
-        const requestId =
-          err && typeof err === "object" && "requestId" in err
-            ? String((err as { requestId?: string }).requestId || "")
-            : "";
-        showErrorModal({
-          message: err instanceof Error ? err.message : "No se pudo guardar la URL.",
-          requestId: requestId || undefined,
-        });
+        showRequestError(err, "No se pudo guardar la URL.");
       }
       return;
     }
@@ -443,14 +606,7 @@ export function bindCurriculumMaterialsPanel(modal: HTMLElement, root: HTMLEleme
         await deleteCurriculumMaterial(id);
         await refreshActivePanel(modal, root);
       } catch (err) {
-        const requestId =
-          err && typeof err === "object" && "requestId" in err
-            ? String((err as { requestId?: string }).requestId || "")
-            : "";
-        showErrorModal({
-          message: err instanceof Error ? err.message : "No se pudo eliminar el material.",
-          requestId: requestId || undefined,
-        });
+        showRequestError(err, "No se pudo eliminar el material.");
       }
     }
   });

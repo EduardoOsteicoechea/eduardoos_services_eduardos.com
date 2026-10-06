@@ -43,12 +43,13 @@ func (a *App) postEoschoolCurriculumMaterialURLHandler(w http.ResponseWriter, r 
 		return
 	}
 	var body struct {
-		StudentKey string `json:"studentKey"`
-		DayID      string `json:"dayId"`
-		SectionID  string `json:"sectionId"`
-		Role       string `json:"role"`
-		URL        string `json:"url"`
-		Title      string `json:"title"`
+		StudentKey  string `json:"studentKey"`
+		DayID       string `json:"dayId"`
+		SectionID   string `json:"sectionId"`
+		Role        string `json:"role"`
+		URL         string `json:"url"`
+		Title       string `json:"title"`
+		Description string `json:"description"`
 	}
 	if err := json.Unmarshal(raw, &body); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -66,13 +67,13 @@ func (a *App) postEoschoolCurriculumMaterialURLHandler(w http.ResponseWriter, r 
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	title := strings.TrimSpace(body.Title)
-	if len(title) > 200 {
-		title = title[:200]
+	if !a.ensureCurriculumMaterialCapacity(w, r, user.ID, body.StudentKey, dayID, sectionID, role) {
+		return
 	}
 	m := newEoschoolCurriculumMaterialBase(user.ID, body.StudentKey, dayID, sectionID, role, eoschoolCurriculumMaterialKindURL)
 	m.URL = href
-	m.Title = title
+	m.Title = sanitizeEoschoolCurriculumMaterialTitle(body.Title)
+	m.Description = sanitizeEoschoolCurriculumMaterialDescription(body.Description)
 	stored, err := a.curriculumMaterials.Insert(r.Context(), m)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
@@ -103,6 +104,9 @@ func (a *App) postEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *ht
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
+	if !a.ensureCurriculumMaterialCapacity(w, r, user.ID, studentKey, dayID, sectionID, role) {
+		return
+	}
 	file, header, err := r.FormFile("file")
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -129,9 +133,14 @@ func (a *App) postEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *ht
 	}
 
 	m := newEoschoolCurriculumMaterialBase(user.ID, studentKey, dayID, sectionID, role, detected.kind)
+	m.Title = sanitizeEoschoolCurriculumMaterialTitle(r.FormValue("title"))
+	m.Description = sanitizeEoschoolCurriculumMaterialDescription(r.FormValue("description"))
 	m.OriginalName = path.Base(strings.TrimSpace(filename))
 	if len(m.OriginalName) > 200 {
 		m.OriginalName = m.OriginalName[:200]
+	}
+	if m.Title == "" {
+		m.Title = sanitizeEoschoolCurriculumMaterialTitle(m.OriginalName)
 	}
 
 	var body []byte
@@ -216,6 +225,60 @@ func (a *App) deleteEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *
 	}
 	a.auditEvent(r, "eoschool_curriculum_material_delete", "ok", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{"ok": true})
+}
+
+func (a *App) patchEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.requireUnsafe(w, r) {
+		return
+	}
+	user, _, ok := a.requireHomescoolMaterialsAccess(w, r)
+	if !ok {
+		return
+	}
+	id := strings.TrimSpace(r.PathValue("id"))
+	if id == "" {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 8192))
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	var body struct {
+		Title       string `json:"title"`
+		Description string `json:"description"`
+	}
+	if err := json.Unmarshal(raw, &body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	title := sanitizeEoschoolCurriculumMaterialTitle(body.Title)
+	description := sanitizeEoschoolCurriculumMaterialDescription(body.Description)
+	updated, found, err := a.curriculumMaterials.UpdateMeta(r.Context(), user.ID, id, title, description)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !found {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	a.auditEvent(r, "eoschool_curriculum_material_patch", "ok", user.ID)
+	writeJSON(w, http.StatusOK, map[string]any{"material": materialWithURLs(updated)})
+}
+
+func (a *App) ensureCurriculumMaterialCapacity(w http.ResponseWriter, r *http.Request, ownerUserID, studentKey, dayID, sectionID, role string) bool {
+	items, err := a.curriculumMaterials.List(r.Context(), ownerUserID, studentKey, dayID, sectionID)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return false
+	}
+	if countEoschoolCurriculumMaterialsForRole(items, role) >= eoschoolCurriculumMaterialMaxPerRole {
+		a.writeSafeError(w, r, http.StatusConflict, "material_limit_reached")
+		return false
+	}
+	return true
 }
 
 func (a *App) getEoschoolCurriculumMaterialFileHandler(w http.ResponseWriter, r *http.Request) {

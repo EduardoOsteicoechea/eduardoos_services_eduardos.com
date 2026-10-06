@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"image"
 	"image/jpeg"
 	"mime/multipart"
@@ -262,5 +263,58 @@ func TestEoschoolCurriculumMaterialCrossOwnerDenied(t *testing.T) {
 		"/api/eoschool/curriculum/materials/"+created.Material.ID, "")
 	if del.Code != http.StatusNotFound {
 		t.Fatalf("cross-owner delete status=%d want 404 body=%s", del.Code, del.Body.String())
+	}
+}
+
+func TestEoschoolCurriculumMaterialPatchAndLimit(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productHomescool)
+
+	first := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eoschool/curriculum/materials/url",
+		`{"dayId":"d5","sectionId":"mat","role":"child","url":"https://example.com/1","title":"Uno","description":"Primero"}`)
+	if first.Code != http.StatusCreated {
+		t.Fatalf("first status=%d body=%s", first.Code, first.Body.String())
+	}
+	var created struct {
+		Material EoschoolCurriculumMaterial `json:"material"`
+	}
+	if err := json.Unmarshal(first.Body.Bytes(), &created); err != nil {
+		t.Fatal(err)
+	}
+	if created.Material.Title != "Uno" || created.Material.Description != "Primero" {
+		t.Fatalf("material=%+v", created.Material)
+	}
+
+	patch := app.doJSON(t, "member@eduardoos.com", http.MethodPatch,
+		"/api/eoschool/curriculum/materials/"+created.Material.ID,
+		`{"title":"Uno editado","description":"Desc editada"}`)
+	if patch.Code != http.StatusOK {
+		t.Fatalf("patch status=%d body=%s", patch.Code, patch.Body.String())
+	}
+	if err := json.Unmarshal(patch.Body.Bytes(), &created); err != nil {
+		t.Fatal(err)
+	}
+	if created.Material.Title != "Uno editado" || created.Material.Description != "Desc editada" {
+		t.Fatalf("patched=%+v", created.Material)
+	}
+
+	for i := 2; i <= 4; i++ {
+		body := fmt.Sprintf(`{"dayId":"d5","sectionId":"mat","role":"child","url":"https://example.com/%d","title":"n%d"}`, i, i)
+		rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eoschool/curriculum/materials/url", body)
+		if rec.Code != http.StatusCreated {
+			t.Fatalf("item %d status=%d body=%s", i, rec.Code, rec.Body.String())
+		}
+	}
+	fifth := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eoschool/curriculum/materials/url",
+		`{"dayId":"d5","sectionId":"mat","role":"child","url":"https://example.com/5","title":"n5"}`)
+	if fifth.Code != http.StatusConflict {
+		t.Fatalf("fifth status=%d want 409 body=%s", fifth.Code, fifth.Body.String())
+	}
+
+	// Other role still allowed.
+	other := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eoschool/curriculum/materials/url",
+		`{"dayId":"d5","sectionId":"mat","role":"proof","url":"https://example.com/proof","title":"Prueba"}`)
+	if other.Code != http.StatusCreated {
+		t.Fatalf("other role status=%d body=%s", other.Code, other.Body.String())
 	}
 }

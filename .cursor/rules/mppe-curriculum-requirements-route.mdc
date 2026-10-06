@@ -52,10 +52,12 @@ Manifest: `day-sheets-manifest.json` (not `plan-classes-manifest.json` / not per
 - Progress Mongo: `/api/eoschool/curriculum/progress*` (por niño; default Elías).
 - Materials (cookie + Homescool entitlement + CSRF on writes):
   - `GET /api/eoschool/curriculum/materials?studentKey=&dayId=&sectionId=`
-  - `POST /api/eoschool/curriculum/materials` (multipart file + role)
-  - `POST /api/eoschool/curriculum/materials/url` (JSON https URL)
+  - `POST /api/eoschool/curriculum/materials` (multipart file + role + optional title/description)
+  - `POST /api/eoschool/curriculum/materials/url` (JSON https URL + optional title/description)
+  - `PATCH /api/eoschool/curriculum/materials/{id}` (title + description)
   - `DELETE /api/eoschool/curriculum/materials/{id}`
   - `GET …/materials/{id}/file` and `…/thumb`
+- Max **4 items per role** (`teacher_guide` | `child` | `proof`) within a day+section (`material_limit_reached`).
 - Images: convert with Homescool progress WebP pipeline (quality 82); originals are not retained on disk.
 - Audio (mpeg/mp4/wav/ogg/webm) and documents (PDF/ODT/DOCX) stored as uploaded bytes under `{MEDIA_ROOT}/eoschool/curriculum/…`.
 - No extra VPS/Nginx setup: reuse existing `MEDIA_ROOT` + `ServeFile`.

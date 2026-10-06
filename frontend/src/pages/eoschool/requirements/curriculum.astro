@@ -1139,7 +1139,8 @@ const areaDefs = [
 
   .eoschool-curriculum-materials__item {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: flex-start;
     gap: var(--rail-gap);
     padding: var(--rail-gap);
     border: var(--border-width) solid var(--color-border);
@@ -1163,6 +1164,19 @@ const areaDefs = [
     min-width: 0;
   }
 
+  .eoschool-curriculum-materials__name {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+  }
+
+  .eoschool-curriculum-materials__desc {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+    overflow-wrap: anywhere;
+  }
+
   .eoschool-curriculum-materials__link {
     font-size: var(--font-size-sm);
     color: var(--color-link);
@@ -1179,7 +1193,17 @@ const areaDefs = [
     color: var(--color-muted);
   }
 
-  .eoschool-curriculum-materials__delete {
+  .eoschool-curriculum-materials__item-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
+    flex-shrink: 0;
+  }
+
+  .eoschool-curriculum-materials__edit,
+  .eoschool-curriculum-materials__delete,
+  .eoschool-curriculum-materials__save,
+  .eoschool-curriculum-materials__cancel {
     height: var(--control-height);
     padding: var(--control-padding-block) var(--control-padding-inline);
     font-size: var(--font-size-sm);
@@ -1188,7 +1212,39 @@ const areaDefs = [
     background: transparent;
     color: var(--color-text);
     cursor: pointer;
-    flex-shrink: 0;
+  }
+
+  .eoschool-curriculum-materials__edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .eoschool-curriculum-materials__edit-form[hidden] {
+    display: none;
+  }
+
+  .eoschool-curriculum-materials__title,
+  .eoschool-curriculum-materials__description {
+    width: auto;
+    min-width: 0;
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-md);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .eoschool-curriculum-materials__title {
+    height: var(--control-height);
+  }
+
+  .eoschool-curriculum-materials__description {
+    min-height: var(--textarea-min-height);
+    resize: vertical;
   }
 
   .eoschool-curriculum-materials__actions {

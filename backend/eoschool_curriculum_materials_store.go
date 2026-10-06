@@ -16,6 +16,7 @@ type EoschoolCurriculumMaterialsStore interface {
 	GetByID(ctx context.Context, id string) (EoschoolCurriculumMaterial, bool, error)
 	List(ctx context.Context, ownerUserID, studentKey, dayID, sectionID string) ([]EoschoolCurriculumMaterial, error)
 	ListByStudentRole(ctx context.Context, ownerUserID, studentKey, role string) ([]EoschoolCurriculumMaterial, error)
+	UpdateMeta(ctx context.Context, ownerUserID, id, title, description string) (EoschoolCurriculumMaterial, bool, error)
 	Delete(ctx context.Context, ownerUserID, id string) (EoschoolCurriculumMaterial, bool, error)
 }
 
@@ -84,6 +85,20 @@ func (s *memoryEoschoolCurriculumMaterialsStore) ListByStudentRole(_ context.Con
 	return out, nil
 }
 
+func (s *memoryEoschoolCurriculumMaterialsStore) UpdateMeta(_ context.Context, ownerUserID, id, title, description string) (EoschoolCurriculumMaterial, bool, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	m, ok := s.rows[id]
+	if !ok || m.OwnerUserID != ownerUserID {
+		return EoschoolCurriculumMaterial{}, false, nil
+	}
+	m.Title = title
+	m.Description = description
+	m.UpdatedAt = time.Now().UTC()
+	s.rows[id] = m
+	return m, true, nil
+}
+
 func (s *memoryEoschoolCurriculumMaterialsStore) Delete(_ context.Context, ownerUserID, id string) (EoschoolCurriculumMaterial, bool, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -138,6 +153,28 @@ func (s *mongoEoschoolCurriculumMaterialsStore) ListByStudentRole(ctx context.Co
 		out = []EoschoolCurriculumMaterial{}
 	}
 	return out, nil
+}
+
+func (s *mongoEoschoolCurriculumMaterialsStore) UpdateMeta(ctx context.Context, ownerUserID, id, title, description string) (EoschoolCurriculumMaterial, bool, error) {
+	now := time.Now().UTC()
+	res := s.col.FindOneAndUpdate(ctx,
+		bson.M{"id": id, "owner_user_id": ownerUserID},
+		bson.M{"$set": bson.M{
+			"title":       title,
+			"description": description,
+			"updated_at":  now,
+		}},
+		options.FindOneAndUpdate().SetReturnDocument(options.After),
+	)
+	var m EoschoolCurriculumMaterial
+	err := res.Decode(&m)
+	if err == mongo.ErrNoDocuments {
+		return m, false, nil
+	}
+	if err != nil {
+		return m, false, err
+	}
+	return m, true, nil
 }
 
 func (s *mongoEoschoolCurriculumMaterialsStore) List(ctx context.Context, ownerUserID, studentKey, dayID, sectionID string) ([]EoschoolCurriculumMaterial, error) {

@@ -19,6 +19,9 @@ const (
 	eoschoolCurriculumMaterialKindURL      = "url"
 
 	eoschoolCurriculumMaterialMaxBytes = 25 << 20 // 25 MiB for audio/docs
+	eoschoolCurriculumMaterialMaxPerRole = 4
+	eoschoolCurriculumMaterialTitleMax   = 200
+	eoschoolCurriculumMaterialDescMax    = 1000
 )
 
 var eoschoolCurriculumMaterialRoles = map[string]bool{
@@ -37,6 +40,7 @@ type EoschoolCurriculumMaterial struct {
 	Role         string    `json:"role" bson:"role"`
 	Kind         string    `json:"kind" bson:"kind"`
 	Title        string    `json:"title,omitempty" bson:"title,omitempty"`
+	Description  string    `json:"description,omitempty" bson:"description,omitempty"`
 	URL          string    `json:"url,omitempty" bson:"url,omitempty"`
 	StorageName  string    `json:"storageName,omitempty" bson:"storage_name,omitempty"`
 	ThumbName    string    `json:"thumbName,omitempty" bson:"thumb_name,omitempty"`
@@ -67,6 +71,32 @@ func validateEoschoolCurriculumMaterialHTTPSURL(raw string) (string, bool) {
 		return "", false
 	}
 	return u.String(), true
+}
+
+func sanitizeEoschoolCurriculumMaterialTitle(raw string) string {
+	title := strings.TrimSpace(raw)
+	if len(title) > eoschoolCurriculumMaterialTitleMax {
+		title = title[:eoschoolCurriculumMaterialTitleMax]
+	}
+	return title
+}
+
+func sanitizeEoschoolCurriculumMaterialDescription(raw string) string {
+	desc := strings.TrimSpace(raw)
+	if len(desc) > eoschoolCurriculumMaterialDescMax {
+		desc = desc[:eoschoolCurriculumMaterialDescMax]
+	}
+	return desc
+}
+
+func countEoschoolCurriculumMaterialsForRole(items []EoschoolCurriculumMaterial, role string) int {
+	n := 0
+	for _, m := range items {
+		if m.Role == role {
+			n++
+		}
+	}
+	return n
 }
 
 func eoschoolCurriculumMaterialFileURL(id string) string {
