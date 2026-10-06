@@ -53,7 +53,6 @@ const cards = [
   description="Dashboard del currículo MPPE: programa, niños, progreso y PDFs."
   page="eoschool-hub"
   robots="noindex,nofollow"
-  showPageTitle={false}
 >
   <Fragment slot="dhs">
     <a class="dhs-action" href="/homescool" data-route title="Homescool" aria-label="Homescool">
@@ -61,8 +60,6 @@ const cards = [
       Homescool
     </a>
   </Fragment>
-
-  <h1 class="page-title-sr">Eoschool MPPE</h1>
 
   <section class="product-dash page-span-all" data-eoschool-hub>
     <p class="status" data-banner>Cargando…</p>
@@ -74,13 +71,9 @@ const cards = [
       {
         cards.map((card) => (
           <a class="product-dash__card" href={card.href} data-route>
-            <header class="product-dash__card-head">
-              <h2 class="product-dash__card-title">
-                <span class="material-symbols-outlined" aria-hidden="true">{card.icon}</span>
-                {card.title}
-              </h2>
-              <p class="product-dash__card-desc">{card.desc}</p>
-            </header>
+            <span class="material-symbols-outlined" aria-hidden="true">{card.icon}</span>
+            <span class="product-dash__card-title">{card.title}</span>
+            <span class="product-dash__card-desc">{card.desc}</span>
           </a>
         ))
       }
@@ -109,11 +102,6 @@ const cards = [
 </script>
 
 <style>
-  .product-dash__card-title {
-    display: flex;
-    align-items: center;
-    gap: var(--rail-gap);
-  }
   a.product-dash__card {
     text-decoration: none;
     color: inherit;
