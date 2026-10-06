@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"sync"
 	"time"
 
@@ -10,9 +11,16 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+var errEoschoolCurriculumStudentExists = errors.New("student_exists")
+var errEoschoolCurriculumStudentNotFound = errors.New("student_not_found")
+
 type EoschoolCurriculumProgressStore interface {
 	GetOrCreate(ctx context.Context, ownerUserID, studentKey string) (EoschoolCurriculumProgressDoc, error)
+	Get(ctx context.Context, ownerUserID, studentKey string) (EoschoolCurriculumProgressDoc, bool, error)
 	ListStudents(ctx context.Context, ownerUserID string) ([]EoschoolCurriculumStudent, error)
+	CreateStudent(ctx context.Context, doc EoschoolCurriculumProgressDoc) (EoschoolCurriculumProgressDoc, error)
+	UpdateStudent(ctx context.Context, ownerUserID, studentKey string, mutate func(*EoschoolCurriculumProgressDoc) error) (EoschoolCurriculumProgressDoc, error)
+	DeleteStudent(ctx context.Context, ownerUserID, studentKey string) (EoschoolCurriculumProgressDoc, error)
 	SetSectionDone(ctx context.Context, ownerUserID, studentKey, dayID, sectionID string, done bool) (EoschoolCurriculumProgressDoc, error)
 }
 
@@ -50,10 +58,16 @@ func (s *memoryEoschoolCurriculumProgressStore) GetOrCreate(_ context.Context, o
 	return row, nil
 }
 
-func (s *memoryEoschoolCurriculumProgressStore) ListStudents(ctx context.Context, ownerUserID string) ([]EoschoolCurriculumStudent, error) {
-	if _, err := s.GetOrCreate(ctx, ownerUserID, eoschoolCurriculumDefaultStudentKey); err != nil {
-		return nil, err
-	}
+func (s *memoryEoschoolCurriculumProgressStore) Get(_ context.Context, ownerUserID, studentKey string) (EoschoolCurriculumProgressDoc, bool, error) {
+	studentKey = normalizeEoschoolCurriculumStudentKey(studentKey)
+	key := eoschoolCurriculumProgressStoreKey(ownerUserID, studentKey)
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	row, ok := s.rows[key]
+	return row, ok, nil
+}
+
+func (s *memoryEoschoolCurriculumProgressStore) ListStudents(_ context.Context, ownerUserID string) ([]EoschoolCurriculumStudent, error) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	out := make([]EoschoolCurriculumStudent, 0)
@@ -63,10 +77,60 @@ func (s *memoryEoschoolCurriculumProgressStore) ListStudents(ctx context.Context
 		}
 		out = append(out, row.studentView())
 	}
-	if len(out) == 0 {
-		return []EoschoolCurriculumStudent{}, nil
-	}
 	return out, nil
+}
+
+func (s *memoryEoschoolCurriculumProgressStore) CreateStudent(_ context.Context, doc EoschoolCurriculumProgressDoc) (EoschoolCurriculumProgressDoc, error) {
+	doc.StudentKey = normalizeEoschoolCurriculumStudentKey(doc.StudentKey)
+	key := eoschoolCurriculumProgressStoreKey(doc.OwnerUserID, doc.StudentKey)
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if _, ok := s.rows[key]; ok {
+		return EoschoolCurriculumProgressDoc{}, errEoschoolCurriculumStudentExists
+	}
+	if doc.ID == "" {
+		doc.ID = randomID(16)
+	}
+	now := time.Now().UTC()
+	if doc.CreatedAt.IsZero() {
+		doc.CreatedAt = now
+	}
+	doc.UpdatedAt = now
+	if doc.SectionsDone == nil {
+		doc.SectionsDone = []string{}
+	}
+	s.rows[key] = doc
+	return doc, nil
+}
+
+func (s *memoryEoschoolCurriculumProgressStore) UpdateStudent(_ context.Context, ownerUserID, studentKey string, mutate func(*EoschoolCurriculumProgressDoc) error) (EoschoolCurriculumProgressDoc, error) {
+	studentKey = normalizeEoschoolCurriculumStudentKey(studentKey)
+	key := eoschoolCurriculumProgressStoreKey(ownerUserID, studentKey)
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	row, ok := s.rows[key]
+	if !ok {
+		return EoschoolCurriculumProgressDoc{}, errEoschoolCurriculumStudentNotFound
+	}
+	if err := mutate(&row); err != nil {
+		return EoschoolCurriculumProgressDoc{}, err
+	}
+	row.UpdatedAt = time.Now().UTC()
+	s.rows[key] = row
+	return row, nil
+}
+
+func (s *memoryEoschoolCurriculumProgressStore) DeleteStudent(_ context.Context, ownerUserID, studentKey string) (EoschoolCurriculumProgressDoc, error) {
+	studentKey = normalizeEoschoolCurriculumStudentKey(studentKey)
+	key := eoschoolCurriculumProgressStoreKey(ownerUserID, studentKey)
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	row, ok := s.rows[key]
+	if !ok {
+		return EoschoolCurriculumProgressDoc{}, errEoschoolCurriculumStudentNotFound
+	}
+	delete(s.rows, key)
+	return row, nil
 }
 
 func (s *memoryEoschoolCurriculumProgressStore) SetSectionDone(ctx context.Context, ownerUserID, studentKey, dayID, sectionID string, done bool) (EoschoolCurriculumProgressDoc, error) {
@@ -117,7 +181,6 @@ func (s *mongoEoschoolCurriculumProgressStore) GetOrCreate(ctx context.Context, 
 	row.ID = randomID(16)
 	_, err = s.col.InsertOne(ctx, row)
 	if err != nil {
-		// Concurrent create: unique (owner_user_id, student_key) — re-read.
 		if mongo.IsDuplicateKeyError(err) {
 			var existing EoschoolCurriculumProgressDoc
 			if findErr := s.col.FindOne(ctx, filter).Decode(&existing); findErr == nil {
@@ -129,25 +192,92 @@ func (s *mongoEoschoolCurriculumProgressStore) GetOrCreate(ctx context.Context, 
 	return row, nil
 }
 
-func (s *mongoEoschoolCurriculumProgressStore) ListStudents(ctx context.Context, ownerUserID string) ([]EoschoolCurriculumStudent, error) {
-	row, err := s.GetOrCreate(ctx, ownerUserID, eoschoolCurriculumDefaultStudentKey)
-	if err != nil {
-		return nil, err
+func (s *mongoEoschoolCurriculumProgressStore) Get(ctx context.Context, ownerUserID, studentKey string) (EoschoolCurriculumProgressDoc, bool, error) {
+	studentKey = normalizeEoschoolCurriculumStudentKey(studentKey)
+	filter := bson.M{"owner_user_id": ownerUserID, "student_key": studentKey}
+	var row EoschoolCurriculumProgressDoc
+	err := s.col.FindOne(ctx, filter).Decode(&row)
+	if err == nil {
+		return row, true, nil
 	}
+	if err == mongo.ErrNoDocuments {
+		return row, false, nil
+	}
+	return row, false, err
+}
+
+func (s *mongoEoschoolCurriculumProgressStore) ListStudents(ctx context.Context, ownerUserID string) ([]EoschoolCurriculumStudent, error) {
 	cur, err := s.col.Find(ctx, bson.M{"owner_user_id": ownerUserID}, options.Find().SetSort(bson.D{{Key: "display_name", Value: 1}}))
 	if err != nil {
-		return []EoschoolCurriculumStudent{row.studentView()}, nil
+		return []EoschoolCurriculumStudent{}, err
 	}
 	defer cur.Close(ctx)
 	var docs []EoschoolCurriculumProgressDoc
-	if err := cur.All(ctx, &docs); err != nil || len(docs) == 0 {
-		return []EoschoolCurriculumStudent{row.studentView()}, nil
+	if err := cur.All(ctx, &docs); err != nil {
+		return []EoschoolCurriculumStudent{}, err
 	}
 	out := make([]EoschoolCurriculumStudent, 0, len(docs))
 	for _, d := range docs {
 		out = append(out, d.studentView())
 	}
 	return out, nil
+}
+
+func (s *mongoEoschoolCurriculumProgressStore) CreateStudent(ctx context.Context, doc EoschoolCurriculumProgressDoc) (EoschoolCurriculumProgressDoc, error) {
+	doc.StudentKey = normalizeEoschoolCurriculumStudentKey(doc.StudentKey)
+	if doc.ID == "" {
+		doc.ID = randomID(16)
+	}
+	now := time.Now().UTC()
+	if doc.CreatedAt.IsZero() {
+		doc.CreatedAt = now
+	}
+	doc.UpdatedAt = now
+	if doc.SectionsDone == nil {
+		doc.SectionsDone = []string{}
+	}
+	_, err := s.col.InsertOne(ctx, doc)
+	if err != nil {
+		if mongo.IsDuplicateKeyError(err) {
+			return EoschoolCurriculumProgressDoc{}, errEoschoolCurriculumStudentExists
+		}
+		return EoschoolCurriculumProgressDoc{}, err
+	}
+	return doc, nil
+}
+
+func (s *mongoEoschoolCurriculumProgressStore) UpdateStudent(ctx context.Context, ownerUserID, studentKey string, mutate func(*EoschoolCurriculumProgressDoc) error) (EoschoolCurriculumProgressDoc, error) {
+	row, found, err := s.Get(ctx, ownerUserID, studentKey)
+	if err != nil {
+		return row, err
+	}
+	if !found {
+		return row, errEoschoolCurriculumStudentNotFound
+	}
+	if err := mutate(&row); err != nil {
+		return row, err
+	}
+	row.UpdatedAt = time.Now().UTC()
+	_, err = s.col.ReplaceOne(ctx, bson.M{"owner_user_id": ownerUserID, "student_key": row.StudentKey}, row)
+	if err != nil {
+		return row, err
+	}
+	return row, nil
+}
+
+func (s *mongoEoschoolCurriculumProgressStore) DeleteStudent(ctx context.Context, ownerUserID, studentKey string) (EoschoolCurriculumProgressDoc, error) {
+	row, found, err := s.Get(ctx, ownerUserID, studentKey)
+	if err != nil {
+		return row, err
+	}
+	if !found {
+		return row, errEoschoolCurriculumStudentNotFound
+	}
+	_, err = s.col.DeleteOne(ctx, bson.M{"owner_user_id": ownerUserID, "student_key": row.StudentKey})
+	if err != nil {
+		return row, err
+	}
+	return row, nil
 }
 
 func (s *mongoEoschoolCurriculumProgressStore) SetSectionDone(ctx context.Context, ownerUserID, studentKey, dayID, sectionID string, done bool) (EoschoolCurriculumProgressDoc, error) {

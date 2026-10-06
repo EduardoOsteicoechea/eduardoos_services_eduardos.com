@@ -1,0 +1,121 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../layouts/Layout.astro";
+
+const cards = [
+  {
+    href: "/eoschool/program",
+    title: "Ver programa",
+    desc: "Plan MPPE 40 semanas sin seguimiento de progreso.",
+    icon: "menu_book",
+  },
+  {
+    href: "/eoschool/study",
+    title: "Clases (estudio)",
+    desc: "Programa con checks por niño y espacio de estudio.",
+    icon: "school",
+  },
+  {
+    href: "/eoschool/students/register",
+    title: "Registrar estudiante",
+    desc: "Nombre, apellido, edad, grado y foto del niño.",
+    icon: "person_add",
+  },
+  {
+    href: "/eoschool/students",
+    title: "Gestionar estudiantes",
+    desc: "Lista, edita o elimina niños del currículo.",
+    icon: "group",
+  },
+  {
+    href: "/eoschool/progress",
+    title: "Progreso",
+    desc: "Semáforo verde / amarillo / rojo por día y materia.",
+    icon: "monitoring",
+  },
+  {
+    href: "/eoschool/portfolio",
+    title: "Portafolio",
+    desc: "Vista previa PDF con temas y fotos de demostración.",
+    icon: "folder_special",
+  },
+  {
+    href: "/eoschool/program/print",
+    title: "Imprimir programa",
+    desc: "PDF estructurado de las 40 semanas completas.",
+    icon: "print",
+  },
+];
+---
+
+<Layout
+  title="Eoschool MPPE"
+  description="Dashboard del currículo MPPE: programa, niños, progreso y PDFs."
+  page="eoschool-hub"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/homescool" data-route title="Homescool" aria-label="Homescool">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">school</span></span>
+      Homescool
+    </a>
+  </Fragment>
+
+  <h1 class="page-title-sr">Eoschool MPPE</h1>
+
+  <section class="product-dash page-span-all" data-eoschool-hub>
+    <p class="status" data-banner>Cargando…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Necesitas sesión y suscripción Homescool.</p>
+      <a class="button" href="/session" data-route>Sign in</a>
+    </div>
+    <div class="product-dash__grid" data-authed hidden>
+      {
+        cards.map((card) => (
+          <a class="product-dash__card" href={card.href} data-route>
+            <header class="product-dash__card-head">
+              <h2 class="product-dash__card-title">
+                <span class="material-symbols-outlined" aria-hidden="true">{card.icon}</span>
+                {card.title}
+              </h2>
+              <p class="product-dash__card-desc">{card.desc}</p>
+            </header>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { requireService, setHidden } from "../../lib/productGate";
+
+  const root = document.querySelector("[data-eoschool-hub]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const authed = root?.querySelector("[data-authed]");
+
+  const result = await requireService("homescool", { requireSubscription: true });
+  if (!result.sessionOk || !result.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
+    setHidden(gate, false);
+    setHidden(authed, true);
+  } else {
+    if (banner instanceof HTMLElement) banner.hidden = true;
+    setHidden(gate, true);
+    setHidden(authed, false);
+  }
+</script>
+
+<style>
+  .product-dash__card-title {
+    display: flex;
+    align-items: center;
+    gap: var(--rail-gap);
+  }
+  a.product-dash__card {
+    text-decoration: none;
+    color: inherit;
+  }
+</style>

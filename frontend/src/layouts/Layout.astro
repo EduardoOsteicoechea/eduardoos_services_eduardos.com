@@ -454,9 +454,13 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
               Requisitos MPPE
             </a>
-            <a href="/eoschool/requirements/curriculum" data-route data-service="homescool" hidden aria-current={path === "/eoschool/requirements/curriculum" || path.startsWith("/eoschool/requirements/curriculum/") ? "page" : undefined}>
+            <a href="/eoschool" data-route data-service="homescool" hidden aria-current={path === "/eoschool" || (path.startsWith("/eoschool/") && !path.startsWith("/eoschool/revision") && !path.startsWith("/eoschool/requirements/national")) ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
+              Eoschool MPPE
+            </a>
+            <a href="/eoschool/study" data-route data-service="homescool" hidden aria-current={path === "/eoschool/study" || path.startsWith("/eoschool/requirements/curriculum") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
-              Currículo 40 sem
+              Clases MPPE
             </a>
             <a href="/documents/pamphlet" data-route data-service="epam" hidden aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">description</span>

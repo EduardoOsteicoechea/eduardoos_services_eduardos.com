@@ -1,0 +1,104 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Portafolio MPPE"
+  description="Vista previa PDF del portafolio del estudiante."
+  page="eoschool-portfolio"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoschool" data-route title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span></span>
+      Dashboard
+    </a>
+  </Fragment>
+
+  <h1 class="page-title-sr">Portafolio MPPE</h1>
+
+  <section class="product-dash" data-portfolio>
+    <p class="status" data-banner>Cargando…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Necesitas sesión y suscripción Homescool.</p>
+      <a class="button" href="/session" data-route>Sign in</a>
+    </div>
+    <div class="product-dash__card" data-authed hidden>
+      <header class="product-dash__card-head">
+        <h2 class="product-dash__card-title">Generar portafolio</h2>
+        <p class="product-dash__card-desc">Temas por semana/día/materia y fotos de demostración (proof).</p>
+      </header>
+      <label>
+        Estudiante
+        <select data-student-select></select>
+      </label>
+      <button type="button" class="button" data-generate>Vista previa PDF</button>
+      <p class="hint" data-status></p>
+      <iframe data-pdf-frame title="Portafolio PDF" hidden style="width: min(40rem, 100%); height: 32rem; border: var(--border-width) solid var(--color-border); border-radius: var(--border-radius);"></iframe>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import {
+    fetchCurriculumPortfolioPreview,
+    fetchCurriculumStudents,
+  } from "../../lib/eoschool-curriculum-api";
+  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+
+  const root = document.querySelector("[data-portfolio]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const authed = root?.querySelector("[data-authed]");
+  const select = root?.querySelector<HTMLSelectElement>("[data-student-select]");
+  const statusEl = root?.querySelector("[data-status]");
+  const frame = root?.querySelector<HTMLIFrameElement>("[data-pdf-frame]");
+  const btn = root?.querySelector("[data-generate]");
+
+  const access = await requireService("homescool", { requireSubscription: true });
+  if (!access.sessionOk || !access.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
+    setHidden(gate, false);
+  } else {
+    setHidden(gate, true);
+    setHidden(authed, false);
+    if (banner instanceof HTMLElement) banner.hidden = true;
+    const studentsRes = await fetchCurriculumStudents();
+    if (!studentsRes.ok) {
+      apiFail("No se pudo cargar estudiantes.", { requestId: studentsRes.requestId });
+    } else if (select) {
+      const qKey = new URLSearchParams(location.search).get("studentKey") || "";
+      for (const s of studentsRes.data.students) {
+        const opt = document.createElement("option");
+        opt.value = s.studentKey;
+        opt.textContent = s.displayName;
+        if (s.studentKey === qKey) opt.selected = true;
+        select.append(opt);
+      }
+    }
+  }
+
+  btn?.addEventListener("click", async () => {
+    const studentKey = select?.value?.trim();
+    if (!studentKey) {
+      apiFail("Selecciona un estudiante.");
+      return;
+    }
+    if (statusEl instanceof HTMLElement) statusEl.textContent = "Generando PDF…";
+    const res = await fetchCurriculumPortfolioPreview(studentKey);
+    if (!res.ok || !res.pdfBytes) {
+      apiFail(res.error || "Error", { requestId: res.requestId });
+      if (statusEl instanceof HTMLElement) statusEl.textContent = "";
+      return;
+    }
+    const blob = new Blob([res.pdfBytes], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    if (frame) {
+      frame.src = url;
+      frame.hidden = false;
+    }
+    if (statusEl instanceof HTMLElement) statusEl.textContent = "Listo.";
+  });
+</script>

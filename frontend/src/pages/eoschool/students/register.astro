@@ -1,0 +1,84 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Registrar estudiante"
+  description="Registra un niño en el currículo MPPE."
+  page="eoschool-student-register"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoschool" data-route title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span></span>
+      Dashboard
+    </a>
+    <a class="dhs-action" href="/eoschool/students" data-route title="Estudiantes" aria-label="Estudiantes">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">group</span></span>
+      Gestionar
+    </a>
+  </Fragment>
+
+  <h1 class="page-title-sr">Registrar estudiante</h1>
+
+  <section class="product-dash" data-register-student>
+    <p class="status" data-banner>Completa los datos del niño.</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Necesitas sesión y suscripción Homescool.</p>
+      <a class="button" href="/session" data-route>Sign in</a>
+    </div>
+    <form class="product-form session-grid" data-form hidden>
+      <label>Nombre <input name="firstName" required maxlength="80" autocomplete="given-name" /></label>
+      <label>Apellido <input name="lastName" required maxlength="80" autocomplete="family-name" /></label>
+      <label>Edad <input name="age" type="number" min="3" max="18" required value="8" /></label>
+      <label>Grado <input name="grade" required maxlength="80" value="3er grado" /></label>
+      <label>Foto <input name="photo" type="file" accept="image/jpeg,image/png,image/webp" /></label>
+      <button class="button" type="submit">Registrar</button>
+    </form>
+    <p class="hint" data-result hidden></p>
+  </section>
+</Layout>
+
+<script>
+  import { createCurriculumStudent } from "../../../lib/eoschool-curriculum-api";
+  import { apiFail, requireService, setHidden } from "../../../lib/productGate";
+
+  const root = document.querySelector("[data-register-student]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const form = root?.querySelector("[data-form]");
+  const resultEl = root?.querySelector("[data-result]");
+
+  const access = await requireService("homescool", { requireSubscription: true });
+  if (!access.sessionOk || !access.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
+    setHidden(gate, false);
+  } else {
+    setHidden(gate, true);
+    setHidden(form, false);
+  }
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const fd = new FormData(event.target as HTMLFormElement);
+    const photo = fd.get("photo");
+    const res = await createCurriculumStudent({
+      firstName: String(fd.get("firstName") || "").trim(),
+      lastName: String(fd.get("lastName") || "").trim(),
+      age: Number(fd.get("age") || 0),
+      grade: String(fd.get("grade") || "").trim(),
+      photo: photo instanceof File && photo.size > 0 ? photo : null,
+    });
+    if (!res.ok) {
+      apiFail(res.error, { requestId: res.requestId });
+      return;
+    }
+    if (resultEl instanceof HTMLElement) {
+      resultEl.hidden = false;
+      resultEl.textContent = `Registrado: ${res.student.displayName} (${res.student.studentKey}).`;
+    }
+    window.location.href = `/eoschool/students?studentKey=${encodeURIComponent(res.student.studentKey)}`;
+  });
+</script>

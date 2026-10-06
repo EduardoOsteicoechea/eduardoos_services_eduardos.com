@@ -1,0 +1,214 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../layouts/Layout.astro";
+import { MPPE_40WEEK_CURRICULUM } from "../../lib/eoschool-mppe-40week-curriculum";
+import { CURRICULUM_SECTION_IDS } from "../../lib/eoschool-curriculum-plan-classes";
+
+const weeks = MPPE_40WEEK_CURRICULUM.weeks;
+const sectionLabels: Record<string, string> = {
+  bib: "Bib",
+  ide: "Ide",
+  len: "Len",
+  mat: "Mat",
+  cie: "Cie",
+};
+
+const dayRows = weeks.flatMap((week) =>
+  week.blocks
+    .flatMap((block) => (block.bible?.days ?? []).map((d) => ({ week: week.week, planDay: d.dayInPlan })))
+    .sort((a, b) => a.planDay - b.planDay)
+    .map((d) => ({ week: d.week, planDay: d.planDay, dayId: `d${d.planDay}` })),
+);
+---
+
+<Layout
+  title="Progreso MPPE"
+  description="Semáforo de avance por día y materia del currículo MPPE."
+  page="eoschool-progress"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoschool" data-route title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span></span>
+      Dashboard
+    </a>
+  </Fragment>
+
+  <h1 class="page-title-sr">Progreso MPPE</h1>
+
+  <section class="product-dash page-span-all" data-mppe-progress>
+    <p class="status" data-banner>Cargando…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Necesitas sesión y suscripción Homescool.</p>
+      <a class="button" href="/session" data-route>Sign in</a>
+    </div>
+
+    <div data-authed hidden>
+      <label class="session-grid">
+        Estudiante
+        <select data-student-select></select>
+      </label>
+      <p class="hint" data-student-meta></p>
+
+      <div class="product-dash__card eoschool-progress-legend">
+        <span class="eoschool-dot eoschool-dot--green" aria-hidden="true"></span> Completo
+        <span class="eoschool-dot eoschool-dot--yellow" aria-hidden="true"></span> Incompleto
+        <span class="eoschool-dot eoschool-dot--red" aria-hidden="true"></span> Pendiente
+      </div>
+
+      <div class="eoschool-progress-table-wrap">
+        <table class="eoschool-progress-table" data-progress-table>
+          <thead>
+            <tr>
+              <th scope="col">Sem</th>
+              <th scope="col">Día</th>
+              <th scope="col">Día</th>
+              {CURRICULUM_SECTION_IDS.map((id) => <th scope="col">{sectionLabels[id]}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              dayRows.map((day) => (
+                <tr data-day-row={day.dayId}>
+                  <td>{day.week}</td>
+                  <td>{day.planDay}</td>
+                  <td><span class="eoschool-dot" data-day-dot aria-label="estado del día"></span></td>
+                  {CURRICULUM_SECTION_IDS.map((sid) => (
+                    <td>
+                      <span
+                        class="eoschool-dot"
+                        data-section-dot
+                        data-section={sid}
+                        aria-label={sectionLabels[sid]}
+                      ></span>
+                    </td>
+                  ))}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import {
+    fetchCurriculumProgress,
+    fetchCurriculumStudents,
+    type CurriculumStudent,
+  } from "../../lib/eoschool-curriculum-api";
+  import { dayTrafficStatus, sectionDone } from "../../lib/eoschool-curriculum-progress-status";
+  import { CURRICULUM_SECTION_IDS, type CurriculumPlanSectionId } from "../../lib/eoschool-curriculum-plan-classes";
+  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+
+  const root = document.querySelector("[data-mppe-progress]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const authed = root?.querySelector("[data-authed]");
+  const select = root?.querySelector<HTMLSelectElement>("[data-student-select]");
+  const meta = root?.querySelector("[data-student-meta]");
+
+  const access = await requireService("homescool", { requireSubscription: true });
+  if (!access.sessionOk || !access.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
+    setHidden(gate, false);
+  } else {
+    setHidden(gate, true);
+    setHidden(authed, false);
+    const studentsRes = await fetchCurriculumStudents();
+    if (!studentsRes.ok) {
+      apiFail("No se pudo cargar estudiantes.", { requestId: studentsRes.requestId });
+    } else {
+      const students = studentsRes.data.students;
+      const qKey = new URLSearchParams(location.search).get("studentKey") || "";
+      if (select) {
+        select.replaceChildren();
+        for (const s of students) {
+          const opt = document.createElement("option");
+          opt.value = s.studentKey;
+          opt.textContent = s.displayName;
+          if (s.studentKey === qKey) opt.selected = true;
+          select.append(opt);
+        }
+      }
+      if (!students.length) {
+        if (banner instanceof HTMLElement) banner.textContent = "Registra un estudiante primero.";
+      } else {
+        if (banner instanceof HTMLElement) banner.hidden = true;
+        const initial = (select?.value || students[0].studentKey).trim();
+        await loadProgress(initial, students);
+        select?.addEventListener("change", () => {
+          void loadProgress(select.value, students);
+        });
+      }
+    }
+  }
+
+  async function loadProgress(studentKey: string, students: CurriculumStudent[]) {
+    const student = students.find((s) => s.studentKey === studentKey);
+    if (meta instanceof HTMLElement && student) {
+      meta.textContent = `${student.displayName} · ${student.age} años · ${student.grade}`;
+    }
+    const loaded = await fetchCurriculumProgress(studentKey);
+    if (!loaded.ok) {
+      apiFail("No se pudo cargar el progreso.", { requestId: loaded.requestId });
+      return;
+    }
+    const done = new Set(loaded.data.sectionsDone);
+    root?.querySelectorAll<HTMLElement>("[data-day-row]").forEach((row) => {
+      const dayId = row.dataset.dayRow || "";
+      const dayDot = row.querySelector<HTMLElement>("[data-day-dot]");
+      const status = dayTrafficStatus(dayId, done);
+      if (dayDot) {
+        dayDot.className = `eoschool-dot eoschool-dot--${status}`;
+      }
+      row.querySelectorAll<HTMLElement>("[data-section-dot]").forEach((dot) => {
+        const sid = dot.dataset.section as CurriculumPlanSectionId;
+        const ok = sectionDone(dayId, sid, done);
+        dot.className = `eoschool-dot eoschool-dot--${ok ? "green" : "red"}`;
+      });
+    });
+  }
+</script>
+
+<style>
+  .eoschool-progress-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rail-gap);
+    font-size: var(--font-size-sm);
+  }
+  .eoschool-progress-table-wrap {
+    overflow-x: auto;
+  }
+  .eoschool-progress-table {
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+  }
+  .eoschool-progress-table th,
+  .eoschool-progress-table td {
+    padding: 0.25rem 0.5rem;
+    border-bottom: var(--border-width) solid var(--color-border);
+    text-align: center;
+  }
+  .eoschool-dot {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--color-muted);
+  }
+  .eoschool-dot--green {
+    background: var(--color-ok);
+  }
+  .eoschool-dot--yellow {
+    background: #c9a227;
+  }
+  .eoschool-dot--red {
+    background: var(--color-err);
+  }
+</style>

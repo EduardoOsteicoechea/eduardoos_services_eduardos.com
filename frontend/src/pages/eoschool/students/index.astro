@@ -1,0 +1,139 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Estudiantes MPPE"
+  description="Gestiona los niños del currículo MPPE."
+  page="eoschool-students"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoschool" data-route title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span></span>
+      Dashboard
+    </a>
+    <a class="dhs-action" href="/eoschool/students/register" data-route title="Registrar" aria-label="Registrar">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">person_add</span></span>
+      Registrar
+    </a>
+  </Fragment>
+
+  <h1 class="page-title-sr">Estudiantes MPPE</h1>
+
+  <section class="product-dash" data-students>
+    <p class="status" data-banner>Cargando…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Necesitas sesión y suscripción Homescool.</p>
+      <a class="button" href="/session" data-route>Sign in</a>
+    </div>
+    <div class="product-dash__grid" data-list hidden></div>
+  </section>
+</Layout>
+
+<script>
+  import {
+    deleteCurriculumStudent,
+    fetchCurriculumStudents,
+    type CurriculumStudent,
+  } from "../../../lib/eoschool-curriculum-api";
+  import { apiFail, requireService, setHidden } from "../../../lib/productGate";
+
+  const root = document.querySelector("[data-students]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const list = root?.querySelector("[data-list]");
+
+  const access = await requireService("homescool", { requireSubscription: true });
+  if (!access.sessionOk || !access.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
+    setHidden(gate, false);
+  } else {
+    setHidden(gate, true);
+    setHidden(list, false);
+    const loaded = await fetchCurriculumStudents();
+    if (!loaded.ok) {
+      apiFail("No se pudo cargar estudiantes.", { requestId: loaded.requestId });
+    } else if (list instanceof HTMLElement) {
+      const students = loaded.data.students;
+      if (banner instanceof HTMLElement) {
+        banner.textContent = students.length ? `${students.length} estudiante(s)` : "Sin estudiantes. Registra el primero.";
+      }
+      list.replaceChildren();
+      for (const s of students) {
+        list.appendChild(renderCard(s));
+      }
+    }
+  }
+
+  function renderCard(s: CurriculumStudent): HTMLElement {
+    const card = document.createElement("article");
+    card.className = "product-dash__card";
+    const head = document.createElement("header");
+    head.className = "product-dash__card-head";
+    const title = document.createElement("h2");
+    title.className = "product-dash__card-title";
+    title.textContent = s.displayName;
+    const desc = document.createElement("p");
+    desc.className = "product-dash__card-desc";
+    desc.textContent = `${s.age} años · ${s.grade} · ${s.studentKey}`;
+    head.append(title, desc);
+    card.append(head);
+
+    if (s.hasPhoto && s.photoUrl) {
+      const img = document.createElement("img");
+      img.src = s.photoUrl;
+      img.alt = "";
+      img.width = 64;
+      img.height = 64;
+      img.style.borderRadius = "50%";
+      img.style.width = "4rem";
+      img.style.height = "4rem";
+      img.style.objectFit = "cover";
+      card.append(img);
+    }
+
+    const actions = document.createElement("div");
+    actions.style.display = "flex";
+    actions.style.flexWrap = "wrap";
+    actions.style.gap = "var(--rail-gap)";
+
+    const study = document.createElement("a");
+    study.className = "button";
+    study.href = `/eoschool/study?studentKey=${encodeURIComponent(s.studentKey)}`;
+    study.dataset.route = "";
+    study.textContent = "Estudio";
+
+    const progress = document.createElement("a");
+    progress.className = "button";
+    progress.href = `/eoschool/progress?studentKey=${encodeURIComponent(s.studentKey)}`;
+    progress.dataset.route = "";
+    progress.textContent = "Progreso";
+
+    const portfolio = document.createElement("a");
+    portfolio.className = "button";
+    portfolio.href = `/eoschool/portfolio?studentKey=${encodeURIComponent(s.studentKey)}`;
+    portfolio.dataset.route = "";
+    portfolio.textContent = "Portafolio";
+
+    const del = document.createElement("button");
+    del.type = "button";
+    del.className = "button";
+    del.textContent = "Eliminar";
+    del.addEventListener("click", async () => {
+      if (!confirm(`¿Eliminar a ${s.displayName}?`)) return;
+      const res = await deleteCurriculumStudent(s.studentKey);
+      if (!res.ok) {
+        apiFail(res.error, { requestId: res.requestId });
+        return;
+      }
+      card.remove();
+    });
+
+    actions.append(study, progress, portfolio, del);
+    card.append(actions);
+    return card;
+  }
+</script>

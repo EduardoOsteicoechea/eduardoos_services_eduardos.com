@@ -11,6 +11,8 @@ import {
 
 const { meta, weeks } = MPPE_40WEEK_CURRICULUM;
 const indexRows = weeks.map(buildWeekIndexRow);
+const curriculumMode = Astro.url.searchParams.get("mode") === "browse" ? "browse" : "study";
+const initialStudentKey = Astro.url.searchParams.get("studentKey")?.trim() || "";
 
 const bibleMeta = meta.bible;
 const areaDefs = [
@@ -30,6 +32,10 @@ const areaDefs = [
   showPageTitle={false}
 >
   <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoschool" data-route title="Eoschool MPPE" aria-label="Eoschool MPPE">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span></span>
+      Dashboard
+    </a>
     <a class="dhs-action" href="/eoschool/requirements/national" data-route title="Requisitos MPPE" aria-label="Requisitos MPPE">
       <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">menu_book</span></span>
       Requisitos
@@ -42,7 +48,12 @@ const areaDefs = [
 
   <h1 class="page-title-sr">Currículo MPPE 40 semanas</h1>
 
-  <section class="product-dash eoschool-curriculum page-span-all" data-curriculum-progress>
+  <section
+    class="product-dash eoschool-curriculum page-span-all"
+    data-curriculum-progress
+    data-curriculum-mode={curriculumMode}
+    data-curriculum-student-key={initialStudentKey || undefined}
+  >
     <p class="lede">
       {meta.grade ?? "3er grado"} · {meta.weeks} semanas × {meta.daysPerWeek ?? 5} días = {meta.totalPlanDays ?? bibleMeta.readingDays}{" "}
       días escolares. Cada día: lectura bíblica (tres pistas) más Identidad, Lenguaje, Matemáticas y Ciencias. Abre un día para ver
@@ -317,9 +328,23 @@ const areaDefs = [
   import { initCurriculumWeekPrint } from "../../../lib/eoschool-curriculum-week-print";
 
   function bootCurriculumChrome() {
-    const root = document.querySelector("[data-curriculum-progress]");
+    const root = document.querySelector<HTMLElement>("[data-curriculum-progress]");
     initCurriculumIndexResize(document.querySelector("[data-curriculum-index]"));
-    void initCurriculumProgress(root);
+    const mode = root?.dataset.curriculumMode || "study";
+    if (mode === "browse") {
+      root?.querySelectorAll<HTMLInputElement>("[data-curriculum-section-check]").forEach((input) => {
+        input.disabled = true;
+        const label = input.closest("label");
+        if (label) label.hidden = true;
+      });
+      const banner = root?.querySelector<HTMLElement>("[data-curriculum-student-banner]");
+      if (banner) {
+        banner.hidden = false;
+        banner.textContent = "Modo consulta: sin seguimiento de progreso.";
+      }
+    } else {
+      void initCurriculumProgress(root);
+    }
     initCurriculumDayModal(root);
     initCurriculumWeekPrint(root);
   }

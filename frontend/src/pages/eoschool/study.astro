@@ -1,0 +1,5 @@
+---
+const studentKey = Astro.url.searchParams.get("studentKey")?.trim() || "";
+const q = studentKey ? `?mode=study&studentKey=${encodeURIComponent(studentKey)}` : "?mode=study";
+return Astro.redirect(`/eoschool/requirements/curriculum${q}`);
+---

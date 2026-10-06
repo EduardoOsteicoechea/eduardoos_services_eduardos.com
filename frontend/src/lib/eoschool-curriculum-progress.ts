@@ -104,7 +104,12 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
   if (!root) return;
 
   const done = new Set<string>();
-  let studentKey = DEFAULT_CURRICULUM_STUDENT_KEY;
+  const fromDataset = (root.dataset.curriculumStudentKey || "").trim();
+  const fromQuery =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("studentKey")?.trim() || ""
+      : "";
+  let studentKey = fromDataset || fromQuery || DEFAULT_CURRICULUM_STUDENT_KEY;
   let persistRemote = false;
 
   try {

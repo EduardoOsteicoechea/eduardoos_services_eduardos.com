@@ -42,15 +42,15 @@ func TestValidateEoschoolCurriculumSectionToggle(t *testing.T) {
 	}
 }
 
-func TestEoschoolCurriculumProgressListStudentsIncludesDefault(t *testing.T) {
+func TestEoschoolCurriculumProgressListStudentsEmptyUntilCreated(t *testing.T) {
 	store := newMemoryEoschoolCurriculumProgressStore()
 	ctx := context.Background()
 	students, err := store.ListStudents(ctx, "owner-a")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(students) != 1 || students[0].StudentKey != eoschoolCurriculumDefaultStudentKey {
-		t.Fatalf("students=%v", students)
+	if len(students) != 0 {
+		t.Fatalf("expected empty list, got %v", students)
 	}
 	_, err = store.SetSectionDone(ctx, "owner-a", "otro-nino", "d2", "cie", true)
 	if err != nil {
@@ -60,7 +60,14 @@ func TestEoschoolCurriculumProgressListStudentsIncludesDefault(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(students) < 2 {
-		t.Fatalf("expected multiple students, got %v", students)
+	if len(students) != 1 {
+		t.Fatalf("expected one student, got %v", students)
+	}
+}
+
+func TestSlugifyEoschoolCurriculumStudentKey(t *testing.T) {
+	got := slugifyEoschoolCurriculumStudentKey("Elías", "Osteicoechea")
+	if got != "elias-osteicoechea" {
+		t.Fatalf("got %q", got)
 	}
 }

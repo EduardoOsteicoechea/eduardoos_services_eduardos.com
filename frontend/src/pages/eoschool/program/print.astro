@@ -1,0 +1,81 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Imprimir programa MPPE"
+  description="PDF estructurado de las 40 semanas del currículo MPPE."
+  page="eoschool-program-print"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoschool" data-route title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span></span>
+      Dashboard
+    </a>
+  </Fragment>
+
+  <h1 class="page-title-sr">Imprimir programa MPPE</h1>
+
+  <section class="product-dash" data-program-print>
+    <p class="status" data-banner>Cargando…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Necesitas sesión y suscripción Homescool.</p>
+      <a class="button" href="/session" data-route>Sign in</a>
+    </div>
+    <div class="product-dash__card" data-authed hidden>
+      <header class="product-dash__card-head">
+        <h2 class="product-dash__card-title">Programa completo (40 semanas)</h2>
+        <p class="product-dash__card-desc">
+          Portada, índice por semana y una hoja por cada uno de los 200 días. Puede tardar un minuto.
+        </p>
+      </header>
+      <button type="button" class="button" data-generate>Descargar PDF</button>
+      <p class="hint" data-status></p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { fetchCurriculumProgramPreview } from "../../../lib/eoschool-curriculum-api";
+  import { apiFail, requireService, setHidden } from "../../../lib/productGate";
+
+  const root = document.querySelector("[data-program-print]");
+  const banner = root?.querySelector("[data-banner]");
+  const gate = root?.querySelector("[data-gate]");
+  const authed = root?.querySelector("[data-authed]");
+  const statusEl = root?.querySelector("[data-status]");
+  const btn = root?.querySelector<HTMLButtonElement>("[data-generate]");
+
+  const access = await requireService("homescool", { requireSubscription: true });
+  if (!access.sessionOk || !access.access.allowed) {
+    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
+    setHidden(gate, false);
+  } else {
+    setHidden(gate, true);
+    setHidden(authed, false);
+    if (banner instanceof HTMLElement) banner.hidden = true;
+  }
+
+  btn?.addEventListener("click", async () => {
+    btn.disabled = true;
+    if (statusEl instanceof HTMLElement) statusEl.textContent = "Generando PDF del programa…";
+    const res = await fetchCurriculumProgramPreview();
+    btn.disabled = false;
+    if (!res.ok || !res.pdfBytes) {
+      apiFail(res.error || "Error", { requestId: res.requestId });
+      if (statusEl instanceof HTMLElement) statusEl.textContent = "";
+      return;
+    }
+    const blob = new Blob([res.pdfBytes], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "mppe-programa-40-semanas.pdf";
+    a.click();
+    URL.revokeObjectURL(url);
+    if (statusEl instanceof HTMLElement) statusEl.textContent = "Descarga iniciada.";
+  });
+</script>

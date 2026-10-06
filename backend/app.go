@@ -56,6 +56,7 @@ type App struct {
 	eoschoolCurriculum     EoschoolCurriculumProgressStore
 	curriculumMaterials    EoschoolCurriculumMaterialsStore
 	curriculumMaterialsFS  *eoschoolCurriculumMaterialsFS
+	eoschoolStudentsFS     *eoschoolCurriculumStudentsFS
 	progressFS             *homescoolProgressFS
 	eoproject              eoprojectStore
 	eoprojectFS            *eoprojectFS
@@ -120,6 +121,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		eoschoolCurriculum:    newEoschoolCurriculumProgressStore(store),
 		curriculumMaterials:   newEoschoolCurriculumMaterialsStore(store),
 		curriculumMaterialsFS: newEoschoolCurriculumMaterialsFS(cfg.MediaRoot),
+		eoschoolStudentsFS:    newEoschoolCurriculumStudentsFS(cfg.MediaRoot),
 		progressFS:            newHomescoolProgressFS(cfg.MediaRoot),
 		eoproject:             newEoprojectStoreFromDataStore(store),
 		eoprojectFS:           newEoprojectFS(cfg.EoprojectMediaRoot),
@@ -390,6 +392,10 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/homescool/progress/photos/{photoId}/{variant}", a.getHomescoolProgressPhotoHandler)
 	mux.HandleFunc("GET /api/homescool/web-assets/{name}", a.getHomescoolWebAssetHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/students", a.listEoschoolCurriculumStudentsHandler)
+	mux.HandleFunc("POST /api/eoschool/curriculum/students", a.createEoschoolCurriculumStudentHandler)
+	mux.HandleFunc("PATCH /api/eoschool/curriculum/students/{studentKey}", a.patchEoschoolCurriculumStudentHandler)
+	mux.HandleFunc("DELETE /api/eoschool/curriculum/students/{studentKey}", a.deleteEoschoolCurriculumStudentHandler)
+	mux.HandleFunc("GET /api/eoschool/curriculum/students/{studentKey}/photo", a.getEoschoolCurriculumStudentPhotoHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/progress", a.getEoschoolCurriculumProgressHandler)
 	mux.HandleFunc("PATCH /api/eoschool/curriculum/progress/sections", a.patchEoschoolCurriculumSectionHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/materials", a.listEoschoolCurriculumMaterialsHandler)
@@ -400,6 +406,8 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/eoschool/curriculum/materials/{id}/thumb", a.getEoschoolCurriculumMaterialThumbHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/day-preview", a.postEoschoolMPPECurriculumDayPreviewHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/week-preview", a.postEoschoolMPPECurriculumWeekPreviewHandler)
+	mux.HandleFunc("POST /api/eoschool/curriculum/program-preview", a.postEoschoolMPPECurriculumProgramPreviewHandler)
+	mux.HandleFunc("POST /api/eoschool/curriculum/portfolio-preview", a.postEoschoolMPPECurriculumPortfolioPreviewHandler)
 
 	a.registerEvoiceRoutes(mux)
 	a.registerEoprojectRoutes(mux)

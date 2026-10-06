@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"strings"
 	"sync"
 	"time"
 
@@ -14,6 +15,7 @@ type EoschoolCurriculumMaterialsStore interface {
 	Insert(ctx context.Context, m EoschoolCurriculumMaterial) (EoschoolCurriculumMaterial, error)
 	GetByID(ctx context.Context, id string) (EoschoolCurriculumMaterial, bool, error)
 	List(ctx context.Context, ownerUserID, studentKey, dayID, sectionID string) ([]EoschoolCurriculumMaterial, error)
+	ListByStudentRole(ctx context.Context, ownerUserID, studentKey, role string) ([]EoschoolCurriculumMaterial, error)
 	Delete(ctx context.Context, ownerUserID, id string) (EoschoolCurriculumMaterial, bool, error)
 }
 
@@ -68,6 +70,20 @@ func (s *memoryEoschoolCurriculumMaterialsStore) List(_ context.Context, ownerUs
 	return out, nil
 }
 
+func (s *memoryEoschoolCurriculumMaterialsStore) ListByStudentRole(_ context.Context, ownerUserID, studentKey, role string) ([]EoschoolCurriculumMaterial, error) {
+	studentKey = normalizeEoschoolCurriculumStudentKey(studentKey)
+	role = strings.TrimSpace(role)
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	out := make([]EoschoolCurriculumMaterial, 0)
+	for _, m := range s.rows {
+		if m.OwnerUserID == ownerUserID && m.StudentKey == studentKey && (role == "" || m.Role == role) {
+			out = append(out, m)
+		}
+	}
+	return out, nil
+}
+
 func (s *memoryEoschoolCurriculumMaterialsStore) Delete(_ context.Context, ownerUserID, id string) (EoschoolCurriculumMaterial, bool, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -98,6 +114,30 @@ func (s *mongoEoschoolCurriculumMaterialsStore) GetByID(ctx context.Context, id 
 		return m, false, err
 	}
 	return m, true, nil
+}
+
+func (s *mongoEoschoolCurriculumMaterialsStore) ListByStudentRole(ctx context.Context, ownerUserID, studentKey, role string) ([]EoschoolCurriculumMaterial, error) {
+	studentKey = normalizeEoschoolCurriculumStudentKey(studentKey)
+	filter := bson.M{
+		"owner_user_id": ownerUserID,
+		"student_key":   studentKey,
+	}
+	if role = strings.TrimSpace(role); role != "" {
+		filter["role"] = role
+	}
+	cur, err := s.col.Find(ctx, filter, options.Find().SetSort(bson.D{{Key: "day_id", Value: 1}, {Key: "section_id", Value: 1}, {Key: "created_at", Value: 1}}))
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+	var out []EoschoolCurriculumMaterial
+	if err := cur.All(ctx, &out); err != nil {
+		return nil, err
+	}
+	if out == nil {
+		out = []EoschoolCurriculumMaterial{}
+	}
+	return out, nil
 }
 
 func (s *mongoEoschoolCurriculumMaterialsStore) List(ctx context.Context, ownerUserID, studentKey, dayID, sectionID string) ([]EoschoolCurriculumMaterial, error) {
