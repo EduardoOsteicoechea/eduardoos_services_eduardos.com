@@ -95,23 +95,40 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { fetchHomescoolProgressSummary } from "../../lib/homescool-progress";
-  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+  import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
   import { subjectDisplayName } from "../../lib/homescool-eoschool";
 
-  const root = document.querySelector("[data-homescool-progress-dash]");
-  const banner = root?.querySelector("[data-banner]");
-  const gate = root?.querySelector("[data-gate]");
-  const authed = root?.querySelector("[data-authed]");
-  const cycleSel = root?.querySelector("[data-cycle]");
-  const weekSel = root?.querySelector("[data-week]");
-  const reloadBtn = root?.querySelector("[data-reload]");
-  const avgEl = root?.querySelector("[data-avg]");
-  const bySubjectEl = root?.querySelector("[data-by-subject]");
-  const byDayEl = root?.querySelector("[data-by-day]");
-  const itemsEl = root?.querySelector("[data-items]");
-  const strengthsEl = root?.querySelector("[data-strengths]");
-  const weaknessesEl = root?.querySelector("[data-weaknesses]");
-  const suggestionsEl = root?.querySelector("[data-suggestions]");
+  let root: Element | null = null;
+  let banner: Element | null | undefined;
+  let gate: Element | null | undefined;
+  let authed: Element | null | undefined;
+  let cycleSel: Element | null | undefined;
+  let weekSel: Element | null | undefined;
+  let reloadBtn: Element | null | undefined;
+  let avgEl: Element | null | undefined;
+  let bySubjectEl: Element | null | undefined;
+  let byDayEl: Element | null | undefined;
+  let itemsEl: Element | null | undefined;
+  let strengthsEl: Element | null | undefined;
+  let weaknessesEl: Element | null | undefined;
+  let suggestionsEl: Element | null | undefined;
+
+  function bindProgressDom() {
+    root = document.querySelector("[data-homescool-progress-dash]");
+    banner = root?.querySelector("[data-banner]");
+    gate = root?.querySelector("[data-gate]");
+    authed = root?.querySelector("[data-authed]");
+    cycleSel = root?.querySelector("[data-cycle]");
+    weekSel = root?.querySelector("[data-week]");
+    reloadBtn = root?.querySelector("[data-reload]");
+    avgEl = root?.querySelector("[data-avg]");
+    bySubjectEl = root?.querySelector("[data-by-subject]");
+    byDayEl = root?.querySelector("[data-by-day]");
+    itemsEl = root?.querySelector("[data-items]");
+    strengthsEl = root?.querySelector("[data-strengths]");
+    weaknessesEl = root?.querySelector("[data-weaknesses]");
+    suggestionsEl = root?.querySelector("[data-suggestions]");
+  }
 
   function fillList(host: Element | null | undefined, rows: string[], empty: string) {
     if (!(host instanceof HTMLElement)) return;
@@ -179,16 +196,28 @@ import Layout from "../../layouts/Layout.astro";
     fillList(suggestionsEl, s.teacherSuggestions || [], "Sin sugerencias aún.");
   }
 
-  const result = await requireService("homescool", { requireSubscription: true });
-  if (!result.sessionOk || !result.access.allowed) {
-    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
-    setHidden(gate, false);
-  } else {
+  onAstroPageLoad("homescool-progress", async () => {
+    bindProgressDom();
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Cargando…";
+    }
+    const result = await requireService("homescool", { requireSubscription: true });
+    if (!result.sessionOk || !result.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = result.sessionOk
+          ? "Necesitas suscripción Homescool."
+          : "Inicia sesión para continuar.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+      return;
+    }
     setHidden(gate, true);
     setHidden(authed, false);
     reloadBtn?.addEventListener("click", () => void load());
     cycleSel?.addEventListener("change", () => void load());
     weekSel?.addEventListener("change", () => void load());
     await load();
-  }
+  });
 </script>

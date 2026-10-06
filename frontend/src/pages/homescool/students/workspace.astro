@@ -23,34 +23,46 @@ import Layout from "../../../layouts/Layout.astro";
 
 <script>
   import { createTeacherTask, fetchTeacherTasks } from "../../../lib/homescool";
-  import { apiFail, requireService, setHidden } from "../../../lib/productGate";
+  import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../../lib/productGate";
 
-  const slug = new URLSearchParams(location.search).get("slug") || "";
-  const root = document.querySelector("[data-workspace]");
-  const banner = root?.querySelector("[data-banner]");
-  const form = root?.querySelector("[data-task-form]");
-  const list = root?.querySelector("[data-tasks]");
+  onAstroPageLoad("homescool-students-workspace", async () => {
+    const slug = new URLSearchParams(location.search).get("slug") || "";
+    const root = document.querySelector("[data-workspace]");
+    const banner = root?.querySelector("[data-banner]");
+    const form = root?.querySelector("[data-task-form]");
+    const list = root?.querySelector("[data-tasks]");
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Loading…";
+    }
 
-  async function reload() {
-    const rows = await fetchTeacherTasks(slug);
-    if (rows.error) {
-      apiFail(rows.error, { requestId: rows.requestId });
+    async function reload() {
+      const rows = await fetchTeacherTasks(slug);
+      if (rows.error) {
+        apiFail(rows.error, { requestId: rows.requestId });
+        return;
+      }
+      if (banner instanceof HTMLElement) banner.textContent = `${slug} · ${rows.tasks.length} task(s)`;
+      if (!(list instanceof HTMLElement)) return;
+      list.replaceChildren();
+      for (const task of rows.tasks) {
+        const li = document.createElement("li");
+        li.textContent = `${task.name} · ${task.status}`;
+        list.appendChild(li);
+      }
+    }
+
+    const result = await requireService("homescool", { requireSubscription: true });
+    if (!slug || !result.sessionOk || !result.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = !slug
+          ? "Access or slug missing."
+          : result.sessionOk
+            ? "Teacher subscription required."
+            : "Sign in required.";
+      }
       return;
     }
-    if (banner instanceof HTMLElement) banner.textContent = `${slug} · ${rows.tasks.length} task(s)`;
-    if (!(list instanceof HTMLElement)) return;
-    list.replaceChildren();
-    for (const task of rows.tasks) {
-      const li = document.createElement("li");
-      li.textContent = `${task.name} · ${task.status}`;
-      list.appendChild(li);
-    }
-  }
-
-  const result = await requireService("homescool", { requireSubscription: true });
-  if (!slug || !result.sessionOk || !result.access.allowed) {
-    if (banner instanceof HTMLElement) banner.textContent = "Access or slug missing.";
-  } else {
     setHidden(form, false);
     setHidden(list, false);
     form?.addEventListener("submit", async (event) => {
@@ -69,5 +81,5 @@ import Layout from "../../../layouts/Layout.astro";
       await reload();
     });
     await reload();
-  }
+  });
 </script>

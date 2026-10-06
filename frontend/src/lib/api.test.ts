@@ -114,8 +114,8 @@ describe("api csrf and errors", () => {
     expect(fetchMock.mock.calls.some((call) => call[0] === "/api/auth/refresh")).toBe(true);
   });
 
-  it("retries product calls once after 401 when session hint is set", async () => {
-    markSessionHint();
+  it("retries product calls once after 401 even without a session hint", async () => {
+    clearSessionHint();
     resetCsrfMemory();
     const fetchMock = vi
       .fn()
@@ -129,6 +129,7 @@ describe("api csrf and errors", () => {
     expect(result.status).toBe(200);
     expect(fetchMock.mock.calls.some((call) => call[0] === "/api/auth/refresh")).toBe(true);
     expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/scrib/books")).toHaveLength(2);
+    expect(hasSessionHint()).toBe(true);
   });
 
   it("deduplicates concurrent refresh requests", async () => {

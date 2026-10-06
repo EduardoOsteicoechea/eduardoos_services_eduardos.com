@@ -159,28 +159,51 @@ import Layout from "../../layouts/Layout.astro";
     revisionClassFromCurriculum,
     type RevisionOCRResult,
   } from "../../lib/homescool-revision";
-  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+  import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
 
-  const root = document.querySelector("[data-eoschool-revision]");
-  const banner = root?.querySelector("[data-banner]");
-  const gate = root?.querySelector("[data-gate]");
-  const authed = root?.querySelector("[data-authed]");
-  const cycleSel = root?.querySelector("[data-cycle]");
-  const weekSel = root?.querySelector("[data-week]");
-  const daySel = root?.querySelector("[data-day]");
-  const subjectSel = root?.querySelector("[data-subject]");
-  const classTitle = root?.querySelector("[data-class-title]");
-  const filesInput = root?.querySelector("[data-files]");
-  const ocrBtn = root?.querySelector("[data-ocr]");
-  const ocrStatus = root?.querySelector("[data-ocr-status]");
-  const results = root?.querySelector("[data-results]");
-  const scoreSummary = root?.querySelector("[data-score-summary]");
-  const mcqTable = root?.querySelector("[data-mcq-table]");
-  const writeList = root?.querySelector("[data-write-list]");
-  const chatCard = root?.querySelector("[data-chat-card]");
-  const chatLog = root?.querySelector("[data-chat-log]");
-  const chatForm = root?.querySelector("[data-chat-form]");
-  const chatInput = root?.querySelector("[data-chat-input]");
+  let root: Element | null = null;
+  let banner: Element | null | undefined;
+  let gate: Element | null | undefined;
+  let authed: Element | null | undefined;
+  let cycleSel: Element | null | undefined;
+  let weekSel: Element | null | undefined;
+  let daySel: Element | null | undefined;
+  let subjectSel: Element | null | undefined;
+  let classTitle: Element | null | undefined;
+  let filesInput: Element | null | undefined;
+  let ocrBtn: Element | null | undefined;
+  let ocrStatus: Element | null | undefined;
+  let results: Element | null | undefined;
+  let scoreSummary: Element | null | undefined;
+  let mcqTable: Element | null | undefined;
+  let writeList: Element | null | undefined;
+  let chatCard: Element | null | undefined;
+  let chatLog: Element | null | undefined;
+  let chatForm: Element | null | undefined;
+  let chatInput: Element | null | undefined;
+
+  function bindRevisionDom() {
+    root = document.querySelector("[data-eoschool-revision]");
+    banner = root?.querySelector("[data-banner]");
+    gate = root?.querySelector("[data-gate]");
+    authed = root?.querySelector("[data-authed]");
+    cycleSel = root?.querySelector("[data-cycle]");
+    weekSel = root?.querySelector("[data-week]");
+    daySel = root?.querySelector("[data-day]");
+    subjectSel = root?.querySelector("[data-subject]");
+    classTitle = root?.querySelector("[data-class-title]");
+    filesInput = root?.querySelector("[data-files]");
+    ocrBtn = root?.querySelector("[data-ocr]");
+    ocrStatus = root?.querySelector("[data-ocr-status]");
+    results = root?.querySelector("[data-results]");
+    scoreSummary = root?.querySelector("[data-score-summary]");
+    mcqTable = root?.querySelector("[data-mcq-table]");
+    writeList = root?.querySelector("[data-write-list]");
+    chatCard = root?.querySelector("[data-chat-card]");
+    chatLog = root?.querySelector("[data-chat-log]");
+    chatForm = root?.querySelector("[data-chat-form]");
+    chatInput = root?.querySelector("[data-chat-input]");
+  }
 
   let curriculum: HomescoolCurriculum | null = null;
   let lastOCR: RevisionOCRResult | null = null;
@@ -371,12 +394,28 @@ import Layout from "../../layouts/Layout.astro";
     chatHistory = [...chatHistory, { role: "assistant", content: finalText }].slice(-8);
   }
 
-  clearAgentRoutePayload();
-  const access = await requireService("homescool", { requireSubscription: true });
-  if (!access.sessionOk || !access.access.allowed) {
-    if (banner instanceof HTMLElement) banner.textContent = "Acceso Homescool requerido.";
-    setHidden(gate, false);
-  } else {
+  onAstroPageLoad("eoschool-revision", async () => {
+    bindRevisionDom();
+    clearAgentRoutePayload();
+    curriculum = null;
+    lastOCR = null;
+    chatHistory = [];
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Cargando…";
+    }
+
+    const access = await requireService("homescool", { requireSubscription: true });
+    if (!access.sessionOk || !access.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = access.sessionOk
+          ? "Necesitas suscripción Homescool."
+          : "Inicia sesión para continuar.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+      return;
+    }
     setHidden(gate, true);
     setHidden(authed, false);
     const loaded = await loadHomescoolCurriculum();
@@ -398,18 +437,18 @@ import Layout from "../../layouts/Layout.astro";
       }
       if (mustLog) console.log("[eoschool-revision] ready", { classCount: curriculum.classes.length });
     }
-  }
 
-  for (const el of [cycleSel, weekSel, daySel]) {
-    el?.addEventListener("change", () => {
-      rebuildSubjectOptions();
+    for (const el of [cycleSel, weekSel, daySel]) {
+      el?.addEventListener("change", () => {
+        rebuildSubjectOptions();
+      });
+    }
+    subjectSel?.addEventListener("change", () => refreshClassTitle());
+    ocrBtn?.addEventListener("click", () => void runOCR());
+    chatForm?.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      if (!(chatInput instanceof HTMLTextAreaElement)) return;
+      void sendChat(chatInput.value);
     });
-  }
-  subjectSel?.addEventListener("change", () => refreshClassTitle());
-  ocrBtn?.addEventListener("click", () => void runOCR());
-  chatForm?.addEventListener("submit", (ev) => {
-    ev.preventDefault();
-    if (!(chatInput instanceof HTMLTextAreaElement)) return;
-    void sendChat(chatInput.value);
   });
 </script>

@@ -37,24 +37,35 @@ import Layout from "../../../layouts/Layout.astro";
     updateCurriculumStudent,
     type CurriculumStudent,
   } from "../../../lib/eoschool-curriculum-api";
-  import { apiFail, requireService, setHidden } from "../../../lib/productGate";
+  import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../../lib/productGate";
 
-  const root = document.querySelector("[data-students]");
-  const banner = root?.querySelector("[data-banner]");
-  const gate = root?.querySelector("[data-gate]");
-  const list = root?.querySelector("[data-list]");
+  onAstroPageLoad("eoschool-students", async () => {
+    const root = document.querySelector("[data-students]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const list = root?.querySelector("[data-list]");
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Cargando…";
+    }
 
-  const access = await requireService("homescool", { requireSubscription: true });
-  if (!access.sessionOk || !access.access.allowed) {
-    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
-    setHidden(gate, false);
-  } else {
+    const access = await requireService("homescool", { requireSubscription: true });
+    if (!access.sessionOk || !access.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = access.sessionOk
+          ? "Necesitas suscripción Homescool."
+          : "Inicia sesión para continuar.";
+      }
+      setHidden(gate, false);
+      setHidden(list, true);
+      return;
+    }
     setHidden(gate, true);
     setHidden(list, false);
-    await reloadList();
-  }
+    await reloadList(banner, list);
+  });
 
-  async function reloadList() {
+  async function reloadList(banner: Element | null | undefined, list: Element | null | undefined) {
     const loaded = await fetchCurriculumStudents();
     if (!loaded.ok) {
       apiFail("No se pudo cargar estudiantes.", { requestId: loaded.requestId });
@@ -177,7 +188,10 @@ import Layout from "../../../layouts/Layout.astro";
         apiFail(res.error, { requestId: res.requestId });
         return;
       }
-      await reloadList();
+      await reloadList(
+        document.querySelector("[data-students] [data-banner]"),
+        document.querySelector("[data-students] [data-list]"),
+      );
     });
 
     del.addEventListener("click", async () => {
@@ -188,9 +202,11 @@ import Layout from "../../../layouts/Layout.astro";
         return;
       }
       card.remove();
-      if (banner instanceof HTMLElement && list instanceof HTMLElement) {
-        const n = list.querySelectorAll(".eoschool-students__card").length;
-        banner.textContent = n ? `${n} estudiante(s)` : "Sin estudiantes. Registra el primero.";
+      const liveBanner = document.querySelector("[data-students] [data-banner]");
+      const liveList = document.querySelector("[data-students] [data-list]");
+      if (liveBanner instanceof HTMLElement && liveList instanceof HTMLElement) {
+        const n = liveList.querySelectorAll(".eoschool-students__card").length;
+        liveBanner.textContent = n ? `${n} estudiante(s)` : "Sin estudiantes. Registra el primero.";
       }
     });
 
@@ -209,50 +225,67 @@ import Layout from "../../../layouts/Layout.astro";
 </script>
 
 <style>
-  .eoschool-students__card {
+  /* Cards are built in JS — scoped selectors never match; use :global. */
+  :global(.eoschool-students__card) {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-padding);
+    cursor: default;
   }
 
-  .eoschool-students__photo {
+  :global(.eoschool-students__photo) {
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
     object-fit: cover;
   }
 
-  .eoschool-students__actions {
+  :global(.eoschool-students__actions) {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--rail-gap);
   }
 
-  .eoschool-students__action {
+  :global(.eoschool-students__action.icon-btn) {
     color: var(--color-text);
+    background: transparent;
+    border: var(--border-width) solid var(--color-border);
   }
 
-  .eoschool-students__action:hover,
-  .eoschool-students__action:focus-visible {
+  :global(.eoschool-students__action.icon-btn:hover),
+  :global(.eoschool-students__action.icon-btn:focus-visible) {
     color: var(--color-accent);
+    border-color: var(--color-accent);
   }
 
-  .eoschool-students__action--danger {
+  /* Undo product-dash icon chrome (soft disc + accent fill) inside action buttons. */
+  :global(.eoschool-students__action .material-symbols-outlined) {
+    display: inline-flex;
+    width: auto;
+    height: auto;
+    font-size: var(--icon-size);
+    color: inherit;
+    background: transparent;
+  }
+
+  :global(.eoschool-students__action--danger.icon-btn) {
     color: var(--color-err);
+    border-color: var(--color-err);
   }
 
-  .eoschool-students__action--danger:hover,
-  .eoschool-students__action--danger:focus-visible {
+  :global(.eoschool-students__action--danger.icon-btn:hover),
+  :global(.eoschool-students__action--danger.icon-btn:focus-visible) {
     color: var(--color-err);
+    border-color: var(--color-err);
   }
 
-  .eoschool-students__edit {
-    width: min(24rem, 100%);
+  :global(.eoschool-students__edit) {
+    max-width: 24rem;
   }
 
-  .eoschool-students__edit-actions {
+  :global(.eoschool-students__edit-actions) {
     display: flex;
     flex-wrap: wrap;
     gap: var(--rail-gap);

@@ -63,12 +63,16 @@ describe("eoschool-curriculum-api", () => {
   it("treats 401 as guest without throwing", async () => {
     const fetchMock = vi
       .fn()
+      // product GET → 401, then cookie refresh attempt (csrf + refresh) also fails
+      .mockResolvedValueOnce(jsonResponse(401, { error: "unauthorized", message: "Sign in to continue." }))
+      .mockResolvedValueOnce(jsonResponse(200, { csrf: "refresh-csrf" }))
       .mockResolvedValueOnce(jsonResponse(401, { error: "unauthorized", message: "Sign in to continue." }));
     vi.stubGlobal("fetch", fetchMock);
     const loaded = await fetchCurriculumProgress();
     expect(loaded.ok).toBe(false);
     if (loaded.ok) return;
     expect(loaded.status).toBe(401);
+    expect(fetchMock.mock.calls.some((call) => call[0] === "/api/auth/refresh")).toBe(true);
   });
 
   it("PATCHes section with CSRF and remints on csrf_invalid", async () => {

@@ -144,7 +144,7 @@ import Layout from "../../layouts/Layout.astro";
   } from "../../lib/eoproject";
   import type { UploadProgress } from "../../lib/api";
   import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
-  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+  import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
 
   const root = document.querySelector("[data-eoproject-project]");
   const banner = root?.querySelector("[data-banner]");
@@ -159,7 +159,7 @@ import Layout from "../../layouts/Layout.astro";
   const shareModal = root?.querySelector("[data-share-modal]");
   const shareResult = root?.querySelector("[data-share-result]");
 
-  const projectId = new URLSearchParams(location.search).get("id") || "";
+  let projectId = new URLSearchParams(location.search).get("id") || "";
   let dashboard: EoprojectDashboard | null = null;
   const viewers = new Map<string, EoprojectIfcViewer>();
   const photoViewer = createEoprojectPhotoViewer();
@@ -962,27 +962,26 @@ import Layout from "../../layouts/Layout.astro";
     for (const v of viewers.values()) v.resize();
   });
 
-  if (!projectId) {
-    setBanner("Missing project id.");
-    setHidden(gate, false);
-  } else {
+  onAstroPageLoad("eoproject-project", async () => {
+    projectId = new URLSearchParams(location.search).get("id") || "";
+    if (!projectId) {
+      setBanner("Missing project id.");
+      setHidden(gate, false);
+      return;
+    }
     const gateResult = await requireService("eoproject");
     if (!gateResult.sessionOk || !gateResult.access.allowed) {
       setBanner(gateResult.sessionOk ? "Subscription required." : "Sign in required.");
       setHidden(gate, false);
       setHidden(authed, true);
-    } else {
-      setHidden(gate, true);
-      setHidden(authed, false);
-      await reload();
+      return;
     }
-  }
+    setHidden(gate, true);
+    setHidden(authed, false);
+    await reload();
+  });
 
-  document.addEventListener(
-    "astro:before-swap",
-    () => {
-      clearAgentRoutePayload();
-    },
-    { once: true },
-  );
+  document.addEventListener("astro:before-swap", () => {
+    clearAgentRoutePayload();
+  });
 </script>

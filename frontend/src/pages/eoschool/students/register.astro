@@ -43,42 +43,54 @@ import Layout from "../../../layouts/Layout.astro";
 
 <script>
   import { createCurriculumStudent } from "../../../lib/eoschool-curriculum-api";
-  import { apiFail, requireService, setHidden } from "../../../lib/productGate";
+  import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../../lib/productGate";
 
-  const root = document.querySelector("[data-register-student]");
-  const banner = root?.querySelector("[data-banner]");
-  const gate = root?.querySelector("[data-gate]");
-  const form = root?.querySelector("[data-form]");
-  const resultEl = root?.querySelector("[data-result]");
+  onAstroPageLoad("eoschool-student-register", async () => {
+    const root = document.querySelector("[data-register-student]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const form = root?.querySelector("[data-form]");
+    const resultEl = root?.querySelector("[data-result]");
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Cargando…";
+    }
 
-  const access = await requireService("homescool", { requireSubscription: true });
-  if (!access.sessionOk || !access.access.allowed) {
-    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
-    setHidden(gate, false);
-  } else {
-    setHidden(gate, true);
-    setHidden(form, false);
-  }
-
-  form?.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const fd = new FormData(event.target as HTMLFormElement);
-    const photo = fd.get("photo");
-    const res = await createCurriculumStudent({
-      firstName: String(fd.get("firstName") || "").trim(),
-      lastName: String(fd.get("lastName") || "").trim(),
-      age: Number(fd.get("age") || 0),
-      grade: String(fd.get("grade") || "").trim(),
-      photo: photo instanceof File && photo.size > 0 ? photo : null,
-    });
-    if (!res.ok) {
-      apiFail(res.error, { requestId: res.requestId });
+    const access = await requireService("homescool", { requireSubscription: true });
+    if (!access.sessionOk || !access.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = access.sessionOk
+          ? "Necesitas suscripción Homescool."
+          : "Inicia sesión para continuar.";
+      }
+      setHidden(gate, false);
+      setHidden(form, true);
       return;
     }
-    if (resultEl instanceof HTMLElement) {
-      resultEl.hidden = false;
-      resultEl.textContent = `Registrado: ${res.student.displayName} (${res.student.studentKey}).`;
-    }
-    window.location.href = `/eoschool/students?studentKey=${encodeURIComponent(res.student.studentKey)}`;
+    setHidden(gate, true);
+    setHidden(form, false);
+    if (banner instanceof HTMLElement) banner.hidden = true;
+
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const fd = new FormData(event.target as HTMLFormElement);
+      const photo = fd.get("photo");
+      const res = await createCurriculumStudent({
+        firstName: String(fd.get("firstName") || "").trim(),
+        lastName: String(fd.get("lastName") || "").trim(),
+        age: Number(fd.get("age") || 0),
+        grade: String(fd.get("grade") || "").trim(),
+        photo: photo instanceof File && photo.size > 0 ? photo : null,
+      });
+      if (!res.ok) {
+        apiFail(res.error, { requestId: res.requestId });
+        return;
+      }
+      if (resultEl instanceof HTMLElement) {
+        resultEl.hidden = false;
+        resultEl.textContent = `Registrado: ${res.student.displayName} (${res.student.studentKey}).`;
+      }
+      window.location.href = `/eoschool/students?studentKey=${encodeURIComponent(res.student.studentKey)}`;
+    });
   });
 </script>

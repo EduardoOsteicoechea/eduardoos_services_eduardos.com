@@ -40,42 +40,53 @@ import Layout from "../../../layouts/Layout.astro";
 
 <script>
   import { fetchCurriculumProgramPreview } from "../../../lib/eoschool-curriculum-api";
-  import { apiFail, requireService, setHidden } from "../../../lib/productGate";
+  import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../../lib/productGate";
 
-  const root = document.querySelector("[data-program-print]");
-  const banner = root?.querySelector("[data-banner]");
-  const gate = root?.querySelector("[data-gate]");
-  const authed = root?.querySelector("[data-authed]");
-  const statusEl = root?.querySelector("[data-status]");
-  const btn = root?.querySelector<HTMLButtonElement>("[data-generate]");
+  onAstroPageLoad("eoschool-program-print", async () => {
+    const root = document.querySelector("[data-program-print]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const authed = root?.querySelector("[data-authed]");
+    const statusEl = root?.querySelector("[data-status]");
+    const btn = root?.querySelector<HTMLButtonElement>("[data-generate]");
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Cargando…";
+    }
 
-  const access = await requireService("homescool", { requireSubscription: true });
-  if (!access.sessionOk || !access.access.allowed) {
-    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
-    setHidden(gate, false);
-  } else {
+    const access = await requireService("homescool", { requireSubscription: true });
+    if (!access.sessionOk || !access.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = access.sessionOk
+          ? "Necesitas suscripción Homescool."
+          : "Inicia sesión para continuar.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+      return;
+    }
     setHidden(gate, true);
     setHidden(authed, false);
     if (banner instanceof HTMLElement) banner.hidden = true;
-  }
 
-  btn?.addEventListener("click", async () => {
-    btn.disabled = true;
-    if (statusEl instanceof HTMLElement) statusEl.textContent = "Generando PDF del programa…";
-    const res = await fetchCurriculumProgramPreview();
-    btn.disabled = false;
-    if (!res.ok || !res.pdfBytes) {
-      apiFail(res.error || "Error", { requestId: res.requestId });
-      if (statusEl instanceof HTMLElement) statusEl.textContent = "";
-      return;
-    }
-    const blob = new Blob([res.pdfBytes], { type: "application/pdf" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "mppe-programa-40-semanas.pdf";
-    a.click();
-    URL.revokeObjectURL(url);
-    if (statusEl instanceof HTMLElement) statusEl.textContent = "Descarga iniciada.";
+    btn?.addEventListener("click", async () => {
+      btn.disabled = true;
+      if (statusEl instanceof HTMLElement) statusEl.textContent = "Generando PDF del programa…";
+      const res = await fetchCurriculumProgramPreview();
+      btn.disabled = false;
+      if (!res.ok || !res.pdfBytes) {
+        apiFail(res.error || "Error", { requestId: res.requestId });
+        if (statusEl instanceof HTMLElement) statusEl.textContent = "";
+        return;
+      }
+      const blob = new Blob([res.pdfBytes], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "mppe-programa-40-semanas.pdf";
+      a.click();
+      URL.revokeObjectURL(url);
+      if (statusEl instanceof HTMLElement) statusEl.textContent = "Descarga iniciada.";
+    });
   });
 </script>

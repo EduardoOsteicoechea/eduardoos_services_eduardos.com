@@ -59,7 +59,14 @@ export async function requireService(
       },
     };
   }
-  const access = await checkServiceAccess(serviceId);
+  let access = await checkServiceAccess(serviceId);
+  // Soft navigations / expired access can yield a false deny; re-hydrate once.
+  if (!access.allowed && !access.isAdmin && !access.hasEntitlement) {
+    const again = await requireSession();
+    if (again.ok) {
+      access = await checkServiceAccess(serviceId);
+    }
+  }
   if (opts?.requireSubscription && serviceId === "homescool") {
     const allowed = access.isAdmin || access.hasEntitlement;
     return { sessionOk: true, access: { ...access, allowed } };
@@ -70,4 +77,44 @@ export async function requireService(
 export function setHidden(el: Element | null, hidden: boolean): void {
   if (!(el instanceof HTMLElement)) return;
   el.hidden = hidden;
+}
+
+/**
+ * ClientRouter keeps ES modules alive across soft navigations, so top-level
+ * `await requireService()` only runs once. Re-bind product boots on every
+ * `astro:page-load` and gate by `html[data-page]`.
+ */
+export function onAstroPageLoad(
+  page: string | ((doc: Document) => boolean),
+  boot: () => void | Promise<void>,
+): void {
+  let seq = 0;
+  const matches = (): boolean =>
+    typeof page === "function"
+      ? page(document)
+      : document.documentElement.getAttribute("data-page") === page;
+
+  const run = (): void => {
+    if (!matches()) return;
+    const my = ++seq;
+    void (async () => {
+      try {
+        await boot();
+      } catch (err) {
+        if (mustLog) {
+          console.log("[productGate] boot failed", {
+            page: typeof page === "string" ? page : "custom",
+            err: err instanceof Error ? err.message : String(err),
+          });
+        }
+        if (my === seq && matches()) {
+          apiFail(err instanceof Error ? err.message : "Could not load this page.");
+        }
+      }
+    })();
+  };
+
+  document.addEventListener("astro:page-load", run);
+  // after-swap covers ClientRouter cases where page-load ordering races the new DOM.
+  document.addEventListener("astro:after-swap", run);
 }

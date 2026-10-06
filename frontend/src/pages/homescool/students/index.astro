@@ -23,17 +23,26 @@ import Layout from "../../../layouts/Layout.astro";
 
 <script>
   import { fetchHomescoolStudents } from "../../../lib/homescool";
-  import { apiFail, requireService, setHidden } from "../../../lib/productGate";
+  import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../../lib/productGate";
 
-  const root = document.querySelector("[data-students]");
-  const banner = root?.querySelector("[data-banner]");
-  const gate = root?.querySelector("[data-gate]");
-  const list = root?.querySelector("[data-list]");
-  const result = await requireService("homescool", { requireSubscription: true });
-  if (!result.sessionOk || !result.access.allowed) {
-    if (banner instanceof HTMLElement) banner.textContent = "Access required.";
-    setHidden(gate, false);
-  } else {
+  onAstroPageLoad("homescool-students", async () => {
+    const root = document.querySelector("[data-students]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const list = root?.querySelector("[data-list]");
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Loading…";
+    }
+    const result = await requireService("homescool", { requireSubscription: true });
+    if (!result.sessionOk || !result.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = result.sessionOk ? "Teacher subscription required." : "Sign in required.";
+      }
+      setHidden(gate, false);
+      setHidden(list, true);
+      return;
+    }
     setHidden(gate, true);
     setHidden(list, false);
     const rows = await fetchHomescoolStudents();
@@ -52,5 +61,5 @@ import Layout from "../../../layouts/Layout.astro";
         list.appendChild(li);
       }
     }
-  }
+  });
 </script>

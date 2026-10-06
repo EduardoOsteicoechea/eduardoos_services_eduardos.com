@@ -82,23 +82,33 @@ const cards = [
 </Layout>
 
 <script>
-  import { requireService, setHidden } from "../../lib/productGate";
+  import { onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
 
-  const root = document.querySelector("[data-eoschool-hub]");
-  const banner = root?.querySelector("[data-banner]");
-  const gate = root?.querySelector("[data-gate]");
-  const authed = root?.querySelector("[data-authed]");
+  onAstroPageLoad("eoschool-hub", async () => {
+    const root = document.querySelector("[data-eoschool-hub]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const authed = root?.querySelector("[data-authed]");
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Cargando…";
+    }
 
-  const result = await requireService("homescool", { requireSubscription: true });
-  if (!result.sessionOk || !result.access.allowed) {
-    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
-    setHidden(gate, false);
-    setHidden(authed, true);
-  } else {
-    if (banner instanceof HTMLElement) banner.hidden = true;
-    setHidden(gate, true);
-    setHidden(authed, false);
-  }
+    const result = await requireService("homescool", { requireSubscription: true });
+    if (!result.sessionOk || !result.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = result.sessionOk
+          ? "Necesitas suscripción Homescool."
+          : "Inicia sesión para continuar.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+    } else {
+      if (banner instanceof HTMLElement) banner.hidden = true;
+      setHidden(gate, true);
+      setHidden(authed, false);
+    }
+  });
 </script>
 
 <style>

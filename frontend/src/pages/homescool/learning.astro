@@ -26,35 +26,44 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { fetchLearningLinks, fetchLearningTasks } from "../../lib/homescool";
-  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+  import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
 
-  const root = document.querySelector("[data-learning]");
-  const banner = root?.querySelector("[data-banner]");
-  const gate = root?.querySelector("[data-gate]");
-  const authed = root?.querySelector("[data-authed]");
-  const teacherSelect = root?.querySelector("[data-teacher]");
-  const list = root?.querySelector("[data-tasks]");
+  onAstroPageLoad("homescool-learning", async () => {
+    const root = document.querySelector("[data-learning]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const authed = root?.querySelector("[data-authed]");
+    const teacherSelect = root?.querySelector("[data-teacher]");
+    const list = root?.querySelector("[data-tasks]");
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Loading…";
+    }
 
-  async function loadTasks(slug: string) {
-    const rows = await fetchLearningTasks(slug);
-    if (rows.error) {
-      apiFail(rows.error, { requestId: rows.requestId });
+    async function loadTasks(slug: string) {
+      const rows = await fetchLearningTasks(slug);
+      if (rows.error) {
+        apiFail(rows.error, { requestId: rows.requestId });
+        return;
+      }
+      if (!(list instanceof HTMLElement)) return;
+      list.replaceChildren();
+      for (const task of rows.tasks) {
+        const li = document.createElement("li");
+        li.textContent = `${task.name} · ${task.status}`;
+        list.appendChild(li);
+      }
+    }
+
+    const result = await requireService("homescool");
+    if (!result.sessionOk || !result.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = result.sessionOk ? "Homescool access required." : "Sign in required.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
       return;
     }
-    if (!(list instanceof HTMLElement)) return;
-    list.replaceChildren();
-    for (const task of rows.tasks) {
-      const li = document.createElement("li");
-      li.textContent = `${task.name} · ${task.status}`;
-      list.appendChild(li);
-    }
-  }
-
-  const result = await requireService("homescool");
-  if (!result.sessionOk || !result.access.allowed) {
-    if (banner instanceof HTMLElement) banner.textContent = "Access required.";
-    setHidden(gate, false);
-  } else {
     setHidden(gate, true);
     setHidden(authed, false);
     const links = await fetchLearningLinks();
@@ -72,5 +81,5 @@ import Layout from "../../layouts/Layout.astro";
       teacherSelect.addEventListener("change", () => void loadTasks(teacherSelect.value));
       if (teacherSelect.value) await loadTasks(teacherSelect.value);
     }
-  }
+  });
 </script>

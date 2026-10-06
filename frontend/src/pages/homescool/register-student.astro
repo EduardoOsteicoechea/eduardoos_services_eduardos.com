@@ -23,28 +23,31 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import { registerHomescoolStudent } from "../../lib/homescool";
-  import { apiFail, requireService } from "../../lib/productGate";
+  import { apiFail, onAstroPageLoad, requireService } from "../../lib/productGate";
 
-  const resultEl = document.querySelector("[data-result]");
-  const gate = await requireService("homescool", { requireSubscription: true });
-  if (!gate.sessionOk || !gate.access.allowed) {
-    apiFail("Teacher subscription required.");
-  }
-
-  document.querySelector("[data-register]")?.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const fd = new FormData(event.target as HTMLFormElement);
-    const res = await registerHomescoolStudent({
-      studentEmail: String(fd.get("studentEmail") || "").trim(),
-      displayName: String(fd.get("displayName") || "").trim() || undefined,
-    });
-    if (!res.student) {
-      apiFail(res.error || "Could not register student.", { requestId: res.requestId });
+  onAstroPageLoad("homescool-register", async () => {
+    const resultEl = document.querySelector("[data-result]");
+    const gate = await requireService("homescool", { requireSubscription: true });
+    if (!gate.sessionOk || !gate.access.allowed) {
+      apiFail(gate.sessionOk ? "Teacher subscription required." : "Sign in required.");
       return;
     }
-    if (resultEl instanceof HTMLElement) {
-      resultEl.hidden = false;
-      resultEl.textContent = `Registered ${res.student.studentEmail} (${res.student.studentSlug}).`;
-    }
+
+    document.querySelector("[data-register]")?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const fd = new FormData(event.target as HTMLFormElement);
+      const res = await registerHomescoolStudent({
+        studentEmail: String(fd.get("studentEmail") || "").trim(),
+        displayName: String(fd.get("displayName") || "").trim() || undefined,
+      });
+      if (!res.student) {
+        apiFail(res.error || "Could not register student.", { requestId: res.requestId });
+        return;
+      }
+      if (resultEl instanceof HTMLElement) {
+        resultEl.hidden = false;
+        resultEl.textContent = `Registered ${res.student.studentEmail} (${res.student.studentSlug}).`;
+      }
+    });
   });
 </script>

@@ -94,52 +94,68 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
   } from "../../lib/eoschool-curriculum-api";
   import { dayTrafficStatus, sectionDone } from "../../lib/eoschool-curriculum-progress-status";
   import type { CurriculumPlanSectionId } from "../../lib/eoschool-curriculum-plan-classes";
-  import { apiFail, requireService, setHidden } from "../../lib/productGate";
+  import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
 
-  const root = document.querySelector("[data-mppe-progress]");
-  const banner = root?.querySelector("[data-banner]");
-  const gate = root?.querySelector("[data-gate]");
-  const authed = root?.querySelector("[data-authed]");
-  const select = root?.querySelector<HTMLSelectElement>("[data-student-select]");
-  const meta = root?.querySelector("[data-student-meta]");
+  onAstroPageLoad("eoschool-progress", async () => {
+    const root = document.querySelector("[data-mppe-progress]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const authed = root?.querySelector("[data-authed]");
+    const select = root?.querySelector<HTMLSelectElement>("[data-student-select]");
+    const meta = root?.querySelector("[data-student-meta]");
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Cargando…";
+    }
 
-  const access = await requireService("homescool", { requireSubscription: true });
-  if (!access.sessionOk || !access.access.allowed) {
-    if (banner instanceof HTMLElement) banner.textContent = "Acceso requerido.";
-    setHidden(gate, false);
-  } else {
+    const access = await requireService("homescool", { requireSubscription: true });
+    if (!access.sessionOk || !access.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = access.sessionOk
+          ? "Necesitas suscripción Homescool."
+          : "Inicia sesión para continuar.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+      return;
+    }
     setHidden(gate, true);
     setHidden(authed, false);
     const studentsRes = await fetchCurriculumStudents();
     if (!studentsRes.ok) {
       apiFail("No se pudo cargar estudiantes.", { requestId: studentsRes.requestId });
-    } else {
-      const students = studentsRes.data.students;
-      const qKey = new URLSearchParams(location.search).get("studentKey") || "";
-      if (select) {
-        select.replaceChildren();
-        for (const s of students) {
-          const opt = document.createElement("option");
-          opt.value = s.studentKey;
-          opt.textContent = s.displayName;
-          if (s.studentKey === qKey) opt.selected = true;
-          select.append(opt);
-        }
-      }
-      if (!students.length) {
-        if (banner instanceof HTMLElement) banner.textContent = "Registra un estudiante primero.";
-      } else {
-        if (banner instanceof HTMLElement) banner.hidden = true;
-        const initial = (select?.value || students[0].studentKey).trim();
-        await loadProgress(initial, students);
-        select?.addEventListener("change", () => {
-          void loadProgress(select.value, students);
-        });
+      return;
+    }
+    const students = studentsRes.data.students;
+    const qKey = new URLSearchParams(location.search).get("studentKey") || "";
+    if (select) {
+      select.replaceChildren();
+      for (const s of students) {
+        const opt = document.createElement("option");
+        opt.value = s.studentKey;
+        opt.textContent = s.displayName;
+        if (s.studentKey === qKey) opt.selected = true;
+        select.append(opt);
       }
     }
-  }
+    if (!students.length) {
+      if (banner instanceof HTMLElement) banner.textContent = "Registra un estudiante primero.";
+      return;
+    }
+    if (banner instanceof HTMLElement) banner.hidden = true;
+    const initial = (select?.value || students[0].studentKey).trim();
+    await loadProgress(root, meta, initial, students);
+    select?.addEventListener("change", () => {
+      void loadProgress(root, meta, select.value, students);
+    });
+  });
 
-  async function loadProgress(studentKey: string, students: CurriculumStudent[]) {
+  async function loadProgress(
+    root: Element | null,
+    meta: Element | null | undefined,
+    studentKey: string,
+    students: CurriculumStudent[],
+  ) {
     const student = students.find((s) => s.studentKey === studentKey);
     if (meta instanceof HTMLElement && student) {
       meta.textContent = `${student.displayName} · ${student.age} años · ${student.grade}`;

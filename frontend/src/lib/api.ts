@@ -479,13 +479,15 @@ export async function apiSend<T>(
     });
     sessionLogCookies(`after ${method} ${path}`);
 
-    if (
-      response.status === 401 &&
-      !opts.skipAuthRetry &&
-      !isAuthPath(path) &&
-      hasSessionHint()
-    ) {
-      sessionLog("api.unauthorized_retry_refresh", { path, method });
+    if (response.status === 401 && !opts.skipAuthRetry && !isAuthPath(path)) {
+      // Always try one cookie refresh (not only when sessionStorage hint is set).
+      // Soft navigations and browser restarts clear the hint while the refresh
+      // cookie remains valid; guests simply get a second 401 from /auth/refresh.
+      sessionLog("api.unauthorized_retry_refresh", {
+        path,
+        method,
+        hadHint: hasSessionHint(),
+      });
       const refreshed = await refreshSession();
       if (refreshed.status === 200 && refreshed.data.id) {
         return apiSend<T>(path, init, { ...opts, skipAuthRetry: true });
