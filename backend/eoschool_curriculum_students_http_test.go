@@ -87,3 +87,87 @@ func TestEoschoolCurriculumStudentPhotoRejectsInvalid(t *testing.T) {
 		t.Fatalf("expected rejection, got %d body=%s", rec.Code, rec.Body.String())
 	}
 }
+
+func TestEoschoolCurriculumStudentPhotoUploadAndGet(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productHomescool)
+	png := encodePNG(t, 8, 8)
+
+	var buf bytes.Buffer
+	mw := multipart.NewWriter(&buf)
+	_ = mw.WriteField("firstName", "Elías")
+	_ = mw.WriteField("lastName", "Osteicoechea")
+	_ = mw.WriteField("age", "8")
+	_ = mw.WriteField("grade", "3er grado")
+	part, err := mw.CreateFormFile("photo", "perfil.png")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := part.Write(png); err != nil {
+		t.Fatal(err)
+	}
+	_ = mw.Close()
+
+	seed := httptestSession(t, app, "member@eduardoos.com")
+	req := httptest.NewRequest(http.MethodPost, "/api/eoschool/curriculum/students", &buf)
+	req.Header.Set("Content-Type", mw.FormDataContentType())
+	req.Header.Set("Origin", app.cfg.AllowedOrigins[0])
+	req.Header.Set("X-CSRF-Token", seed.csrf)
+	for _, c := range seed.cookies {
+		req.AddCookie(c)
+	}
+	rec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("create status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	var created struct {
+		Student EoschoolCurriculumStudent `json:"student"`
+	}
+	if err := json.Unmarshal(rec.Body.Bytes(), &created); err != nil {
+		t.Fatal(err)
+	}
+	if !created.Student.HasPhoto || created.Student.PhotoURL == "" {
+		t.Fatalf("expected photo on student: %+v", created.Student)
+	}
+
+	getReq := httptest.NewRequest(http.MethodGet, created.Student.PhotoURL, nil)
+	for _, c := range seed.cookies {
+		getReq.AddCookie(c)
+	}
+	getRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(getRec, getReq)
+	if getRec.Code != http.StatusOK {
+		t.Fatalf("photo get status=%d body=%s", getRec.Code, getRec.Body.String())
+	}
+	if getRec.Header().Get("Content-Type") != "image/png" {
+		t.Fatalf("content-type=%q", getRec.Header().Get("Content-Type"))
+	}
+	if !bytes.Equal(getRec.Body.Bytes(), png) {
+		t.Fatal("photo bytes mismatch")
+	}
+
+	var patchBuf bytes.Buffer
+	pmw := multipart.NewWriter(&patchBuf)
+	part2, err := pmw.CreateFormFile("photo", "perfil2.png")
+	if err != nil {
+		t.Fatal(err)
+	}
+	png2 := encodePNG(t, 10, 10)
+	if _, err := part2.Write(png2); err != nil {
+		t.Fatal(err)
+	}
+	_ = pmw.Close()
+	patchReq := httptest.NewRequest(http.MethodPatch, "/api/eoschool/curriculum/students/"+created.Student.StudentKey, &patchBuf)
+	patchReq.Header.Set("Content-Type", pmw.FormDataContentType())
+	patchReq.Header.Set("Origin", app.cfg.AllowedOrigins[0])
+	patchReq.Header.Set("X-CSRF-Token", seed.csrf)
+	for _, c := range seed.cookies {
+		patchReq.AddCookie(c)
+	}
+	patchRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(patchRec, patchReq)
+	if patchRec.Code != http.StatusOK {
+		t.Fatalf("patch photo status=%d body=%s", patchRec.Code, patchRec.Body.String())
+	}
+}

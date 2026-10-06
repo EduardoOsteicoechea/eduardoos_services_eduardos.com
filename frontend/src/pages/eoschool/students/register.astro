@@ -30,11 +30,24 @@ import Layout from "../../../layouts/Layout.astro";
       <a class="button" href="/session" data-route>Sign in</a>
     </div>
     <form class="product-form session-grid" data-form hidden>
+      <div class="eoschool-register__photo" data-photo-block>
+        <span class="eoschool-register__photo-label">Foto de perfil</span>
+        <div class="eoschool-register__photo-row">
+          <button class="eoschool-register__avatar" type="button" data-photo-trigger title="Elegir foto" aria-label="Elegir foto de perfil">
+            <img class="eoschool-register__photo-img" data-photo-preview alt="" hidden />
+            <span class="material-symbols-outlined eoschool-register__photo-icon" data-photo-placeholder aria-hidden="true">person</span>
+            <span class="material-symbols-outlined eoschool-register__photo-badge" aria-hidden="true">photo_camera</span>
+          </button>
+          <label class="eoschool-register__photo-pick">
+            Elegir imagen
+            <input name="photo" type="file" accept="image/jpeg,image/png,image/webp" data-photo-input />
+          </label>
+        </div>
+      </div>
       <label>Nombre <input name="firstName" required maxlength="80" autocomplete="given-name" /></label>
       <label>Apellido <input name="lastName" required maxlength="80" autocomplete="family-name" /></label>
       <label>Edad <input name="age" type="number" min="3" max="18" required value="8" /></label>
       <label>Grado <input name="grade" required maxlength="80" value="3er grado" /></label>
-      <label>Foto <input name="photo" type="file" accept="image/jpeg,image/png,image/webp" /></label>
       <button class="button" type="submit">Registrar</button>
     </form>
     <p class="hint" data-result hidden></p>
@@ -71,6 +84,23 @@ import Layout from "../../../layouts/Layout.astro";
     setHidden(form, false);
     if (banner instanceof HTMLElement) banner.hidden = true;
 
+    const photoInput = form?.querySelector<HTMLInputElement>("[data-photo-input]");
+    const photoTrigger = form?.querySelector("[data-photo-trigger]");
+    const photoPreview = form?.querySelector<HTMLImageElement>("[data-photo-preview]");
+    const photoPlaceholder = form?.querySelector<HTMLElement>("[data-photo-placeholder]");
+    let previewUrl = "";
+
+    photoTrigger?.addEventListener("click", () => photoInput?.click());
+    photoInput?.addEventListener("change", () => {
+      const file = photoInput.files?.[0];
+      if (!(file instanceof File) || !photoPreview) return;
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      previewUrl = URL.createObjectURL(file);
+      photoPreview.src = previewUrl;
+      photoPreview.hidden = false;
+      if (photoPlaceholder) photoPlaceholder.hidden = true;
+    });
+
     form?.addEventListener("submit", async (event) => {
       event.preventDefault();
       const fd = new FormData(event.target as HTMLFormElement);
@@ -94,3 +124,94 @@ import Layout from "../../../layouts/Layout.astro";
     });
   });
 </script>
+
+<style>
+  .eoschool-register__photo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    grid-column: 1 / -1;
+  }
+
+  .eoschool-register__photo-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  .eoschool-register__photo-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-register__avatar {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    padding: 0;
+    overflow: hidden;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .eoschool-register__avatar:hover,
+  .eoschool-register__avatar:focus-visible {
+    border-color: var(--color-accent);
+  }
+
+  .eoschool-register__photo-img {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .eoschool-register__photo-icon {
+    font-size: var(--font-size-2xl);
+    color: var(--color-muted);
+  }
+
+  .eoschool-register__photo-badge {
+    position: absolute;
+    right: 0.15rem;
+    bottom: 0.15rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: var(--font-size-sm);
+    color: var(--color-bg);
+    background: var(--color-text);
+    border-radius: 50%;
+  }
+
+  .eoschool-register__photo-pick {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+  }
+
+  .eoschool-register__photo-pick input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+</style>

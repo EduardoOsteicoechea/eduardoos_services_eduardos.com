@@ -108,28 +108,81 @@ import Layout from "../../../layouts/Layout.astro";
     return el;
   }
 
+  function photoSrc(url: string | undefined): string {
+    if (!url) return "";
+    const sep = url.includes("?") ? "&" : "?";
+    return `${url}${sep}v=${Date.now()}`;
+  }
+
   function renderCard(s: CurriculumStudent): HTMLElement {
     const card = document.createElement("article");
     card.className = "product-dash__card eoschool-students__card";
     card.dataset.studentKey = s.studentKey;
 
-    if (s.hasPhoto && s.photoUrl) {
-      const img = document.createElement("img");
-      img.className = "eoschool-students__photo";
-      img.src = s.photoUrl;
-      img.alt = "";
-      card.append(img);
-    }
+    const profile = document.createElement("div");
+    profile.className = "eoschool-students__profile";
 
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/jpeg,image/png,image/webp";
+    fileInput.className = "eoschool-students__photo-input";
+    fileInput.setAttribute("aria-label", `Subir foto de ${s.displayName}`);
+
+    const avatarBtn = document.createElement("button");
+    avatarBtn.type = "button";
+    avatarBtn.className = "eoschool-students__avatar";
+    avatarBtn.title = "Subir o cambiar foto";
+    avatarBtn.setAttribute("aria-label", `Subir o cambiar foto de ${s.displayName}`);
+
+    const avatarImg = document.createElement("img");
+    avatarImg.className = "eoschool-students__photo";
+    avatarImg.alt = "";
+    const avatarPlaceholder = document.createElement("span");
+    avatarPlaceholder.className = "material-symbols-outlined eoschool-students__avatar-icon";
+    avatarPlaceholder.setAttribute("aria-hidden", "true");
+    avatarPlaceholder.textContent = "person";
+    const cameraBadge = document.createElement("span");
+    cameraBadge.className = "eoschool-students__avatar-badge material-symbols-outlined";
+    cameraBadge.setAttribute("aria-hidden", "true");
+    cameraBadge.textContent = "photo_camera";
+
+    if (s.hasPhoto && s.photoUrl) {
+      avatarImg.src = photoSrc(s.photoUrl);
+      avatarImg.hidden = false;
+      avatarPlaceholder.hidden = true;
+    } else {
+      avatarImg.hidden = true;
+      avatarPlaceholder.hidden = false;
+    }
+    avatarBtn.append(avatarImg, avatarPlaceholder, cameraBadge);
+
+    const identity = document.createElement("div");
+    identity.className = "eoschool-students__identity";
     const title = document.createElement("h2");
     title.className = "product-dash__card-title";
     title.textContent = s.displayName;
-
     const desc = document.createElement("p");
     desc.className = "product-dash__card-desc";
     desc.textContent = `${s.age} años · ${s.grade} · ${s.studentKey}`;
+    identity.append(title, desc);
 
-    card.append(title, desc);
+    profile.append(avatarBtn, fileInput, identity);
+
+    avatarBtn.addEventListener("click", () => fileInput.click());
+    fileInput.addEventListener("change", async () => {
+      const file = fileInput.files?.[0];
+      fileInput.value = "";
+      if (!(file instanceof File) || file.size <= 0) return;
+      const res = await updateCurriculumStudent(s.studentKey, { photo: file });
+      if (!res.ok) {
+        apiFail(res.error, { requestId: res.requestId });
+        return;
+      }
+      await reloadList(
+        document.querySelector("[data-students] [data-banner]"),
+        document.querySelector("[data-students] [data-list]"),
+      );
+    });
 
     const actions = document.createElement("div");
     actions.className = "eoschool-students__actions";
@@ -153,19 +206,54 @@ import Layout from "../../../layouts/Layout.astro";
     const del = iconAction("button", { icon: "delete", label: "Eliminar", danger: true });
 
     const form = document.createElement("form");
-    form.className = "eoschool-students__edit session-grid";
+    form.className = "eoschool-students__edit";
     form.hidden = true;
+    const previewSrc =
+      s.hasPhoto && s.photoUrl
+        ? photoSrc(s.photoUrl)
+        : "";
     form.innerHTML = `
+      <div class="eoschool-students__photo-field">
+        <span class="eoschool-students__photo-label">Foto de perfil</span>
+        <div class="eoschool-students__photo-row">
+          <img class="eoschool-students__photo eoschool-students__photo--preview" data-edit-preview alt="" ${
+            previewSrc ? `src="${escapeAttr(previewSrc)}"` : "hidden"
+          } />
+          <span class="material-symbols-outlined eoschool-students__avatar-icon" data-edit-placeholder ${
+            previewSrc ? "hidden" : ""
+          } aria-hidden="true">person</span>
+          <label class="eoschool-students__photo-pick">
+            Elegir imagen
+            <input name="photo" type="file" accept="image/jpeg,image/png,image/webp" />
+          </label>
+        </div>
+        ${
+          s.hasPhoto
+            ? `<label class="eoschool-students__clear-photo"><input name="clearPhoto" type="checkbox" value="true" /> Quitar foto</label>`
+            : ""
+        }
+      </div>
       <label>Nombre <input name="firstName" required maxlength="80" value="${escapeAttr(s.firstName || "")}" /></label>
       <label>Apellido <input name="lastName" required maxlength="80" value="${escapeAttr(s.lastName || "")}" /></label>
       <label>Edad <input name="age" type="number" min="3" max="18" required value="${s.age}" /></label>
       <label>Grado <input name="grade" required maxlength="80" value="${escapeAttr(s.grade)}" /></label>
-      <label>Foto <input name="photo" type="file" accept="image/jpeg,image/png,image/webp" /></label>
       <div class="eoschool-students__edit-actions">
         <button type="submit" class="button">Guardar</button>
         <button type="button" class="button" data-cancel-edit>Cancelar</button>
       </div>
     `;
+
+    const editPhoto = form.querySelector<HTMLInputElement>('input[name="photo"]');
+    const editPreview = form.querySelector<HTMLImageElement>("[data-edit-preview]");
+    const editPlaceholder = form.querySelector<HTMLElement>("[data-edit-placeholder]");
+    editPhoto?.addEventListener("change", () => {
+      const file = editPhoto.files?.[0];
+      if (!(file instanceof File) || !editPreview) return;
+      const url = URL.createObjectURL(file);
+      editPreview.src = url;
+      editPreview.hidden = false;
+      if (editPlaceholder) editPlaceholder.hidden = true;
+    });
 
     edit.addEventListener("click", () => {
       form.hidden = !form.hidden;
@@ -177,12 +265,14 @@ import Layout from "../../../layouts/Layout.astro";
       event.preventDefault();
       const fd = new FormData(form);
       const photo = fd.get("photo");
+      const clearPhoto = fd.get("clearPhoto") === "true";
       const res = await updateCurriculumStudent(s.studentKey, {
         firstName: String(fd.get("firstName") || "").trim(),
         lastName: String(fd.get("lastName") || "").trim(),
         age: Number(fd.get("age") || 0),
         grade: String(fd.get("grade") || "").trim(),
-        photo: photo instanceof File && photo.size > 0 ? photo : null,
+        photo: !clearPhoto && photo instanceof File && photo.size > 0 ? photo : null,
+        clearPhoto,
       });
       if (!res.ok) {
         apiFail(res.error, { requestId: res.requestId });
@@ -211,7 +301,7 @@ import Layout from "../../../layouts/Layout.astro";
     });
 
     actions.append(study, progress, portfolio, edit, del);
-    card.append(actions, form);
+    card.append(profile, actions, form);
     return card;
   }
 
@@ -234,11 +324,87 @@ import Layout from "../../../layouts/Layout.astro";
     cursor: default;
   }
 
+  :global(.eoschool-students__profile) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-padding);
+    min-width: 0;
+  }
+
+  :global(.eoschool-students__identity) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  :global(.eoschool-students__avatar) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    padding: 0;
+    overflow: hidden;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  :global(.eoschool-students__avatar:hover),
+  :global(.eoschool-students__avatar:focus-visible) {
+    border-color: var(--color-accent);
+  }
+
   :global(.eoschool-students__photo) {
-    width: 4rem;
-    height: 4rem;
+    width: 4.5rem;
+    height: 4.5rem;
     border-radius: 50%;
     object-fit: cover;
+  }
+
+  :global(.eoschool-students__photo--preview) {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  :global(.eoschool-students__avatar .material-symbols-outlined),
+  :global(.eoschool-students__photo-row .material-symbols-outlined) {
+    width: auto;
+    height: auto;
+    background: transparent;
+  }
+
+  :global(.eoschool-students__avatar-icon) {
+    font-size: var(--font-size-2xl);
+    color: var(--color-muted);
+  }
+
+  :global(.eoschool-students__avatar-badge) {
+    position: absolute;
+    right: 0.15rem;
+    bottom: 0.15rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: var(--font-size-sm);
+    color: var(--color-bg);
+    background: var(--color-text);
+    border-radius: 50%;
+  }
+
+  :global(.eoschool-students__photo-input) {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
   }
 
   :global(.eoschool-students__actions) {
@@ -260,7 +426,6 @@ import Layout from "../../../layouts/Layout.astro";
     border-color: var(--color-accent);
   }
 
-  /* Undo product-dash icon chrome (soft disc + accent fill) inside action buttons. */
   :global(.eoschool-students__action .material-symbols-outlined) {
     display: inline-flex;
     width: auto;
@@ -282,7 +447,77 @@ import Layout from "../../../layouts/Layout.astro";
   }
 
   :global(.eoschool-students__edit) {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--rail-gap);
     max-width: 24rem;
+  }
+
+  :global(.eoschool-students__edit label) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: var(--font-size-sm);
+  }
+
+  :global(.eoschool-students__edit input:not([type="file"]):not([type="checkbox"])),
+  :global(.eoschool-students__edit .button) {
+    min-height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-md);
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+
+  :global(.eoschool-students__photo-field) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+
+  :global(.eoschool-students__photo-label) {
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  :global(.eoschool-students__photo-row) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rail-gap);
+  }
+
+  :global(.eoschool-students__photo-pick) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+  }
+
+  :global(.eoschool-students__photo-pick input) {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+
+  :global(.eoschool-students__clear-photo) {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--rail-gap);
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
   }
 
   :global(.eoschool-students__edit-actions) {
