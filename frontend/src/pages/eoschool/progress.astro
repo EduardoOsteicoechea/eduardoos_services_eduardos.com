@@ -236,6 +236,17 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
     text-align: center;
   }
 
+  .eoschool-progress-table th {
+    background: var(--color-surface);
+  }
+
+  /* Sem + Día: same discrete surface as the header row */
+  .eoschool-progress-table td:nth-child(1),
+  .eoschool-progress-table td:nth-child(2) {
+    background: var(--color-surface);
+    color: var(--color-muted);
+  }
+
   .eoschool-dot {
     display: inline-block;
     width: 0.75rem;
