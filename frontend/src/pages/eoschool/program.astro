@@ -1,3 +1,21 @@
 ---
-return Astro.redirect("/eoschool/requirements/curriculum?mode=browse");
+const target = "/eoschool/requirements/curriculum?mode=browse";
 ---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>Abriendo programa…</title>
+  </head>
+  <body>
+    <p><a id="eoschool-redirect" href={target}>Continuar al programa</a></p>
+    <script>
+      const a = document.getElementById("eoschool-redirect");
+      const href = a?.getAttribute("href");
+      if (href) location.replace(href);
+    </script>
+  </body>
+</html>

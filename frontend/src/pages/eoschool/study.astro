@@ -1,5 +1,24 @@
 ---
 const studentKey = Astro.url.searchParams.get("studentKey")?.trim() || "";
-const q = studentKey ? `?mode=study&studentKey=${encodeURIComponent(studentKey)}` : "?mode=study";
-return Astro.redirect(`/eoschool/requirements/curriculum${q}`);
+const target = studentKey
+  ? `/eoschool/requirements/curriculum?mode=study&studentKey=${encodeURIComponent(studentKey)}`
+  : "/eoschool/requirements/curriculum?mode=study";
 ---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>Abriendo clases…</title>
+  </head>
+  <body>
+    <p><a id="eoschool-redirect" href={target}>Continuar a clases</a></p>
+    <script>
+      const a = document.getElementById("eoschool-redirect");
+      const href = a?.getAttribute("href");
+      if (href) location.replace(href);
+    </script>
+  </body>
+</html>

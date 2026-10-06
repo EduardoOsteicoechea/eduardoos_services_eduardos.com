@@ -4,7 +4,6 @@ import Layout from "../../layouts/Layout.astro";
 import { MPPE_40WEEK_CURRICULUM } from "../../lib/eoschool-mppe-40week-curriculum";
 import { CURRICULUM_SECTION_IDS } from "../../lib/eoschool-curriculum-plan-classes";
 
-const weeks = MPPE_40WEEK_CURRICULUM.weeks;
 const sectionLabels: Record<string, string> = {
   bib: "Bib",
   ide: "Ide",
@@ -13,7 +12,7 @@ const sectionLabels: Record<string, string> = {
   cie: "Cie",
 };
 
-const dayRows = weeks.flatMap((week) =>
+const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
   week.blocks
     .flatMap((block) => (block.bible?.days ?? []).map((d) => ({ week: week.week, planDay: d.dayInPlan })))
     .sort((a, b) => a.planDay - b.planDay)
@@ -26,7 +25,6 @@ const dayRows = weeks.flatMap((week) =>
   description="Semáforo de avance por día y materia del currículo MPPE."
   page="eoschool-progress"
   robots="noindex,nofollow"
-  showPageTitle={false}
 >
   <Fragment slot="dhs">
     <a class="dhs-action" href="/eoschool" data-route title="Dashboard" aria-label="Dashboard">
@@ -35,8 +33,6 @@ const dayRows = weeks.flatMap((week) =>
     </a>
   </Fragment>
 
-  <h1 class="page-title-sr">Progreso MPPE</h1>
-
   <section class="product-dash page-span-all" data-mppe-progress>
     <p class="status" data-banner>Cargando…</p>
     <div data-gate hidden class="product-gate">
@@ -44,17 +40,13 @@ const dayRows = weeks.flatMap((week) =>
       <a class="button" href="/session" data-route>Sign in</a>
     </div>
 
-    <div data-authed hidden>
-      <label class="session-grid">
-        Estudiante
-        <select data-student-select></select>
-      </label>
-      <p class="hint" data-student-meta></p>
-
-      <div class="product-dash__card eoschool-progress-legend">
-        <span class="eoschool-dot eoschool-dot--green" aria-hidden="true"></span> Completo
-        <span class="eoschool-dot eoschool-dot--yellow" aria-hidden="true"></span> Incompleto
-        <span class="eoschool-dot eoschool-dot--red" aria-hidden="true"></span> Pendiente
+    <div class="eoschool-progress__body" data-authed hidden>
+      <div class="eoschool-progress__toolbar">
+        <label class="eoschool-progress__student">
+          <span class="eoschool-progress__label">Estudiante</span>
+          <select data-student-select></select>
+        </label>
+        <p class="eoschool-progress__meta" data-student-meta></p>
       </div>
 
       <div class="eoschool-progress-table-wrap">
@@ -63,7 +55,7 @@ const dayRows = weeks.flatMap((week) =>
             <tr>
               <th scope="col">Sem</th>
               <th scope="col">Día</th>
-              <th scope="col">Día</th>
+              <th scope="col">Estado</th>
               {CURRICULUM_SECTION_IDS.map((id) => <th scope="col">{sectionLabels[id]}</th>)}
             </tr>
           </thead>
@@ -101,7 +93,7 @@ const dayRows = weeks.flatMap((week) =>
     type CurriculumStudent,
   } from "../../lib/eoschool-curriculum-api";
   import { dayTrafficStatus, sectionDone } from "../../lib/eoschool-curriculum-progress-status";
-  import { CURRICULUM_SECTION_IDS, type CurriculumPlanSectionId } from "../../lib/eoschool-curriculum-plan-classes";
+  import type { CurriculumPlanSectionId } from "../../lib/eoschool-curriculum-plan-classes";
   import { apiFail, requireService, setHidden } from "../../lib/productGate";
 
   const root = document.querySelector("[data-mppe-progress]");
@@ -175,26 +167,66 @@ const dayRows = weeks.flatMap((week) =>
 </script>
 
 <style>
-  .eoschool-progress-legend {
+  .eoschool-progress__body {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-direction: column;
+    gap: var(--space-padding);
+    min-width: 0;
+  }
+
+  .eoschool-progress__toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     gap: var(--rail-gap);
+    max-width: 24rem;
+  }
+
+  .eoschool-progress__student {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
     font-size: var(--font-size-sm);
   }
+
+  .eoschool-progress__label {
+    color: var(--color-muted);
+  }
+
+  .eoschool-progress__student select {
+    min-height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-md);
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+
+  .eoschool-progress__meta {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
   .eoschool-progress-table-wrap {
     overflow-x: auto;
+    min-width: 0;
   }
+
   .eoschool-progress-table {
     border-collapse: collapse;
     font-size: var(--font-size-sm);
   }
+
   .eoschool-progress-table th,
   .eoschool-progress-table td {
     padding: 0.25rem 0.5rem;
     border-bottom: var(--border-width) solid var(--color-border);
     text-align: center;
   }
+
   .eoschool-dot {
     display: inline-block;
     width: 0.75rem;
@@ -202,12 +234,16 @@ const dayRows = weeks.flatMap((week) =>
     border-radius: 50%;
     background: var(--color-muted);
   }
+
+  /* Brand --color-ok is grey; traffic-light green is intentional here. */
   .eoschool-dot--green {
-    background: var(--color-ok);
+    background: #22c55e;
   }
+
   .eoschool-dot--yellow {
-    background: #c9a227;
+    background: #eab308;
   }
+
   .eoschool-dot--red {
     background: var(--color-err);
   }
