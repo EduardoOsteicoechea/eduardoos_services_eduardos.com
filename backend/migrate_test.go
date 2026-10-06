@@ -103,8 +103,8 @@ func TestSafeMigrationsAreIdempotent(t *testing.T) {
 	if err := applySchemaMigrations(ctx, log, applier, "test", safeSchemaMigrations(), false, ""); err != nil {
 		t.Fatalf("second apply: %v", err)
 	}
-	if len(applier.records) != 12 {
-		t.Fatalf("expected twelve migration records, got %d", len(applier.records))
+	if len(applier.records) != 13 {
+		t.Fatalf("expected thirteen migration records, got %d", len(applier.records))
 	}
 	if applier.records["001_initial_auth_schema"].Checksum == "" {
 		t.Fatal("missing checksum")
@@ -124,8 +124,8 @@ func TestSafeMigrationsAreIdempotent(t *testing.T) {
 
 func TestIndexDefinitionsMatchContract(t *testing.T) {
 	migrations := safeSchemaMigrations()
-	if len(migrations) != 12 {
-		t.Fatalf("expected twelve safe migrations, got %d", len(migrations))
+	if len(migrations) != 13 {
+		t.Fatalf("expected thirteen safe migrations, got %d", len(migrations))
 	}
 	m := migrations[0]
 	assertUnique := func(collection, field string) {
@@ -167,7 +167,7 @@ func TestIndexDefinitionsMatchContract(t *testing.T) {
 	if !ok || !resetHash.Unique {
 		t.Fatal("reset OTP hash must be unique")
 	}
-	required := []string{colUsers, colSessions, colEmailOTPs, colResetOTPs, colEntitlements, colAPIKeys, colEoschoolCurriculumProgress}
+	required := []string{colUsers, colSessions, colEmailOTPs, colResetOTPs, colEntitlements, colAPIKeys, colEoschoolCurriculumProgress, colEoschoolCurriculumMaterials}
 	have := map[string]bool{}
 	for _, mig := range migrations {
 		for _, name := range mig.Collections {

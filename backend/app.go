@@ -53,11 +53,13 @@ type App struct {
 	evoiceJobs       *evoiceJobStore
 	homescool        HomescoolStore
 	progress         HomescoolProgressStore
-	eoschoolCurriculum EoschoolCurriculumProgressStore
-	progressFS       *homescoolProgressFS
-	eoproject        eoprojectStore
-	eoprojectFS      *eoprojectFS
-	failClosedEnt    bool
+	eoschoolCurriculum     EoschoolCurriculumProgressStore
+	curriculumMaterials    EoschoolCurriculumMaterialsStore
+	curriculumMaterialsFS  *eoschoolCurriculumMaterialsFS
+	progressFS             *homescoolProgressFS
+	eoproject              eoprojectStore
+	eoprojectFS            *eoprojectFS
+	failClosedEnt          bool
 }
 
 func newApp(cfg config) *App {
@@ -115,10 +117,12 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		pamphlet:         openPamphletStore(store, cfg.MediaRoot),
 		homescool:        openHomescoolStore(store, cfg.MediaRoot),
 		progress:           newHomescoolProgressStore(store),
-		eoschoolCurriculum: newEoschoolCurriculumProgressStore(store),
-		progressFS:         newHomescoolProgressFS(cfg.MediaRoot),
-		eoproject:        newEoprojectStoreFromDataStore(store),
-		eoprojectFS:      newEoprojectFS(cfg.EoprojectMediaRoot),
+		eoschoolCurriculum:    newEoschoolCurriculumProgressStore(store),
+		curriculumMaterials:   newEoschoolCurriculumMaterialsStore(store),
+		curriculumMaterialsFS: newEoschoolCurriculumMaterialsFS(cfg.MediaRoot),
+		progressFS:            newHomescoolProgressFS(cfg.MediaRoot),
+		eoproject:             newEoprojectStoreFromDataStore(store),
+		eoprojectFS:           newEoprojectFS(cfg.EoprojectMediaRoot),
 		mailer:           smtpMailer{cfg: cfg},
 		chat:             map[string]ChatClient{},
 		audit:            newAuditStore(),
@@ -388,6 +392,12 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/eoschool/curriculum/students", a.listEoschoolCurriculumStudentsHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/progress", a.getEoschoolCurriculumProgressHandler)
 	mux.HandleFunc("PATCH /api/eoschool/curriculum/progress/sections", a.patchEoschoolCurriculumSectionHandler)
+	mux.HandleFunc("GET /api/eoschool/curriculum/materials", a.listEoschoolCurriculumMaterialsHandler)
+	mux.HandleFunc("POST /api/eoschool/curriculum/materials", a.postEoschoolCurriculumMaterialHandler)
+	mux.HandleFunc("POST /api/eoschool/curriculum/materials/url", a.postEoschoolCurriculumMaterialURLHandler)
+	mux.HandleFunc("DELETE /api/eoschool/curriculum/materials/{id}", a.deleteEoschoolCurriculumMaterialHandler)
+	mux.HandleFunc("GET /api/eoschool/curriculum/materials/{id}/file", a.getEoschoolCurriculumMaterialFileHandler)
+	mux.HandleFunc("GET /api/eoschool/curriculum/materials/{id}/thumb", a.getEoschoolCurriculumMaterialThumbHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/day-preview", a.postEoschoolMPPECurriculumDayPreviewHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/week-preview", a.postEoschoolMPPECurriculumWeekPreviewHandler)
 

@@ -2,12 +2,18 @@ import { showErrorModal } from "./error-modal";
 import { clonePdfBytes, downloadPdfBytes, renderHomescoolPdfPreview } from "./homescool-pdf-preview";
 import type { CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
 import {
+  bindCurriculumMaterialsPanel,
+  loadCurriculumMaterialsPanel,
+} from "./eoschool-curriculum-materials";
+import {
   fetchMppeDaySheet,
   type MppeCurriculumDaySection,
   type MppeCurriculumDaySheet,
 } from "./mppe-curriculum-day-sheet";
 import { fetchMppeDayPdfPreview } from "./mppe-curriculum-pdf-preview";
 import { mustLog } from "./dev-log";
+
+let materialsRoot: HTMLElement | null = null;
 
 let sheetCache: Map<string, MppeCurriculumDaySheet> = new Map();
 let activePdfBytes: Uint8Array | null = null;
@@ -284,6 +290,10 @@ function activateTab(
     tab.classList.toggle("eoschool-curriculum-modal__tab--active", active);
   });
   setModalSectionContent(modal, card, sectionId, sheet);
+  const dayId = card.dataset.curriculumDay ?? "";
+  if (dayId) {
+    void loadCurriculumMaterialsPanel(modal, materialsRoot, dayId, sectionId);
+  }
 }
 
 export function bindCurriculumDayModalShell(modal: HTMLElement): void {
@@ -313,8 +323,12 @@ export function bindCurriculumDayModalShell(modal: HTMLElement): void {
 }
 
 export function initCurriculumDayModal(root: HTMLElement | null): void {
+  materialsRoot = root;
   const modal = document.querySelector<HTMLElement>("[data-curriculum-day-modal]");
-  if (modal) bindCurriculumDayModalShell(modal);
+  if (modal) {
+    bindCurriculumDayModalShell(modal);
+    bindCurriculumMaterialsPanel(modal, root);
+  }
 
   if (!root) return;
   if (root.dataset.dayModalBound === "true") return;

@@ -11,6 +11,7 @@ globs:
   - frontend/scripts/build-40week-mppe-curriculum.mjs
   - backend/eoschool_mppe_curriculum*.go
   - backend/eoschool_curriculum_progress*.go
+  - backend/eoschool_curriculum_materials*.go
   - backend/pkg/pdf/mppe_curriculum_day.go
 alwaysApply: false
 ---
@@ -41,19 +42,30 @@ Manifest: `day-sheets-manifest.json` (not `plan-classes-manifest.json` / not per
 
 ## UI
 
-- **Card:** solo aprendizaje(s); **modal:** objetivo + aprendizaje específico.
+- **Card:** solo aprendizaje(s); **modal:** objetivo + aprendizaje específico + **materiales por asignatura**.
 - **PDF:** una sola hoja carta con **5 tarjetas** (rejilla 3+2), tipografía **9 pt** títulos de tarjeta, **8 pt** cuerpo — generada por el API MPPE, no por `/api/homescool/preview`.
+- **Materiales (modal, por tab/asignatura):** roles `teacher_guide` | `child` | `proof`; kinds `image` | `audio` | `document` | `url`. Scope: `owner + studentKey + dayId + sectionId`.
 
 ## API
 
 - `POST /api/eoschool/curriculum/day-preview` — body = full `mppe-curriculum-day` JSON → PDF base64 (5 cards).
 - Progress Mongo: `/api/eoschool/curriculum/progress*` (por niño; default Elías).
+- Materials (cookie + Homescool entitlement + CSRF on writes):
+  - `GET /api/eoschool/curriculum/materials?studentKey=&dayId=&sectionId=`
+  - `POST /api/eoschool/curriculum/materials` (multipart file + role)
+  - `POST /api/eoschool/curriculum/materials/url` (JSON https URL)
+  - `DELETE /api/eoschool/curriculum/materials/{id}`
+  - `GET …/materials/{id}/file` and `…/thumb`
+- Images: convert with Homescool progress WebP pipeline (quality 82); originals are not retained on disk.
+- Audio (mpeg/mp4/wav/ogg/webm) and documents (PDF/ODT/DOCX) stored as uploaded bytes under `{MEDIA_ROOT}/eoschool/curriculum/…`.
+- No extra VPS/Nginx setup: reuse existing `MEDIA_ROOT` + `ServeFile`.
 
 ## Forbidden on this route
 
 - Generating or requiring Homescool `lesson.kind`, `quiz`, `slotSequence`, or `layout: letter-grid-v2` for MPPE day sheets.
 - Using `POST /api/homescool/preview` for the curriculum day modal PDF.
 - Copying Homescool week themes as the spine instead of the 40-week MPPE plan data.
+- Embedding section materials into the 5-card day PDF unless explicitly requested.
 
 ## When editing
 

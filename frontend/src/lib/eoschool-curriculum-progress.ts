@@ -69,6 +69,7 @@ function setStudentBanner(
     el.hidden = true;
     el.textContent = "";
     el.removeAttribute("data-curriculum-persist");
+    root.removeAttribute("data-curriculum-persist");
     return;
   }
   if (mode === "offline") {
@@ -76,6 +77,7 @@ function setStudentBanner(
       "Progreso en el navegador: el API de currículo aún no está disponible en este entorno. Los checks no se guardan en la nube.";
     el.hidden = false;
     el.dataset.curriculumPersist = "local";
+    root.dataset.curriculumPersist = "local";
     return;
   }
   if (mode === "guest") {
@@ -83,6 +85,7 @@ function setStudentBanner(
       "Invitado: los checks no se guardan. Inicia sesión con Homescool para persistir el progreso de Elías.";
     el.hidden = false;
     el.dataset.curriculumPersist = "guest";
+    root.dataset.curriculumPersist = "guest";
     return;
   }
   if (!student) {
@@ -93,6 +96,8 @@ function setStudentBanner(
   el.textContent = formatStudentBanner(student);
   el.hidden = false;
   el.dataset.curriculumPersist = "remote";
+  root.dataset.curriculumPersist = "remote";
+  root.dataset.curriculumStudentKey = student.studentKey;
 }
 
 export async function initCurriculumProgress(root: HTMLElement | null): Promise<void> {
@@ -107,6 +112,7 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
     if (loaded.ok) {
       persistRemote = true;
       studentKey = loaded.data.student.studentKey;
+      root.dataset.curriculumStudentKey = studentKey;
       loaded.data.sectionsDone.forEach((key) => done.add(key));
       setStudentBanner(root, loaded.data.student, "remote");
       if (mustLog) {
