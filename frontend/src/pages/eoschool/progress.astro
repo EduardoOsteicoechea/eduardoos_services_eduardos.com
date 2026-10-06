@@ -55,7 +55,6 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
             <tr>
               <th scope="col">Sem</th>
               <th scope="col">Día</th>
-              <th scope="col">Estado</th>
               {CURRICULUM_SECTION_IDS.map((id) => <th scope="col">{sectionLabels[id]}</th>)}
             </tr>
           </thead>
@@ -65,7 +64,6 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
                 <tr data-day-row={day.dayId}>
                   <td>{day.week}</td>
                   <td>{day.planDay}</td>
-                  <td><span class="eoschool-dot" data-day-dot aria-label="estado del día"></span></td>
                   {CURRICULUM_SECTION_IDS.map((sid) => (
                     <td>
                       <span
@@ -92,7 +90,7 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
     fetchCurriculumStudents,
     type CurriculumStudent,
   } from "../../lib/eoschool-curriculum-api";
-  import { dayTrafficStatus, sectionDone } from "../../lib/eoschool-curriculum-progress-status";
+  import { sectionDone } from "../../lib/eoschool-curriculum-progress-status";
   import type { CurriculumPlanSectionId } from "../../lib/eoschool-curriculum-plan-classes";
   import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
 
@@ -168,11 +166,6 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
     const done = new Set(loaded.data.sectionsDone);
     root?.querySelectorAll<HTMLElement>("[data-day-row]").forEach((row) => {
       const dayId = row.dataset.dayRow || "";
-      const dayDot = row.querySelector<HTMLElement>("[data-day-dot]");
-      const status = dayTrafficStatus(dayId, done);
-      if (dayDot) {
-        dayDot.className = `eoschool-dot eoschool-dot--${status}`;
-      }
       row.querySelectorAll<HTMLElement>("[data-section-dot]").forEach((dot) => {
         const sid = dot.dataset.section as CurriculumPlanSectionId;
         const ok = sectionDone(dayId, sid, done);
@@ -254,10 +247,6 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
   /* Brand --color-ok is grey; traffic-light green is intentional here. */
   .eoschool-dot--green {
     background: #22c55e;
-  }
-
-  .eoschool-dot--yellow {
-    background: #eab308;
   }
 
   .eoschool-dot--red {
