@@ -1,4 +1,5 @@
 import type { CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
+import corpus from "../data/homescool/jokes-riddles-1000.json";
 
 export type CurriculumTreatKind = "joke" | "riddle";
 
@@ -12,7 +13,7 @@ export type CurriculumTreat = {
   locale?: string;
 };
 
-/** Placeholder samples so the modal works before the 1000-item corpus lands. */
+/** Tiny fallback if a key is missing from the corpus. */
 const SAMPLE_TREATS: CurriculumTreat[] = [
   {
     key: "sample:joke",
@@ -33,11 +34,6 @@ const SAMPLE_TREATS: CurriculumTreat[] = [
     locale: "es-VE",
   },
 ];
-
-const TREATS_URL = "/eoschool/requirements/curriculum/treats.json";
-
-let treatsByKey: Map<string, CurriculumTreat> | null = null;
-let loadPromise: Promise<Map<string, CurriculumTreat>> | null = null;
 
 function isTreat(raw: unknown): raw is CurriculumTreat {
   if (!raw || typeof raw !== "object") return false;
@@ -63,28 +59,17 @@ function buildMap(items: CurriculumTreat[]): Map<string, CurriculumTreat> {
   return map;
 }
 
-async function loadTreatsMap(): Promise<Map<string, CurriculumTreat>> {
-  if (treatsByKey) return treatsByKey;
-  if (loadPromise) return loadPromise;
+const CORPUS_TREATS: CurriculumTreat[] = Array.isArray(corpus)
+  ? corpus.filter(isTreat)
+  : [];
 
-  loadPromise = (async () => {
-    try {
-      const res = await fetch(TREATS_URL, { credentials: "same-origin" });
-      if (!res.ok) {
-        treatsByKey = buildMap(SAMPLE_TREATS);
-        return treatsByKey;
-      }
-      const data: unknown = await res.json();
-      const list = Array.isArray(data) ? data.filter(isTreat) : [];
-      treatsByKey = buildMap(list.length ? list : SAMPLE_TREATS);
-      return treatsByKey;
-    } catch {
-      treatsByKey = buildMap(SAMPLE_TREATS);
-      return treatsByKey;
-    }
-  })();
+let treatsByKey: Map<string, CurriculumTreat> | null = null;
 
-  return loadPromise;
+function treatsMap(): Map<string, CurriculumTreat> {
+  if (!treatsByKey) {
+    treatsByKey = buildMap(CORPUS_TREATS.length ? CORPUS_TREATS : SAMPLE_TREATS);
+  }
+  return treatsByKey;
 }
 
 export function treatKey(dayId: string, sectionId: string): string {
@@ -95,10 +80,8 @@ export async function getCurriculumTreat(
   dayId: string,
   sectionId: string,
 ): Promise<CurriculumTreat> {
-  const map = await loadTreatsMap();
-  const hit = map.get(treatKey(dayId, sectionId));
+  const hit = treatsMap().get(treatKey(dayId, sectionId));
   if (hit) return hit;
-  // Stable fallback by day number so every activity still gets something.
   const n = Number.parseInt(dayId.replace(/^d/, ""), 10);
   const sample = SAMPLE_TREATS[(Number.isFinite(n) ? n : 0) % SAMPLE_TREATS.length];
   return {
@@ -109,8 +92,7 @@ export async function getCurriculumTreat(
   };
 }
 
-/** Test/helper: replace corpus in memory (e.g. after the 1000-item file is ready). */
+/** Test/helper: replace corpus in memory. */
 export function setCurriculumTreatsForTests(items: CurriculumTreat[]): void {
   treatsByKey = buildMap(items);
-  loadPromise = Promise.resolve(treatsByKey);
 }

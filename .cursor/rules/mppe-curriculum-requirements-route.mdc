@@ -45,7 +45,7 @@ Manifest: `day-sheets-manifest.json` (not `plan-classes-manifest.json` / not per
 - **Card:** solo aprendizaje(s); **modal:** objetivo + aprendizaje específico + **materiales por asignatura**.
 - **PDF:** una sola hoja carta con **5 tarjetas** (rejilla 3+2), tipografía **9 pt** títulos de tarjeta, **8 pt** cuerpo — generada por el API MPPE, no por `/api/homescool/preview`.
 - **Materiales (modal, por tab/asignatura):** roles `teacher_guide` | `child` | `proof`; kinds `image` | `audio` | `document` | `url`. Scope: `owner + studentKey + dayId + sectionId`.
-- **Treat (al marcar sección completa):** modal de celebración con confeti + chiste/adivinanza. Corpus: `frontend/public/eoschool/requirements/curriculum/treats.json` (keys `dN:section`); fallback samples until the full corpus lands.
+- **Treat (al marcar sección completa):** modal de celebración con confeti + chiste/adivinanza. Corpus: `frontend/src/data/homescool/jokes-riddles-1000.json` (keys `dN:section`, 1000 ítems); regenerar con `scripts/generate_homescool_jokes_riddles.py`.
 
 ## API
 
