@@ -5,6 +5,7 @@ import {
   patchCurriculumSection,
   type CurriculumStudent,
 } from "./eoschool-curriculum-api";
+import { openCurriculumTreatModal } from "./eoschool-curriculum-treat-modal";
 import { showErrorModal } from "./error-modal";
 import { mustLog } from "./dev-log";
 
@@ -167,6 +168,11 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
     if (target.checked) done.add(key);
     else done.delete(key);
     applyProgress(root, done);
+
+    const justCompleted = target.checked && !prev;
+    if (justCompleted) {
+      void openCurriculumTreatModal(dayId, sectionId);
+    }
 
     if (!persistRemote) {
       // Optimistic local-only for guests; do not confuse with session loss.

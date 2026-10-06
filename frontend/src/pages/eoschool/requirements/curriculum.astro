@@ -319,17 +319,52 @@ const areaDefs = [
       </div>
     </div>
   </div>
+
+  <div class="eoschool-curriculum-treat" data-curriculum-treat-modal hidden>
+    <canvas class="eoschool-curriculum-treat__confetti" data-curriculum-treat-confetti aria-hidden="true"></canvas>
+    <div
+      class="eoschool-curriculum-treat__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="curriculum-treat-title"
+    >
+      <header class="eoschool-curriculum-treat__toolbar">
+        <h2 class="eoschool-curriculum-treat__title" id="curriculum-treat-title">
+          ¡Actividad lista!
+        </h2>
+        <button
+          class="icon-btn eoschool-curriculum-treat__close"
+          type="button"
+          data-curriculum-treat-close
+          aria-label="Cerrar"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        </button>
+      </header>
+      <p class="eoschool-curriculum-treat__kind" data-curriculum-treat-kind>Chiste</p>
+      <p class="eoschool-curriculum-treat__setup" data-curriculum-treat-setup></p>
+      <button type="button" class="eoschool-curriculum-treat__reveal" data-curriculum-treat-reveal hidden>
+        Ver respuesta
+      </button>
+      <p class="eoschool-curriculum-treat__punchline" data-curriculum-treat-punchline hidden></p>
+      <button type="button" class="eoschool-curriculum-treat__ok" data-curriculum-treat-close>
+        ¡Genial!
+      </button>
+    </div>
+  </div>
 </Layout>
 
 <script>
   import { initCurriculumIndexResize } from "../../../lib/eoschool-curriculum-index-resize";
   import { initCurriculumDayModal } from "../../../lib/eoschool-curriculum-day-modal";
   import { initCurriculumProgress } from "../../../lib/eoschool-curriculum-progress";
+  import { bindCurriculumTreatModal } from "../../../lib/eoschool-curriculum-treat-modal";
   import { initCurriculumWeekPrint } from "../../../lib/eoschool-curriculum-week-print";
 
   function bootCurriculumChrome() {
     const root = document.querySelector<HTMLElement>("[data-curriculum-progress]");
     initCurriculumIndexResize(document.querySelector("[data-curriculum-index]"));
+    bindCurriculumTreatModal();
     const mode = root?.dataset.curriculumMode || "study";
     if (mode === "browse") {
       root?.querySelectorAll<HTMLInputElement>("[data-curriculum-section-check]").forEach((input) => {
@@ -1324,5 +1359,127 @@ const areaDefs = [
       min-height: 16rem;
       flex: 1 1 auto;
     }
+  }
+
+  .eoschool-curriculum-treat {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-modal) + 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-padding);
+    background: color-mix(in srgb, var(--color-bg) 45%, transparent);
+    backdrop-filter: blur(0.125rem);
+  }
+
+  .eoschool-curriculum-treat[hidden] {
+    display: none;
+  }
+
+  html:has(body.eoschool-curriculum-treat-open),
+  body.eoschool-curriculum-treat-open {
+    overflow: hidden;
+  }
+
+  .eoschool-curriculum-treat__confetti {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .eoschool-curriculum-treat__dialog {
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    width: min(100%, calc(var(--content-basis, 30rem) * 0.9));
+    max-height: calc(100% - 2rem);
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .eoschool-curriculum-treat__toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum-treat__title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .eoschool-curriculum-treat__close {
+    flex-shrink: 0;
+  }
+
+  .eoschool-curriculum-treat__kind {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+    color: var(--color-accent);
+    letter-spacing: 0.04rem;
+    text-transform: uppercase;
+  }
+
+  .eoschool-curriculum-treat__setup {
+    margin: 0;
+    font-size: var(--font-size-md);
+    line-height: 1.45;
+    color: var(--color-text);
+  }
+
+  .eoschool-curriculum-treat__setup[hidden] {
+    display: none;
+  }
+
+  .eoschool-curriculum-treat__punchline {
+    margin: 0;
+    padding: var(--rail-gap);
+    font-size: var(--font-size-md);
+    font-weight: 650;
+    line-height: 1.4;
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+    border-radius: var(--border-radius);
+  }
+
+  .eoschool-curriculum-treat__punchline[hidden] {
+    display: none;
+  }
+
+  .eoschool-curriculum-treat__reveal,
+  .eoschool-curriculum-treat__ok {
+    align-self: flex-start;
+    height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-md);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-button-bg);
+    color: var(--color-button-fg);
+    cursor: pointer;
+  }
+
+  .eoschool-curriculum-treat__reveal[hidden] {
+    display: none;
+  }
+
+  .eoschool-curriculum-treat__ok {
+    margin-top: var(--rail-gap);
   }
 </style>
