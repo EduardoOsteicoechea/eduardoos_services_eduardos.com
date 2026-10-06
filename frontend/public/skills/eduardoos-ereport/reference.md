@@ -24,7 +24,7 @@ Create/update one node without append/replace:
 - `PATCH …/sections/{sectionId}` (`title`, `kind`, `productHistory`)
 - `POST …/sections/{sectionId}/groups`
 - `PATCH …/groups/{groupId}` (`title`, `productHistory`)
-- `POST …/groups/{groupId}/items` (new item: `incidencia` + `status: "reprobado"`)
+- `POST …/groups/{groupId}/items` (new item: `nombre` and/or `incidencia` + `status: "reprobado"`; title-first OK)
 - `PATCH …/items/{itemId}` (edit issue fields)
 
 ### Web embed

@@ -158,12 +158,24 @@ func TestEreportV1NodeMutations(t *testing.T) {
 		t.Fatalf("want append_existing_item_modified, got %s", appendRec.Body.String())
 	}
 
-	// New item without incidencia rejected
-	badItem, _ := json.Marshal(map[string]any{"nombre": "no text", "status": "reprobado"})
+	// Title-only create (empty incidencia) allowed for node routes
+	titleOnly, _ := json.Marshal(map[string]any{"nombre": "Title only", "status": "reprobado"})
+	titleRec := v1JSON(t, app, secret, http.MethodPost,
+		"/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections/"+sectionID+"/groups/"+groupID+"/items", titleOnly)
+	if titleRec.Code != http.StatusCreated {
+		t.Fatalf("title-only item should 201, got %d %s", titleRec.Code, titleRec.Body.String())
+	}
+	titleNode := decodeMap(t, titleRec)["node"].(map[string]any)
+	if asString(titleNode["nombre"]) != "Title only" || asString(titleNode["incidencia"]) != "" {
+		t.Fatalf("title-only node: %#v", titleNode)
+	}
+
+	// New item without nombre and incidencia rejected
+	badItem, _ := json.Marshal(map[string]any{"nombre": "", "status": "reprobado"})
 	badItemRec := v1JSON(t, app, secret, http.MethodPost,
 		"/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections/"+sectionID+"/groups/"+groupID+"/items", badItem)
 	if badItemRec.Code != http.StatusBadRequest {
-		t.Fatalf("empty incidencia should 400, got %d %s", badItemRec.Code, badItemRec.Body.String())
+		t.Fatalf("empty nombre+incidencia should 400, got %d %s", badItemRec.Code, badItemRec.Body.String())
 	}
 }
 

@@ -28,7 +28,7 @@ Storage is the VPS filesystem under `media/ereport/<ownerUserId>/`. There are no
 5. `GET /api/v1/ereport/orgs/{orgId}/reports/{reportId}`
 6. `POST` the same report path with `{ "confirmOverwrite": true, "payload": { … } }`
 
-API POST is additive. Do not modify or delete existing item ids. New items need non-empty `incidencia` and `status: "reprobado"`. Print `viewUrl` after a write.
+API POST is additive. Do not modify or delete existing item ids. Append-mode new items need non-empty `incidencia` and `status: "reprobado"`. Granular item POST (web connector) may create with `nombre` only and fill `incidencia` later via PATCH. Print `viewUrl` after a write.
 
 ## Web projects (embed)
 

@@ -78,11 +78,16 @@ async function nodeWrite(
   body: Record<string, unknown>,
 ): Promise<{ status: number; requestId: string; data: Record<string, unknown> }> {
   await getCsrf();
-  const { status, data, requestId } = await apiRequest<Record<string, unknown>>(path, {
-    method,
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  // Snapshot + disk write can exceed the default 12s API timeout and look like a lost save.
+  const { status, data, requestId } = await apiRequest<Record<string, unknown>>(
+    path,
+    {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    },
+    { timeoutMs: 120000 },
+  );
   return { status, requestId, data: data as Record<string, unknown> };
 }
 
@@ -97,6 +102,10 @@ function raiseApiError(status: number, requestId: string, data: Record<string, u
 export function startEreportWebConnector(root: HTMLElement) {
   let config = readQueryConfig();
   let payload: ReportPayload | null = null;
+  /** Bumped on write success so a slower in-flight GET cannot wipe newer local state. */
+  let loadGen = 0;
+  let bootInFlight: Promise<void> | null = null;
+  let bootKey = "";
 
   const statusEl = el<HTMLElement>(root, "[data-wc-status]");
   const authPanel = el<HTMLElement>(root, "[data-wc-auth]");
@@ -292,8 +301,15 @@ export function startEreportWebConnector(root: HTMLElement) {
     const orgId = selectedOrg();
     const reportId = selectedReport();
     if (!orgId || !reportId) return;
+    const gen = ++loadGen;
+    const keep = {
+      sectionId: selectedSection(),
+      groupId: selectedGroup(),
+      itemId: selectedItem(),
+    };
     setStatus("Loading report…");
     const { status, data, requestId } = await fetchOrgReport(orgId, reportId);
+    if (gen !== loadGen) return;
     if (status !== 200) {
       raiseApiError(status, requestId, data as unknown as Record<string, unknown>);
       setStatus("Could not load report.");
@@ -306,8 +322,13 @@ export function startEreportWebConnector(root: HTMLElement) {
       reportLabel.hidden = false;
     }
     cascade?.removeAttribute("hidden");
-    applyPayload(payload);
+    applyPayload(payload, keep);
     setStatus("Select a section, or create one.");
+  }
+
+  function commitPayload(next: ReportPayload | null | undefined, keep: { sectionId?: string; groupId?: string; itemId?: string }) {
+    loadGen += 1;
+    applyPayload(next, keep);
   }
 
   async function ensureGroup(sectionId: string): Promise<string | null> {
@@ -358,7 +379,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           const gid = await ensureGroup(node.id);
           groupId = gid || "";
         }
-        applyPayload(payload, { sectionId: node?.id, groupId });
+        commitPayload(payload, { sectionId: node?.id, groupId });
         setStatus(groupId ? "Section created (with General subsection)." : "Section created.");
       } finally {
         setBusy(false);
@@ -392,7 +413,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           setStatus("Could not save section.");
           return;
         }
-        applyPayload((data.payload as ReportPayload) || payload, keep);
+        commitPayload((data.payload as ReportPayload) || payload, keep);
         setStatus("Section saved.");
       } finally {
         setBusy(false);
@@ -423,7 +444,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           return;
         }
         const node = data.node as GroupNode;
-        applyPayload((data.payload as ReportPayload) || payload, {
+        commitPayload((data.payload as ReportPayload) || payload, {
           sectionId,
           groupId: node?.id,
         });
@@ -461,7 +482,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           setStatus("Could not save subsection.");
           return;
         }
-        applyPayload((data.payload as ReportPayload) || payload, keep);
+        commitPayload((data.payload as ReportPayload) || payload, keep);
         setStatus("Subsection saved.");
       } finally {
         setBusy(false);
@@ -475,8 +496,8 @@ export function startEreportWebConnector(root: HTMLElement) {
       setStatus("Select a section first.");
       return;
     }
-    const incidencia = window.prompt("New issue text (incidencia)");
-    if (!incidencia?.trim()) return;
+    const nombre = window.prompt("New issue title");
+    if (!nombre?.trim()) return;
     await enqueueWrite(async () => {
       setBusy(true);
       try {
@@ -485,13 +506,13 @@ export function startEreportWebConnector(root: HTMLElement) {
           const gid = await ensureGroup(sectionId);
           if (!gid) return;
           groupId = gid;
-          applyPayload(payload, { sectionId, groupId });
+          commitPayload(payload, { sectionId, groupId });
         }
         setStatus("Creating issue…");
         const { status, requestId, data } = await nodeWrite(
           "POST",
           `${basePath()}/sections/${encodeURIComponent(sectionId)}/groups/${encodeURIComponent(groupId)}/items`,
-          { incidencia: incidencia.trim(), status: "reprobado", nombre: "" },
+          { nombre: nombre.trim(), incidencia: "", status: "reprobado" },
         );
         if (status !== 201 && status !== 200) {
           raiseApiError(status, requestId, data);
@@ -499,12 +520,12 @@ export function startEreportWebConnector(root: HTMLElement) {
           return;
         }
         const node = data.node as ItemNode;
-        applyPayload((data.payload as ReportPayload) || payload, {
+        commitPayload((data.payload as ReportPayload) || payload, {
           sectionId,
           groupId,
           itemId: node?.id,
         });
-        setStatus("Issue created.");
+        setStatus("Issue created. Fill incidencia content, then Save.");
       } finally {
         setBusy(false);
       }
@@ -519,8 +540,9 @@ export function startEreportWebConnector(root: HTMLElement) {
       setStatus("Select an issue to save.");
       return;
     }
-    if (!itemIncidencia.value.trim()) {
-      setStatus("Incidencia cannot be empty.");
+    const nombre = itemNombre.value.trim();
+    if (!nombre) {
+      setStatus("Issue title cannot be empty.");
       return;
     }
     await enqueueWrite(async () => {
@@ -532,7 +554,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           "PATCH",
           `${basePath()}/sections/${encodeURIComponent(sectionId)}/groups/${encodeURIComponent(groupId)}/items/${encodeURIComponent(itemId)}`,
           {
-            nombre: itemNombre.value,
+            nombre,
             incidencia: itemIncidencia.value,
             fechaIncidencia: itemFechaInc.value,
             status: itemStatus.value,
@@ -545,7 +567,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           setStatus("Could not save issue.");
           return;
         }
-        applyPayload((data.payload as ReportPayload) || payload, keep);
+        commitPayload((data.payload as ReportPayload) || payload, keep);
         setStatus("Issue saved.");
       } finally {
         setBusy(false);
@@ -593,55 +615,71 @@ export function startEreportWebConnector(root: HTMLElement) {
   }
 
   async function bootstrap(next?: Partial<ConnectorConfig>) {
-    try {
-      if (next?.orgId && next?.reportId) {
-        config = { orgId: next.orgId, reportId: next.reportId, locked: true };
-      }
-      authPanel?.setAttribute("hidden", "");
-      pathCard?.setAttribute("hidden", "");
-      cascade?.setAttribute("hidden", "");
-      if (reportLabel) reportLabel.hidden = true;
-      setStatus("Checking subscription…");
-
-      const access = await fetchEreportAccess();
-      if (access.status === 401) {
-        authPanel?.removeAttribute("hidden");
-        if (authMsg) {
-          authMsg.innerHTML =
-            'Sign in on eduardoos.com to use the connector. <a href="/session" data-route>Sign in</a>';
-        }
-        setStatus("Sign in required.");
-        return;
-      }
-      if (access.status !== 200) {
-        raiseApiError(access.status, access.requestId, access.data as unknown as Record<string, unknown>);
-        setStatus("Could not verify access.");
-        return;
-      }
-      if (!access.data.canCreate) {
-        authPanel?.removeAttribute("hidden");
-        if (authMsg) {
-          authMsg.innerHTML =
-            'An active eReport subscription is required. <a href="/payments/subscription" data-route>Subscriptions</a>';
-        }
-        setStatus("Subscription required.");
-        return;
-      }
-
-      if (config.locked) {
-        pathCard?.setAttribute("hidden", "");
-        await loadReportPayload();
-        return;
-      }
-      await loadOrgsForPicker();
-    } catch (err) {
-      if (mustLog) console.log("[ereport-web-connector] bootstrap failed", err);
-      setStatus("Could not start connector.");
-      showErrorModal({
-        message: "Could not start the eReport connector.",
-        details: err instanceof Error ? err.message : String(err),
-      });
+    if (next?.orgId && next?.reportId) {
+      config = { orgId: next.orgId, reportId: next.reportId, locked: true };
     }
+    const key = config.locked ? `${config.orgId}/${config.reportId}` : "picker";
+    if (bootInFlight && bootKey === key) {
+      if (mustLog) console.log("[ereport-web-connector] reuse in-flight bootstrap", { key });
+      return bootInFlight;
+    }
+    if (payload && bootKey === key && config.locked) {
+      if (mustLog) console.log("[ereport-web-connector] skip duplicate init", { key });
+      return;
+    }
+    bootKey = key;
+    const run = (async () => {
+      try {
+        authPanel?.setAttribute("hidden", "");
+        pathCard?.setAttribute("hidden", "");
+        cascade?.setAttribute("hidden", "");
+        if (reportLabel) reportLabel.hidden = true;
+        setStatus("Checking subscription…");
+
+        const access = await fetchEreportAccess();
+        if (access.status === 401) {
+          authPanel?.removeAttribute("hidden");
+          if (authMsg) {
+            authMsg.innerHTML =
+              'Sign in on eduardoos.com to use the connector. <a href="/session" data-route>Sign in</a>';
+          }
+          setStatus("Sign in required.");
+          return;
+        }
+        if (access.status !== 200) {
+          raiseApiError(access.status, access.requestId, access.data as unknown as Record<string, unknown>);
+          setStatus("Could not verify access.");
+          return;
+        }
+        if (!access.data.canCreate) {
+          authPanel?.removeAttribute("hidden");
+          if (authMsg) {
+            authMsg.innerHTML =
+              'An active eReport subscription is required. <a href="/payments/subscription" data-route>Subscriptions</a>';
+          }
+          setStatus("Subscription required.");
+          return;
+        }
+
+        if (config.locked) {
+          pathCard?.setAttribute("hidden", "");
+          await loadReportPayload();
+          return;
+        }
+        await loadOrgsForPicker();
+      } catch (err) {
+        if (mustLog) console.log("[ereport-web-connector] bootstrap failed", err);
+        setStatus("Could not start connector.");
+        showErrorModal({
+          message: "Could not start the eReport connector.",
+          details: err instanceof Error ? err.message : String(err),
+        });
+      }
+    })();
+    bootInFlight = run.finally(() => {
+      if (bootInFlight === run) bootInFlight = null;
+    });
+    return bootInFlight;
   }
 
   orgSelect?.addEventListener("change", () => {

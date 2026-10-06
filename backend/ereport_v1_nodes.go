@@ -205,7 +205,8 @@ func mutateCreateItem(sectionID, groupID string) ereportNodeMutator {
 		if v, ok := body["checklist"]; ok {
 			item["checklist"] = v
 		}
-		if err := validateNewAPIItem(item); err != nil {
+		// Web connector creates by title (nombre) first; incidencia content is filled later.
+		if err := validateNewNodeItem(item); err != nil {
 			return nil, err
 		}
 		items = append(items, item)
@@ -496,4 +497,28 @@ func validEreportItemStatus(st string) bool {
 	default:
 		return false
 	}
+}
+
+// validateNewNodeItem allows creating an issue with only a title (nombre).
+// Full report append mode still requires incidencia via validateNewAPIItem.
+func validateNewNodeItem(it map[string]any) error {
+	nombre := strings.TrimSpace(asString(it["nombre"]))
+	text := strings.TrimSpace(asString(it["incidencia"]))
+	if nombre == "" && text == "" {
+		return apiWriteErr("append_invalid_new_item_status", "new issues require non-empty nombre or incidencia")
+	}
+	status := asString(it["status"])
+	if status != ereportNodeStatusReprobado {
+		return apiWriteErr("append_invalid_new_item_status", "new issues must have status reprobado")
+	}
+	if checklistLen(it["checklist"]) == 0 {
+		it["checklist"] = []any{
+			map[string]any{
+				"id":      "ux-test",
+				"label":   "UX Test",
+				"checked": false,
+			},
+		}
+	}
+	return nil
 }
