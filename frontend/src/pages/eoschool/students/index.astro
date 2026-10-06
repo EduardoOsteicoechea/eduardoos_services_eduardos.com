@@ -8,7 +8,6 @@ import Layout from "../../../layouts/Layout.astro";
   description="Gestiona los niños del currículo MPPE."
   page="eoschool-students"
   robots="noindex,nofollow"
-  showPageTitle={false}
 >
   <Fragment slot="dhs">
     <a class="dhs-action" href="/eoschool" data-route title="Dashboard" aria-label="Dashboard">
@@ -21,9 +20,7 @@ import Layout from "../../../layouts/Layout.astro";
     </a>
   </Fragment>
 
-  <h1 class="page-title-sr">Estudiantes MPPE</h1>
-
-  <section class="product-dash" data-students>
+  <section class="product-dash page-span-all" data-students>
     <p class="status" data-banner>Cargando…</p>
     <div data-gate hidden class="product-gate">
       <p class="hint">Necesitas sesión y suscripción Homescool.</p>
@@ -37,6 +34,7 @@ import Layout from "../../../layouts/Layout.astro";
   import {
     deleteCurriculumStudent,
     fetchCurriculumStudents,
+    updateCurriculumStudent,
     type CurriculumStudent,
   } from "../../../lib/eoschool-curriculum-api";
   import { apiFail, requireService, setHidden } from "../../../lib/productGate";
@@ -53,87 +51,210 @@ import Layout from "../../../layouts/Layout.astro";
   } else {
     setHidden(gate, true);
     setHidden(list, false);
+    await reloadList();
+  }
+
+  async function reloadList() {
     const loaded = await fetchCurriculumStudents();
     if (!loaded.ok) {
       apiFail("No se pudo cargar estudiantes.", { requestId: loaded.requestId });
-    } else if (list instanceof HTMLElement) {
-      const students = loaded.data.students;
-      if (banner instanceof HTMLElement) {
-        banner.textContent = students.length ? `${students.length} estudiante(s)` : "Sin estudiantes. Registra el primero.";
-      }
-      list.replaceChildren();
-      for (const s of students) {
-        list.appendChild(renderCard(s));
-      }
+      return;
     }
+    if (!(list instanceof HTMLElement)) return;
+    const students = loaded.data.students;
+    if (banner instanceof HTMLElement) {
+      banner.textContent = students.length
+        ? `${students.length} estudiante(s)`
+        : "Sin estudiantes. Registra el primero.";
+    }
+    list.replaceChildren();
+    for (const s of students) {
+      list.appendChild(renderCard(s));
+    }
+  }
+
+  function iconAction(
+    tag: "a" | "button",
+    opts: { icon: string; label: string; danger?: boolean; href?: string },
+  ): HTMLElement {
+    const el = document.createElement(tag);
+    el.className = opts.danger
+      ? "icon-btn eoschool-students__action eoschool-students__action--danger"
+      : "icon-btn eoschool-students__action";
+    el.title = opts.label;
+    el.setAttribute("aria-label", opts.label);
+    if (tag === "a" && opts.href) {
+      (el as HTMLAnchorElement).href = opts.href;
+      (el as HTMLAnchorElement).dataset.route = "";
+    } else {
+      (el as HTMLButtonElement).type = "button";
+    }
+    const icon = document.createElement("span");
+    icon.className = "material-symbols-outlined";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = opts.icon;
+    el.append(icon);
+    return el;
   }
 
   function renderCard(s: CurriculumStudent): HTMLElement {
     const card = document.createElement("article");
-    card.className = "product-dash__card";
-    const head = document.createElement("header");
-    head.className = "product-dash__card-head";
-    const title = document.createElement("h2");
-    title.className = "product-dash__card-title";
-    title.textContent = s.displayName;
-    const desc = document.createElement("p");
-    desc.className = "product-dash__card-desc";
-    desc.textContent = `${s.age} años · ${s.grade} · ${s.studentKey}`;
-    head.append(title, desc);
-    card.append(head);
+    card.className = "product-dash__card eoschool-students__card";
+    card.dataset.studentKey = s.studentKey;
 
     if (s.hasPhoto && s.photoUrl) {
       const img = document.createElement("img");
+      img.className = "eoschool-students__photo";
       img.src = s.photoUrl;
       img.alt = "";
-      img.width = 64;
-      img.height = 64;
-      img.style.borderRadius = "50%";
-      img.style.width = "4rem";
-      img.style.height = "4rem";
-      img.style.objectFit = "cover";
       card.append(img);
     }
 
+    const title = document.createElement("h2");
+    title.className = "product-dash__card-title";
+    title.textContent = s.displayName;
+
+    const desc = document.createElement("p");
+    desc.className = "product-dash__card-desc";
+    desc.textContent = `${s.age} años · ${s.grade} · ${s.studentKey}`;
+
+    card.append(title, desc);
+
     const actions = document.createElement("div");
-    actions.style.display = "flex";
-    actions.style.flexWrap = "wrap";
-    actions.style.gap = "var(--rail-gap)";
+    actions.className = "eoschool-students__actions";
 
-    const study = document.createElement("a");
-    study.className = "button";
-    study.href = `/eoschool/study?studentKey=${encodeURIComponent(s.studentKey)}`;
-    study.dataset.route = "";
-    study.textContent = "Estudio";
+    const study = iconAction("a", {
+      icon: "school",
+      label: "Estudio",
+      href: `/eoschool/study?studentKey=${encodeURIComponent(s.studentKey)}`,
+    });
+    const progress = iconAction("a", {
+      icon: "monitoring",
+      label: "Progreso",
+      href: `/eoschool/progress?studentKey=${encodeURIComponent(s.studentKey)}`,
+    });
+    const portfolio = iconAction("a", {
+      icon: "folder_special",
+      label: "Portafolio",
+      href: `/eoschool/portfolio?studentKey=${encodeURIComponent(s.studentKey)}`,
+    });
+    const edit = iconAction("button", { icon: "edit", label: "Editar" });
+    const del = iconAction("button", { icon: "delete", label: "Eliminar", danger: true });
 
-    const progress = document.createElement("a");
-    progress.className = "button";
-    progress.href = `/eoschool/progress?studentKey=${encodeURIComponent(s.studentKey)}`;
-    progress.dataset.route = "";
-    progress.textContent = "Progreso";
+    const form = document.createElement("form");
+    form.className = "eoschool-students__edit session-grid";
+    form.hidden = true;
+    form.innerHTML = `
+      <label>Nombre <input name="firstName" required maxlength="80" value="${escapeAttr(s.firstName || "")}" /></label>
+      <label>Apellido <input name="lastName" required maxlength="80" value="${escapeAttr(s.lastName || "")}" /></label>
+      <label>Edad <input name="age" type="number" min="3" max="18" required value="${s.age}" /></label>
+      <label>Grado <input name="grade" required maxlength="80" value="${escapeAttr(s.grade)}" /></label>
+      <label>Foto <input name="photo" type="file" accept="image/jpeg,image/png,image/webp" /></label>
+      <div class="eoschool-students__edit-actions">
+        <button type="submit" class="button">Guardar</button>
+        <button type="button" class="button" data-cancel-edit>Cancelar</button>
+      </div>
+    `;
 
-    const portfolio = document.createElement("a");
-    portfolio.className = "button";
-    portfolio.href = `/eoschool/portfolio?studentKey=${encodeURIComponent(s.studentKey)}`;
-    portfolio.dataset.route = "";
-    portfolio.textContent = "Portafolio";
+    edit.addEventListener("click", () => {
+      form.hidden = !form.hidden;
+    });
+    form.querySelector("[data-cancel-edit]")?.addEventListener("click", () => {
+      form.hidden = true;
+    });
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const fd = new FormData(form);
+      const photo = fd.get("photo");
+      const res = await updateCurriculumStudent(s.studentKey, {
+        firstName: String(fd.get("firstName") || "").trim(),
+        lastName: String(fd.get("lastName") || "").trim(),
+        age: Number(fd.get("age") || 0),
+        grade: String(fd.get("grade") || "").trim(),
+        photo: photo instanceof File && photo.size > 0 ? photo : null,
+      });
+      if (!res.ok) {
+        apiFail(res.error, { requestId: res.requestId });
+        return;
+      }
+      await reloadList();
+    });
 
-    const del = document.createElement("button");
-    del.type = "button";
-    del.className = "button";
-    del.textContent = "Eliminar";
     del.addEventListener("click", async () => {
-      if (!confirm(`¿Eliminar a ${s.displayName}?`)) return;
+      if (!confirm(`¿Eliminar a ${s.displayName}? Esta acción no se puede deshacer.`)) return;
       const res = await deleteCurriculumStudent(s.studentKey);
       if (!res.ok) {
         apiFail(res.error, { requestId: res.requestId });
         return;
       }
       card.remove();
+      if (banner instanceof HTMLElement && list instanceof HTMLElement) {
+        const n = list.querySelectorAll(".eoschool-students__card").length;
+        banner.textContent = n ? `${n} estudiante(s)` : "Sin estudiantes. Registra el primero.";
+      }
     });
 
-    actions.append(study, progress, portfolio, del);
-    card.append(actions);
+    actions.append(study, progress, portfolio, edit, del);
+    card.append(actions, form);
     return card;
   }
+
+  function escapeAttr(value: string): string {
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
 </script>
+
+<style>
+  .eoschool-students__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-padding);
+  }
+
+  .eoschool-students__photo {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .eoschool-students__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-students__action {
+    color: var(--color-text);
+  }
+
+  .eoschool-students__action:hover,
+  .eoschool-students__action:focus-visible {
+    color: var(--color-accent);
+  }
+
+  .eoschool-students__action--danger {
+    color: var(--color-err);
+  }
+
+  .eoschool-students__action--danger:hover,
+  .eoschool-students__action--danger:focus-visible {
+    color: var(--color-err);
+  }
+
+  .eoschool-students__edit {
+    width: min(24rem, 100%);
+  }
+
+  .eoschool-students__edit-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
+  }
+</style>
