@@ -45,8 +45,9 @@ type App struct {
 	apiKeyLimit      *limiter
 	ordinatoLimit    *limiter
 	publisherLimit   *limiter
-	revisionOCRLimit *limiter
-	progressOCRLimit *limiter
+	revisionOCRLimit     *limiter
+	progressOCRLimit     *limiter
+	materialExtractLimit *limiter
 	ereport          *ereportFS
 	evoiceMeta       evoiceMetaStore
 	evoiceFS         *evoiceFS
@@ -153,8 +154,9 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		apiKeyLimit:      newLimiter(time.Minute, apiKeyRatePerMin),
 		ordinatoLimit:    newLimiter(ordinatoProxyWindow, ordinatoProxyMax),
 		publisherLimit:   newLimiter(publisherProxyWindow, publisherProxyMax),
-		revisionOCRLimit: newLimiter(homescoolRevisionOCRWindow, homescoolRevisionOCRUserMax),
-		progressOCRLimit: newLimiter(homescoolProgressOCRWindow, homescoolProgressOCRUserMax),
+		revisionOCRLimit:     newLimiter(homescoolRevisionOCRWindow, homescoolRevisionOCRUserMax),
+		progressOCRLimit:     newLimiter(homescoolProgressOCRWindow, homescoolProgressOCRUserMax),
+		materialExtractLimit: newLimiter(eoschoolMaterialExtractWindow, eoschoolMaterialExtractUserMax),
 		ereport:          newEreportFS(cfg.EreportMediaRoot),
 		evoiceMeta:       newEvoiceMetaFromStore(store),
 		evoiceFS:         newEvoiceFS(cfg.EvoiceMediaRoot),
@@ -402,6 +404,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/eoschool/curriculum/materials", a.postEoschoolCurriculumMaterialHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/materials/url", a.postEoschoolCurriculumMaterialURLHandler)
 	mux.HandleFunc("PATCH /api/eoschool/curriculum/materials/{id}", a.patchEoschoolCurriculumMaterialHandler)
+	mux.HandleFunc("POST /api/eoschool/curriculum/materials/{id}/extract", a.postEoschoolCurriculumMaterialExtractHandler)
 	mux.HandleFunc("DELETE /api/eoschool/curriculum/materials/{id}", a.deleteEoschoolCurriculumMaterialHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/materials/{id}/file", a.getEoschoolCurriculumMaterialFileHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/materials/{id}/thumb", a.getEoschoolCurriculumMaterialThumbHandler)

@@ -22,6 +22,14 @@ const (
 	eoschoolCurriculumMaterialMaxPerRole = 4
 	eoschoolCurriculumMaterialTitleMax   = 200
 	eoschoolCurriculumMaterialDescMax    = 1000
+
+	eoschoolMaterialExtractionStatusNone   = "none"
+	eoschoolMaterialExtractionStatusReady  = "ready"
+	eoschoolMaterialExtractionStatusFailed = "failed"
+
+	eoschoolMaterialExtractionSourceDocument = "document"
+	eoschoolMaterialExtractionSourceImage    = "image"
+	eoschoolMaterialExtractionSourceAudio    = "audio"
 )
 
 var eoschoolCurriculumMaterialRoles = map[string]bool{
@@ -30,27 +38,58 @@ var eoschoolCurriculumMaterialRoles = map[string]bool{
 	eoschoolCurriculumMaterialRoleProof:        true,
 }
 
+// EoschoolMaterialExtractionBlock is one structured span of extracted text.
+type EoschoolMaterialExtractionBlock struct {
+	Kind      string `json:"kind" bson:"kind"`
+	Label     string `json:"label,omitempty" bson:"label,omitempty"`
+	Text      string `json:"text" bson:"text"`
+	Illegible bool   `json:"illegible,omitempty" bson:"illegible,omitempty"`
+}
+
+// EoschoolMaterialExtraction is AI/local text extracted from a curriculum material file.
+type EoschoolMaterialExtraction struct {
+	Status      string                           `json:"status" bson:"status"`
+	SourceKind  string                           `json:"sourceKind,omitempty" bson:"source_kind,omitempty"`
+	RawText     string                           `json:"rawText,omitempty" bson:"raw_text,omitempty"`
+	CleanText   string                           `json:"cleanText,omitempty" bson:"clean_text,omitempty"`
+	Blocks      []EoschoolMaterialExtractionBlock `json:"blocks,omitempty" bson:"blocks,omitempty"`
+	Provider    string                           `json:"provider,omitempty" bson:"provider,omitempty"`
+	Model       string                           `json:"model,omitempty" bson:"model,omitempty"`
+	Message     string                           `json:"message,omitempty" bson:"message,omitempty"`
+	ExtractedAt time.Time                        `json:"extractedAt,omitempty" bson:"extracted_at,omitempty"`
+}
+
 // EoschoolCurriculumMaterial is one attachment or URL for a curriculum day section.
 type EoschoolCurriculumMaterial struct {
-	ID           string    `json:"id" bson:"id"`
-	OwnerUserID  string    `json:"ownerUserId" bson:"owner_user_id"`
-	StudentKey   string    `json:"studentKey" bson:"student_key"`
-	DayID        string    `json:"dayId" bson:"day_id"`
-	SectionID    string    `json:"sectionId" bson:"section_id"`
-	Role         string    `json:"role" bson:"role"`
-	Kind         string    `json:"kind" bson:"kind"`
-	Title        string    `json:"title,omitempty" bson:"title,omitempty"`
-	Description  string    `json:"description,omitempty" bson:"description,omitempty"`
-	URL          string    `json:"url,omitempty" bson:"url,omitempty"`
-	StorageName  string    `json:"storageName,omitempty" bson:"storage_name,omitempty"`
-	ThumbName    string    `json:"thumbName,omitempty" bson:"thumb_name,omitempty"`
-	ContentType  string    `json:"contentType,omitempty" bson:"content_type,omitempty"`
-	Bytes        int64     `json:"bytes,omitempty" bson:"bytes,omitempty"`
-	OriginalName string    `json:"originalName,omitempty" bson:"original_name,omitempty"`
-	FileURL      string    `json:"fileUrl,omitempty" bson:"-"`
-	ThumbURL     string    `json:"thumbUrl,omitempty" bson:"-"`
-	CreatedAt    time.Time `json:"createdAt" bson:"created_at"`
-	UpdatedAt    time.Time `json:"updatedAt" bson:"updated_at"`
+	ID           string                     `json:"id" bson:"id"`
+	OwnerUserID  string                     `json:"ownerUserId" bson:"owner_user_id"`
+	StudentKey   string                     `json:"studentKey" bson:"student_key"`
+	DayID        string                     `json:"dayId" bson:"day_id"`
+	SectionID    string                     `json:"sectionId" bson:"section_id"`
+	Role         string                     `json:"role" bson:"role"`
+	Kind         string                     `json:"kind" bson:"kind"`
+	Title        string                     `json:"title,omitempty" bson:"title,omitempty"`
+	Description  string                     `json:"description,omitempty" bson:"description,omitempty"`
+	URL          string                     `json:"url,omitempty" bson:"url,omitempty"`
+	StorageName  string                     `json:"storageName,omitempty" bson:"storage_name,omitempty"`
+	ThumbName    string                     `json:"thumbName,omitempty" bson:"thumb_name,omitempty"`
+	ContentType  string                     `json:"contentType,omitempty" bson:"content_type,omitempty"`
+	Bytes        int64                      `json:"bytes,omitempty" bson:"bytes,omitempty"`
+	OriginalName string                     `json:"originalName,omitempty" bson:"original_name,omitempty"`
+	Extraction   *EoschoolMaterialExtraction `json:"extraction,omitempty" bson:"extraction,omitempty"`
+	FileURL      string                     `json:"fileUrl,omitempty" bson:"-"`
+	ThumbURL     string                     `json:"thumbUrl,omitempty" bson:"-"`
+	CreatedAt    time.Time                  `json:"createdAt" bson:"created_at"`
+	UpdatedAt    time.Time                  `json:"updatedAt" bson:"updated_at"`
+}
+
+func eoschoolCurriculumMaterialExtractable(kind string) bool {
+	switch kind {
+	case eoschoolCurriculumMaterialKindImage, eoschoolCurriculumMaterialKindAudio, eoschoolCurriculumMaterialKindDocument:
+		return true
+	default:
+		return false
+	}
 }
 
 func validateEoschoolCurriculumMaterialRole(role string) bool {

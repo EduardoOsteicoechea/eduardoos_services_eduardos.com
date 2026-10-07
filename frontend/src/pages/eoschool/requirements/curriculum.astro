@@ -1331,6 +1331,107 @@ const areaDefs = [
     cursor: pointer;
   }
 
+  .eoschool-curriculum-materials__extract {
+    flex-shrink: 0;
+  }
+
+  .eoschool-curriculum-materials__extract[data-extract-ready="true"] {
+    color: var(--color-ok);
+  }
+
+  .eoschool-curriculum-materials__extract[data-extract-failed="true"] {
+    color: var(--color-err);
+  }
+
+  .eoschool-material-extract-modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-padding);
+    background: color-mix(in srgb, var(--color-bg) 55%, transparent);
+  }
+
+  .eoschool-material-extract-modal[hidden] {
+    display: none;
+  }
+
+  .eoschool-material-extract-modal__dialog {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    width: min(var(--modal-width, 28rem), calc(100% - 2rem));
+    max-height: calc(100% - 2rem);
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .eoschool-material-extract-modal__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-material-extract-modal__title {
+    margin: 0;
+    font-size: var(--font-size-md);
+    font-weight: 650;
+  }
+
+  .eoschool-material-extract-modal__close {
+    border-radius: 50%;
+  }
+
+  .eoschool-material-extract-modal__body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    min-height: 0;
+  }
+
+  .eoschool-material-extract-modal__text,
+  .eoschool-material-extract-modal__json {
+    margin: 0;
+    padding: var(--rail-gap);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-family);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+  }
+
+  .eoschool-material-extract-modal__json[hidden] {
+    display: none;
+  }
+
+  .eoschool-material-extract-modal__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-material-extract-modal__toggle-json,
+  .eoschool-material-extract-modal__reextract {
+    height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-sm);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
   @media (max-width: 63.999rem) {
     .eoschool-curriculum-modal {
       padding: var(--rail-gap);

@@ -74,6 +74,17 @@ func sniffEoschoolCurriculumAudio(data []byte, ext string) (eoschoolCurriculumFi
 }
 
 func sniffEoschoolCurriculumDocument(data []byte, ext string) (eoschoolCurriculumFileKind, bool) {
+	if len(data) == 0 {
+		return eoschoolCurriculumFileKind{}, false
+	}
+	// Plain text (.txt) — allow UTF-8 / Latin-1 body without magic bytes.
+	if ext == ".txt" || looksLikePlainTextDocument(data, ext) {
+		return eoschoolCurriculumFileKind{
+			kind: eoschoolCurriculumMaterialKindDocument,
+			ext:  ".txt",
+			mime: "text/plain",
+		}, true
+	}
 	if len(data) < 4 {
 		return eoschoolCurriculumFileKind{}, false
 	}
@@ -115,4 +126,20 @@ func sniffEoschoolCurriculumDocument(data []byte, ext string) (eoschoolCurriculu
 		}
 	}
 	return eoschoolCurriculumFileKind{}, false
+}
+
+func looksLikePlainTextDocument(data []byte, ext string) bool {
+	if ext != "" && ext != ".txt" {
+		return false
+	}
+	if len(data) == 0 || len(data) > eoschoolCurriculumMaterialMaxBytes {
+		return false
+	}
+	n := min(512, len(data))
+	for i := 0; i < n; i++ {
+		if data[i] == 0 {
+			return false
+		}
+	}
+	return ext == ".txt"
 }

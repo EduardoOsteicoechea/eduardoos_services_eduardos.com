@@ -1,4 +1,4 @@
-import { apiSend, deleteJSON, patchJSON, uploadFile } from "./api";
+import { apiSend, deleteJSON, patchJSON, postJSON, uploadFile } from "./api";
 import { DEFAULT_CURRICULUM_STUDENT_KEY } from "./eoschool-curriculum-api";
 import type { CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
 import { showErrorModal } from "./error-modal";
@@ -6,6 +6,25 @@ import { mustLog } from "./dev-log";
 
 export type CurriculumMaterialRole = "teacher_guide" | "child" | "proof";
 export type CurriculumMaterialKind = "image" | "audio" | "document" | "url";
+
+export type CurriculumMaterialExtractionBlock = {
+  kind: string;
+  label?: string;
+  text: string;
+  illegible?: boolean;
+};
+
+export type CurriculumMaterialExtraction = {
+  status: "none" | "ready" | "failed" | string;
+  sourceKind?: "document" | "image" | "audio" | string;
+  rawText?: string;
+  cleanText?: string;
+  blocks?: CurriculumMaterialExtractionBlock[];
+  provider?: string;
+  model?: string;
+  message?: string;
+  extractedAt?: string;
+};
 
 export type CurriculumMaterial = {
   id: string;
@@ -23,6 +42,7 @@ export type CurriculumMaterial = {
   contentType?: string;
   bytes?: number;
   originalName?: string;
+  extraction?: CurriculumMaterialExtraction | null;
   fileUrl?: string;
   thumbUrl?: string;
   createdAt: string;
@@ -42,7 +62,11 @@ const ROLE_LABELS: Record<CurriculumMaterialRole, string> = {
 const ROLES: CurriculumMaterialRole[] = ["teacher_guide", "child", "proof"];
 
 const FILE_ACCEPT =
-  "image/jpeg,image/png,image/webp,audio/mpeg,audio/mp4,audio/wav,audio/ogg,audio/webm,.pdf,.odt,.docx,application/pdf";
+  "image/jpeg,image/png,image/webp,audio/mpeg,audio/mp4,audio/wav,audio/ogg,audio/webm,.pdf,.odt,.docx,.txt,text/plain,application/pdf";
+
+function isExtractableKind(kind: CurriculumMaterialKind): boolean {
+  return kind === "image" || kind === "audio" || kind === "document";
+}
 
 function errFromApi(message: string, requestId?: string): Error & { requestId?: string } {
   const err = new Error(message) as Error & { requestId?: string };
@@ -149,6 +173,149 @@ export async function deleteCurriculumMaterial(id: string): Promise<void> {
   }
 }
 
+export async function extractCurriculumMaterial(id: string): Promise<CurriculumMaterial> {
+  const { status, data, requestId } = await postJSON<{ material: CurriculumMaterial }>(
+    `${MATERIALS_PATH}/${id}/extract`,
+    {},
+    { timeoutMs: 120000 },
+  );
+  if (status < 200 || status >= 300) {
+    throw errFromApi(data.message || "No se pudo extraer el texto.", requestId);
+  }
+  return data.material;
+}
+
+export function extractionDisplayText(
+  extraction: CurriculumMaterialExtraction | null | undefined,
+): string {
+  if (!extraction) return "";
+  const clean = extraction.cleanText?.trim();
+  if (clean) return clean;
+  return extraction.rawText?.trim() || "";
+}
+
+function ensureExtractionModal(): HTMLElement {
+  let overlay = document.getElementById("eoschool-material-extract-modal");
+  if (overlay) return overlay;
+  overlay = document.createElement("div");
+  overlay.id = "eoschool-material-extract-modal";
+  overlay.className = "eoschool-material-extract-modal";
+  overlay.hidden = true;
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  overlay.setAttribute("aria-labelledby", "eoschool-material-extract-title");
+
+  const dialog = document.createElement("div");
+  dialog.className = "eoschool-material-extract-modal__dialog";
+
+  const top = document.createElement("header");
+  top.className = "eoschool-material-extract-modal__top";
+  const title = document.createElement("h2");
+  title.id = "eoschool-material-extract-title";
+  title.className = "eoschool-material-extract-modal__title";
+  title.dataset.extractTitle = "";
+  title.textContent = "Texto extraído";
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "icon-btn eoschool-material-extract-modal__close";
+  close.dataset.extractClose = "";
+  close.setAttribute("aria-label", "Cerrar");
+  close.innerHTML =
+    '<span class="material-symbols-outlined" aria-hidden="true">close</span>';
+  top.append(title, close);
+
+  const body = document.createElement("div");
+  body.className = "eoschool-material-extract-modal__body";
+  const text = document.createElement("pre");
+  text.className = "eoschool-material-extract-modal__text";
+  text.dataset.extractText = "";
+  const json = document.createElement("pre");
+  json.className = "eoschool-material-extract-modal__json";
+  json.dataset.extractJson = "";
+  json.hidden = true;
+  body.append(text, json);
+
+  const actions = document.createElement("div");
+  actions.className = "eoschool-material-extract-modal__actions";
+  const toggleJson = document.createElement("button");
+  toggleJson.type = "button";
+  toggleJson.className = "eoschool-material-extract-modal__toggle-json";
+  toggleJson.dataset.extractToggleJson = "";
+  toggleJson.textContent = "Ver JSON";
+  const reextract = document.createElement("button");
+  reextract.type = "button";
+  reextract.className = "eoschool-material-extract-modal__reextract";
+  reextract.dataset.extractReextract = "";
+  reextract.textContent = "Re-extraer";
+  actions.append(toggleJson, reextract);
+
+  dialog.append(top, body, actions);
+  overlay.append(dialog);
+  document.body.append(overlay);
+
+  overlay.addEventListener("click", (ev) => {
+    if (ev.target === overlay) closeExtractionModal();
+  });
+  close.addEventListener("click", () => closeExtractionModal());
+  toggleJson.addEventListener("click", () => {
+    const jsonEl = overlay?.querySelector<HTMLElement>("[data-extract-json]");
+    if (!jsonEl) return;
+    jsonEl.hidden = !jsonEl.hidden;
+    toggleJson.textContent = jsonEl.hidden ? "Ver JSON" : "Ocultar JSON";
+  });
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape" && overlay && !overlay.hidden) {
+      closeExtractionModal();
+    }
+  });
+  return overlay;
+}
+
+let extractModalMaterialId = "";
+let extractModalOnReextract: ((id: string) => void) | null = null;
+
+export function openExtractionModal(
+  material: CurriculumMaterial,
+  opts?: { onReextract?: (id: string) => void },
+): void {
+  const overlay = ensureExtractionModal();
+  extractModalMaterialId = material.id;
+  extractModalOnReextract = opts?.onReextract ?? null;
+  const title = overlay.querySelector<HTMLElement>("[data-extract-title]");
+  const text = overlay.querySelector<HTMLElement>("[data-extract-text]");
+  const json = overlay.querySelector<HTMLElement>("[data-extract-json]");
+  const reextract = overlay.querySelector<HTMLButtonElement>("[data-extract-reextract]");
+  if (title) title.textContent = itemLabel(material);
+  const extraction = material.extraction;
+  if (text) {
+    if (extraction?.status === "failed") {
+      text.textContent = extraction.message?.trim() || "No se pudo extraer el texto.";
+    } else {
+      text.textContent = extractionDisplayText(extraction) || "Sin texto extraído.";
+    }
+  }
+  if (json) {
+    json.hidden = true;
+    json.textContent = extraction ? JSON.stringify(extraction, null, 2) : "";
+  }
+  const toggle = overlay.querySelector<HTMLButtonElement>("[data-extract-toggle-json]");
+  if (toggle) toggle.textContent = "Ver JSON";
+  if (reextract) {
+    reextract.onclick = () => {
+      if (extractModalMaterialId && extractModalOnReextract) {
+        extractModalOnReextract(extractModalMaterialId);
+      }
+    };
+  }
+  overlay.hidden = false;
+}
+
+export function closeExtractionModal(): void {
+  const overlay = document.getElementById("eoschool-material-extract-modal");
+  if (overlay) overlay.hidden = true;
+  extractModalMaterialId = "";
+}
+
 function resolveStudentKey(root: HTMLElement | null): string {
   const fromRoot = root?.dataset.curriculumStudentKey?.trim();
   if (fromRoot) return fromRoot;
@@ -247,6 +414,36 @@ function renderMaterialItem(m: CurriculumMaterial, editable: boolean): HTMLEleme
   if (editable) {
     const actions = document.createElement("div");
     actions.className = "eoschool-curriculum-materials__item-actions";
+
+    if (isExtractableKind(m.kind)) {
+      const extract = document.createElement("button");
+      extract.type = "button";
+      extract.className = "eoschool-curriculum-materials__extract icon-btn";
+      extract.dataset.materialExtract = m.id;
+      const ready = m.extraction?.status === "ready";
+      const failed = m.extraction?.status === "failed";
+      extract.title = ready
+        ? "Ver texto extraído"
+        : failed
+          ? "Reintentar extracción de texto"
+          : "Extraer texto";
+      extract.setAttribute(
+        "aria-label",
+        ready
+          ? `Ver texto de ${itemLabel(m)}`
+          : failed
+            ? `Reintentar extracción de ${itemLabel(m)}`
+            : `Extraer texto de ${itemLabel(m)}`,
+      );
+      const icon = document.createElement("span");
+      icon.className = "material-symbols-outlined";
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = ready ? "description" : failed ? "refresh" : "article";
+      extract.append(icon);
+      if (ready) extract.dataset.extractReady = "true";
+      if (failed) extract.dataset.extractFailed = "true";
+      actions.append(extract);
+    }
 
     const edit = document.createElement("button");
     edit.type = "button";
@@ -494,6 +691,27 @@ async function refreshActivePanel(modal: HTMLElement, root: HTMLElement | null):
   await loadCurriculumMaterialsPanel(modal, root, activeCtx.dayId, activeCtx.sectionId);
 }
 
+async function runMaterialExtract(
+  modal: HTMLElement,
+  root: HTMLElement | null,
+  id: string,
+  openAfter: boolean,
+): Promise<void> {
+  try {
+    const material = await extractCurriculumMaterial(id);
+    await refreshActivePanel(modal, root);
+    if (openAfter || material.extraction?.status === "ready" || material.extraction?.status === "failed") {
+      openExtractionModal(material, {
+        onReextract: (mid) => {
+          void runMaterialExtract(modal, root, mid, true);
+        },
+      });
+    }
+  } catch (err) {
+    showRequestError(err, "No se pudo extraer el texto.");
+  }
+}
+
 export function bindCurriculumMaterialsPanel(modal: HTMLElement, root: HTMLElement | null): void {
   if (modal.dataset.curriculumMaterialsBound === "true") return;
   modal.dataset.curriculumMaterialsBound = "true";
@@ -528,6 +746,40 @@ export function bindCurriculumMaterialsPanel(modal: HTMLElement, root: HTMLEleme
   modal.addEventListener("click", async (ev) => {
     const target = ev.target;
     if (!(target instanceof HTMLElement)) return;
+
+    const extractBtn = target.closest<HTMLButtonElement>("[data-material-extract]");
+    if (extractBtn) {
+      const id = extractBtn.dataset.materialExtract;
+      if (!id || !activeCtx) return;
+      const ready = extractBtn.dataset.extractReady === "true";
+      if (ready) {
+        try {
+          const items = await fetchCurriculumMaterials({
+            studentKey: activeCtx.studentKey,
+            dayId: activeCtx.dayId,
+            sectionId: activeCtx.sectionId,
+          });
+          const material = items.find((m) => m.id === id);
+          if (material) {
+            openExtractionModal(material, {
+              onReextract: (mid) => {
+                void runMaterialExtract(modal, root, mid, true);
+              },
+            });
+          }
+        } catch (err) {
+          showRequestError(err, "No se pudo cargar el texto.");
+        }
+        return;
+      }
+      extractBtn.disabled = true;
+      try {
+        await runMaterialExtract(modal, root, id, true);
+      } finally {
+        extractBtn.disabled = false;
+      }
+      return;
+    }
 
     const editBtn = target.closest<HTMLButtonElement>("[data-material-edit]");
     if (editBtn) {

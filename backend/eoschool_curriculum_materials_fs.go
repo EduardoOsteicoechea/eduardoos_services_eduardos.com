@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -86,4 +87,13 @@ func (fs *eoschoolCurriculumMaterialsFS) exists(owner, student, dayID, sectionID
 	}
 	_, err = os.Stat(filepath.Join(dir, filepath.Base(name)))
 	return err == nil
+}
+
+func (fs *eoschoolCurriculumMaterialsFS) readAll(owner, student, dayID, sectionID, name string) ([]byte, error) {
+	f, _, err := fs.open(owner, student, dayID, sectionID, name)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+	return io.ReadAll(f)
 }
