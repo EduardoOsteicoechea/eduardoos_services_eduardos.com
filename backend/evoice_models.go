@@ -113,7 +113,7 @@ type evoiceGenerateOpts struct {
 	ContentPercent int
 }
 
-// UsesDeepSeek is the premium/super_premium LLM path (OpenRouter refine + vision).
+// UsesDeepSeek is the premium/super_premium LLM path (direct DeepSeek refine + vision).
 func (o evoiceGenerateOpts) UsesDeepSeek() bool {
 	if o.Mode == ModePremium || o.Mode == ModeSuperPremium {
 		return true

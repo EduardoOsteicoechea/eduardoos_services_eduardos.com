@@ -180,11 +180,11 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		http:    httpClient,
 	}
 	app.log.Info("ai.providers",
-		"openrouter_configured", strings.TrimSpace(cfg.OpenRouterKey) != "",
-		"openrouter_model", cfg.OpenRouterModel,
-		"openrouter_vision_model", cfg.OpenRouterVisionModel,
 		"deepseek_configured", strings.TrimSpace(cfg.DeepSeekKey) != "",
 		"deepseek_model", cfg.DeepSeekModel,
+		"deepseek_vision_model", cfg.DeepSeekVisionModel,
+		"openrouter_configured", strings.TrimSpace(cfg.OpenRouterKey) != "",
+		"openrouter_model", cfg.OpenRouterModel,
 		"kimi_configured", strings.TrimSpace(cfg.KimiKey) != "",
 		"kimi_model", cfg.KimiModel,
 	)

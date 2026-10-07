@@ -147,7 +147,7 @@ func (a *App) postHomescoolProgressPhotoHandler(w http.ResponseWriter, r *http.R
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	client := a.chat["openrouter"]
+	client := a.chat["deepseek"]
 	if client == nil {
 		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
 		return

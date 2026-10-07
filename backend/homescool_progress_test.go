@@ -88,7 +88,7 @@ func TestPostHomescoolProgress(t *testing.T) {
 		visionText: `{"rawText":"3 x 4 = 12","mcq":[{"n":1,"selectedKey":"B","selectedText":"12"}],"write":[{"n":1,"text":"grupos iguales"}]}`,
 		longText:   `{"score":8,"summary":"Buen trabajo.","strengths":["Reconoce la multiplicación."],"weaknesses":[],"teacherSuggestions":["Practicar tablas."],"rationale":"Respondió bien.","interpretedAnswers":[{"n":1,"type":"mcq","prompt":"¿Cuánto es 3 × 4?","studentSaid":"12","assessment":"Correcto.","ok":true}]}`,
 	}
-	app.chat["openrouter"] = chat
+	app.chat["deepseek"] = chat
 	docJSON, err := json.Marshal(sampleEoschoolRevisionDoc())
 	if err != nil {
 		t.Fatal(err)

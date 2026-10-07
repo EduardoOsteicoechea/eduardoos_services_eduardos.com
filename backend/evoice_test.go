@@ -244,12 +244,12 @@ func TestEvoiceConvertTimeoutUsesDeepSeek(t *testing.T) {
 	}
 }
 
-func TestEvoicePythonRunnerChildEnvUsesOpenRouter(t *testing.T) {
+func TestEvoicePythonRunnerChildEnvUsesDeepSeek(t *testing.T) {
 	runner := evoicePythonRunner{
-		OpenRouterKey:         "or-live-key",
-		OpenRouterBase:        openRouterBaseURL,
-		OpenRouterModel:       openRouterDefaultModel,
-		OpenRouterVisionModel: openRouterDefaultVisionModel,
+		DeepSeekKey:         "ds-live-key",
+		DeepSeekBase:        "https://api.deepseek.com",
+		DeepSeekModel:       "deepseek-v4-flash",
+		DeepSeekVisionModel: "deepseek-flash",
 	}
 	env := runner.childEnv("/tmp/evoice-job")
 	got := map[string]string{}
@@ -260,14 +260,17 @@ func TestEvoicePythonRunnerChildEnvUsesOpenRouter(t *testing.T) {
 		}
 		got[key] = value
 	}
-	if got["OPENROUTER_API_KEY"] != "or-live-key" {
-		t.Fatalf("openrouter key %q", got["OPENROUTER_API_KEY"])
+	if got["DEEPSEEK_API_KEY"] != "ds-live-key" {
+		t.Fatalf("deepseek key %q", got["DEEPSEEK_API_KEY"])
 	}
-	if got["OPENROUTER_VISION_MODEL"] != openRouterDefaultVisionModel {
-		t.Fatalf("vision model %q", got["OPENROUTER_VISION_MODEL"])
+	if got["DEEPSEEK_VISION_MODEL"] != "deepseek-flash" {
+		t.Fatalf("vision model %q", got["DEEPSEEK_VISION_MODEL"])
 	}
-	if got["DEEPSEEK_API_KEY"] != "" {
-		t.Fatalf("deepseek key should be blank, got %q", got["DEEPSEEK_API_KEY"])
+	if got["DEEPSEEK_BASE_URL"] != "https://api.deepseek.com" {
+		t.Fatalf("base url %q", got["DEEPSEEK_BASE_URL"])
+	}
+	if got["OPENROUTER_API_KEY"] != "" {
+		t.Fatalf("openrouter key should be blank, got %q", got["OPENROUTER_API_KEY"])
 	}
 }
 

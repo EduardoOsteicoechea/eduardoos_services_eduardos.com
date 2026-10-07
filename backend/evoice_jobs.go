@@ -29,7 +29,7 @@ var evoicePremiumPlan = []evoiceJobStep{
 	{ID: "download_docs", Label: "Load documents", State: "pending"},
 	{ID: "download_audios", Label: "Load existing audios", State: "pending"},
 	{ID: "extract_speech", Label: "Convert to speech (extract)", State: "pending"},
-	{ID: "refine_deepseek", Label: "Refine with OpenRouter", State: "pending"},
+	{ID: "refine_deepseek", Label: "Refine with DeepSeek", State: "pending"},
 	{ID: "convert_audio", Label: "Convert to audio", State: "pending"},
 	{ID: "upload", Label: "Persist audios", State: "pending"},
 	{ID: "finalize", Label: "Finalize", State: "pending"},
@@ -117,12 +117,12 @@ func (evoiceFakeRunner) Run(_ context.Context, projectDir string, onlyFiles []st
 }
 
 type evoicePythonRunner struct {
-	Python                string
-	Script                string
-	OpenRouterKey         string
-	OpenRouterBase        string
-	OpenRouterModel       string
-	OpenRouterVisionModel string
+	Python              string
+	Script              string
+	DeepSeekKey         string
+	DeepSeekBase        string
+	DeepSeekModel       string
+	DeepSeekVisionModel string
 }
 
 func (p evoicePythonRunner) Run(ctx context.Context, projectDir string, onlyFiles []string, opts evoiceGenerateOpts, logFn func(string)) (evoiceJobStats, error) {
@@ -250,12 +250,12 @@ func resolveEvoiceRunner(cfg config) evoiceJobRunner {
 		script = defaultEvoiceWorkerScript()
 	}
 	return evoicePythonRunner{
-		Python:                py,
-		Script:                script,
-		OpenRouterKey:         cfg.OpenRouterKey,
-		OpenRouterBase:        cfg.OpenRouterBaseURL,
-		OpenRouterModel:       cfg.OpenRouterModel,
-		OpenRouterVisionModel: cfg.OpenRouterVisionModel,
+		Python:              py,
+		Script:              script,
+		DeepSeekKey:         cfg.DeepSeekKey,
+		DeepSeekBase:        cfg.DeepSeekBaseURL,
+		DeepSeekModel:       cfg.DeepSeekModel,
+		DeepSeekVisionModel: cfg.DeepSeekVisionModel,
 	}
 }
 
@@ -265,12 +265,13 @@ func (p evoicePythonRunner) childEnv(tmpDir string) []string {
 		"TMPDIR=" + tmpDir,
 		"TEMP=" + tmpDir,
 		"TMP=" + tmpDir,
-		"OPENROUTER_API_KEY=" + strings.TrimSpace(p.OpenRouterKey),
-		"OPENROUTER_API_BASE=" + strings.TrimSpace(p.OpenRouterBase),
-		"OPENROUTER_MODEL=" + strings.TrimSpace(p.OpenRouterModel),
-		"OPENROUTER_VISION_MODEL=" + strings.TrimSpace(p.OpenRouterVisionModel),
-		// Blank so a leftover DeepSeek key in systemd cannot bill the empty account.
-		"DEEPSEEK_API_KEY=",
+		"DEEPSEEK_API_KEY=" + strings.TrimSpace(p.DeepSeekKey),
+		"DEEPSEEK_BASE_URL=" + strings.TrimSpace(p.DeepSeekBase),
+		"DEEPSEEK_API_BASE=" + strings.TrimSpace(p.DeepSeekBase),
+		"DEEPSEEK_MODEL=" + strings.TrimSpace(p.DeepSeekModel),
+		"DEEPSEEK_VISION_MODEL=" + strings.TrimSpace(p.DeepSeekVisionModel),
+		// Blank so a leftover OpenRouter key in systemd cannot bill that account.
+		"OPENROUTER_API_KEY=",
 	}
 }
 

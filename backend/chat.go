@@ -29,7 +29,7 @@ const (
 	publicChatIPMax      = 20
 	publicChatUserMax    = 40
 	publicChatWindow     = time.Hour
-	publicChatProvider   = "openrouter"
+	publicChatProvider   = "deepseek"
 )
 
 type publicChatTurn struct {
