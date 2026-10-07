@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net"
+	"net/http"
 	"net/mail"
 	"regexp"
 	"strings"
@@ -86,10 +88,43 @@ func validOTP(raw string) bool {
 	return otpRE.MatchString(strings.TrimSpace(raw))
 }
 
-func clientIP(rAddr string) string {
-	host := rAddr
-	if i := strings.LastIndex(host, ":"); i >= 0 {
-		host = host[:i]
+// clientIP returns the client address for rate limits and audit.
+// When the peer is a loopback proxy (Nginx → API on 127.0.0.1), trust the
+// left-most X-Forwarded-For / X-Real-IP value Nginx sets. Otherwise use the
+// direct peer so clients cannot spoof the header against a public bind.
+func clientIP(r *http.Request) string {
+	if r == nil {
+		return ""
+	}
+	peer := peerHost(r.RemoteAddr)
+	if isLoopbackHost(peer) {
+		if xff := strings.TrimSpace(r.Header.Get("X-Forwarded-For")); xff != "" {
+			first := strings.TrimSpace(strings.Split(xff, ",")[0])
+			if host := peerHost(first); host != "" {
+				return host
+			}
+		}
+		if xri := strings.TrimSpace(r.Header.Get("X-Real-IP")); xri != "" {
+			if host := peerHost(xri); host != "" {
+				return host
+			}
+		}
+	}
+	return peer
+}
+
+func peerHost(rAddr string) string {
+	host := strings.TrimSpace(rAddr)
+	if host == "" {
+		return ""
+	}
+	if h, _, err := net.SplitHostPort(host); err == nil {
+		return strings.Trim(h, "[]")
 	}
 	return strings.Trim(host, "[]")
+}
+
+func isLoopbackHost(host string) bool {
+	ip := net.ParseIP(host)
+	return ip != nil && ip.IsLoopback()
 }

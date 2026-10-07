@@ -17,7 +17,7 @@ func (a *App) registerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	a.logAuthDebug(r, "register_csrf_ok")
-	if !a.registerLimit.allow(clientIP(r.RemoteAddr)) {
+	if !a.registerLimit.allow(clientIP(r)) {
 		a.logAuthDebug(r, "register_rate_limited")
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
@@ -208,7 +208,7 @@ func (a *App) resendVerificationHandler(w http.ResponseWriter, r *http.Request) 
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	ip := clientIP(r.RemoteAddr)
+	ip := clientIP(r)
 	ipOK := a.resendIPLimit.allow(ip)
 	idOK := a.resendIDLimit.allow(emailNorm)
 	if !ipOK || !idOK {
@@ -323,20 +323,27 @@ func (a *App) requestPasswordResetHandler(w http.ResponseWriter, r *http.Request
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	ip := clientIP(r.RemoteAddr)
+	ip := clientIP(r)
 	ipOK := a.resetIPLimit.allow(ip)
 	idOK := a.resetIDLimit.allow(emailNorm)
 	if !ipOK || !idOK {
 		a.logAuthDebug(r, "password_reset_request_rate_limited",
 			slog.Bool("ip_ok", ipOK),
 			slog.Bool("id_ok", idOK),
+			slog.String("client_ip", ip),
 		)
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	user, err := a.store.UserByEmail(r.Context(), emailNorm)
 	if err != nil {
-		a.logAuthDebug(r, "password_reset_request_user_not_found")
+		if errors.Is(err, errNotFound) {
+			a.logAuthDebug(r, "password_reset_request_user_not_found")
+		} else {
+			a.logAuthDebug(r, "password_reset_request_user_lookup_failed",
+				slog.String("reason", redactLogValue(err.Error())),
+			)
+		}
 	} else {
 		a.logAuthDebug(r, "password_reset_request_user_loaded",
 			slog.String("user_id", user.ID),

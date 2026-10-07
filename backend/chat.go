@@ -164,7 +164,7 @@ func (a *App) publicChatHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	ip := clientIP(r.RemoteAddr)
+	ip := clientIP(r)
 	user := a.currentUser(r)
 	userID := ""
 	if user != nil {

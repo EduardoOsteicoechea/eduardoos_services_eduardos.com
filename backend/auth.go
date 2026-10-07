@@ -452,7 +452,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.requireUnsafe(w, r) {
 		return
 	}
-	ip := clientIP(r.RemoteAddr)
+	ip := clientIP(r)
 	var body struct {
 		Identifier string `json:"identifier"`
 		Password   string `json:"password"`

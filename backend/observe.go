@@ -108,7 +108,7 @@ func (a *App) logRequest(r *http.Request, status int, dur time.Duration) {
 		slog.Int64("duration_ms", dur.Milliseconds()),
 		slog.String("user_id", userID),
 		slog.String("role", role),
-		slog.String("source_ip", clientIP(r.RemoteAddr)),
+		slog.String("source_ip", clientIP(r)),
 	)
 }
 
@@ -144,7 +144,7 @@ func (a *App) auditEvent(r *http.Request, kind, status, userID string) {
 		slog.String("status", status),
 		slog.String("user_id", userID),
 		slog.String("route", r.URL.Path),
-		slog.String("source_ip", clientIP(r.RemoteAddr)),
+		slog.String("source_ip", clientIP(r)),
 	)
 }
 

@@ -484,7 +484,7 @@ func (a *App) ereportInviteOTPHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	_, emailNorm, emailOK := normalizeEmail(body.Email)
-	ip := clientIP(r.RemoteAddr)
+	ip := clientIP(r)
 	if !a.inviteOTPLimit.allow(inv.ID) || !a.inviteOTPLimit.allow(ip) {
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return

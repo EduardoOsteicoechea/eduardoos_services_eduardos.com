@@ -490,7 +490,7 @@ func (a *App) voiceInterpretHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	rid := requestIDFrom(r, w)
-	ip := clientIP(r.RemoteAddr)
+	ip := clientIP(r)
 	userID := a.voiceUserID(r)
 	if !a.voiceInterpret.allow(ip) || (userID != "" && !a.voiceUserLimit.allow(userID)) {
 		a.voiceDebug("voice.interpret", "request_id", rid, "status", "rate_limited", "user_id", userID)
@@ -584,7 +584,7 @@ func (a *App) voiceStartHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	rid := requestIDFrom(r, w)
-	ip := clientIP(r.RemoteAddr)
+	ip := clientIP(r)
 	userID := a.voiceUserID(r)
 	if !a.voiceIPLimit.allow(ip) || (userID != "" && !a.voiceUserLimit.allow(userID)) {
 		a.voiceDebug("voice.stream.start", "request_id", rid, "status", "rate_limited", "user_id", userID)
@@ -737,7 +737,7 @@ func (a *App) voiceSpeakHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
-	ip := clientIP(r.RemoteAddr)
+	ip := clientIP(r)
 	userID := a.voiceUserID(r)
 	if !a.voiceSpeakLimit.allow(ip) || (userID != "" && !a.voiceUserLimit.allow(userID)) {
 		a.voiceDebug("voice.speak", "request_id", rid, "status", "rate_limited", "user_id", userID)
