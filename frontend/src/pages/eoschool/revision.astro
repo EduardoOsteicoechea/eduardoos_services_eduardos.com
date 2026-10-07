@@ -1,5 +1,6 @@
 ---
 import { Fragment } from "astro/jsx-runtime";
+import EoschoolDashBack from "../../components/EoschoolDashBack.astro";
 import Layout from "../../layouts/Layout.astro";
 ---
 
@@ -20,6 +21,7 @@ import Layout from "../../layouts/Layout.astro";
   <h1 class="page-title-sr">Revisión eoschool</h1>
 
   <section class="product-dash" data-eoschool-revision>
+    <EoschoolDashBack />
     <p class="status" data-banner>Cargando…</p>
     <div data-gate hidden class="product-gate">
       <p class="hint">Necesitas sesión e entitlement Homescool.</p>

@@ -1,5 +1,6 @@
 ---
 import { Fragment } from "astro/jsx-runtime";
+import EoschoolDashBack from "../../components/EoschoolDashBack.astro";
 import Layout from "../../layouts/Layout.astro";
 import { MPPE_40WEEK_CURRICULUM } from "../../lib/eoschool-mppe-40week-curriculum";
 import { CURRICULUM_SECTION_IDS } from "../../lib/eoschool-curriculum-plan-classes";
@@ -34,6 +35,7 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
   </Fragment>
 
   <section class="product-dash page-span-all" data-mppe-progress>
+    <EoschoolDashBack />
     <p class="status" data-banner>Cargando…</p>
     <div data-gate hidden class="product-gate">
       <p class="hint">Necesitas sesión y suscripción Homescool.</p>

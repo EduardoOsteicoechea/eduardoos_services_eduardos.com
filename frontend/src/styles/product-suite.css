@@ -25,6 +25,13 @@
   color: var(--color-muted);
 }
 
+.product-dash__back {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
 .product-dash__section-title {
   margin: 0;
   font-size: var(--font-size-md);

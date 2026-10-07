@@ -1,5 +1,6 @@
 ---
 import { Fragment } from "astro/jsx-runtime";
+import EoschoolDashBack from "../../../components/EoschoolDashBack.astro";
 import Layout from "../../../layouts/Layout.astro";
 import { MPPE_40WEEK_CURRICULUM } from "../../../lib/eoschool-mppe-40week-curriculum";
 import {
@@ -54,6 +55,7 @@ const areaDefs = [
     data-curriculum-mode={curriculumMode}
     data-curriculum-student-key={initialStudentKey || undefined}
   >
+    <EoschoolDashBack />
     <p class="lede">
       {meta.grade ?? "3er grado"} · {meta.weeks} semanas × {meta.daysPerWeek ?? 5} días = {meta.totalPlanDays ?? bibleMeta.readingDays}{" "}
       días escolares. Cada día: lectura bíblica (tres pistas) más Identidad, Lenguaje, Matemáticas y Ciencias. Abre un día para ver
