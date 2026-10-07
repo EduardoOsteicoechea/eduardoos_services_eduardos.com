@@ -77,6 +77,7 @@ export async function createCurriculumStudent(input: {
   const { status, data, requestId } = await apiSend<{ student: CurriculumStudent; message?: string }>(
     STUDENTS_PATH,
     { method: "POST", body },
+    { timeoutMs: 120000 },
   );
   if (status < 200 || status >= 300) {
     return { ok: false, error: data.message || "No se pudo registrar el estudiante.", requestId };
@@ -105,6 +106,7 @@ export async function updateCurriculumStudent(
   const { status, data, requestId } = await apiSend<{ student: CurriculumStudent; message?: string }>(
     `${STUDENTS_PATH}/${encodeURIComponent(studentKey)}`,
     { method: "PATCH", body },
+    { timeoutMs: 120000 },
   );
   if (status < 200 || status >= 300) {
     return { ok: false, error: data.message || "No se pudo actualizar el estudiante.", requestId };

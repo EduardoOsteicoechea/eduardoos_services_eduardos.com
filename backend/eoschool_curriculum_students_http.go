@@ -47,12 +47,13 @@ func (a *App) createEoschoolCurriculumStudentHandler(w http.ResponseWriter, r *h
 				a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
 				return
 			}
-			kind, err := detectAvatar(data)
-			if err != nil {
-				a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			kind, prepared, prepErr := prepareEoschoolStudentPhoto(data)
+			if prepErr != nil {
+				status, code := mapEoschoolStudentPhotoErr(prepErr)
+				a.writeSafeError(w, r, status, code)
 				return
 			}
-			photo = data
+			photo = prepared
 			photoKind = kind
 		}
 	} else {
@@ -199,12 +200,13 @@ func (a *App) patchEoschoolCurriculumStudentHandler(w http.ResponseWriter, r *ht
 				a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
 				return
 			}
-			kind, err := detectAvatar(data)
-			if err != nil {
-				a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			kind, prepared, prepErr := prepareEoschoolStudentPhoto(data)
+			if prepErr != nil {
+				status, code := mapEoschoolStudentPhotoErr(prepErr)
+				a.writeSafeError(w, r, status, code)
 				return
 			}
-			photo = data
+			photo = prepared
 			photoKind = kind
 		}
 	} else {
@@ -229,7 +231,9 @@ func (a *App) patchEoschoolCurriculumStudentHandler(w http.ResponseWriter, r *ht
 	}
 
 	var oldPhoto string
+	var putFSErr error
 	updated, err := a.eoschoolCurriculum.UpdateStudent(r.Context(), user.ID, studentKey, func(doc *EoschoolCurriculumProgressDoc) error {
+		hydrateEoschoolCurriculumStudentNames(doc)
 		nextFirst := doc.FirstName
 		nextLast := doc.LastName
 		nextGrade := doc.Grade
@@ -263,6 +267,7 @@ func (a *App) patchEoschoolCurriculumStudentHandler(w http.ResponseWriter, r *ht
 			oldPhoto = doc.PhotoStorageName
 			name := "photo" + photoKind.ext
 			if err := a.eoschoolStudentsFS.put(user.ID, studentKey, name, photo); err != nil {
+				putFSErr = err
 				return err
 			}
 			doc.PhotoStorageName = name
@@ -273,6 +278,11 @@ func (a *App) patchEoschoolCurriculumStudentHandler(w http.ResponseWriter, r *ht
 	if err != nil {
 		if errors.Is(err, errEoschoolCurriculumStudentNotFound) {
 			a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+			return
+		}
+		if putFSErr != nil {
+			a.mustLogf(r, "eoschool.student.photo.put_err", "err", putFSErr.Error())
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 			return
 		}
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")

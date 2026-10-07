@@ -20,7 +20,8 @@ const (
 	eoschoolCurriculumDefaultLastName    = "Osteicoechea"
 	eoschoolCurriculumDefaultGrade       = "3er grado"
 	eoschoolCurriculumDefaultAge         = 8
-	eoschoolCurriculumStudentMaxPhoto    = 5 << 20
+	// Intake limit before downscale/WebP (phone camera JPEGs are often >5 MiB).
+	eoschoolCurriculumStudentMaxPhoto = 20 << 20
 )
 
 var eoschoolCurriculumDayID = regexp.MustCompile(`^d[1-9][0-9]*$`)

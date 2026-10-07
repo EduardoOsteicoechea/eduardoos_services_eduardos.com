@@ -140,11 +140,11 @@ func TestEoschoolCurriculumStudentPhotoUploadAndGet(t *testing.T) {
 	if getRec.Code != http.StatusOK {
 		t.Fatalf("photo get status=%d body=%s", getRec.Code, getRec.Body.String())
 	}
-	if getRec.Header().Get("Content-Type") != "image/png" {
+	if getRec.Header().Get("Content-Type") != "image/webp" {
 		t.Fatalf("content-type=%q", getRec.Header().Get("Content-Type"))
 	}
-	if !bytes.Equal(getRec.Body.Bytes(), png) {
-		t.Fatal("photo bytes mismatch")
+	if len(getRec.Body.Bytes()) == 0 {
+		t.Fatal("expected non-empty photo body")
 	}
 
 	var patchBuf bytes.Buffer
@@ -169,5 +169,65 @@ func TestEoschoolCurriculumStudentPhotoUploadAndGet(t *testing.T) {
 	app.Handler().ServeHTTP(patchRec, patchReq)
 	if patchRec.Code != http.StatusOK {
 		t.Fatalf("patch photo status=%d body=%s", patchRec.Code, patchRec.Body.String())
+	}
+}
+
+func TestEoschoolCurriculumStudentPhotoAcceptsPhoneSizedJPEG(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productHomescool)
+	// Larger than maxAvatarEdge (2048); previously rejected by detectAvatar.
+	jpeg := encodeJPEG(t, 3000, 2000)
+
+	var buf bytes.Buffer
+	mw := multipart.NewWriter(&buf)
+	_ = mw.WriteField("firstName", "Elías")
+	_ = mw.WriteField("lastName", "Osteicoechea")
+	_ = mw.WriteField("age", "8")
+	_ = mw.WriteField("grade", "3er grado")
+	part, err := mw.CreateFormFile("photo", "phone.jpg")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := part.Write(jpeg); err != nil {
+		t.Fatal(err)
+	}
+	_ = mw.Close()
+
+	seed := httptestSession(t, app, "member@eduardoos.com")
+	req := httptest.NewRequest(http.MethodPost, "/api/eoschool/curriculum/students", &buf)
+	req.Header.Set("Content-Type", mw.FormDataContentType())
+	req.Header.Set("Origin", app.cfg.AllowedOrigins[0])
+	req.Header.Set("X-CSRF-Token", seed.csrf)
+	for _, c := range seed.cookies {
+		req.AddCookie(c)
+	}
+	rec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(rec, req)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("create status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	var created struct {
+		Student EoschoolCurriculumStudent `json:"student"`
+	}
+	if err := json.Unmarshal(rec.Body.Bytes(), &created); err != nil {
+		t.Fatal(err)
+	}
+	if !created.Student.HasPhoto {
+		t.Fatal("expected hasPhoto after phone-sized upload")
+	}
+}
+
+func TestHydrateEoschoolCurriculumStudentNames(t *testing.T) {
+	doc := EoschoolCurriculumProgressDoc{
+		DisplayName: "Elías Osteicoechea",
+		Age:         0,
+		Grade:       "",
+	}
+	hydrateEoschoolCurriculumStudentNames(&doc)
+	if doc.FirstName != "Elías" || doc.LastName != "Osteicoechea" {
+		t.Fatalf("names=%q %q", doc.FirstName, doc.LastName)
+	}
+	if doc.Age != eoschoolCurriculumDefaultAge || doc.Grade != eoschoolCurriculumDefaultGrade {
+		t.Fatalf("age=%d grade=%q", doc.Age, doc.Grade)
 	}
 }
