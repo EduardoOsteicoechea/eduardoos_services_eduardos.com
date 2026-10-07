@@ -58,6 +58,7 @@ type App struct {
 	curriculumMaterials    EoschoolCurriculumMaterialsStore
 	curriculumMaterialsFS  *eoschoolCurriculumMaterialsFS
 	eoschoolStudentsFS     *eoschoolCurriculumStudentsFS
+	curriculumTutors       EoschoolCurriculumTutorStore
 	progressFS             *homescoolProgressFS
 	eoproject              eoprojectStore
 	eoprojectFS            *eoprojectFS
@@ -123,6 +124,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		curriculumMaterials:   newEoschoolCurriculumMaterialsStore(store),
 		curriculumMaterialsFS: newEoschoolCurriculumMaterialsFS(cfg.MediaRoot),
 		eoschoolStudentsFS:    newEoschoolCurriculumStudentsFS(cfg.MediaRoot),
+		curriculumTutors:      newEoschoolCurriculumTutorStore(store),
 		progressFS:            newHomescoolProgressFS(cfg.MediaRoot),
 		eoproject:             newEoprojectStoreFromDataStore(store),
 		eoprojectFS:           newEoprojectFS(cfg.EoprojectMediaRoot),
@@ -398,6 +400,8 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("PATCH /api/eoschool/curriculum/students/{studentKey}", a.patchEoschoolCurriculumStudentHandler)
 	mux.HandleFunc("DELETE /api/eoschool/curriculum/students/{studentKey}", a.deleteEoschoolCurriculumStudentHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/students/{studentKey}/photo", a.getEoschoolCurriculumStudentPhotoHandler)
+	mux.HandleFunc("GET /api/eoschool/curriculum/tutors", a.listEoschoolCurriculumTutorsHandler)
+	mux.HandleFunc("PUT /api/eoschool/curriculum/tutors/{userId}/students", a.putEoschoolCurriculumTutorStudentsHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/progress", a.getEoschoolCurriculumProgressHandler)
 	mux.HandleFunc("PATCH /api/eoschool/curriculum/progress/sections", a.patchEoschoolCurriculumSectionHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/materials", a.listEoschoolCurriculumMaterialsHandler)

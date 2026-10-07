@@ -22,12 +22,12 @@ type eoschoolCurriculumSectionPatch struct {
 // getEoschoolCurriculumProgressHandler returns owner-scoped section completion
 // for the MPPE curriculum UI (cookie session + Homescool entitlement).
 func (a *App) getEoschoolCurriculumProgressHandler(w http.ResponseWriter, r *http.Request) {
-	user, _, ok := a.requireHomescoolMaterialsAccess(w, r)
+	studentKey := normalizeEoschoolCurriculumStudentKey(r.URL.Query().Get("studentKey"))
+	_, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
 	if !ok {
 		return
 	}
-	studentKey := normalizeEoschoolCurriculumStudentKey(r.URL.Query().Get("studentKey"))
-	doc, err := a.eoschoolCurriculum.GetOrCreate(r.Context(), user.ID, studentKey)
+	doc, err := a.eoschoolCurriculum.GetOrCreate(r.Context(), ownerID, studentKey)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -43,7 +43,7 @@ func (a *App) listEoschoolCurriculumStudentsHandler(w http.ResponseWriter, r *ht
 	if !ok {
 		return
 	}
-	students, err := a.eoschoolCurriculum.ListStudents(r.Context(), user.ID)
+	students, err := a.listEoschoolCurriculumStudentsVisible(r.Context(), user)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -54,10 +54,6 @@ func (a *App) listEoschoolCurriculumStudentsHandler(w http.ResponseWriter, r *ht
 func (a *App) patchEoschoolCurriculumSectionHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.validOrigin(r) || !a.validCSRF(r) {
 		a.writeSafeError(w, r, http.StatusForbidden, "csrf_invalid")
-		return
-	}
-	user, _, ok := a.requireHomescoolMaterialsAccess(w, r)
-	if !ok {
 		return
 	}
 	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 4096))
@@ -77,7 +73,11 @@ func (a *App) patchEoschoolCurriculumSectionHandler(w http.ResponseWriter, r *ht
 		return
 	}
 	studentKey := normalizeEoschoolCurriculumStudentKey(body.StudentKey)
-	doc, err := a.eoschoolCurriculum.SetSectionDone(r.Context(), user.ID, studentKey, dayID, sectionID, body.Completed)
+	_, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	doc, err := a.eoschoolCurriculum.SetSectionDone(r.Context(), ownerID, studentKey, dayID, sectionID, body.Completed)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return

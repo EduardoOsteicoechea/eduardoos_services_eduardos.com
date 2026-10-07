@@ -38,7 +38,16 @@ func (a *App) postEoschoolCurriculumMaterialExtractHandler(w http.ResponseWriter
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	if !found || m.OwnerUserID != user.ID {
+	if !found {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	allowed, err := a.canAccessEoschoolCurriculumMaterial(r.Context(), user, m)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !allowed {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
@@ -51,7 +60,7 @@ func (a *App) postEoschoolCurriculumMaterialExtractHandler(w http.ResponseWriter
 		return
 	}
 
-	data, err := a.curriculumMaterialsFS.readAll(user.ID, m.StudentKey, m.DayID, m.SectionID, m.StorageName)
+	data, err := a.curriculumMaterialsFS.readAll(m.OwnerUserID, m.StudentKey, m.DayID, m.SectionID, m.StorageName)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
@@ -89,7 +98,7 @@ func (a *App) postEoschoolCurriculumMaterialExtractHandler(w http.ResponseWriter
 		}
 		failed := failedEoschoolMaterialExtraction(extractionSourceKind(m.Kind), safeExtractFailureMessage(err))
 		failed.ExtractedAt = time.Now().UTC()
-		updated, okUpd, updErr := a.curriculumMaterials.UpdateExtraction(r.Context(), user.ID, m.ID, failed)
+		updated, okUpd, updErr := a.curriculumMaterials.UpdateExtraction(r.Context(), m.OwnerUserID, m.ID, failed)
 		if updErr == nil && okUpd {
 			a.auditEvent(r, "eoschool_curriculum_material_extract", "failed", user.ID)
 			writeJSON(w, http.StatusOK, map[string]any{"material": materialWithURLs(updated)})
@@ -105,7 +114,7 @@ func (a *App) postEoschoolCurriculumMaterialExtractHandler(w http.ResponseWriter
 
 	extraction.ExtractedAt = time.Now().UTC()
 	extraction = sanitizeEoschoolMaterialExtraction(extraction)
-	updated, okUpd, err := a.curriculumMaterials.UpdateExtraction(r.Context(), user.ID, m.ID, extraction)
+	updated, okUpd, err := a.curriculumMaterials.UpdateExtraction(r.Context(), m.OwnerUserID, m.ID, extraction)
 	if err != nil || !okUpd {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return

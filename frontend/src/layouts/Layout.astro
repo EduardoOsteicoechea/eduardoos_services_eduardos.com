@@ -442,25 +442,9 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
               Institutes
             </a>
-            <a href="/homescool" data-route data-service="homescool" hidden aria-current={path === "/homescool" || path.startsWith("/homescool/") || path.startsWith("/eoschool/") ? "page" : undefined}>
+            <a href="/eoschool" data-route data-service="homescool" hidden aria-current={path === "/eoschool" || path.startsWith("/eoschool/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">school</span>
-              Homescool
-            </a>
-            <a href="/eoschool/revision" data-route data-service="homescool" hidden aria-current={path === "/eoschool/revision" || path.startsWith("/eoschool/revision/") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">grading</span>
-              Revisión
-            </a>
-            <a href="/eoschool/requirements/national" data-route data-service="homescool" hidden aria-current={path === "/eoschool/requirements/national" ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
-              Requisitos MPPE
-            </a>
-            <a href="/eoschool" data-route data-service="homescool" hidden aria-current={path === "/eoschool" || (path.startsWith("/eoschool/") && !path.startsWith("/eoschool/revision") && !path.startsWith("/eoschool/requirements/national")) ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
-              Eoschool MPPE
-            </a>
-            <a href="/eoschool/requirements/curriculum?mode=study" data-route data-service="homescool" hidden aria-current={path === "/eoschool/study" || path.startsWith("/eoschool/requirements/curriculum") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
-              Clases MPPE
+              Homeschool
             </a>
             <a href="/documents/pamphlet" data-route data-service="epam" hidden aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">description</span>

@@ -326,12 +326,12 @@ func (a *App) deleteEoschoolCurriculumStudentHandler(w http.ResponseWriter, r *h
 }
 
 func (a *App) getEoschoolCurriculumStudentPhotoHandler(w http.ResponseWriter, r *http.Request) {
-	user, _, ok := a.requireHomescoolMaterialsAccess(w, r)
+	studentKey := normalizeEoschoolCurriculumStudentKey(r.PathValue("studentKey"))
+	_, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
 	if !ok {
 		return
 	}
-	studentKey := normalizeEoschoolCurriculumStudentKey(r.PathValue("studentKey"))
-	doc, found, err := a.eoschoolCurriculum.Get(r.Context(), user.ID, studentKey)
+	doc, found, err := a.eoschoolCurriculum.Get(r.Context(), ownerID, studentKey)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -340,7 +340,7 @@ func (a *App) getEoschoolCurriculumStudentPhotoHandler(w http.ResponseWriter, r 
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
-	f, info, err := a.eoschoolStudentsFS.open(user.ID, studentKey, doc.PhotoStorageName)
+	f, info, err := a.eoschoolStudentsFS.open(ownerID, studentKey, doc.PhotoStorageName)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return

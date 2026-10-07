@@ -1,5 +1,4 @@
 ---
-import { Fragment } from "astro/jsx-runtime";
 import Layout from "../../layouts/Layout.astro";
 
 const cards = [
@@ -49,18 +48,11 @@ const cards = [
 ---
 
 <Layout
-  title="Eoschool MPPE"
+  title="Homeschool"
   description="Dashboard del currículo MPPE: programa, niños, progreso y PDFs."
   page="eoschool-hub"
   robots="noindex,nofollow"
 >
-  <Fragment slot="dhs">
-    <a class="dhs-action" href="/homescool" data-route title="Homescool" aria-label="Homescool">
-      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">school</span></span>
-      Homescool
-    </a>
-  </Fragment>
-
   <section class="product-dash page-span-all" data-eoschool-hub>
     <p class="status" data-banner>Cargando…</p>
     <div data-gate hidden class="product-gate">
@@ -77,11 +69,17 @@ const cards = [
           </a>
         ))
       }
+      <a class="product-dash__card" href="/eoschool/tutors" data-route data-admin-tutors hidden>
+        <span class="material-symbols-outlined" aria-hidden="true">supervisor_account</span>
+        <span class="product-dash__card-title">Gestionar tutores</span>
+        <span class="product-dash__card-desc">Asigna estudiantes a tutores con acceso Homeschool.</span>
+      </a>
     </div>
   </section>
 </Layout>
 
 <script>
+  import { isPlatformAdmin, refreshAuthSession } from "../../lib/auth";
   import { onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
 
   onAstroPageLoad("eoschool-hub", async () => {
@@ -89,12 +87,14 @@ const cards = [
     const banner = root?.querySelector("[data-banner]");
     const gate = root?.querySelector("[data-gate]");
     const authed = root?.querySelector("[data-authed]");
+    const tutorsCard = root?.querySelector("[data-admin-tutors]");
     if (banner instanceof HTMLElement) {
       banner.hidden = false;
       banner.textContent = "Cargando…";
     }
 
     const result = await requireService("homescool", { requireSubscription: true });
+    await refreshAuthSession();
     if (!result.sessionOk || !result.access.allowed) {
       if (banner instanceof HTMLElement) {
         banner.textContent = result.sessionOk
@@ -107,6 +107,7 @@ const cards = [
       if (banner instanceof HTMLElement) banner.hidden = true;
       setHidden(gate, true);
       setHidden(authed, false);
+      setHidden(tutorsCard, !isPlatformAdmin());
     }
   });
 </script>

@@ -277,6 +277,20 @@ func safeSchemaMigrations() []schemaMigration {
 				}},
 			},
 		},
+		{
+			ID:          "016_eoschool_curriculum_tutor_assignments",
+			Description: "Create eoschool MPPE tutor→student assignments (owner-scoped)",
+			Collections: []string{colEoschoolCurriculumTutorAssignments},
+			Indexes: []indexSpec{
+				{Collection: colEoschoolCurriculumTutorAssignments, Keys: bson.D{
+					{Key: "owner_user_id", Value: 1},
+					{Key: "tutor_user_id", Value: 1},
+					{Key: "student_key", Value: 1},
+				}, Unique: true},
+				{Collection: colEoschoolCurriculumTutorAssignments, Keys: bson.D{{Key: "tutor_user_id", Value: 1}, {Key: "student_key", Value: 1}}},
+				{Collection: colEoschoolCurriculumTutorAssignments, Keys: bson.D{{Key: "owner_user_id", Value: 1}}},
+			},
+		},
 	}
 }
 

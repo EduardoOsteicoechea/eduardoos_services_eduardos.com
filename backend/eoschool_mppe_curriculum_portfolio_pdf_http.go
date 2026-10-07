@@ -22,10 +22,6 @@ func (a *App) postEoschoolMPPECurriculumPortfolioPreviewHandler(w http.ResponseW
 		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return
 	}
-	user, _, ok := a.requireHomescoolMaterialsAccess(w, r)
-	if !ok {
-		return
-	}
 	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 4096))
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -39,7 +35,11 @@ func (a *App) postEoschoolMPPECurriculumPortfolioPreviewHandler(w http.ResponseW
 		return
 	}
 	studentKey := normalizeEoschoolCurriculumStudentKey(body.StudentKey)
-	progress, found, err := a.eoschoolCurriculum.Get(r.Context(), user.ID, studentKey)
+	user, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	progress, found, err := a.eoschoolCurriculum.Get(r.Context(), ownerID, studentKey)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -54,7 +54,7 @@ func (a *App) postEoschoolMPPECurriculumPortfolioPreviewHandler(w http.ResponseW
 		done[k] = true
 	}
 
-	proofs, err := a.curriculumMaterials.ListByStudentRole(r.Context(), user.ID, studentKey, eoschoolCurriculumMaterialRoleProof)
+	proofs, err := a.curriculumMaterials.ListByStudentRole(r.Context(), ownerID, studentKey, eoschoolCurriculumMaterialRoleProof)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -64,7 +64,7 @@ func (a *App) postEoschoolMPPECurriculumPortfolioPreviewHandler(w http.ResponseW
 		if m.Kind != eoschoolCurriculumMaterialKindImage || m.StorageName == "" {
 			continue
 		}
-		f, _, err := a.curriculumMaterialsFS.open(user.ID, m.StudentKey, m.DayID, m.SectionID, m.StorageName)
+		f, _, err := a.curriculumMaterialsFS.open(ownerID, m.StudentKey, m.DayID, m.SectionID, m.StorageName)
 		if err != nil {
 			continue
 		}

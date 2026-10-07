@@ -103,8 +103,8 @@ func TestSafeMigrationsAreIdempotent(t *testing.T) {
 	if err := applySchemaMigrations(ctx, log, applier, "test", safeSchemaMigrations(), false, ""); err != nil {
 		t.Fatalf("second apply: %v", err)
 	}
-	if len(applier.records) != 13 {
-		t.Fatalf("expected thirteen migration records, got %d", len(applier.records))
+	if len(applier.records) != 14 {
+		t.Fatalf("expected fourteen migration records, got %d", len(applier.records))
 	}
 	if applier.records["001_initial_auth_schema"].Checksum == "" {
 		t.Fatal("missing checksum")
@@ -124,8 +124,8 @@ func TestSafeMigrationsAreIdempotent(t *testing.T) {
 
 func TestIndexDefinitionsMatchContract(t *testing.T) {
 	migrations := safeSchemaMigrations()
-	if len(migrations) != 13 {
-		t.Fatalf("expected thirteen safe migrations, got %d", len(migrations))
+	if len(migrations) != 14 {
+		t.Fatalf("expected fourteen safe migrations, got %d", len(migrations))
 	}
 	m := migrations[0]
 	assertUnique := func(collection, field string) {

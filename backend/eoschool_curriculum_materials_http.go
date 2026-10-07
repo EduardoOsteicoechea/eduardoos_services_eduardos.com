@@ -10,10 +10,6 @@ import (
 )
 
 func (a *App) listEoschoolCurriculumMaterialsHandler(w http.ResponseWriter, r *http.Request) {
-	user, _, ok := a.requireHomescoolMaterialsAccess(w, r)
-	if !ok {
-		return
-	}
 	studentKey := normalizeEoschoolCurriculumStudentKey(r.URL.Query().Get("studentKey"))
 	dayID := strings.TrimSpace(r.URL.Query().Get("dayId"))
 	sectionID := strings.TrimSpace(r.URL.Query().Get("sectionId"))
@@ -21,7 +17,11 @@ func (a *App) listEoschoolCurriculumMaterialsHandler(w http.ResponseWriter, r *h
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	items, err := a.curriculumMaterials.List(r.Context(), user.ID, studentKey, dayID, sectionID)
+	_, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	items, err := a.curriculumMaterials.List(r.Context(), ownerID, studentKey, dayID, sectionID)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -31,10 +31,6 @@ func (a *App) listEoschoolCurriculumMaterialsHandler(w http.ResponseWriter, r *h
 
 func (a *App) postEoschoolCurriculumMaterialURLHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.requireUnsafe(w, r) {
-		return
-	}
-	user, _, ok := a.requireHomescoolMaterialsAccess(w, r)
-	if !ok {
 		return
 	}
 	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 8192))
@@ -67,10 +63,14 @@ func (a *App) postEoschoolCurriculumMaterialURLHandler(w http.ResponseWriter, r 
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	if !a.ensureCurriculumMaterialCapacity(w, r, user.ID, body.StudentKey, dayID, sectionID, role) {
+	user, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, body.StudentKey)
+	if !ok {
 		return
 	}
-	m := newEoschoolCurriculumMaterialBase(user.ID, body.StudentKey, dayID, sectionID, role, eoschoolCurriculumMaterialKindURL)
+	if !a.ensureCurriculumMaterialCapacity(w, r, ownerID, body.StudentKey, dayID, sectionID, role) {
+		return
+	}
+	m := newEoschoolCurriculumMaterialBase(ownerID, body.StudentKey, dayID, sectionID, role, eoschoolCurriculumMaterialKindURL)
 	m.URL = href
 	m.Title = sanitizeEoschoolCurriculumMaterialTitle(body.Title)
 	m.Description = sanitizeEoschoolCurriculumMaterialDescription(body.Description)
@@ -87,10 +87,6 @@ func (a *App) postEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *ht
 	if !a.requireUnsafe(w, r) {
 		return
 	}
-	user, _, ok := a.requireHomescoolMaterialsAccess(w, r)
-	if !ok {
-		return
-	}
 	r.Body = http.MaxBytesReader(w, r.Body, homescoolProgressMaxBytes+(1<<20))
 	if err := r.ParseMultipartForm(homescoolProgressMaxBytes + (1 << 20)); err != nil {
 		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
@@ -104,7 +100,11 @@ func (a *App) postEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *ht
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	if !a.ensureCurriculumMaterialCapacity(w, r, user.ID, studentKey, dayID, sectionID, role) {
+	user, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	if !a.ensureCurriculumMaterialCapacity(w, r, ownerID, studentKey, dayID, sectionID, role) {
 		return
 	}
 	file, header, err := r.FormFile("file")
@@ -132,7 +132,7 @@ func (a *App) postEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *ht
 		return
 	}
 
-	m := newEoschoolCurriculumMaterialBase(user.ID, studentKey, dayID, sectionID, role, detected.kind)
+	m := newEoschoolCurriculumMaterialBase(ownerID, studentKey, dayID, sectionID, role, detected.kind)
 	m.Title = sanitizeEoschoolCurriculumMaterialTitle(r.FormValue("title"))
 	m.Description = sanitizeEoschoolCurriculumMaterialDescription(r.FormValue("description"))
 	m.OriginalName = path.Base(strings.TrimSpace(filename))
@@ -170,13 +170,13 @@ func (a *App) postEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *ht
 		m.Bytes = int64(len(body))
 	}
 
-	if err := a.curriculumMaterialsFS.put(user.ID, m.StudentKey, dayID, sectionID, m.StorageName, body); err != nil {
+	if err := a.curriculumMaterialsFS.put(ownerID, m.StudentKey, dayID, sectionID, m.StorageName, body); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	if len(thumb) > 0 {
-		if err := a.curriculumMaterialsFS.put(user.ID, m.StudentKey, dayID, sectionID, m.ThumbName, thumb); err != nil {
-			_ = a.curriculumMaterialsFS.delete(user.ID, m.StudentKey, dayID, sectionID, m.StorageName)
+		if err := a.curriculumMaterialsFS.put(ownerID, m.StudentKey, dayID, sectionID, m.ThumbName, thumb); err != nil {
+			_ = a.curriculumMaterialsFS.delete(ownerID, m.StudentKey, dayID, sectionID, m.StorageName)
 			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 			return
 		}
@@ -184,9 +184,9 @@ func (a *App) postEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *ht
 
 	stored, err := a.curriculumMaterials.Insert(r.Context(), m)
 	if err != nil {
-		_ = a.curriculumMaterialsFS.delete(user.ID, m.StudentKey, dayID, sectionID, m.StorageName)
+		_ = a.curriculumMaterialsFS.delete(ownerID, m.StudentKey, dayID, sectionID, m.StorageName)
 		if m.ThumbName != "" {
-			_ = a.curriculumMaterialsFS.delete(user.ID, m.StudentKey, dayID, sectionID, m.ThumbName)
+			_ = a.curriculumMaterialsFS.delete(ownerID, m.StudentKey, dayID, sectionID, m.ThumbName)
 		}
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -208,7 +208,25 @@ func (a *App) deleteEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	m, found, err := a.curriculumMaterials.Delete(r.Context(), user.ID, id)
+	existing, found, err := a.curriculumMaterials.GetByID(r.Context(), id)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !found {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	allowed, err := a.canAccessEoschoolCurriculumMaterial(r.Context(), user, existing)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !allowed {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	m, found, err := a.curriculumMaterials.Delete(r.Context(), existing.OwnerUserID, id)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -218,10 +236,10 @@ func (a *App) deleteEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *
 		return
 	}
 	if m.StorageName != "" {
-		_ = a.curriculumMaterialsFS.delete(user.ID, m.StudentKey, m.DayID, m.SectionID, m.StorageName)
+		_ = a.curriculumMaterialsFS.delete(m.OwnerUserID, m.StudentKey, m.DayID, m.SectionID, m.StorageName)
 	}
 	if m.ThumbName != "" {
-		_ = a.curriculumMaterialsFS.delete(user.ID, m.StudentKey, m.DayID, m.SectionID, m.ThumbName)
+		_ = a.curriculumMaterialsFS.delete(m.OwnerUserID, m.StudentKey, m.DayID, m.SectionID, m.ThumbName)
 	}
 	a.auditEvent(r, "eoschool_curriculum_material_delete", "ok", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{"ok": true})
@@ -255,7 +273,25 @@ func (a *App) patchEoschoolCurriculumMaterialHandler(w http.ResponseWriter, r *h
 	}
 	title := sanitizeEoschoolCurriculumMaterialTitle(body.Title)
 	description := sanitizeEoschoolCurriculumMaterialDescription(body.Description)
-	updated, found, err := a.curriculumMaterials.UpdateMeta(r.Context(), user.ID, id, title, description)
+	existing, found, err := a.curriculumMaterials.GetByID(r.Context(), id)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !found {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	allowed, err := a.canAccessEoschoolCurriculumMaterial(r.Context(), user, existing)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !allowed {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	updated, found, err := a.curriculumMaterials.UpdateMeta(r.Context(), existing.OwnerUserID, id, title, description)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -304,7 +340,16 @@ func (a *App) serveEoschoolCurriculumMaterialVariant(w http.ResponseWriter, r *h
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	if !found || m.OwnerUserID != user.ID {
+	if !found {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	allowed, err := a.canAccessEoschoolCurriculumMaterial(r.Context(), user, m)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !allowed {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
@@ -322,7 +367,7 @@ func (a *App) serveEoschoolCurriculumMaterialVariant(w http.ResponseWriter, r *h
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
-	f, info, err := a.curriculumMaterialsFS.open(user.ID, m.StudentKey, m.DayID, m.SectionID, name)
+	f, info, err := a.curriculumMaterialsFS.open(m.OwnerUserID, m.StudentKey, m.DayID, m.SectionID, name)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
