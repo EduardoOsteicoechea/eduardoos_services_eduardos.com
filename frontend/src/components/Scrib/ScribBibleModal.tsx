@@ -1,13 +1,17 @@
 /**
- * Scrib Bible panel — Book → Chapter → Verse, docked beside the tool rail.
- * For now only Romans (Greek / SBLGNT) is available.
+ * Scrib Bible panel — Corpus → Book → Chapter → Verse, docked beside the tool rail.
+ * NT Greek (SBLGNT) and OT Hebrew (WLC).
  */
 
 import { useEffect, useMemo, useState } from "react";
 import {
+  booksForCorpus,
+  corpusForBookId,
+  defaultBookForCorpus,
   fetchScribBibleBook,
-  SCRIB_BIBLE_BOOKS,
+  SCRIB_BIBLE_CORPORA,
   type BibleBookDoc,
+  type BibleCorpus,
   type BibleVerse,
 } from "../../lib/scribBible";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
@@ -16,18 +20,27 @@ import type { ScribDockSide } from "./ScribToolbar";
 const NAV_STORAGE_KEY = "eduardoos-scrib-bible-nav";
 
 type StoredNav = {
+  corpus: BibleCorpus;
   bookId: string;
   chapter: number | null;
   verse: number | null;
 };
 
+function isCorpus(value: unknown): value is BibleCorpus {
+  return value === "nt-greek" || value === "ot-hebrew";
+}
+
 function readStoredNav(): StoredNav | null {
   try {
     const raw = localStorage.getItem(NAV_STORAGE_KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as StoredNav;
+    const parsed = JSON.parse(raw) as Partial<StoredNav> & { bookId?: string };
     if (!parsed || typeof parsed.bookId !== "string") return null;
+    const corpus = isCorpus(parsed.corpus)
+      ? parsed.corpus
+      : corpusForBookId(parsed.bookId);
     return {
+      corpus,
       bookId: parsed.bookId,
       chapter: typeof parsed.chapter === "number" ? parsed.chapter : null,
       verse: typeof parsed.verse === "number" ? parsed.verse : null,
@@ -55,13 +68,23 @@ export default function ScribBibleModal({
   dockSide = "left",
 }: ScribBibleModalProps) {
   const stored = useMemo(() => readStoredNav(), []);
+  const initialCorpus = stored?.corpus ?? "nt-greek";
+  const initialBooks = booksForCorpus(initialCorpus);
+  const initialBookId =
+    stored?.bookId && initialBooks.some((b) => b.id === stored.bookId)
+      ? stored.bookId
+      : defaultBookForCorpus(initialCorpus).id;
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [bookId, setBookId] = useState(stored?.bookId ?? SCRIB_BIBLE_BOOKS[0]?.id ?? "romans");
+  const [corpus, setCorpus] = useState<BibleCorpus>(initialCorpus);
+  const [bookId, setBookId] = useState(initialBookId);
   const [doc, setDoc] = useState<BibleBookDoc | null>(null);
   const [chapter, setChapter] = useState<number | null>(stored?.chapter ?? null);
   const [verse, setVerse] = useState<number | null>(stored?.verse ?? null);
   const [navCollapsed, setNavCollapsed] = useState(false);
+
+  const corpusBooks = useMemo(() => booksForCorpus(corpus), [corpus]);
 
   const chapterDoc = useMemo(() => {
     if (!doc || chapter == null) return null;
@@ -75,9 +98,11 @@ export default function ScribBibleModal({
     return verses.find((v) => v.verse === verse) ?? null;
   }, [verses, verse]);
 
+  const isHebrew = doc?.language === "hebrew" || corpus === "ot-hebrew";
+
   useEffect(() => {
-    writeStoredNav({ bookId, chapter, verse });
-  }, [bookId, chapter, verse]);
+    writeStoredNav({ corpus, bookId, chapter, verse });
+  }, [corpus, bookId, chapter, verse]);
 
   useEffect(() => {
     if (!open) return;
@@ -95,7 +120,9 @@ export default function ScribBibleModal({
             ? nav.chapter
             : next.chapters[0]?.chapter ?? null;
         const matchChapter =
-          next.chapters.find((c) => c.chapter === preferredChapter) ?? next.chapters[0] ?? null;
+          next.chapters.find((c) => c.chapter === preferredChapter) ??
+          next.chapters[0] ??
+          null;
         setChapter(matchChapter?.chapter ?? null);
         if (
           matchChapter &&
@@ -125,8 +152,8 @@ export default function ScribBibleModal({
 
   const dockClass =
     dockSide === "right"
-      ? "scrib-ref-panel scrib-ref-panel--dock-right"
-      : "scrib-ref-panel scrib-ref-panel--dock-left";
+      ? "scrib-ref-panel scrib-ref-panel--bible scrib-ref-panel--dock-right"
+      : "scrib-ref-panel scrib-ref-panel--bible scrib-ref-panel--dock-left";
   const panelClass = navCollapsed
     ? `${dockClass} scrib-ref-panel--nav-collapsed`
     : dockClass;
@@ -149,10 +176,42 @@ export default function ScribBibleModal({
           <>
             {!navCollapsed ? (
               <>
-                <div className="scrib-ref-panel__tabs" role="tablist" aria-label="Books">
-                  {SCRIB_BIBLE_BOOKS.map((book) => (
+                <div
+                  className="scrib-ref-panel__tabs scrib-ref-panel__tabs--corpus"
+                  role="tablist"
+                  aria-label="Corpus"
+                >
+                  {SCRIB_BIBLE_CORPORA.map((entry) => (
                     <button
-                      key={book.id}
+                      key={entry.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={corpus === entry.id}
+                      className={
+                        corpus === entry.id
+                          ? "scrib-ref-panel__tab is-active"
+                          : "scrib-ref-panel__tab"
+                      }
+                      onClick={() => {
+                        if (entry.id === corpus) return;
+                        const nextBooks = booksForCorpus(entry.id);
+                        const nextBook = nextBooks[0];
+                        setCorpus(entry.id);
+                        setBookId(nextBook?.id ?? "");
+                        setChapter(null);
+                        setVerse(null);
+                        setDoc(null);
+                      }}
+                    >
+                      {entry.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="scrib-ref-panel__tabs" role="tablist" aria-label="Books">
+                  {corpusBooks.map((book) => (
+                    <button
+                      key={`${book.corpus}-${book.id}`}
                       type="button"
                       role="tab"
                       aria-selected={bookId === book.id}
@@ -256,10 +315,7 @@ export default function ScribBibleModal({
               </span>
             </button>
 
-            <section
-              className="scrib-ref-panel__text"
-              aria-live="polite"
-            >
+            <section className="scrib-ref-panel__text" aria-live="polite">
               {activeVerse ? (
                 <p className="scrib-ref-panel__text-id">
                   {doc?.bookName} {chapter}:{activeVerse.verse}
@@ -269,6 +325,8 @@ export default function ScribBibleModal({
               <textarea
                 className="scrib-ref-panel__text-body"
                 readOnly
+                dir={isHebrew ? "rtl" : "ltr"}
+                lang={isHebrew ? "he" : "el"}
                 value={activeVerse?.text ?? ""}
                 placeholder={activeVerse ? undefined : "Select a verse."}
                 aria-label="Verse text"

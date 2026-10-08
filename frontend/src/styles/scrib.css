@@ -652,6 +652,12 @@ html.dark .scrib-page {
   border-radius: 0 0 0 var(--border-radius);
 }
 
+/* Bible tray only: +50px (3.125rem) vs Institutes / annotations */
+.scrib-ref-panel--bible {
+  width: calc(var(--sidebar-width) + 3.125rem);
+  max-width: calc(var(--sidebar-width) + 3.125rem);
+}
+
 .scrib-ref-panel__head {
   display: flex;
   align-items: center;
@@ -693,6 +699,14 @@ html.dark .scrib-page {
   gap: 0.35rem;
   margin-bottom: 0.5rem;
   flex-shrink: 0;
+}
+
+.scrib-ref-panel__tabs--corpus {
+  margin-bottom: 0.25rem;
+}
+
+.scrib-ref-panel__text-body[dir="rtl"] {
+  text-align: right;
 }
 
 .scrib-ref-panel__tab {
@@ -856,6 +870,11 @@ html.dark .scrib-page {
     max-width: var(--sidebar-width);
     max-height: 12rem;
     border-radius: 0;
+  }
+
+  .scrib-ref-panel--bible {
+    width: calc(var(--sidebar-width) + 3.125rem);
+    max-width: calc(var(--sidebar-width) + 3.125rem);
   }
 
   .scrib-ref-panel--dock-left {
