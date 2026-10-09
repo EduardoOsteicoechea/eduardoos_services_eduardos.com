@@ -88,6 +88,15 @@ html.dark .scrib-page {
   pointer-events: none;
 }
 
+.scrib-page__draw-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  touch-action: none;
+  cursor: crosshair;
+  background: transparent;
+}
+
 html.scrib-fullscreen--header-hidden .site-header {
   display: none;
 }

@@ -3,6 +3,7 @@ import {
   SCRIB_BACKGROUND_LAYER_ID,
   SCRIB_DRAW_LAYER_IDS,
   SCRIB_LAYER_IDS,
+  SCRIB_LAYER_LABELS,
   SCRIB_PAGE_HEIGHT_MM,
   SCRIB_PAGE_WIDTH_MM,
   isScribDrawableLayer,
@@ -174,5 +175,14 @@ describe("scrib background layer", () => {
     expect(isScribDrawableLayer(SCRIB_BACKGROUND_LAYER_ID)).toBe(false);
     expect(SCRIB_DRAW_LAYER_IDS).not.toContain(SCRIB_BACKGROUND_LAYER_ID);
     expect(SCRIB_DRAW_LAYER_IDS).toHaveLength(6);
+  });
+});
+
+describe("scrib text layer labels", () => {
+  it("uses ambiguous Text 1/2/3 labels for the three text layers", () => {
+    expect(SCRIB_LAYER_LABELS.original).toBe("Text 1");
+    expect(SCRIB_LAYER_LABELS.translation1).toBe("Text 2");
+    expect(SCRIB_LAYER_LABELS.translation2).toBe("Text 3");
+    expect(isScribDrawableLayer("translation2")).toBe(true);
   });
 });

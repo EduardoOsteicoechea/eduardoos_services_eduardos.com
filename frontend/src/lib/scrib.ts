@@ -50,9 +50,10 @@ export const SCRIB_LAYER_LABELS: Record<ScribLayerId, string> = {
   chapter: "Número de capítulo",
   verse: "Número de versículo",
   word: "Número de palabra",
-  original: "Texto original",
-  translation1: "Traducción 1",
-  translation2: "Traducción 2",
+  // Intentional ambiguity — any of these three may hold source or translation ink.
+  original: "Text 1",
+  translation1: "Text 2",
+  translation2: "Text 3",
 };
 
 export function isScribDrawableLayer(id: string): boolean {

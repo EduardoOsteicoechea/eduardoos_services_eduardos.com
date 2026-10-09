@@ -471,13 +471,17 @@ export default function ScribEditor() {
     pointsRef.current = [];
     setDraftPath("");
     if (mode !== "draw" && mode !== "erase") return;
-    const current = sheetSnapshotRef.current;
-    if (!current || pts.length < 2) return;
+    const snapshot = sheetSnapshotRef.current;
+    if (!snapshot || pts.length < 2) return;
 
+    // Ensure every canonical layer exists (incl. Text 3 / translation2) before write.
+    const current = ensureLayers(snapshot);
     const activeId = current.activeLayerId;
     let pathsBefore: StrokePath[] = [];
+    let found = false;
     const layers = current.layers.map((layer) => {
       if (layer.id !== activeId) return layer;
+      found = true;
       pathsBefore = clonePaths(layer.paths);
       if (mode === "erase") {
         return {
@@ -493,6 +497,7 @@ export default function ScribEditor() {
         paths: [...layer.paths, { d, strokeWidth: current.strokeWidthMm }],
       };
     });
+    if (!found || !isScribDrawableLayer(activeId)) return;
     setUndoStack((stack) => [
       ...stack,
       { kind: "layer", layerId: activeId, pathsBefore },
@@ -890,10 +895,10 @@ export default function ScribEditor() {
                 width: `${SCRIB_PAGE_WIDTH_MM * scale}mm`,
                 height: `${SCRIB_PAGE_HEIGHT_MM * scale}mm`,
               }}
-              onPointerDown={onPointerDown}
-              onPointerMove={onPointerMove}
-              onPointerUp={onPointerUp}
-              onPointerCancel={onPointerUp}
+              onPointerDown={mode === "annotate" ? onPointerDown : undefined}
+              onPointerMove={mode === "annotate" ? onPointerMove : undefined}
+              onPointerUp={mode === "annotate" ? onPointerUp : undefined}
+              onPointerCancel={mode === "annotate" ? onPointerUp : undefined}
             >
               <ScribSheetBackground
                 scale={scale}
@@ -911,9 +916,11 @@ export default function ScribEditor() {
                   width={`${SCRIB_PAGE_WIDTH_MM * scale}mm`}
                   height={`${SCRIB_PAGE_HEIGHT_MM * scale}mm`}
                   shapeRendering="geometricPrecision"
+                  pointerEvents="none"
                   style={{
                     zIndex: index + 1,
                     opacity: layer.opacity,
+                    pointerEvents: "none",
                   }}
                   aria-hidden
                 >
@@ -926,30 +933,53 @@ export default function ScribEditor() {
                       strokeWidth={path.strokeWidth}
                       strokeLinecap="round"
                       strokeLinejoin="round"
+                      pointerEvents="none"
                     />
                   ))}
-                  {layer.id === sheet.activeLayerId &&
-                  draftPath &&
-                  mode === "draw" &&
-                  !annotationEditorOpen ? (
-                    <path
-                      d={draftPath}
-                      fill="none"
-                      stroke="var(--scrib-ink)"
-                      strokeWidth={sheet.strokeWidthMm}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      opacity={0.85}
-                    />
-                  ) : null}
                 </svg>
               ))}
+              {/* Draft above every ink layer so Text 3 (top stack) opacity never hides the stroke. */}
+              {draftPath && mode === "draw" && !annotationEditorOpen ? (
+                <svg
+                  className="scrib-layer scrib-layer--draft"
+                  viewBox={`0 0 ${SCRIB_PAGE_WIDTH_MM} ${SCRIB_PAGE_HEIGHT_MM}`}
+                  width={`${SCRIB_PAGE_WIDTH_MM * scale}mm`}
+                  height={`${SCRIB_PAGE_HEIGHT_MM * scale}mm`}
+                  shapeRendering="geometricPrecision"
+                  pointerEvents="none"
+                  style={{ zIndex: 40, pointerEvents: "none" }}
+                  aria-hidden
+                >
+                  <path
+                    d={draftPath}
+                    fill="none"
+                    stroke="var(--scrib-ink)"
+                    strokeWidth={sheet.strokeWidthMm}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    opacity={0.85}
+                  />
+                </svg>
+              ) : null}
               {mode === "annotate" ? (
                 <ScribAnnotationRects
                   blocks={noteBlocks}
                   selection={annotateSelection}
                   scale={scale}
                   draftRect={draftRect}
+                />
+              ) : null}
+              {/*
+                Top hit target for stylus draw/erase. Layer SVGs (esp. Text 3 on top)
+                must never steal pen hits from the page.
+              */}
+              {(mode === "draw" || mode === "erase") && !annotationEditorOpen ? (
+                <div
+                  className="scrib-page__draw-surface"
+                  onPointerDown={onPointerDown}
+                  onPointerMove={onPointerMove}
+                  onPointerUp={onPointerUp}
+                  onPointerCancel={onPointerUp}
                 />
               ) : null}
             </div>
@@ -1040,7 +1070,20 @@ export default function ScribEditor() {
                           checked={sheet.activeLayerId === layer.id}
                           onChange={() => {
                             const current = sheetSnapshotRef.current;
-                            if (current) commitSheet({ ...current, activeLayerId: layer.id });
+                            if (!current) return;
+                            const next = ensureLayers({
+                              ...current,
+                              activeLayerId: layer.id,
+                              layers: current.layers.map((l) =>
+                                l.id === layer.id && l.opacity <= 0
+                                  ? { ...l, opacity: 1 }
+                                  : l,
+                              ),
+                            });
+                            commitSheet(next);
+                            // Close so the page is drawable immediately (modal was blocking hits).
+                            setLayersOpen(false);
+                            persist(next);
                           }}
                         />
                         <span>{label}</span>

@@ -383,6 +383,16 @@ html.dark .scrib-page {
   pointer-events: none;
 }
 
+.scrib-page__draw-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  touch-action: none;
+  cursor: crosshair;
+  /* Transparent hit target above every ink layer (incl. Text 3). */
+  background: transparent;
+}
+
 .scrib-fullscreen-controls {
   position: absolute;
   z-index: var(--z-modal);
