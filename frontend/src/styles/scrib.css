@@ -1125,8 +1125,7 @@ html.dark .scrib-page {
   text-align: left;
 }
 
-.scrib-annotation-pick__swatch,
-.scrib-annotation-editor__swatch {
+.scrib-annotation-pick__swatch {
   flex-shrink: 0;
   width: 1.25rem;
   height: 1.25rem;
@@ -1141,59 +1140,118 @@ html.dark .scrib-page {
   white-space: nowrap;
 }
 
-.scrib-annotation-editor__canvas-head {
-  display: flex;
-  align-items: center;
-  gap: var(--rail-gap);
-}
-
-.scrib-annotation-editor {
+/* Floating note editor */
+.scrib-note-layer {
   position: fixed;
   inset: 0;
   z-index: 180;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  background: color-mix(in srgb, var(--color-bg) 55%, transparent);
+  pointer-events: none;
 }
 
-.scrib-annotation-editor__panel {
+.scrib-note {
+  position: absolute;
   display: flex;
   flex-direction: column;
   gap: var(--rail-gap);
-  width: min(40rem, calc(var(--shell-viewport-width, 30rem) - 2rem));
-  height: calc(100% - 2rem);
-  max-height: calc(100% - 2rem);
-  padding: var(--space-padding);
-  border: var(--border-width) solid var(--color-border);
+  pointer-events: auto;
+  padding: var(--rail-gap);
+  padding-top: calc(var(--rail-gap) + 0.5rem);
+  border: 0.125rem double var(--color-text);
   border-radius: var(--border-radius);
   background: var(--color-surface);
-  overflow: hidden;
+  box-shadow: 0 0.25rem 0.75rem color-mix(in srgb, #000 35%, transparent);
+  overflow: visible;
+  touch-action: none;
 }
 
-.scrib-annotation-editor__head {
+.scrib-note--move {
+  cursor: grab;
+}
+
+.scrib-note__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.875rem;
+  height: 1.875rem;
+  margin: 0;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-err);
+  color: var(--color-button-fg, #fff);
+  transform: translate(50%, -50%);
+  cursor: pointer;
+}
+
+.scrib-note__close .material-symbols-outlined {
+  font-size: var(--icon-size);
+}
+
+.scrib-note__toolbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--rail-gap);
   flex-shrink: 0;
+  padding-right: 1rem;
 }
 
-.scrib-annotation-editor__head h2 {
-  margin: 0;
-  flex: 1;
-  font-size: var(--font-size-md);
+.scrib-note__tool.icon-btn {
+  width: var(--button-size);
+  height: var(--button-size);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-text);
 }
 
-.scrib-annotation-editor__hint {
+.scrib-note__tool.icon-btn.is-active {
+  outline: var(--border-width) solid #ff8800;
+  background: color-mix(in srgb, #ff8800 14%, transparent);
+}
+
+.scrib-note__settings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rail-gap);
+  flex-shrink: 0;
+  padding: var(--rail-gap);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+}
+
+.scrib-note__settings-color {
+  display: flex;
+  align-items: center;
   margin: 0;
-  flex-basis: 100%;
+  cursor: pointer;
+}
+
+.scrib-note__settings-color input[type="color"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  cursor: pointer;
+}
+
+.scrib-note__settings-width {
+  min-width: 2.5rem;
   font-size: var(--font-size-xs);
   color: var(--color-muted);
+  text-align: center;
 }
 
-.scrib-annotation-editor__body {
+.scrib-note__body {
   display: flex;
   flex-direction: column;
   gap: var(--rail-gap);
@@ -1202,75 +1260,87 @@ html.dark .scrib-page {
   flex: 1;
 }
 
-.scrib-annotation-editor__canvas {
+.scrib-note__canvas {
   display: flex;
   flex-direction: column;
-  gap: var(--rail-gap);
+  min-height: 0;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
-  padding: var(--rail-gap);
-  min-height: 0;
+  overflow: hidden;
 }
 
-.scrib-annotation-editor__canvas--heading {
+.scrib-note__canvas--heading {
   flex-shrink: 0;
 }
 
-.scrib-annotation-editor__canvas--body {
+.scrib-note__canvas--body {
   flex: 1;
   min-height: 15rem;
   display: flex;
   flex-direction: column;
 }
 
-.scrib-annotation-editor__canvas.is-active {
+.scrib-note__canvas.is-active {
   border-color: #ff8800;
 }
 
-.scrib-annotation-editor__field-btn {
-  border: 0;
-  background: transparent;
-  color: var(--color-text);
-  font-family: var(--font-family);
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-}
-
-.scrib-annotation-editor__canvas-scroll {
+.scrib-note__canvas-scroll {
   overflow: hidden;
   min-height: 0;
 }
 
-.scrib-annotation-editor__canvas-scroll--heading {
+.scrib-note__canvas-scroll--heading {
   height: 3.75rem;
   flex-shrink: 0;
 }
 
-.scrib-annotation-editor__canvas-scroll--body {
+.scrib-note__canvas-scroll--body {
   flex: 1;
   min-height: 15rem;
   display: flex;
   flex-direction: column;
 }
 
-.scrib-annotation-editor__svg {
+.scrib-note__svg {
   display: block;
   touch-action: none;
-  cursor: crosshair;
   width: auto;
   align-self: stretch;
   flex: 1;
 }
 
-.scrib-annotation-editor__svg--heading {
+.scrib-note__svg--heading {
   height: 3.75rem;
   flex: none;
 }
 
-.scrib-annotation-editor__svg--body {
+.scrib-note__svg--body {
   min-height: 15rem;
   height: auto;
   flex: 1;
+}
+
+.scrib-note__resize {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: nwse-resize;
+  touch-action: none;
+  transform: translate(35%, 35%);
+}
+
+.scrib-note__resize .material-symbols-outlined {
+  font-size: var(--font-size-sm);
 }
 
 .scrib-annotation-views {

@@ -1142,6 +1142,11 @@ export default function ScribEditor() {
         bodyPaths={editorAnn?.annotation.body.paths ?? []}
         activeField={annotationInkField}
         onActiveField={setAnnotationInkField}
+        onStrokeWidth={(nextMm) => {
+          const current = sheetSnapshotRef.current;
+          if (!current) return;
+          commitSheet({ ...current, strokeWidthMm: nextMm });
+        }}
         onCommitField={(field, paths, pathsBefore) => {
           if (!annotateSelection) return;
           setUndoStack((stack) => [

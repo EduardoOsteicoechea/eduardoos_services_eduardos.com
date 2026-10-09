@@ -26,7 +26,7 @@ Annotate subtools (toolbar / DHS when `mode === "annotate"`):
 
 - Orange fixed border while `mode === "annotate"`.
 - No note tree panel.
-- Annotation editor: heading canvas `3.75rem` tall; body canvas `15rem` default and grows when the dialog expands; center-ink control per active field.
+- Floating note editor (no title text): toolbar move / draw-settings / zoom / pan / center; `1.875rem` round close at top-right vertex; square SE resize; Esc closes. Heading canvas `3.75rem`; body `15rem` default and grows with the panel.
 - View windows: multiple `view.open`, drag + SE resize; persisted on the sheet.
 
 ## Persistence
