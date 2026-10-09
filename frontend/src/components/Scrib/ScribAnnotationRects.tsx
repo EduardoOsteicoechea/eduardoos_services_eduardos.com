@@ -1,45 +1,25 @@
 /**
- * Drawn-area rectangles over the Scrib page — only mounted in annotate mode.
+ * Drawn note rectangles over the Scrib page — only mounted in annotate mode.
  */
 
 import {
   SCRIB_PAGE_HEIGHT_MM,
   SCRIB_PAGE_WIDTH_MM,
-  type ScribNoteBlock,
-  type ScribRectMm,
 } from "../../lib/scrib";
 import {
-  isRectSelected,
+  isRegionSelected,
   type ScribAnnotateSelection,
+  type ScribNoteRegion,
 } from "../../lib/scribAnnotations";
+import type { ScribRectMm } from "../../lib/scrib";
 
 type ScribAnnotationRectsProps = {
-  blocks: ScribNoteBlock[];
+  regions: ScribNoteRegion[];
   selection: ScribAnnotateSelection | null;
   scale: number;
   draftRect: { x: number; y: number; w: number; h: number } | null;
+  draftColor: string;
 };
-
-function isGroupHighlighted(
-  selection: ScribAnnotateSelection | null,
-  blockId: string,
-  areaId?: string,
-): "strong" | "soft" | "none" {
-  if (!selection || selection.blockId !== blockId) return "none";
-  if (typeof selection.rectIndex === "number") {
-    // Specific rect selected — group glow stays soft for siblings.
-    if (areaId) {
-      return selection.areaId === areaId ? "soft" : "none";
-    }
-    return !selection.areaId ? "soft" : "none";
-  }
-  if (!selection.areaId) {
-    return areaId ? "soft" : "strong";
-  }
-  if (areaId && selection.areaId === areaId) return "strong";
-  if (!areaId) return "soft";
-  return "none";
-}
 
 function SelectionChrome({ r }: { r: ScribRectMm }) {
   const handle = 0.8;
@@ -76,10 +56,11 @@ function SelectionChrome({ r }: { r: ScribRectMm }) {
 }
 
 export default function ScribAnnotationRects({
-  blocks,
+  regions,
   selection,
   scale,
   draftRect,
+  draftColor,
 }: ScribAnnotationRectsProps) {
   return (
     <svg
@@ -89,68 +70,25 @@ export default function ScribAnnotationRects({
       height={`${SCRIB_PAGE_HEIGHT_MM * scale}mm`}
       aria-hidden
     >
-      {blocks.map((block) => {
-        if (!block.visible) return null;
-        const blockHl = isGroupHighlighted(selection, block.id);
+      {regions.map((region) => {
+        const selected = isRegionSelected(selection, region);
+        const r = region.rect;
         return (
-          <g key={block.id}>
-            {block.rects.map((r, i) => {
-              const selected = isRectSelected(selection, block.id, undefined, i);
-              return (
-                <g key={`b-${block.id}-${i}`}>
-                  <rect
-                    x={r.x}
-                    y={r.y}
-                    width={r.w}
-                    height={r.h}
-                    fill={block.color}
-                    fillOpacity={
-                      selected ? 0.22 : blockHl === "strong" ? 0.28 : 0.12
-                    }
-                    stroke={block.color}
-                    strokeWidth={0.1}
-                    strokeOpacity={blockHl === "none" && !selected ? 0.55 : 1}
-                  />
-                  {selected ? <SelectionChrome r={r} /> : null}
-                </g>
-              );
-            })}
-            {block.areas.map((area) => {
-              if (!area.visible) return null;
-              const areaHl = isGroupHighlighted(selection, block.id, area.id);
-              return (
-                <g key={area.id}>
-                  {area.rects.map((r, i) => {
-                    const selected = isRectSelected(
-                      selection,
-                      block.id,
-                      area.id,
-                      i,
-                    );
-                    return (
-                      <g key={`a-${area.id}-${i}`}>
-                        <rect
-                          x={r.x}
-                          y={r.y}
-                          width={r.w}
-                          height={r.h}
-                          fill={area.color}
-                          fillOpacity={
-                            selected ? 0.24 : areaHl === "strong" ? 0.32 : 0.14
-                          }
-                          stroke={area.color}
-                          strokeWidth={0.1}
-                          strokeOpacity={
-                            areaHl === "none" && !selected ? 0.55 : 1
-                          }
-                        />
-                        {selected ? <SelectionChrome r={r} /> : null}
-                      </g>
-                    );
-                  })}
-                </g>
-              );
-            })}
+          <g
+            key={`${region.blockId}-${region.areaId}-${region.annotationId}`}
+          >
+            <rect
+              x={r.x}
+              y={r.y}
+              width={r.w}
+              height={r.h}
+              fill={region.color}
+              fillOpacity={selected ? 0.28 : 0.14}
+              stroke={region.color}
+              strokeWidth={0.1}
+              strokeOpacity={selected ? 1 : 0.55}
+            />
+            {selected ? <SelectionChrome r={r} /> : null}
           </g>
         );
       })}
@@ -160,8 +98,9 @@ export default function ScribAnnotationRects({
           y={Math.min(draftRect.y, draftRect.y + draftRect.h)}
           width={Math.abs(draftRect.w)}
           height={Math.abs(draftRect.h)}
-          fill="none"
-          stroke="#ff8800"
+          fill={draftColor}
+          fillOpacity={0.18}
+          stroke={draftColor}
           strokeWidth={0.1}
           strokeDasharray="2 1.5"
         />

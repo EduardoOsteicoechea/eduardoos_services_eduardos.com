@@ -3,17 +3,22 @@
  * when parent mode is draw/erase (toolbar retargeted).
  */
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { StrokePath } from "../../lib/scrib";
-import type { ScribNoteInkField } from "../../lib/scribAnnotations";
+import {
+  centerInkPaths,
+  type ScribNoteInkField,
+} from "../../lib/scribAnnotations";
 import type { ScribToolMode } from "./ScribHeaderMenu";
 
-const NOTE_W_MM = 120;
-const NOTE_H_MM = 80;
+const NOTE_W = 120;
+const HEADING_H_DEFAULT = 30;
+const BODY_H_DEFAULT = 120;
 
 type ScribAnnotationEditorModalProps = {
   open: boolean;
   name: string;
+  color: string;
   mode: ScribToolMode;
   strokeWidthMm: number;
   headingPaths: StrokePath[];
@@ -66,13 +71,43 @@ export default function ScribAnnotationEditorModal(
 ) {
   const headingSvgRef = useRef<SVGSVGElement>(null);
   const bodySvgRef = useRef<SVGSVGElement>(null);
+  const bodyScrollRef = useRef<HTMLDivElement>(null);
   const drawingRef = useRef(false);
   const pointerIdRef = useRef<number | null>(null);
   const fieldRef = useRef<ScribNoteInkField>("heading");
   const pointsRef = useRef<{ x: number; y: number }[]>([]);
   const [draftPath, setDraftPath] = useState("");
+  const [headingH, setHeadingH] = useState(HEADING_H_DEFAULT);
+  const [bodyH, setBodyH] = useState(BODY_H_DEFAULT);
+
+  useEffect(() => {
+    if (!props.open) return;
+    const headingEl = headingSvgRef.current;
+    const bodyEl = bodyScrollRef.current;
+    const sync = () => {
+      if (headingEl) {
+        const w = headingEl.clientWidth;
+        const h = headingEl.clientHeight;
+        if (w > 0 && h > 0) setHeadingH((NOTE_W * h) / w);
+      }
+      if (bodyEl) {
+        const w = bodyEl.clientWidth;
+        const h = bodyEl.clientHeight;
+        if (w > 0 && h > 0) setBodyH((NOTE_W * h) / w);
+      }
+    };
+    sync();
+    const ro = new ResizeObserver(sync);
+    if (headingEl) ro.observe(headingEl);
+    if (bodyEl) ro.observe(bodyEl);
+    return () => ro.disconnect();
+  }, [props.open]);
 
   if (!props.open) return null;
+
+  function fieldHeight(field: ScribNoteInkField): number {
+    return field === "heading" ? headingH : bodyH;
+  }
 
   function mmFromClient(
     field: ScribNoteInkField,
@@ -84,8 +119,8 @@ export default function ScribAnnotationEditorModal(
     const rect = el.getBoundingClientRect();
     if (rect.width <= 0 || rect.height <= 0) return null;
     return {
-      x: ((clientX - rect.left) / rect.width) * NOTE_W_MM,
-      y: ((clientY - rect.top) / rect.height) * NOTE_H_MM,
+      x: ((clientX - rect.left) / rect.width) * NOTE_W,
+      y: ((clientY - rect.top) / rect.height) * fieldHeight(field),
     };
   }
 
@@ -146,6 +181,15 @@ export default function ScribAnnotationEditorModal(
     props.onCommitField(field, next, pathsBefore);
   }
 
+  function centerActiveField() {
+    const field = props.activeField;
+    const current = field === "heading" ? props.headingPaths : props.bodyPaths;
+    if (current.length === 0) return;
+    const pathsBefore = current.map((p) => ({ ...p }));
+    const next = centerInkPaths(current, NOTE_W, fieldHeight(field));
+    props.onCommitField(field, next, pathsBefore);
+  }
+
   function renderCanvas(
     field: ScribNoteInkField,
     paths: StrokePath[],
@@ -153,12 +197,14 @@ export default function ScribAnnotationEditorModal(
     label: string,
   ) {
     const active = props.activeField === field;
+    const h = fieldHeight(field);
+    const isBody = field === "body";
     return (
       <section
         className={
           active
-            ? "scrib-annotation-editor__canvas is-active"
-            : "scrib-annotation-editor__canvas"
+            ? `scrib-annotation-editor__canvas scrib-annotation-editor__canvas--${field} is-active`
+            : `scrib-annotation-editor__canvas scrib-annotation-editor__canvas--${field}`
         }
       >
         <header className="scrib-annotation-editor__canvas-head">
@@ -178,14 +224,37 @@ export default function ScribAnnotationEditorModal(
               {field === "heading" ? "title" : "notes"}
             </span>
           </button>
+          {active ? (
+            <button
+              type="button"
+              className="scrib-tool-rail__btn icon-btn"
+              title="Centrar tinta en el lienzo"
+              aria-label="Centrar tinta dibujada en el centro del lienzo"
+              onClick={centerActiveField}
+            >
+              <span className="material-symbols-outlined" aria-hidden="true">
+                filter_center_focus
+              </span>
+            </button>
+          ) : null}
         </header>
-        <div className="scrib-annotation-editor__canvas-scroll">
+        <div
+          ref={isBody ? bodyScrollRef : undefined}
+          className={
+            isBody
+              ? "scrib-annotation-editor__canvas-scroll scrib-annotation-editor__canvas-scroll--body"
+              : "scrib-annotation-editor__canvas-scroll scrib-annotation-editor__canvas-scroll--heading"
+          }
+        >
           <svg
             ref={svgRef}
-            className="scrib-annotation-editor__svg"
-            viewBox={`0 0 ${NOTE_W_MM} ${NOTE_H_MM}`}
-            width={`${NOTE_W_MM}mm`}
-            height={`${NOTE_H_MM}mm`}
+            className={
+              isBody
+                ? "scrib-annotation-editor__svg scrib-annotation-editor__svg--body"
+                : "scrib-annotation-editor__svg scrib-annotation-editor__svg--heading"
+            }
+            viewBox={`0 0 ${NOTE_W} ${h}`}
+            preserveAspectRatio="none"
             shapeRendering="geometricPrecision"
             onPointerDown={(e) => onPointerDown(field, e)}
             onPointerMove={onPointerMove}
@@ -195,8 +264,8 @@ export default function ScribAnnotationEditorModal(
             <rect
               x={0}
               y={0}
-              width={NOTE_W_MM}
-              height={NOTE_H_MM}
+              width={NOTE_W}
+              height={h}
               fill="var(--color-surface)"
               stroke="var(--color-border)"
               strokeWidth={0.25}
@@ -241,6 +310,11 @@ export default function ScribAnnotationEditorModal(
     >
       <div className="scrib-annotation-editor__panel">
         <header className="scrib-annotation-editor__head">
+          <span
+            className="scrib-annotation-editor__swatch"
+            style={{ background: props.color }}
+            aria-hidden
+          />
           <h2 title={props.name}>{props.name}</h2>
           <p className="scrib-annotation-editor__hint">
             Usa Dibujar / Borrar de la barra sobre el título o el cuerpo (stylus).

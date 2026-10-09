@@ -1,13 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { normalizeScribSheet, type ScribSheet } from "./scrib";
 import {
-  appendRectToSelection,
-  createNoteAnnotation,
-  createNoteArea,
-  createNoteBlock,
-  hitTestNoteRect,
-  isRectSelected,
+  appendNoteRegion,
+  centerInkPaths,
+  createNoteRegion,
+  hitTestNoteRegions,
+  isRegionSelected,
+  listNoteRegions,
   mapAnnotationInk,
+  selectionOfRegion,
   sheetNoteBlocks,
   withNoteBlocks,
 } from "./scribAnnotations";
@@ -55,7 +56,7 @@ describe("normalizeScribSheet noteBlocks", () => {
               name: "Area",
               visible: true,
               color: "#2266aa",
-              rects: [],
+              rects: [{ x: 1, y: 2, w: 3, h: 4 }],
               annotations: [
                 {
                   id: "n",
@@ -71,47 +72,59 @@ describe("normalizeScribSheet noteBlocks", () => {
       ],
     });
     expect(n.noteBlocks?.[0]?.areas[0]?.annotations[0]?.view.w).toBe(280);
+    expect(listNoteRegions(n.noteBlocks ?? [])).toHaveLength(1);
   });
 });
 
 describe("scribAnnotations helpers", () => {
   it("mapAnnotationInk does not mutate layers", () => {
-    const block = createNoteBlock("B");
-    const area = createNoteArea("A");
-    const ann = createNoteAnnotation("N");
-    area.annotations = [ann];
-    block.areas = [area];
+    const block = createNoteRegion({ x: 10, y: 20, w: 30, h: 40 }, "#ff8800", "N");
     const sheet = withNoteBlocks(baseSheet(), [block]);
+    const region = listNoteRegions(sheetNoteBlocks(sheet))[0];
     const layerPathsBefore = sheet.layers[1].paths.length;
     const next = mapAnnotationInk(
       sheet,
-      { blockId: block.id, areaId: area.id, annotationId: ann.id },
+      selectionOfRegion(region),
       "heading",
       (paths) => [...paths, { d: "M 2 2 L 3 3", strokeWidth: 0.4 }],
     );
     expect(next.layers[1].paths).toHaveLength(layerPathsBefore);
-    expect(sheetNoteBlocks(next)[0].areas[0].annotations[0].heading.paths).toHaveLength(1);
+    expect(
+      sheetNoteBlocks(next)[0].areas[0].annotations[0].heading.paths,
+    ).toHaveLength(1);
   });
 
-  it("appendRectToSelection adds block rect", () => {
-    const block = createNoteBlock("B");
-    const sheet = withNoteBlocks(baseSheet(), [block]);
-    const next = appendRectToSelection(
-      sheet,
-      { blockId: block.id },
+  it("appendNoteRegion adds a rect with ink containers", () => {
+    const { sheet, selection } = appendNoteRegion(
+      baseSheet(),
       { x: 10, y: 20, w: 30, h: 40 },
+      "#2266aa",
     );
-    expect(sheetNoteBlocks(next)[0].rects).toEqual([{ x: 10, y: 20, w: 30, h: 40 }]);
+    expect(selection).not.toBeNull();
+    const regions = listNoteRegions(sheetNoteBlocks(sheet));
+    expect(regions).toHaveLength(1);
+    expect(regions[0].rect).toEqual({ x: 10, y: 20, w: 30, h: 40 });
+    expect(regions[0].color).toBe("#2266aa");
+    expect(regions[0].heading.paths).toEqual([]);
+    expect(regions[0].body.paths).toEqual([]);
   });
 
-  it("hitTestNoteRect and isRectSelected pick a drawn area", () => {
-    const block = createNoteBlock("B");
-    block.rects = [{ x: 10, y: 20, w: 30, h: 40 }];
-    const hit = hitTestNoteRect([block], { x: 15, y: 25 });
-    expect(hit).toEqual({ blockId: block.id, rectIndex: 0 });
-    expect(isRectSelected(hit, block.id, undefined, 0)).toBe(true);
-    expect(isRectSelected({ blockId: block.id }, block.id, undefined, 0)).toBe(
-      false,
+  it("hitTestNoteRegions returns overlapping topmost-first", () => {
+    const a = createNoteRegion({ x: 10, y: 20, w: 30, h: 40 }, "#111111", "A");
+    const b = createNoteRegion({ x: 15, y: 25, w: 30, h: 40 }, "#222222", "B");
+    const hits = hitTestNoteRegions([a, b], { x: 20, y: 30 });
+    expect(hits).toHaveLength(2);
+    expect(hits[0].name).toBe("B");
+    expect(isRegionSelected(selectionOfRegion(hits[0]), hits[0])).toBe(true);
+  });
+
+  it("centerInkPaths moves bbox center to canvas center", () => {
+    const centered = centerInkPaths(
+      [{ d: "M 0 0 L 10 0", strokeWidth: 0.3 }],
+      100,
+      100,
     );
+    expect(centered[0].d).toContain("45.000");
+    expect(centered[0].d).toContain("50.000");
   });
 });

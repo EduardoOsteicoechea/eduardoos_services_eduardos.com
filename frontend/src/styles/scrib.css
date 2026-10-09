@@ -1020,84 +1020,34 @@ html.dark .scrib-page {
   pointer-events: none;
 }
 
-.scrib-annotations-tree {
-  z-index: 160;
-  max-height: 36rem;
-}
-
-.scrib-annotations-tree__scroll {
+.scrib-tool-rail__color {
   display: flex;
-  flex-direction: column;
-  gap: var(--rail-gap);
-}
-
-.scrib-annotations-tree__toolbar {
-  display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--rail-gap);
-}
-
-.scrib-annotations-tree__list,
-.scrib-annotations-tree__children {
-  list-style: none;
+  justify-content: center;
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
   margin: 0;
+  cursor: pointer;
+}
+
+.scrib-tool-rail__color input[type="color"] {
+  width: 1.25rem;
+  height: 1.25rem;
   padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  cursor: pointer;
+}
+
+.scrib-header-annotate-color {
   display: flex;
-  flex-direction: column;
-}
-
-.scrib-annotations-tree__children {
-  margin-left: 0.75rem;
-  padding-left: 0.75rem;
-}
-
-.scrib-annotations-tree__node {
-  position: relative;
-  padding-left: 0.75rem;
-}
-
-.scrib-annotations-tree__node::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 0;
-  border-left: var(--border-width) solid var(--color-border);
-}
-
-.scrib-annotations-tree__node--last::before {
-  bottom: auto;
-  height: 1rem;
-}
-
-.scrib-annotations-tree__branch {
-  position: absolute;
-  left: 0;
-  top: 1rem;
-  width: 0.75rem;
-  height: 0;
-  border-top: var(--border-width) solid var(--color-border);
-}
-
-.scrib-annotations-tree__row {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: var(--rail-gap);
-  min-height: var(--control-height);
-  padding: 0.125rem 0.25rem;
-  border-radius: var(--border-radius);
+  padding: 0 var(--control-padding-inline);
 }
 
-.scrib-annotations-tree__row.is-selected {
-  outline: var(--border-width) solid #ff8800;
-  background: color-mix(in srgb, #ff8800 12%, transparent);
-}
-
-.scrib-annotations-tree__color {
+.scrib-header-annotate-color input[type="color"] {
   width: 1.5rem;
   height: 1.5rem;
   padding: 0;
@@ -1107,20 +1057,88 @@ html.dark .scrib-page {
   cursor: pointer;
 }
 
-.scrib-annotations-tree__name {
+.scrib-annotation-pick {
+  position: fixed;
+  inset: 0;
+  z-index: 185;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--color-bg) 55%, transparent);
+}
+
+.scrib-annotation-pick__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  width: min(22rem, calc(var(--shell-viewport-width, 30rem) - 2rem));
+  max-height: calc(100% - 2rem);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  overflow: auto;
+}
+
+.scrib-annotation-pick__head {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.scrib-annotation-pick__head h2 {
+  margin: 0;
   flex: 1;
-  min-width: 3rem;
-  text-align: left;
-  border: 0;
-  background: transparent;
+  font-size: var(--font-size-md);
+}
+
+.scrib-annotation-pick__hint {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-muted);
+}
+
+.scrib-annotation-pick__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.scrib-annotation-pick__item {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  width: auto;
+  min-height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-family);
   font-size: var(--font-size-sm);
   cursor: pointer;
+  text-align: left;
 }
 
-.scrib-annotations-tree .scrib-tool-rail__btn.icon-btn {
+.scrib-annotation-pick__swatch,
+.scrib-annotation-editor__swatch {
   flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--border-radius);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.scrib-annotation-pick__label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .scrib-annotation-editor__canvas-head {
@@ -1145,6 +1163,7 @@ html.dark .scrib-page {
   flex-direction: column;
   gap: var(--rail-gap);
   width: min(40rem, calc(var(--shell-viewport-width, 30rem) - 2rem));
+  height: calc(100% - 2rem);
   max-height: calc(100% - 2rem);
   padding: var(--space-padding);
   border: var(--border-width) solid var(--color-border);
@@ -1158,6 +1177,7 @@ html.dark .scrib-page {
   flex-wrap: wrap;
   align-items: center;
   gap: var(--rail-gap);
+  flex-shrink: 0;
 }
 
 .scrib-annotation-editor__head h2 {
@@ -1177,8 +1197,9 @@ html.dark .scrib-page {
   display: flex;
   flex-direction: column;
   gap: var(--rail-gap);
-  overflow: auto;
+  overflow: hidden;
   min-height: 0;
+  flex: 1;
 }
 
 .scrib-annotation-editor__canvas {
@@ -1188,6 +1209,18 @@ html.dark .scrib-page {
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   padding: var(--rail-gap);
+  min-height: 0;
+}
+
+.scrib-annotation-editor__canvas--heading {
+  flex-shrink: 0;
+}
+
+.scrib-annotation-editor__canvas--body {
+  flex: 1;
+  min-height: 15rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .scrib-annotation-editor__canvas.is-active {
@@ -1204,14 +1237,40 @@ html.dark .scrib-page {
 }
 
 .scrib-annotation-editor__canvas-scroll {
-  overflow: auto;
-  max-height: 12rem;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.scrib-annotation-editor__canvas-scroll--heading {
+  height: 3.75rem;
+  flex-shrink: 0;
+}
+
+.scrib-annotation-editor__canvas-scroll--body {
+  flex: 1;
+  min-height: 15rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .scrib-annotation-editor__svg {
   display: block;
   touch-action: none;
   cursor: crosshair;
+  width: auto;
+  align-self: stretch;
+  flex: 1;
+}
+
+.scrib-annotation-editor__svg--heading {
+  height: 3.75rem;
+  flex: none;
+}
+
+.scrib-annotation-editor__svg--body {
+  min-height: 15rem;
+  height: auto;
+  flex: 1;
 }
 
 .scrib-annotation-views {

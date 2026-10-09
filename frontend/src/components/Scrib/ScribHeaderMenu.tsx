@@ -9,6 +9,7 @@ import { APP_ROUTES } from "../../config/routes";
 import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "../HeaderDynamicMenu/HeaderDynamicMenu.css";
 import type { ScribBackgroundPattern } from "../../lib/scrib";
+import type { ScribAnnotateSubtool } from "../../lib/scribAnnotations";
 import type { ScribDockSide } from "./ScribToolbar";
 
 export type ScribToolMode = "draw" | "zoom" | "erase" | "annotate";
@@ -34,8 +35,10 @@ type ScribHeaderMenuProps = {
   institutesOpen?: boolean;
   onOpenBible: () => void;
   bibleOpen?: boolean;
-  annotateTreeOpen?: boolean;
-  onToggleAnnotateTree?: () => void;
+  annotateSubtool?: ScribAnnotateSubtool;
+  annotateColor?: string;
+  onAnnotateSubtool?: (tool: ScribAnnotateSubtool) => void;
+  onAnnotateColor?: (color: string) => void;
   dockSide?: ScribDockSide;
   onToggleDock?: () => void;
   onUndo: () => void;
@@ -154,26 +157,43 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
             <ActionIcon name="edit_note" />
             <span className="header-dynamic-menu__label">Anotar</span>
           </button>
-          {props.onToggleAnnotateTree ? (
-            <button
-              type="button"
-              className={actionClass(Boolean(props.annotateTreeOpen))}
-              title={
-                props.annotateTreeOpen
-                  ? "Cerrar árbol de anotaciones"
-                  : "Árbol de anotaciones"
-              }
-              aria-label={
-                props.annotateTreeOpen
-                  ? "Cerrar árbol de anotaciones"
-                  : "Abrir árbol de anotaciones"
-              }
-              aria-pressed={Boolean(props.annotateTreeOpen)}
-              onClick={props.onToggleAnnotateTree}
-            >
-              <ActionIcon name="account_tree" />
-              <span className="header-dynamic-menu__label">Árbol notas</span>
-            </button>
+          {props.mode === "annotate" && props.onAnnotateSubtool ? (
+            <>
+              <label
+                className="scrib-header-annotate-color"
+                title="Color del rectángulo"
+              >
+                <span className="header-dynamic-menu__label">Color</span>
+                <input
+                  type="color"
+                  value={props.annotateColor ?? "#ff8800"}
+                  aria-label="Color del rectángulo de anotación"
+                  onChange={(e) => props.onAnnotateColor?.(e.target.value)}
+                />
+              </label>
+              <button
+                type="button"
+                className={actionClass(props.annotateSubtool === "rect")}
+                title="Dibujar rectángulo"
+                aria-label="Dibujar rectángulo de anotación"
+                aria-pressed={props.annotateSubtool === "rect"}
+                onClick={() => props.onAnnotateSubtool?.("rect")}
+              >
+                <ActionIcon name="crop_square" />
+                <span className="header-dynamic-menu__label">Rectángulo</span>
+              </button>
+              <button
+                type="button"
+                className={actionClass(props.annotateSubtool === "select")}
+                title="Seleccionar rectángulo y ver contenido"
+                aria-label="Seleccionar rectángulo y ver contenido"
+                aria-pressed={props.annotateSubtool === "select"}
+                onClick={() => props.onAnnotateSubtool?.("select")}
+              >
+                <ActionIcon name="arrow_selector_tool" />
+                <span className="header-dynamic-menu__label">Seleccionar</span>
+              </button>
+            </>
           ) : null}
           <button
             type="button"

@@ -4,6 +4,7 @@
  */
 
 import type { ScribBackgroundPattern } from "../../lib/scrib";
+import type { ScribAnnotateSubtool } from "../../lib/scribAnnotations";
 import type { ScribToolMode } from "./ScribHeaderMenu";
 
 export type ScribDockSide = "left" | "right";
@@ -17,7 +18,8 @@ type ScribToolbarProps = {
   backgroundPattern: ScribBackgroundPattern;
   institutesOpen: boolean;
   bibleOpen: boolean;
-  annotateTreeOpen: boolean;
+  annotateSubtool: ScribAnnotateSubtool;
+  annotateColor: string;
   dockSide: ScribDockSide;
   onDashboard: () => void;
   onSelectZoom: () => void;
@@ -26,12 +28,13 @@ type ScribToolbarProps = {
   onStrokeMinus: () => void;
   onSelectErase: () => void;
   onSelectAnnotate: () => void;
+  onAnnotateSubtool: (tool: ScribAnnotateSubtool) => void;
+  onAnnotateColor: (color: string) => void;
   onEnterFullscreen: () => void;
   onOpenLayers: () => void;
   onToggleBackgroundPattern: () => void;
   onOpenInstitutes: () => void;
   onOpenBible: () => void;
-  onToggleAnnotateTree: () => void;
   onUndo: () => void;
   onPrint: () => void;
   onToggleDock: () => void;
@@ -142,24 +145,42 @@ export default function ScribToolbar(props: ScribToolbarProps) {
       >
         <ToolIcon name="edit_note" />
       </button>
-      <button
-        type="button"
-        className={toolClass(props.annotateTreeOpen)}
-        title={
-          props.annotateTreeOpen
-            ? "Cerrar árbol de anotaciones"
-            : "Árbol de anotaciones"
-        }
-        aria-label={
-          props.annotateTreeOpen
-            ? "Cerrar árbol de anotaciones"
-            : "Abrir árbol de anotaciones"
-        }
-        aria-pressed={props.annotateTreeOpen}
-        onClick={props.onToggleAnnotateTree}
-      >
-        <ToolIcon name="account_tree" />
-      </button>
+      {props.mode === "annotate" ? (
+        <>
+          <label
+            className="scrib-tool-rail__color"
+            title="Color del rectángulo"
+          >
+            <span className="page-title-sr">Color del rectángulo</span>
+            <input
+              type="color"
+              value={props.annotateColor}
+              aria-label="Color del rectángulo de anotación"
+              onChange={(e) => props.onAnnotateColor(e.target.value)}
+            />
+          </label>
+          <button
+            type="button"
+            className={toolClass(props.annotateSubtool === "rect")}
+            title="Dibujar rectángulo"
+            aria-label="Dibujar rectángulo de anotación"
+            aria-pressed={props.annotateSubtool === "rect"}
+            onClick={() => props.onAnnotateSubtool("rect")}
+          >
+            <ToolIcon name="crop_square" />
+          </button>
+          <button
+            type="button"
+            className={toolClass(props.annotateSubtool === "select")}
+            title="Seleccionar rectángulo y ver contenido"
+            aria-label="Seleccionar rectángulo y ver contenido"
+            aria-pressed={props.annotateSubtool === "select"}
+            onClick={() => props.onAnnotateSubtool("select")}
+          >
+            <ToolIcon name="arrow_selector_tool" />
+          </button>
+        </>
+      ) : null}
       <button
         type="button"
         className={toolClass(props.isFullscreen)}
