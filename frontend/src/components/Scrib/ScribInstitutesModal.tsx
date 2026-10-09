@@ -189,8 +189,8 @@ export default function ScribInstitutesModal({
 
   const dockClass =
     dockSide === "right"
-      ? "scrib-ref-panel scrib-ref-panel--dock-right"
-      : "scrib-ref-panel scrib-ref-panel--dock-left";
+      ? "scrib-ref-panel scrib-ref-panel--institutes scrib-ref-panel--dock-right"
+      : "scrib-ref-panel scrib-ref-panel--institutes scrib-ref-panel--dock-left";
   const panelClass = navCollapsed
     ? `${dockClass} scrib-ref-panel--nav-collapsed`
     : dockClass;
@@ -332,6 +332,7 @@ export default function ScribInstitutesModal({
               <textarea
                 className="scrib-ref-panel__text-body"
                 readOnly
+                lang="la"
                 value={activeParagraph?.text ?? ""}
                 placeholder={activeParagraph ? undefined : "Select a paragraph."}
                 aria-label="Paragraph text"

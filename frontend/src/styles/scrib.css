@@ -652,10 +652,11 @@ html.dark .scrib-page {
   border-radius: 0 0 0 var(--border-radius);
 }
 
-/* Bible tray only: +50px (3.125rem) vs Institutes / annotations */
-.scrib-ref-panel--bible {
-  width: calc(var(--sidebar-width) + 3.125rem);
-  max-width: calc(var(--sidebar-width) + 3.125rem);
+/* Bible + Institutes (Greek/Hebrew/Latin): +100px (6.25rem) vs annotations */
+.scrib-ref-panel--bible,
+.scrib-ref-panel--institutes {
+  width: calc(var(--sidebar-width) + 6.25rem);
+  max-width: calc(var(--sidebar-width) + 6.25rem);
 }
 
 .scrib-ref-panel__head {
@@ -832,7 +833,7 @@ html.dark .scrib-page {
   background: transparent;
   color: inherit;
   font-family: var(--font-family);
-  font-size: var(--font-size-sm);
+  font-size: calc(var(--font-size-sm) * 1.5);
   line-height: 1.45;
   white-space: pre-wrap;
   resize: none;
@@ -857,7 +858,7 @@ html.dark .scrib-page {
   flex: 1 1 auto;
   min-height: 18rem;
   max-height: none;
-  font-size: calc(var(--font-size-sm) * 1.5);
+  font-size: calc(var(--font-size-sm) * 2.25);
   line-height: 1.5;
 }
 
@@ -872,9 +873,10 @@ html.dark .scrib-page {
     border-radius: 0;
   }
 
-  .scrib-ref-panel--bible {
-    width: calc(var(--sidebar-width) + 3.125rem);
-    max-width: calc(var(--sidebar-width) + 3.125rem);
+  .scrib-ref-panel--bible,
+  .scrib-ref-panel--institutes {
+    width: calc(var(--sidebar-width) + 6.25rem);
+    max-width: calc(var(--sidebar-width) + 6.25rem);
   }
 
   .scrib-ref-panel--dock-left {
