@@ -19,15 +19,24 @@ type ScribAnnotationRectsProps = {
   scale: number;
   draftRect: { x: number; y: number; w: number; h: number } | null;
   draftColor: string;
+  /** Larger corner handles when editing rect geometry. */
+  editHandles?: boolean;
 };
 
-function SelectionChrome({ r }: { r: ScribRectMm }) {
-  const handle = 0.8;
+function SelectionChrome({
+  r,
+  editHandles,
+}: {
+  r: ScribRectMm;
+  editHandles?: boolean;
+}) {
+  const handle = editHandles ? 2.2 : 0.8;
+  const half = handle / 2;
   const corners = [
-    { x: r.x, y: r.y },
-    { x: r.x + r.w - handle, y: r.y },
-    { x: r.x, y: r.y + r.h - handle },
-    { x: r.x + r.w - handle, y: r.y + r.h - handle },
+    { x: r.x - half, y: r.y - half },
+    { x: r.x + r.w - half, y: r.y - half },
+    { x: r.x - half, y: r.y + r.h - half },
+    { x: r.x + r.w - half, y: r.y + r.h - half },
   ];
   return (
     <g className="scrib-annotation-rects__selection">
@@ -38,7 +47,7 @@ function SelectionChrome({ r }: { r: ScribRectMm }) {
         height={r.h}
         fill="none"
         stroke="#ff8800"
-        strokeWidth={0.1}
+        strokeWidth={editHandles ? 0.2 : 0.1}
       />
       {corners.map((c, i) => (
         <rect
@@ -48,7 +57,8 @@ function SelectionChrome({ r }: { r: ScribRectMm }) {
           width={handle}
           height={handle}
           fill="#ff8800"
-          stroke="none"
+          stroke="var(--color-bg)"
+          strokeWidth={editHandles ? 0.15 : 0}
         />
       ))}
     </g>
@@ -61,6 +71,7 @@ export default function ScribAnnotationRects({
   scale,
   draftRect,
   draftColor,
+  editHandles,
 }: ScribAnnotationRectsProps) {
   return (
     <svg
@@ -88,7 +99,9 @@ export default function ScribAnnotationRects({
               strokeWidth={0.1}
               strokeOpacity={selected ? 1 : 0.55}
             />
-            {selected ? <SelectionChrome r={r} /> : null}
+            {selected ? (
+              <SelectionChrome r={r} editHandles={editHandles} />
+            ) : null}
           </g>
         );
       })}

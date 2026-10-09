@@ -23,7 +23,9 @@ export type ScribAnnotateSelection = {
 
 export type ScribNoteInkField = "heading" | "body";
 
-export type ScribAnnotateSubtool = "select" | "rect";
+export type ScribAnnotateSubtool = "select" | "rect" | "edit";
+
+export type ScribRectCorner = "nw" | "ne" | "sw" | "se";
 
 export type ScribNoteRegion = {
   blockId: string;
@@ -272,10 +274,96 @@ export function deleteNoteRegion(
   );
 }
 
+export function updateNoteRegionColor(
+  sheet: ScribSheet,
+  selection: ScribAnnotateSelection,
+  color: string,
+): ScribSheet {
+  return updateNoteBlocks(sheet, (blocks) =>
+    blocks.map((block) => {
+      if (block.id !== selection.blockId) return block;
+      return {
+        ...block,
+        color,
+        areas: block.areas.map((area) =>
+          area.id === selection.areaId ? { ...area, color } : area,
+        ),
+      };
+    }),
+  );
+}
+
+export function updateNoteRegionRect(
+  sheet: ScribSheet,
+  selection: ScribAnnotateSelection,
+  rect: ScribRectMm,
+): ScribSheet {
+  const normalized = normalizeRect(rect);
+  if (normalized.w < 0.5 || normalized.h < 0.5) return sheet;
+  return updateNoteBlocks(sheet, (blocks) =>
+    blocks.map((block) => {
+      if (block.id !== selection.blockId) return block;
+      return {
+        ...block,
+        areas: block.areas.map((area) =>
+          area.id === selection.areaId
+            ? { ...area, rects: [normalized] }
+            : area,
+        ),
+      };
+    }),
+  );
+}
+
 function rectContains(r: ScribRectMm, pt: { x: number; y: number }): boolean {
   return (
     pt.x >= r.x && pt.x <= r.x + r.w && pt.y >= r.y && pt.y <= r.y + r.h
   );
+}
+
+/** Hit-test page-mm point against corner handles of a rect (handle size in mm). */
+export function hitTestRectCorner(
+  rect: ScribRectMm,
+  pt: { x: number; y: number },
+  handleMm = 2.5,
+): ScribRectCorner | null {
+  const corners: Array<{ id: ScribRectCorner; x: number; y: number }> = [
+    { id: "nw", x: rect.x, y: rect.y },
+    { id: "ne", x: rect.x + rect.w, y: rect.y },
+    { id: "sw", x: rect.x, y: rect.y + rect.h },
+    { id: "se", x: rect.x + rect.w, y: rect.y + rect.h },
+  ];
+  for (const c of corners) {
+    if (Math.abs(pt.x - c.x) <= handleMm && Math.abs(pt.y - c.y) <= handleMm) {
+      return c.id;
+    }
+  }
+  return null;
+}
+
+export function resizeRectFromCorner(
+  rect: ScribRectMm,
+  corner: ScribRectCorner,
+  pt: { x: number; y: number },
+): ScribRectMm {
+  let x1 = rect.x;
+  let y1 = rect.y;
+  let x2 = rect.x + rect.w;
+  let y2 = rect.y + rect.h;
+  if (corner === "nw") {
+    x1 = pt.x;
+    y1 = pt.y;
+  } else if (corner === "ne") {
+    x2 = pt.x;
+    y1 = pt.y;
+  } else if (corner === "sw") {
+    x1 = pt.x;
+    y2 = pt.y;
+  } else {
+    x2 = pt.x;
+    y2 = pt.y;
+  }
+  return normalizeRect({ x: x1, y: y1, w: x2 - x1, h: y2 - y1 });
 }
 
 /** All visible regions under a page-mm point, topmost first. */

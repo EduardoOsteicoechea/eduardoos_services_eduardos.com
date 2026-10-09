@@ -43,16 +43,21 @@ import {
   appendNoteRegion,
   findNoteAnnotation,
   hitTestNoteRegions,
+  hitTestRectCorner,
   listNoteRegions,
   listOpenAnnotationViews,
   mapAnnotationInk,
+  resizeRectFromCorner,
   selectionOfRegion,
   setAnnotationView,
   sheetNoteBlocks,
+  updateNoteRegionColor,
+  updateNoteRegionRect,
   type ScribAnnotateSelection,
   type ScribAnnotateSubtool,
   type ScribNoteInkField,
   type ScribNoteRegion,
+  type ScribRectCorner,
 } from "../../lib/scribAnnotations";
 import { downloadScribSheetPdf } from "../../lib/scribPrint";
 import "./Scrib.css";
@@ -174,9 +179,15 @@ export default function ScribEditor() {
   const [scale, setScale] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [undoStack, setUndoStack] = useState<UndoEntry[]>([]);
+  const [redoStack, setRedoStack] = useState<UndoEntry[]>([]);
   const rectDragRef = useRef<{
     startX: number;
     startY: number;
+  } | null>(null);
+  const cornerDragRef = useRef<{
+    selection: ScribAnnotateSelection;
+    corner: ScribRectCorner;
+    orig: { x: number; y: number; w: number; h: number };
   } | null>(null);
   const draftRectRef = useRef<{
     x: number;
@@ -376,6 +387,38 @@ export default function ScribEditor() {
         setPickCandidates(hits);
         return;
       }
+      if (annotateSubtool === "edit") {
+        const blocks = sheetNoteBlocks(sheet);
+        if (annotateSelection) {
+          const selected = listNoteRegions(blocks).find(
+            (r) =>
+              r.blockId === annotateSelection.blockId &&
+              r.areaId === annotateSelection.areaId &&
+              r.annotationId === annotateSelection.annotationId,
+          );
+          if (selected) {
+            const corner = hitTestRectCorner(selected.rect, pt);
+            if (corner) {
+              cornerDragRef.current = {
+                selection: annotateSelection,
+                corner,
+                orig: { ...selected.rect },
+              };
+              activePointerIdRef.current = e.pointerId;
+              (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+              return;
+            }
+          }
+        }
+        const hits = hitTestNoteRegions(blocks, pt);
+        if (hits.length === 1) {
+          setAnnotateSelection(selectionOfRegion(hits[0]));
+          setAnnotateColor(hits[0].color);
+        } else if (hits.length > 1) {
+          setPickCandidates(hits);
+        }
+        return;
+      }
       if (annotateSubtool !== "rect") return;
       rectDragRef.current = { startX: pt.x, startY: pt.y };
       const zero = { x: pt.x, y: pt.y, w: 0, h: 0 };
@@ -399,6 +442,23 @@ export default function ScribEditor() {
 
   function onPointerMove(e: React.PointerEvent) {
     if (annotationEditorOpen) return;
+
+    if (mode === "annotate" && cornerDragRef.current) {
+      if (
+        activePointerIdRef.current !== null &&
+        e.pointerId !== activePointerIdRef.current
+      ) {
+        return;
+      }
+      const pt = mmFromClient(e.clientX, e.clientY);
+      if (!pt) return;
+      const drag = cornerDragRef.current;
+      const nextRect = resizeRectFromCorner(drag.orig, drag.corner, pt);
+      const current = sheetSnapshotRef.current;
+      if (!current) return;
+      commitSheet(updateNoteRegionRect(current, drag.selection, nextRect));
+      return;
+    }
 
     if (mode === "annotate" && rectDragRef.current) {
       if (
@@ -446,6 +506,25 @@ export default function ScribEditor() {
     setPickCandidates([]);
     setAnnotationEditorOpen(true);
     setMode("draw");
+  }
+
+  function pickRegion(region: ScribNoteRegion) {
+    if (annotateSubtool === "edit") {
+      setAnnotateSelection(selectionOfRegion(region));
+      setAnnotateColor(region.color);
+      setPickCandidates([]);
+      return;
+    }
+    openRegionEditor(region);
+  }
+
+  function onAnnotateColorChange(color: string) {
+    setAnnotateColor(color);
+    if (annotateSubtool === "edit" && annotateSelection) {
+      mutateNotes((cur) =>
+        updateNoteRegionColor(cur, annotateSelection, color),
+      );
+    }
   }
 
   function finishRect() {
@@ -504,6 +583,7 @@ export default function ScribEditor() {
       ...stack,
       { kind: "layer", layerId: activeId, pathsBefore },
     ]);
+    setRedoStack([]);
     const next: ScribSheet = { ...current, layers };
     commitSheet(next);
     persist(next);
@@ -595,6 +675,12 @@ export default function ScribEditor() {
       return;
     }
     activePointerIdRef.current = null;
+    if (mode === "annotate" && cornerDragRef.current) {
+      cornerDragRef.current = null;
+      const current = sheetSnapshotRef.current;
+      if (current) persist(current);
+      return;
+    }
     if (mode === "annotate" && rectDragRef.current) {
       finishRect();
       return;
@@ -602,28 +688,65 @@ export default function ScribEditor() {
     void finishStroke();
   }
 
-  async function onUndo() {
-    const current = sheetSnapshotRef.current;
-    if (!current || undoStack.length === 0) return;
-    const entry = undoStack[undoStack.length - 1];
-    setUndoStack((s) => s.slice(0, -1));
+  function applyUndoEntry(entry: UndoEntry, current: ScribSheet): ScribSheet {
     if (entry.kind === "note") {
-      const next = mapAnnotationInk(
+      return mapAnnotationInk(
         current,
         entry.selection,
         entry.field,
         () => clonePaths(entry.pathsBefore),
       );
-      commitSheet(next);
-      persist(next);
-      return;
     }
-    const next: ScribSheet = {
+    return {
       ...current,
       layers: current.layers.map((l) =>
-        l.id === entry.layerId ? { ...l, paths: clonePaths(entry.pathsBefore) } : l,
+        l.id === entry.layerId
+          ? { ...l, paths: clonePaths(entry.pathsBefore) }
+          : l,
       ),
     };
+  }
+
+  function snapshotNoteRedo(entry: UndoEntry, current: ScribSheet): UndoEntry {
+    if (entry.kind !== "note") {
+      const layer = current.layers.find((l) => l.id === entry.layerId);
+      return {
+        kind: "layer",
+        layerId: entry.layerId,
+        pathsBefore: clonePaths(layer?.paths ?? []),
+      };
+    }
+    const found = findNoteAnnotation(sheetNoteBlocks(current), entry.selection);
+    const paths =
+      entry.field === "heading"
+        ? found?.annotation.heading.paths ?? []
+        : found?.annotation.body.paths ?? [];
+    return {
+      kind: "note",
+      selection: entry.selection,
+      field: entry.field,
+      pathsBefore: clonePaths(paths),
+    };
+  }
+
+  async function onUndo() {
+    const current = sheetSnapshotRef.current;
+    if (!current || undoStack.length === 0) return;
+    const entry = undoStack[undoStack.length - 1];
+    setUndoStack((s) => s.slice(0, -1));
+    setRedoStack((s) => [...s, snapshotNoteRedo(entry, current)]);
+    const next = applyUndoEntry(entry, current);
+    commitSheet(next);
+    persist(next);
+  }
+
+  async function onRedo() {
+    const current = sheetSnapshotRef.current;
+    if (!current || redoStack.length === 0) return;
+    const entry = redoStack[redoStack.length - 1];
+    setRedoStack((s) => s.slice(0, -1));
+    setUndoStack((s) => [...s, snapshotNoteRedo(entry, current)]);
+    const next = applyUndoEntry(entry, current);
     commitSheet(next);
     persist(next);
   }
@@ -831,7 +954,7 @@ export default function ScribEditor() {
         annotateSubtool={annotateSubtool}
         annotateColor={annotateColor}
         onAnnotateSubtool={setAnnotateSubtool}
-        onAnnotateColor={setAnnotateColor}
+        onAnnotateColor={onAnnotateColorChange}
         dockSide={dockSide}
         onToggleDock={toggleDock}
         onPrint={printSheet}
@@ -859,7 +982,7 @@ export default function ScribEditor() {
           onSelectErase={() => selectToolMode("erase")}
           onSelectAnnotate={() => selectToolMode("annotate")}
           onAnnotateSubtool={setAnnotateSubtool}
-          onAnnotateColor={setAnnotateColor}
+          onAnnotateColor={onAnnotateColorChange}
           onEnterFullscreen={() => void enterFullscreen()}
           onOpenLayers={openLayers}
           onToggleBackgroundPattern={onToggleBackgroundPattern}
@@ -969,6 +1092,7 @@ export default function ScribEditor() {
                   scale={scale}
                   draftRect={draftRect}
                   draftColor={annotateColor}
+                  editHandles={annotateSubtool === "edit"}
                 />
               ) : null}
               {/*
@@ -1128,7 +1252,7 @@ export default function ScribEditor() {
       <ScribAnnotationPickModal
         open={pickCandidates.length > 1}
         candidates={pickCandidates}
-        onPick={openRegionEditor}
+        onPick={pickRegion}
         onClose={() => setPickCandidates([])}
       />
 
@@ -1142,6 +1266,12 @@ export default function ScribEditor() {
         bodyPaths={editorAnn?.annotation.body.paths ?? []}
         activeField={annotationInkField}
         onActiveField={setAnnotationInkField}
+        canUndo={undoStack.length > 0}
+        canRedo={redoStack.length > 0}
+        onUndo={() => void onUndo()}
+        onRedo={() => void onRedo()}
+        onSelectDraw={() => setMode("draw")}
+        onSelectErase={() => setMode("erase")}
         onStrokeWidth={(nextMm) => {
           const current = sheetSnapshotRef.current;
           if (!current) return;
@@ -1153,6 +1283,7 @@ export default function ScribEditor() {
             ...stack,
             { kind: "note", selection: annotateSelection, field, pathsBefore },
           ]);
+          setRedoStack([]);
           mutateNotes((cur) =>
             mapAnnotationInk(cur, annotateSelection, field, () => paths),
           );

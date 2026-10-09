@@ -18,15 +18,16 @@ Extends `ScribToolMode` with `"annotate"`. Sheet layer ink (`draw` / `erase`) is
 
 Annotate subtools (toolbar / DHS when `mode === "annotate"`):
 
-- **Color** — fill/stroke color for the next rectangle
+- **Color** — fill for the next rectangle; in **Edit**, recolors the selected region
 - **Rect** — drag a rectangle on the page (creates a region)
 - **Select** — tap a rectangle to open its content; if several overlap, a pick modal lists them
+- **Edit** — select a region, change color, drag corner handles to resize
 
 ## Chrome
 
 - Orange fixed border while `mode === "annotate"`.
 - No note tree panel.
-- Floating note editor (no title text): toolbar move / draw-settings / zoom / pan / center; `1.875rem` round close at top-right vertex; square SE resize; Esc closes. Heading canvas `3.75rem`; body `15rem` default and grows with the panel.
+- Floating note editor (no title text): toolbar move / draw / erase / undo / redo / draw-settings / zoom / pan / center; `1.875rem` round close at top-right vertex; square SE resize; Esc closes. Zoom uses non-passive wheel + vertical drag. Heading canvas full modal width, height `3.75rem`; body `15rem` default and grows with the panel.
 - View windows: multiple `view.open`, drag + SE resize; persisted on the sheet.
 
 ## Persistence

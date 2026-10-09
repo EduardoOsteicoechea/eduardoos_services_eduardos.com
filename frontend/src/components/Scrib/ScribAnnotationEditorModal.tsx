@@ -1,6 +1,6 @@
 /**
- * Floating note editor — heading + body canvases with move / draw-settings /
- * zoom / pan / center chrome. Esc closes; SE handle resizes.
+ * Floating note editor — heading + body canvases with move / draw / erase /
+ * undo / redo / draw-settings / zoom / pan / center. Esc closes; SE resizes.
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -22,7 +22,7 @@ const ZOOM_MAX = 4;
 const PANEL_MIN_W = 16;
 const PANEL_MIN_H = 18;
 
-type NoteChromeMode = "draw" | "move" | "zoom" | "pan";
+type NoteChromeMode = "draw" | "erase" | "move" | "zoom" | "pan";
 
 type ScribAnnotationEditorModalProps = {
   open: boolean;
@@ -34,6 +34,12 @@ type ScribAnnotationEditorModalProps = {
   bodyPaths: StrokePath[];
   activeField: ScribNoteInkField;
   onActiveField: (field: ScribNoteInkField) => void;
+  canUndo: boolean;
+  canRedo: boolean;
+  onUndo: () => void;
+  onRedo: () => void;
+  onSelectDraw: () => void;
+  onSelectErase: () => void;
   onStrokeWidth: (nextMm: number) => void;
   onCommitField: (
     field: ScribNoteInkField,
@@ -80,11 +86,13 @@ function ToolBtn({
   name,
   title,
   active,
+  disabled,
   onClick,
 }: {
   name: string;
   title: string;
   active?: boolean;
+  disabled?: boolean;
   onClick: () => void;
 }) {
   return (
@@ -98,6 +106,7 @@ function ToolBtn({
       title={title}
       aria-label={title}
       aria-pressed={typeof active === "boolean" ? active : undefined}
+      disabled={disabled}
       onClick={onClick}
     >
       <span className="material-symbols-outlined" aria-hidden="true">
@@ -112,13 +121,16 @@ export default function ScribAnnotationEditorModal(
 ) {
   const headingSvgRef = useRef<SVGSVGElement>(null);
   const bodySvgRef = useRef<SVGSVGElement>(null);
+  const headingScrollRef = useRef<HTMLDivElement>(null);
   const bodyScrollRef = useRef<HTMLDivElement>(null);
   const drawingRef = useRef(false);
   const pointerIdRef = useRef<number | null>(null);
   const fieldRef = useRef<ScribNoteInkField>("heading");
   const pointsRef = useRef<{ x: number; y: number }[]>([]);
+  const chromeModeRef = useRef<NoteChromeMode>("draw");
+  const viewZoomRef = useRef(1);
   const dragRef = useRef<{
-    kind: "move" | "resize" | "pan";
+    kind: "move" | "resize" | "pan" | "zoom";
     startX: number;
     startY: number;
     origX: number;
@@ -127,6 +139,7 @@ export default function ScribAnnotationEditorModal(
     origH: number;
     origPanX: number;
     origPanY: number;
+    origZoom: number;
   } | null>(null);
 
   const [draftPath, setDraftPath] = useState("");
@@ -140,8 +153,15 @@ export default function ScribAnnotationEditorModal(
   const [viewPan, setViewPan] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    chromeModeRef.current = chromeMode;
+  }, [chromeMode]);
+  useEffect(() => {
+    viewZoomRef.current = viewZoom;
+  }, [viewZoom]);
+
+  useEffect(() => {
     if (!props.open) return;
-    setChromeMode("draw");
+    setChromeMode(props.mode === "erase" ? "erase" : "draw");
     setSettingsOpen(false);
     setViewZoom(1);
     setViewPan({ x: 0, y: 0 });
@@ -158,6 +178,16 @@ export default function ScribAnnotationEditorModal(
 
   useEffect(() => {
     if (!props.open) return;
+    if (props.mode === "erase") setChromeMode("erase");
+    else if (props.mode === "draw") {
+      setChromeMode((cur) =>
+        cur === "move" || cur === "zoom" || cur === "pan" ? cur : "draw",
+      );
+    }
+  }, [props.mode, props.open]);
+
+  useEffect(() => {
+    if (!props.open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
@@ -170,12 +200,13 @@ export default function ScribAnnotationEditorModal(
 
   useEffect(() => {
     if (!props.open) return;
-    const headingEl = headingSvgRef.current;
+    const headingEl = headingScrollRef.current ?? headingSvgRef.current;
     const bodyEl = bodyScrollRef.current;
     const sync = () => {
-      if (headingEl) {
-        const w = headingEl.clientWidth;
-        const h = headingEl.clientHeight;
+      const hSvg = headingSvgRef.current;
+      if (hSvg) {
+        const w = hSvg.clientWidth;
+        const h = hSvg.clientHeight;
         if (w > 0 && h > 0) setHeadingH((NOTE_W * h) / w);
       }
       if (bodyEl) {
@@ -191,10 +222,39 @@ export default function ScribAnnotationEditorModal(
     return () => ro.disconnect();
   }, [props.open, panel.w, panel.h]);
 
+  /** Non-passive wheel so zoom mode can preventDefault and actually scale. */
+  useEffect(() => {
+    if (!props.open) return;
+    const nodes = [headingScrollRef.current, bodyScrollRef.current].filter(
+      (n): n is HTMLDivElement => Boolean(n),
+    );
+    const onWheel = (e: WheelEvent) => {
+      if (chromeModeRef.current !== "zoom") return;
+      e.preventDefault();
+      e.stopPropagation();
+      const delta = e.deltaY > 0 ? 0.9 : 1.1;
+      setViewZoom((z) => Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, z * delta)));
+    };
+    for (const node of nodes) {
+      node.addEventListener("wheel", onWheel, { passive: false });
+    }
+    return () => {
+      for (const node of nodes) {
+        node.removeEventListener("wheel", onWheel);
+      }
+    };
+  }, [props.open, panel.w, panel.h]);
+
   if (!props.open) return null;
 
   function fieldHeight(field: ScribNoteInkField): number {
     return field === "heading" ? headingH : bodyH;
+  }
+
+  function inkMode(): "draw" | "erase" {
+    if (chromeMode === "erase") return "erase";
+    if (props.mode === "erase") return "erase";
+    return "draw";
   }
 
   function mmFromClient(
@@ -217,14 +277,11 @@ export default function ScribAnnotationEditorModal(
   }
 
   function canDraw(): boolean {
-    return (
-      chromeMode === "draw" &&
-      (props.mode === "draw" || props.mode === "erase")
-    );
+    return chromeMode === "draw" || chromeMode === "erase";
   }
 
   function beginChromeDrag(
-    kind: "move" | "pan",
+    kind: "move" | "pan" | "zoom",
     e: React.PointerEvent,
     captureEl: Element,
   ) {
@@ -238,6 +295,7 @@ export default function ScribAnnotationEditorModal(
       origH: panel.h,
       origPanX: viewPan.x,
       origPanY: viewPan.y,
+      origZoom: viewZoomRef.current,
     };
     pointerIdRef.current = e.pointerId;
     captureEl.setPointerCapture(e.pointerId);
@@ -251,13 +309,14 @@ export default function ScribAnnotationEditorModal(
       beginChromeDrag("move", e, e.currentTarget as Element);
       return;
     }
-
     if (chromeMode === "pan") {
       beginChromeDrag("pan", e, e.currentTarget as Element);
       return;
     }
-
-    if (chromeMode === "zoom") return;
+    if (chromeMode === "zoom") {
+      beginChromeDrag("zoom", e, e.currentTarget as Element);
+      return;
+    }
 
     if (!canDraw()) return;
     if (e.pointerType !== "pen") return;
@@ -271,26 +330,37 @@ export default function ScribAnnotationEditorModal(
   }
 
   function onCanvasPointerMove(e: React.PointerEvent) {
-    if (dragRef.current?.kind === "pan" || dragRef.current?.kind === "move") {
+    const drag = dragRef.current;
+    if (
+      drag &&
+      (drag.kind === "pan" || drag.kind === "move" || drag.kind === "zoom")
+    ) {
       if (
         pointerIdRef.current !== null &&
         e.pointerId !== pointerIdRef.current
       ) {
         return;
       }
-      const d = dragRef.current;
-      if (d.kind === "pan") {
+      if (drag.kind === "pan") {
         setViewPan({
-          x: d.origPanX + (e.clientX - d.startX) / 16,
-          y: d.origPanY + (e.clientY - d.startY) / 16,
+          x: drag.origPanX + (e.clientX - drag.startX) / 16,
+          y: drag.origPanY + (e.clientY - drag.startY) / 16,
         });
         return;
       }
-      setPanel((p) => ({
-        ...p,
-        x: Math.max(0, d.origX + (e.clientX - d.startX) / 16),
-        y: Math.max(0, d.origY + (e.clientY - d.startY) / 16),
-      }));
+      if (drag.kind === "move") {
+        setPanel((p) => ({
+          ...p,
+          x: Math.max(0, drag.origX + (e.clientX - drag.startX) / 16),
+          y: Math.max(0, drag.origY + (e.clientY - drag.startY) / 16),
+        }));
+        return;
+      }
+      // Drag vertically to zoom (works without a wheel).
+      const factor = Math.exp(-(e.clientY - drag.startY) / 180);
+      setViewZoom(
+        Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, drag.origZoom * factor)),
+      );
       return;
     }
 
@@ -303,7 +373,7 @@ export default function ScribAnnotationEditorModal(
     const pt = mmFromClient(field, e.clientX, e.clientY);
     if (!pt) return;
     pointsRef.current.push(pt);
-    if (props.mode === "draw") {
+    if (inkMode() === "draw") {
       setDraftPath(
         pointsRef.current
           .map((p, i) => `${i === 0 ? "M" : "L"} ${p.x.toFixed(3)} ${p.y.toFixed(3)}`)
@@ -313,7 +383,11 @@ export default function ScribAnnotationEditorModal(
   }
 
   function onCanvasPointerUp() {
-    if (dragRef.current?.kind === "pan" || dragRef.current?.kind === "move") {
+    if (
+      dragRef.current?.kind === "pan" ||
+      dragRef.current?.kind === "move" ||
+      dragRef.current?.kind === "zoom"
+    ) {
       dragRef.current = null;
       pointerIdRef.current = null;
       return;
@@ -330,7 +404,7 @@ export default function ScribAnnotationEditorModal(
       field === "heading" ? props.headingPaths : props.bodyPaths;
     const pathsBefore = current.map((p) => ({ ...p }));
     let next: StrokePath[];
-    if (props.mode === "erase") {
+    if (inkMode() === "erase") {
       next = erasePaths(current, pts, props.strokeWidthMm);
     } else {
       const d = pts
@@ -343,7 +417,11 @@ export default function ScribAnnotationEditorModal(
 
   function onPanelChromeDown(e: React.PointerEvent) {
     if (chromeMode !== "move") return;
-    if ((e.target as HTMLElement).closest("button, input, label, .scrib-note__resize")) {
+    if (
+      (e.target as HTMLElement).closest(
+        "button, input, label, .scrib-note__resize",
+      )
+    ) {
       return;
     }
     beginChromeDrag("move", e, e.currentTarget as Element);
@@ -393,16 +471,10 @@ export default function ScribAnnotationEditorModal(
       origH: panel.h,
       origPanX: viewPan.x,
       origPanY: viewPan.y,
+      origZoom: viewZoom,
     };
     pointerIdRef.current = e.pointerId;
     (e.currentTarget as Element).setPointerCapture(e.pointerId);
-  }
-
-  function onCanvasWheel(e: React.WheelEvent) {
-    if (chromeMode !== "zoom") return;
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? 0.9 : 1.1;
-    setViewZoom((z) => Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, z * delta)));
   }
 
   function centerActiveField() {
@@ -424,9 +496,27 @@ export default function ScribAnnotationEditorModal(
     props.onStrokeWidth(next);
   }
 
+  function setDrawMode() {
+    setSettingsOpen(false);
+    setChromeMode("draw");
+    props.onSelectDraw();
+  }
+
+  function setEraseMode() {
+    setSettingsOpen(false);
+    setChromeMode("erase");
+    props.onSelectErase();
+  }
+
   function toggleChrome(next: NoteChromeMode) {
     setSettingsOpen(false);
-    setChromeMode((cur) => (cur === next ? "draw" : next));
+    setChromeMode((cur) => {
+      if (cur === next) {
+        props.onSelectDraw();
+        return "draw";
+      }
+      return next;
+    });
   }
 
   function renderCanvas(
@@ -450,13 +540,12 @@ export default function ScribAnnotationEditorModal(
         onPointerDown={() => props.onActiveField(field)}
       >
         <div
-          ref={isBody ? bodyScrollRef : undefined}
+          ref={isBody ? bodyScrollRef : headingScrollRef}
           className={
             isBody
               ? "scrib-note__canvas-scroll scrib-note__canvas-scroll--body"
               : "scrib-note__canvas-scroll scrib-note__canvas-scroll--heading"
           }
-          onWheel={onCanvasWheel}
         >
           <svg
             ref={svgRef}
@@ -473,10 +562,12 @@ export default function ScribAnnotationEditorModal(
                 chromeMode === "pan"
                   ? "grab"
                   : chromeMode === "zoom"
-                    ? "zoom-in"
+                    ? "ns-resize"
                     : chromeMode === "move"
-                      ? "default"
-                      : "crosshair",
+                      ? "grab"
+                      : chromeMode === "erase"
+                        ? "cell"
+                        : "crosshair",
             }}
             onPointerDown={(e) => onCanvasPointerDown(field, e)}
             onPointerMove={onCanvasPointerMove}
@@ -504,7 +595,7 @@ export default function ScribAnnotationEditorModal(
                   strokeLinejoin="round"
                 />
               ))}
-              {active && draftPath && props.mode === "draw" ? (
+              {active && draftPath && inkMode() === "draw" ? (
                 <path
                   d={draftPath}
                   fill="none"
@@ -564,17 +655,42 @@ export default function ScribAnnotationEditorModal(
             onClick={() => toggleChrome("move")}
           />
           <ToolBtn
+            name="draw"
+            title="Dibujar"
+            active={chromeMode === "draw"}
+            onClick={setDrawMode}
+          />
+          <ToolBtn
+            name="ink_eraser"
+            title="Borrar"
+            active={chromeMode === "erase"}
+            onClick={setEraseMode}
+          />
+          <ToolBtn
+            name="undo"
+            title="Deshacer"
+            disabled={!props.canUndo}
+            onClick={props.onUndo}
+          />
+          <ToolBtn
+            name="redo"
+            title="Rehacer"
+            disabled={!props.canRedo}
+            onClick={props.onRedo}
+          />
+          <ToolBtn
             name="palette"
             title="Ajustes de trazo"
             active={settingsOpen}
             onClick={() => {
               setSettingsOpen((v) => !v);
               setChromeMode("draw");
+              props.onSelectDraw();
             }}
           />
           <ToolBtn
             name="zoom_in"
-            title="Modo zoom"
+            title="Modo zoom (rueda o arrastrar vertical)"
             active={chromeMode === "zoom"}
             onClick={() => toggleChrome("zoom")}
           />

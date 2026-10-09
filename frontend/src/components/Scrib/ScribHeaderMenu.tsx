@@ -193,6 +193,17 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
                 <ActionIcon name="arrow_selector_tool" />
                 <span className="header-dynamic-menu__label">Seleccionar</span>
               </button>
+              <button
+                type="button"
+                className={actionClass(props.annotateSubtool === "edit")}
+                title="Editar rectángulo (color y esquinas)"
+                aria-label="Editar rectángulo: color y esquinas"
+                aria-pressed={props.annotateSubtool === "edit"}
+                onClick={() => props.onAnnotateSubtool?.("edit")}
+              >
+                <ActionIcon name="tune" />
+                <span className="header-dynamic-menu__label">Editar rect</span>
+              </button>
             </>
           ) : null}
           <button

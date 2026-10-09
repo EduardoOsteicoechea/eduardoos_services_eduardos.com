@@ -1199,6 +1199,7 @@ html.dark .scrib-page {
   gap: var(--rail-gap);
   flex-shrink: 0;
   padding-right: 1rem;
+  min-width: 0;
 }
 
 .scrib-note__tool.icon-btn {
@@ -1258,12 +1259,16 @@ html.dark .scrib-page {
   overflow: hidden;
   min-height: 0;
   flex: 1;
+  min-width: 0;
+  align-self: stretch;
 }
 
 .scrib-note__canvas {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  min-width: 0;
+  align-self: stretch;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -1271,6 +1276,7 @@ html.dark .scrib-page {
 
 .scrib-note__canvas--heading {
   flex-shrink: 0;
+  align-self: stretch;
 }
 
 .scrib-note__canvas--body {
@@ -1278,6 +1284,7 @@ html.dark .scrib-page {
   min-height: 15rem;
   display: flex;
   flex-direction: column;
+  align-self: stretch;
 }
 
 .scrib-note__canvas.is-active {
@@ -1287,11 +1294,16 @@ html.dark .scrib-page {
 .scrib-note__canvas-scroll {
   overflow: hidden;
   min-height: 0;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
 }
 
 .scrib-note__canvas-scroll--heading {
   height: 3.75rem;
   flex-shrink: 0;
+  align-self: stretch;
 }
 
 .scrib-note__canvas-scroll--body {
@@ -1299,25 +1311,33 @@ html.dark .scrib-page {
   min-height: 15rem;
   display: flex;
   flex-direction: column;
+  align-self: stretch;
 }
 
 .scrib-note__svg {
   display: block;
   touch-action: none;
-  width: auto;
+  min-width: 0;
   align-self: stretch;
   flex: 1;
 }
 
 .scrib-note__svg--heading {
   height: 3.75rem;
-  flex: none;
+  flex: 1;
+  align-self: stretch;
 }
 
 .scrib-note__svg--body {
   min-height: 15rem;
   height: auto;
   flex: 1;
+  align-self: stretch;
+}
+
+.scrib-note__tool.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .scrib-note__resize {

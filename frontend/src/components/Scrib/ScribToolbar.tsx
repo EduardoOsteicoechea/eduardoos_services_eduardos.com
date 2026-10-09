@@ -179,6 +179,16 @@ export default function ScribToolbar(props: ScribToolbarProps) {
           >
             <ToolIcon name="arrow_selector_tool" />
           </button>
+          <button
+            type="button"
+            className={toolClass(props.annotateSubtool === "edit")}
+            title="Editar rectángulo (color y esquinas)"
+            aria-label="Editar rectángulo: color y esquinas"
+            aria-pressed={props.annotateSubtool === "edit"}
+            onClick={() => props.onAnnotateSubtool("edit")}
+          >
+            <ToolIcon name="tune" />
+          </button>
         </>
       ) : null}
       <button
