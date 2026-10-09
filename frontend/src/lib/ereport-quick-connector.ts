@@ -10,6 +10,7 @@ import { openEreportAdvancedConnectorModal } from "./ereport-connector-modal";
 import { parseIssueText } from "./ereport-issue-parse";
 
 const OVERLAY_ID = "eduardoos-ereport-quick-overlay";
+const SETTINGS_ID = "eduardoos-ereport-settings-overlay";
 const DEFAULTS_KEY = "ereport.connector.defaults";
 
 export type ConnectorDefaults = {
@@ -61,14 +62,24 @@ function saveDefaults(d: ConnectorDefaults) {
 }
 
 function onEscape(ev: KeyboardEvent) {
-  if (ev.key === "Escape") {
-    ev.preventDefault();
-    ev.stopPropagation();
-    closeEreportQuickConnector();
+  if (ev.key !== "Escape") return;
+  ev.preventDefault();
+  ev.stopPropagation();
+  const settings = document.getElementById(SETTINGS_ID);
+  if (settings) {
+    closeEreportSettingsModal();
+    return;
   }
+  closeEreportQuickConnector();
+}
+
+export function closeEreportSettingsModal() {
+  const existing = document.getElementById(SETTINGS_ID);
+  if (existing?.parentNode) existing.parentNode.removeChild(existing);
 }
 
 export function closeEreportQuickConnector() {
+  closeEreportSettingsModal();
   const existing = document.getElementById(OVERLAY_ID);
   if (existing?.parentNode) existing.parentNode.removeChild(existing);
   document.removeEventListener("keydown", onEscape, true);
@@ -112,6 +123,117 @@ async function postItem(
   );
 }
 
+function openSettingsModal(opts: {
+  binding: WebsiteRegistrationBinding;
+  payload: ReportPayload | null;
+  defaults: ConnectorDefaults;
+  onSaved: (next: ConnectorDefaults) => void;
+  onAdvanced: () => void;
+}) {
+  closeEreportSettingsModal();
+
+  const overlay = document.createElement("div");
+  overlay.id = SETTINGS_ID;
+  overlay.className = "ereport-settings-overlay";
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  overlay.setAttribute("aria-label", "Connector settings");
+
+  const frame = document.createElement("div");
+  frame.className = "ereport-settings-overlay__frame";
+  frame.innerHTML = `
+    <header class="ereport-settings-overlay__bar">
+      <h2 class="ereport-settings-overlay__title">Connector settings</h2>
+      <button type="button" class="icon-btn" data-eq-settings-close aria-label="Close settings" title="Close">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      </button>
+    </header>
+    <div class="ereport-settings-overlay__body">
+      <label>
+        Report
+        <select data-eq-report disabled>
+          <option value="${opts.binding.orgId}:${opts.binding.reportId}">${opts.binding.tema || "Website registration"}</option>
+        </select>
+      </label>
+      <label>
+        Main section
+        <select data-eq-section></select>
+      </label>
+      <label>
+        Subsection
+        <select data-eq-group></select>
+      </label>
+    </div>
+    <div class="ereport-settings-overlay__actions">
+      <button type="button" class="btn btn--primary" data-eq-save-config>Save defaults</button>
+      <button type="button" class="btn" data-eq-advanced>Advanced editor</button>
+    </div>
+  `;
+
+  overlay.append(frame);
+  document.body.append(overlay);
+
+  const sectionSelect = el<HTMLSelectElement>(frame, "[data-eq-section]")!;
+  const groupSelect = el<HTMLSelectElement>(frame, "[data-eq-group]")!;
+
+  function populateConfigSelects() {
+    const sections = opts.payload?.sections || [];
+    fillSelect(
+      sectionSelect,
+      sections.map((s) => ({ value: s.id, label: s.title || s.id })),
+      "Select section…",
+    );
+    sectionSelect.value = opts.defaults.sectionId || "";
+    const sec = sections.find((s) => s.id === sectionSelect.value);
+    fillSelect(
+      groupSelect,
+      (sec?.groups || []).map((g) => ({ value: g.id, label: g.title || g.id })),
+      "Select subsection…",
+    );
+    groupSelect.value = opts.defaults.groupId || "";
+  }
+
+  populateConfigSelects();
+
+  el(frame, "[data-eq-settings-close]")?.addEventListener("click", () => closeEreportSettingsModal());
+  overlay.addEventListener("click", (ev) => {
+    if (ev.target === overlay) closeEreportSettingsModal();
+  });
+
+  sectionSelect.addEventListener("change", () => {
+    const sec = (opts.payload?.sections || []).find((s) => s.id === sectionSelect.value);
+    fillSelect(
+      groupSelect,
+      (sec?.groups || []).map((g) => ({ value: g.id, label: g.title || g.id })),
+      "Select subsection…",
+    );
+    groupSelect.value = sec?.groups?.[0]?.id || "";
+  });
+
+  el(frame, "[data-eq-save-config]")?.addEventListener("click", () => {
+    if (!sectionSelect.value || !groupSelect.value) {
+      window.alert("Select a main section and subsection.");
+      return;
+    }
+    const next: ConnectorDefaults = {
+      orgId: opts.binding.orgId,
+      reportId: opts.binding.reportId,
+      sectionId: sectionSelect.value,
+      groupId: groupSelect.value,
+    };
+    saveDefaults(next);
+    opts.onSaved(next);
+    closeEreportSettingsModal();
+    window.alert("Defaults saved.");
+  });
+
+  el(frame, "[data-eq-advanced]")?.addEventListener("click", () => {
+    opts.onAdvanced();
+  });
+
+  sectionSelect.focus();
+}
+
 export async function openEreportQuickConnector(opts?: {
   binding?: WebsiteRegistrationBinding | null;
 }) {
@@ -152,26 +274,6 @@ export async function openEreportQuickConnector(opts?: {
       </div>
     </header>
     <p class="ereport-quick-overlay__context" data-eq-context></p>
-    <div class="ereport-quick-overlay__config" data-eq-config-panel hidden>
-      <label>
-        Report
-        <select data-eq-report disabled>
-          <option value="${binding.orgId}:${binding.reportId}">${binding.tema || "Website registration"}</option>
-        </select>
-      </label>
-      <label>
-        Main section
-        <select data-eq-section></select>
-      </label>
-      <label>
-        Subsection
-        <select data-eq-group></select>
-      </label>
-      <div class="ereport-quick-overlay__row">
-        <button type="button" class="btn btn--primary" data-eq-save-config>Save defaults</button>
-        <button type="button" class="btn" data-eq-advanced>Advanced editor</button>
-      </div>
-    </div>
     <ul class="ereport-quick-overlay__list" data-eq-list></ul>
     <div class="ereport-quick-overlay__compose" data-eq-compose>
       <button type="button" class="icon-btn" data-eq-add aria-label="Add issue" title="Add issue">
@@ -193,9 +295,6 @@ export async function openEreportQuickConnector(opts?: {
   const contextEl = el<HTMLElement>(frame, "[data-eq-context]")!;
   const listEl = el<HTMLElement>(frame, "[data-eq-list]")!;
   const statusEl = el<HTMLElement>(frame, "[data-eq-status]")!;
-  const configPanel = el<HTMLElement>(frame, "[data-eq-config-panel]")!;
-  const sectionSelect = el<HTMLSelectElement>(frame, "[data-eq-section]")!;
-  const groupSelect = el<HTMLSelectElement>(frame, "[data-eq-group]")!;
   const inputRow = el<HTMLElement>(frame, "[data-eq-input-row]")!;
   const input = el<HTMLTextAreaElement>(frame, "[data-eq-input]")!;
 
@@ -261,21 +360,26 @@ export async function openEreportQuickConnector(opts?: {
     ].join(" · ");
   }
 
-  function populateConfigSelects() {
-    const sections = payload?.sections || [];
-    fillSelect(
-      sectionSelect,
-      sections.map((s) => ({ value: s.id, label: s.title || s.id })),
-      "Select section…",
-    );
-    sectionSelect.value = defaults?.sectionId || "";
-    const sec = sections.find((s) => s.id === sectionSelect.value);
-    fillSelect(
-      groupSelect,
-      (sec?.groups || []).map((g) => ({ value: g.id, label: g.title || g.id })),
-      "Select subsection…",
-    );
-    groupSelect.value = defaults?.groupId || "";
+  function openSettings() {
+    openSettingsModal({
+      binding: binding!,
+      payload,
+      defaults: defaults!,
+      onSaved: (next) => {
+        defaults = next;
+        syncContext();
+        renderList();
+        setStatus("Defaults saved.");
+      },
+      onAdvanced: () => {
+        closeEreportQuickConnector();
+        openEreportAdvancedConnectorModal({
+          orgId: binding!.orgId,
+          reportId: binding!.reportId,
+          label: "eReport connector",
+        });
+      },
+    });
   }
 
   async function reloadReport() {
@@ -307,12 +411,11 @@ export async function openEreportQuickConnector(opts?: {
       const s = sections.find((x) => x.id === defaults!.sectionId);
       defaults.groupId = s?.groups?.[0]?.id || "";
     }
-    populateConfigSelects();
     syncContext();
     renderList();
     setStatus(defaults?.sectionId && defaults?.groupId ? "Ready." : "Open settings to pick section and subsection.");
     if (!defaults?.sectionId || !defaults?.groupId) {
-      configPanel.hidden = false;
+      openSettings();
     }
   }
 
@@ -321,53 +424,12 @@ export async function openEreportQuickConnector(opts?: {
     if (ev.target === overlay) closeEreportQuickConnector();
   });
 
-  el(frame, "[data-eq-config]")?.addEventListener("click", () => {
-    configPanel.hidden = !configPanel.hidden;
-    if (!configPanel.hidden) populateConfigSelects();
-  });
-
-  sectionSelect.addEventListener("change", () => {
-    const sec = (payload?.sections || []).find((s) => s.id === sectionSelect.value);
-    fillSelect(
-      groupSelect,
-      (sec?.groups || []).map((g) => ({ value: g.id, label: g.title || g.id })),
-      "Select subsection…",
-    );
-    groupSelect.value = sec?.groups?.[0]?.id || "";
-  });
-
-  el(frame, "[data-eq-save-config]")?.addEventListener("click", () => {
-    if (!sectionSelect.value || !groupSelect.value) {
-      window.alert("Select a main section and subsection.");
-      return;
-    }
-    defaults = {
-      orgId: binding!.orgId,
-      reportId: binding!.reportId,
-      sectionId: sectionSelect.value,
-      groupId: groupSelect.value,
-    };
-    saveDefaults(defaults);
-    configPanel.hidden = true;
-    syncContext();
-    renderList();
-    setStatus("Defaults saved.");
-    window.alert("Defaults saved.");
-  });
-
-  el(frame, "[data-eq-advanced]")?.addEventListener("click", () => {
-    closeEreportQuickConnector();
-    openEreportAdvancedConnectorModal({
-      orgId: binding!.orgId,
-      reportId: binding!.reportId,
-      label: "eReport connector",
-    });
-  });
+  el(frame, "[data-eq-config]")?.addEventListener("click", () => openSettings());
 
   el(frame, "[data-eq-add]")?.addEventListener("click", () => {
     if (!defaults?.sectionId || !defaults?.groupId) {
       window.alert("Configure section and subsection first.");
-      configPanel.hidden = false;
+      openSettings();
       return;
     }
     inputRow.hidden = false;

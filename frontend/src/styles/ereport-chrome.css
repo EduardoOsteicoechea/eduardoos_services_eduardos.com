@@ -775,6 +775,16 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
   outline: none;
 }
 
+/* —— Header bug_report (left of menu) —— */
+.app-header .header-ereport-connector.icon-btn {
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+}
+
+.app-header .header-ereport-connector[hidden] {
+  display: none;
+}
+
 /* —— Quick website-issue connector —— */
 .ereport-quick-overlay {
   position: fixed;
@@ -826,39 +836,6 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
   margin: 0;
   font-size: var(--font-size-sm);
   color: var(--color-muted);
-}
-
-.ereport-quick-overlay__config {
-  display: flex;
-  flex-direction: column;
-  gap: var(--rail-gap);
-  padding: var(--space-padding);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  background: var(--color-surface);
-}
-
-.ereport-quick-overlay__config label {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--rail-gap) * 0.5);
-  font-size: var(--font-size-sm);
-}
-
-.ereport-quick-overlay__config select {
-  height: var(--control-height);
-  padding: var(--control-padding-block) var(--control-padding-inline);
-  font-size: var(--font-size-md);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  background: var(--color-bg);
-  color: var(--color-text);
-}
-
-.ereport-quick-overlay__row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--rail-gap);
 }
 
 .ereport-quick-overlay__list {
@@ -921,4 +898,74 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
 .ereport-quick-overlay__status {
   margin: 0;
   font-size: var(--font-size-sm);
+}
+
+/* —— Nested connector settings modal —— */
+.ereport-settings-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-modal) + 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  box-sizing: border-box;
+  background: color-mix(in srgb, var(--color-bg) 55%, transparent);
+}
+
+.ereport-settings-overlay__frame {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  width: min(24rem, calc(var(--shell-viewport-width, var(--content-basis, 48rem)) - 2rem));
+  max-height: calc(var(--shell-viewport-height, 40rem) - 4rem);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  box-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--color-text) 25%, transparent);
+  overflow: auto;
+}
+
+.ereport-settings-overlay__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rail-gap);
+}
+
+.ereport-settings-overlay__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.ereport-settings-overlay__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.ereport-settings-overlay__body label {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rail-gap) * 0.5);
+  font-size: var(--font-size-sm);
+}
+
+.ereport-settings-overlay__body select {
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font-size: var(--font-size-md);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.ereport-settings-overlay__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
 }

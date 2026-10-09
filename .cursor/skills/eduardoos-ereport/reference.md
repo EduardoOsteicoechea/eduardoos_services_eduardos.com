@@ -10,10 +10,16 @@ Auth: `Authorization: Bearer eos_live_…` (required for all `/api/v1/ereport/*`
 
 Live catalog keys: `payloadSchema.ereport.websiteRegistration`, `payloadSchema.ereport.webConnector.features`, `errors.website_registration_exists`.
 
-- Hub purpose `website_registration` \| `other` (one website registration per owner).
-- Cookie `GET /api/ereport/access` → `websiteRegistration`.
-- Site chrome: Connector + header bug_report → quick modal; Advanced → `/ereport/web-connector`.
-- CLI env: point org/report ids at that binding; API still allows all owned reports.
+| Surface | Behavior |
+|---------|----------|
+| Hub create | `purpose` / `firstReportPurpose`: `website_registration` \| `other` (default `other`) |
+| Cookie access | `GET /api/ereport/access` → `websiteRegistration: { orgId, reportId, tema } \| null` |
+| Site chrome | Menu **Connector** + header **bug_report** (left of menu) only when entitlement + binding |
+| Quick modal | Add-only issues; parse `nombre` until first `.` |
+| Settings modal | Gear opens settings dialog; section/group defaults in `localStorage` key `ereport.connector.defaults` |
+| Advanced | `/ereport/web-connector`; save alerts on node create/save |
+| CLI `.env` | `EDUARDOOS_ORG_ID` / `EDUARDOOS_REPORT_ID` → website_registration report |
+| API scope | Key routes still reach **all** owned orgs/reports (UI lock only) |
 
 ## Ordered Issue Tracker flow
 
@@ -38,13 +44,22 @@ Live catalog keys: `payloadSchema.ereport.websiteRegistration`, `payloadSchema.e
 | `append` (default) | Merge only; existing ids immutable; new items = non-empty `incidencia` + `status: "reprobado"` |
 | `replace` | Full payload replace; requires `confirmOverwrite: true`; mixed statuses OK |
 
-### Granular nodes (web connector)
+### Granular nodes (web connector / quick modal)
 
-- `POST …/sections`, `PATCH …/sections/{sectionId}`
-- `POST …/groups`, `PATCH …/groups/{groupId}`
-- `POST …/items`, `PATCH …/items/{itemId}`
+- `POST …/reports/{reportId}/sections`
+- `PATCH …/sections/{sectionId}`
+- `POST …/sections/{sectionId}/groups`
+- `PATCH …/groups/{groupId}`
+- `POST …/groups/{groupId}/items`
+- `PATCH …/items/{itemId}`
 
-Embed: `https://eduardoos.com/ereport/embed.js` + theme `…/embed-theme.css` → `EduardoOSEreport.mount({ orgId, reportId, menuSelector })` (prefer website_registration ids). Hosts must restyle `--eos-ereport-*` / `.eos-ereport-embed-menu-btn` to match their menu.
+Same paths under cookie `/api/ereport/...` for the site UI.
+
+### Web embed
+
+- Loader: `https://eduardoos.com/ereport/embed.js`
+- Theme: `https://eduardoos.com/ereport/embed-theme.css`
+- Mount: `EduardoOSEreport.mount({ orgId, reportId, menuSelector })`
 
 ## Local execution log (optional — user consent first)
 
@@ -57,12 +72,7 @@ python .ereport/execution_log.py enable     # blocked until accept
 python .ereport/execution_log.py ingest|digest|to-ereport
 ```
 
-| Consent | Meaning |
-|---------|---------|
-| `accept` | Agent must incorporate detailed ledger logging into its standing rules |
-| `reject` | No ledger; agent may still POST Issue Tracker updates without execution logging |
-
-See `EXECUTION_LOG.md` and skill **Mandatory: execution-logging consent**. Do not upload the ledger to the connector development remote.
+See `EXECUTION_LOG.md` and skill **Mandatory: execution-logging consent**.
 
 ## Thin CLI
 
@@ -71,8 +81,4 @@ python .ereport/ereport_client.py docs
 python .ereport/ereport_client.py request METHOD /path [--file body.json]
 ```
 
-Bare `.ereport` payload files auto-wrap as `{confirmOverwrite:true, payload:…}` on report POST (still defaults to append unless the JSON includes `"mode":"replace"`).
-
-## viewUrl
-
-`{BASE}/ereport/workspace?user={ownerSafe}&org={orgId}&report={reportId}`
+`viewUrl`: `{BASE}/ereport/workspace?user={ownerSafe}&org={orgId}&report={reportId}`

@@ -1963,16 +1963,20 @@ section.diag .panel:not(form) {
     order: 0;
   }
 
-  .header-session:not([hidden]) {
+  .header-ereport-connector:not([hidden]) {
     order: 1;
   }
 
-  .header-cart:not([hidden]) {
+  .header-session:not([hidden]) {
     order: 2;
   }
 
-  .header-menu {
+  .header-cart:not([hidden]) {
     order: 3;
+  }
+
+  .header-menu {
+    order: 4;
   }
 
   .sidebar-left,
@@ -2208,16 +2212,20 @@ section.diag .panel:not(form) {
     order: 0;
   }
 
-  .header-session:not([hidden]) {
+  .header-ereport-connector:not([hidden]) {
     order: 1;
   }
 
-  .header-cart:not([hidden]) {
+  .header-session:not([hidden]) {
     order: 2;
   }
 
-  .header-menu {
+  .header-cart:not([hidden]) {
     order: 3;
+  }
+
+  .header-menu {
+    order: 4;
   }
 
   .app-header .icon-btn:not(.header-session):not(.header-menu) {

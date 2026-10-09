@@ -94,7 +94,7 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 							"id":          "quick_issue_modal",
 							"summary":     "Default site Connector opens a compact modal: list issues in the configured subsection (add-only, no delete), + text input, save via session POST …/items.",
 							"issueParse":  "Text until the first '.' is nombre; remainder is incidencia. No period → whole string is both.",
-							"config":      "Settings stores default sectionId + groupId in localStorage key ereport.connector.defaults (org/report from websiteRegistration). Advanced editor link opens /ereport/web-connector locked.",
+							"config":      "Gear opens a nested settings modal; stores default sectionId + groupId in localStorage key ereport.connector.defaults (org/report from websiteRegistration). Advanced editor opens /ereport/web-connector locked.",
 							"saveAlert":   "window.alert on create/save success or failure (quick modal and advanced editor node saves).",
 						},
 						{
