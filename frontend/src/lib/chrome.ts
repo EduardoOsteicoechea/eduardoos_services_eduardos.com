@@ -319,19 +319,43 @@ function scheduleSessionRefresh(): void {
   }
 }
 
-/** Connector (menu + header) only when eReport entitlement is visible AND a website_registration report exists. */
+function isEreportConnectorNode(node: HTMLElement): boolean {
+  return node.hasAttribute("data-ereport-connector-open");
+}
+
+function hideEreportConnectorNodes(nodes: HTMLElement[]) {
+  for (const node of nodes) {
+    node.hidden = true;
+    node.removeAttribute("data-org-id");
+    node.removeAttribute("data-report-id");
+  }
+}
+
+/** Ignore stale overlapping refreshAuth → access fetches (prevents show/hide flash). */
+let ereportConnectorGateGen = 0;
+let ereportConnectorBindingCache: { orgId: string; reportId: string } | null = null;
+
+/**
+ * Connector (menu + header) visibility is owned only here — never by syncSubscriptionNav.
+ * Stay hidden until entitlement + website_registration binding are confirmed.
+ * If already visible with a cached binding, keep showing while re-fetching (no flicker).
+ */
 async function syncEreportConnectorGate(authed: boolean): Promise<void> {
+  const gen = ++ereportConnectorGateGen;
   const nodes = [...document.querySelectorAll("[data-ereport-connector-open]")].filter(
     (node): node is HTMLElement => node instanceof HTMLElement,
   );
   if (nodes.length === 0) return;
   if (!authed) {
-    for (const node of nodes) {
-      node.hidden = true;
-      node.removeAttribute("data-org-id");
-      node.removeAttribute("data-report-id");
-    }
+    ereportConnectorBindingCache = null;
+    hideEreportConnectorNodes(nodes);
+    sessionLog("chrome.ereportConnectorGate", { binding: false, hubVisible: false, count: nodes.length });
     return;
+  }
+  const alreadyShowing = Boolean(ereportConnectorBindingCache) && nodes.some((n) => !n.hidden);
+  if (!alreadyShowing) {
+    // First paint / was hidden: stay hidden until binding is confirmed (no entitlement flash).
+    hideEreportConnectorNodes(nodes);
   }
   const hub = document.querySelector<HTMLElement>('a[data-service="ereport"]:not([data-ereport-connector-open])');
   const hubVisible = hub ? !hub.hidden : false;
@@ -349,6 +373,8 @@ async function syncEreportConnectorGate(authed: boolean): Promise<void> {
       binding = null;
     }
   }
+  if (gen !== ereportConnectorGateGen) return;
+  ereportConnectorBindingCache = binding;
   for (const node of nodes) {
     if (!hubVisible || !binding) {
       node.hidden = true;
@@ -372,6 +398,8 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
   }
   if (isAdmin) {
     for (const node of nodes) {
+      // Connector buttons are gated separately (website registration binding).
+      if (isEreportConnectorNode(node)) continue;
       node.hidden = false;
     }
     sessionLog("chrome.refreshAuth.services", { mode: "admin", count: nodes.length });
@@ -405,6 +433,7 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
     }),
   );
   for (const node of nodes) {
+    if (isEreportConnectorNode(node)) continue;
     const id = (node.getAttribute("data-service") || "").trim().toLowerCase();
     node.hidden = !allowed.get(id);
   }
