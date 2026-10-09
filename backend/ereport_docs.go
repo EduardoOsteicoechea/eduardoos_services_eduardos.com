@@ -29,7 +29,7 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 			"epam":      "https://github.com/EduardoOsteicoechea/epam — clone as .epam/ sidecar. Mirror: https://eduardoos.com/skills/epam/",
 		},
 		"skill": "https://github.com/EduardoOsteicoechea/eduardoos-ereport-connector — clone as .ereport/. Homescool: eduardoos-eoschool-connector as .eoschool/. EPAM: https://github.com/EduardoOsteicoechea/epam as .epam/.",
-		"agentGuidance": "1) Require EDUARDOOS_API_KEY. 2) ALWAYS GET /api/v1/docs first. 3a) eReport: access → orgs → reports → GET → POST append/replace, or use granular section/group/item POST/PATCH for the web connector. 3b) Homescool materials: access → list → POST with confirmOverwrite. 3c) EPAM: access → POST /api/v1/epam/epams with the pamphlet/.epam document (auto-publishes to /articles when the key owner is the public articles publisher). PUT requires confirmOverwrite:true. 4) Always print viewUrl and articleUrl after write. 5) Never invent endpoints — use this catalog. 6) Web embed: https://eduardoos.com/ereport/embed.js → mount({ apiKey, menuSelector }).",
+		"agentGuidance": "1) Require EDUARDOOS_API_KEY. 2) ALWAYS GET /api/v1/docs first. 3a) eReport: access → orgs → reports → GET → POST append/replace, or use granular section/group/item POST/PATCH for the web connector. For a **site** connector, point EDUARDOOS_ORG_ID/EDUARDOOS_REPORT_ID at the owner's single website_registration report (hub purpose); the site UI Connector locks to that binding while the API still allows all owned reports. 3b) Homescool materials: access → list → POST with confirmOverwrite. 3c) EPAM: access → POST /api/v1/epam/epams with the pamphlet/.epam document (auto-publishes to /articles when the key owner is the public articles publisher). PUT requires confirmOverwrite:true. 4) Always print viewUrl and articleUrl after write. 5) Never invent endpoints — use this catalog. 6) Web embed: https://eduardoos.com/ereport/embed.js → mount({ orgId, reportId, menuSelector }) (session + subscription; no API key). 7) eduardoos.com shell: Connector menu + header bug_report open the quick issue modal when websiteRegistration is set on cookie GET /api/ereport/access.",
 		"routes": []map[string]any{
 			{"method": http.MethodGet, "path": "/api/v1/docs", "auth": "none", "summary": "This catalog (public). Fetch first."},
 			{"method": http.MethodGet, "path": "/api/v1/ereport/access", "auth": "api_key", "summary": "eReport — check API access.", "requirements": "api + ereport (or admin)."},
@@ -61,6 +61,7 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 			"append_existing_item_modified":  "eReport mode append tried to change an existing id.",
 			"append_invalid_new_item_status": "eReport mode append new item missing incidencia or status was not reprobado.",
 			"replace_confirm_required":       "Homescool POST or eReport replace without confirmOverwrite:true.",
+			"website_registration_exists":    "eReport create org/report with purpose website_registration when the owner already has one.",
 			"invalid_request":                "Bad material meta or empty html.",
 			"unauthorized":                   "Missing/invalid Bearer API key.",
 			"forbidden":                      "Missing api and/or product entitlement.",
@@ -74,11 +75,38 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 				"writeSemantics":      "POST mode append (default) or replace; both need confirmOverwrite:true. Granular section/group/item POST/PATCH mutate one node without append/replace.",
 				"postBody":            `{"confirmOverwrite":true,"mode":"append","tema":"optional","payload":{}}`,
 				"postBodyReplaceExample": `{"confirmOverwrite":true,"mode":"replace","tema":"Model Checker 1.1","payload":{"appTitle":"Issue Tracker","orgName":"…","reportName":"…","reportDate":"YYYY-MM-DD","reportNumber":"…","theme":"dark","validationCriteria":[],"sections":[]}}`,
+				"websiteRegistration": map[string]any{
+					"purposeValues": []string{"website_registration", "other"},
+					"default":       "other",
+					"uniqueness":    "At most one website_registration report per owner (HTTP 409 website_registration_exists).",
+					"hubCreate":     "Cookie UI POST /api/ereport/orgs (firstReportPurpose) and POST /api/ereport/orgs/{orgId}/reports (purpose).",
+					"sessionAccess": "Cookie GET /api/ereport/access returns websiteRegistration: { orgId, reportId, tema } | null when the signed-in owner has that report.",
+					"siteConnector": "eduardoos.com (and hosts with the same chrome): main-menu Connector + header bug_report icon are shown only with eReport entitlement AND websiteRegistration binding. They open the quick issue modal locked to that report. Without binding, use the eReport hub / local .ereport file (dev reporting).",
+					"cliEnv":        "Set EDUARDOOS_ORG_ID and EDUARDOOS_REPORT_ID in .ereport/.env to the website_registration report. API key routes still allow all owned orgs/reports; the site UI is what locks to the binding.",
+					"metaField":     "Report meta.json purpose (normalized on load).",
+				},
 				"webConnector": map[string]any{
 					"embedScript": "https://eduardoos.com/ereport/embed.js",
 					"embedTheme":  "https://eduardoos.com/ereport/embed-theme.css",
-					"modalPath":   "/ereport/web-connector",
-					"notes":       "Host mount({ orgId, reportId, menuSelector }). Opens a wide same-origin modal. Auth is cookie session + eReport subscription (no API key). Session node writes: POST/PATCH /api/ereport/orgs/.../sections|groups|items. Override --eos-ereport-* for host menu styling.",
+					"advancedModalPath": "/ereport/web-connector",
+					"features": []map[string]any{
+						{
+							"id":          "quick_issue_modal",
+							"summary":     "Default site Connector opens a compact modal: list issues in the configured subsection (add-only, no delete), + text input, save via session POST …/items.",
+							"issueParse":  "Text until the first '.' is nombre; remainder is incidencia. No period → whole string is both.",
+							"config":      "Settings stores default sectionId + groupId in localStorage key ereport.connector.defaults (org/report from websiteRegistration). Advanced editor link opens /ereport/web-connector locked.",
+							"saveAlert":   "window.alert on create/save success or failure (quick modal and advanced editor node saves).",
+						},
+						{
+							"id":      "header_report_button",
+							"summary": "Activity-bar icon (bug_report) left of the menu opener; same visibility gate and opener as the menu Connector entry.",
+						},
+						{
+							"id":      "embed_host",
+							"summary": "External sites: EduardoOSEreport.mount({ orgId, reportId, menuSelector }). Prefer the website_registration ids.",
+						},
+					},
+					"notes": "Auth is cookie session + eReport subscription (no API key in the browser). Session node writes: POST/PATCH /api/ereport/orgs/.../sections|groups|items. Override --eos-ereport-* for host menu styling.",
 				},
 				"modes": map[string]any{
 					"append":  "Default. Additive merge only. Conservative for agents.",
@@ -119,6 +147,9 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 				"itemFields": map[string]string{
 					"id": "item id", "nombre": "name", "status": "aprobado|reprobado|no_aplica|empty",
 					"incidencia": "issue text", "solucion": "resolution", "checklist": "{id,label,checked}[]",
+				},
+				"metaFields": map[string]string{
+					"purpose": "website_registration|other — site Connector binding when website_registration",
 				},
 			},
 			"homescool": map[string]any{

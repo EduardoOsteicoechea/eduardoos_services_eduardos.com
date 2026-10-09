@@ -4,6 +4,24 @@
 
 Auth: `Authorization: Bearer eos_live_…` for `/api/v1/ereport/*`.
 
+## Website registration + site Connector
+
+See live catalog:
+
+- `payloadSchema.ereport.websiteRegistration`
+- `payloadSchema.ereport.webConnector.features`
+- `errors.website_registration_exists`
+
+| Surface | Behavior |
+|---------|----------|
+| Hub create | `purpose` / `firstReportPurpose`: `website_registration` \| `other` (default `other`) |
+| Cookie access | `GET /api/ereport/access` → `websiteRegistration: { orgId, reportId, tema } \| null` |
+| Site chrome | Menu **Connector** + header **bug_report** only when entitlement + binding |
+| Quick modal | Add-only issues; parse `nombre` until first `.`; Config → section/group defaults |
+| Advanced | `/ereport/web-connector`; save alerts on node create/save |
+| CLI `.env` | `EDUARDOOS_ORG_ID` / `EDUARDOOS_REPORT_ID` → website_registration report |
+| API scope | Key routes still reach **all** owned orgs/reports (UI lock only) |
+
 ## Ordered flow
 
 1. `GET /api/v1/docs`
@@ -26,6 +44,8 @@ Create/update one node without append/replace:
 - `PATCH …/groups/{groupId}` (`title`, `productHistory`)
 - `POST …/groups/{groupId}/items` (new item: `nombre` and/or `incidencia` + `status: "reprobado"`; title-first OK)
 - `PATCH …/items/{itemId}` (edit issue fields)
+
+Same paths under cookie `/api/ereport/...` for the site quick modal and advanced editor.
 
 ### Web embed
 

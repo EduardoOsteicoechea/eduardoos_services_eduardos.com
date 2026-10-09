@@ -6,6 +6,15 @@
 Base default: `https://eduardoos.com`  
 Auth: `Authorization: Bearer eos_live_…` (required for all `/api/v1/ereport/*`)
 
+## Website registration + site Connector
+
+Live catalog keys: `payloadSchema.ereport.websiteRegistration`, `payloadSchema.ereport.webConnector.features`, `errors.website_registration_exists`.
+
+- Hub purpose `website_registration` \| `other` (one website registration per owner).
+- Cookie `GET /api/ereport/access` → `websiteRegistration`.
+- Site chrome: Connector + header bug_report → quick modal; Advanced → `/ereport/web-connector`.
+- CLI env: point org/report ids at that binding; API still allows all owned reports.
+
 ## Ordered Issue Tracker flow
 
 1. `GET /api/v1/docs`  
@@ -35,7 +44,7 @@ Auth: `Authorization: Bearer eos_live_…` (required for all `/api/v1/ereport/*`
 - `POST …/groups`, `PATCH …/groups/{groupId}`
 - `POST …/items`, `PATCH …/items/{itemId}`
 
-Embed: `https://eduardoos.com/ereport/embed.js` + theme `…/embed-theme.css` → `EduardoOSEreport.mount({ apiKey, menuSelector })`. Hosts must restyle `--eos-ereport-*` / `.eos-ereport-embed-menu-btn` to match their menu.
+Embed: `https://eduardoos.com/ereport/embed.js` + theme `…/embed-theme.css` → `EduardoOSEreport.mount({ orgId, reportId, menuSelector })` (prefer website_registration ids). Hosts must restyle `--eos-ereport-*` / `.eos-ereport-embed-menu-btn` to match their menu.
 
 ## Local execution log (optional — user consent first)
 
