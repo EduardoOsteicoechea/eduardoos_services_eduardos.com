@@ -170,6 +170,13 @@ import Layout from "../../layouts/Layout.astro";
                 Report name
                 <input name="tema" required maxlength="200" />
               </label>
+              <label>
+                Report purpose
+                <select name="purpose">
+                  <option value="other" selected>Other</option>
+                  <option value="website_registration">Website registration</option>
+                </select>
+              </label>
               <div class="ereport-hub__row">
                 <button class="btn btn--primary" type="submit" data-needs-create>New report</button>
                 <button class="btn" type="button" data-import-btn="panel" data-needs-create>Import .ereport</button>
@@ -236,6 +243,13 @@ import Layout from "../../layouts/Layout.astro";
             First report name
             <input name="firstReportName" required maxlength="200" placeholder="e.g. Model QA — Sprint 1" />
           </label>
+          <label>
+            Report purpose
+            <select name="firstReportPurpose">
+              <option value="other" selected>Other</option>
+              <option value="website_registration">Website registration</option>
+            </select>
+          </label>
           <div class="ereport-hub__row">
             <button class="btn btn--primary" type="submit" data-needs-create>Create org + first report</button>
           </div>
@@ -253,6 +267,13 @@ import Layout from "../../layouts/Layout.astro";
           <label>
             Report name
             <input name="tema" required maxlength="200" />
+          </label>
+          <label>
+            Report purpose
+            <select name="purpose">
+              <option value="other" selected>Other</option>
+              <option value="website_registration">Website registration</option>
+            </select>
           </label>
           <div class="ereport-hub__row">
             <button class="btn btn--primary" type="submit" data-needs-create>Create report</button>
@@ -1133,7 +1154,11 @@ import Layout from "../../layouts/Layout.astro";
       }
       setBusy(form, true);
       const data = new FormData(form);
-      const res = await createEreportOrg(String(data.get("name") || ""), String(data.get("firstReportName") || ""));
+      const res = await createEreportOrg(
+        String(data.get("name") || ""),
+        String(data.get("firstReportName") || ""),
+        String(data.get("firstReportPurpose") || "other"),
+      );
       setBusy(form, false);
       const message = fail(res.status, res.data, "Organization created.");
       setBanner(root, message.text, message.kind);
@@ -1161,7 +1186,8 @@ import Layout from "../../layouts/Layout.astro";
       }
       if (!tema) return;
       setBusy(form, true);
-      const res = await createOrgReport(orgId, tema);
+      const purpose = String(data.get("purpose") || "other");
+      const res = await createOrgReport(orgId, tema, purpose);
       setBusy(form, false);
       const message = fail(res.status, res.data, "Report created.");
       setBanner(root, message.text, message.kind);
@@ -1178,10 +1204,11 @@ import Layout from "../../layouts/Layout.astro";
         setHubError("eReport subscription required.");
         return;
       }
-      const tema = String(new FormData(form).get("tema") || "").trim();
+      const formData = new FormData(form);
+      const tema = String(formData.get("tema") || "").trim();
       if (!tema) return;
       setBusy(form, true);
-      const res = await createOrgReport(activeOrgId, tema);
+      const res = await createOrgReport(activeOrgId, tema, String(formData.get("purpose") || "other"));
       setBusy(form, false);
       const message = fail(res.status, res.data, "Report created.");
       setBanner(root, message.text, message.kind);

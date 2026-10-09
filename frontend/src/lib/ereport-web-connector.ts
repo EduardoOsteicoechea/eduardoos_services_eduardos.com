@@ -146,6 +146,11 @@ export function startEreportWebConnector(root: HTMLElement) {
     if (statusEl) statusEl.textContent = msg;
   }
 
+  function notifySave(msg: string, alertUser = true) {
+    setStatus(msg);
+    if (alertUser) window.alert(msg);
+  }
+
   function selectedOrg(): string {
     return config.locked ? config.orgId : orgSelect?.value || config.orgId;
   }
@@ -369,7 +374,7 @@ export function startEreportWebConnector(root: HTMLElement) {
         });
         if (status !== 201 && status !== 200) {
           raiseApiError(status, requestId, data);
-          setStatus("Could not create section.");
+          notifySave("Could not create section.");
           return;
         }
         payload = (data.payload as ReportPayload) || payload;
@@ -380,7 +385,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           groupId = gid || "";
         }
         commitPayload(payload, { sectionId: node?.id, groupId });
-        setStatus(groupId ? "Section created (with General subsection)." : "Section created.");
+        notifySave(groupId ? "Section created (with General subsection)." : "Section created.");
       } finally {
         setBusy(false);
       }
@@ -410,11 +415,11 @@ export function startEreportWebConnector(root: HTMLElement) {
         );
         if (status !== 200) {
           raiseApiError(status, requestId, data);
-          setStatus("Could not save section.");
+          notifySave("Could not save section.");
           return;
         }
         commitPayload((data.payload as ReportPayload) || payload, keep);
-        setStatus("Section saved.");
+        notifySave("Section saved.");
       } finally {
         setBusy(false);
       }
@@ -440,7 +445,7 @@ export function startEreportWebConnector(root: HTMLElement) {
         );
         if (status !== 201 && status !== 200) {
           raiseApiError(status, requestId, data);
-          setStatus("Could not create subsection.");
+          notifySave("Could not create subsection.");
           return;
         }
         const node = data.node as GroupNode;
@@ -448,7 +453,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           sectionId,
           groupId: node?.id,
         });
-        setStatus("Subsection created.");
+        notifySave("Subsection created.");
       } finally {
         setBusy(false);
       }
@@ -479,11 +484,11 @@ export function startEreportWebConnector(root: HTMLElement) {
         );
         if (status !== 200) {
           raiseApiError(status, requestId, data);
-          setStatus("Could not save subsection.");
+          notifySave("Could not save subsection.");
           return;
         }
         commitPayload((data.payload as ReportPayload) || payload, keep);
-        setStatus("Subsection saved.");
+        notifySave("Subsection saved.");
       } finally {
         setBusy(false);
       }
@@ -516,7 +521,7 @@ export function startEreportWebConnector(root: HTMLElement) {
         );
         if (status !== 201 && status !== 200) {
           raiseApiError(status, requestId, data);
-          setStatus("Could not create issue.");
+          notifySave("Could not create issue.");
           return;
         }
         const node = data.node as ItemNode;
@@ -525,7 +530,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           groupId,
           itemId: node?.id,
         });
-        setStatus("Issue created. Fill incidencia content, then Save.");
+        notifySave("Issue created. Fill incidencia content, then Save.");
       } finally {
         setBusy(false);
       }
@@ -564,11 +569,11 @@ export function startEreportWebConnector(root: HTMLElement) {
         );
         if (status !== 200) {
           raiseApiError(status, requestId, data);
-          setStatus("Could not save issue.");
+          notifySave("Could not save issue.");
           return;
         }
         commitPayload((data.payload as ReportPayload) || payload, keep);
-        setStatus("Issue saved.");
+        notifySave("Issue saved.");
       } finally {
         setBusy(false);
       }

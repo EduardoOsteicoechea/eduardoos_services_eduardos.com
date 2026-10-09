@@ -60,6 +60,67 @@ func TestEreportCreateRequiresEntitlementAndAdminBypass(t *testing.T) {
 	}
 }
 
+func TestEreportWebsiteRegistrationPurpose(t *testing.T) {
+	app := newTestApp(false)
+	if err := app.grantEntitlement("member-1", productEreport); err != nil {
+		t.Fatal(err)
+	}
+	other := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs",
+		`{"name":"Site","firstReportName":"Misc","firstReportPurpose":"other"}`)
+	if other.Code != http.StatusCreated {
+		t.Fatalf("other create: %d %s", other.Code, other.Body.String())
+	}
+	otherBody := decodeMap(t, other)
+	otherReport := otherBody["report"].(map[string]any)
+	if purpose := otherReport["purpose"].(string); purpose != ereportPurposeOther {
+		t.Fatalf("expected other purpose, got %q", purpose)
+	}
+
+	access := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/access", "")
+	if access.Code != http.StatusOK {
+		t.Fatalf("access: %d %s", access.Code, access.Body.String())
+	}
+	accessBody := decodeMap(t, access)
+	if accessBody["websiteRegistration"] != nil {
+		t.Fatalf("expected no website registration yet, got %#v", accessBody["websiteRegistration"])
+	}
+
+	website := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs",
+		`{"name":"eduardoos","firstReportName":"Website issues","firstReportPurpose":"website_registration"}`)
+	if website.Code != http.StatusCreated {
+		t.Fatalf("website create: %d %s", website.Code, website.Body.String())
+	}
+	websiteBody := decodeMap(t, website)
+	websiteOrg := websiteBody["org"].(map[string]any)
+	websiteReport := websiteBody["report"].(map[string]any)
+	if purpose := websiteReport["purpose"].(string); purpose != ereportPurposeWebsite {
+		t.Fatalf("expected website purpose, got %q", purpose)
+	}
+
+	access2 := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/access", "")
+	access2Body := decodeMap(t, access2)
+	binding, ok := access2Body["websiteRegistration"].(map[string]any)
+	if !ok {
+		t.Fatalf("expected websiteRegistration binding, got %#v", access2Body["websiteRegistration"])
+	}
+	if binding["orgId"] != websiteOrg["id"] || binding["reportId"] != websiteReport["id"] {
+		t.Fatalf("binding mismatch: %#v vs org=%v report=%v", binding, websiteOrg["id"], websiteReport["id"])
+	}
+
+	dup := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs",
+		`{"name":"OtherSite","firstReportName":"Also website","firstReportPurpose":"website_registration"}`)
+	if dup.Code != http.StatusConflict {
+		t.Fatalf("expected 409 duplicate website registration, got %d %s", dup.Code, dup.Body.String())
+	}
+
+	orgID := otherBody["org"].(map[string]any)["id"].(string)
+	dupReport := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/reports",
+		`{"tema":"Another website","purpose":"website_registration"}`)
+	if dupReport.Code != http.StatusConflict {
+		t.Fatalf("expected 409 on second website report, got %d %s", dupReport.Code, dupReport.Body.String())
+	}
+}
+
 func TestEreportEntitlementsUnavailableFailClosed(t *testing.T) {
 	app := newTestApp(false)
 	app.failClosedEnt = true

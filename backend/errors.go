@@ -20,6 +20,7 @@ var safeMessages = map[string]string{
 	"csrf_invalid":                   "Security check failed. Try again.",
 	"rate_limited":                   "Too many attempts. Try later.",
 	"conflict":                       "That username is already taken.",
+	"website_registration_exists":    "A website registration report already exists.",
 	"material_limit_reached":         "Máximo 4 materiales por actividad.",
 	"payload_too_large":              "That file is too large.",
 	"image_too_large":                "That image is too large. Use a JPG, PNG, or WebP under 10 MB (max 8192 px).",

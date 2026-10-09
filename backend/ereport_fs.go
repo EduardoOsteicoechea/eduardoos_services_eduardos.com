@@ -561,6 +561,7 @@ func (fs *ereportFS) loadReport(ownerUserID, orgID, reportID string) (ereportMet
 		payload = map[string]any{}
 	}
 	healEreportChecklistLegacy(payload)
+	meta.Purpose = normalizeEreportPurpose(meta.Purpose)
 	return meta, payload, nil
 }
 

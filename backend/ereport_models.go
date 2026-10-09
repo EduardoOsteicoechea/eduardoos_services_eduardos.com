@@ -25,10 +25,16 @@ const (
 	inviteCookieTTL        = 30 * 24 * time.Hour
 )
 
+const (
+	ereportPurposeOther   = "other"
+	ereportPurposeWebsite = "website_registration"
+)
+
 type ereportCard struct {
 	ID           string `json:"id"`
 	Tema         string `json:"tema"`
 	ReportNumber string `json:"reportNumber,omitempty"`
+	Purpose      string `json:"purpose,omitempty"`
 	UpdatedAt    string `json:"updatedAt"`
 }
 
@@ -37,17 +43,18 @@ type ereportLibrary struct {
 }
 
 type ereportMeta struct {
-	ID           string `json:"id"`
-	Tema         string `json:"tema"`
-	ReportNumber string `json:"reportNumber,omitempty"`
-	ReportDate   string `json:"reportDate,omitempty"`
-	OrgID        string `json:"orgId"`
-	OwnerUserID  string `json:"ownerUserId"`
-	OwnerEmail   string `json:"ownerEmail,omitempty"`
-	OwnerSafe    string `json:"ownerSafe,omitempty"`
+	ID            string `json:"id"`
+	Tema          string `json:"tema"`
+	ReportNumber  string `json:"reportNumber,omitempty"`
+	ReportDate    string `json:"reportDate,omitempty"`
+	Purpose       string `json:"purpose,omitempty"` // website_registration | other
+	OrgID         string `json:"orgId"`
+	OwnerUserID   string `json:"ownerUserId"`
+	OwnerEmail    string `json:"ownerEmail,omitempty"`
+	OwnerSafe     string `json:"ownerSafe,omitempty"`
 	OwnerUsername string `json:"ownerUsername,omitempty"`
-	CreatedAt    string `json:"createdAt"`
-	UpdatedAt    string `json:"updatedAt"`
+	CreatedAt     string `json:"createdAt"`
+	UpdatedAt     string `json:"updatedAt"`
 }
 
 type ereportOrgCard struct {
@@ -254,4 +261,36 @@ func emptyEreportItem(id string) map[string]any {
 
 func displayOwnerSafe(email string) string {
 	return strings.ReplaceAll(strings.ToLower(strings.TrimSpace(email)), "@", "_at_")
+}
+
+func normalizeEreportPurpose(raw string) string {
+	switch strings.ToLower(strings.TrimSpace(raw)) {
+	case ereportPurposeWebsite, "website":
+		return ereportPurposeWebsite
+	default:
+		return ereportPurposeOther
+	}
+}
+
+func (a *App) findWebsiteRegistration(ownerUserID string) (orgID, reportID, tema string, ok bool) {
+	idx, err := a.ereport.loadOrgsIndex(ownerUserID)
+	if err != nil {
+		return "", "", "", false
+	}
+	for _, org := range idx.Orgs {
+		lib, libErr := a.ereport.loadOrgLibrary(ownerUserID, org.ID)
+		if libErr != nil {
+			continue
+		}
+		for _, card := range lib.Reports {
+			meta, _, loadErr := a.ereport.loadReport(ownerUserID, org.ID, card.ID)
+			if loadErr != nil {
+				continue
+			}
+			if normalizeEreportPurpose(meta.Purpose) == ereportPurposeWebsite {
+				return org.ID, meta.ID, meta.Tema, true
+			}
+		}
+	}
+	return "", "", "", false
 }

@@ -17,6 +17,8 @@ disable-model-invocation: true
 Repo: https://github.com/EduardoOsteicoechea/eduardoos-ereport-connector
 Docs: https://eduardoos.com/api-docs
 
+Point `EDUARDOOS_ORG_ID` / `EDUARDOOS_REPORT_ID` at the owner’s **website registration** report (hub purpose). The site Connector UI locks to that binding; the API still allows other reports.
+
 Storage is the VPS filesystem under `media/ereport/<ownerUserId>/`. There are no S3 paths and no flat `/api/v1/ereport/reports/{ownerSafe}/{reportId}` routes.
 
 ## Ordered flow

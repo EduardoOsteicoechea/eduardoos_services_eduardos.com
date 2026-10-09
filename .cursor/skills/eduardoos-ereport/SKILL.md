@@ -21,6 +21,10 @@ disable-model-invocation: true
 Repo: https://github.com/EduardoOsteicoechea/eduardoos-ereport-connector  
 Docs: https://eduardoos.com/api-docs
 
+## Website registration binding
+
+For a **site** connector (menu / header / quick modal), create the report in the eReport hub with purpose **Website registration** (one per owner). Set `EDUARDOOS_ORG_ID` and `EDUARDOOS_REPORT_ID` in `.ereport/.env` to that report. The public API still allows other reports; the site UI Connector only opens that website-registration binding.
+
 ## Mandatory: execution-logging consent (before Mode D)
 
 When implementing or wiring eReport in a host repo, the agent **must notify the user** that an optional **execution logging extension** exists, and **must wait for an explicit choice** before enabling it.

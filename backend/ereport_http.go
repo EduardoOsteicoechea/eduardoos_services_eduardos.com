@@ -66,12 +66,22 @@ func (a *App) ereportAccessHandler(w http.ResponseWriter, r *http.Request) {
 	if ok {
 		a.redeemPendingShares(user)
 	}
-	writeJSON(w, http.StatusOK, map[string]any{
+	out := map[string]any{
 		"canCreate":   ok,
 		"ownerUserId": user.ID,
 		"ownerSafe":   displayOwnerSafe(user.Email),
 		"ownerEmail":  user.Email,
-	})
+	}
+	if orgID, reportID, tema, found := a.findWebsiteRegistration(user.ID); found {
+		out["websiteRegistration"] = map[string]any{
+			"orgId":    orgID,
+			"reportId": reportID,
+			"tema":     tema,
+		}
+	} else {
+		out["websiteRegistration"] = nil
+	}
+	writeJSON(w, http.StatusOK, out)
 }
 
 func (a *App) ereportGetOrgsHandler(w http.ResponseWriter, r *http.Request) {
@@ -132,9 +142,10 @@ func (a *App) ereportCreateOrgHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var body struct {
-		Name            string `json:"name"`
-		FirstReportName string `json:"firstReportName"`
-		FirstReportTema string `json:"firstReportTema"`
+		Name               string `json:"name"`
+		FirstReportName    string `json:"firstReportName"`
+		FirstReportTema    string `json:"firstReportTema"`
+		FirstReportPurpose string `json:"firstReportPurpose"`
 	}
 	if !a.decodeEreportJSON(w, r, &body) {
 		return
@@ -147,6 +158,13 @@ func (a *App) ereportCreateOrgHandler(w http.ResponseWriter, r *http.Request) {
 	firstName := strings.TrimSpace(body.FirstReportName)
 	if firstName == "" {
 		firstName = strings.TrimSpace(body.FirstReportTema)
+	}
+	purpose := normalizeEreportPurpose(body.FirstReportPurpose)
+	if purpose == ereportPurposeWebsite {
+		if _, _, _, found := a.findWebsiteRegistration(user.ID); found {
+			a.writeSafeError(w, r, http.StatusConflict, "website_registration_exists")
+			return
+		}
 	}
 	now := nowRFC3339()
 	id := randomID(16)
@@ -166,7 +184,7 @@ func (a *App) ereportCreateOrgHandler(w http.ResponseWriter, r *http.Request) {
 	if firstName != "" {
 		rid := randomID(16)
 		rm := ereportMeta{
-			ID: rid, Tema: firstName, OrgID: id, OwnerUserID: user.ID,
+			ID: rid, Tema: firstName, Purpose: purpose, OrgID: id, OwnerUserID: user.ID,
 			CreatedAt: now, UpdatedAt: now,
 		}
 		rm = displayMeta(user, rm)
@@ -175,7 +193,7 @@ func (a *App) ereportCreateOrgHandler(w http.ResponseWriter, r *http.Request) {
 			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 			return
 		}
-		lib.Reports = append(lib.Reports, ereportCard{ID: rid, Tema: firstName, UpdatedAt: now})
+		lib.Reports = append(lib.Reports, ereportCard{ID: rid, Tema: firstName, Purpose: purpose, UpdatedAt: now})
 		reportMeta = &rm
 		reportPayload = payload
 	}
@@ -326,7 +344,8 @@ func (a *App) ereportCreateReportHandler(w http.ResponseWriter, r *http.Request)
 		return
 	}
 	var body struct {
-		Tema string `json:"tema"`
+		Tema    string `json:"tema"`
+		Purpose string `json:"purpose"`
 	}
 	if !a.decodeEreportJSON(w, r, &body) {
 		return
@@ -335,10 +354,17 @@ func (a *App) ereportCreateReportHandler(w http.ResponseWriter, r *http.Request)
 	if tema == "" {
 		tema = "Sin tema"
 	}
+	purpose := normalizeEreportPurpose(body.Purpose)
+	if purpose == ereportPurposeWebsite {
+		if _, _, _, found := a.findWebsiteRegistration(user.ID); found {
+			a.writeSafeError(w, r, http.StatusConflict, "website_registration_exists")
+			return
+		}
+	}
 	now := nowRFC3339()
 	id := randomID(16)
 	meta := displayMeta(user, ereportMeta{
-		ID: id, Tema: tema, OrgID: orgMeta.ID, OwnerUserID: user.ID,
+		ID: id, Tema: tema, Purpose: purpose, OrgID: orgMeta.ID, OwnerUserID: user.ID,
 		CreatedAt: now, UpdatedAt: now,
 	})
 	payload := emptyEreportPayload()
@@ -347,7 +373,7 @@ func (a *App) ereportCreateReportHandler(w http.ResponseWriter, r *http.Request)
 		return
 	}
 	lib, _ := a.ereport.loadOrgLibrary(user.ID, orgID)
-	lib.Reports = append(lib.Reports, ereportCard{ID: id, Tema: tema, UpdatedAt: now})
+	lib.Reports = append(lib.Reports, ereportCard{ID: id, Tema: tema, Purpose: purpose, UpdatedAt: now})
 	_ = a.ereport.saveOrgLibrary(user.ID, orgID, lib)
 	a.auditEvent(r, "ereport_report_create", "ok", user.ID)
 	writeJSON(w, http.StatusCreated, map[string]any{

@@ -2,6 +2,7 @@ import { clearSessionHint, getMe, postJSON, profileAvatarURL, refreshSession, re
 import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { exposeEreportConnectorGlobal, wireEreportConnectorMenu } from "./ereport-connector-modal";
+import { fetchEreportAccess } from "./ereport";
 import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
 import { startVoiceChat } from "./voice";
@@ -318,6 +319,50 @@ function scheduleSessionRefresh(): void {
   }
 }
 
+/** Connector (menu + header) only when eReport entitlement is visible AND a website_registration report exists. */
+async function syncEreportConnectorGate(authed: boolean): Promise<void> {
+  const nodes = [...document.querySelectorAll("[data-ereport-connector-open]")].filter(
+    (node): node is HTMLElement => node instanceof HTMLElement,
+  );
+  if (nodes.length === 0) return;
+  if (!authed) {
+    for (const node of nodes) {
+      node.hidden = true;
+      node.removeAttribute("data-org-id");
+      node.removeAttribute("data-report-id");
+    }
+    return;
+  }
+  const hub = document.querySelector<HTMLElement>('a[data-service="ereport"]:not([data-ereport-connector-open])');
+  const hubVisible = hub ? !hub.hidden : false;
+  let binding: { orgId: string; reportId: string } | null = null;
+  if (hubVisible) {
+    try {
+      const { status, data } = await fetchEreportAccess();
+      if (status === 200 && data.websiteRegistration?.orgId && data.websiteRegistration?.reportId) {
+        binding = {
+          orgId: data.websiteRegistration.orgId,
+          reportId: data.websiteRegistration.reportId,
+        };
+      }
+    } catch {
+      binding = null;
+    }
+  }
+  for (const node of nodes) {
+    if (!hubVisible || !binding) {
+      node.hidden = true;
+      node.removeAttribute("data-org-id");
+      node.removeAttribute("data-report-id");
+      continue;
+    }
+    node.hidden = false;
+    node.setAttribute("data-org-id", binding.orgId);
+    node.setAttribute("data-report-id", binding.reportId);
+  }
+  sessionLog("chrome.ereportConnectorGate", { binding: Boolean(binding), hubVisible, count: nodes.length });
+}
+
 async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<void> {
   const nodes = [...document.querySelectorAll("[data-service]")].filter(
     (node): node is HTMLElement => node instanceof HTMLElement,
@@ -458,6 +503,7 @@ export async function refreshAuthChrome(): Promise<void> {
     node.hidden = false;
   });
   await syncSubscriptionNav(isAdmin, authed);
+  await syncEreportConnectorGate(authed);
   enforceGuestInstitutesAccess(authed);
   enforcePlainUserRouteAccess(isPlainUser);
   if (authed) {

@@ -38,6 +38,8 @@ export function closeEreportConnectorModal() {
     window.removeEventListener("message", messageHandler);
     messageHandler = null;
   }
+  // Also close quick modal if open.
+  void import("./ereport-quick-connector").then((m) => m.closeEreportQuickConnector());
 }
 
 function sameHost(origin: string, base: string): boolean {
@@ -48,7 +50,8 @@ function sameHost(origin: string, base: string): boolean {
   }
 }
 
-export function openEreportConnectorModal(opts: EreportConnectorOpenOpts = {}) {
+/** Full iframe web-connector (advanced editor). */
+export function openEreportAdvancedConnectorModal(opts: EreportConnectorOpenOpts = {}) {
   closeEreportConnectorModal();
   const base = baseOrigin(opts);
   openBase = base;
@@ -78,40 +81,28 @@ export function openEreportConnectorModal(opts: EreportConnectorOpenOpts = {}) {
   closeBtn.textContent = "×";
   closeBtn.addEventListener("click", (ev) => {
     ev.preventDefault();
-    ev.stopPropagation();
     closeEreportConnectorModal();
   });
 
   const iframe = document.createElement("iframe");
   iframe.className = "ereport-connector-overlay__iframe";
-  iframe.src = src;
   iframe.title = opts.label || "eReport connector";
+  iframe.src = src;
   iframe.setAttribute("allow", "clipboard-write");
 
-  let sent = false;
-  const sendInit = () => {
-    if (sent || !orgId || !reportId || !iframe.contentWindow) return;
-    try {
-      iframe.contentWindow.postMessage({ type: INIT_TYPE, orgId, reportId }, base);
-      sent = true;
-    } catch {
-      /* ignore */
-    }
-  };
-
-  iframe.addEventListener("load", sendInit);
-
   messageHandler = (ev: MessageEvent) => {
-    if (!ev.data || typeof ev.data !== "object") return;
-    if (!sameHost(ev.origin, openBase || base)) return;
-    const type = (ev.data as { type?: string }).type;
+    if (!sameHost(ev.origin, openBase)) return;
+    const data = ev.data;
+    if (!data || typeof data !== "object") return;
+    const type = (data as { type?: string }).type;
+    if (type === READY_TYPE && iframe.contentWindow) {
+      iframe.contentWindow.postMessage(
+        { type: INIT_TYPE, orgId, reportId },
+        openBase,
+      );
+    }
     if (type === CLOSE_TYPE) {
       closeEreportConnectorModal();
-      return;
-    }
-    if (type === READY_TYPE) {
-      sent = false;
-      sendInit();
     }
   };
   window.addEventListener("message", messageHandler);
@@ -127,10 +118,19 @@ export function openEreportConnectorModal(opts: EreportConnectorOpenOpts = {}) {
   document.addEventListener("keydown", onEscape, true);
   closeBtn.focus();
 
-  // Ask chrome to close trays without breaking aria state.
   document.dispatchEvent(new CustomEvent("eos:close-trays"));
 
-  if (mustLog) console.log("[ereport-connector-modal] open", { orgId: Boolean(orgId), reportId: Boolean(reportId) });
+  if (mustLog) console.log("[ereport-connector-modal] open advanced", { orgId: Boolean(orgId), reportId: Boolean(reportId) });
+}
+
+/** Default: quick issue reporter (website registration). */
+export async function openEreportConnectorModal(opts: EreportConnectorOpenOpts = {}) {
+  const { openEreportQuickConnector } = await import("./ereport-quick-connector");
+  const orgId = (opts.orgId || "").trim();
+  const reportId = (opts.reportId || "").trim();
+  await openEreportQuickConnector({
+    binding: orgId && reportId ? { orgId, reportId } : null,
+  });
 }
 
 export function wireEreportConnectorMenu(root: ParentNode = document) {
@@ -142,7 +142,7 @@ export function wireEreportConnectorMenu(root: ParentNode = document) {
       ev.preventDefault();
       const orgId = node.getAttribute("data-org-id") || undefined;
       const reportId = node.getAttribute("data-report-id") || undefined;
-      openEreportConnectorModal({ orgId, reportId });
+      void openEreportConnectorModal({ orgId, reportId });
     });
   });
 }
@@ -171,7 +171,7 @@ export function exposeEreportConnectorGlobal() {
       }
       const open = (ev?: Event) => {
         ev?.preventDefault?.();
-        openEreportConnectorModal({
+        void openEreportConnectorModal({
           orgId: opts.orgId,
           reportId: opts.reportId,
           baseUrl: opts.baseUrl,
@@ -201,7 +201,9 @@ export function exposeEreportConnectorGlobal() {
       document.body.appendChild(fab);
       return { open, close: closeEreportConnectorModal, el: fab };
     },
-    open: openEreportConnectorModal,
+    open: (opts) => {
+      void openEreportConnectorModal(opts);
+    },
     close: closeEreportConnectorModal,
   };
 }

@@ -20,10 +20,19 @@ export type OrgCard = {
   updatedAt?: string;
 };
 
+export type EreportPurpose = "website_registration" | "other";
+
+export type WebsiteRegistrationBinding = {
+  orgId: string;
+  reportId: string;
+  tema?: string;
+};
+
 export type ReportCard = {
   id: string;
   tema: string;
   reportNumber?: string;
+  purpose?: EreportPurpose | string;
   updatedAt: string;
 };
 
@@ -39,6 +48,7 @@ export type EreportMeta = {
   tema: string;
   reportNumber?: string;
   reportDate?: string;
+  purpose?: EreportPurpose | string;
   orgId: string;
   ownerUserId?: string;
   ownerEmail?: string;
@@ -82,7 +92,13 @@ export function displayOwnerSafe(email: string): string {
 }
 
 export function fetchEreportAccess() {
-  return apiRequest<{ canCreate?: boolean; ownerSafe?: string; ownerEmail?: string; ownerUserId?: string }>("/ereport/access");
+  return apiRequest<{
+    canCreate?: boolean;
+    ownerSafe?: string;
+    ownerEmail?: string;
+    ownerUserId?: string;
+    websiteRegistration?: WebsiteRegistrationBinding | null;
+  }>("/ereport/access");
 }
 
 export function fetchEreportOrgs() {
@@ -93,10 +109,15 @@ export function fetchEreportOrg(orgId: string) {
   return apiRequest<{ org?: OrgCard & { name: string }; reports?: ReportCard[] }>(`/ereport/orgs/${orgId}`);
 }
 
-export function createEreportOrg(name: string, firstReportName: string) {
+export function createEreportOrg(
+  name: string,
+  firstReportName: string,
+  firstReportPurpose: EreportPurpose | string = "other",
+) {
   return postJSON<{ org?: OrgCard & EreportMeta; report?: EreportMeta; viewUrl?: string }>("/ereport/orgs", {
     name,
     firstReportName,
+    firstReportPurpose,
   });
 }
 
@@ -108,8 +129,8 @@ export function deleteEreportOrg(orgId: string) {
   return deleteJSON(`/ereport/orgs/${orgId}`);
 }
 
-export function createOrgReport(orgId: string, tema: string) {
-  return postJSON<{ meta?: EreportMeta; viewUrl?: string }>(`/ereport/orgs/${orgId}/reports`, { tema });
+export function createOrgReport(orgId: string, tema: string, purpose: EreportPurpose | string = "other") {
+  return postJSON<{ meta?: EreportMeta; viewUrl?: string }>(`/ereport/orgs/${orgId}/reports`, { tema, purpose });
 }
 
 export function importOrgReport(orgId: string, tema: string, payload: EreportPayload) {
