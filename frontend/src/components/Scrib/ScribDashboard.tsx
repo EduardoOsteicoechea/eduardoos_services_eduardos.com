@@ -127,30 +127,43 @@ export default function ScribDashboard() {
       e.preventDefault();
       e.stopPropagation();
       const handle = e.currentTarget;
-      handle.setPointerCapture(e.pointerId);
+      const pointerId = e.pointerId;
+      try {
+        handle.setPointerCapture(pointerId);
+      } catch {
+        /* capture optional — window listeners still drive the drag */
+      }
       const startX = e.clientX;
       const startRem = railWidthRem;
       const rootRem = readRootRem();
 
       const onMove = (moveEv: PointerEvent) => {
+        if (moveEv.pointerId !== pointerId) return;
         const deltaRem = (moveEv.clientX - startX) / rootRem;
         setRailWidthRem(clampRailWidthRem(startRem + deltaRem));
       };
 
       const onEnd = (endEv: PointerEvent) => {
-        handle.releasePointerCapture(endEv.pointerId);
-        handle.removeEventListener("pointermove", onMove);
-        handle.removeEventListener("pointerup", onEnd);
-        handle.removeEventListener("pointercancel", onEnd);
+        if (endEv.pointerId !== pointerId) return;
+        try {
+          if (handle.hasPointerCapture(pointerId)) {
+            handle.releasePointerCapture(pointerId);
+          }
+        } catch {
+          /* ignore */
+        }
+        window.removeEventListener("pointermove", onMove);
+        window.removeEventListener("pointerup", onEnd);
+        window.removeEventListener("pointercancel", onEnd);
         const deltaRem = (endEv.clientX - startX) / rootRem;
         const next = clampRailWidthRem(startRem + deltaRem);
         setRailWidthRem(next);
         writeStoredRailWidthRem(next);
       };
 
-      handle.addEventListener("pointermove", onMove);
-      handle.addEventListener("pointerup", onEnd);
-      handle.addEventListener("pointercancel", onEnd);
+      window.addEventListener("pointermove", onMove);
+      window.addEventListener("pointerup", onEnd);
+      window.addEventListener("pointercancel", onEnd);
     },
     [railWidthRem],
   );
@@ -501,18 +514,18 @@ export default function ScribDashboard() {
                   }
                   onKeyDown={onNameKeyDown}
                 />
-                <button
-                  type="button"
-                  className="scrib-book__resizer"
-                  title="Redimensionar barra de sección"
-                  aria-label="Redimensionar barra de sección"
-                  onPointerDown={onRailResizePointerDown}
-                >
-                  <span className="scrib-book__resizer-dot" aria-hidden="true" />
-                  <span className="scrib-book__resizer-dot" aria-hidden="true" />
-                  <span className="scrib-book__resizer-dot" aria-hidden="true" />
-                </button>
               </aside>
+              <button
+                type="button"
+                className="scrib-book__resizer"
+                title="Redimensionar barra de sección"
+                aria-label="Redimensionar barra de sección"
+                onPointerDown={onRailResizePointerDown}
+              >
+                <span className="scrib-book__resizer-dot" aria-hidden="true" />
+                <span className="scrib-book__resizer-dot" aria-hidden="true" />
+                <span className="scrib-book__resizer-dot" aria-hidden="true" />
+              </button>
               <button
                 type="button"
                 className="icon-btn scrib-book__delete"

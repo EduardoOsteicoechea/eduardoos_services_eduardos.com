@@ -148,6 +148,7 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   background: var(--color-surface);
+  overflow: visible;
 }
 
 .scrib-book--drop-target {
@@ -158,6 +159,7 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
 
 .scrib-book__rail {
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,15 +170,20 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   min-height: 0;
   padding-right: var(--rail-gap);
   border-right: var(--border-width) solid var(--color-border);
+  overflow: visible;
 }
 
-/* Horizontal resize grip: centered on the rail’s right border. */
+/*
+ * Grip is a child of .scrib-book (not the rail) so main/cards cannot paint over it.
+ * 0.9375×2.8125rem visual; centered on the rail’s right border at mid-height.
+ */
 .scrib-book__resizer {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: -0.46875rem;
-  z-index: 3;
+  top: 50%;
+  left: calc(
+    var(--space-padding) + var(--scrib-book-rail-width) - 0.46875rem
+  );
+  z-index: 5;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -185,7 +192,7 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   gap: 0.1875rem;
   width: 0.9375rem;
   height: 2.8125rem;
-  margin-block: auto;
+  margin: 0;
   padding: 0;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
@@ -193,6 +200,7 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   color: var(--color-muted);
   cursor: col-resize;
   touch-action: none;
+  transform: translateY(-50%);
 }
 
 .scrib-book__resizer:hover,
