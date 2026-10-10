@@ -43,11 +43,23 @@ type ItemNode = {
   incidencia?: string;
   status?: string;
   fechaIncidencia?: string;
+  checklist?: Array<{ id?: string; checked?: boolean }>;
 };
 type ReportPayload = {
   reportDate?: string;
   sections?: SectionNode[];
 };
+
+/** Open = not closed. Closed = status aprobado, or all checklist rows checked. */
+export function isWebsiteIssueOpen(item: {
+  status?: string;
+  checklist?: Array<{ checked?: boolean }> | null;
+}): boolean {
+  if ((item.status || "").trim() === "aprobado") return false;
+  const list = Array.isArray(item.checklist) ? item.checklist : [];
+  if (list.length > 0 && list.every((c) => !!c.checked)) return false;
+  return true;
+}
 
 let writeChain: Promise<void> = Promise.resolve();
 
@@ -431,7 +443,7 @@ export async function openEreportQuickConnector(opts?: {
   function renderList() {
     listEl.replaceChildren();
     const group = currentGroup();
-    const items = group?.items || [];
+    const items = (group?.items || []).filter(isWebsiteIssueOpen);
     if (!defaults?.sectionId || !defaults?.groupId) {
       setStatus("Configure section and subsection first.");
       return;
@@ -439,7 +451,10 @@ export async function openEreportQuickConnector(opts?: {
     if (items.length === 0) {
       const empty = document.createElement("li");
       empty.className = "ereport-quick-overlay__empty";
-      empty.textContent = "No issues in this subsection yet.";
+      empty.textContent =
+        (group?.items || []).length > 0
+          ? "No open issues in this subsection."
+          : "No issues in this subsection yet.";
       listEl.append(empty);
       return;
     }

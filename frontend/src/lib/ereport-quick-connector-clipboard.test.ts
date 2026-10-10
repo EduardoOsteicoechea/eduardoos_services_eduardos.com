@@ -1,5 +1,38 @@
 import { describe, expect, it } from "vitest";
-import { formatIssueClipboardText } from "./ereport-quick-connector";
+import {
+  formatIssueClipboardText,
+  isWebsiteIssueOpen,
+} from "./ereport-quick-connector";
+
+describe("isWebsiteIssueOpen", () => {
+  it("hides aprobado status", () => {
+    expect(isWebsiteIssueOpen({ status: "aprobado" })).toBe(false);
+  });
+
+  it("hides when every checklist row is checked", () => {
+    expect(
+      isWebsiteIssueOpen({
+        status: "reprobado",
+        checklist: [
+          { checked: true },
+          { checked: true },
+        ],
+      }),
+    ).toBe(false);
+  });
+
+  it("keeps reprobado / partial / empty checklist open", () => {
+    expect(isWebsiteIssueOpen({ status: "reprobado" })).toBe(true);
+    expect(
+      isWebsiteIssueOpen({
+        status: "",
+        checklist: [{ checked: true }, { checked: false }],
+      }),
+    ).toBe(true);
+    expect(isWebsiteIssueOpen({ status: "", checklist: [] })).toBe(true);
+  });
+});
+
 
 describe("formatIssueClipboardText", () => {
   it("formats labeled ids and nombre/incidencia text", () => {
