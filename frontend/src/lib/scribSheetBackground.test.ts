@@ -8,6 +8,8 @@ import {
   SCRIB_PAGE_WIDTH_MM,
   isScribDrawableLayer,
   normalizeScribBackgroundPattern,
+  resolveScribSheetFromLocation,
+  scribSheetHref,
   toggleScribBackgroundPattern,
 } from "./scrib";
 import {
@@ -184,5 +186,29 @@ describe("scrib text layer labels", () => {
     expect(SCRIB_LAYER_LABELS.translation1).toBe("Text 2");
     expect(SCRIB_LAYER_LABELS.translation2).toBe("Text 3");
     expect(isScribDrawableLayer("translation2")).toBe(true);
+  });
+});
+
+describe("scrib sheet open href", () => {
+  it("builds and resolves sheet URLs with book+sheet (user optional)", () => {
+    expect(scribSheetHref("member_at_x.com", "b1", "s1")).toBe(
+      "/scrib/sheet?book=b1&sheet=s1&user=member_at_x.com",
+    );
+    expect(scribSheetHref("", "b1", "s1")).toBe("/scrib/sheet?book=b1&sheet=s1");
+    expect(
+      resolveScribSheetFromLocation({
+        pathname: "/scrib/sheet",
+        search: "?book=b1&sheet=s1",
+      }),
+    ).toEqual({ userSafe: "", bookId: "b1", sheetId: "s1" });
+    expect(
+      resolveScribSheetFromLocation({
+        pathname: "/scrib/sheet",
+        search: "?user=u&book=b1&sheet=s1",
+      }),
+    ).toEqual({ userSafe: "u", bookId: "b1", sheetId: "s1" });
+    expect(
+      resolveScribSheetFromLocation({ pathname: "/scrib/sheet", search: "" }),
+    ).toBeNull();
   });
 });

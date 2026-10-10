@@ -401,7 +401,8 @@ export async function moveScribSheet(
 }
 
 export function scribSheetHref(userSafe: string, bookId: string, sheetId: string): string {
-  const q = new URLSearchParams({ user: userSafe, book: bookId, sheet: sheetId });
+  const q = new URLSearchParams({ book: bookId, sheet: sheetId });
+  if (userSafe) q.set("user", userSafe);
   return `/scrib/sheet?${q.toString()}`;
 }
 
@@ -424,9 +425,18 @@ export function resolveScribSheetFromLocation(loc?: {
   const userSafe = params.get("user") ?? "";
   const bookId = params.get("book") ?? "";
   const sheetId = params.get("sheet") ?? "";
-  if (userSafe && bookId && sheetId) {
+  // API fetch only needs book + sheet; `user` is optional URL identity.
+  if (bookId && sheetId) {
+    if (mustLog) {
+      console.log("[scrib] resolve sheet location", {
+        userSafe: Boolean(userSafe),
+        bookId,
+        sheetId,
+      });
+    }
     return { userSafe, bookId, sheetId };
   }
+  if (mustLog) console.log("[scrib] resolve sheet location failed", { search: target.search });
   return null;
 }
 

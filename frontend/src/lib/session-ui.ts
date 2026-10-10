@@ -426,6 +426,28 @@ export function onSessionPageReady(init: (root: HTMLElement) => void): void {
   });
 }
 
+/** Same-origin relative path (+ search/hash) from `?next=`; rejects open redirects. */
+export function safePostAuthNext(raw: string | null | undefined): string | null {
+  if (!raw) return null;
+  let value = raw.trim();
+  try {
+    value = decodeURIComponent(value);
+  } catch {
+    /* keep trimmed raw */
+  }
+  value = value.trim();
+  if (!value.startsWith("/") || value.startsWith("//") || value.includes("://")) {
+    return null;
+  }
+  return value;
+}
+
+export function redirectAfterAuth(): void {
+  const next = safePostAuthNext(new URLSearchParams(window.location.search).get("next"));
+  sessionLog("session.redirectAfterAuth", { next: next ?? "/" });
+  go(next ?? "/");
+}
+
 export async function requireGuest(root: HTMLElement, copy: SessionCopy): Promise<boolean> {
   setBanner(root, copy.loading);
   sessionLog("session.requireGuest.start");
@@ -433,7 +455,7 @@ export async function requireGuest(root: HTMLElement, copy: SessionCopy): Promis
     const { status, data } = await getMe();
     sessionLog("session.requireGuest.me", { status, userId: data.id, error: data.error });
     if (status === 200) {
-      go("/");
+      redirectAfterAuth();
       return false;
     }
     if (status !== 401) {
@@ -645,7 +667,7 @@ async function persistLoginForm(form: HTMLFormElement): Promise<void> {
     setBanner(root, message.text, message.kind);
     if (result.status === 200) {
       await afterAuthChange();
-      go("/");
+      redirectAfterAuth();
     }
   } catch {
     setBanner(root, copy.loadError, "err");

@@ -236,7 +236,8 @@ export default function ScribEditor() {
         resolved.bookId,
         resolved.sheetId,
       );
-      if (window.location.pathname !== pretty) {
+      const current = `${window.location.pathname}${window.location.search}`;
+      if (current !== pretty) {
         replaceClientUrl(pretty);
       }
     }

@@ -23,7 +23,7 @@ vi.mock("./router", () => ({
 import { getMe, postJSON } from "./api";
 import { go } from "./router";
 import { applySessionAvatar } from "./chrome";
-import { fillProfile, onBoundPageReady, onSessionPageReady, profileAvatarURL, profilePatchBody, reportFailure, requireAuth, requireGuest, sanitizePhoneNational, sessionCopy, setBusy, loginBodyFromForm, splitE164, startProfileActions } from "./session-ui";
+import { fillProfile, onBoundPageReady, onSessionPageReady, profileAvatarURL, profilePatchBody, reportFailure, requireAuth, requireGuest, sanitizePhoneNational, safePostAuthNext, sessionCopy, setBusy, loginBodyFromForm, splitE164, startProfileActions } from "./session-ui";
 import { startErrorModal } from "./error-modal";
 
 function mountModal(): void {
@@ -58,6 +58,18 @@ describe("session forms", () => {
     document.body.innerHTML = "";
   });
 
+  it("keeps same-origin next paths with query for post-auth redirect", () => {
+    expect(
+      safePostAuthNext("/scrib/sheet?user=a&book=b&sheet=c"),
+    ).toBe("/scrib/sheet?user=a&book=b&sheet=c");
+    expect(safePostAuthNext(encodeURIComponent("/scrib/sheet?book=b&sheet=c"))).toBe(
+      "/scrib/sheet?book=b&sheet=c",
+    );
+    expect(safePostAuthNext("https://evil.example/")).toBeNull();
+    expect(safePostAuthNext("//evil.example")).toBeNull();
+    expect(safePostAuthNext("")).toBeNull();
+  });
+
   it("treats 401 /api/auth/me as normal guest state", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 401,
@@ -70,6 +82,23 @@ describe("session forms", () => {
     expect(go).not.toHaveBeenCalled();
     expect(document.getElementById("error-modal")?.hidden).toBe(true);
     expect(root.querySelector("[data-banner]")?.textContent).toBe("Sign in or create an account.");
+  });
+
+  it("sends authenticated guests to next including sheet query", async () => {
+    vi.stubGlobal("location", {
+      ...window.location,
+      search: "?next=%2Fscrib%2Fsheet%3Fbook%3Db1%26sheet%3Ds1",
+    });
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-authed",
+      data: { id: "u1", email: "member@eduardoos.com", username: "member", role: "user" },
+    });
+    const root = document.querySelector("[data-session]") as HTMLElement;
+    const ok = await requireGuest(root, sessionCopy());
+    expect(ok).toBe(false);
+    expect(go).toHaveBeenCalledWith("/scrib/sheet?book=b1&sheet=s1");
+    vi.unstubAllGlobals();
   });
 
   it("opens the modal for non-401 session load failures", async () => {

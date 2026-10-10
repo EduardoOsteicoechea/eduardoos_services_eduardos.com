@@ -8,6 +8,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { APP_ROUTES } from "../../config/routes";
 import { isAuthenticated, isPlatformAdmin, refreshAuthSession } from "../../lib/auth";
+import { mustLog } from "../../lib/dev-log";
 import {
   checkServiceAccess,
   fetchMyEntitlements,
@@ -15,6 +16,14 @@ import {
 } from "../../lib/payments";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
 import "./ServiceGate.css";
+
+/** Same-origin path + query + hash for post-login return (never drop search). */
+function loginNextTarget(): string {
+  if (typeof window === "undefined") return "/";
+  const next = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  if (mustLog) console.log("[service-gate] login next", { next });
+  return next || "/";
+}
 
 interface ServiceGateProps {
   serviceId: string;
@@ -98,7 +107,7 @@ export default function ServiceGate({
         <div className="service-gate__actions">
           <a
             className="btn btn--primary"
-            href={`${APP_ROUTES.login}?next=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname : "/")}`}
+            href={`${APP_ROUTES.login}?next=${encodeURIComponent(loginNextTarget())}`}
           >
             Sign in
           </a>
