@@ -6,7 +6,14 @@
  * localStorage (`eduardoos-scrib-institutes-nav`) — amendment 2026-09-03.
  */
 
-import { useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import {
   chapterNavLabel,
   fetchParagraphChapter,
@@ -16,6 +23,11 @@ import {
   type ParagraphIndexChapter,
   type ParagraphUnit,
 } from "../../lib/calvinsInstitutesParagraphs";
+import {
+  readStoredRefPanelWidthRem,
+  SCRIB_INSTITUTES_PANEL_WIDTH_KEY,
+  startRefPanelResize,
+} from "../../lib/scribPanelResize";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
 import type { ScribDockSide } from "./ScribToolbar";
 
@@ -75,6 +87,29 @@ export default function ScribInstitutesModal({
     stored?.chapterId ?? null,
   );
   const [navCollapsed, setNavCollapsed] = useState(false);
+  const [panelWidthRem, setPanelWidthRem] = useState(() =>
+    typeof window === "undefined"
+      ? 18.25
+      : readStoredRefPanelWidthRem(SCRIB_INSTITUTES_PANEL_WIDTH_KEY),
+  );
+
+  const onPanelResizePointerDown = useCallback(
+    (e: ReactPointerEvent<HTMLButtonElement>) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      e.stopPropagation();
+      startRefPanelResize({
+        pointerId: e.pointerId,
+        startClientX: e.clientX,
+        startWidthRem: panelWidthRem,
+        dockSide,
+        storageKey: SCRIB_INSTITUTES_PANEL_WIDTH_KEY,
+        onWidth: setPanelWidthRem,
+        captureTarget: e.currentTarget,
+      });
+    },
+    [dockSide, panelWidthRem],
+  );
 
   const groups = useMemo(() => groupChaptersByLiber(chapters), [chapters]);
   const bookEntries = useMemo(() => {
@@ -199,7 +234,31 @@ export default function ScribInstitutesModal({
     : "Ocultar selector de liber, caput y párrafo";
 
   return (
-    <aside className={panelClass} aria-label="Institutes Capita">
+    <aside
+      className={panelClass}
+      aria-label="Institutes Capita"
+      style={
+        {
+          "--scrib-ref-panel-width": `${panelWidthRem}rem`,
+        } as CSSProperties
+      }
+    >
+      <button
+        type="button"
+        className="scrib-resize-grip scrib-ref-panel__resizer"
+        title="Redimensionar panel Institutes"
+        aria-label="Redimensionar panel Institutes"
+        onPointerDown={onPanelResizePointerDown}
+      >
+        <span className="scrib-resize-grip__dots" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </span>
+      </button>
       <header className="scrib-ref-panel__head">
         <h2>Institutes</h2>
       </header>

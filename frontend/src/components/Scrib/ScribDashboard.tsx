@@ -515,16 +515,21 @@ export default function ScribDashboard() {
                   onKeyDown={onNameKeyDown}
                 />
               </aside>
-              <button
+                <button
                 type="button"
-                className="scrib-book__resizer"
+                className="scrib-resize-grip scrib-book__resizer"
                 title="Redimensionar barra de sección"
                 aria-label="Redimensionar barra de sección"
                 onPointerDown={onRailResizePointerDown}
               >
-                <span className="scrib-book__resizer-dot" aria-hidden="true" />
-                <span className="scrib-book__resizer-dot" aria-hidden="true" />
-                <span className="scrib-book__resizer-dot" aria-hidden="true" />
+                <span className="scrib-resize-grip__dots" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </span>
               </button>
               <button
                 type="button"
