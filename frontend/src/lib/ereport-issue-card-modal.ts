@@ -372,14 +372,28 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
       row.setAttribute("data-check-id", c.id);
       const toggle = document.createElement("button");
       toggle.type = "button";
-      toggle.className = `icon-btn ereport-issue-card-overlay__check-toggle${c.checked ? " is-checked" : ""}`;
+      toggle.className = `ereport-issue-card-overlay__check-toggle${c.checked ? " is-checked" : ""}`;
       toggle.setAttribute("data-check-toggle", "");
       toggle.setAttribute("aria-pressed", c.checked ? "true" : "false");
       toggle.title = c.checked ? "Uncheck" : "Check";
-      toggle.setAttribute("aria-label", c.checked ? `Uncheck ${c.label || "UX"}` : `Check ${c.label || "UX"}`);
-      toggle.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">check</span>';
-      toggle.addEventListener("click", () => {
-        c.checked = !c.checked;
+      toggle.setAttribute(
+        "aria-label",
+        c.checked ? `Uncheck ${c.label || "UX"}` : `Check ${c.label || "UX"}`,
+      );
+      toggle.innerHTML =
+        '<span class="material-symbols-outlined" aria-hidden="true">check</span>';
+      toggle.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        if (!fieldsReady || toggle.disabled) return;
+        const id = c.id;
+        draft.checklist = ensureIssueChecklist(
+          (draft.checklist || []).map((rowItem) =>
+            rowItem.id === id
+              ? { ...rowItem, checked: !rowItem.checked }
+              : rowItem,
+          ),
+        );
         renderChecklist();
         scheduleSave();
       });
@@ -389,22 +403,29 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
       label.setAttribute("data-check-label", "");
       label.value = c.label || "";
       label.placeholder = "UI/UX text";
-      label.maxLength = 120;
+      label.maxLength = 200;
       label.setAttribute("aria-label", "UI/UX text");
+      label.disabled = !fieldsReady;
       label.addEventListener("input", () => scheduleSave());
       const del = document.createElement("button");
       del.type = "button";
       del.className = "icon-btn";
       del.title = "Remove UX check";
       del.setAttribute("aria-label", "Remove UX check");
-      del.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">delete</span>';
-      del.addEventListener("click", () => {
+      del.disabled = !fieldsReady;
+      del.innerHTML =
+        '<span class="material-symbols-outlined" aria-hidden="true">delete</span>';
+      del.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        if (!fieldsReady || del.disabled) return;
         draft.checklist = ensureIssueChecklist(
           (draft.checklist || []).filter((x) => x.id !== c.id),
         );
         renderChecklist();
         scheduleSave();
       });
+      toggle.disabled = !fieldsReady;
       row.append(toggle, label, del);
       checklistHost.append(row);
     }
@@ -475,9 +496,15 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
           draft = cloneItem({
             ...draft,
             ...node,
+            /* Keep local checklist if PATCH echo omits/reshapes checked flags. */
+            checklist:
+              Array.isArray(node.checklist) && node.checklist.length > 0
+                ? node.checklist
+                : draft.checklist,
             imagesIncidencia: draft.imagesIncidencia,
             imagesSolucion: draft.imagesSolucion,
           });
+          renderChecklist();
         }
         notifyReportMutated(orgId, reportId);
         opts.onChanged?.();

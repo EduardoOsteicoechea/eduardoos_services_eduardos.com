@@ -1224,8 +1224,43 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
   min-width: 0;
 }
 
+/* Tracker-parity toggle: empty ring when off; filled + visible check when on. */
+.ereport-issue-card-overlay__check-toggle {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  padding: 0;
+  border-radius: 50%;
+  border: 0.125rem solid var(--color-border);
+  background: transparent;
+  color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ereport-issue-card-overlay__check-toggle .material-symbols-outlined {
+  font-size: var(--font-size-sm);
+  line-height: 1;
+}
+
+.ereport-issue-card-overlay__check-toggle:hover,
+.ereport-issue-card-overlay__check-toggle:focus-visible {
+  border-color: var(--color-accent);
+  outline: none;
+}
+
 .ereport-issue-card-overlay__check-toggle.is-checked {
-  color: var(--color-ok);
+  background: var(--color-ok);
+  border-color: var(--color-ok);
+  color: var(--color-button-fg);
+}
+
+.ereport-issue-card-overlay__check-toggle:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .ereport-issue-card-overlay__footer .btn--danger {
