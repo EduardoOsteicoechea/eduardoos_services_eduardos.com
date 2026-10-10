@@ -49,8 +49,9 @@ html[data-page^="ereport"] {
   --font-sm: 0.875rem;
   --font-base: 1rem;
   --font-lg: 1.125rem;
-  /* Workspace / invite text scale (font +/-). Chrome keeps site --color-*. */
-  font-size: calc(1rem * var(--site-text-scale));
+  /* Spec 063: eReport-only root rem (0.875rem = --font-size-sm) × --site-text-scale.
+     Rem children (type + controls) scale; font +/- keeps --site-text-scale steps. */
+  font-size: calc(0.875rem * var(--site-text-scale));
   color-scheme: dark;
 }
 

@@ -202,6 +202,8 @@ export function startTrackerHost(
             send(msg);
           }
           opts.handlers.onBooted?.();
+          // Boot may have used an empty in-memory CSRF; ask the host to mint + resend.
+          opts.handlers.onNeedConfig?.();
         },
         onLoaded: () => {
           send({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });

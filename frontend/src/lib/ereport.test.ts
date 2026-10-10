@@ -108,6 +108,7 @@ describe("eReport public invite routing", () => {
     expect(layoutSrc).toContain("data-page-title");
     const css = readFileSync(join(here, "../styles/ereport-chrome.css"), "utf8");
     expect(css).toContain("--font-base: 1rem");
+    expect(css).toContain("font-size: calc(0.875rem * var(--site-text-scale))");
     expect(css).toContain("--p3: 1rem");
     expect(css).toContain("--m2: 0.75rem");
     expect(css).toMatch(/\.btn--red,[\s\S]{0,80}\.btn--danger/);
@@ -392,6 +393,8 @@ describe("eReport workspace chrome", () => {
       expect(src).not.toContain('iframe.src = "/ereport-tracker.html"');
       expect(src).toContain("onNeedConfig");
       expect(src).toContain("trackerConfigMessage");
+      expect(src).toContain("pushConfig()");
+      expect(src).toContain("getCsrf(true)");
     }
   });
 
@@ -436,6 +439,7 @@ describe("eReport workspace chrome", () => {
     expect(host).toMatch(
       /onBooted:\s*\(\)\s*=>\s*\{[\s\S]*?type:\s*"theme"[\s\S]*?trackerLoadMessage/,
     );
+    expect(host).toContain("opts.handlers.onNeedConfig?.()");
     expect(host).toContain("onLoaded:");
     const inviteSrc = readFileSync(join(here, "../pages/ereport/invite.astro"), "utf8");
     expect(inviteSrc).toContain("ereport-theme");

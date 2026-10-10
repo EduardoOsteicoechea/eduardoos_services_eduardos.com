@@ -193,6 +193,84 @@ function log(step: string, detail: Record<string, unknown> = {}): void {
     });
 }
 
+/** Scrollports that can jump when the edit dock shows, hides, focuses, or saves. */
+type EditorScrollSnap = {
+    windowX: number;
+    windowY: number;
+    elements: Array<{ el: HTMLElement; top: number; left: number }>;
+};
+
+function editorScrollElements(): HTMLElement[] {
+    const seen = new Set<HTMLElement>();
+    const out: HTMLElement[] = [];
+    const push = (el: Element | null | undefined): void => {
+        if (!(el instanceof HTMLElement) || seen.has(el)) return;
+        seen.add(el);
+        out.push(el);
+    };
+    push(document.documentElement);
+    push(document.body);
+    push(document.querySelector(".pamphlet-layout-workspace"));
+    push(document.querySelector(".pamphlet-route-root"));
+    push(document.querySelector(".pamphlet-app"));
+    push(document.querySelector("#pamphlet-pdf-stage"));
+    return out;
+}
+
+function captureEditorScroll(): EditorScrollSnap {
+    return {
+        windowX: window.scrollX || 0,
+        windowY: window.scrollY || document.documentElement.scrollTop || 0,
+        elements: editorScrollElements().map((el) => ({
+            el,
+            top: el.scrollTop,
+            left: el.scrollLeft,
+        })),
+    };
+}
+
+function restoreEditorScroll(snap: EditorScrollSnap): void {
+    window.scrollTo(snap.windowX, snap.windowY);
+    for (const entry of snap.elements) {
+        if (!entry.el.isConnected) continue;
+        entry.el.scrollTop = entry.top;
+        entry.el.scrollLeft = entry.left;
+    }
+}
+
+/** Nest-safe: outer open/save/close owns the snap so inner showShell/close do not stomp it. */
+let preserveScrollDepth = 0;
+let preserveScrollSnap: EditorScrollSnap | null = null;
+
+function withPreservedEditorScroll(fn: () => void): void {
+    if (preserveScrollDepth === 0) {
+        preserveScrollSnap = captureEditorScroll();
+    }
+    preserveScrollDepth += 1;
+    try {
+        fn();
+    } finally {
+        preserveScrollDepth -= 1;
+        if (preserveScrollDepth === 0 && preserveScrollSnap) {
+            const snap = preserveScrollSnap;
+            preserveScrollSnap = null;
+            restoreEditorScroll(snap);
+            requestAnimationFrame(() => {
+                restoreEditorScroll(snap);
+                requestAnimationFrame(() => restoreEditorScroll(snap));
+            });
+        }
+    }
+}
+
+function focusWithoutScroll(el: HTMLElement): void {
+    try {
+        el.focus({ preventScroll: true });
+    } catch {
+        el.focus();
+    }
+}
+
 function setDockButtonIcon(btn: HTMLButtonElement, src: string, label: string): void {
     btn.replaceChildren();
     const img = document.createElement("img");
@@ -290,15 +368,40 @@ export function setupEditDock(
         document.body.style.width = "auto";
     }
 
+    function phoneAppScrollTop(): number {
+        const app = document.querySelector(".pamphlet-app");
+        return app instanceof HTMLElement ? app.scrollTop : 0;
+    }
+
     function unlockPhonePageScroll(): void {
         if (!phoneScrollLocked) return;
+        // While locked, wheel/touch scroll moves to .pamphlet-app — fold that in.
+        const y = phoneLockedScrollY + phoneAppScrollTop();
         phoneScrollLocked = false;
         document.body.style.position = "";
         document.body.style.top = "";
         document.body.style.left = "";
         document.body.style.right = "";
         document.body.style.width = "";
-        window.scrollTo(0, phoneLockedScrollY);
+        const app = document.querySelector(".pamphlet-app");
+        if (app instanceof HTMLElement) app.scrollTop = 0;
+        window.scrollTo(0, y);
+        phoneLockedScrollY = y;
+        // Keep nest-safe restore from replaying pre-unlock (window=0 / app scrolled) snaps.
+        if (preserveScrollSnap) {
+            preserveScrollSnap.windowX = window.scrollX || 0;
+            preserveScrollSnap.windowY = y;
+            for (const entry of preserveScrollSnap.elements) {
+                if (entry.el === app || entry.el.classList.contains("pamphlet-app")) {
+                    entry.top = 0;
+                    entry.left = 0;
+                }
+                if (entry.el === document.documentElement || entry.el === document.body) {
+                    entry.top = y;
+                    entry.left = window.scrollX || 0;
+                }
+            }
+        }
     }
 
     const on = <K extends keyof HTMLElementEventMap>(
@@ -381,28 +484,33 @@ export function setupEditDock(
     }
 
     function showShell(): void {
-        dockRoot.hidden = false;
-        syncPhoneDockPortal();
+        withPreservedEditorScroll(() => {
+            dockRoot.hidden = false;
+            syncPhoneDockPortal();
+        });
     }
 
     function close(): void {
-        clearLiveTimer();
-        setChromeStatus(false);
-        session = null;
-        textarea.hidden = true;
-        textarea.value = "";
-        imagePanel.hidden = true;
-        fileInput.value = "";
-        host.setSelected(null, null);
-        host.highlightBodyItem(null);
-        setIdle(true);
-        if (isPersistent()) {
-            showShell();
-        } else {
-            dockRoot.hidden = true;
-            syncPhoneDockPortal();
-        }
-        log("close", { persistent: isPersistent() });
+        withPreservedEditorScroll(() => {
+            clearLiveTimer();
+            setChromeStatus(false);
+            session = null;
+            textarea.hidden = true;
+            textarea.value = "";
+            imagePanel.hidden = true;
+            fileInput.value = "";
+            host.setSelected(null, null);
+            host.highlightBodyItem(null);
+            setIdle(true);
+            if (isPersistent()) {
+                dockRoot.hidden = false;
+                syncPhoneDockPortal();
+            } else {
+                dockRoot.hidden = true;
+                syncPhoneDockPortal();
+            }
+            log("close", { persistent: isPersistent() });
+        });
     }
 
     function syncPersistentShell(): void {
@@ -504,138 +612,146 @@ export function setupEditDock(
     }
 
     function open(loc: LastEditedElement, kindHint = ""): void {
-        const current = host.getDoc();
-        if (!current || !host.hasEditableSession()) {
-            host.setError("No pamphlet file is open.");
-            return;
-        }
+        withPreservedEditorScroll(() => {
+            const current = host.getDoc();
+            if (!current || !host.hasEditableSession()) {
+                host.setError("No pamphlet file is open.");
+                return;
+            }
 
-        if (isChromeColumn(loc.column) || chromeFieldFromKind(kindHint)) {
-            flushLiveText();
-            const field = chromeFieldAt(loc, kindHint);
-            if (!field) {
+            if (isChromeColumn(loc.column) || chromeFieldFromKind(kindHint)) {
+                flushLiveText();
+                const field = chromeFieldAt(loc, kindHint);
+                if (!field) {
+                    host.setError("Campo de cabecera o pie no válido.");
+                    return;
+                }
+                const resolved = locForChromeField(field, loc);
+                const content = readChromeContent(current, resolved, kindHint || field);
+                const max = chromeFieldMaxLength(field);
+                session = {
+                    loc: { column: resolved.column, index: resolved.index },
+                    kind: kindHint || field,
+                    imageMode: false,
+                    chromeMode: true,
+                    initialContent: content,
+                    initialHeightMm: 0,
+                    initialStyles: [
+                        [0, 0],
+                        [0, 0],
+                        [0, 0],
+                    ],
+                };
+                current.last_edited_element = {
+                    column: resolved.column,
+                    index: resolved.index,
+                };
+                host.setDoc(host.ensureDocumentId(current));
+                host.setSelected(resolved.column, resolved.index);
+                host.highlightBodyItem(null);
+
+                showShell();
+                setIdle(false);
+                imagePanel.hidden = true;
+                textarea.hidden = false;
+                suppressInput = true;
+                textarea.value = content;
+                textarea.maxLength = max;
+                const updateStatus = () => {
+                    setChromeStatus(true, Math.max(0, max - textarea.value.length), max);
+                };
+                updateStatus();
+                suppressInput = false;
+                setDockToolbarForChrome(true);
+                requestAnimationFrame(() => {
+                    focusWithoutScroll(textarea);
+                    textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+                });
+                log("open.chrome", {
+                    column: resolved.column,
+                    index: resolved.index,
+                    field,
+                    kindHint: kindHint || null,
+                });
+                return;
+            }
+
+            if (loc.column < 1 || loc.column > 8) {
                 host.setError("Campo de cabecera o pie no válido.");
                 return;
             }
-            const resolved = locForChromeField(field, loc);
-            const content = readChromeContent(current, resolved, kindHint || field);
-            const max = chromeFieldMaxLength(field);
+
+            flushLiveText();
+
+            const item = getBodyItemFromDoc(current, loc);
+            if (!item) {
+                // Hit/DOM race after reflow — do not spam the global error modal.
+                host.setError(
+                    `No se encontró el elemento (columna ${loc.column}, índice ${loc.index}).`,
+                );
+                return;
+            }
+
+            const imageMode = item.type === "image";
+            const styles = structuredClone(item.style_indexes) as StyleIndexes;
             session = {
-                loc: { column: resolved.column, index: resolved.index },
-                kind: kindHint || field,
-                imageMode: false,
-                chromeMode: true,
-                initialContent: content,
-                initialHeightMm: 0,
-                initialStyles: [[0, 0], [0, 0], [0, 0]],
+                loc: { column: loc.column, index: loc.index },
+                kind: kindHint || item.type,
+                imageMode,
+                chromeMode: false,
+                initialContent: item.content,
+                initialHeightMm: item.height_mm || DEFAULT_IMAGE_HEIGHT_MM,
+                initialStyles: styles,
             };
-            current.last_edited_element = {
-                column: resolved.column,
-                index: resolved.index,
-            };
+            current.last_edited_element = { column: loc.column, index: loc.index };
             host.setDoc(host.ensureDocumentId(current));
-            host.setSelected(resolved.column, resolved.index);
-            host.highlightBodyItem(null);
+            host.setSelected(loc.column, loc.index);
+            host.highlightBodyItem(loc);
 
             showShell();
             setIdle(false);
-            imagePanel.hidden = true;
-            textarea.hidden = false;
             suppressInput = true;
-            textarea.value = content;
-            textarea.maxLength = max;
-            const updateStatus = () => {
-                setChromeStatus(true, Math.max(0, max - textarea.value.length), max);
-            };
-            updateStatus();
-            suppressInput = false;
-            setDockToolbarForChrome(true);
-            requestAnimationFrame(() => {
-                textarea.focus();
-                textarea.setSelectionRange(textarea.value.length, textarea.value.length);
-            });
-            log("open.chrome", {
-                column: resolved.column,
-                index: resolved.index,
-                field,
-                kindHint: kindHint || null,
-            });
-            return;
-        }
-
-        if (loc.column < 1 || loc.column > 8) {
-            host.setError("Campo de cabecera o pie no válido.");
-            return;
-        }
-
-        flushLiveText();
-
-        const item = getBodyItemFromDoc(current, loc);
-        if (!item) {
-            // Hit/DOM race after reflow — do not spam the global error modal.
-            host.setError(
-                `No se encontró el elemento (columna ${loc.column}, índice ${loc.index}).`,
-            );
-            return;
-        }
-
-        const imageMode = item.type === "image";
-        const styles = structuredClone(item.style_indexes) as StyleIndexes;
-        session = {
-            loc: { column: loc.column, index: loc.index },
-            kind: kindHint || item.type,
-            imageMode,
-            chromeMode: false,
-            initialContent: item.content,
-            initialHeightMm: item.height_mm || DEFAULT_IMAGE_HEIGHT_MM,
-            initialStyles: styles,
-        };
-        current.last_edited_element = { column: loc.column, index: loc.index };
-        host.setDoc(host.ensureDocumentId(current));
-        host.setSelected(loc.column, loc.index);
-        host.highlightBodyItem(loc);
-
-        showShell();
-        setIdle(false);
-        suppressInput = true;
-        if (imageMode) {
-            textarea.hidden = true;
-            imagePanel.hidden = false;
-        } else {
-            imagePanel.hidden = true;
-            textarea.hidden = false;
-            textarea.value = item.content;
-            requestAnimationFrame(() => {
-                textarea.focus();
-                if (textarea.value === "Write here") textarea.select();
-            });
-        }
-        suppressInput = false;
-
-        setDockToolbarForChrome(false);
-        for (const action of [
-            "move-up",
-            "move-down",
-            "add-above",
-            "add-below",
-            "bold",
-            "notes",
-            "copy",
-        ]) {
-            const btn = dockRoot.querySelector<HTMLButtonElement>(`[data-dock-action="${action}"]`);
-            if (!btn) continue;
-            if (imageMode && (action === "bold" || action === "notes" || action === "copy")) {
-                btn.hidden = true;
+            if (imageMode) {
+                textarea.hidden = true;
+                imagePanel.hidden = false;
             } else {
-                btn.hidden = false;
+                imagePanel.hidden = true;
+                textarea.hidden = false;
+                textarea.value = item.content;
+                requestAnimationFrame(() => {
+                    focusWithoutScroll(textarea);
+                    if (textarea.value === "Write here") textarea.select();
+                });
             }
-        }
+            suppressInput = false;
 
-        log("open", {
-            column: loc.column,
-            index: loc.index,
-            kind: session.kind,
-            imageMode,
+            setDockToolbarForChrome(false);
+            for (const action of [
+                "move-up",
+                "move-down",
+                "add-above",
+                "add-below",
+                "bold",
+                "notes",
+                "copy",
+            ]) {
+                const btn = dockRoot.querySelector<HTMLButtonElement>(
+                    `[data-dock-action="${action}"]`,
+                );
+                if (!btn) continue;
+                if (imageMode && (action === "bold" || action === "notes" || action === "copy")) {
+                    btn.hidden = true;
+                } else {
+                    btn.hidden = false;
+                }
+            }
+
+            log("open", {
+                column: loc.column,
+                index: loc.index,
+                kind: session.kind,
+                imageMode,
+            });
         });
     }
 
@@ -657,69 +773,78 @@ export function setupEditDock(
 
         switch (action) {
             case "ok": {
-                flushLiveText();
-                if (session.chromeMode) {
-                    const doc = host.getDoc();
-                    if (doc) {
-                        host.pushUndoSnapshot();
-                        host.commitChromeOnly(clonePamphlet(doc));
+                withPreservedEditorScroll(() => {
+                    flushLiveText();
+                    if (session?.chromeMode) {
+                        const doc = host.getDoc();
+                        if (doc) {
+                            host.pushUndoSnapshot();
+                            host.commitChromeOnly(clonePamphlet(doc));
+                        }
+                        close();
+                        return;
                     }
                     close();
-                    return;
-                }
-                close();
-                const doc = host.getDoc();
-                if (doc) host.applyLocalDoc(clonePamphlet(doc), { openEdit: false });
+                    const doc = host.getDoc();
+                    if (doc) host.applyLocalDoc(clonePamphlet(doc), { openEdit: false });
+                });
                 return;
             }
             case "cancel": {
-                if (session.chromeMode) {
+                withPreservedEditorScroll(() => {
+                    if (session?.chromeMode) {
+                        const snap = session;
+                        const current = host.getDoc();
+                        if (current) {
+                            writeChromeContent(
+                                current,
+                                snap.loc,
+                                snap.initialContent,
+                                snap.kind,
+                            );
+                            host.setDoc(host.ensureDocumentId(current));
+                            host.syncLiveChromeContent(snap.loc, snap.initialContent);
+                            host.schedulePreview();
+                        }
+                        close();
+                        return;
+                    }
+                    // Discard all edits for this item session (not the activity-bar single-step undo).
                     const snap = session;
-                    const current = host.getDoc();
-                    if (current) {
-                        writeChromeContent(
-                            current,
-                            snap.loc,
-                            snap.initialContent,
-                            snap.kind,
-                        );
-                        host.setDoc(host.ensureDocumentId(current));
-                        host.syncLiveChromeContent(snap.loc, snap.initialContent);
-                        host.schedulePreview();
-                    }
+                    if (!snap) return;
+                    mutateDoc((data, l) => {
+                        updateItemContent(data, l, snap.initialContent);
+                        if (snap.imageMode) {
+                            updateItemHeightMm(data, l, snap.initialHeightMm);
+                            updateItemStyleIndexes(data, l, snap.initialStyles);
+                        }
+                    });
                     close();
-                    return;
-                }
-                // Discard all edits for this item session (not the activity-bar single-step undo).
-                const snap = session;
-                mutateDoc((data, l) => {
-                    updateItemContent(data, l, snap.initialContent);
-                    if (snap.imageMode) {
-                        updateItemHeightMm(data, l, snap.initialHeightMm);
-                        updateItemStyleIndexes(data, l, snap.initialStyles);
-                    }
                 });
-                close();
                 return;
             }
             case "move-up": {
-                host.pushUndoSnapshot();
-                const base = clonePamphlet(current);
-                const nextLoc = moveItemUp(base, loc);
-                if (!nextLoc) return;
-                base.last_edited_element = nextLoc;
-                close();
-                host.commitDocument(base, true);
+                withPreservedEditorScroll(() => {
+                    host.pushUndoSnapshot();
+                    const base = clonePamphlet(current);
+                    const nextLoc = moveItemUp(base, loc);
+                    if (!nextLoc) return;
+                    base.last_edited_element = nextLoc;
+                    close();
+                    host.commitDocument(base, true);
+                });
                 return;
             }
             case "move-down": {
-                host.pushUndoSnapshot();
-                const base = clonePamphlet(current);
-                const nextLoc = moveItemDown(base, loc);
-                if (!nextLoc) return;
-                base.last_edited_element = nextLoc;
-                close();
-                host.commitDocument(base, true);
+                withPreservedEditorScroll(() => {
+                    host.pushUndoSnapshot();
+                    const base = clonePamphlet(current);
+                    const nextLoc = moveItemDown(base, loc);
+                    if (!nextLoc) return;
+                    base.last_edited_element = nextLoc;
+                    close();
+                    host.commitDocument(base, true);
+                });
                 return;
             }
             case "add-above": {

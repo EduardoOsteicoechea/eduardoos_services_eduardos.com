@@ -172,7 +172,7 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <script>
-  import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
+  import { clearAgentRoutePayload, getCsrf, setAgentRoutePayload } from "../../lib/api";
   import { replaceClientUrl } from "../../lib/router";
   import {
     createReportHistory,
@@ -379,9 +379,10 @@ import Layout from "../../layouts/Layout.astro";
           : "";
       const canDelete = !isShared || canEditShared;
       const pushConfig = () => {
-        void refreshCsrf().then(() => {
+        // Force remint so need-config after 403 cannot reuse a stale in-memory token.
+        void getCsrf(true).then((token) => {
           if (disposed || !host) return;
-          host.post(trackerConfigMessage(uploadUrl, rememberedCsrf(), { canDelete }));
+          host.post(trackerConfigMessage(uploadUrl, token || rememberedCsrf(), { canDelete }));
         });
       };
       host?.destroy();
@@ -408,6 +409,9 @@ import Layout from "../../layouts/Layout.astro";
       });
       // Bust cache so the iframe always reboots and receives a fresh config message.
       iframe.src = trackerIframeSrc();
+      // Proactively mint CSRF (boot onNeedConfig also does this) so paste/upload are not stuck
+      // with uploadUrl set but an empty token from rememberedCsrf().
+      pushConfig();
       for (const command of pendingCmds.splice(0)) {
         host.post(trackerCommandMessage(command));
       }

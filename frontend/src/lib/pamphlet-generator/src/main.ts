@@ -1950,6 +1950,14 @@ function activateEditAt(data: PamphletStructure, loc: LastEditedElement): void {
 }
 
 function renderDocument(data: PamphletStructure, openEdit: boolean): void {
+    // DOM rebuild on save/approve must not reset html / PDF-stage scroll.
+    const scrollX = window.scrollX || 0;
+    const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    const stageTop = pdfStage.scrollTop;
+    const stageLeft = pdfStage.scrollLeft;
+    const appTop = appRoot.scrollTop;
+    const appLeft = appRoot.scrollLeft;
+
     const before = columnFingerprint(data);
     // Temporarily force simple pamphlet: structured lead columns are unreliable.
     let migrated = migrateStructuredLeadsToEvenColumns(data);
@@ -1975,6 +1983,11 @@ function renderDocument(data: PamphletStructure, openEdit: boolean): void {
     if (before !== after && hasEditableSession()) {
         schedulePersist();
     }
+    window.scrollTo(scrollX, scrollY);
+    pdfStage.scrollTop = stageTop;
+    pdfStage.scrollLeft = stageLeft;
+    appRoot.scrollTop = appTop;
+    appRoot.scrollLeft = appLeft;
     if (openEdit) {
         activateEditAt(currentDoc ?? migrated, (currentDoc ?? migrated).last_edited_element);
     }

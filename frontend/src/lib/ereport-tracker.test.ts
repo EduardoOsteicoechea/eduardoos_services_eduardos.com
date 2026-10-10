@@ -71,6 +71,7 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain("ingestImageFiles");
     expect(tracker).toContain("bindThumbSources");
     expect(tracker).toContain("ensureImageUploadConfig");
+    expect(tracker).toContain("imageUploadConfigured");
     expect(tracker).toContain("need-config");
     expect(tracker).toContain("bindColumnImageDrop");
     expect(tracker).toContain('data-act="pick-img"');
@@ -78,6 +79,8 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain('document.addEventListener("paste"');
     expect(tracker).toContain("thumb-load-bar");
     expect(tracker).toContain("im.dataUrl || im.url");
+    // Require both uploadUrl and CSRF before treating config as ready.
+    expect(tracker).toContain("imageUpload.url && imageUpload.csrf");
     expect(tracker).not.toContain("reader.readAsDataURL(file)");
     expect(tracker).not.toMatch(/aws-sdk|S3_BUCKET/i);
   });

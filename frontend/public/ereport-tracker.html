@@ -32,11 +32,11 @@
   --sticky-sub-h: 2.75rem;
   --radius: 0.1875rem;
   --section-head-bg: #dcdcdc;
-  /* Spec 063: root rem × --site-text-scale; rem children keep proportions. */
+  /* Spec 063: eReport tracker root rem (0.875rem) × --site-text-scale; rem children keep proportions. */
   --site-text-scale: 1;
 }
 html {
-  font-size: calc(1rem * var(--site-text-scale, 1));
+  font-size: calc(0.875rem * var(--site-text-scale, 1));
   scroll-behavior: smooth;
   height: 100%;
   color-scheme: light;
@@ -2077,15 +2077,23 @@ function clipboardImageFiles(clipboardData) {
   return out;
 }
 
-async function ensureImageUploadConfig() {
-  if (imageUpload.url) return true;
-  if (!(window.parent && window.parent !== window)) return false;
+function imageUploadConfigured() {
+  return Boolean(imageUpload.url && imageUpload.csrf);
+}
+
+async function ensureImageUploadConfig(force = false) {
+  if (!force && imageUploadConfigured()) return true;
+  if (!(window.parent && window.parent !== window)) return imageUploadConfigured();
+  if (force) {
+    // Drop stale CSRF so the host must mint a fresh pair before we proceed.
+    imageUpload.csrf = "";
+  }
   window.parent.postMessage({ source: "ereport-tracker", type: "need-config" }, "*");
   const deadline = Date.now() + 2500;
-  while (!imageUpload.url && Date.now() < deadline) {
+  while (!imageUploadConfigured() && Date.now() < deadline) {
     await new Promise((resolve) => setTimeout(resolve, 50));
   }
-  return !!imageUpload.url;
+  return imageUploadConfigured();
 }
 
 async function uploadImageFile(file) {
@@ -2100,16 +2108,27 @@ async function uploadImageFile(file) {
     toast("No se pudo subir la imagen: falta la configuración de carga.");
     return null;
   }
-  const body = new FormData();
-  body.append("file", file);
-  const headers = { Accept: "application/json" };
-  if (imageUpload.csrf) headers["X-CSRF-Token"] = imageUpload.csrf;
-  const res = await fetch(imageUpload.url, { method: "POST", credentials: "include", headers, body });
-  const data = await res.json().catch(() => ({}));
+  const postOnce = async () => {
+    const body = new FormData();
+    body.append("file", file);
+    const headers = { Accept: "application/json" };
+    if (imageUpload.csrf) headers["X-CSRF-Token"] = imageUpload.csrf;
+    const res = await fetch(imageUpload.url, { method: "POST", credentials: "include", headers, body });
+    const data = await res.json().catch(() => ({}));
+    return { res, data };
+  };
+  let { res, data } = await postOnce();
+  // Host may have booted with an empty/stale CSRF; refresh once and retry.
+  if (res.status === 403 || res.status === 401) {
+    if (await ensureImageUploadConfig(true)) {
+      ({ res, data } = await postOnce());
+    }
+  }
   if (res.status < 200 || res.status >= 300) {
     if (window.parent && window.parent !== window) {
       window.parent.postMessage({ source: "ereport-tracker", type: "error", message: data.message || "Image upload failed." }, "*");
     }
+    toast(data.message || "No se pudo subir la imagen.");
     return null;
   }
   return { id: data.id, mime: data.mime, name: data.name || file.name, url: data.url };

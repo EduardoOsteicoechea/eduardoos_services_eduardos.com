@@ -768,9 +768,9 @@ html.dark .scrib-page {
   width: 100%;
 }
 
-/* —— Tool rail (icon-only; 50px → 3.125rem) —— */
+/* —— Tool rail (icon-only; 60px → 3.75rem so the vertical scrollbar fits) —— */
 :root {
-  --scrib-tool-rail-width: 3.125rem;
+  --scrib-tool-rail-width: 3.75rem;
 }
 
 .scrib-tool-rail {

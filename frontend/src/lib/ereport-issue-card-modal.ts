@@ -561,14 +561,60 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
     return true;
   }
 
-  async function addImages(which: "incidencia" | "solucion", files: FileList | null) {
+  function isImageFile(file: File): boolean {
+    if (/^image\//i.test(file.type || "")) return true;
+    return /\.(png|jpe?g|webp|gif)$/i.test(file.name || "");
+  }
+
+  function clipboardImageFiles(clipboardData: DataTransfer | null): File[] {
+    const out: File[] = [];
+    if (!clipboardData) return out;
+    const files = clipboardData.files ? Array.from(clipboardData.files) : [];
+    for (const file of files) {
+      if (file && isImageFile(file)) out.push(file);
+    }
+    if (out.length) return out;
+    const items = clipboardData.items ? Array.from(clipboardData.items) : [];
+    for (const item of items) {
+      if (!item || !/^image\//i.test(item.type || "")) continue;
+      const file = item.getAsFile?.();
+      if (file) out.push(file);
+    }
+    return out;
+  }
+
+  function resolvePasteImageWhich(target: EventTarget | null): "incidencia" | "solucion" {
+    if (target instanceof Element) {
+      if (target.closest("[data-eq-issue-solucion]") || target.closest("[data-eq-thumbs-solucion]")) {
+        return "solucion";
+      }
+      if (target.closest("[data-eq-issue-incidencia]") || target.closest("[data-eq-thumbs-incidencia]")) {
+        return "incidencia";
+      }
+      if (target.closest(".ereport-issue-card-overlay__col:last-child")) return "solucion";
+    }
+    if (document.activeElement instanceof Element) {
+      if (document.activeElement.closest("[data-eq-issue-solucion]")) return "solucion";
+    }
+    return "incidencia";
+  }
+
+  async function addImages(which: "incidencia" | "solucion", files: FileList | File[] | null) {
     if (!files?.length) return;
+    if (!fieldsReady) {
+      setStatus("Still loading issue…");
+      return;
+    }
+    const list = Array.from(files).filter((file) => file && isImageFile(file));
+    if (!list.length) {
+      setStatus("No images uploaded.");
+      return;
+    }
     await enqueueWrite(async () => {
       const uploaded: EreportIssueImageRef[] = [];
-      for (const file of Array.from(files)) {
-        if (!file.type.startsWith("image/")) continue;
+      for (const file of list) {
         try {
-          await getCsrf();
+          await getCsrf(true);
           const { status, data, requestId } = await uploadReportImage(
             ownerImageUploadPath(orgId, reportId),
             file,
@@ -583,7 +629,7 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
           }
           uploaded.push({
             id: data.id,
-            mime: data.mime,
+            mime: data.mime || file.type || "image/png",
             name: data.name || file.name,
             url: data.url,
           });
@@ -683,8 +729,14 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
     node.addEventListener("change", () => scheduleSave());
   }
 
-  el(frame, "[data-eq-issue-img-inc]")?.addEventListener("click", () => fileInc.click());
-  el(frame, "[data-eq-issue-img-sol]")?.addEventListener("click", () => fileSol.click());
+  el(frame, "[data-eq-issue-img-inc]")?.addEventListener("click", () => {
+    if (!fieldsReady || fileInc.disabled) return;
+    fileInc.click();
+  });
+  el(frame, "[data-eq-issue-img-sol]")?.addEventListener("click", () => {
+    if (!fieldsReady || fileSol.disabled) return;
+    fileSol.click();
+  });
   fileInc.addEventListener("change", () => {
     void addImages("incidencia", fileInc.files);
     fileInc.value = "";
@@ -692,6 +744,13 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
   fileSol.addEventListener("change", () => {
     void addImages("solucion", fileSol.files);
     fileSol.value = "";
+  });
+  overlay.addEventListener("paste", (ev) => {
+    if (!fieldsReady) return;
+    const images = clipboardImageFiles(ev.clipboardData);
+    if (!images.length) return;
+    ev.preventDefault();
+    void addImages(resolvePasteImageWhich(ev.target), images);
   });
 
   el(frame, "[data-eq-issue-add-check]")?.addEventListener("click", () => {

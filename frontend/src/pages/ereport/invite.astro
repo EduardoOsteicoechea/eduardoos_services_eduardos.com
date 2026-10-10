@@ -53,7 +53,7 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 
 <script>
-  import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
+  import { clearAgentRoutePayload, getCsrf, setAgentRoutePayload } from "../../lib/api";
   import {
     claimInviteSession,
     fetchInvitePreview,
@@ -170,9 +170,10 @@ import Layout from "../../layouts/Layout.astro";
       if (editor instanceof HTMLElement) editor.hidden = false;
       if (!(iframe instanceof HTMLIFrameElement)) return;
       const pushConfig = () => {
-        void refreshCsrf().then(() => {
+        // Force remint so need-config after 403 cannot reuse a stale in-memory token.
+        void getCsrf(true).then((token) => {
           if (!host) return;
-          host.post(trackerConfigMessage(opts.uploadUrl, rememberedCsrf(), { canDelete }));
+          host.post(trackerConfigMessage(opts.uploadUrl, token || rememberedCsrf(), { canDelete }));
         });
       };
       host?.destroy();
@@ -202,6 +203,8 @@ import Layout from "../../layouts/Layout.astro";
         },
       });
       iframe.src = trackerIframeSrc();
+      // Resend uploadUrl + CSRF after mint (boot onNeedConfig also refreshes).
+      pushConfig();
       for (const command of pendingCmds.splice(0)) {
         host.post(trackerCommandMessage(command));
       }

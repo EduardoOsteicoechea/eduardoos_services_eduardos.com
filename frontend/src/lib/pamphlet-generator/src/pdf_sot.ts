@@ -693,12 +693,17 @@ export class PamphletPdfSot {
             return;
         }
 
+        // Keep stage scroll across page swaps (edit-dock show/save triggers preview regen).
+        const stageScrollTop = this.stage.scrollTop;
+        const stageScrollLeft = this.stage.scrollLeft;
         const prev = this.stage.querySelector(".pamphlet-pdf-stage__pages");
         if (prev) {
             prev.replaceWith(nextPages);
         } else {
             this.stage.replaceChildren(nextPages);
         }
+        this.stage.scrollTop = stageScrollTop;
+        this.stage.scrollLeft = stageScrollLeft;
         this.lastLayout = layout;
         this.applySelectedClass();
         log("render.swap.ok", { seq, hitCount: hits.length });
