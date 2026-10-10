@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { ereportWorkspaceIssueHref } from "./ereport-connector-modal";
 import {
   isEreportOwnerPath,
   isPublicEreportInvitePath,
@@ -135,6 +136,18 @@ describe("eReport public invite routing", () => {
     expect(workspaceHref("org-1", "rep-1", "a_at_b.com")).toBe(
       "/ereport/workspace?org=org-1&report=rep-1&user=a_at_b.com",
     );
+    expect(workspaceHref("org-1", "rep-1", "a_at_b.com", { itemId: "issue-9" })).toBe(
+      "/ereport/workspace?org=org-1&report=rep-1&user=a_at_b.com&item=issue-9",
+    );
+    expect(
+      ereportWorkspaceIssueHref({
+        orgId: "org-1",
+        reportId: "rep-1",
+        itemId: "issue-9",
+        ownerSafe: "a_at_b.com",
+        baseUrl: "https://eduardoos.com",
+      }),
+    ).toBe("https://eduardoos.com/ereport/workspace?org=org-1&report=rep-1&user=a_at_b.com&item=issue-9");
   });
 });
 

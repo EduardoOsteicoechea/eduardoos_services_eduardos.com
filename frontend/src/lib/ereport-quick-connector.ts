@@ -7,7 +7,13 @@ import {
   patchReportSiteConnector,
   type WebsiteRegistrationBinding,
 } from "./ereport";
-import { openEreportAdvancedConnectorModal } from "./ereport-connector-modal";
+import {
+  closeEreportIssueCardModal,
+  isEreportIssueCardModalOpen,
+  openEreportAdvancedConnectorModal,
+  openEreportIssueCardModal,
+  openEreportWorkspaceIssue,
+} from "./ereport-connector-modal";
 import { parseIssueText } from "./ereport-issue-parse";
 
 const OVERLAY_ID = "eduardoos-ereport-quick-overlay";
@@ -92,6 +98,10 @@ function onEscape(ev: KeyboardEvent) {
   if (ev.key !== "Escape") return;
   ev.preventDefault();
   ev.stopPropagation();
+  if (isEreportIssueCardModalOpen()) {
+    closeEreportIssueCardModal();
+    return;
+  }
   const settings = document.getElementById(SETTINGS_ID);
   if (settings) {
     closeEreportSettingsModal();
@@ -106,6 +116,7 @@ export function closeEreportSettingsModal() {
 }
 
 export function closeEreportQuickConnector() {
+  closeEreportIssueCardModal();
   closeEreportSettingsModal();
   const existing = document.getElementById(OVERLAY_ID);
   if (existing?.parentNode) existing.parentNode.removeChild(existing);
@@ -115,6 +126,45 @@ export function closeEreportQuickConnector() {
 
 function el<T extends HTMLElement>(root: ParentNode, sel: string): T | null {
   return root.querySelector(sel) as T | null;
+}
+
+/** Labeled clipboard payload so a user can paste an issue into an agent chat. */
+export function formatIssueClipboardText(opts: {
+  reportId: string;
+  sectionId: string;
+  groupId: string;
+  itemId: string;
+  nombre?: string;
+  incidencia?: string;
+}): string {
+  const nombre = (opts.nombre || "").trim();
+  const incidencia = (opts.incidencia || "").trim();
+  const lines = [
+    `reportId: ${opts.reportId}`,
+    `sectionId: ${opts.sectionId}`,
+    `groupId: ${opts.groupId}`,
+    `itemId: ${opts.itemId}`,
+  ];
+  if (nombre) lines.push(`nombre: ${nombre}`);
+  if (incidencia) lines.push(`incidencia: ${incidencia}`);
+  if (!nombre && !incidencia) lines.push("(no nombre/incidencia text)");
+  return lines.join("\n");
+}
+
+async function copyTextToClipboard(value: string): Promise<void> {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  const area = document.createElement("textarea");
+  area.value = value;
+  area.setAttribute("readonly", "");
+  area.style.position = "fixed";
+  area.style.left = "-9999rem";
+  document.body.appendChild(area);
+  area.select();
+  document.execCommand("copy");
+  area.remove();
 }
 
 function fillSelect(select: HTMLSelectElement, options: { value: string; label: string }[], placeholder: string) {
@@ -295,10 +345,16 @@ export async function openEreportQuickConnector(opts?: {
   document.dispatchEvent(new CustomEvent("eos:close-trays"));
 
   let binding = opts?.binding ?? null;
-  if (!binding?.orgId || !binding?.reportId) {
+  let ownerSafe = "";
+  {
     const { status, data } = await fetchEreportAccess();
-    if (status === 200 && data.websiteRegistration?.orgId && data.websiteRegistration?.reportId) {
-      binding = data.websiteRegistration;
+    if (status === 200) {
+      ownerSafe = (data.ownerSafe || "").trim();
+      if (!binding?.orgId || !binding?.reportId) {
+        if (data.websiteRegistration?.orgId && data.websiteRegistration?.reportId) {
+          binding = data.websiteRegistration;
+        }
+      }
     }
   }
   if (!binding?.orgId || !binding?.reportId) {
@@ -396,7 +452,84 @@ export async function openEreportQuickConnector(opts?: {
       const st = document.createElement("span");
       st.className = "ereport-quick-overlay__item-status";
       st.textContent = it.status || "";
-      li.append(title, st);
+      const actions = document.createElement("div");
+      actions.className = "ereport-quick-overlay__item-actions";
+      const copyBtn = document.createElement("button");
+      copyBtn.type = "button";
+      copyBtn.className = "icon-btn ereport-quick-overlay__item-copy";
+      copyBtn.setAttribute("aria-label", "Copy issue for agent");
+      copyBtn.title = "Copy issue for agent";
+      copyBtn.innerHTML =
+        '<span class="material-symbols-outlined" aria-hidden="true">content_copy</span>';
+      copyBtn.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const text = formatIssueClipboardText({
+          reportId: defaults!.reportId,
+          sectionId: defaults!.sectionId,
+          groupId: defaults!.groupId,
+          itemId: it.id,
+          nombre: it.nombre,
+          incidencia: it.incidencia,
+        });
+        void copyTextToClipboard(text)
+          .then(() => {
+            setStatus("Issue copied.");
+            if (mustLog) console.log("[ereport-quick] issue copied", { itemId: it.id });
+          })
+          .catch(() => {
+            setStatus("Could not copy issue.");
+            if (mustLog) console.log("[ereport-quick] issue copy failed", { itemId: it.id });
+          });
+      });
+      actions.append(copyBtn);
+      const itemId = (it.id || "").trim();
+      if (itemId && !itemId.startsWith("tmp-")) {
+        const openCardBtn = document.createElement("button");
+        openCardBtn.type = "button";
+        openCardBtn.className = "btn ereport-quick-overlay__item-open-card";
+        openCardBtn.setAttribute("aria-label", "Open issue");
+        openCardBtn.title = "Open issue";
+        openCardBtn.textContent = "Open";
+        openCardBtn.addEventListener("click", (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          void openEreportIssueCardModal({
+            orgId: defaults.orgId,
+            reportId: defaults.reportId,
+            sectionId: defaults.sectionId,
+            groupId: defaults.groupId,
+            itemId,
+            item: it,
+            onChanged: () => {
+              void reloadReport();
+            },
+            onDeleted: () => {
+              void reloadReport();
+            },
+          });
+        });
+        actions.append(openCardBtn);
+        const openWorkspaceBtn = document.createElement("button");
+        openWorkspaceBtn.type = "button";
+        openWorkspaceBtn.className = "icon-btn ereport-quick-overlay__item-open";
+        openWorkspaceBtn.setAttribute("aria-label", "Open issue in eReport");
+        openWorkspaceBtn.title = "Open issue in eReport";
+        openWorkspaceBtn.innerHTML =
+          '<span class="material-symbols-outlined" aria-hidden="true">open_in_new</span>';
+        openWorkspaceBtn.addEventListener("click", (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          openEreportWorkspaceIssue({
+            orgId: defaults.orgId,
+            reportId: defaults.reportId,
+            itemId,
+            ownerSafe,
+          });
+        });
+        actions.append(openWorkspaceBtn);
+      }
+      li.append(title, st, actions);
       listEl.append(li);
     }
   }

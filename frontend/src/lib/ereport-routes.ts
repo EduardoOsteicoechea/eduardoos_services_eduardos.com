@@ -1,5 +1,5 @@
 /** Bump when `public/ereport-tracker.html` changes so browsers drop the cached canvas. */
-export const TRACKER_SRC = "/ereport-tracker.html?v=093";
+export const TRACKER_SRC = "/ereport-tracker.html?v=094";
 
 /** Always force a fresh iframe document (same ?v= alone will not reload). */
 export function trackerIframeSrc(): string {
@@ -51,13 +51,22 @@ export function readPrettyEreportPath(pathname: string): { ownerSafe: string; re
   return { ownerSafe: decodeURIComponent(parts[1]), reportId: parts[2] ? decodeURIComponent(parts[2]) : "" };
 }
 
-export function workspaceHref(orgId: string, reportId: string, ownerSafe = "", opts?: { shared?: boolean }): string {
+export function workspaceHref(
+  orgId: string,
+  reportId: string,
+  ownerSafe = "",
+  opts?: { shared?: boolean; itemId?: string },
+): string {
   const q = new URLSearchParams({ org: orgId, report: reportId });
   if (ownerSafe) {
     q.set("user", ownerSafe);
   }
   if (opts?.shared) {
     q.set("shared", "1");
+  }
+  const itemId = (opts?.itemId || "").trim();
+  if (itemId) {
+    q.set("item", itemId);
   }
   return `/ereport/workspace?${q.toString()}`;
 }

@@ -223,6 +223,7 @@ import Layout from "../../layouts/Layout.astro";
     let orgId = params.get("org")?.trim() || "";
     let reportId = params.get("report")?.trim() || pretty.reportId;
     let ownerSafe = params.get("user")?.trim() || pretty.ownerSafe;
+    let focusItemId = params.get("item")?.trim() || "";
     let isShared = params.get("shared") === "1";
     let canEditShared = true;
     /** Cloud = VPS report; local = File System Access .ereport (autosave only that side). */
@@ -398,6 +399,10 @@ import Layout from "../../layouts/Layout.astro";
           onError: (message) => setBanner(root, message, "err"),
           onNeedConfig: () => {
             pushConfig();
+          },
+          onLoaded: () => {
+            if (!focusItemId || !host) return;
+            host.post({ target: "ereport-tracker", type: "focus-item", itemId: focusItemId });
           },
         },
       });
@@ -583,7 +588,7 @@ import Layout from "../../layouts/Layout.astro";
         reportName: String(res.data.payload.reportName || res.data.meta.tema || "").trim() || res.data.meta.tema,
       };
       fillIdsFields();
-      const href = workspaceHref(orgId, reportId, ownerSafe);
+      const href = workspaceHref(orgId, reportId, ownerSafe, focusItemId ? { itemId: focusItemId } : undefined);
       if (href && window.location.pathname + window.location.search !== href) {
         replaceClientUrl(href);
       }

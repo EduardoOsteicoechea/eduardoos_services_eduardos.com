@@ -444,6 +444,10 @@ button.has-label { gap: 0.35rem; }
   box-shadow: none;
   scroll-margin-top: calc(var(--topbar-h) + var(--sticky-sec-h) + var(--sticky-sub-h) + 0.5rem);
 }
+.item-card.is-deep-linked {
+  outline: 0.125rem solid var(--accent);
+  outline-offset: 0.125rem;
+}
 .item-card.is-aprobado { background: var(--success-bg); box-shadow: inset 0.25rem 0 0 var(--success); }
 .item-card.is-reprobado { background: var(--danger-bg); box-shadow: inset 0.25rem 0 0 var(--danger); }
 .item-card.is-none {
@@ -2561,7 +2565,66 @@ function saveMainScroll() {
 
 /** When set, next render() applies this scrollTop (e.g. restore after reload). */
 let pendingScrollTop = null;
+/** Deep-link from parent workspace `?item=` — wins over scroll restore. */
+let pendingFocusItemId = null;
 let scrollSaveTimer = 0;
+
+function readParentFocusItemId() {
+  try {
+    const loc = window.parent && window.parent.location ? window.parent.location : window.location;
+    return String(new URLSearchParams(loc.search || "").get("item") || "").trim();
+  } catch (e) {
+    return "";
+  }
+}
+
+function focusItemById(iid) {
+  const id = String(iid || "").trim();
+  if (!id) return false;
+  pendingFocusItemId = id;
+  pendingScrollTop = null;
+  return applyPendingFocus();
+}
+
+function applyPendingFocus() {
+  const iid = pendingFocusItemId;
+  if (!iid) return false;
+  const target = "item-" + iid;
+  let el = document.getElementById(target);
+  if (!el) {
+    try {
+      el = document.querySelector('.item-card[data-item="' + String(iid).replace(/\\/g, "\\\\").replace(/"/g, '\\"') + '"]');
+    } catch (e) {
+      el = null;
+    }
+  }
+  if (!el) return false;
+  const sid = el.dataset.section;
+  const gid = el.dataset.group;
+  const runScroll = () => {
+    const again = document.getElementById(target) || el;
+    if (!again) return;
+    document.querySelectorAll(".item-card.is-deep-linked").forEach((node) => node.classList.remove("is-deep-linked"));
+    again.classList.add("is-deep-linked");
+    if (typeof again.scrollIntoView === "function") {
+      again.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    const focusable = again.querySelector("button, input, textarea, [tabindex]:not([tabindex='-1'])");
+    if (focusable && typeof focusable.focus === "function") {
+      try { focusable.focus({ preventScroll: true }); } catch (e) { focusable.focus(); }
+    }
+    pendingFocusItemId = null;
+    updateActiveNav();
+  };
+  if (ensureExpandedForItem(sid, gid, iid)) {
+    collectFromDom();
+    // Keep pendingFocusItemId; render() re-applies focus after expand.
+    render();
+    return true;
+  }
+  requestAnimationFrame(() => requestAnimationFrame(runScroll));
+  return true;
+}
 function scheduleSaveMainScroll() {
   if (scrollSaveTimer) return;
   scrollSaveTimer = window.setTimeout(() => {
@@ -2888,7 +2951,15 @@ function render() {
   updateStatus();
   syncStickyOffsets();
   const scroller = mainScrollEl();
-  if (scroller) {
+  if (pendingFocusItemId) {
+    pendingScrollTop = null;
+    requestAnimationFrame(() => {
+      if (!applyPendingFocus() && scroller) {
+        scroller.scrollTop = keepScrollTop;
+        updateActiveNav();
+      }
+    });
+  } else if (scroller) {
     const target = pendingScrollTop != null ? pendingScrollTop : keepScrollTop;
     pendingScrollTop = null;
     requestAnimationFrame(() => {
@@ -3678,10 +3749,23 @@ updateStatus();
         if (state.collapse == null) seedCollapsedHierarchy();
         else applyCollapseFromState();
         bindMeta();
-        pendingScrollTop = readStoredScrollTop();
+        const deepItem = readParentFocusItemId();
+        if (deepItem) {
+          pendingFocusItemId = deepItem;
+          pendingScrollTop = null;
+        } else {
+          pendingScrollTop = readStoredScrollTop();
+        }
         render();
         autoSaveEnabled = true;
         emit("loaded", {});
+      } catch (e) {
+        emit("error", { message: String(e && e.message ? e.message : e) });
+      }
+    }
+    if (d.type === "focus-item") {
+      try {
+        focusItemById(d.itemId);
       } catch (e) {
         emit("error", { message: String(e && e.message ? e.message : e) });
       }

@@ -853,7 +853,7 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
 .ereport-quick-overlay__item,
 .ereport-quick-overlay__empty {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: var(--rail-gap);
   padding: var(--control-padding-block) var(--control-padding-inline);
@@ -863,12 +863,50 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
 }
 
 .ereport-quick-overlay__item-title {
+  flex: 1;
   min-width: 0;
 }
 
 .ereport-quick-overlay__item-status {
   color: var(--color-muted);
   font-size: var(--font-size-xs);
+}
+
+.ereport-quick-overlay__item-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  flex-shrink: 0;
+}
+
+.ereport-quick-overlay__item-copy.icon-btn,
+.ereport-quick-overlay__item-open.icon-btn {
+  flex-shrink: 0;
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+  border-radius: var(--border-radius);
+  background: transparent;
+  border: 0;
+  color: var(--color-text);
+}
+
+.ereport-quick-overlay__item-copy.icon-btn:hover,
+.ereport-quick-overlay__item-copy.icon-btn:focus-visible,
+.ereport-quick-overlay__item-open.icon-btn:hover,
+.ereport-quick-overlay__item-open.icon-btn:focus-visible {
+  color: var(--color-accent);
+}
+
+.ereport-quick-overlay__item-copy .material-symbols-outlined,
+.ereport-quick-overlay__item-open .material-symbols-outlined {
+  font-size: var(--icon-size);
+}
+
+.ereport-quick-overlay__item-open-card {
+  flex-shrink: 0;
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font-size: var(--font-size-sm);
 }
 
 .ereport-quick-overlay__compose {
@@ -1013,4 +1051,191 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
   display: flex;
   flex-wrap: wrap;
   gap: var(--rail-gap);
+}
+
+/* —— Single-issue card overlay (website issues → Open) —— */
+.ereport-issue-card-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-modal) + 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  box-sizing: border-box;
+  background: color-mix(in srgb, var(--color-bg) 55%, transparent);
+}
+
+.ereport-issue-card-overlay__frame {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  width: min(42rem, calc(var(--shell-viewport-width, var(--content-basis, 48rem)) - 2rem));
+  max-height: calc(var(--shell-viewport-height, 40rem) - 4rem);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  box-shadow: 0 0.75rem 2rem color-mix(in srgb, var(--color-text) 25%, transparent);
+  overflow: hidden;
+}
+
+.ereport-issue-card-overlay__bar,
+.ereport-issue-card-overlay__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rail-gap);
+  flex-shrink: 0;
+}
+
+.ereport-issue-card-overlay__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.ereport-issue-card-overlay__bar-actions,
+.ereport-issue-card-overlay__hooks {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.ereport-issue-card-overlay__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.ereport-issue-card-overlay__field {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rail-gap) * 0.5);
+  font-size: var(--font-size-sm);
+}
+
+.ereport-issue-card-overlay__field input,
+.ereport-issue-card-overlay__field textarea,
+.ereport-issue-card-overlay__check-label {
+  width: auto;
+  min-height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font-size: var(--font-size-md);
+  font-family: inherit;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.ereport-issue-card-overlay__field textarea {
+  min-height: var(--textarea-min-height);
+  resize: vertical;
+}
+
+.ereport-issue-card-overlay__cols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.ereport-issue-card-overlay__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.ereport-issue-card-overlay__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--rail-gap);
+}
+
+.ereport-issue-card-overlay__field--inline {
+  flex: 1 1 10rem;
+}
+
+.ereport-issue-card-overlay__thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.ereport-issue-card-overlay__thumb {
+  position: relative;
+  width: 4.5rem;
+  height: 4.5rem;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.ereport-issue-card-overlay__thumb img {
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  object-fit: cover;
+}
+
+.ereport-issue-card-overlay__thumb-del {
+  position: absolute;
+  top: 0.125rem;
+  right: 0.125rem;
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+}
+
+.ereport-issue-card-overlay__ux {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding-top: var(--rail-gap);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.ereport-issue-card-overlay__ux-title {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+}
+
+.ereport-issue-card-overlay__ux-empty {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.ereport-issue-card-overlay__check-row {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
+.ereport-issue-card-overlay__check-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.ereport-issue-card-overlay__check-toggle.is-checked {
+  color: var(--color-ok);
+}
+
+.ereport-issue-card-overlay__footer .btn--danger {
+  color: var(--color-button-fg);
+  background: var(--color-err);
+  border-color: var(--color-err);
+}
+
+.ereport-issue-card-overlay__status {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
 }

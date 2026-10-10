@@ -1,4 +1,15 @@
 import { mustLog } from "./dev-log";
+import { workspaceHref } from "./ereport-routes";
+
+export {
+  closeEreportIssueCardModal,
+  isEreportIssueCardModalOpen,
+  openEreportIssueCardModal,
+  type EreportIssueCardItem,
+  type EreportIssueCardOpenOpts,
+  type EreportIssueChecklistRow,
+  type EreportIssueImageRef,
+} from "./ereport-issue-card-modal";
 
 const OVERLAY_ID = "eduardoos-ereport-connector-overlay";
 const INIT_TYPE = "ereport-embed-init";
@@ -12,9 +23,39 @@ export type EreportConnectorOpenOpts = {
   label?: string;
 };
 
-function baseOrigin(opts?: EreportConnectorOpenOpts): string {
+export type EreportWorkspaceIssueOpenOpts = {
+  orgId: string;
+  reportId: string;
+  itemId: string;
+  ownerSafe?: string;
+  baseUrl?: string;
+};
+
+function baseOrigin(opts?: { baseUrl?: string }): string {
   if (opts?.baseUrl) return opts.baseUrl.replace(/\/$/, "");
   return window.location.origin;
+}
+
+/** Workspace URL that opens a report and focuses one issue (`item` query). */
+export function ereportWorkspaceIssueHref(opts: EreportWorkspaceIssueOpenOpts): string {
+  const orgId = (opts.orgId || "").trim();
+  const reportId = (opts.reportId || "").trim();
+  const itemId = (opts.itemId || "").trim();
+  const ownerSafe = (opts.ownerSafe || "").trim();
+  const path = workspaceHref(orgId, reportId, ownerSafe, itemId ? { itemId } : undefined);
+  const base = baseOrigin(opts).replace(/\/$/, "");
+  return `${base}${path}`;
+}
+
+/** Open eReport workspace in a new tab scrolled/focused on the given issue. */
+export function openEreportWorkspaceIssue(opts: EreportWorkspaceIssueOpenOpts): void {
+  const orgId = (opts.orgId || "").trim();
+  const reportId = (opts.reportId || "").trim();
+  const itemId = (opts.itemId || "").trim();
+  if (!orgId || !reportId || !itemId) return;
+  const url = ereportWorkspaceIssueHref({ ...opts, orgId, reportId, itemId });
+  window.open(url, "_blank", "noopener,noreferrer");
+  if (mustLog) console.log("[ereport-connector-modal] open workspace issue", { orgId, reportId, itemId: Boolean(itemId) });
 }
 
 function onEscape(ev: KeyboardEvent) {
