@@ -136,6 +136,17 @@ export function booksForCorpus(corpus: BibleCorpus): BibleBookOption[] {
   return SCRIB_BIBLE_BOOKS.filter((b) => b.corpus === corpus);
 }
 
+/** Compact tab label: first three letters (numbered books keep the digit). */
+export function bibleBookShortLabel(name: string): string {
+  const trimmed = name.trim();
+  const numbered = trimmed.match(/^(\d+)\s+(.+)$/);
+  if (numbered) {
+    const word = numbered[2] ?? "";
+    return `${numbered[1]}${word.slice(0, 3)}`;
+  }
+  return trimmed.slice(0, 3);
+}
+
 export function resolveBibleBook(
   bookId: string,
   corpus?: BibleCorpus,

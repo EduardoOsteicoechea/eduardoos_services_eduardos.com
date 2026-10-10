@@ -633,10 +633,12 @@ html.dark .scrib-page {
 .scrib-ref-panel {
   position: fixed;
   top: 0;
+  bottom: 0;
   z-index: 80;
   width: var(--sidebar-width);
   max-width: var(--sidebar-width);
-  max-height: 36rem;
+  max-height: none;
+  height: auto;
   margin: 0;
   padding: var(--space-padding);
   box-sizing: border-box;
@@ -733,6 +735,12 @@ html.dark .scrib-page {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+}
+
+.scrib-ref-panel__tab--book {
+  min-width: 0;
+  padding: 0 0.35rem;
+  letter-spacing: 0;
 }
 
 .scrib-ref-panel__tab-meta {
@@ -836,7 +844,7 @@ html.dark .scrib-page {
   width: auto;
   flex: 1 1 auto;
   min-height: 8rem;
-  max-height: 14rem;
+  max-height: none;
   padding: 0.35rem 0.4rem;
   border: 0;
   border-radius: var(--border-radius);
@@ -852,7 +860,7 @@ html.dark .scrib-page {
 }
 
 .scrib-ref-panel--nav-collapsed {
-  max-height: 42rem;
+  max-height: none;
 }
 
 .scrib-ref-panel--nav-collapsed .scrib-ref-panel__scroll {
@@ -877,9 +885,10 @@ html.dark .scrib-page {
   .scrib-ref-panel--dock-left,
   .scrib-ref-panel--dock-right {
     top: 0;
+    bottom: 0;
     width: var(--sidebar-width);
     max-width: var(--sidebar-width);
-    max-height: 12rem;
+    max-height: none;
     border-radius: 0;
   }
 
@@ -900,16 +909,16 @@ html.dark .scrib-page {
   }
 
   .scrib-ref-panel__chips {
-    max-height: 3rem;
+    max-height: 6rem;
   }
 
   .scrib-ref-panel__text-body {
-    max-height: 3rem;
-    min-height: 3rem;
+    max-height: none;
+    min-height: 4rem;
   }
 
   .scrib-ref-panel--nav-collapsed {
-    max-height: 18rem;
+    max-height: none;
   }
 
   .scrib-ref-panel--nav-collapsed .scrib-ref-panel__text-body {

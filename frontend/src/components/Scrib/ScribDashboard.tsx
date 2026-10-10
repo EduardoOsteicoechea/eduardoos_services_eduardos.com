@@ -1,6 +1,6 @@
 /**
- * Scrib dashboard — books as containers with sheet cards + new sheet.
- * Book and sheet names are inline-editable (blur / Enter persist).
+ * Scrib dashboard — sections as containers with sheet cards + new sheet.
+ * Section and sheet names are inline-editable (blur / Enter persist).
  */
 
 import { useCallback, useEffect, useState, type FormEvent, type KeyboardEvent } from "react";
@@ -24,12 +24,22 @@ import {
 import "../ProductDashboard/ProductDashboard.css";
 import "./Scrib.css";
 
+/** Legacy Institutes library entries are not shown as Scrib sections. */
+function isLegacyInstitutesSection(book: ScribBookCard): boolean {
+  const name = book.name.trim().toLowerCase();
+  return (
+    /^calvin'?s?\s*institutes\b/.test(name) ||
+    name === "institutes" ||
+    name.startsWith("institutio")
+  );
+}
+
 export default function ScribDashboard() {
   const [userSafe, setUserSafe] = useState("");
   const [books, setBooks] = useState<ScribBookCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [bookName, setBookName] = useState("");
+  const [sectionName, setSectionName] = useState("");
   const [busy, setBusy] = useState(false);
 
   const reload = useCallback(async () => {
@@ -41,7 +51,7 @@ export default function ScribDashboard() {
       setBooks([]);
     } else {
       setUserSafe(res.userSafe);
-      setBooks(res.books);
+      setBooks(res.books.filter((b) => !isLegacyInstitutesSection(b)));
     }
     setLoading(false);
   }, []);
@@ -50,9 +60,9 @@ export default function ScribDashboard() {
     void reload();
   }, [reload]);
 
-  async function onCreateBook(e: FormEvent) {
+  async function onCreateSection(e: FormEvent) {
     e.preventDefault();
-    const name = bookName.trim();
+    const name = sectionName.trim();
     if (!name || busy) return;
     setBusy(true);
     const res = await createScribBook(name);
@@ -61,7 +71,7 @@ export default function ScribDashboard() {
       setError(res.error);
       return;
     }
-    setBookName("");
+    setSectionName("");
     await reload();
   }
 
@@ -77,8 +87,8 @@ export default function ScribDashboard() {
     window.location.href = scribSheetHref(userSafe, bookId, res.sheet.id);
   }
 
-  async function onDeleteBook(bookId: string) {
-    if (busy || !window.confirm("¿Eliminar este libro y todas sus hojas?")) return;
+  async function onDeleteSection(bookId: string) {
+    if (busy || !window.confirm("¿Eliminar esta sección y todas sus hojas?")) return;
     setBusy(true);
     const res = await deleteScribBook(bookId);
     setBusy(false);
@@ -101,7 +111,7 @@ export default function ScribDashboard() {
     await reload();
   }
 
-  async function commitBookName(bookId: string, previous: string, nextRaw: string) {
+  async function commitSectionName(bookId: string, previous: string, nextRaw: string) {
     const next = nextRaw.trim();
     if (!next || next === previous || busy) {
       if (!next) await reload();
@@ -169,22 +179,22 @@ export default function ScribDashboard() {
     <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription>
       <ProductHubShell>
         <DashboardSection>
-        <form className="scrib-dashboard__new-book" onSubmit={onCreateBook}>
-          <label className="scrib-dashboard__label" htmlFor="scrib-book-name">
-            Nuevo libro
+        <form className="scrib-dashboard__new-book" onSubmit={onCreateSection}>
+          <label className="scrib-dashboard__label" htmlFor="scrib-section-name">
+            Nueva sección
           </label>
           <div className="scrib-dashboard__row">
             <input
-              id="scrib-book-name"
+              id="scrib-section-name"
               className="scrib-dashboard__input"
-              value={bookName}
-              onChange={(e) => setBookName(e.target.value)}
-              placeholder="Nombre del libro"
+              value={sectionName}
+              onChange={(e) => setSectionName(e.target.value)}
+              placeholder="Nombre de la sección"
               maxLength={120}
               required
             />
             <button className="btn btn--primary" type="submit" disabled={busy}>
-              Crear libro
+              Crear sección
             </button>
           </div>
         </form>
@@ -194,7 +204,7 @@ export default function ScribDashboard() {
 
         {!loading && books.length === 0 ? (
           <p className="scrib-dashboard__empty">
-            Aún no hay libros. Crea el primero arriba.
+            Aún no hay secciones. Crea la primera arriba.
           </p>
         ) : null}
 
@@ -204,20 +214,20 @@ export default function ScribDashboard() {
               <div className="scrib-book__head">
                 <input
                   className="scrib-book__title-input"
-                  aria-label="Nombre del libro"
+                  aria-label="Nombre de la sección"
                   defaultValue={book.name}
                   key={`${book.id}:${book.name}`}
                   maxLength={120}
                   disabled={busy}
                   onBlur={(e) =>
-                    void commitBookName(book.id, book.name, e.target.value)
+                    void commitSectionName(book.id, book.name, e.target.value)
                   }
                   onKeyDown={onNameKeyDown}
                 />
                 <button
                   type="button"
                   className="btn scrib-book__delete"
-                  onClick={() => void onDeleteBook(book.id)}
+                  onClick={() => void onDeleteSection(book.id)}
                   disabled={busy}
                 >
                   Eliminar

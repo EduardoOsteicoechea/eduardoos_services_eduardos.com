@@ -5,6 +5,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
+  bibleBookShortLabel,
   booksForCorpus,
   corpusForBookId,
   defaultBookForCorpus,
@@ -214,11 +215,13 @@ export default function ScribBibleModal({
                       key={`${book.corpus}-${book.id}`}
                       type="button"
                       role="tab"
+                      title={book.name}
+                      aria-label={book.name}
                       aria-selected={bookId === book.id}
                       className={
                         bookId === book.id
-                          ? "scrib-ref-panel__tab is-active"
-                          : "scrib-ref-panel__tab"
+                          ? "scrib-ref-panel__tab scrib-ref-panel__tab--book is-active"
+                          : "scrib-ref-panel__tab scrib-ref-panel__tab--book"
                       }
                       onClick={() => {
                         setBookId(book.id);
@@ -227,8 +230,7 @@ export default function ScribBibleModal({
                         setDoc(null);
                       }}
                     >
-                      {book.name}
-                      <span className="scrib-ref-panel__tab-meta">{book.languageLabel}</span>
+                      {bibleBookShortLabel(book.name)}
                     </button>
                   ))}
                 </div>
