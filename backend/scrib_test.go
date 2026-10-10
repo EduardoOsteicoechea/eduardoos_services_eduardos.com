@@ -117,6 +117,98 @@ func TestScribLibraryBookSheetRoundTrip(t *testing.T) {
 	}
 }
 
+func TestScribReorderLibraryAndMoveSheet(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productScrib)
+
+	rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/scrib/books", `{"name":"A"}`)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("create A: %d %s", rec.Code, rec.Body.String())
+	}
+	var bookA scribBook
+	if err := json.Unmarshal(rec.Body.Bytes(), &bookA); err != nil {
+		t.Fatal(err)
+	}
+	rec = app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/scrib/books", `{"name":"B"}`)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("create B: %d %s", rec.Code, rec.Body.String())
+	}
+	var bookB scribBook
+	if err := json.Unmarshal(rec.Body.Bytes(), &bookB); err != nil {
+		t.Fatal(err)
+	}
+
+	rec = app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/scrib/books/"+bookA.ID+"/sheets", `{"name":"Movible"}`)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("create sheet: %d %s", rec.Code, rec.Body.String())
+	}
+	var sheet scribSheet
+	if err := json.Unmarshal(rec.Body.Bytes(), &sheet); err != nil {
+		t.Fatal(err)
+	}
+
+	payload, _ := json.Marshal(map[string]any{"bookIds": []string{bookB.ID, bookA.ID}})
+	rec = app.doJSON(t, "member@eduardoos.com", http.MethodPut, "/api/scrib/library", string(payload))
+	if rec.Code != http.StatusOK {
+		t.Fatalf("reorder: %d %s", rec.Code, rec.Body.String())
+	}
+
+	rec = app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/scrib/library", "")
+	lib := decodeMap(t, rec)
+	books, _ := lib["books"].([]any)
+	if len(books) != 2 {
+		t.Fatalf("books=%#v", books)
+	}
+	first, _ := books[0].(map[string]any)
+	second, _ := books[1].(map[string]any)
+	if first["id"] != bookB.ID || second["id"] != bookA.ID {
+		t.Fatalf("order want B,A got %v %v", first["id"], second["id"])
+	}
+
+	moveBody, _ := json.Marshal(map[string]any{"targetBookId": bookB.ID})
+	rec = app.doJSON(t, "member@eduardoos.com", http.MethodPost,
+		"/api/scrib/books/"+bookA.ID+"/sheets/"+sheet.ID+"/move", string(moveBody))
+	if rec.Code != http.StatusOK {
+		t.Fatalf("move: %d %s", rec.Code, rec.Body.String())
+	}
+	var moved scribSheet
+	if err := json.Unmarshal(rec.Body.Bytes(), &moved); err != nil {
+		t.Fatal(err)
+	}
+	if moved.BookID != bookB.ID || moved.ID != sheet.ID {
+		t.Fatalf("moved sheet %#v", moved)
+	}
+
+	rec = app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/scrib/books/"+bookB.ID+"/sheets/"+sheet.ID, "")
+	if rec.Code != http.StatusOK {
+		t.Fatalf("get at target: %d %s", rec.Code, rec.Body.String())
+	}
+	rec = app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/scrib/books/"+bookA.ID+"/sheets/"+sheet.ID, "")
+	if rec.Code != http.StatusNotFound {
+		t.Fatalf("source should 404: %d %s", rec.Code, rec.Body.String())
+	}
+
+	rec = app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/scrib/library", "")
+	lib = decodeMap(t, rec)
+	books, _ = lib["books"].([]any)
+	for _, raw := range books {
+		row, _ := raw.(map[string]any)
+		sheets, _ := row["sheets"].([]any)
+		if row["id"] == bookA.ID && len(sheets) != 0 {
+			t.Fatalf("source still has sheets %#v", sheets)
+		}
+		if row["id"] == bookB.ID {
+			if len(sheets) != 1 {
+				t.Fatalf("target sheets %#v", sheets)
+			}
+			sc, _ := sheets[0].(map[string]any)
+			if sc["id"] != sheet.ID || sc["name"] != "Movible" {
+				t.Fatalf("target meta %#v", sc)
+			}
+		}
+	}
+}
+
 func TestScribNoteBlocksRoundTrip(t *testing.T) {
 	app := newTestApp(false)
 	_ = app.grantEntitlement("member-1", productScrib)

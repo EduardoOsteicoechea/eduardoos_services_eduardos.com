@@ -134,7 +134,8 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
 
 .scrib-book {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: stretch;
   gap: var(--space-padding);
   box-sizing: border-box;
   min-width: 0;
@@ -144,12 +145,59 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   background: var(--color-surface);
 }
 
-.scrib-book__head {
+.scrib-book--drop-target {
+  border-color: var(--color-accent);
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: 0.125rem;
+}
+
+.scrib-book__rail {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   gap: var(--rail-gap);
+  flex: 0 0 auto;
   min-width: 0;
+  padding-right: var(--rail-gap);
+  border-right: var(--border-width) solid var(--color-border);
+}
+
+.scrib-book__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.scrib-book__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--rail-gap);
+}
+
+.scrib-book__order {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex-shrink: 0;
+}
+
+.scrib-book__order-btn.icon-btn {
+  width: var(--rail-button-size);
+  height: var(--rail-button-size);
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+}
+
+.scrib-book__order-btn.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.scrib-book__order-btn .material-symbols-outlined {
+  font-size: var(--icon-size);
 }
 
 .scrib-book__title {
@@ -160,8 +208,10 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
 }
 
 .scrib-book__title-input {
+  box-sizing: border-box;
   flex: 1 1 auto;
-  min-width: 0;
+  width: 2.5rem;
+  min-height: 8rem;
   margin: 0;
   padding: var(--control-padding-block) var(--control-padding-inline);
   border: var(--border-width) solid transparent;
@@ -171,7 +221,14 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   font-family: var(--font-family);
   font-size: var(--font-size-md);
   font-weight: 650;
-  line-height: 1.3;
+  line-height: 1.2;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  text-align: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .scrib-book__title-input:hover,
@@ -194,6 +251,31 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   position: relative;
   min-height: calc(var(--control-height) * 3.5);
   overflow: hidden;
+  cursor: grab;
+}
+
+.scrib-sheet-card--new {
+  cursor: pointer;
+}
+
+.scrib-sheet-card--dragging {
+  opacity: 0.55;
+  cursor: grabbing;
+}
+
+.scrib-sheet-card__drag {
+  position: absolute;
+  top: var(--rail-gap);
+  left: var(--rail-gap);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  pointer-events: none;
+}
+
+.scrib-sheet-card__drag .material-symbols-outlined {
+  font-size: var(--icon-size);
 }
 
 .scrib-sheet-card__body {
@@ -203,6 +285,7 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   justify-content: space-between;
   gap: var(--rail-gap);
   min-width: 0;
+  padding-left: calc(var(--icon-size) + var(--rail-gap));
   padding-right: calc(var(--button-size-sm) + var(--rail-gap));
 }
 

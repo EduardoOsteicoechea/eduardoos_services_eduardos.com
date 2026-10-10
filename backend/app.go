@@ -329,6 +329,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/latin/calvins-institutes/paragraphs/chapters/{book}/{chapter}", a.latinCalvinsParagraphChapterHandler)
 
 	mux.HandleFunc("GET /api/scrib/library", a.scribGetLibraryHandler)
+	mux.HandleFunc("PUT /api/scrib/library", a.scribReorderLibraryHandler)
 	mux.HandleFunc("POST /api/scrib/books", a.scribCreateBookHandler)
 	mux.HandleFunc("GET /api/scrib/books/{bookId}", a.scribGetBookHandler)
 	mux.HandleFunc("PUT /api/scrib/books/{bookId}", a.scribRenameBookHandler)
@@ -337,6 +338,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/scrib/books/{bookId}/sheets/{sheetId}", a.scribGetSheetHandler)
 	mux.HandleFunc("PUT /api/scrib/books/{bookId}/sheets/{sheetId}", a.scribPutSheetHandler)
 	mux.HandleFunc("DELETE /api/scrib/books/{bookId}/sheets/{sheetId}", a.scribDeleteSheetHandler)
+	mux.HandleFunc("POST /api/scrib/books/{bookId}/sheets/{sheetId}/move", a.scribMoveSheetHandler)
 	mux.HandleFunc("POST /api/scrib/print/pdf", a.scribPrintPDFHandler)
 
 	mux.HandleFunc("GET /api/epams/series-tree", a.listEpamSeriesTreeHandler)

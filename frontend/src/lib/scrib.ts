@@ -363,6 +363,43 @@ export async function deleteScribSheet(
   return { ok: true, requestId };
 }
 
+export async function reorderScribLibrary(
+  bookIds: string[],
+): Promise<{ ok: boolean; error?: string; requestId?: string }> {
+  const { status, data, requestId } = await apiRequest<{ ok?: boolean }>(
+    "/scrib/library",
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ bookIds }),
+    },
+  );
+  if (status < 200 || status >= 300) {
+    return { ok: false, error: errMsg(data, "Could not reorder sections."), requestId };
+  }
+  return { ok: true, requestId };
+}
+
+export async function moveScribSheet(
+  sourceBookId: string,
+  sheetId: string,
+  targetBookId: string,
+): Promise<{ sheet: ScribSheet | null; error?: string; requestId?: string }> {
+  const { status, data, requestId } = await apiRequest<ScribSheet>(
+    `/scrib/books/${encodeURIComponent(sourceBookId)}/sheets/${encodeURIComponent(sheetId)}/move`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ targetBookId }),
+    },
+    { timeoutMs: scribSheetTimeoutMs },
+  );
+  if (status < 200 || status >= 300) {
+    return { sheet: null, error: errMsg(data, "Could not move sheet."), requestId };
+  }
+  return { sheet: data ? normalizeScribSheet(data) : null, requestId };
+}
+
 export function scribSheetHref(userSafe: string, bookId: string, sheetId: string): string {
   const q = new URLSearchParams({ user: userSafe, book: bookId, sheet: sheetId });
   return `/scrib/sheet?${q.toString()}`;

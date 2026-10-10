@@ -74,6 +74,68 @@ func (a *App) scribGetLibraryHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func (a *App) scribReorderLibraryHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.validOrigin(r) || !a.validCSRF(r) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	user := a.requireScribUser(w, r)
+	if user == nil {
+		return
+	}
+	var body struct {
+		BookIDs []string `json:"bookIds"`
+	}
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 64<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	lib, err := a.scrib.GetLibrary(r.Context(), user.ID)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	byID := make(map[string]scribBookMeta, len(lib.Books))
+	for _, meta := range lib.Books {
+		byID[meta.ID] = meta
+	}
+	seen := make(map[string]bool, len(body.BookIDs))
+	ordered := make([]scribBookMeta, 0, len(lib.Books))
+	for _, id := range body.BookIDs {
+		id = strings.TrimSpace(id)
+		if id == "" || seen[id] {
+			continue
+		}
+		meta, ok := byID[id]
+		if !ok {
+			continue
+		}
+		seen[id] = true
+		ordered = append(ordered, meta)
+	}
+	for _, meta := range lib.Books {
+		if !seen[meta.ID] {
+			ordered = append(ordered, meta)
+		}
+	}
+	lib.UserID = user.ID
+	lib.Books = ordered
+	if err := a.scrib.SaveLibrary(r.Context(), lib); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.mustLogf(r, "scrib.reorder_library", "user_id", user.ID, "books", len(ordered))
+	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "bookIds": bookIDsFromMeta(ordered)})
+}
+
+func bookIDsFromMeta(books []scribBookMeta) []string {
+	out := make([]string, 0, len(books))
+	for _, b := range books {
+		out = append(out, b.ID)
+	}
+	return out
+}
+
 func (a *App) scribCreateBookHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.validOrigin(r) || !a.validCSRF(r) {
 		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
@@ -341,6 +403,121 @@ func (a *App) scribDeleteSheetHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	a.mustLogf(r, "scrib.delete_sheet", "sheet_id", sheetID)
 	writeJSON(w, http.StatusOK, map[string]any{"deleted": true, "sheetId": sheetID})
+}
+
+func (a *App) scribMoveSheetHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.validOrigin(r) || !a.validCSRF(r) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	user := a.requireScribUser(w, r)
+	if user == nil {
+		return
+	}
+	sourceBookID := strings.TrimSpace(r.PathValue("bookId"))
+	sheetID := strings.TrimSpace(r.PathValue("sheetId"))
+	var body struct {
+		TargetBookID string `json:"targetBookId"`
+	}
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 8<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	targetBookID := strings.TrimSpace(body.TargetBookID)
+	if sourceBookID == "" || sheetID == "" || targetBookID == "" {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	if sourceBookID == targetBookID {
+		sheet, err := a.scrib.GetSheet(r.Context(), user.ID, sourceBookID, sheetID)
+		if errors.Is(err, errNotFound) || sheet == nil {
+			a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+			return
+		}
+		if err != nil {
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+		writeJSON(w, http.StatusOK, sheet)
+		return
+	}
+	sourceBook, err := a.scrib.GetBook(r.Context(), user.ID, sourceBookID)
+	if errors.Is(err, errNotFound) || sourceBook == nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	targetBook, err := a.scrib.GetBook(r.Context(), user.ID, targetBookID)
+	if errors.Is(err, errNotFound) || targetBook == nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	sheet, err := a.scrib.GetSheet(r.Context(), user.ID, sourceBookID, sheetID)
+	if errors.Is(err, errNotFound) || sheet == nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	now := scribNow()
+	meta := scribSheetMeta{ID: sheet.ID, Name: sheet.Name, UpdatedAt: now}
+	for _, s := range sourceBook.Sheets {
+		if s.ID == sheetID {
+			meta.Name = s.Name
+			break
+		}
+	}
+	if sheet.Name != "" {
+		meta.Name = sheet.Name
+	}
+	meta.UpdatedAt = now
+
+	sheet.BookID = targetBookID
+	sheet.UserID = user.ID
+	sheet.UpdatedAt = now
+	if err := a.scrib.SaveSheet(r.Context(), sheet); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if err := a.scrib.DeleteSheet(r.Context(), user.ID, sourceBookID, sheetID); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+
+	filtered := make([]scribSheetMeta, 0, len(sourceBook.Sheets))
+	for _, s := range sourceBook.Sheets {
+		if s.ID != sheetID {
+			filtered = append(filtered, s)
+		}
+	}
+	sourceBook.Sheets = filtered
+	sourceBook.UpdatedAt = now
+	_ = a.scrib.SaveBook(r.Context(), sourceBook)
+
+	already := false
+	for _, s := range targetBook.Sheets {
+		if s.ID == sheetID {
+			already = true
+			break
+		}
+	}
+	if !already {
+		targetBook.Sheets = append(targetBook.Sheets, meta)
+	}
+	targetBook.UpdatedAt = now
+	_ = a.scrib.SaveBook(r.Context(), targetBook)
+
+	a.mustLogf(r, "scrib.move_sheet", "sheet_id", sheetID, "from", sourceBookID, "to", targetBookID)
+	writeJSON(w, http.StatusOK, sheet)
 }
 
 func scribSafeEmail(email string) string {
