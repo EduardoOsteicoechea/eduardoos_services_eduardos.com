@@ -295,6 +295,21 @@ func (a *App) ereportGetOrgHandler(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	libChanged := false
+	for i := range lib.Reports {
+		rm, _, loadErr := a.ereport.loadReport(user.ID, orgID, lib.Reports[i].ID)
+		if loadErr != nil {
+			continue
+		}
+		purpose := normalizeEreportPurpose(rm.Purpose)
+		if lib.Reports[i].Purpose != purpose {
+			lib.Reports[i].Purpose = purpose
+			libChanged = true
+		}
+	}
+	if libChanged {
+		_ = a.ereport.saveOrgLibrary(user.ID, orgID, lib)
+	}
 	writeJSON(w, http.StatusOK, map[string]any{
 		"org":     displayOrgMeta(user, meta),
 		"reports": lib.Reports,

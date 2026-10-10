@@ -54,6 +54,15 @@ function enqueueWrite(fn: () => Promise<void>): Promise<void> {
   return run;
 }
 
+/** Notify an open workspace to reload so its autosave cannot overwrite node writes. */
+function notifyReportMutated(orgId: string, reportId: string) {
+  document.dispatchEvent(
+    new CustomEvent("eos:ereport-report-mutated", {
+      detail: { orgId, reportId },
+    }),
+  );
+}
+
 function todayDate(): string {
   return new Date().toISOString().slice(0, 10);
 }
@@ -244,23 +253,31 @@ function openSettingsModal(opts: {
     opts.onSaved(next);
     saveBtn.disabled = true;
     void enqueueWrite(async () => {
-      const { status, data, requestId } = await patchReportSiteConnector(next.orgId, next.reportId, {
-        sectionId: next.sectionId,
-        groupId: next.groupId,
-        assign: false,
-      });
-      saveBtn.disabled = false;
-      if (status !== 200) {
-        showErrorModal({
-          message: String(data.message || "Could not save defaults."),
-          requestId: String(data.request_id || requestId),
-          details: String(data.error || `HTTP ${status}`),
+      try {
+        const { status, data, requestId } = await patchReportSiteConnector(next.orgId, next.reportId, {
+          sectionId: next.sectionId,
+          groupId: next.groupId,
+          assign: false,
         });
+        saveBtn.disabled = false;
+        if (status !== 200) {
+          showErrorModal({
+            message: String(data.message || "Could not save defaults."),
+            requestId: String(data.request_id || requestId),
+            details: String(data.error || `HTTP ${status}`),
+          });
+          window.alert("Could not save defaults on the server.");
+          return;
+        }
+        notifyReportMutated(next.orgId, next.reportId);
+        closeEreportSettingsModal();
+        window.alert("Defaults saved.");
+      } catch (err) {
+        saveBtn.disabled = false;
+        const msg = err instanceof Error ? err.message : "Could not save defaults.";
+        showErrorModal({ message: msg });
         window.alert("Could not save defaults on the server.");
-        return;
       }
-      closeEreportSettingsModal();
-      window.alert("Defaults saved.");
     });
   });
 
@@ -518,31 +535,41 @@ export async function openEreportQuickConnector(opts?: {
     const groupId = defaults.groupId;
 
     void enqueueWrite(async () => {
-      const { status, data, requestId } = await postItem(orgId, reportId, sectionId, groupId, {
-        nombre,
-        incidencia,
-        status: "reprobado",
-        fechaIncidencia: fecha,
-      });
-      if (status !== 201 && status !== 200) {
-        // Drop optimistic temp item and stay responsive.
+      try {
+        const { status, data, requestId } = await postItem(orgId, reportId, sectionId, groupId, {
+          nombre,
+          incidencia,
+          status: "reprobado",
+          fechaIncidencia: fecha,
+        });
+        if (status !== 201 && status !== 200) {
+          const g = currentGroup();
+          if (g?.items) g.items = g.items.filter((it) => it.id !== tempId);
+          renderList();
+          showErrorModal({
+            message: String(data.message || "Could not save issue."),
+            requestId: String(data.request_id || requestId),
+            details: String(data.error || `HTTP ${status}`),
+          });
+          setStatus("Could not save issue.");
+          window.alert("Could not save issue.");
+          return;
+        }
+        payload = (data.payload as ReportPayload) || payload;
+        syncContext();
+        renderList();
+        setStatus("Issue saved.");
+        notifyReportMutated(orgId, reportId);
+        if (mustLog) console.log("[ereport-quick] issue saved", { nombre, status, requestId });
+      } catch (err) {
         const g = currentGroup();
         if (g?.items) g.items = g.items.filter((it) => it.id !== tempId);
         renderList();
-        showErrorModal({
-          message: String(data.message || "Could not save issue."),
-          requestId: String(data.request_id || requestId),
-          details: String(data.error || `HTTP ${status}`),
-        });
+        const msg = err instanceof Error ? err.message : "Could not save issue.";
+        showErrorModal({ message: msg });
         setStatus("Could not save issue.");
         window.alert("Could not save issue.");
-        return;
       }
-      payload = (data.payload as ReportPayload) || payload;
-      syncContext();
-      renderList();
-      setStatus("Issue saved.");
-      if (mustLog) console.log("[ereport-quick] issue saved", { nombre });
     });
   }
 

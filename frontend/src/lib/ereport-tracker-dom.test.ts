@@ -64,8 +64,9 @@ describe("tracker canvas authoring", () => {
     expect(section().querySelectorAll(".section-open .item-card").length).toBe(1);
 
     const gid = section().querySelector(".group-block")?.getAttribute("data-group") as string;
+    expect(section().querySelector(`[data-group="${gid}"]`)?.querySelectorAll(".item-card").length).toBe(0);
     click(section().querySelector('[data-act="add-item"]'));
-    expect(section().querySelector(`[data-group="${gid}"]`)?.querySelectorAll(".item-card").length).toBe(2);
+    expect(section().querySelector(`[data-group="${gid}"]`)?.querySelectorAll(".item-card").length).toBe(1);
   });
 
   it("retypes a section between funcionalidades and subartículos", async () => {

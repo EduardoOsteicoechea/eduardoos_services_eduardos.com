@@ -91,6 +91,14 @@ async function nodeWrite(
   return { status, requestId, data: data as Record<string, unknown> };
 }
 
+function notifyReportMutated(orgId: string, reportId: string) {
+  document.dispatchEvent(
+    new CustomEvent("eos:ereport-report-mutated", {
+      detail: { orgId, reportId },
+    }),
+  );
+}
+
 function raiseApiError(status: number, requestId: string, data: Record<string, unknown>) {
   showErrorModal({
     message: String(data.message || "Request failed."),
@@ -385,7 +393,8 @@ export function startEreportWebConnector(root: HTMLElement) {
           groupId = gid || "";
         }
         commitPayload(payload, { sectionId: node?.id, groupId });
-        notifySave(groupId ? "Section created (with General subsection)." : "Section created.");
+        notifyReportMutated(selectedOrg(), selectedReport());
+        notifySave(groupId ? "Section created (with empty General subsection)." : "Section created.");
       } finally {
         setBusy(false);
       }
@@ -419,6 +428,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           return;
         }
         commitPayload((data.payload as ReportPayload) || payload, keep);
+        notifyReportMutated(selectedOrg(), selectedReport());
         notifySave("Section saved.");
       } finally {
         setBusy(false);
@@ -453,6 +463,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           sectionId,
           groupId: node?.id,
         });
+        notifyReportMutated(selectedOrg(), selectedReport());
         notifySave("Subsection created.");
       } finally {
         setBusy(false);
@@ -488,6 +499,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           return;
         }
         commitPayload((data.payload as ReportPayload) || payload, keep);
+        notifyReportMutated(selectedOrg(), selectedReport());
         notifySave("Subsection saved.");
       } finally {
         setBusy(false);
@@ -530,6 +542,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           groupId,
           itemId: node?.id,
         });
+        notifyReportMutated(selectedOrg(), selectedReport());
         notifySave("Issue created. Fill incidencia content, then Save.");
       } finally {
         setBusy(false);
@@ -573,6 +586,7 @@ export function startEreportWebConnector(root: HTMLElement) {
           return;
         }
         commitPayload((data.payload as ReportPayload) || payload, keep);
+        notifyReportMutated(selectedOrg(), selectedReport());
         notifySave("Issue saved.");
       } finally {
         setBusy(false);

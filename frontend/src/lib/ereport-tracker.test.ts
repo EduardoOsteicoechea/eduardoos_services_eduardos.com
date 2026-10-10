@@ -40,6 +40,8 @@ describe("vendored tracker assets", () => {
       expect(tracker).toContain(`root.querySelectorAll('[data-act="${act}"]')`);
     }
     expect(tracker).toContain("function addGroup(");
+    expect(tracker).toContain("items: []");
+    expect(tracker).not.toContain("items: [normalizeItem({ id: uid(id) }, { newIssue: true })]");
     expect(tracker).toContain("function removeGroup(");
     expect(tracker).toContain("function removeSection(");
     expect(tracker).toContain("function toggleSectionKind(");

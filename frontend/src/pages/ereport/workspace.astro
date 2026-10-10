@@ -643,6 +643,27 @@ import Layout from "../../layouts/Layout.astro";
     document.addEventListener(EREPORT_OPEN_LOCAL_EVENT, onErrorLoadEreport);
     disposers.push(() => document.removeEventListener(EREPORT_OPEN_LOCAL_EVENT, onErrorLoadEreport));
 
+    /** Connector / node API writes must win over stale workspace autosave. */
+    const onExternalReportMutate = (ev: Event) => {
+      const detail = (ev as CustomEvent<{ orgId?: string; reportId?: string }>).detail;
+      if (!detail?.orgId || !detail?.reportId) return;
+      if (detail.orgId !== orgId || detail.reportId !== reportId) return;
+      if (saveTarget !== "cloud" || disposed) return;
+      void (async () => {
+        const res = isShared ? await fetchSharedReport(orgId, reportId) : await fetchOrgReport(orgId, reportId);
+        if (disposed || res.status !== 200 || !res.data.payload) return;
+        tema = res.data.meta?.tema || tema;
+        payload = {
+          ...res.data.payload,
+          reportName: String(res.data.payload.reportName || res.data.meta?.tema || tema || "").trim() || tema,
+        };
+        attachHost(payload);
+        setBanner(root, "Reloaded after Connector save.", "ok");
+      })();
+    };
+    document.addEventListener("eos:ereport-report-mutated", onExternalReportMutate);
+    disposers.push(() => document.removeEventListener("eos:ereport-report-mutated", onExternalReportMutate));
+
     void requireAuth(root, copy).then(async (me) => {
       if (!me || disposed) return;
       syncOwnerOnlyChrome();

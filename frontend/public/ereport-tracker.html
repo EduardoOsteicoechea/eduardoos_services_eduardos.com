@@ -1886,7 +1886,7 @@ function addGroup(sid) {
     id,
     title: (sec.kind === "subarticulos" ? "Nuevo subartículo " : "Nueva subsección ") + n,
     productHistory: "",
-    items: [normalizeItem({ id: uid(id) }, { newIssue: true })]
+    items: []
   });
   collapseState.sections.delete(sid);
   collapseState.groups.delete(id);
@@ -1977,8 +1977,6 @@ function removeItem(sid, gid, iid) {
   if (!found) return;
   if (gid === SECTION_ITEMS) {
     found.sec.items = found.list.filter(i => i.id !== iid);
-  } else if (found.list.length <= 1) {
-    found.list[0] = normalizeItem({ id: uid(gid) }, { newIssue: true });
   } else {
     found.grp.items = found.list.filter(i => i.id !== iid);
   }
@@ -1990,7 +1988,7 @@ function clearGroup(sid, gid) {
   if (!confirm("¿Vaciar todas las incidencias de este grupo?")) return;
   collectFromDom();
   const grp = state.sections.find(s => s.id === sid).groups.find(g => g.id === gid);
-  grp.items = [normalizeItem({ id: uid(gid) }, { newIssue: true })];
+  grp.items = [];
   render();
 }
 
@@ -2001,7 +1999,7 @@ function clearSection(sid) {
   const sec = state.sections.find(s => s.id === sid);
   sec.items = [];
   sec.groups.forEach(grp => {
-    grp.items = [normalizeItem({ id: uid(grp.id) }, { newIssue: true })];
+    grp.items = [];
   });
   render();
 }
@@ -3391,7 +3389,7 @@ function emptyLikeEmbedded() {
   (data.sections || []).forEach(sec => {
     sec.items = [];
     (sec.groups || []).forEach(grp => {
-      grp.items = [normalizeItem({ id: uid(grp.id || "item") }, { newIssue: true })];
+      grp.items = [];
     });
   });
   return normalizeState(data);

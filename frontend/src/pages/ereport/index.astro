@@ -1483,6 +1483,11 @@ import Layout from "../../layouts/Layout.astro";
         setBanner(root, "Report assigned to site Connector.", "ok");
         await refreshManageReports();
         document.dispatchEvent(new CustomEvent("eos:ereport-connector-refresh"));
+        document.dispatchEvent(
+          new CustomEvent("eos:ereport-report-mutated", {
+            detail: { orgId: assignOrgId, reportId: assignReportId },
+          }),
+        );
       })();
     });
 
