@@ -218,9 +218,6 @@ export default function ScribBibleModal({
           <span />
           <span />
           <span />
-          <span />
-          <span />
-          <span />
         </span>
       </button>
       <header className="scrib-ref-panel__head">

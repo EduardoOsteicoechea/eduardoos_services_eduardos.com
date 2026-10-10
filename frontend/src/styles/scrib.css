@@ -174,8 +174,8 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
 }
 
 /*
- * Shared Scrib resize grip (reference image): 0.9375×2.8125rem, err fill,
- * white 2×3 dots, mid-height on the panel border.
+ * Shared Scrib resize grip: 0.9375×2.8125rem, theme fg fill / bg dots,
+ * single vertical column of 3 dots, mid-height on the panel border.
  */
 .scrib-resize-grip {
   box-sizing: border-box;
@@ -188,8 +188,8 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   padding: 0;
   border: 0;
   border-radius: var(--border-radius);
-  background: var(--color-err);
-  color: var(--color-button-fg);
+  background: var(--color-text);
+  color: var(--color-bg);
   cursor: col-resize;
   touch-action: none;
 }
@@ -201,8 +201,10 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
 }
 
 .scrib-resize-grip__dots {
-  display: grid;
-  grid-template-columns: 0.1875rem 0.1875rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 0.1875rem;
   pointer-events: none;
 }
@@ -946,6 +948,8 @@ html.dark .scrib-page {
   min-height: 0;
   flex: 1;
   overflow: auto;
+  /* Keep nested chip scrollbars a stable --rail-gap from this panel scrollbar. */
+  scrollbar-gutter: stable;
 }
 
 .scrib-ref-panel__error {
@@ -1020,6 +1024,9 @@ html.dark .scrib-page {
   gap: 0.28rem;
   max-height: 12rem;
   overflow: auto;
+  box-sizing: border-box;
+  /* Uniform gutter between inner chip scrollbar and panel scrollbar (H–H). */
+  margin-inline-end: var(--rail-gap);
   padding: 0.15rem 0;
 }
 

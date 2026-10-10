@@ -526,9 +526,6 @@ export default function ScribDashboard() {
                   <span />
                   <span />
                   <span />
-                  <span />
-                  <span />
-                  <span />
                 </span>
               </button>
               <button
