@@ -964,6 +964,51 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
   color: var(--color-text);
 }
 
+.ereport-assign-dialog {
+  width: calc(var(--sidebar-width, 20rem) + 4rem);
+  max-width: calc(100% - 2rem);
+  max-height: calc(100% - 2rem);
+  margin: auto;
+  padding: var(--space-padding, 1rem);
+  border: var(--border-width, 0.0625rem) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+.ereport-assign-dialog::backdrop {
+  background: color-mix(in srgb, var(--color-bg) 40%, transparent);
+}
+.ereport-assign-dialog__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap, 0.5rem);
+}
+.ereport-assign-dialog__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rail-gap, 0.5rem);
+}
+.ereport-assign-dialog__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+.ereport-assign-dialog label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: var(--font-size-sm);
+}
+.ereport-assign-dialog select {
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font-size: var(--font-size-md);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
 .ereport-settings-overlay__actions {
   display: flex;
   flex-wrap: wrap;

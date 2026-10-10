@@ -26,12 +26,13 @@ Docs: https://eduardoos.com/api-docs
 
 Documented in live `GET /api/v1/docs` → `payloadSchema.ereport.websiteRegistration` and `webConnector.features`.
 
-1. Hub: create report with purpose **Website registration** (one per owner; default **Other**).
-2. Cookie `GET /api/ereport/access` → `websiteRegistration: { orgId, reportId, tema } | null`.
-3. eduardoos.com chrome: menu **Connector** + header **bug_report** (left of the menu opener) only with entitlement + binding → **quick issue modal** (add-only; nombre until first `.`).
-4. Quick modal **settings** (gear) opens a settings dialog: default section + subsection in `localStorage` (`ereport.connector.defaults`); **Advanced** → `/ereport/web-connector` (save alerts).
-5. `.ereport/.env`: `EDUARDOOS_ORG_ID` / `EDUARDOOS_REPORT_ID` = that report. API still allows all owned reports; UI locks to the binding.
-6. Without binding: Connector / bug button hidden; use hub + local `.ereport` file (dev reporting).
+1. Hub: create report with purpose **Website registration**, or **Manage reports → Assign to site** (picks default section/subsection; moves the binding if another report already had it).
+2. Cookie `GET /api/ereport/access` → `websiteRegistration: { orgId, reportId, tema, sectionId?, groupId? } | null`.
+3. eduardoos.com chrome: menu **Connector** + header **bug_report** (left of the menu opener) only with entitlement + binding → **quick issue modal** (add-only; nombre until first `.`; optimistic save; `fechaIncidencia` + `reportDate` = today).
+4. Quick modal **settings** (gear): default section + subsection persisted via `PATCH …/site-connector` (+ `localStorage` `ereport.connector.defaults`); **Advanced** → `/ereport/web-connector`.
+5. External hosts without the hub: `embed.js` **Configure** (⚙) opens `/ereport/connector-config` and stores `ereport.embed.binding`.
+6. `.ereport/.env`: `EDUARDOOS_ORG_ID` / `EDUARDOOS_REPORT_ID` = that report. API still allows all owned reports; UI locks to the binding.
+7. Without binding: Connector / bug button hidden; use hub + local `.ereport` file (dev reporting).
 
 ## Mandatory: execution-logging consent (before Mode D)
 

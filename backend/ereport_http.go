@@ -72,12 +72,8 @@ func (a *App) ereportAccessHandler(w http.ResponseWriter, r *http.Request) {
 		"ownerSafe":   displayOwnerSafe(user.Email),
 		"ownerEmail":  user.Email,
 	}
-	if orgID, reportID, tema, found := a.findWebsiteRegistration(user.ID); found {
-		out["websiteRegistration"] = map[string]any{
-			"orgId":    orgID,
-			"reportId": reportID,
-			"tema":     tema,
-		}
+	if binding, found := a.findWebsiteRegistration(user.ID); found {
+		out["websiteRegistration"] = binding
 	} else {
 		out["websiteRegistration"] = nil
 	}
@@ -161,7 +157,7 @@ func (a *App) ereportCreateOrgHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	purpose := normalizeEreportPurpose(body.FirstReportPurpose)
 	if purpose == ereportPurposeWebsite {
-		if _, _, _, found := a.findWebsiteRegistration(user.ID); found {
+		if _, found := a.findWebsiteRegistration(user.ID); found {
 			a.writeSafeError(w, r, http.StatusConflict, "website_registration_exists")
 			return
 		}
@@ -356,7 +352,7 @@ func (a *App) ereportCreateReportHandler(w http.ResponseWriter, r *http.Request)
 	}
 	purpose := normalizeEreportPurpose(body.Purpose)
 	if purpose == ereportPurposeWebsite {
-		if _, _, _, found := a.findWebsiteRegistration(user.ID); found {
+		if _, found := a.findWebsiteRegistration(user.ID); found {
 			a.writeSafeError(w, r, http.StatusConflict, "website_registration_exists")
 			return
 		}
@@ -518,6 +514,74 @@ func (a *App) ereportPutReportHandler(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{"meta": meta, "payload": payload})
 }
 
+// PATCH /api/ereport/orgs/{orgId}/reports/{reportId}/site-connector
+// Assigns this report as the site website_registration binding (optional) and
+// persists default connector section/subsection ids.
+func (a *App) ereportSiteConnectorHandler(w http.ResponseWriter, r *http.Request) {
+	user := a.requireEreportOwnerWrite(w, r)
+	if user == nil {
+		return
+	}
+	if !a.requireCreateEntitlement(w, r, user) {
+		return
+	}
+	meta, payload, ok := a.ownerLoadReport(w, r, user)
+	if !ok {
+		return
+	}
+	var body struct {
+		Assign    *bool  `json:"assign"`
+		SectionID string `json:"sectionId"`
+		GroupID   string `json:"groupId"`
+	}
+	if !a.decodeEreportJSON(w, r, &body) {
+		return
+	}
+	sectionID := strings.TrimSpace(body.SectionID)
+	groupID := strings.TrimSpace(body.GroupID)
+	if sectionID == "" || groupID == "" {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	sec, _, err := findSection(payload, sectionID)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	if _, _, err := findGroup(sec, groupID); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	assign := true
+	if body.Assign != nil {
+		assign = *body.Assign
+	}
+	now := nowRFC3339()
+	if assign {
+		a.clearOtherWebsiteRegistrations(user.ID, meta.OrgID, meta.ID)
+		meta.Purpose = ereportPurposeWebsite
+	}
+	meta.ConnectorSectionID = sectionID
+	meta.ConnectorGroupID = groupID
+	meta.UpdatedAt = now
+	meta = displayMeta(user, meta)
+	if err := a.ereport.saveReport(user.ID, meta, payload); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.touchLibrary(user.ID, meta)
+	writeJSON(w, http.StatusOK, map[string]any{
+		"meta": meta,
+		"websiteRegistration": websiteRegistrationBinding{
+			OrgID:     meta.OrgID,
+			ReportID:  meta.ID,
+			Tema:      meta.Tema,
+			SectionID: meta.ConnectorSectionID,
+			GroupID:   meta.ConnectorGroupID,
+		},
+	})
+}
+
 func (a *App) touchLibrary(ownerUserID string, meta ereportMeta) {
 	lib, err := a.ereport.loadOrgLibrary(ownerUserID, meta.OrgID)
 	if err != nil {
@@ -527,6 +591,7 @@ func (a *App) touchLibrary(ownerUserID string, meta ereportMeta) {
 		if lib.Reports[i].ID == meta.ID {
 			lib.Reports[i].Tema = meta.Tema
 			lib.Reports[i].ReportNumber = meta.ReportNumber
+			lib.Reports[i].Purpose = normalizeEreportPurpose(meta.Purpose)
 			lib.Reports[i].UpdatedAt = meta.UpdatedAt
 		}
 	}

@@ -1,0 +1,80 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="eReport connector config"
+  page="ereport-connector-config"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+  description="Choose the eReport org, report, section, and subsection used by the host-site connector."
+>
+  <h1 class="page-title-sr">eReport connector config</h1>
+  <section class="ereport-cc" data-ereport-connector-config>
+    <header class="ereport-cc__bar">
+      <h2 class="ereport-cc__title">Configure site connector</h2>
+      <button type="button" class="icon-btn" data-cc-close aria-label="Close" title="Close">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      </button>
+    </header>
+    <p class="hint">Signed-in eduardoos.com session required. This assigns the website registration report and default section/subsection.</p>
+    <p class="status" data-cc-status>Loading…</p>
+    <label>
+      Report
+      <select data-cc-report></select>
+    </label>
+    <label>
+      Main section
+      <select data-cc-section></select>
+    </label>
+    <label>
+      Subsection
+      <select data-cc-group></select>
+    </label>
+    <button type="button" class="btn btn--primary" data-cc-save>Save defaults</button>
+  </section>
+</Layout>
+
+<style>
+  .ereport-cc {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    padding: var(--space-padding);
+    max-width: 32rem;
+  }
+  .ereport-cc__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--rail-gap);
+  }
+  .ereport-cc__title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+  }
+  .ereport-cc label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: var(--font-size-sm);
+  }
+  .ereport-cc select {
+    height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-md);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+</style>
+
+<script>
+  import { startEreportConnectorConfig } from "../../lib/ereport-connector-config";
+
+  const root = document.querySelector("[data-ereport-connector-config]");
+  if (root instanceof HTMLElement) {
+    startEreportConnectorConfig(root);
+  }
+</script>

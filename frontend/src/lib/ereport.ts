@@ -26,6 +26,8 @@ export type WebsiteRegistrationBinding = {
   orgId: string;
   reportId: string;
   tema?: string;
+  sectionId?: string;
+  groupId?: string;
 };
 
 export type ReportCard = {
@@ -49,6 +51,8 @@ export type EreportMeta = {
   reportNumber?: string;
   reportDate?: string;
   purpose?: EreportPurpose | string;
+  connectorSectionId?: string;
+  connectorGroupId?: string;
   orgId: string;
   ownerUserId?: string;
   ownerEmail?: string;
@@ -150,6 +154,23 @@ export function saveOrgReport(orgId: string, reportId: string, body: { tema?: st
 
 export function deleteOrgReport(orgId: string, reportId: string) {
   return deleteJSON(`/ereport/orgs/${orgId}/reports/${reportId}`);
+}
+
+/** Assign report as site website_registration and/or persist connector section/subsection defaults. */
+export function patchReportSiteConnector(
+  orgId: string,
+  reportId: string,
+  body: { sectionId: string; groupId: string; assign?: boolean },
+) {
+  return apiRequest<{ meta?: EreportMeta; websiteRegistration?: WebsiteRegistrationBinding }>(
+    `/ereport/orgs/${orgId}/reports/${reportId}/site-connector`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    },
+    { timeoutMs: 120000 },
+  );
 }
 
 export function listReportHistory(orgId: string, reportId: string) {

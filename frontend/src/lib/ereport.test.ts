@@ -82,6 +82,8 @@ describe("eReport public invite routing", () => {
     expect(hubSrc).toContain("data-register-form");
     expect(hubSrc).toContain("data-recent-list");
     expect(hubSrc).toContain("data-manage-reports-list");
+    expect(hubSrc).toContain("data-assign-dialog");
+    expect(hubSrc).toContain("patchReportSiteConnector");
     expect(hubSrc).toContain("data-hub-back");
     expect(hubSrc).toContain('searchParams.delete("view")');
     expect(hubSrc).toContain('data-hub-view="manage-reports"');

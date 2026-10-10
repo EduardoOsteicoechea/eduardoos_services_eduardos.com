@@ -205,6 +205,12 @@ func mutateCreateItem(sectionID, groupID string) ereportNodeMutator {
 		if v, ok := body["checklist"]; ok {
 			item["checklist"] = v
 		}
+		today := ereportTodayDate()
+		if strings.TrimSpace(asString(item["fechaIncidencia"])) == "" {
+			item["fechaIncidencia"] = today
+		}
+		// Express / connector creates bump the report date to the last-edit day.
+		payload["reportDate"] = today
 		// Web connector creates by title (nombre) first; incidencia content is filled later.
 		if err := validateNewNodeItem(item); err != nil {
 			return nil, err
@@ -380,6 +386,9 @@ func (a *App) ereportMutateReportNodes(w http.ResponseWriter, r *http.Request, u
 	}
 	now := nowRFC3339()
 	meta.UpdatedAt = now
+	if d, ok := working["reportDate"].(string); ok {
+		meta.ReportDate = strings.TrimSpace(d)
+	}
 	meta = displayMeta(user, meta)
 	if err := a.ereport.saveReport(user.ID, meta, working); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

@@ -121,6 +121,108 @@ func TestEreportWebsiteRegistrationPurpose(t *testing.T) {
 	}
 }
 
+func TestEreportAssignSiteConnector(t *testing.T) {
+	app := newTestApp(false)
+	if err := app.grantEntitlement("member-1", productEreport); err != nil {
+		t.Fatal(err)
+	}
+	created := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs",
+		`{"name":"Site","firstReportName":"Misc","firstReportPurpose":"other"}`)
+	if created.Code != http.StatusCreated {
+		t.Fatalf("create: %d %s", created.Code, created.Body.String())
+	}
+	body := decodeMap(t, created)
+	orgID := body["org"].(map[string]any)["id"].(string)
+	reportID := body["report"].(map[string]any)["id"].(string)
+
+	got := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/orgs/"+orgID+"/reports/"+reportID, "")
+	if got.Code != http.StatusOK {
+		t.Fatalf("get report: %d %s", got.Code, got.Body.String())
+	}
+	payload := decodeMap(t, got)["payload"].(map[string]any)
+	secs := payload["sections"].([]any)
+	sec0 := secs[0].(map[string]any)
+	sectionID := sec0["id"].(string)
+	groups := sec0["groups"].([]any)
+	groupID := groups[0].(map[string]any)["id"].(string)
+
+	assign := app.doJSON(t, "member@eduardoos.com", http.MethodPatch,
+		"/api/ereport/orgs/"+orgID+"/reports/"+reportID+"/site-connector",
+		`{"assign":true,"sectionId":"`+sectionID+`","groupId":"`+groupID+`"}`)
+	if assign.Code != http.StatusOK {
+		t.Fatalf("assign: %d %s", assign.Code, assign.Body.String())
+	}
+	assignBody := decodeMap(t, assign)
+	meta := assignBody["meta"].(map[string]any)
+	if meta["purpose"] != ereportPurposeWebsite {
+		t.Fatalf("expected website purpose, got %#v", meta["purpose"])
+	}
+	if meta["connectorSectionId"] != sectionID || meta["connectorGroupId"] != groupID {
+		t.Fatalf("connector defaults mismatch: %#v", meta)
+	}
+
+	access := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/access", "")
+	accessBody := decodeMap(t, access)
+	binding := accessBody["websiteRegistration"].(map[string]any)
+	if binding["orgId"] != orgID || binding["reportId"] != reportID {
+		t.Fatalf("binding mismatch: %#v", binding)
+	}
+	if binding["sectionId"] != sectionID || binding["groupId"] != groupID {
+		t.Fatalf("binding defaults mismatch: %#v", binding)
+	}
+
+	// Create another report and move assignment.
+	other := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/reports",
+		`{"tema":"Second","purpose":"other"}`)
+	if other.Code != http.StatusCreated {
+		t.Fatalf("second report: %d %s", other.Code, other.Body.String())
+	}
+	otherID := decodeMap(t, other)["meta"].(map[string]any)["id"].(string)
+	got2 := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/orgs/"+orgID+"/reports/"+otherID, "")
+	payload2 := decodeMap(t, got2)["payload"].(map[string]any)
+	sec2 := payload2["sections"].([]any)[0].(map[string]any)
+	sec2ID := sec2["id"].(string)
+	grp2ID := sec2["groups"].([]any)[0].(map[string]any)["id"].(string)
+
+	move := app.doJSON(t, "member@eduardoos.com", http.MethodPatch,
+		"/api/ereport/orgs/"+orgID+"/reports/"+otherID+"/site-connector",
+		`{"assign":true,"sectionId":"`+sec2ID+`","groupId":"`+grp2ID+`"}`)
+	if move.Code != http.StatusOK {
+		t.Fatalf("move assign: %d %s", move.Code, move.Body.String())
+	}
+
+	prev := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/orgs/"+orgID+"/reports/"+reportID, "")
+	prevMeta := decodeMap(t, prev)["meta"].(map[string]any)
+	if prevMeta["purpose"] != ereportPurposeOther {
+		t.Fatalf("previous report should be demoted to other, got %#v", prevMeta["purpose"])
+	}
+
+	access2 := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/access", "")
+	binding2 := decodeMap(t, access2)["websiteRegistration"].(map[string]any)
+	if binding2["reportId"] != otherID {
+		t.Fatalf("expected binding moved to %s, got %#v", otherID, binding2)
+	}
+
+	// Creating an item should set fechaIncidencia and reportDate.
+	item := app.doJSON(t, "member@eduardoos.com", http.MethodPost,
+		"/api/ereport/orgs/"+orgID+"/reports/"+otherID+"/sections/"+sec2ID+"/groups/"+grp2ID+"/items",
+		`{"nombre":"Broken link","incidencia":"Footer 404"}`)
+	if item.Code != http.StatusCreated {
+		t.Fatalf("create item: %d %s", item.Code, item.Body.String())
+	}
+	itemBody := decodeMap(t, item)
+	node := itemBody["node"].(map[string]any)
+	fecha, _ := node["fechaIncidencia"].(string)
+	if strings.TrimSpace(fecha) == "" {
+		t.Fatalf("expected fechaIncidencia set, got %#v", node["fechaIncidencia"])
+	}
+	pl := itemBody["payload"].(map[string]any)
+	rd, _ := pl["reportDate"].(string)
+	if strings.TrimSpace(rd) == "" {
+		t.Fatalf("expected reportDate bumped, got %#v", pl["reportDate"])
+	}
+}
+
 func TestEreportEntitlementsUnavailableFailClosed(t *testing.T) {
 	app := newTestApp(false)
 	app.failClosedEnt = true

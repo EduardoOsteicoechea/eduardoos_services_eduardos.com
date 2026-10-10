@@ -43,18 +43,29 @@ type ereportLibrary struct {
 }
 
 type ereportMeta struct {
-	ID            string `json:"id"`
-	Tema          string `json:"tema"`
-	ReportNumber  string `json:"reportNumber,omitempty"`
-	ReportDate    string `json:"reportDate,omitempty"`
-	Purpose       string `json:"purpose,omitempty"` // website_registration | other
-	OrgID         string `json:"orgId"`
-	OwnerUserID   string `json:"ownerUserId"`
-	OwnerEmail    string `json:"ownerEmail,omitempty"`
-	OwnerSafe     string `json:"ownerSafe,omitempty"`
-	OwnerUsername string `json:"ownerUsername,omitempty"`
-	CreatedAt     string `json:"createdAt"`
-	UpdatedAt     string `json:"updatedAt"`
+	ID                 string `json:"id"`
+	Tema               string `json:"tema"`
+	ReportNumber       string `json:"reportNumber,omitempty"`
+	ReportDate         string `json:"reportDate,omitempty"`
+	Purpose            string `json:"purpose,omitempty"` // website_registration | other
+	ConnectorSectionID string `json:"connectorSectionId,omitempty"`
+	ConnectorGroupID   string `json:"connectorGroupId,omitempty"`
+	OrgID              string `json:"orgId"`
+	OwnerUserID        string `json:"ownerUserId"`
+	OwnerEmail         string `json:"ownerEmail,omitempty"`
+	OwnerSafe          string `json:"ownerSafe,omitempty"`
+	OwnerUsername      string `json:"ownerUsername,omitempty"`
+	CreatedAt          string `json:"createdAt"`
+	UpdatedAt          string `json:"updatedAt"`
+}
+
+// websiteRegistrationBinding is returned by GET /api/ereport/access.
+type websiteRegistrationBinding struct {
+	OrgID     string `json:"orgId"`
+	ReportID  string `json:"reportId"`
+	Tema      string `json:"tema"`
+	SectionID string `json:"sectionId,omitempty"`
+	GroupID   string `json:"groupId,omitempty"`
 }
 
 type ereportOrgCard struct {
@@ -272,10 +283,10 @@ func normalizeEreportPurpose(raw string) string {
 	}
 }
 
-func (a *App) findWebsiteRegistration(ownerUserID string) (orgID, reportID, tema string, ok bool) {
+func (a *App) findWebsiteRegistration(ownerUserID string) (websiteRegistrationBinding, bool) {
 	idx, err := a.ereport.loadOrgsIndex(ownerUserID)
 	if err != nil {
-		return "", "", "", false
+		return websiteRegistrationBinding{}, false
 	}
 	for _, org := range idx.Orgs {
 		lib, libErr := a.ereport.loadOrgLibrary(ownerUserID, org.ID)
@@ -288,9 +299,58 @@ func (a *App) findWebsiteRegistration(ownerUserID string) (orgID, reportID, tema
 				continue
 			}
 			if normalizeEreportPurpose(meta.Purpose) == ereportPurposeWebsite {
-				return org.ID, meta.ID, meta.Tema, true
+				return websiteRegistrationBinding{
+					OrgID:     org.ID,
+					ReportID:  meta.ID,
+					Tema:      meta.Tema,
+					SectionID: strings.TrimSpace(meta.ConnectorSectionID),
+					GroupID:   strings.TrimSpace(meta.ConnectorGroupID),
+				}, true
 			}
 		}
 	}
-	return "", "", "", false
+	return websiteRegistrationBinding{}, false
+}
+
+// clearOtherWebsiteRegistrations demotes every website_registration report except keep.
+func (a *App) clearOtherWebsiteRegistrations(ownerUserID, keepOrgID, keepReportID string) {
+	idx, err := a.ereport.loadOrgsIndex(ownerUserID)
+	if err != nil {
+		return
+	}
+	now := nowRFC3339()
+	for _, org := range idx.Orgs {
+		lib, libErr := a.ereport.loadOrgLibrary(ownerUserID, org.ID)
+		if libErr != nil {
+			continue
+		}
+		libChanged := false
+		for i, card := range lib.Reports {
+			if org.ID == keepOrgID && card.ID == keepReportID {
+				continue
+			}
+			meta, payload, loadErr := a.ereport.loadReport(ownerUserID, org.ID, card.ID)
+			if loadErr != nil {
+				continue
+			}
+			if normalizeEreportPurpose(meta.Purpose) != ereportPurposeWebsite {
+				continue
+			}
+			meta.Purpose = ereportPurposeOther
+			meta.UpdatedAt = now
+			if saveErr := a.ereport.saveReport(ownerUserID, meta, payload); saveErr != nil {
+				continue
+			}
+			lib.Reports[i].Purpose = ereportPurposeOther
+			lib.Reports[i].UpdatedAt = now
+			libChanged = true
+		}
+		if libChanged {
+			_ = a.ereport.saveOrgLibrary(ownerUserID, org.ID, lib)
+		}
+	}
+}
+
+func ereportTodayDate() string {
+	return time.Now().UTC().Format("2006-01-02")
 }

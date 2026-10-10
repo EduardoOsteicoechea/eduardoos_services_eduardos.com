@@ -260,6 +260,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("POST /api/ereport/orgs/{orgId}/invites", a.ereportCreateOrgInviteHandler)
 	mux.HandleFunc("GET /api/ereport/orgs/{orgId}/reports/{reportId}", a.ereportGetReportHandler)
 	mux.HandleFunc("PUT /api/ereport/orgs/{orgId}/reports/{reportId}", a.ereportPutReportHandler)
+	mux.HandleFunc("PATCH /api/ereport/orgs/{orgId}/reports/{reportId}/site-connector", a.ereportSiteConnectorHandler)
 	mux.HandleFunc("DELETE /api/ereport/orgs/{orgId}/reports/{reportId}", a.ereportDeleteReportHandler)
 	mux.HandleFunc("POST /api/ereport/orgs/{orgId}/reports/{reportId}/sections", a.ereportPostSectionHandler)
 	mux.HandleFunc("PATCH /api/ereport/orgs/{orgId}/reports/{reportId}/sections/{sectionId}", a.ereportPatchSectionHandler)

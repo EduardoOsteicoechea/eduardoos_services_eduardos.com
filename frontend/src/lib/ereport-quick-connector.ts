@@ -4,6 +4,7 @@ import { showErrorModal } from "./error-modal";
 import {
   fetchEreportAccess,
   fetchOrgReport,
+  patchReportSiteConnector,
   type WebsiteRegistrationBinding,
 } from "./ereport";
 import { openEreportAdvancedConnectorModal } from "./ereport-connector-modal";
@@ -35,10 +36,27 @@ type ItemNode = {
   nombre?: string;
   incidencia?: string;
   status?: string;
+  fechaIncidencia?: string;
 };
 type ReportPayload = {
+  reportDate?: string;
   sections?: SectionNode[];
 };
+
+let writeChain: Promise<void> = Promise.resolve();
+
+function enqueueWrite(fn: () => Promise<void>): Promise<void> {
+  const run = writeChain.then(fn, fn);
+  writeChain = run.then(
+    () => undefined,
+    () => undefined,
+  );
+  return run;
+}
+
+function todayDate(): string {
+  return new Date().toISOString().slice(0, 10);
+}
 
 function loadDefaults(): ConnectorDefaults | null {
   try {
@@ -57,7 +75,7 @@ function loadDefaults(): ConnectorDefaults | null {
   }
 }
 
-function saveDefaults(d: ConnectorDefaults) {
+function saveDefaultsLocal(d: ConnectorDefaults) {
   localStorage.setItem(DEFAULTS_KEY, JSON.stringify(d));
 }
 
@@ -109,7 +127,7 @@ async function postItem(
   reportId: string,
   sectionId: string,
   groupId: string,
-  body: { nombre: string; incidencia: string; status: string },
+  body: { nombre: string; incidencia: string; status: string; fechaIncidencia?: string },
 ) {
   await getCsrf();
   return apiRequest<Record<string, unknown>>(
@@ -175,6 +193,7 @@ function openSettingsModal(opts: {
 
   const sectionSelect = el<HTMLSelectElement>(frame, "[data-eq-section]")!;
   const groupSelect = el<HTMLSelectElement>(frame, "[data-eq-group]")!;
+  const saveBtn = el<HTMLButtonElement>(frame, "[data-eq-save-config]")!;
 
   function populateConfigSelects() {
     const sections = opts.payload?.sections || [];
@@ -210,7 +229,7 @@ function openSettingsModal(opts: {
     groupSelect.value = sec?.groups?.[0]?.id || "";
   });
 
-  el(frame, "[data-eq-save-config]")?.addEventListener("click", () => {
+  saveBtn.addEventListener("click", () => {
     if (!sectionSelect.value || !groupSelect.value) {
       window.alert("Select a main section and subsection.");
       return;
@@ -221,10 +240,28 @@ function openSettingsModal(opts: {
       sectionId: sectionSelect.value,
       groupId: groupSelect.value,
     };
-    saveDefaults(next);
+    saveDefaultsLocal(next);
     opts.onSaved(next);
-    closeEreportSettingsModal();
-    window.alert("Defaults saved.");
+    saveBtn.disabled = true;
+    void enqueueWrite(async () => {
+      const { status, data, requestId } = await patchReportSiteConnector(next.orgId, next.reportId, {
+        sectionId: next.sectionId,
+        groupId: next.groupId,
+        assign: false,
+      });
+      saveBtn.disabled = false;
+      if (status !== 200) {
+        showErrorModal({
+          message: String(data.message || "Could not save defaults."),
+          requestId: String(data.request_id || requestId),
+          details: String(data.error || `HTTP ${status}`),
+        });
+        window.alert("Could not save defaults on the server.");
+        return;
+      }
+      closeEreportSettingsModal();
+      window.alert("Defaults saved.");
+    });
   });
 
   el(frame, "[data-eq-advanced]")?.addEventListener("click", () => {
@@ -299,15 +336,13 @@ export async function openEreportQuickConnector(opts?: {
   const input = el<HTMLTextAreaElement>(frame, "[data-eq-input]")!;
 
   let payload: ReportPayload | null = null;
-  let defaults = loadDefaults();
-  if (!defaults || defaults.orgId !== binding.orgId || defaults.reportId !== binding.reportId) {
-    defaults = {
-      orgId: binding.orgId,
-      reportId: binding.reportId,
-      sectionId: defaults?.sectionId || "",
-      groupId: defaults?.groupId || "",
-    };
-  }
+  const cached = loadDefaults();
+  let defaults: ConnectorDefaults = {
+    orgId: binding.orgId,
+    reportId: binding.reportId,
+    sectionId: binding.sectionId || (cached?.orgId === binding.orgId && cached?.reportId === binding.reportId ? cached.sectionId : "") || "",
+    groupId: binding.groupId || (cached?.orgId === binding.orgId && cached?.reportId === binding.reportId ? cached.groupId : "") || "",
+  };
 
   function setStatus(msg: string) {
     statusEl.textContent = msg;
@@ -394,6 +429,12 @@ export async function openEreportQuickConnector(opts?: {
       return;
     }
     payload = (data.payload as ReportPayload) || { sections: [] };
+    const meta = data.meta;
+    if (meta?.connectorSectionId) defaults.sectionId = String(meta.connectorSectionId);
+    if (meta?.connectorGroupId) defaults.groupId = String(meta.connectorGroupId);
+    if (binding?.sectionId && !defaults.sectionId) defaults.sectionId = binding.sectionId;
+    if (binding?.groupId && !defaults.groupId) defaults.groupId = binding.groupId;
+
     const sections = payload.sections || [];
     if (defaults?.sectionId && !sections.some((s) => s.id === defaults!.sectionId)) {
       defaults.sectionId = "";
@@ -410,6 +451,9 @@ export async function openEreportQuickConnector(opts?: {
     if (defaults?.sectionId && !defaults.groupId) {
       const s = sections.find((x) => x.id === defaults!.sectionId);
       defaults.groupId = s?.groups?.[0]?.id || "";
+    }
+    if (defaults.sectionId && defaults.groupId) {
+      saveDefaultsLocal(defaults);
     }
     syncContext();
     renderList();
@@ -436,7 +480,7 @@ export async function openEreportQuickConnector(opts?: {
     input.focus();
   });
 
-  async function submitIssue() {
+  function submitIssue() {
     if (!defaults?.sectionId || !defaults?.groupId) {
       window.alert("Configure section and subsection first.");
       return;
@@ -446,41 +490,69 @@ export async function openEreportQuickConnector(opts?: {
       window.alert("Write an issue first.");
       return;
     }
-    setStatus("Saving issue…");
-    const { status, data, requestId } = await postItem(
-      defaults.orgId,
-      defaults.reportId,
-      defaults.sectionId,
-      defaults.groupId,
-      { nombre, incidencia, status: "reprobado" },
-    );
-    if (status !== 201 && status !== 200) {
-      showErrorModal({
-        message: String(data.message || "Could not save issue."),
-        requestId: String(data.request_id || requestId),
-        details: String(data.error || `HTTP ${status}`),
-      });
-      setStatus("Could not save issue.");
-      window.alert("Could not save issue.");
+    const fecha = todayDate();
+    const tempId = `tmp-${Date.now()}`;
+    const group = currentGroup();
+    if (!group) {
+      window.alert("Configure section and subsection first.");
       return;
     }
-    payload = (data.payload as ReportPayload) || payload;
+    if (!group.items) group.items = [];
+    group.items.push({
+      id: tempId,
+      nombre,
+      incidencia,
+      status: "reprobado",
+      fechaIncidencia: fecha,
+    });
+    if (payload) payload.reportDate = fecha;
     input.value = "";
     inputRow.hidden = true;
     syncContext();
     renderList();
-    setStatus("Issue saved.");
-    window.alert("Issue saved.");
-    if (mustLog) console.log("[ereport-quick] issue saved", { nombre });
+    setStatus("Saving…");
+
+    const orgId = defaults.orgId;
+    const reportId = defaults.reportId;
+    const sectionId = defaults.sectionId;
+    const groupId = defaults.groupId;
+
+    void enqueueWrite(async () => {
+      const { status, data, requestId } = await postItem(orgId, reportId, sectionId, groupId, {
+        nombre,
+        incidencia,
+        status: "reprobado",
+        fechaIncidencia: fecha,
+      });
+      if (status !== 201 && status !== 200) {
+        // Drop optimistic temp item and stay responsive.
+        const g = currentGroup();
+        if (g?.items) g.items = g.items.filter((it) => it.id !== tempId);
+        renderList();
+        showErrorModal({
+          message: String(data.message || "Could not save issue."),
+          requestId: String(data.request_id || requestId),
+          details: String(data.error || `HTTP ${status}`),
+        });
+        setStatus("Could not save issue.");
+        window.alert("Could not save issue.");
+        return;
+      }
+      payload = (data.payload as ReportPayload) || payload;
+      syncContext();
+      renderList();
+      setStatus("Issue saved.");
+      if (mustLog) console.log("[ereport-quick] issue saved", { nombre });
+    });
   }
 
   el(frame, "[data-eq-submit]")?.addEventListener("click", () => {
-    void submitIssue();
+    submitIssue();
   });
   input.addEventListener("keydown", (ev) => {
     if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) {
       ev.preventDefault();
-      void submitIssue();
+      submitIssue();
     }
   });
 

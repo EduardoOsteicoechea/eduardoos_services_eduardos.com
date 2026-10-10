@@ -622,6 +622,10 @@ export function startChrome(): void {
   startClientRouting();
   exposeEreportConnectorGlobal();
   wireEreportConnectorMenu();
+  document.addEventListener("eos:ereport-connector-refresh", () => {
+    ereportConnectorBindingCache = null;
+    void syncEreportConnectorGate(true);
+  });
   sessionLogStorage("chrome.start");
 
   applyStoredPreferences();

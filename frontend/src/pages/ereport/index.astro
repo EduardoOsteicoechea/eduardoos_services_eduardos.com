@@ -313,8 +313,33 @@ import Layout from "../../layouts/Layout.astro";
       <div data-view="manage-reports">
         <button class="btn" type="button" data-hub-back>Back to dashboard</button>
         <h2 class="product-dash__section-title">Manage reports</h2>
-        <p class="hint">Open, snapshot history, or delete permanently.</p>
+        <p class="hint">Open, assign to site connector, snapshot history, or delete permanently.</p>
         <ul class="ereport-list" data-manage-reports-list></ul>
+        <dialog class="ereport-assign-dialog" data-assign-dialog>
+          <form method="dialog" class="ereport-assign-dialog__form" data-assign-form>
+            <header class="ereport-assign-dialog__bar">
+              <h2 class="ereport-assign-dialog__title">Assign report to site</h2>
+              <button type="submit" class="icon-btn" value="cancel" aria-label="Close" title="Close">
+                <span class="material-symbols-outlined" aria-hidden="true">close</span>
+              </button>
+            </header>
+            <p class="hint" data-assign-report-name></p>
+            <p class="hint">Sets this report as the website registration binding and default section/subsection for the Connector.</p>
+            <label>
+              Main section
+              <select name="sectionId" data-assign-section required></select>
+            </label>
+            <label>
+              Subsection
+              <select name="groupId" data-assign-group required></select>
+            </label>
+            <p class="status" data-assign-status hidden></p>
+            <div class="ereport-hub__row">
+              <button class="btn btn--primary" type="button" data-assign-save>Assign to site</button>
+              <button class="btn" type="submit" value="cancel">Cancel</button>
+            </div>
+          </form>
+        </dialog>
       </div>
 
       <div data-view="history">
@@ -352,6 +377,7 @@ import Layout from "../../layouts/Layout.astro";
     fetchSharedReports,
     importOrgReport,
     listReportHistory,
+    patchReportSiteConnector,
     restoreReportHistory,
     updateEreportOrgs,
     workspaceHref,
@@ -736,6 +762,18 @@ import Layout from "../../layouts/Layout.astro";
         const meta = document.createElement("span");
         meta.className = "hint";
         meta.textContent = `${report.orgName || report.orgId} · ${formatReportDate(report.updatedAt)}`;
+        const assign = document.createElement("button");
+        assign.type = "button";
+        assign.className = "btn";
+        assign.textContent = report.purpose === "website_registration" ? "Site defaults" : "Assign to site";
+        assign.dataset.assignOrg = report.orgId;
+        assign.dataset.assignReport = report.id;
+        assign.dataset.reportName = report.tema || report.id;
+        if (report.purpose === "website_registration") {
+          assign.title = "Update default section and subsection for the site Connector";
+        } else {
+          assign.title = "Make this the website registration report and set Connector defaults";
+        }
         const hist = document.createElement("button");
         hist.type = "button";
         hist.className = "btn";
@@ -750,7 +788,7 @@ import Layout from "../../layouts/Layout.astro";
         del.dataset.deleteReport = report.id;
         del.dataset.deleteReportOrg = report.orgId;
         del.dataset.reportName = report.tema || report.id;
-        li.append(a, meta, hist, del);
+        li.append(a, meta, assign, hist, del);
         list.append(li);
       }
     };
@@ -767,6 +805,88 @@ import Layout from "../../layouts/Layout.astro";
       await loadAllReports();
       paintManageReports();
       paintCounts();
+    };
+
+    type AssignSection = { id: string; title?: string; groups?: Array<{ id: string; title?: string }> };
+    let assignOrgId = "";
+    let assignReportId = "";
+    let assignPayloadSections: AssignSection[] = [];
+
+    const fillAssignGroupSelect = (sectionId: string, preferredGroupId = "") => {
+      const groupSelect = root.querySelector("[data-assign-group]");
+      if (!(groupSelect instanceof HTMLSelectElement)) return;
+      groupSelect.replaceChildren();
+      const sec = assignPayloadSections.find((s) => s.id === sectionId);
+      const groups = sec?.groups || [];
+      if (groups.length === 0) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "No subsections";
+        groupSelect.append(opt);
+        return;
+      }
+      for (const g of groups) {
+        const opt = document.createElement("option");
+        opt.value = g.id;
+        opt.textContent = g.title || g.id;
+        groupSelect.append(opt);
+      }
+      groupSelect.value = preferredGroupId && groups.some((g) => g.id === preferredGroupId)
+        ? preferredGroupId
+        : groups[0]?.id || "";
+    };
+
+    const openAssignDialog = async (orgId: string, reportId: string, reportName: string) => {
+      const dialog = root.querySelector("[data-assign-dialog]");
+      if (!(dialog instanceof HTMLDialogElement)) return;
+      assignOrgId = orgId;
+      assignReportId = reportId;
+      const nameEl = root.querySelector("[data-assign-report-name]");
+      if (nameEl instanceof HTMLElement) nameEl.textContent = reportName;
+      const statusEl = root.querySelector("[data-assign-status]");
+      if (statusEl instanceof HTMLElement) {
+        statusEl.hidden = false;
+        statusEl.textContent = "Loading sections…";
+      }
+      const sectionSelect = root.querySelector("[data-assign-section]");
+      const groupSelect = root.querySelector("[data-assign-group]");
+      if (sectionSelect instanceof HTMLSelectElement) sectionSelect.replaceChildren();
+      if (groupSelect instanceof HTMLSelectElement) groupSelect.replaceChildren();
+      dialog.showModal();
+
+      const res = await fetchOrgReport(orgId, reportId);
+      if (res.status !== 200) {
+        if (statusEl instanceof HTMLElement) {
+          statusEl.textContent = res.data.message || "Could not load report.";
+        }
+        return;
+      }
+      const sections = ((res.data.payload as { sections?: AssignSection[] } | undefined)?.sections || []) as AssignSection[];
+      assignPayloadSections = sections;
+      const meta = res.data.meta;
+      if (!(sectionSelect instanceof HTMLSelectElement)) return;
+      sectionSelect.replaceChildren();
+      if (sections.length === 0) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "Create a section in the report first";
+        sectionSelect.append(opt);
+        if (statusEl instanceof HTMLElement) statusEl.textContent = "This report has no sections yet.";
+        return;
+      }
+      for (const s of sections) {
+        const opt = document.createElement("option");
+        opt.value = s.id;
+        opt.textContent = s.title || s.id;
+        sectionSelect.append(opt);
+      }
+      const preferredSection = meta?.connectorSectionId || sections[0]?.id || "";
+      sectionSelect.value = preferredSection;
+      fillAssignGroupSelect(preferredSection, meta?.connectorGroupId || "");
+      if (statusEl instanceof HTMLElement) {
+        statusEl.hidden = true;
+        statusEl.textContent = "";
+      }
     };
 
     const paintReports = () => {
@@ -1072,6 +1192,16 @@ import Layout from "../../layouts/Layout.astro";
         return;
       }
 
+      const assignBtn = node.closest("[data-assign-org]");
+      if (assignBtn instanceof HTMLElement && assignBtn.dataset.assignOrg && assignBtn.dataset.assignReport) {
+        void openAssignDialog(
+          assignBtn.dataset.assignOrg,
+          assignBtn.dataset.assignReport,
+          assignBtn.dataset.reportName || assignBtn.dataset.assignReport,
+        );
+        return;
+      }
+
       const delReport = node.closest("[data-delete-report]");
       if (delReport instanceof HTMLElement && delReport.dataset.deleteReport) {
         const orgId = delReport.dataset.deleteReportOrg || activeOrgId;
@@ -1302,6 +1432,58 @@ import Layout from "../../layouts/Layout.astro";
         }
         link.hidden = false;
       }
+    });
+
+    root.querySelector("[data-assign-section]")?.addEventListener("change", (event) => {
+      const select = event.currentTarget;
+      if (!(select instanceof HTMLSelectElement)) return;
+      fillAssignGroupSelect(select.value);
+    });
+
+    root.querySelector("[data-assign-save]")?.addEventListener("click", () => {
+      void (async () => {
+        if (!assignOrgId || !assignReportId) return;
+        const sectionSelect = root.querySelector("[data-assign-section]");
+        const groupSelect = root.querySelector("[data-assign-group]");
+        const statusEl = root.querySelector("[data-assign-status]");
+        const sectionId = sectionSelect instanceof HTMLSelectElement ? sectionSelect.value : "";
+        const groupId = groupSelect instanceof HTMLSelectElement ? groupSelect.value : "";
+        if (!sectionId || !groupId) {
+          if (statusEl instanceof HTMLElement) {
+            statusEl.hidden = false;
+            statusEl.textContent = "Select a section and subsection.";
+          }
+          return;
+        }
+        if (statusEl instanceof HTMLElement) {
+          statusEl.hidden = false;
+          statusEl.textContent = "Saving…";
+        }
+        const saveBtn = root.querySelector("[data-assign-save]");
+        if (saveBtn instanceof HTMLButtonElement) saveBtn.disabled = true;
+        const res = await patchReportSiteConnector(assignOrgId, assignReportId, {
+          sectionId,
+          groupId,
+          assign: true,
+        });
+        if (saveBtn instanceof HTMLButtonElement) saveBtn.disabled = false;
+        if (res.status !== 200) {
+          if (statusEl instanceof HTMLElement) {
+            statusEl.textContent = res.data.message || "Could not assign report.";
+          }
+          showErrorModal({
+            message: String(res.data.message || "Could not assign report."),
+            requestId: String(res.data.request_id || res.requestId || ""),
+            details: String(res.data.error || `HTTP ${res.status}`),
+          });
+          return;
+        }
+        const dialog = root.querySelector("[data-assign-dialog]");
+        if (dialog instanceof HTMLDialogElement) dialog.close();
+        setBanner(root, "Report assigned to site Connector.", "ok");
+        await refreshManageReports();
+        document.dispatchEvent(new CustomEvent("eos:ereport-connector-refresh"));
+      })();
     });
 
     document.addEventListener(

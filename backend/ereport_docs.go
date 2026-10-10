@@ -78,35 +78,46 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 				"websiteRegistration": map[string]any{
 					"purposeValues": []string{"website_registration", "other"},
 					"default":       "other",
-					"uniqueness":    "At most one website_registration report per owner (HTTP 409 website_registration_exists).",
+					"uniqueness":    "At most one website_registration report per owner on create (HTTP 409 website_registration_exists). Assign-to-site moves the purpose to the chosen report and demotes the previous one to other.",
 					"hubCreate":     "Cookie UI POST /api/ereport/orgs (firstReportPurpose) and POST /api/ereport/orgs/{orgId}/reports (purpose).",
-					"sessionAccess": "Cookie GET /api/ereport/access returns websiteRegistration: { orgId, reportId, tema } | null when the signed-in owner has that report.",
+					"hubAssign":     "Manage reports → Assign to site / Site defaults → PATCH /api/ereport/orgs/{orgId}/reports/{reportId}/site-connector { assign, sectionId, groupId }.",
+					"sessionAccess": "Cookie GET /api/ereport/access returns websiteRegistration: { orgId, reportId, tema, sectionId?, groupId? } | null.",
 					"siteConnector": "eduardoos.com (and hosts with the same chrome): main-menu Connector + header bug_report icon are shown only with eReport entitlement AND websiteRegistration binding. They open the quick issue modal locked to that report. Without binding, use the eReport hub / local .ereport file (dev reporting).",
 					"cliEnv":        "Set EDUARDOOS_ORG_ID and EDUARDOOS_REPORT_ID in .ereport/.env to the website_registration report. API key routes still allow all owned orgs/reports; the site UI is what locks to the binding.",
-					"metaField":     "Report meta.json purpose (normalized on load).",
+					"metaFields":    "meta.json purpose + connectorSectionId + connectorGroupId (normalized on load).",
 				},
 				"webConnector": map[string]any{
 					"embedScript": "https://eduardoos.com/ereport/embed.js",
 					"embedTheme":  "https://eduardoos.com/ereport/embed-theme.css",
 					"advancedModalPath": "/ereport/web-connector",
+					"configModalPath":   "/ereport/connector-config",
 					"features": []map[string]any{
 						{
 							"id":          "quick_issue_modal",
-							"summary":     "Default site Connector opens a compact modal: list issues in the configured subsection (add-only, no delete), + text input, save via session POST …/items.",
+							"summary":     "Default site Connector opens a compact modal: list issues in the configured subsection (add-only, no delete), + text input, optimistic local payload update then session POST …/items (120s timeout).",
 							"issueParse":  "Text until the first '.' is nombre; remainder is incidencia. No period → whole string is both.",
-							"config":      "Gear opens a nested settings modal; stores default sectionId + groupId in localStorage key ereport.connector.defaults (org/report from websiteRegistration). Advanced editor opens /ereport/web-connector locked.",
-							"saveAlert":   "window.alert on create/save success or failure (quick modal and advanced editor node saves).",
+							"config":      "Gear opens settings; persists sectionId+groupId via PATCH …/site-connector (assign:false) and caches localStorage ereport.connector.defaults. Server meta/access defaults win on open. Advanced editor opens /ereport/web-connector locked.",
+							"expressDates": "Create item sets fechaIncidencia (today UTC YYYY-MM-DD if empty) and bumps payload.reportDate + meta.reportDate to that day.",
+							"saveAlert":   "window.alert on create/save failure (and advanced editor node saves). Success stays non-blocking in the quick modal.",
 						},
 						{
 							"id":      "header_report_button",
 							"summary": "Activity-bar icon (bug_report) left of the menu opener; same visibility gate and opener as the menu Connector entry.",
 						},
 						{
+							"id":      "assign_report_to_site",
+							"summary": "Hub Manage reports: Assign to site picks default section/subsection, sets purpose=website_registration, demotes any previous website_registration to other.",
+						},
+						{
 							"id":      "embed_host",
-							"summary": "External sites: EduardoOSEreport.mount({ orgId, reportId, menuSelector }). Prefer the website_registration ids.",
+							"summary": "External sites: EduardoOSEreport.mount({ orgId?, reportId?, menuSelector }). Gear Configure opens /ereport/connector-config (session on eduardoos.com) to pick report/section/subsection; stores localStorage ereport.embed.binding.",
+						},
+						{
+							"id":      "host_configure_defaults",
+							"summary": "Embed Configure button for hosts without the eReport hub UI; assigns site connector defaults on the signed-in owner's report.",
 						},
 					},
-					"notes": "Auth is cookie session + eReport subscription (no API key in the browser). Session node writes: POST/PATCH /api/ereport/orgs/.../sections|groups|items. Override --eos-ereport-* for host menu styling.",
+					"notes": "Auth is cookie session + eReport subscription (no API key in the browser). Session node writes: POST/PATCH /api/ereport/orgs/.../sections|groups|items (use 120s client timeouts). Override --eos-ereport-* for host menu styling.",
 				},
 				"modes": map[string]any{
 					"append":  "Default. Additive merge only. Conservative for agents.",
@@ -149,7 +160,10 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 					"incidencia": "issue text", "solucion": "resolution", "checklist": "{id,label,checked}[]",
 				},
 				"metaFields": map[string]string{
-					"purpose": "website_registration|other — site Connector binding when website_registration",
+					"purpose":             "website_registration|other — site Connector binding when website_registration",
+					"connectorSectionId":  "Default main section for the site Connector",
+					"connectorGroupId":    "Default subsection for the site Connector",
+					"reportDate":          "Report date (YYYY-MM-DD); bumped on express/connector item create",
 				},
 			},
 			"homescool": map[string]any{
