@@ -30,7 +30,7 @@ func TestSubscriptionsCatalogPublic(t *testing.T) {
 		id, _ := row["id"].(string)
 		ids[id] = true
 	}
-	for _, want := range []string{"epam", "homescool", "scrib", "ereport", "evoice", "api"} {
+	for _, want := range []string{"epam", "homescool", "scrib", "ereport", "ereport-connector", "evoice", "api"} {
 		if !ids[want] {
 			t.Fatalf("missing catalog id %s in %#v", want, ids)
 		}

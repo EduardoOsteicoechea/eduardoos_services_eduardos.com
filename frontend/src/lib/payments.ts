@@ -20,6 +20,7 @@ const SERVICE_ICONS: Record<string, string> = {
   homescool: "school",
   scrib: "edit_note",
   ereport: "assignment",
+  "ereport-connector": "cable",
   evoice: "record_voice_over",
   api: "key",
 };
@@ -53,6 +54,13 @@ export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
     description: "Issue tracker reports (.ereport) with cloud storage and sharing.",
     monthlyUsd: 1,
     icon: "assignment",
+  },
+  {
+    id: "ereport-connector",
+    label: "eReport Connector",
+    description: "Use the eReport site connector (website registration binding, quick issue modal, and embed).",
+    monthlyUsd: 1,
+    icon: "cable",
   },
   {
     id: "evoice",

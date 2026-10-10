@@ -314,13 +314,13 @@ func (a *App) ereportV1MutateReport(w http.ResponseWriter, r *http.Request, muta
 	a.ereportMutateReportNodes(w, r, user, "api-node", apiKeyPrefixFrom(r), mutate)
 }
 
-// Session-cookie path for the web connector embed (subscription + ownership).
+// Session-cookie path for hub + web connector (ereport and/or ereport-connector + ownership).
 func (a *App) ereportSessionMutateReport(w http.ResponseWriter, r *http.Request, mutate ereportNodeMutator) {
 	user := a.requireEreportOwnerWrite(w, r)
 	if user == nil {
 		return
 	}
-	if !a.requireCreateEntitlement(w, r, user) {
+	if !a.requireEreportSessionNodeEntitlement(w, r, user) {
 		return
 	}
 	a.ereportMutateReportNodes(w, r, user, "web-connector", "", mutate)

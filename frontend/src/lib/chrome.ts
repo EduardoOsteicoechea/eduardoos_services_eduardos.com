@@ -337,10 +337,10 @@ let ereportConnectorBindingCache: { orgId: string; reportId: string } | null = n
 
 /**
  * Connector (menu + header) visibility is owned only here — never by syncSubscriptionNav.
- * Stay hidden until entitlement + website_registration binding are confirmed.
+ * Stay hidden until ereport-connector entitlement + website_registration binding are confirmed.
  * If already visible with a cached binding, keep showing while re-fetching (no flicker).
  */
-async function syncEreportConnectorGate(authed: boolean): Promise<void> {
+async function syncEreportConnectorGate(authed: boolean, isAdmin = false): Promise<void> {
   const gen = ++ereportConnectorGateGen;
   const nodes = [...document.querySelectorAll("[data-ereport-connector-open]")].filter(
     (node): node is HTMLElement => node instanceof HTMLElement,
@@ -349,7 +349,7 @@ async function syncEreportConnectorGate(authed: boolean): Promise<void> {
   if (!authed) {
     ereportConnectorBindingCache = null;
     hideEreportConnectorNodes(nodes);
-    sessionLog("chrome.ereportConnectorGate", { binding: false, hubVisible: false, count: nodes.length });
+    sessionLog("chrome.ereportConnectorGate", { binding: false, entitled: false, count: nodes.length });
     return;
   }
   const alreadyShowing = Boolean(ereportConnectorBindingCache) && nodes.some((n) => !n.hidden);
@@ -357,10 +357,17 @@ async function syncEreportConnectorGate(authed: boolean): Promise<void> {
     // First paint / was hidden: stay hidden until binding is confirmed (no entitlement flash).
     hideEreportConnectorNodes(nodes);
   }
-  const hub = document.querySelector<HTMLElement>('a[data-service="ereport"]:not([data-ereport-connector-open])');
-  const hubVisible = hub ? !hub.hidden : false;
+  let entitled = isAdmin;
+  if (!entitled) {
+    try {
+      const access = await checkServiceAccess("ereport-connector");
+      entitled = Boolean(access.hasEntitlement) || Boolean(access.isAdmin);
+    } catch {
+      entitled = false;
+    }
+  }
   let binding: { orgId: string; reportId: string } | null = null;
-  if (hubVisible) {
+  if (entitled) {
     try {
       const { status, data } = await fetchEreportAccess();
       if (status === 200 && data.websiteRegistration?.orgId && data.websiteRegistration?.reportId) {
@@ -376,7 +383,7 @@ async function syncEreportConnectorGate(authed: boolean): Promise<void> {
   if (gen !== ereportConnectorGateGen) return;
   ereportConnectorBindingCache = binding;
   for (const node of nodes) {
-    if (!hubVisible || !binding) {
+    if (!entitled || !binding) {
       node.hidden = true;
       node.removeAttribute("data-org-id");
       node.removeAttribute("data-report-id");
@@ -386,7 +393,7 @@ async function syncEreportConnectorGate(authed: boolean): Promise<void> {
     node.setAttribute("data-org-id", binding.orgId);
     node.setAttribute("data-report-id", binding.reportId);
   }
-  sessionLog("chrome.ereportConnectorGate", { binding: Boolean(binding), hubVisible, count: nodes.length });
+  sessionLog("chrome.ereportConnectorGate", { binding: Boolean(binding), entitled, count: nodes.length });
 }
 
 async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<void> {
@@ -532,7 +539,7 @@ export async function refreshAuthChrome(): Promise<void> {
     node.hidden = false;
   });
   await syncSubscriptionNav(isAdmin, authed);
-  await syncEreportConnectorGate(authed);
+  await syncEreportConnectorGate(authed, isAdmin);
   enforceGuestInstitutesAccess(authed);
   enforcePlainUserRouteAccess(isPlainUser);
   if (authed) {
@@ -624,7 +631,7 @@ export function startChrome(): void {
   wireEreportConnectorMenu();
   document.addEventListener("eos:ereport-connector-refresh", () => {
     ereportConnectorBindingCache = null;
-    void syncEreportConnectorGate(true);
+    void syncEreportConnectorGate(true, false);
   });
   sessionLogStorage("chrome.start");
 

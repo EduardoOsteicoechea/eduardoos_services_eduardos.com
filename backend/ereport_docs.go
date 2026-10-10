@@ -82,7 +82,7 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 					"hubCreate":     "Cookie UI POST /api/ereport/orgs (firstReportPurpose) and POST /api/ereport/orgs/{orgId}/reports (purpose).",
 					"hubAssign":     "Manage reports → Assign to site / Site defaults → PATCH /api/ereport/orgs/{orgId}/reports/{reportId}/site-connector { assign, sectionId, groupId }.",
 					"sessionAccess": "Cookie GET /api/ereport/access returns websiteRegistration: { orgId, reportId, tema, sectionId?, groupId? } | null.",
-					"siteConnector": "eduardoos.com (and hosts with the same chrome): main-menu Connector + header bug_report icon are shown only with eReport entitlement AND websiteRegistration binding. They open the quick issue modal locked to that report. Without binding, use the eReport hub / local .ereport file (dev reporting).",
+					"siteConnector": "eduardoos.com (and hosts with the same chrome): main-menu Connector + header bug_report icon are shown only with ereport-connector entitlement AND websiteRegistration binding. They open the quick issue modal locked to that report. Full hub remains product ereport. Without binding, use the eReport hub / local .ereport file (dev reporting).",
 					"cliEnv":        "Set EDUARDOOS_ORG_ID and EDUARDOOS_REPORT_ID in .ereport/.env to the website_registration report. API key routes still allow all owned orgs/reports; the site UI is what locks to the binding.",
 					"metaFields":    "meta.json purpose + connectorSectionId + connectorGroupId (normalized on load).",
 				},

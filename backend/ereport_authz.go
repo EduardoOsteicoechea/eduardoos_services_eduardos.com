@@ -127,6 +127,27 @@ func (a *App) requireCreateEntitlement(w http.ResponseWriter, r *http.Request, u
 	return true
 }
 
+// requireEreportSessionNodeEntitlement gates cookie section/group/item mutations.
+// Full hub (ereport) and site connector (ereport-connector) both use these routes.
+func (a *App) requireEreportSessionNodeEntitlement(w http.ResponseWriter, r *http.Request, user *User) bool {
+	okHub, unavailable := a.hasProductEntitlement(r, user, productEreport)
+	if unavailable {
+		a.auditEvent(r, "ereport_entitlement", "denied", user.ID)
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return false
+	}
+	if okHub {
+		return true
+	}
+	okConn, unavailable := a.hasProductEntitlement(r, user, productEreportConnector)
+	if unavailable || !okConn {
+		a.auditEvent(r, "ereport_connector_entitlement", "denied", user.ID)
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return false
+	}
+	return true
+}
+
 func (a *App) requireEreportUser(w http.ResponseWriter, r *http.Request) *User {
 	user := a.currentUser(r)
 	if user == nil {
