@@ -1087,7 +1087,8 @@ html.dark .scrib-page {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  min-height: 0;
+  /* Keep a readable verse pane before the user expands via nav toggle. */
+  min-height: 14rem;
   flex: 1 1 auto;
 }
 
@@ -1104,7 +1105,7 @@ html.dark .scrib-page {
   margin: 0;
   width: auto;
   flex: 1 1 auto;
-  min-height: 8rem;
+  min-height: 12rem;
   max-height: none;
   padding: 0.35rem 0.4rem;
   border: 0;
@@ -1175,7 +1176,11 @@ html.dark .scrib-page {
 
   .scrib-ref-panel__text-body {
     max-height: none;
-    min-height: 4rem;
+    min-height: 10rem;
+  }
+
+  .scrib-ref-panel__text {
+    min-height: 12rem;
   }
 
   .scrib-ref-panel--nav-collapsed {
