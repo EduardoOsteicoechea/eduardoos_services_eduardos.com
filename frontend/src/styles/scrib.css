@@ -127,6 +127,7 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
 }
 
 .scrib-books {
+  --scrib-book-rail-width: 2.5rem;
   display: flex;
   flex-direction: column;
   gap: var(--space-padding);
@@ -156,15 +157,58 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
 }
 
 .scrib-book__rail {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--rail-gap);
-  flex: 0 0 auto;
+  flex: 0 0 var(--scrib-book-rail-width);
+  width: var(--scrib-book-rail-width);
   min-width: 0;
   min-height: 0;
   padding-right: var(--rail-gap);
   border-right: var(--border-width) solid var(--color-border);
+}
+
+/* Horizontal resize grip: centered on the rail’s right border. */
+.scrib-book__resizer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -0.46875rem;
+  z-index: 3;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1875rem;
+  width: 0.9375rem;
+  height: 2.8125rem;
+  margin-block: auto;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-muted);
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.scrib-book__resizer:hover,
+.scrib-book__resizer:focus-visible {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-bg) 85%, var(--color-accent) 12%);
+  outline: none;
+}
+
+.scrib-book__resizer-dot {
+  flex: 0 0 auto;
+  width: 0.1875rem;
+  height: 0.1875rem;
+  border-radius: 50%;
+  background: currentColor;
 }
 
 .scrib-book__main {
@@ -215,7 +259,9 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   box-sizing: border-box;
   /* flex-basis 0: vertical label must not set section height taller than the cards. */
   flex: 1 1 0;
-  width: 2.5rem;
+  width: auto;
+  align-self: stretch;
+  min-width: 0;
   min-height: 0;
   margin: 0;
   padding: var(--control-padding-block) var(--control-padding-inline);
@@ -341,6 +387,10 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   position: relative;
   min-height: calc(var(--control-height) * 3.5);
   overflow: hidden;
+  cursor: pointer;
+}
+
+.scrib-sheet-card[draggable="true"] {
   cursor: grab;
 }
 

@@ -8,9 +8,11 @@ import {
   useCallback,
   useEffect,
   useState,
+  type CSSProperties,
   type DragEvent,
   type FormEvent,
   type KeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
 } from "react";
 import ServiceGate from "../ServiceGate/ServiceGate";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
@@ -36,6 +38,42 @@ import "../ProductDashboard/ProductDashboard.css";
 import "./Scrib.css";
 
 const SHEET_DRAG_MIME = "application/x-scrib-sheet";
+
+/** Shared rail width for every section (curriculum-index resize pattern). */
+const RAIL_WIDTH_STORAGE_KEY = "eduardoos-scrib-book-rail-width";
+const RAIL_WIDTH_DEFAULT_REM = 2.5;
+const RAIL_WIDTH_MIN_REM = 1.75;
+const RAIL_WIDTH_MAX_REM = 8;
+
+function readRootRem(): number {
+  if (typeof document === "undefined") return 16;
+  const px = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  return Number.isFinite(px) && px > 0 ? px : 16;
+}
+
+function clampRailWidthRem(value: number): number {
+  return Math.min(RAIL_WIDTH_MAX_REM, Math.max(RAIL_WIDTH_MIN_REM, value));
+}
+
+function readStoredRailWidthRem(): number {
+  try {
+    const raw = localStorage.getItem(RAIL_WIDTH_STORAGE_KEY);
+    if (!raw) return RAIL_WIDTH_DEFAULT_REM;
+    const parsed = parseFloat(raw);
+    if (!Number.isFinite(parsed)) return RAIL_WIDTH_DEFAULT_REM;
+    return clampRailWidthRem(parsed);
+  } catch {
+    return RAIL_WIDTH_DEFAULT_REM;
+  }
+}
+
+function writeStoredRailWidthRem(rem: number): void {
+  try {
+    localStorage.setItem(RAIL_WIDTH_STORAGE_KEY, String(clampRailWidthRem(rem)));
+  } catch {
+    /* ignore quota / private mode */
+  }
+}
 
 /** Legacy Institutes library entries are not shown as Scrib sections. */
 function isLegacyInstitutesSection(book: ScribBookCard): boolean {
@@ -79,6 +117,43 @@ export default function ScribDashboard() {
     null,
   );
   const [deleteConfirmText, setDeleteConfirmText] = useState("");
+  const [railWidthRem, setRailWidthRem] = useState(() =>
+    typeof window === "undefined" ? RAIL_WIDTH_DEFAULT_REM : readStoredRailWidthRem(),
+  );
+
+  const onRailResizePointerDown = useCallback(
+    (e: ReactPointerEvent<HTMLButtonElement>) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const handle = e.currentTarget;
+      handle.setPointerCapture(e.pointerId);
+      const startX = e.clientX;
+      const startRem = railWidthRem;
+      const rootRem = readRootRem();
+
+      const onMove = (moveEv: PointerEvent) => {
+        const deltaRem = (moveEv.clientX - startX) / rootRem;
+        setRailWidthRem(clampRailWidthRem(startRem + deltaRem));
+      };
+
+      const onEnd = (endEv: PointerEvent) => {
+        handle.releasePointerCapture(endEv.pointerId);
+        handle.removeEventListener("pointermove", onMove);
+        handle.removeEventListener("pointerup", onEnd);
+        handle.removeEventListener("pointercancel", onEnd);
+        const deltaRem = (endEv.clientX - startX) / rootRem;
+        const next = clampRailWidthRem(startRem + deltaRem);
+        setRailWidthRem(next);
+        writeStoredRailWidthRem(next);
+      };
+
+      handle.addEventListener("pointermove", onMove);
+      handle.addEventListener("pointerup", onEnd);
+      handle.addEventListener("pointercancel", onEnd);
+    },
+    [railWidthRem],
+  );
 
   const reload = useCallback(async () => {
     setLoading(true);
@@ -113,8 +188,12 @@ export default function ScribDashboard() {
     await reload();
   }
 
+  function openSheet(bookId: string, sheetId: string) {
+    window.location.href = scribSheetHref(userSafe, bookId, sheetId);
+  }
+
   async function onNewSheet(bookId: string) {
-    if (busy || !userSafe) return;
+    if (busy) return;
     setBusy(true);
     const res = await createScribSheet(bookId, "Hoja nueva");
     setBusy(false);
@@ -122,7 +201,7 @@ export default function ScribDashboard() {
       setError(res.error ?? "Could not create sheet");
       return;
     }
-    window.location.href = scribSheetHref(userSafe, bookId, res.sheet.id);
+    openSheet(bookId, res.sheet.id);
   }
 
   function openDeleteSection(bookId: string, name: string) {
@@ -241,6 +320,15 @@ export default function ScribDashboard() {
       e.preventDefault();
       return;
     }
+    // Keep Abrir / rename / delete clickable — do not start a drag from controls.
+    const origin = e.target;
+    if (
+      origin instanceof Element &&
+      origin.closest("a, button, input, textarea, select, label")
+    ) {
+      e.preventDefault();
+      return;
+    }
     const payload = JSON.stringify({ bookId, sheetId: sheet.id });
     e.dataTransfer.setData(SHEET_DRAG_MIME, payload);
     e.dataTransfer.setData("text/plain", payload);
@@ -352,7 +440,14 @@ export default function ScribDashboard() {
           </p>
         ) : null}
 
-        <div className="scrib-books">
+        <div
+          className="scrib-books"
+          style={
+            {
+              "--scrib-book-rail-width": `${railWidthRem}rem`,
+            } as CSSProperties
+          }
+        >
           {books.map((book, index) => {
             const sectionClass =
               dropTargetBookId === book.id
@@ -406,6 +501,17 @@ export default function ScribDashboard() {
                   }
                   onKeyDown={onNameKeyDown}
                 />
+                <button
+                  type="button"
+                  className="scrib-book__resizer"
+                  title="Redimensionar barra de sección"
+                  aria-label="Redimensionar barra de sección"
+                  onPointerDown={onRailResizePointerDown}
+                >
+                  <span className="scrib-book__resizer-dot" aria-hidden="true" />
+                  <span className="scrib-book__resizer-dot" aria-hidden="true" />
+                  <span className="scrib-book__resizer-dot" aria-hidden="true" />
+                </button>
               </aside>
               <button
                 type="button"
@@ -426,6 +532,7 @@ export default function ScribDashboard() {
                       draggingSheetId === sheet.id
                         ? "product-dash__card scrib-sheet-card scrib-sheet-card--dragging"
                         : "product-dash__card scrib-sheet-card";
+                    const sheetHref = scribSheetHref(userSafe, book.id, sheet.id);
                     return (
                     <div
                       key={sheet.id}
@@ -434,6 +541,16 @@ export default function ScribDashboard() {
                       draggable={!busy}
                       onDragStart={(e) => onSheetDragStart(e, book.id, sheet)}
                       onDragEnd={onSheetDragEnd}
+                      onClick={(e) => {
+                        const t = e.target;
+                        if (
+                          t instanceof Element &&
+                          t.closest("a, button, input, textarea, select, label")
+                        ) {
+                          return;
+                        }
+                        openSheet(book.id, sheet.id);
+                      }}
                     >
                       <span
                         className="scrib-sheet-card__drag"
@@ -469,16 +586,15 @@ export default function ScribDashboard() {
                             ? new Date(sheet.updatedAt).toLocaleString()
                             : ""}
                         </span>
-                        {userSafe ? (
-                          <a
-                            className="scrib-sheet-card__open"
-                            href={scribSheetHref(userSafe, book.id, sheet.id)}
-                            draggable={false}
-                            onMouseDown={(e) => e.stopPropagation()}
-                          >
-                            Abrir
-                          </a>
-                        ) : null}
+                        <a
+                          className="scrib-sheet-card__open"
+                          href={sheetHref}
+                          draggable={false}
+                          onMouseDown={(e) => e.stopPropagation()}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Abrir
+                        </a>
                       </div>
                       <button
                         type="button"
@@ -498,7 +614,7 @@ export default function ScribDashboard() {
                     type="button"
                     className="product-dash__card scrib-sheet-card scrib-sheet-card--new"
                     onClick={() => void onNewSheet(book.id)}
-                    disabled={busy || !userSafe}
+                    disabled={busy}
                   >
                     <span className="product-dash__card-head">
                       <span className="material-symbols-outlined" aria-hidden="true">
