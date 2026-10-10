@@ -16,7 +16,7 @@ export function personSchema() {
     "@id": `${SITE_ORIGIN}/#person`,
     name: PERSON_NAME,
     url: SITE_ORIGIN,
-    jobTitle: "AEC AI Technologist",
+    jobTitle: "Architect. BIM Software Developer. AEC AI Technologist",
     description:
       "Licensed Building Architect (ULA, Cum Laude) and full-stack desktop–web–cloud developer with focused BIM training. Builds Revit/AutoCAD API tools, AI integrations, and multiplatform products for AEC.",
     sameAs: [...SAME_AS],
