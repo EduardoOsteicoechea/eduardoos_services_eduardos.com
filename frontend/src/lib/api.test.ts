@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   clearAgentRoutePayload,
+  clearMeCache,
   clearSessionHint,
   collectChatPageContext,
   currentCsrf,
@@ -29,6 +30,7 @@ describe("api csrf and errors", () => {
   beforeEach(() => {
     resetCsrfMemory();
     clearSessionHint();
+    clearMeCache();
   });
 
   afterEach(() => {
@@ -36,6 +38,7 @@ describe("api csrf and errors", () => {
     vi.unstubAllGlobals();
     resetCsrfMemory();
     clearSessionHint();
+    clearMeCache();
   });
 
   it("fetches /api/auth/csrf with credentials and stores the token in memory", async () => {
@@ -144,6 +147,212 @@ describe("api csrf and errors", () => {
     expect(first.status).toBe(200);
     expect(second.status).toBe(200);
     expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/refresh")).toHaveLength(1);
+  });
+
+  it("deduplicates concurrent getMe requests to a single /auth/me", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-me-ok" }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    const [first, second] = await Promise.all([getMe(), getMe()]);
+    expect(first.status).toBe(200);
+    expect(second.status).toBe(200);
+    expect(first.data.id).toBe("member-1");
+    expect(second.data.id).toBe("member-1");
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(1);
+  });
+
+  it("deduplicates concurrent getMe through one refresh wave", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse(401, { error: "unauthorized", request_id: "rid-me-expired" }))
+      .mockResolvedValueOnce(jsonResponse(200, { csrf: "refresh-csrf" }))
+      .mockResolvedValueOnce(
+        jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-refresh-ok" }),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-me-ok" }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+    const [first, second] = await Promise.all([getMe(), getMe()]);
+    expect(first.status).toBe(200);
+    expect(second.status).toBe(200);
+    expect(first.data.id).toBe("member-1");
+    expect(second.data.id).toBe("member-1");
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(2);
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/refresh")).toHaveLength(1);
+  });
+
+  it("returns fresh Me cache immediately and revalidates in the background", async () => {
+    vi.useFakeTimers();
+    let resolveBackground: ((value: Response) => void) | undefined;
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-me-1" }),
+      )
+      .mockImplementationOnce(
+        () =>
+          new Promise<Response>((resolve) => {
+            resolveBackground = resolve;
+          }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const first = await getMe();
+    expect(first.status).toBe(200);
+    expect(first.data.id).toBe("member-1");
+    expect(first.requestId).toBe("rid-me-1");
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(1);
+
+    const second = await getMe();
+    expect(second.status).toBe(200);
+    expect(second.data.id).toBe("member-1");
+    expect(second.requestId).toBe("rid-me-1");
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(2);
+
+    resolveBackground?.(
+      jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-me-2" }),
+    );
+    await vi.advanceTimersByTimeAsync(0);
+    vi.useRealTimers();
+  });
+
+  it("refetches Me after clearMeCache and after TTL expiry", async () => {
+    vi.useFakeTimers();
+    const fetchMock = vi.fn().mockImplementation(() =>
+      Promise.resolve(
+        jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-me-ok" }),
+      ),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await getMe();
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(1);
+
+    clearMeCache();
+    await getMe();
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(2);
+
+    await getMe();
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(3);
+
+    await vi.advanceTimersByTimeAsync(15001);
+    await getMe();
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(4);
+    vi.useRealTimers();
+  });
+
+  it("bypasses Me cache when force is true", async () => {
+    const fetchMock = vi.fn().mockImplementation(() =>
+      Promise.resolve(
+        jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-me-ok" }),
+      ),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await getMe();
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(1);
+
+    await getMe({ force: true });
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(2);
+  });
+
+  it("keeps meInFlight coalescing when cache is warm and callers overlap", async () => {
+    let resolveMe: ((value: Response) => void) | undefined;
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-me-1" }),
+      )
+      .mockImplementation(
+        () =>
+          new Promise<Response>((resolve) => {
+            resolveMe = resolve;
+          }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await getMe();
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(1);
+
+    const cached = await getMe();
+    expect(cached.requestId).toBe("rid-me-1");
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(2);
+
+    const forcedA = getMe({ force: true });
+    const forcedB = getMe({ force: true });
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(2);
+    resolveMe?.(
+      jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-me-2" }),
+    );
+    expect((await forcedA).requestId).toBe("rid-me-2");
+    expect((await forcedB).requestId).toBe("rid-me-2");
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(2);
+  });
+
+  it("ignores in-flight Me success after clearMeCache so cache stays empty", async () => {
+    let resolveMe: ((value: Response) => void) | undefined;
+    const fetchMock = vi
+      .fn()
+      .mockImplementationOnce(
+        () =>
+          new Promise<Response>((resolve) => {
+            resolveMe = resolve;
+          }),
+      )
+      .mockImplementation(() =>
+        Promise.resolve(
+          jsonResponse(200, { id: "member-2", email: "b@c.d", role: "user" }, { "X-Request-ID": "rid-me-2" }),
+        ),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const pending = getMe();
+    clearMeCache();
+    resolveMe?.(
+      jsonResponse(200, { id: "stale-user", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-stale" }),
+    );
+    const stale = await pending;
+    expect(stale.status).toBe(401);
+    expect(stale.data.id).toBeUndefined();
+    expect(stale.data.error).toBe("unauthorized");
+    expect(hasSessionHint()).toBe(false);
+
+    const next = await getMe();
+    expect(next.status).toBe(200);
+    expect(next.data.id).toBe("member-2");
+    expect(next.requestId).toBe("rid-me-2");
+    expect(hasSessionHint()).toBe(true);
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(2);
+  });
+
+  it("does not cache transient Me network errors as success", async () => {
+    vi.useFakeTimers();
+    const fetchMock = vi
+      .fn()
+      .mockImplementationOnce((_url: string, init: RequestInit) => {
+        return new Promise((_, reject) => {
+          init.signal?.addEventListener("abort", () => {
+            reject(new DOMException("Aborted", "AbortError"));
+          });
+        });
+      })
+      .mockResolvedValueOnce(
+        jsonResponse(200, { id: "member-1", email: "a@b.c", role: "user" }, { "X-Request-ID": "rid-me-ok" }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const pending = getMe();
+    await vi.advanceTimersByTimeAsync(12000);
+    const failed = await pending;
+    expect(failed.status).toBe(0);
+
+    const ok = await getMe();
+    expect(ok.status).toBe(200);
+    expect(ok.data.id).toBe("member-1");
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/me")).toHaveLength(2);
+    vi.useRealTimers();
   });
 
   it("refreshes csrf before unsafe submissions and sends X-CSRF-Token", async () => {

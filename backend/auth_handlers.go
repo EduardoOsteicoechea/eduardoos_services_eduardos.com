@@ -168,7 +168,7 @@ func (a *App) verifyEmailHandler(w http.ResponseWriter, r *http.Request) {
 	user.Status = statusVerified
 	user.EmailVerified = true
 	user.UpdatedAt = time.Now().UTC()
-	if err := a.store.UpdateUser(r.Context(), user); err != nil {
+	if err := a.updateUser(r.Context(), user); err != nil {
 		a.logAuthDebug(r, "verify_email_update_failed", slog.String("reason", redactLogValue(err.Error())))
 		writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 		return
@@ -282,13 +282,13 @@ func (a *App) changePasswordHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	user.PasswordHash = hash
 	user.UpdatedAt = time.Now().UTC()
-	if err := a.store.UpdateUser(r.Context(), user); err != nil {
+	if err := a.updateUser(r.Context(), user); err != nil {
 		a.logAuthDebug(r, "change_password_update_failed", slog.String("reason", redactLogValue(err.Error())))
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
 	a.logAuthDebug(r, "change_password_revoking_sessions", slog.String("user_id", user.ID))
-	_ = a.store.RevokeUserSessions(r.Context(), user.ID, "password_change")
+	_ = a.revokeUserSessions(r.Context(), user.ID, "password_change")
 	if _, err := a.issueSessionLogged(w, r, user); err != nil {
 		a.logAuthDebug(r, "change_password_session_failed")
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
@@ -425,11 +425,11 @@ func (a *App) resetPasswordHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	user.PasswordHash = hash
 	user.UpdatedAt = time.Now().UTC()
-	if err := a.store.UpdateUser(r.Context(), user); err != nil {
+	if err := a.updateUser(r.Context(), user); err != nil {
 		a.logAuthDebug(r, "password_reset_update_failed", slog.String("reason", redactLogValue(err.Error())))
 	}
 	a.logAuthDebug(r, "password_reset_revoking_sessions", slog.String("user_id", user.ID))
-	_ = a.store.RevokeUserSessions(r.Context(), user.ID, "reset")
+	_ = a.revokeUserSessions(r.Context(), user.ID, "reset")
 	a.clearAuthCookies(w)
 	a.auditEvent(r, "password_reset", "success", user.ID)
 	a.logAuthDebug(r, "password_reset_success", slog.String("user_id", user.ID))

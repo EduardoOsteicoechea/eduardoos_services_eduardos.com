@@ -63,6 +63,7 @@ type App struct {
 	eoproject              eoprojectStore
 	eoprojectFS            *eoprojectFS
 	failClosedEnt          bool
+	sessionCache           *sessionCache
 }
 
 func newApp(cfg config) *App {
@@ -116,6 +117,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		cfg:              cfg,
 		log:              newJSONLogger(),
 		store:            store,
+		sessionCache:     newSessionCache(),
 		scrib:            openScribStore(store),
 		pamphlet:         openPamphletStore(store, cfg.MediaRoot),
 		homescool:        openHomescoolStore(store, cfg.MediaRoot),

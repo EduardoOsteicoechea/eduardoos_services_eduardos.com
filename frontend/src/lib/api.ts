@@ -223,6 +223,15 @@ export type VoiceChunkResponse = APIErrorBody & {
 let csrfToken = "";
 let csrfInFlight: Promise<string> | null = null;
 let refreshInFlight: Promise<{ status: number; data: MeResponse; requestId: string }> | null = null;
+let meInFlight: Promise<{ status: number; data: MeResponse; requestId: string }> | null = null;
+let meRevalidateInFlight: Promise<{ status: number; data: MeResponse; requestId: string }> | null = null;
+
+type MeResult = { status: number; data: MeResponse; requestId: string };
+type MeCacheEntry = { status: number; data: MeResponse; requestId: string; fetchedAt: number };
+
+const ME_CACHE_TTL_MS = 15000;
+let meCache: MeCacheEntry | null = null;
+let meCacheEpoch = 0;
 
 const SESSION_HINT_KEY = "eduardoos.session-hint";
 const REFRESH_LOCK_KEY = "eduardoos.refresh-lock";
@@ -259,13 +268,102 @@ export function markSessionHint(): void {
   }
 }
 
+export function clearMeCache(): void {
+  meCache = null;
+  meCacheEpoch += 1;
+}
+
 export function clearSessionHint(): void {
+  clearMeCache();
   try {
     sessionStorage.removeItem(SESSION_HINT_KEY);
     sessionLog("session.hint.clear");
   } catch {
     /* private mode */
   }
+}
+
+function isMeCacheFresh(): boolean {
+  return meCache !== null && Date.now() - meCache.fetchedAt < ME_CACHE_TTL_MS;
+}
+
+function cachedMeResult(): MeResult | null {
+  if (!meCache) return null;
+  return { status: meCache.status, data: meCache.data, requestId: meCache.requestId };
+}
+
+function rememberMeCache(result: MeResult, epoch: number): void {
+  if (epoch !== meCacheEpoch) return;
+  if (result.status === 200 && result.data.id) {
+    meCache = {
+      status: result.status,
+      data: result.data,
+      requestId: result.requestId,
+      fetchedAt: Date.now(),
+    };
+    return;
+  }
+  if (result.status === 401) {
+    meCache = null;
+  }
+}
+
+function guestMeAfterStaleEpoch(): MeResult {
+  clearSessionHint();
+  return {
+    status: 401,
+    data: {
+      error: "unauthorized",
+      message: "Sign in to continue.",
+    },
+    requestId: "",
+  };
+}
+
+function fetchMeNetwork(): Promise<MeResult> {
+  if (!meInFlight) {
+    const epoch = meCacheEpoch;
+    meInFlight = (async () => {
+      const first = await apiSend<MeResponse>("/auth/me", {}, { skipAuthRetry: true });
+      if (first.status === 200 && first.data.id) {
+        if (epoch !== meCacheEpoch) {
+          return guestMeAfterStaleEpoch();
+        }
+        markSessionHint();
+        rememberMeCache(first, epoch);
+        return first;
+      }
+      if (first.status !== 401) {
+        // Transient / non-auth failures: do not treat as a fresh Me success.
+        return first;
+      }
+      sessionLog("session.me.unauthorized_try_refresh");
+      const refreshed = await refreshSession();
+      if (refreshed.status !== 200 || !refreshed.data.id) {
+        clearSessionHint();
+        return first;
+      }
+      if (epoch !== meCacheEpoch) {
+        return guestMeAfterStaleEpoch();
+      }
+      const retry = await apiSend<MeResponse>("/auth/me", {}, { skipAuthRetry: true });
+      if (epoch !== meCacheEpoch) {
+        return guestMeAfterStaleEpoch();
+      }
+      rememberMeCache(retry, epoch);
+      return retry;
+    })().finally(() => {
+      meInFlight = null;
+    });
+  }
+  return meInFlight;
+}
+
+function revalidateMeInBackground(): void {
+  if (meInFlight || meRevalidateInFlight) return;
+  meRevalidateInFlight = fetchMeNetwork().finally(() => {
+    meRevalidateInFlight = null;
+  });
 }
 
 export function hasSessionHint(): boolean {
@@ -627,22 +725,16 @@ export async function refreshSession(): Promise<{ status: number; data: MeRespon
   return refreshInFlight;
 }
 
-export async function getMe(): Promise<{ status: number; data: MeResponse; requestId: string }> {
-  const first = await apiSend<MeResponse>("/auth/me", {}, { skipAuthRetry: true });
-  if (first.status === 200 && first.data.id) {
-    markSessionHint();
-    return first;
+export async function getMe(opts?: { force?: boolean }): Promise<{ status: number; data: MeResponse; requestId: string }> {
+  const force = opts?.force === true;
+  if (!force && isMeCacheFresh()) {
+    const cached = cachedMeResult();
+    if (cached) {
+      revalidateMeInBackground();
+      return cached;
+    }
   }
-  if (first.status !== 401) {
-    return first;
-  }
-  sessionLog("session.me.unauthorized_try_refresh");
-  const refreshed = await refreshSession();
-  if (refreshed.status !== 200 || !refreshed.data.id) {
-    clearSessionHint();
-    return first;
-  }
-  return apiSend<MeResponse>("/auth/me", {}, { skipAuthRetry: true });
+  return fetchMeNetwork();
 }
 
 export async function getAdminUsers(): Promise<{ status: number; data: AdminUsersResponse; requestId: string }> {

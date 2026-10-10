@@ -83,7 +83,7 @@ func (a *App) patchProfileHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	user.UpdatedAt = time.Now().UTC()
-	if err := a.store.UpdateUser(r.Context(), user); err != nil {
+	if err := a.updateUser(r.Context(), user); err != nil {
 		if errors.Is(err, errDuplicateUsername) {
 			a.writeSafeError(w, r, http.StatusConflict, "conflict")
 			return
@@ -190,7 +190,7 @@ func (a *App) uploadAvatarHandler(w http.ResponseWriter, r *http.Request) {
 	user.AvatarFilename = filepath.Base(relative)
 	user.AvatarUpdatedAt = &now
 	user.UpdatedAt = now
-	if err := a.store.UpdateUser(r.Context(), user); err != nil {
+	if err := a.updateUser(r.Context(), user); err != nil {
 		removeAvatarFile(a.cfg.MediaRoot, relative)
 		a.logValidation(r, "avatar_store_failed")
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -223,7 +223,7 @@ func (a *App) deleteAvatarHandler(w http.ResponseWriter, r *http.Request) {
 	user.AvatarFilename = ""
 	user.AvatarUpdatedAt = nil
 	user.UpdatedAt = time.Now().UTC()
-	if err := a.store.UpdateUser(r.Context(), user); err != nil {
+	if err := a.updateUser(r.Context(), user); err != nil {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}

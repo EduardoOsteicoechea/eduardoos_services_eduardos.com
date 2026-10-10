@@ -1,4 +1,4 @@
-import { clearSessionHint, getMe, postJSON, profileAvatarURL, refreshSession, resetCsrfMemory } from "./api";
+import { clearMeCache, clearSessionHint, getMe, postJSON, profileAvatarURL, refreshSession, resetCsrfMemory } from "./api";
 import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { exposeEreportConnectorGlobal, wireEreportConnectorMenu } from "./ereport-connector-modal";
@@ -660,6 +660,7 @@ export function startChrome(): void {
           }
           resetCsrfMemory();
           clearSessionHint();
+          clearMeCache();
           await refreshAuthChrome();
           closeAllPanels();
           go("/session");

@@ -92,18 +92,19 @@ export function startClientRouting(): void {
     };
 
     // ClientRouter soft swaps involving pamphlet leave zombie DOM/URL pairs.
+    // Only preventDefault — Astro then sets location.href = to.href; do not
+    // also assignSameOrigin here (that double hard-nav hangs Back/Forward).
     if (needsFullDocumentNav(ev.to.pathname) || needsFullDocumentNav(ev.from.pathname)) {
       event.preventDefault();
-      assignSameOrigin(ev.to.href);
       return;
     }
 
-    // Browser back/forward: soft VT routinely stalls (URL updates, content/veil stuck;
-    // a manual reload always shows the right page). Cancel and hard-load the URL
-    // popstate already applied. Hash-only traversals stay soft.
+    // Browser back/forward: soft VT routinely stalls (URL updates, content/veil stuck).
+    // Cancel soft prep only — Astro delegates to location.href = to.href after
+    // preventDefault. Do not reload() here (double hard-nav / hung veil).
+    // Hash-only traversals stay soft.
     if (ev.navigationType === "traverse" && !samePathAndQuery(ev.from, ev.to)) {
       event.preventDefault();
-      window.location.reload();
     }
   });
 

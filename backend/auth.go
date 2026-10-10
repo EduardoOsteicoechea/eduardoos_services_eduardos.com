@@ -146,6 +146,12 @@ func (a *App) currentSession(r *http.Request) *Session {
 	if err != nil {
 		return nil
 	}
+	if sess, _, ok := a.sessionCache.get(claims.SID); ok {
+		if sessionCacheAlive(sess, claims.Subject) {
+			return sess
+		}
+		a.sessionCache.invalidate(claims.SID)
+	}
 	sess, err := a.store.SessionByID(r.Context(), claims.SID)
 	if err != nil || sess.Revoked || sess.UserID != claims.Subject {
 		return nil
@@ -158,15 +164,64 @@ func (a *App) currentSession(r *http.Request) *Session {
 }
 
 func (a *App) currentUser(r *http.Request) *User {
-	sess := a.currentSession(r)
-	if sess == nil {
+	cookie, err := r.Cookie(a.accessCookieName())
+	if err != nil || cookie.Value == "" {
+		return nil
+	}
+	claims, err := a.parseAccess(cookie.Value)
+	if err != nil {
+		return nil
+	}
+	if sess, user, ok := a.sessionCache.get(claims.SID); ok {
+		if sessionCacheAlive(sess, claims.Subject) {
+			if user != nil && user.Status != statusDisabled {
+				return user
+			}
+			if user != nil && user.Status == statusDisabled {
+				a.sessionCache.invalidate(claims.SID)
+				return nil
+			}
+		} else {
+			a.sessionCache.invalidate(claims.SID)
+		}
+	}
+	sess, err := a.store.SessionByID(r.Context(), claims.SID)
+	if err != nil || sess.Revoked || sess.UserID != claims.Subject {
+		return nil
+	}
+	now := time.Now().UTC()
+	if now.After(sess.ExpiresAt) || now.After(sess.AbsoluteExpiresAt) {
 		return nil
 	}
 	user, err := a.store.UserByID(r.Context(), sess.UserID)
 	if err != nil || user.Status == statusDisabled {
 		return nil
 	}
+	a.sessionCache.put(sess, user)
 	return user
+}
+
+// revokeFamily revokes a refresh-token family and drops matching cache entries.
+func (a *App) revokeFamily(ctx context.Context, familyID, reason string) error {
+	err := a.store.RevokeFamily(ctx, familyID, reason)
+	a.sessionCache.invalidateFamily(familyID)
+	return err
+}
+
+// revokeUserSessions revokes every session for a user and clears their cache entries.
+func (a *App) revokeUserSessions(ctx context.Context, userID, reason string) error {
+	err := a.store.RevokeUserSessions(ctx, userID, reason)
+	a.sessionCache.invalidateUser(userID)
+	return err
+}
+
+// updateUser persists a user and invalidates cached /me material for that account.
+func (a *App) updateUser(ctx context.Context, user *User) error {
+	err := a.store.UpdateUser(ctx, user)
+	if err == nil && user != nil {
+		a.sessionCache.invalidateUser(user.ID)
+	}
+	return err
 }
 
 func (a *App) issueSession(w http.ResponseWriter, user *User) (*Session, error) {
@@ -232,6 +287,8 @@ func (a *App) rotateSession(w http.ResponseWriter, old *Session, user *User) (*S
 	if err := a.store.InsertSession(context.Background(), next); err != nil {
 		return nil, err
 	}
+	a.sessionCache.invalidate(old.SessionID)
+	a.sessionCache.invalidate(next.SessionID)
 	token, err := a.signAccess(user.ID, next.SessionID)
 	if err != nil {
 		return nil, err
@@ -274,6 +331,7 @@ func (a *App) mintCSRF(w http.ResponseWriter, r *http.Request) string {
 		sess.CSRFHash = hash
 		sess.CSRF = token
 		_ = a.store.UpdateSession(r.Context(), sess)
+		a.sessionCache.invalidate(sess.SessionID)
 		return token
 	}
 	if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
@@ -286,6 +344,7 @@ func (a *App) mintCSRF(w http.ResponseWriter, r *http.Request) string {
 			sess.CSRFHash = hash
 			sess.CSRF = token
 			_ = a.store.UpdateSession(r.Context(), sess)
+			a.sessionCache.invalidate(sess.SessionID)
 			return token
 		}
 		// Do NOT clear access/refresh here. A concurrent /auth/refresh may have just
@@ -535,14 +594,16 @@ func (a *App) logoutHandler(w http.ResponseWriter, r *http.Request) {
 			slog.String("session_id", sess.SessionID),
 			slog.String("family_id", sess.FamilyID),
 		)
-		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "logout")
+		_ = a.revokeFamily(r.Context(), sess.FamilyID, "logout")
+		a.sessionCache.invalidate(sess.SessionID)
 	} else if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
 		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil {
 			a.logAuthDebug(r, "logout_revoke_refresh_session",
 				slog.String("session_id", sess.SessionID),
 				slog.String("family_id", sess.FamilyID),
 			)
-			_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "logout")
+			_ = a.revokeFamily(r.Context(), sess.FamilyID, "logout")
+			a.sessionCache.invalidate(sess.SessionID)
 		} else {
 			a.logAuthDebug(r, "logout_refresh_lookup_failed")
 		}
@@ -581,7 +642,8 @@ func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
 			slog.String("session_id", sess.SessionID),
 			slog.String("family_id", sess.FamilyID),
 		)
-		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "reuse")
+		_ = a.revokeFamily(r.Context(), sess.FamilyID, "reuse")
+		a.sessionCache.invalidate(sess.SessionID)
 		a.clearAuthCookies(w)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
@@ -592,7 +654,8 @@ func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
 			slog.String("reason", "session_expired"),
 			slog.String("session_id", sess.SessionID),
 		)
-		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "expired")
+		_ = a.revokeFamily(r.Context(), sess.FamilyID, "expired")
+		a.sessionCache.invalidate(sess.SessionID)
 		a.clearAuthCookies(w)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
@@ -609,7 +672,8 @@ func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
 			slog.String("session_id", sess.SessionID),
 			slog.Bool("user_found", err == nil),
 		)
-		_ = a.store.RevokeFamily(r.Context(), sess.FamilyID, "disable")
+		_ = a.revokeFamily(r.Context(), sess.FamilyID, "disable")
+		a.sessionCache.invalidate(sess.SessionID)
 		a.clearAuthCookies(w)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
