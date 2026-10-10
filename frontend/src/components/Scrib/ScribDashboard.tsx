@@ -75,6 +75,10 @@ export default function ScribDashboard() {
   const [busy, setBusy] = useState(false);
   const [draggingSheetId, setDraggingSheetId] = useState("");
   const [dropTargetBookId, setDropTargetBookId] = useState("");
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(
+    null,
+  );
+  const [deleteConfirmText, setDeleteConfirmText] = useState("");
 
   const reload = useCallback(async () => {
     setLoading(true);
@@ -121,15 +125,28 @@ export default function ScribDashboard() {
     window.location.href = scribSheetHref(userSafe, bookId, res.sheet.id);
   }
 
-  async function onDeleteSection(bookId: string) {
-    if (busy || !window.confirm("¿Eliminar esta sección y todas sus hojas?")) return;
+  function openDeleteSection(bookId: string, name: string) {
+    if (busy) return;
+    setDeleteTarget({ id: bookId, name });
+    setDeleteConfirmText("");
+  }
+
+  function closeDeleteSection() {
+    setDeleteTarget(null);
+    setDeleteConfirmText("");
+  }
+
+  async function confirmDeleteSection() {
+    if (!deleteTarget || busy) return;
+    if (deleteConfirmText.trim() !== deleteTarget.name) return;
     setBusy(true);
-    const res = await deleteScribBook(bookId);
+    const res = await deleteScribBook(deleteTarget.id);
     setBusy(false);
     if (res.error) {
       setError(res.error);
       return;
     }
+    closeDeleteSection();
     await reload();
   }
 
@@ -390,17 +407,19 @@ export default function ScribDashboard() {
                   onKeyDown={onNameKeyDown}
                 />
               </aside>
+              <button
+                type="button"
+                className="icon-btn scrib-book__delete"
+                title="Eliminar sección"
+                aria-label={`Eliminar sección ${book.name}`}
+                onClick={() => openDeleteSection(book.id, book.name)}
+                disabled={busy}
+              >
+                <span className="material-symbols-outlined" aria-hidden="true">
+                  delete
+                </span>
+              </button>
               <div className="scrib-book__main">
-                <div className="scrib-book__toolbar">
-                  <button
-                    type="button"
-                    className="btn scrib-book__delete"
-                    onClick={() => void onDeleteSection(book.id)}
-                    disabled={busy}
-                  >
-                    Eliminar
-                  </button>
-                </div>
                 <div className="product-dash__grid scrib-sheets" role="list">
                   {(book.sheets ?? []).map((sheet) => {
                     const cardClass =
@@ -494,6 +513,67 @@ export default function ScribDashboard() {
             );
           })}
         </div>
+
+        {deleteTarget ? (
+          <div
+            className="scrib-delete-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="scrib-delete-title"
+          >
+            <div className="scrib-delete-modal__panel">
+              <h2 id="scrib-delete-title" className="scrib-delete-modal__title">
+                Eliminar sección
+              </h2>
+              <p className="scrib-delete-modal__hint">
+                Se borrarán todas las hojas. Para confirmar, escribe{" "}
+                <strong>{deleteTarget.name}</strong>.
+              </p>
+              <input
+                className="scrib-delete-modal__input"
+                value={deleteConfirmText}
+                onChange={(e) => setDeleteConfirmText(e.target.value)}
+                placeholder={deleteTarget.name}
+                aria-label="Escribe el nombre de la sección para confirmar"
+                autoFocus
+                disabled={busy}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") {
+                    e.preventDefault();
+                    closeDeleteSection();
+                  }
+                  if (
+                    e.key === "Enter" &&
+                    deleteConfirmText.trim() === deleteTarget.name
+                  ) {
+                    e.preventDefault();
+                    void confirmDeleteSection();
+                  }
+                }}
+              />
+              <div className="scrib-delete-modal__actions">
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={closeDeleteSection}
+                  disabled={busy}
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  className="btn btn--primary"
+                  onClick={() => void confirmDeleteSection()}
+                  disabled={
+                    busy || deleteConfirmText.trim() !== deleteTarget.name
+                  }
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
         </DashboardSection>
       </ProductHubShell>
     </ServiceGate>

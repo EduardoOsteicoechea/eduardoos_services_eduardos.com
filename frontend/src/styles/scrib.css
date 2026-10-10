@@ -133,13 +133,16 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
 }
 
 .scrib-book {
+  position: relative;
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: flex-start;
   gap: var(--space-padding);
   box-sizing: border-box;
   min-width: 0;
+  height: auto;
   padding: var(--space-padding);
+  padding-right: calc(var(--space-padding) + var(--button-size) + var(--rail-gap));
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   background: var(--color-surface);
@@ -157,7 +160,9 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   align-items: center;
   gap: var(--rail-gap);
   flex: 0 0 auto;
+  align-self: stretch;
   min-width: 0;
+  min-height: 0;
   padding-right: var(--rail-gap);
   border-right: var(--border-width) solid var(--color-border);
 }
@@ -165,15 +170,10 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
 .scrib-book__main {
   display: flex;
   flex-direction: column;
-  gap: var(--rail-gap);
+  gap: 0;
   flex: 1 1 auto;
   min-width: 0;
-}
-
-.scrib-book__toolbar {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--rail-gap);
+  height: auto;
 }
 
 .scrib-book__order {
@@ -211,7 +211,7 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   box-sizing: border-box;
   flex: 1 1 auto;
   width: 2.5rem;
-  min-height: 8rem;
+  min-height: 0;
   margin: 0;
   padding: var(--control-padding-block) var(--control-padding-inline);
   border: var(--border-width) solid transparent;
@@ -238,8 +238,93 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   outline: none;
 }
 
-.scrib-book__delete {
+.scrib-book__delete.icon-btn {
+  position: absolute;
+  top: var(--rail-gap);
+  right: var(--rail-gap);
+  z-index: 2;
+  width: var(--button-size);
+  height: var(--button-size);
+  border-radius: 50%;
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-err);
   flex-shrink: 0;
+}
+
+.scrib-book__delete.icon-btn:hover,
+.scrib-book__delete.icon-btn:focus-visible {
+  border-color: var(--color-err);
+  color: var(--color-err);
+}
+
+.scrib-book__delete .material-symbols-outlined {
+  font-size: var(--icon-size);
+}
+
+.scrib-delete-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-padding);
+  background: color-mix(in srgb, var(--color-text) 35%, transparent);
+}
+
+.scrib-delete-modal__panel {
+  box-sizing: border-box;
+  width: min(var(--modal-width, 28rem), calc(var(--shell-viewport-width, 30rem) - 2rem));
+  max-height: calc(var(--shell-viewport-height, 40rem) - 2rem);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.scrib-delete-modal__title {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-lg);
+}
+
+.scrib-delete-modal__hint {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.scrib-delete-modal__hint strong {
+  color: var(--color-text);
+  font-weight: 650;
+}
+
+.scrib-delete-modal__input {
+  box-sizing: border-box;
+  width: auto;
+  min-height: var(--control-height);
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+}
+
+.scrib-delete-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--rail-gap);
 }
 
 .scrib-sheets {
@@ -285,7 +370,7 @@ html.scrib-fullscreen--header-hidden .sidebar-right {
   justify-content: space-between;
   gap: var(--rail-gap);
   min-width: 0;
-  padding-left: calc(var(--icon-size) + var(--rail-gap));
+  padding-left: calc(var(--rail-gap) + var(--icon-size) + 0.5rem);
   padding-right: calc(var(--button-size-sm) + var(--rail-gap));
 }
 
