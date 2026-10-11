@@ -319,6 +319,47 @@ export function setupEditDock(
         return `${px / rootFontPx()}rem`;
     }
 
+    function remToPx(rem: number): number {
+        return rem * rootFontPx();
+    }
+
+    /**
+     * Phone only: scroll the sheet host so the item in edit sits 0.5rem below
+     * the pinned dock bottom. Tablet/desktop keep their own scroll (no-op).
+     */
+    function alignPhoneEditedItemUnderDock(loc: FlatRef): void {
+        if (destroyed || !phoneMq.matches || isPersistent()) return;
+        if (!session || session.chromeMode) return;
+        if (dockRoot.hidden || !dockRoot.hasAttribute("data-phone-pinned")) return;
+
+        const el = host.findBodyItemContainer(loc);
+        const app = document.querySelector(".pamphlet-app");
+        if (!(el instanceof HTMLElement) || !(app instanceof HTMLElement)) return;
+
+        syncPhoneDockViewportPin();
+        const gapPx = remToPx(0.5);
+        const targetTop = dockRoot.getBoundingClientRect().bottom + gapPx;
+        const delta = el.getBoundingClientRect().top - targetTop;
+        if (Math.abs(delta) < 0.5) return;
+        app.scrollTop += delta;
+    }
+
+    /** Run after withPreservedEditorScroll's double-rAF restore so it is not undone. */
+    function schedulePhoneEditedItemUnderDock(loc: FlatRef): void {
+        if (!phoneMq.matches || isPersistent()) return;
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    if (destroyed || !session) return;
+                    if (session.loc.column !== loc.column || session.loc.index !== loc.index) {
+                        return;
+                    }
+                    alignPhoneEditedItemUnderDock(loc);
+                });
+            });
+        });
+    }
+
     function clearPhoneDockInlinePin(): void {
         dockRoot.style.position = "";
         dockRoot.style.top = "";
@@ -753,6 +794,10 @@ export function setupEditDock(
                 imageMode,
             });
         });
+        // Phone only: after scroll-preserve restore, pin item 0.5rem under dock.
+        if (session && !session.chromeMode) {
+            schedulePhoneEditedItemUnderDock(session.loc);
+        }
     }
 
     async function handleAction(action: string): Promise<void> {
