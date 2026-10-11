@@ -834,6 +834,164 @@ func TestEreportImageUploadAndGet(t *testing.T) {
 	}
 }
 
+func TestEreportV1ImageUploadAndGet(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEreport)
+	_ = app.grantEntitlement("member-1", productAPI)
+	created := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs", `{"name":"V1Img","firstReportName":"Pics"}`)
+	body := decodeMap(t, created)
+	orgID := body["org"].(map[string]any)["id"].(string)
+	reportID := body["report"].(map[string]any)["id"].(string)
+
+	keyRec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/apikeys", `{"label":"v1-img"}`)
+	if keyRec.Code != http.StatusCreated {
+		t.Fatalf("apikey: %d %s", keyRec.Code, keyRec.Body.String())
+	}
+	secret := decodeMap(t, keyRec)["key"].(string)
+	base := "/api/v1/ereport/orgs/" + orgID + "/reports/" + reportID + "/images"
+
+	// 401 without key
+	noAuth := httptest.NewRequest(http.MethodPost, base, nil)
+	noAuthRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(noAuthRec, noAuth)
+	if noAuthRec.Code != http.StatusUnauthorized {
+		t.Fatalf("want 401 without key, got %d %s", noAuthRec.Code, noAuthRec.Body.String())
+	}
+
+	// authorized upload + download round-trip
+	png := tinyPNG()
+	var buf bytes.Buffer
+	mw := multipart.NewWriter(&buf)
+	part, _ := mw.CreateFormFile("file", "agent.png")
+	_, _ = part.Write(png)
+	_ = mw.Close()
+	upReq := httptest.NewRequest(http.MethodPost, base, bytes.NewReader(buf.Bytes()))
+	upReq.Header.Set("Authorization", "Bearer "+secret)
+	upReq.Header.Set("Content-Type", mw.FormDataContentType())
+	upRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(upRec, upReq)
+	if upRec.Code != http.StatusCreated {
+		t.Fatalf("v1 upload: %d %s", upRec.Code, upRec.Body.String())
+	}
+	up := decodeMap(t, upRec)
+	imageID := asString(up["id"])
+	wantURL := base + "/" + imageID
+	if asString(up["url"]) != wantURL {
+		t.Fatalf("url want %q got %q", wantURL, up["url"])
+	}
+	if asString(up["mime"]) != "image/png" {
+		t.Fatalf("mime %v", up["mime"])
+	}
+
+	getReq := httptest.NewRequest(http.MethodGet, wantURL, nil)
+	getReq.Header.Set("Authorization", "Bearer "+secret)
+	getRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(getRec, getReq)
+	if getRec.Code != http.StatusOK {
+		t.Fatalf("v1 get image: %d %s", getRec.Code, getRec.Body.String())
+	}
+	if getRec.Header().Get("Content-Type") != "image/png" {
+		t.Fatalf("content-type %q", getRec.Header().Get("Content-Type"))
+	}
+	if getRec.Header().Get("Cache-Control") != "private, no-store" {
+		t.Fatalf("cache-control %q", getRec.Header().Get("Cache-Control"))
+	}
+	if !bytes.Equal(getRec.Body.Bytes(), png) {
+		t.Fatal("GET must return uploaded bytes")
+	}
+
+	// unknown imageId → 404 safe JSON
+	miss := httptest.NewRequest(http.MethodGet, base+"/does-not-exist", nil)
+	miss.Header.Set("Authorization", "Bearer "+secret)
+	missRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(missRec, miss)
+	if missRec.Code != http.StatusNotFound {
+		t.Fatalf("want 404, got %d %s", missRec.Code, missRec.Body.String())
+	}
+	if decodeMap(t, missRec)["error"] != "not_found" {
+		t.Fatalf("safe error body: %s", missRec.Body.String())
+	}
+	if strings.Contains(missRec.Body.String(), app.cfg.EreportMediaRoot) {
+		t.Fatal("must not leak filesystem path")
+	}
+
+	// reject spoofed / unsupported types
+	svg := bytes.Repeat([]byte("<svg xmlns='n'></svg>"), 10)
+	var buf2 bytes.Buffer
+	mw2 := multipart.NewWriter(&buf2)
+	part2, _ := mw2.CreateFormFile("file", "x.png")
+	_, _ = part2.Write(svg)
+	_ = mw2.Close()
+	badReq := httptest.NewRequest(http.MethodPost, base, bytes.NewReader(buf2.Bytes()))
+	badReq.Header.Set("Authorization", "Bearer "+secret)
+	badReq.Header.Set("Content-Type", mw2.FormDataContentType())
+	badRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(badRec, badReq)
+	if badRec.Code == http.StatusCreated {
+		t.Fatal("spoofed svg must be rejected")
+	}
+
+	// wrong owner: admin key cannot read member-owned image (owner-scoped load → not_found)
+	otherKey := app.doJSON(t, "admin@eduardoos.com", http.MethodPost, "/api/apikeys", `{"label":"other-img"}`)
+	if otherKey.Code != http.StatusCreated {
+		t.Fatalf("admin apikey: %d %s", otherKey.Code, otherKey.Body.String())
+	}
+	cross := httptest.NewRequest(http.MethodGet, wantURL, nil)
+	cross.Header.Set("Authorization", "Bearer "+decodeMap(t, otherKey)["key"].(string))
+	crossRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(crossRec, cross)
+	if crossRec.Code != http.StatusNotFound {
+		t.Fatalf("cross-owner want 404, got %d %s", crossRec.Code, crossRec.Body.String())
+	}
+
+	// 403 missing ereport entitlement (api only)
+	noEntApp := newTestApp(false)
+	_ = noEntApp.grantEntitlement("member-1", productAPI)
+	keyOnly := noEntApp.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/apikeys", `{"label":"api-only"}`)
+	if keyOnly.Code != http.StatusCreated {
+		t.Fatalf("api-only key: %d %s", keyOnly.Code, keyOnly.Body.String())
+	}
+	feReq := httptest.NewRequest(http.MethodGet, "/api/v1/ereport/orgs/x/reports/y/images/z", nil)
+	feReq.Header.Set("Authorization", "Bearer "+decodeMap(t, keyOnly)["key"].(string))
+	feRec := httptest.NewRecorder()
+	noEntApp.Handler().ServeHTTP(feRec, feReq)
+	if feRec.Code != http.StatusForbidden {
+		t.Fatalf("missing ereport entitlement want 403, got %d %s", feRec.Code, feRec.Body.String())
+	}
+
+	// oversized rejected
+	app.cfg.EreportMaxImageBytes = 64
+	big := append(tinyPNG(), bytes.Repeat([]byte{0}, 128)...)
+	var buf3 bytes.Buffer
+	mw3 := multipart.NewWriter(&buf3)
+	part3, _ := mw3.CreateFormFile("file", "big.png")
+	_, _ = part3.Write(big)
+	_ = mw3.Close()
+	bigReq := httptest.NewRequest(http.MethodPost, base, bytes.NewReader(buf3.Bytes()))
+	bigReq.Header.Set("Authorization", "Bearer "+secret)
+	bigReq.Header.Set("Content-Type", mw3.FormDataContentType())
+	bigRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(bigRec, bigReq)
+	if bigRec.Code == http.StatusCreated {
+		t.Fatal("oversized upload must be rejected")
+	}
+
+	// docs catalog lists image routes
+	docs := httptest.NewRequest(http.MethodGet, "/api/v1/docs", nil)
+	docsRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(docsRec, docs)
+	raw := docsRec.Body.String()
+	if !strings.Contains(raw, `"/api/v1/ereport/orgs/{orgId}/reports/{reportId}/images"`) {
+		t.Fatal("docs must list POST images route")
+	}
+	if !strings.Contains(raw, `"/api/v1/ereport/orgs/{orgId}/reports/{reportId}/images/{imageId}"`) {
+		t.Fatal("docs must list GET image route")
+	}
+	if !strings.Contains(raw, `"images"`) {
+		t.Fatal("docs payloadSchema.ereport must document images")
+	}
+}
+
 func TestEreportAPIV1AdditiveAndHistory(t *testing.T) {
 	app := newTestApp(false)
 	_ = app.grantEntitlement("member-1", productEreport)
