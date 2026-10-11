@@ -21,6 +21,39 @@ func (a *App) ereportUploadImageHandler(w http.ResponseWriter, r *http.Request) 
 	a.saveEreportImage(w, r, user.ID, meta.OrgID, meta.ID, "")
 }
 
+// POST /api/v1/ereport/orgs/{orgId}/reports/{reportId}/images — API-key upload.
+func (a *App) ereportV1UploadImageHandler(w http.ResponseWriter, r *http.Request) {
+	user := apiUserFrom(r)
+	if user == nil {
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	orgID := r.PathValue("orgId")
+	reportID := r.PathValue("reportId")
+	if _, _, err := a.ereport.loadReport(user.ID, orgID, reportID); err != nil {
+		a.writeEreportNotFound(w, r, orgID, reportID, ereportMissingReason(err))
+		return
+	}
+	prefix := "/api/v1/ereport/orgs/" + orgID + "/reports/" + reportID + "/images/"
+	a.saveEreportImage(w, r, user.ID, orgID, reportID, prefix)
+}
+
+// GET /api/v1/ereport/orgs/{orgId}/reports/{reportId}/images/{imageId} — API-key download.
+func (a *App) ereportV1GetImageHandler(w http.ResponseWriter, r *http.Request) {
+	user := apiUserFrom(r)
+	if user == nil {
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	orgID := r.PathValue("orgId")
+	reportID := r.PathValue("reportId")
+	if _, _, err := a.ereport.loadReport(user.ID, orgID, reportID); err != nil {
+		a.writeEreportNotFound(w, r, orgID, reportID, ereportMissingReason(err))
+		return
+	}
+	a.serveEreportImage(w, r, user.ID, orgID, reportID, r.PathValue("imageId"))
+}
+
 func (a *App) ereportInviteUploadImageHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.requireUnsafe(w, r) {
 		return

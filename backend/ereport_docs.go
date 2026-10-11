@@ -29,7 +29,7 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 			"epam":      "https://github.com/EduardoOsteicoechea/epam — clone as .epam/ sidecar. Mirror: https://eduardoos.com/skills/epam/",
 		},
 		"skill": "https://github.com/EduardoOsteicoechea/eduardoos-ereport-connector — clone as .ereport/. Homescool: eduardoos-eoschool-connector as .eoschool/. EPAM: https://github.com/EduardoOsteicoechea/epam as .epam/.",
-		"agentGuidance": "1) Require EDUARDOOS_API_KEY. 2) ALWAYS GET /api/v1/docs first. 3a) eReport: access → orgs → reports → GET → POST append/replace, or use granular section/group/item POST/PATCH for the web connector. For a **site** connector, point EDUARDOOS_ORG_ID/EDUARDOOS_REPORT_ID at the owner's single website_registration report (hub purpose); the site UI Connector locks to that binding while the API still allows all owned reports. 3b) Homescool materials: access → list → POST with confirmOverwrite. 3c) EPAM: access → POST /api/v1/epam/epams with the pamphlet/.epam document (auto-publishes to /articles when the key owner is the public articles publisher). PUT requires confirmOverwrite:true. 4) Always print viewUrl and articleUrl after write. 5) Never invent endpoints — use this catalog. 6) Web embed: https://eduardoos.com/ereport/embed.js → mount({ orgId, reportId, menuSelector }) (session + subscription; no API key). 7) eduardoos.com shell: Connector menu + header bug_report open the quick issue modal when websiteRegistration is set on cookie GET /api/ereport/access.",
+		"agentGuidance": "1) Require EDUARDOOS_API_KEY. 2) ALWAYS GET /api/v1/docs first. 3a) eReport: access → orgs → reports → GET → POST append/replace, or use granular section/group/item POST/PATCH for the web connector. Upload/download issue images via POST/GET /api/v1/ereport/orgs/{orgId}/reports/{reportId}/images[/{imageId}] (API key; never cookie paths without a session). For a **site** connector, point EDUARDOOS_ORG_ID/EDUARDOOS_REPORT_ID at the owner's single website_registration report (hub purpose); the site UI Connector locks to that binding while the API still allows all owned reports. 3b) Homescool materials: access → list → POST with confirmOverwrite. 3c) EPAM: access → POST /api/v1/epam/epams with the pamphlet/.epam document (auto-publishes to /articles when the key owner is the public articles publisher). PUT requires confirmOverwrite:true. 4) Always print viewUrl and articleUrl after write. 5) Never invent endpoints — use this catalog. 6) Web embed: https://eduardoos.com/ereport/embed.js → mount({ orgId, reportId, menuSelector }) (session + subscription; no API key). 7) eduardoos.com shell: Connector menu + header bug_report open the quick issue modal when websiteRegistration is set on cookie GET /api/ereport/access.",
 		"routes": []map[string]any{
 			{"method": http.MethodGet, "path": "/api/v1/docs", "auth": "none", "summary": "This catalog (public). Fetch first."},
 			{"method": http.MethodGet, "path": "/api/v1/ereport/access", "auth": "api_key", "summary": "eReport — check API access.", "requirements": "api + ereport (or admin)."},
@@ -43,6 +43,8 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 			{"method": http.MethodPatch, "path": "/api/v1/ereport/orgs/{orgId}/reports/{reportId}/sections/{sectionId}/groups/{groupId}", "auth": "api_key", "summary": "eReport — update group title/productHistory.", "body": `{"title":"…","productHistory":"…"}`},
 			{"method": http.MethodPost, "path": "/api/v1/ereport/orgs/{orgId}/reports/{reportId}/sections/{sectionId}/groups/{groupId}/items", "auth": "api_key", "summary": "eReport — create one issue (nombre and/or incidencia; status reprobado). Title-first create allowed; fill incidencia later via PATCH.", "body": `{"nombre":"…","incidencia":"…","status":"reprobado"}`},
 			{"method": http.MethodPatch, "path": "/api/v1/ereport/orgs/{orgId}/reports/{reportId}/sections/{sectionId}/groups/{groupId}/items/{itemId}", "auth": "api_key", "summary": "eReport — update issue fields (web connector).", "body": `{"nombre":"…","incidencia":"…","status":"aprobado|reprobado|no_aplica|","solucion":"…","checklist":[…]}`},
+			{"method": http.MethodPost, "path": "/api/v1/ereport/orgs/{orgId}/reports/{reportId}/images", "auth": "api_key", "summary": "eReport — upload one issue image (multipart field file). Returns {id,url,mime,name}.", "body": "multipart/form-data; file=<png|jpeg|webp>", "requirements": "api + ereport (or admin)."},
+			{"method": http.MethodGet, "path": "/api/v1/ereport/orgs/{orgId}/reports/{reportId}/images/{imageId}", "auth": "api_key", "summary": "eReport — download image bytes (image/jpeg|png|webp). Cache-Control: private, no-store.", "requirements": "api + ereport (or admin). Owner-scoped."},
 			{"method": http.MethodGet, "path": "/api/v1/ereport/library", "auth": "api_key", "summary": "eReport — alias for orgs."},
 			{"method": http.MethodGet, "path": "/api/v1/homescool/access", "auth": "api_key", "summary": "Homescool — check API access.", "requirements": "api + homescool (or admin)."},
 			{"method": http.MethodGet, "path": "/api/v1/homescool/materials", "auth": "api_key", "summary": "Homescool — list owned study materials (optional ?cycle=1|2|3)."},
@@ -158,12 +160,18 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 				"itemFields": map[string]string{
 					"id": "item id", "nombre": "name", "status": "aprobado|reprobado|no_aplica|empty",
 					"incidencia": "issue text", "solucion": "resolution", "checklist": "{id,label,checked}[]",
+					"imagesIncidencia": "image refs [{id,url,mime,name?}]", "imagesSolucion": "same shape", "images": "alias of imagesSolucion",
+				},
+				"images": map[string]any{
+					"upload":   "POST multipart field `file` (png|jpeg|webp) → {id,url,mime,name}. url is /api/v1/ereport/orgs/{orgId}/reports/{reportId}/images/{id}.",
+					"download": "GET …/images/{imageId} returns raw bytes (Bearer). Attach returned id/url on item imagesIncidencia/imagesSolucion before PATCH item or append/replace.",
+					"agentTip": "Cookie UI image URLs need a session; agents must use v1 image routes with the API key. Prefer image id from the payload when rewriting URLs.",
 				},
 				"metaFields": map[string]string{
-					"purpose":             "website_registration|other — site Connector binding when website_registration",
-					"connectorSectionId":  "Default main section for the site Connector",
-					"connectorGroupId":    "Default subsection for the site Connector",
-					"reportDate":          "Report date (YYYY-MM-DD); bumped on express/connector item create",
+					"purpose":            "website_registration|other — site Connector binding when website_registration",
+					"connectorSectionId": "Default main section for the site Connector",
+					"connectorGroupId":   "Default subsection for the site Connector",
+					"reportDate":         "Report date (YYYY-MM-DD); bumped on express/connector item create",
 				},
 			},
 			"homescool": map[string]any{

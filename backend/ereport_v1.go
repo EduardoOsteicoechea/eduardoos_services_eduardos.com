@@ -143,6 +143,8 @@ func (a *App) ereportV1GetReportHandler(w http.ResponseWriter, r *http.Request) 
 		a.writeEreportNotFound(w, r, orgID, reportID, ereportMissingReason(err))
 		return
 	}
+	// Agents fetch images with the API key; rewrite cookie/invite image URLs to v1.
+	payload = rewriteEreportImageURLsForV1(deepCloneMap(payload), orgID, reportID)
 	ownerSafe := displayOwnerSafe(user.Email)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"orgId":       orgID,
@@ -153,6 +155,47 @@ func (a *App) ereportV1GetReportHandler(w http.ResponseWriter, r *http.Request) 
 		"meta":        displayMeta(user, meta),
 		"payload":     payload,
 	})
+}
+
+// rewriteEreportImageURLsForV1 maps any …/images/{id} URL in the payload to the
+// API-key fetch path so agents do not hit cookie-only image routes.
+func rewriteEreportImageURLsForV1(payload map[string]any, orgID, reportID string) map[string]any {
+	if payload == nil {
+		return payload
+	}
+	prefix := "/api/v1/ereport/orgs/" + orgID + "/reports/" + reportID + "/images/"
+	rewriteList := func(raw any) {
+		for _, im := range asMapSlice(raw) {
+			id := strings.TrimSpace(asString(im["id"]))
+			if id == "" {
+				if u := asString(im["url"]); u != "" {
+					if i := strings.LastIndex(u, "/images/"); i >= 0 {
+						id = strings.TrimSpace(strings.SplitN(u[i+len("/images/"):], "?", 2)[0])
+					}
+				}
+			}
+			if id == "" {
+				continue
+			}
+			im["id"] = id
+			im["url"] = prefix + id
+		}
+	}
+	for _, sec := range asMapSlice(payload["sections"]) {
+		for _, it := range asMapSlice(sec["items"]) {
+			rewriteList(it["imagesIncidencia"])
+			rewriteList(it["imagesSolucion"])
+			rewriteList(it["images"])
+		}
+		for _, grp := range asMapSlice(sec["groups"]) {
+			for _, it := range asMapSlice(grp["items"]) {
+				rewriteList(it["imagesIncidencia"])
+				rewriteList(it["imagesSolucion"])
+				rewriteList(it["images"])
+			}
+		}
+	}
+	return payload
 }
 
 func (a *App) ereportV1PostReportHandler(w http.ResponseWriter, r *http.Request) {
