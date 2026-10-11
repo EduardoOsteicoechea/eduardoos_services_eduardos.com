@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import ScribDashboard from "../../components/Scrib/ScribDashboard.tsx";
+import ScribHub from "../../components/Scrib/ScribHub.tsx";
 ---
 
 <Layout
@@ -11,5 +11,5 @@ import ScribDashboard from "../../components/Scrib/ScribDashboard.tsx";
 >
   <!-- React portals into #header-dynamic-menu-host -->
   <span slot="dhs" hidden></span>
-  <ScribDashboard client:load />
+  <ScribHub client:load />
 </Layout>

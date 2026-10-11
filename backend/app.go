@@ -13,6 +13,7 @@ type App struct {
 	log              *slog.Logger
 	store            DataStore
 	scrib            ScribStore
+	scribStreak      ScribStreakStore
 	pamphlet         PamphletStore
 	mailer           Mailer
 	chat             map[string]ChatClient
@@ -119,6 +120,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		store:            store,
 		sessionCache:     newSessionCache(),
 		scrib:            openScribStore(store),
+		scribStreak:      openScribStreakStore(store),
 		pamphlet:         openPamphletStore(store, cfg.MediaRoot),
 		homescool:        openHomescoolStore(store, cfg.MediaRoot),
 		progress:           newHomescoolProgressStore(store),
@@ -315,6 +317,8 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("PATCH /api/v1/ereport/orgs/{orgId}/reports/{reportId}/sections/{sectionId}/groups/{groupId}", a.withAPIKey(productEreport, a.ereportV1PatchGroupHandler))
 	mux.HandleFunc("POST /api/v1/ereport/orgs/{orgId}/reports/{reportId}/sections/{sectionId}/groups/{groupId}/items", a.withAPIKey(productEreport, a.ereportV1PostItemHandler))
 	mux.HandleFunc("PATCH /api/v1/ereport/orgs/{orgId}/reports/{reportId}/sections/{sectionId}/groups/{groupId}/items/{itemId}", a.withAPIKey(productEreport, a.ereportV1PatchItemHandler))
+	mux.HandleFunc("POST /api/v1/ereport/orgs/{orgId}/reports/{reportId}/images", a.withAPIKey(productEreport, a.ereportV1UploadImageHandler))
+	mux.HandleFunc("GET /api/v1/ereport/orgs/{orgId}/reports/{reportId}/images/{imageId}", a.withAPIKey(productEreport, a.ereportV1GetImageHandler))
 	mux.HandleFunc("GET /api/v1/homescool/access", a.withAPIKey(productHomescool, a.homescoolV1AccessHandler))
 	mux.HandleFunc("GET /api/v1/homescool/materials", a.withAPIKey(productHomescool, a.homescoolV1ListMaterialsHandler))
 	mux.HandleFunc("GET /api/v1/homescool/materials/{materialId}", a.withAPIKey(productHomescool, a.homescoolV1GetMaterialHandler))
@@ -342,6 +346,14 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("DELETE /api/scrib/books/{bookId}/sheets/{sheetId}", a.scribDeleteSheetHandler)
 	mux.HandleFunc("POST /api/scrib/books/{bookId}/sheets/{sheetId}/move", a.scribMoveSheetHandler)
 	mux.HandleFunc("POST /api/scrib/print/pdf", a.scribPrintPDFHandler)
+	mux.HandleFunc("GET /api/scrib/streak/config", a.scribStreakGetConfigHandler)
+	mux.HandleFunc("PUT /api/scrib/streak/config", a.scribStreakPutConfigHandler)
+	mux.HandleFunc("GET /api/scrib/streak/today", a.scribStreakGetTodayHandler)
+	mux.HandleFunc("GET /api/scrib/streak/days", a.scribStreakListDaysHandler)
+	mux.HandleFunc("GET /api/scrib/streak/days/{date}", a.scribStreakGetDayHandler)
+	mux.HandleFunc("POST /api/scrib/streak/days/{date}/complete", a.scribStreakCompleteDayHandler)
+	mux.HandleFunc("GET /api/scrib/streak/stats", a.scribStreakStatsHandler)
+	mux.HandleFunc("GET /api/scrib/streak/snapshots/{snapshotId}", a.scribStreakGetSnapshotHandler)
 
 	mux.HandleFunc("GET /api/epams/series-tree", a.listEpamSeriesTreeHandler)
 	mux.HandleFunc("GET /api/epams/catalog", a.listEpamCatalogHandler)

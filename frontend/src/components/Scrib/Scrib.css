@@ -328,3 +328,105 @@ html.scrib-fullscreen--header-hidden .scrib-viewport {
     print-color-adjust: exact;
   }
 }
+
+/* Streak hub */
+.scrib-streak__form,
+.scrib-streak__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.scrib-streak__item {
+  margin: 0;
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.scrib-streak__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  font-size: var(--font-size-sm);
+}
+
+.scrib-streak__field input,
+.scrib-streak__field select {
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font-size: var(--font-size-md);
+}
+
+.scrib-streak__check {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  font-size: var(--font-size-sm);
+}
+
+.scrib-streak__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.scrib-streak__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.scrib-streak__list-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.scrib-streak__sheets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-padding);
+}
+
+.scrib-streak__sheet-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  flex: 1 1 12rem;
+  min-width: 0;
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.scrib-streak__mini-sheet {
+  flex: 1;
+  max-width: 14rem;
+  height: 18rem;
+  background: var(--color-surface);
+  border-radius: var(--border-radius);
+}
+
+.scrib-streak__link {
+  color: var(--color-link);
+  font-size: var(--font-size-sm);
+}
+
+.scrib-streak__muted,
+.scrib-streak__meta,
+.scrib-streak__stats {
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.scrib-streak__ok {
+  font-size: var(--font-size-sm);
+  color: var(--color-ok);
+}

@@ -78,6 +78,7 @@ func main() {
 	}
 
 	app := newAppWithStore(cfg, store)
+	app.startScribStreakReminderLoop()
 	server := &http.Server{
 		Addr:    cfg.ListenAddr,
 		Handler: app.Handler(),

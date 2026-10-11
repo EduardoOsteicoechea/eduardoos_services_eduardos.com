@@ -12,7 +12,6 @@ import {
   type FormEvent,
   type KeyboardEvent,
 } from "react";
-import ServiceGate from "../ServiceGate/ServiceGate";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
 import {
   createScribBook,
@@ -28,10 +27,7 @@ import {
   type ScribBookCard,
   type SheetMeta,
 } from "../../lib/scrib";
-import {
-  DashboardSection,
-  ProductHubShell,
-} from "../ProductDashboard/ProductDashboard";
+import { DashboardSection } from "../ProductDashboard/ProductDashboard";
 import "../ProductDashboard/ProductDashboard.css";
 import "./Scrib.css";
 
@@ -335,9 +331,7 @@ export default function ScribDashboard() {
   }
 
   return (
-    <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription>
-      <ProductHubShell>
-        <DashboardSection>
+        <DashboardSection title="Biblioteca">
         <form className="scrib-dashboard__new-book" onSubmit={onCreateSection}>
           <div className="scrib-dashboard__row">
             <input
@@ -598,7 +592,5 @@ export default function ScribDashboard() {
           </div>
         ) : null}
         </DashboardSection>
-      </ProductHubShell>
-    </ServiceGate>
   );
 }
