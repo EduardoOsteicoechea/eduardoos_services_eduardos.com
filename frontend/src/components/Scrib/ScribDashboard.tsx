@@ -8,11 +8,9 @@ import {
   useCallback,
   useEffect,
   useState,
-  type CSSProperties,
   type DragEvent,
   type FormEvent,
   type KeyboardEvent,
-  type PointerEvent as ReactPointerEvent,
 } from "react";
 import ServiceGate from "../ServiceGate/ServiceGate";
 import { ViewLoading } from "../ViewLoading/ViewLoading";
@@ -38,42 +36,6 @@ import "../ProductDashboard/ProductDashboard.css";
 import "./Scrib.css";
 
 const SHEET_DRAG_MIME = "application/x-scrib-sheet";
-
-/** Shared rail width for every section (curriculum-index resize pattern). */
-const RAIL_WIDTH_STORAGE_KEY = "eduardoos-scrib-book-rail-width";
-const RAIL_WIDTH_DEFAULT_REM = 2.5;
-const RAIL_WIDTH_MIN_REM = 1.75;
-const RAIL_WIDTH_MAX_REM = 8;
-
-function readRootRem(): number {
-  if (typeof document === "undefined") return 16;
-  const px = parseFloat(getComputedStyle(document.documentElement).fontSize);
-  return Number.isFinite(px) && px > 0 ? px : 16;
-}
-
-function clampRailWidthRem(value: number): number {
-  return Math.min(RAIL_WIDTH_MAX_REM, Math.max(RAIL_WIDTH_MIN_REM, value));
-}
-
-function readStoredRailWidthRem(): number {
-  try {
-    const raw = localStorage.getItem(RAIL_WIDTH_STORAGE_KEY);
-    if (!raw) return RAIL_WIDTH_DEFAULT_REM;
-    const parsed = parseFloat(raw);
-    if (!Number.isFinite(parsed)) return RAIL_WIDTH_DEFAULT_REM;
-    return clampRailWidthRem(parsed);
-  } catch {
-    return RAIL_WIDTH_DEFAULT_REM;
-  }
-}
-
-function writeStoredRailWidthRem(rem: number): void {
-  try {
-    localStorage.setItem(RAIL_WIDTH_STORAGE_KEY, String(clampRailWidthRem(rem)));
-  } catch {
-    /* ignore quota / private mode */
-  }
-}
 
 /** Legacy Institutes library entries are not shown as Scrib sections. */
 function isLegacyInstitutesSection(book: ScribBookCard): boolean {
@@ -117,56 +79,6 @@ export default function ScribDashboard() {
     null,
   );
   const [deleteConfirmText, setDeleteConfirmText] = useState("");
-  const [railWidthRem, setRailWidthRem] = useState(() =>
-    typeof window === "undefined" ? RAIL_WIDTH_DEFAULT_REM : readStoredRailWidthRem(),
-  );
-
-  const onRailResizePointerDown = useCallback(
-    (e: ReactPointerEvent<HTMLButtonElement>) => {
-      if (e.button !== 0) return;
-      e.preventDefault();
-      e.stopPropagation();
-      const handle = e.currentTarget;
-      const pointerId = e.pointerId;
-      try {
-        handle.setPointerCapture(pointerId);
-      } catch {
-        /* capture optional — window listeners still drive the drag */
-      }
-      const startX = e.clientX;
-      const startRem = railWidthRem;
-      const rootRem = readRootRem();
-
-      const onMove = (moveEv: PointerEvent) => {
-        if (moveEv.pointerId !== pointerId) return;
-        const deltaRem = (moveEv.clientX - startX) / rootRem;
-        setRailWidthRem(clampRailWidthRem(startRem + deltaRem));
-      };
-
-      const onEnd = (endEv: PointerEvent) => {
-        if (endEv.pointerId !== pointerId) return;
-        try {
-          if (handle.hasPointerCapture(pointerId)) {
-            handle.releasePointerCapture(pointerId);
-          }
-        } catch {
-          /* ignore */
-        }
-        window.removeEventListener("pointermove", onMove);
-        window.removeEventListener("pointerup", onEnd);
-        window.removeEventListener("pointercancel", onEnd);
-        const deltaRem = (endEv.clientX - startX) / rootRem;
-        const next = clampRailWidthRem(startRem + deltaRem);
-        setRailWidthRem(next);
-        writeStoredRailWidthRem(next);
-      };
-
-      window.addEventListener("pointermove", onMove);
-      window.addEventListener("pointerup", onEnd);
-      window.addEventListener("pointercancel", onEnd);
-    },
-    [railWidthRem],
-  );
 
   const reload = useCallback(async () => {
     setLoading(true);
@@ -453,14 +365,7 @@ export default function ScribDashboard() {
           </p>
         ) : null}
 
-        <div
-          className="scrib-books"
-          style={
-            {
-              "--scrib-book-rail-width": `${railWidthRem}rem`,
-            } as CSSProperties
-          }
-        >
+        <div className="scrib-books">
           {books.map((book, index) => {
             const sectionClass =
               dropTargetBookId === book.id
@@ -515,19 +420,6 @@ export default function ScribDashboard() {
                   onKeyDown={onNameKeyDown}
                 />
               </aside>
-                <button
-                type="button"
-                className="scrib-resize-grip scrib-book__resizer"
-                title="Redimensionar barra de sección"
-                aria-label="Redimensionar barra de sección"
-                onPointerDown={onRailResizePointerDown}
-              >
-                <span className="scrib-resize-grip__dots" aria-hidden="true">
-                  <span />
-                  <span />
-                  <span />
-                </span>
-              </button>
               <button
                 type="button"
                 className="icon-btn scrib-book__delete"

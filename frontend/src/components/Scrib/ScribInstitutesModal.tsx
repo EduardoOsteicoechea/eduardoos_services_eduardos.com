@@ -382,9 +382,27 @@ export default function ScribInstitutesModal({
             </button>
 
             <section className="scrib-ref-panel__text" aria-live="polite">
-              {activeParagraph ? (
-                <p className="scrib-ref-panel__text-id">{activeParagraph.id}</p>
-              ) : null}
+              <div className="scrib-ref-panel__text-head">
+                <p className="scrib-ref-panel__text-id">
+                  {activeParagraph?.id ?? "Select a paragraph."}
+                </p>
+                <button
+                  type="button"
+                  className="icon-btn scrib-ref-panel__text-copy"
+                  title="Copiar texto al portapapeles"
+                  aria-label="Copiar texto del párrafo al portapapeles"
+                  disabled={!activeParagraph?.text}
+                  onClick={() => {
+                    const text = activeParagraph?.text?.trim();
+                    if (!text || !navigator.clipboard?.writeText) return;
+                    void navigator.clipboard.writeText(text);
+                  }}
+                >
+                  <span className="material-symbols-outlined" aria-hidden="true">
+                    content_copy
+                  </span>
+                </button>
+              </div>
               <textarea
                 className="scrib-ref-panel__text-body"
                 readOnly

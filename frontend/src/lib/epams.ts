@@ -133,6 +133,40 @@ export async function fetchEpam(epamId: string): Promise<EpamDocumentResponse> {
   return { meta, document };
 }
 
+/** User-facing save refusal — prefer specific session / auth codes over generic text. */
+export function cloudSaveRefusalMessage(
+  status: number,
+  data: { error?: string; message?: string },
+): string {
+  const code = String(data.error || "").toLowerCase();
+  if (status === 401 || code === "unauthorized" || code === "invalid_credentials") {
+    return "Sesión no disponible o expirada. Inicia sesión de nuevo para guardar el panfleto.";
+  }
+  if (status === 403 || code === "forbidden" || code === "csrf_invalid") {
+    return "Guardado rechazado: permiso o CSRF inválido. Recarga la página e inicia sesión si hace falta.";
+  }
+  if (status === 404 || code === "not_found") {
+    return "No se encontró el panfleto en la nube. Ábrelo de nuevo desde tu lista.";
+  }
+  if (status === 409 || code === "conflict") {
+    return "Conflicto al guardar: el panfleto cambió en el servidor. Recarga o descarga una copia local.";
+  }
+  if (status === 413 || code === "payload_too_large") {
+    return "El panfleto es demasiado grande para guardar en la nube.";
+  }
+  if (status === 429 || code === "rate_limited") {
+    return "Demasiados intentos de guardado. Espera un momento e inténtalo de nuevo.";
+  }
+  if (status === 0 || code === "provider_unavailable") {
+    return "Sin conexión con el servidor. Los cambios siguen en este navegador.";
+  }
+  const detail = (data.message || "").trim();
+  if (detail) {
+    return `No se pudo guardar (${code || `HTTP ${status}`}): ${detail}`;
+  }
+  return `No se pudo guardar el panfleto (HTTP ${status || "?"} · ${code || "error"}).`;
+}
+
 export async function saveEpamToCloud(
   { document, epamId, fileName, fallbackTitle }: SaveEpamOptions,
 ): Promise<EpamDocumentResponse> {
@@ -151,9 +185,9 @@ export async function saveEpamToCloud(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
-  if (mustLog) console.log("[epams] save", { status, epamId });
+  if (mustLog) console.log("[epams] save", { status, epamId, error: data.error });
   if (status < 200 || status >= 300) {
-    throw new Error(data.message || "Could not save pamphlet.");
+    throw new Error(cloudSaveRefusalMessage(status, data));
   }
   return {
     meta: data.meta ?? {

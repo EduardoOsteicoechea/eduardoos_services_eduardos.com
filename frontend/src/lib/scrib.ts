@@ -206,7 +206,33 @@ export function normalizeScribSheet(sheet: ScribSheet): ScribSheet {
   };
 }
 
-function errMsg(data: { message?: string }, fallback: string): string {
+function errMsg(
+  status: number,
+  data: { message?: string; error?: string },
+  fallback: string,
+): string {
+  const code = String(data.error || "").toLowerCase();
+  if (status === 401 || code === "unauthorized" || code === "invalid_credentials") {
+    return "Sesión no disponible o expirada. Inicia sesión de nuevo para guardar.";
+  }
+  if (status === 403 || code === "forbidden" || code === "csrf_invalid") {
+    return "Guardado rechazado: permiso o CSRF inválido. Recarga e inicia sesión si hace falta.";
+  }
+  if (status === 404 || code === "not_found") {
+    return "No se encontró el recurso. Recarga la página.";
+  }
+  if (status === 409 || code === "conflict") {
+    return "Conflicto al guardar. Recarga e inténtalo de nuevo.";
+  }
+  if (status === 413 || code === "payload_too_large") {
+    return "El contenido es demasiado grande para guardar.";
+  }
+  if (status === 429 || code === "rate_limited") {
+    return "Demasiados intentos. Espera un momento e inténtalo de nuevo.";
+  }
+  if (status === 0) {
+    return "Sin conexión con el servidor. Los cambios pueden no haberse guardado.";
+  }
   return data.message || fallback;
 }
 
@@ -222,7 +248,7 @@ export async function fetchScribLibrary(): Promise<{
   }>("/scrib/library");
   if (mustLog) console.log("[scrib] library", { status, requestId });
   if (status < 200 || status >= 300) {
-    return { userSafe: "", books: [], error: errMsg(data, "Could not load Scrib library."), requestId };
+    return { userSafe: "", books: [], error: errMsg(status, data, "Could not load Scrib library."), requestId };
   }
   return {
     userSafe: data.userSafe ?? "",
@@ -242,7 +268,7 @@ export async function createScribBook(name: string): Promise<{
     body: JSON.stringify({ name }),
   });
   if (status < 200 || status >= 300) {
-    return { book: null, error: errMsg(data, "Could not create book."), requestId };
+    return { book: null, error: errMsg(status, data, "Could not create book."), requestId };
   }
   return { book: data ? { ...data, sheets: data.sheets ?? [] } : null, requestId };
 }
@@ -253,7 +279,7 @@ export async function deleteScribBook(bookId: string): Promise<{ ok: boolean; er
     { method: "DELETE" },
   );
   if (status < 200 || status >= 300) {
-    return { ok: false, error: errMsg(data, "Could not delete book."), requestId };
+    return { ok: false, error: errMsg(status, data, "Could not delete book."), requestId };
   }
   return { ok: true, requestId };
 }
@@ -273,7 +299,7 @@ export async function renameScribBook(
     },
   );
   if (status < 200 || status >= 300) {
-    return { book: null, error: errMsg(data, "Could not rename book."), requestId };
+    return { book: null, error: errMsg(status, data, "Could not rename book."), requestId };
   }
   return { book: data ? { ...data, sheets: data.sheets ?? [] } : null, requestId };
 }
@@ -291,7 +317,7 @@ export async function createScribSheet(
     },
   );
   if (status < 200 || status >= 300) {
-    return { sheet: null, error: errMsg(data, "Could not create sheet."), requestId };
+    return { sheet: null, error: errMsg(status, data, "Could not create sheet."), requestId };
   }
   return { sheet: data ? normalizeScribSheet(data) : null, requestId };
 }
@@ -309,7 +335,7 @@ export async function fetchScribSheet(
     { timeoutMs: scribSheetTimeoutMs },
   );
   if (status < 200 || status >= 300) {
-    return { sheet: null, error: errMsg(data, "Could not load sheet."), requestId };
+    return { sheet: null, error: errMsg(status, data, "Could not load sheet."), requestId };
   }
   return { sheet: data ? normalizeScribSheet(data) : null, requestId };
 }
@@ -344,7 +370,7 @@ export async function saveScribSheet(
   );
   if (mustLog) console.log("[scrib] save sheet", { status, requestId, sheetId: sheet.id });
   if (status < 200 || status >= 300) {
-    return { sheet: null, error: errMsg(data, "Could not save sheet."), requestId };
+    return { sheet: null, error: errMsg(status, data, "Could not save sheet."), requestId };
   }
   return { sheet: data ? normalizeScribSheet(data) : null, requestId };
 }
@@ -358,7 +384,7 @@ export async function deleteScribSheet(
     { method: "DELETE" },
   );
   if (status < 200 || status >= 300) {
-    return { ok: false, error: errMsg(data, "Could not delete sheet."), requestId };
+    return { ok: false, error: errMsg(status, data, "Could not delete sheet."), requestId };
   }
   return { ok: true, requestId };
 }
@@ -375,7 +401,7 @@ export async function reorderScribLibrary(
     },
   );
   if (status < 200 || status >= 300) {
-    return { ok: false, error: errMsg(data, "Could not reorder sections."), requestId };
+    return { ok: false, error: errMsg(status, data, "Could not reorder sections."), requestId };
   }
   return { ok: true, requestId };
 }
@@ -395,7 +421,7 @@ export async function moveScribSheet(
     { timeoutMs: scribSheetTimeoutMs },
   );
   if (status < 200 || status >= 300) {
-    return { sheet: null, error: errMsg(data, "Could not move sheet."), requestId };
+    return { sheet: null, error: errMsg(status, data, "Could not move sheet."), requestId };
   }
   return { sheet: data ? normalizeScribSheet(data) : null, requestId };
 }

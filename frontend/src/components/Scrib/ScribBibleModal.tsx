@@ -374,12 +374,31 @@ export default function ScribBibleModal({
             </button>
 
             <section className="scrib-ref-panel__text" aria-live="polite">
-              {activeVerse ? (
+              <div className="scrib-ref-panel__text-head">
                 <p className="scrib-ref-panel__text-id">
-                  {doc?.bookName} {chapter}:{activeVerse.verse}
-                  {doc?.edition ? ` · ${doc.edition}` : ""}
+                  {activeVerse
+                    ? `${doc?.bookName} ${chapter}:${activeVerse.verse}${
+                        doc?.edition ? ` · ${doc.edition}` : ""
+                      }`
+                    : "Select a verse."}
                 </p>
-              ) : null}
+                <button
+                  type="button"
+                  className="icon-btn scrib-ref-panel__text-copy"
+                  title="Copiar texto al portapapeles"
+                  aria-label="Copiar texto del versículo al portapapeles"
+                  disabled={!activeVerse?.text}
+                  onClick={() => {
+                    const text = activeVerse?.text?.trim();
+                    if (!text || !navigator.clipboard?.writeText) return;
+                    void navigator.clipboard.writeText(text);
+                  }}
+                >
+                  <span className="material-symbols-outlined" aria-hidden="true">
+                    content_copy
+                  </span>
+                </button>
+              </div>
               <textarea
                 className="scrib-ref-panel__text-body"
                 readOnly

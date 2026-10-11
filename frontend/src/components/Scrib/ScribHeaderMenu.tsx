@@ -148,6 +148,17 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
           </button>
           <button
             type="button"
+            className={actionClass()}
+            title="Deshacer"
+            aria-label="Revertir última acción"
+            disabled={!props.canUndo}
+            onClick={props.onUndo}
+          >
+            <ActionIcon name="undo" />
+            <span className="header-dynamic-menu__label">Deshacer</span>
+          </button>
+          <button
+            type="button"
             className={actionClass(props.mode === "annotate")}
             title="Modo anotación"
             aria-label="Modo anotación"
@@ -313,17 +324,6 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
           >
             <ActionIcon name="print" />
             <span className="header-dynamic-menu__label">PDF</span>
-          </button>
-          <button
-            type="button"
-            className={actionClass()}
-            title="Deshacer"
-            aria-label="Revertir última acción"
-            disabled={!props.canUndo}
-            onClick={props.onUndo}
-          >
-            <ActionIcon name="undo" />
-            <span className="header-dynamic-menu__label">Deshacer</span>
           </button>
           {props.saving ? (
             <span className="scrib-save-hint" aria-live="polite">

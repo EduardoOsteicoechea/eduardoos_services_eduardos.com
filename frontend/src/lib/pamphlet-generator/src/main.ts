@@ -63,7 +63,14 @@ import {
     savePamphlet,
     setOpenFileName,
 } from "./pamphlet_file";
-import { copyEpam, fetchEpam, fetchEpams, fetchEpamSeriesTree, recycleEpam, saveEpamToCloud } from "../../epams";
+import {
+    copyEpam,
+    fetchEpam,
+    fetchEpams,
+    fetchEpamSeriesTree,
+    recycleEpam,
+    saveEpamToCloud,
+} from "../../epams";
 import type { EpamSeriesTreeItem, EpamSeriesTreeResponse } from "../../epams";
 import {
     fetchEpamCatalog,
@@ -2023,7 +2030,19 @@ function resolveCloudEpamId(): string | null {
     return null;
 }
 
+/** Refresh cookie session + CSRF before cloud write; refuse with a clear message if gone. */
+async function ensureCloudSessionForSave(): Promise<void> {
+    const ok = await refreshAuthSession();
+    if (!ok) {
+        throw new Error(
+            "Sesión no disponible o expirada. Inicia sesión de nuevo para guardar el panfleto.",
+        );
+    }
+    await getCsrf(true);
+}
+
 async function persistCloud(data: PamphletStructure): Promise<PamphletStructure> {
+    await ensureCloudSessionForSave();
     const withId = ensureDocumentId(data);
     const stamped: PamphletStructure = {
         ...withId,
@@ -2114,8 +2133,11 @@ async function flushPersist(): Promise<void> {
         const message = err instanceof Error ? err.message : String(err);
         persistQueued = true;
         if (!pendingPersistDoc) pendingPersistDoc = toSave;
+        // Prefer the specific refusal (missing session, CSRF, …) as the banner text.
         showSyncBanner(
-            `No se pudo guardar en el servidor (${message}). Los cambios siguen en este navegador.`,
+            /sesión|csrf|permiso|conexión|conflicto|grande|intentos/i.test(message)
+                ? `${message} Los cambios siguen en este navegador.`
+                : `No se pudo guardar en el servidor (${message}). Los cambios siguen en este navegador.`,
         );
     } finally {
         persistFlushing = false;
@@ -3815,6 +3837,7 @@ on(saveCloudBtn, "click", async () => {
             }
         }
 
+        await refreshAuthSession();
         if (getAuthToken() && isAuthenticated()) {
             const savedDoc = await persistCloud({ ...withId });
             memorySession = false;
@@ -3833,14 +3856,21 @@ on(saveCloudBtn, "click", async () => {
         renderDocument(withId, false);
         updatePrintAvailability();
         setStatus(
-            `Downloaded ${downloaded}. Sign in to also keep a cloud copy.`,
+            `Downloaded ${downloaded}. Sesión no disponible: inicia sesión para guardar también en la nube.`,
             "info",
+        );
+        setError(
+            "Sesión no disponible o expirada. Inicia sesión de nuevo para guardar el panfleto en la nube.",
         );
     } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
-        setError(`Save failed: ${message}`);
+        setError(message.startsWith("Sesión") || message.startsWith("Guardado") || message.startsWith("No se pudo")
+            ? message
+            : `Save failed: ${message}`);
         showSyncBanner(
-            `No se pudo guardar en el servidor (${message}). Los cambios siguen en este navegador.`,
+            /sesión|csrf|permiso|conexión|conflicto|grande|intentos/i.test(message)
+                ? `${message} Los cambios siguen en este navegador.`
+                : `No se pudo guardar en el servidor (${message}). Los cambios siguen en este navegador.`,
         );
     }
 });

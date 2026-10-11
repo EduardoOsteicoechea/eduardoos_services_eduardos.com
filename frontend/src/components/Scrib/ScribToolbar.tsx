@@ -137,6 +137,16 @@ export default function ScribToolbar(props: ScribToolbarProps) {
       </button>
       <button
         type="button"
+        className={toolClass()}
+        title="Deshacer"
+        aria-label="Revertir última acción"
+        disabled={!props.canUndo}
+        onClick={props.onUndo}
+      >
+        <ToolIcon name="undo" />
+      </button>
+      <button
+        type="button"
         className={toolClass(props.mode === "annotate")}
         title="Modo anotación"
         aria-label="Modo anotación"
@@ -263,16 +273,6 @@ export default function ScribToolbar(props: ScribToolbarProps) {
         onClick={props.onPrint}
       >
         <ToolIcon name="print" />
-      </button>
-      <button
-        type="button"
-        className={toolClass()}
-        title="Deshacer"
-        aria-label="Revertir última acción"
-        disabled={!props.canUndo}
-        onClick={props.onUndo}
-      >
-        <ToolIcon name="undo" />
       </button>
       <button
         type="button"
