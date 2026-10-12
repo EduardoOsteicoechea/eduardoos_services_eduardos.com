@@ -234,9 +234,9 @@ html[data-page="home"] .home-services__card {
 }
 
 html[data-page="home"] .home-services__showcase {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-padding);
 }
 
 html[data-page="home"] .home-services__offer {
@@ -351,7 +351,8 @@ html[data-page="home"] .home-services__shot figcaption {
 
   html[data-page="home"] .home-profile__pair,
   html[data-page="home"] .home-profile__education,
-  html[data-page="home"] .home-services__cards {
+  html[data-page="home"] .home-services__cards,
+  html[data-page="home"] .home-services__showcase {
     grid-template-columns: minmax(0, 1fr);
   }
 
