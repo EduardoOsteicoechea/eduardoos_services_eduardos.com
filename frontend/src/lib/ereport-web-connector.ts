@@ -2,6 +2,7 @@ import { apiRequest, getCsrf } from "./api";
 import { mustLog } from "./dev-log";
 import { showErrorModal } from "./error-modal";
 import {
+  EREPORT_API_TIMEOUT_MS,
   fetchEreportAccess,
   fetchEreportOrg,
   fetchEreportOrgs,
@@ -86,7 +87,7 @@ async function nodeWrite(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     },
-    { timeoutMs: 120000 },
+    { timeoutMs: EREPORT_API_TIMEOUT_MS },
   );
   return { status, requestId, data: data as Record<string, unknown> };
 }

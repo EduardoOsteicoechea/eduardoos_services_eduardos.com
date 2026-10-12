@@ -477,6 +477,8 @@ function isUnsafe(method: string): boolean {
 }
 
 const apiTimeoutMs = 12000;
+/** CSRF + refresh must outlive a slow VPS/Mongo round-trip; 12s was aborting mid-session renew. */
+const authTimeoutMs = 30000;
 
 type ApiSendOpts = {
   skipAuthRetry?: boolean;
@@ -680,7 +682,7 @@ export async function getCsrf(force = false): Promise<string> {
   if (!csrfInFlight) {
     sessionLog("csrf.fetch_start", { force });
     csrfInFlight = (async () => {
-      const timed = timeoutSignal();
+      const timed = timeoutSignal(undefined, authTimeoutMs);
       try {
         const headers = new Headers();
         headers.set("Accept", "application/json");
@@ -710,12 +712,13 @@ export async function refreshSession(): Promise<{ status: number; data: MeRespon
   if (!refreshInFlight) {
     sessionLog("session.refresh.start");
     refreshInFlight = withRefreshLock(async () => {
-      const result = await postJSON<MeResponse>("/auth/refresh", {});
+      const result = await postJSON<MeResponse>("/auth/refresh", {}, { timeoutMs: authTimeoutMs });
       sessionLog("session.refresh.done", { status: result.status, userId: result.data.id });
       if (result.status === 200 && result.data.id) {
         markSessionHint();
       } else if (result.status === 401) {
         clearSessionHint();
+        clearMeCache();
       }
       return result;
     }).finally(() => {

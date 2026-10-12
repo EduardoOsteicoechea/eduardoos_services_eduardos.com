@@ -12,7 +12,8 @@ import { checkServiceAccess } from "./serviceAccess";
 const FONT_STEPS = ["0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
 const ALL_PANELS = ["main-menu", "dynamic-header", "agent-sidebar"] as const;
 const PHONE_TRAY_MQ = "(max-width: 47.999rem)";
-const SESSION_REFRESH_MS = 10 * 60 * 1000;
+/** Refresh before access JWT expiry (15m). Keep under accessTTL with headroom for background-tab timer throttling. */
+const SESSION_REFRESH_MS = 8 * 60 * 1000;
 
 let sessionRefreshTimer: ReturnType<typeof setInterval> | undefined;
 
@@ -300,7 +301,15 @@ function scheduleSessionRefresh(): void {
         void refreshAuthChrome();
         return;
       }
-      clearSessionRefreshTimer();
+      // Only stop on definitive auth loss. Timeouts / 429 / 5xx must not kill the timer —
+      // otherwise the access cookie expires (~15m) with no further proactive refresh.
+      if (result.status === 401) {
+        clearSessionRefreshTimer();
+        clearMeCache();
+        clearSessionHint();
+        resetCsrfMemory();
+        void refreshAuthChrome();
+      }
     });
   }, SESSION_REFRESH_MS);
   if (typeof document !== "undefined" && !document.documentElement.dataset.sessionVisBound) {
@@ -312,6 +321,15 @@ function scheduleSessionRefresh(): void {
       sessionLog("chrome.visibility.refresh");
       void refreshSession().then((result) => {
         if (result.status === 200 && result.data.id) {
+          void refreshAuthChrome();
+          scheduleSessionRefresh();
+          return;
+        }
+        if (result.status === 401) {
+          clearSessionRefreshTimer();
+          clearMeCache();
+          clearSessionHint();
+          resetCsrfMemory();
           void refreshAuthChrome();
         }
       });

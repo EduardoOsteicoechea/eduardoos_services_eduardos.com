@@ -11,6 +11,9 @@ import { workspaceHref } from "./ereport-routes";
 
 export type EreportPayload = Record<string, unknown>;
 
+/** Report GET/PUT and connector node writes (snapshot + disk) often exceed the default 12s API timeout. */
+export const EREPORT_API_TIMEOUT_MS = 300_000;
+
 export type OrgCard = {
   id: string;
   name: string;
@@ -144,12 +147,16 @@ export function importOrgReport(orgId: string, tema: string, payload: EreportPay
 export function fetchOrgReport(orgId: string, reportId: string) {
   return apiRequest<{ meta?: EreportMeta; payload?: EreportPayload; canShare?: boolean; canEdit?: boolean }>(
     `/ereport/orgs/${orgId}/reports/${reportId}`,
+    {},
+    { timeoutMs: EREPORT_API_TIMEOUT_MS },
   );
 }
 
 export function saveOrgReport(orgId: string, reportId: string, body: { tema?: string; payload?: EreportPayload }) {
   // Large payloads (images as data URLs) often exceed the default 12s API timeout.
-  return putJSON<{ meta?: EreportMeta }>(`/ereport/orgs/${orgId}/reports/${reportId}`, body, { timeoutMs: 120000 });
+  return putJSON<{ meta?: EreportMeta }>(`/ereport/orgs/${orgId}/reports/${reportId}`, body, {
+    timeoutMs: EREPORT_API_TIMEOUT_MS,
+  });
 }
 
 export function deleteOrgReport(orgId: string, reportId: string) {
@@ -169,7 +176,7 @@ export function patchReportSiteConnector(
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     },
-    { timeoutMs: 120000 },
+    { timeoutMs: EREPORT_API_TIMEOUT_MS },
   );
 }
 
@@ -185,7 +192,7 @@ export function createReportHistory(
   return postJSON<{ id?: string; tema?: string; source?: string }>(
     `/ereport/orgs/${orgId}/reports/${reportId}/history`,
     body,
-    { timeoutMs: 120000 },
+    { timeoutMs: EREPORT_API_TIMEOUT_MS },
   );
 }
 
@@ -230,7 +237,9 @@ export function fetchSharedReport(orgId: string, reportId: string) {
 }
 
 export function saveSharedReport(orgId: string, reportId: string, body: { tema?: string; payload?: EreportPayload }) {
-  return putJSON<{ meta?: EreportMeta }>(`/ereport/shared/orgs/${orgId}/reports/${reportId}`, body, { timeoutMs: 120000 });
+  return putJSON<{ meta?: EreportMeta }>(`/ereport/shared/orgs/${orgId}/reports/${reportId}`, body, {
+    timeoutMs: EREPORT_API_TIMEOUT_MS,
+  });
 }
 
 export function sharedImageUploadPath(orgId: string, reportId: string): string {
@@ -306,7 +315,9 @@ export function fetchInviteReport(reportId: string) {
 }
 
 export function saveInviteReport(reportId: string, body: { tema?: string; payload?: EreportPayload }) {
-  return putJSON<{ meta?: EreportMeta }>(`/ereport/invite-session/reports/${reportId}`, body, { timeoutMs: 120000 });
+  return putJSON<{ meta?: EreportMeta }>(`/ereport/invite-session/reports/${reportId}`, body, {
+    timeoutMs: EREPORT_API_TIMEOUT_MS,
+  });
 }
 
 export type EreportSaveBody = { tema?: string; payload?: EreportPayload };
