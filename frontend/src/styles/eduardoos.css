@@ -116,8 +116,55 @@ html[data-page="home"] main > * {
     background-position: left center;
   }
 
+  /* Fill the phone viewport so the hero separator can sit on the fold.
+     Flex (not grid) so the hero grows against the real page-title height. */
+  html[data-page="home"] main {
+    display: flex;
+    flex-direction: column;
+    min-height: var(--shell-viewport-height, 40rem);
+    padding-bottom: 0;
+    gap: calc(var(--rail-gap) * 0.75);
+    row-gap: calc(var(--rail-gap) * 0.75);
+  }
+
+  /* Tighten H1 → eyebrow gap to 0.75× (title band + main gap + hero pad). */
+  html[data-page="home"] main > .page-title {
+    flex: 0 0 auto;
+    grid-template-rows:
+      var(--space-padding)
+      minmax(var(--menu-button-size), auto)
+      calc(var(--space-margin) * 0.75);
+  }
+
+  html[data-page="home"] main > .page {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    min-width: 0;
+  }
+
   html[data-page="home"] .eyebrow {
     max-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.65);
+  }
+
+  /* Pin hero separator to the bottom of the phone viewport. */
+  html[data-page="home"] .hero {
+    box-sizing: border-box;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    padding-top: calc(var(--space-padding) * 0.75);
+    /* At least the remaining first-screen space after the title band. */
+    min-height: calc(
+      var(--shell-viewport-height, 40rem) - var(--space-padding) -
+        var(--menu-button-size) - calc(var(--space-margin) * 0.75) -
+        calc(var(--rail-gap) * 0.75)
+    );
+  }
+
+  html[data-page="home"] .hero__meta {
+    margin-top: auto;
   }
 
   .hero__lede {
