@@ -116,59 +116,59 @@ html[data-page="home"] main > * {
     background-position: left center;
   }
 
-  /* Fill the phone viewport so the hero separator can sit on the fold.
-     Flex (not grid) so the hero grows against the real page-title height. */
+  /* First screen: H1 → lead (2rem) → (space) → actions + meta → line 0.5rem from fold. */
   html[data-page="home"] main {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     min-height: var(--shell-viewport-height, 40rem);
-    padding-bottom: 0;
-    gap: calc(var(--rail-gap) * 0.75);
-    row-gap: calc(var(--rail-gap) * 0.75);
+    padding-bottom: 0.5rem;
+    gap: 0;
+    row-gap: 0;
   }
 
-  /* Tighten H1 → eyebrow gap to 0.75× (title band + main gap + hero pad). */
   html[data-page="home"] main > .page-title {
     flex: 0 0 auto;
     grid-template-rows:
       var(--space-padding)
       minmax(var(--menu-button-size), auto)
-      calc(var(--space-margin) * 0.75);
+      0;
   }
 
+  /* Basis 0 so .page is exactly the remaining first-screen height; sections overflow below. */
   html[data-page="home"] main > .page {
     display: flex;
     flex-direction: column;
-    flex: 1 0 auto;
+    flex: 1 1 0;
     min-width: 0;
+    min-height: 0;
+    overflow: visible;
   }
 
-  html[data-page="home"] .eyebrow {
-    max-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.65);
+  html[data-page="home"] .hero > .eyebrow {
+    display: none;
   }
 
-  /* Pin hero separator to the bottom of the phone viewport. */
   html[data-page="home"] .hero {
     box-sizing: border-box;
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     margin-bottom: 0;
-    padding-top: calc(var(--space-padding) * 0.75);
-    /* At least the remaining first-screen space after the title band. */
-    min-height: calc(
-      var(--shell-viewport-height, 40rem) - var(--space-padding) -
-        var(--menu-button-size) - calc(var(--space-margin) * 0.75) -
-        calc(var(--rail-gap) * 0.75)
-    );
+    padding-top: 2rem;
   }
 
-  html[data-page="home"] .hero__meta {
+  html[data-page="home"] .hero__lede {
+    inline-size: calc(var(--shell-viewport-width, var(--content-basis)) * 0.6);
+  }
+
+  /* Buttons + meta sit just above the bottom separator. */
+  html[data-page="home"] .hero__actions {
     margin-top: auto;
   }
 
-  .hero__lede {
-    inline-size: calc(var(--shell-viewport-width, var(--content-basis)) * 0.6);
+  html[data-page="home"] .hero__meta {
+    margin-top: 0;
   }
 
   .hero__actions .btn {
