@@ -81,6 +81,15 @@
   --sidebar-toolbar-band: calc(
     var(--space-padding) + var(--rail-button-size) + var(--space-padding) + var(--border-width)
   );
+  /*
+    Session action (Log out/Sign in): control + bottom margin.
+    Subscribe (next section): top margin + control + bottom margin.
+    DHS route tools offset by this so Dashboard lines up with eWrite.
+  */
+  --menu-pre-product-offset: calc(
+    var(--control-height) + var(--space-padding) +
+    var(--space-padding) + var(--control-height) + var(--space-padding)
+  );
   --font-family: "Raleway", ui-sans-serif, system-ui, sans-serif;
   --font-family-display: "Raleway", ui-sans-serif, system-ui, sans-serif;
   --font-family-ui: "Raleway", ui-sans-serif, system-ui, sans-serif;
@@ -602,11 +611,9 @@ a {
   margin-top: 0;
 }
 
-/* When menu is open, docked trays clear the shared toolbar band so rows align.
-   Font/theme chrome is the first DHS *content* row — sit it under the painted band
-   so #main-menu .sidebar-toolbar::after cannot cover the buttons. */
+/* Each tray owns its own top toolbar — do not offset DHS under a painted span. */
 #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) {
-  padding-top: calc(var(--sidebar-toolbar-band) + var(--tray-body-pad-top));
+  padding-top: 0;
   z-index: calc(var(--z-sidebar) + 1);
 }
 
@@ -647,41 +654,9 @@ a {
   background: var(--color-surface);
 }
 
-#main-menu .sidebar-toolbar {
-  margin-bottom: calc(var(--tray-body-pad-top) + 0.5rem);
-}
-
-/* Paint the toolbar band across docked DHS / agent columns (controls stay left).
-   Width follows data-menu-toolbar from chrome: menu | menu-dhs | menu-agent | menu-dhs-agent.
-   Homescool fixed rail is not a docked overlay, so it does not widen the band. */
+/* Never paint a continuous toolbar band across open trays — each column has its own header. */
 #main-menu .sidebar-toolbar::after {
   content: none;
-}
-
-html[data-menu-toolbar="menu-dhs"] #main-menu .sidebar-toolbar::after,
-html[data-menu-toolbar="menu-agent"] #main-menu .sidebar-toolbar::after,
-html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 100%;
-  background: var(--color-surface);
-  border-bottom: var(--border-width) solid var(--color-border);
-  box-sizing: border-box;
-  pointer-events: none;
-}
-
-html[data-menu-toolbar="menu-dhs"] #main-menu .sidebar-toolbar::after {
-  width: var(--sidebar-width);
-}
-
-html[data-menu-toolbar="menu-agent"] #main-menu .sidebar-toolbar::after {
-  width: var(--agent-sidebar-width);
-}
-
-html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
-  width: calc(var(--sidebar-width) + var(--agent-sidebar-width));
 }
 
 .sidebar-toolbar .icon-btn {
@@ -742,7 +717,7 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   padding: 0;
 }
 
-/* First row of the dynamic menu: font − / + / theme (below the shared top band). */
+/* DHS chrome toolbar sits in its own column, level with Home / AI / profile. */
 #dynamic-header > .sidebar-toolbar[data-dhs-chrome] {
   margin: 0;
   margin-bottom: var(--tray-body-pad-top);
@@ -751,10 +726,12 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   z-index: 1;
 }
 
-/* DHS paints its own chrome row — do not extend the menu toolbar band over it. */
-html[data-menu-toolbar="menu-dhs"] #main-menu .sidebar-toolbar::after,
-html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
-  content: none;
+/*
+  After Log out/Sign in + Subscribe, product links start (eWrite…).
+  Offset DHS route tools so Dashboard lines up with eWrite / Articles.
+*/
+#main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) > .sidebar-toolbar[data-dhs-chrome] + * {
+  margin-top: var(--menu-pre-product-offset);
 }
 
 .sidebar-left nav {

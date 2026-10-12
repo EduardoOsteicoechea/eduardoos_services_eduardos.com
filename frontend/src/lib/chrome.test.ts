@@ -268,12 +268,14 @@ describe("menu toolbar span", () => {
   it("keeps font/theme chrome as the first DHS row when the menu is open", () => {
     const css = readFileSync(join(here, "../styles/global.css"), "utf8");
     expect(css).toMatch(
-      /#main-menu:not\(\[hidden\]\) ~ #dynamic-header:not\(\[hidden\]\) \{[^}]*padding-top: calc\(var\(--sidebar-toolbar-band\)/,
+      /#main-menu:not\(\[hidden\]\) ~ #dynamic-header:not\(\[hidden\]\) \{[^}]*padding-top: 0;/,
     );
+    expect(css).toContain("--menu-pre-product-offset");
     expect(css).toMatch(
-      /html\[data-menu-toolbar="menu-dhs"\] #main-menu \.sidebar-toolbar::after/,
+      /#main-menu:not\(\[hidden\]\) ~ #dynamic-header:not\(\[hidden\]\) > \.sidebar-toolbar\[data-dhs-chrome\] \+ \*/,
     );
-    expect(css).toContain('content: none');
+    expect(css).toContain("#main-menu .sidebar-toolbar::after");
+    expect(css).toContain("content: none");
 
     (document.getElementById("main-menu") as HTMLElement).hidden = false;
     const dhs = document.getElementById("dynamic-header") as HTMLElement;
@@ -290,6 +292,25 @@ describe("menu toolbar span", () => {
     expect(document.documentElement.dataset.menuToolbar).toBe("menu-dhs");
     expect(dhs.querySelectorAll("[data-font], [data-theme-toggle]").length).toBe(3);
     expect(dhs.querySelector("[data-dhs-chrome]")?.compareDocumentPosition(dhs.querySelector("#header-dynamic-menu-host")!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it("allows decreasing root font size down to 10px", () => {
+    document.documentElement.style.fontSize = "0.875rem";
+    localStorage.setItem("root-font-size", "0.875rem");
+    document.body.innerHTML = `
+      <button type="button" data-font="-">-</button>
+      <aside id="main-menu" hidden></aside>
+      <aside id="dynamic-header" hidden></aside>
+      <aside id="agent-sidebar" hidden></aside>
+    `;
+    window.__chromeStarted = false;
+    startChrome();
+    const down = document.querySelector("[data-font='-']") as HTMLButtonElement;
+    down.click(); // 0.875 → 0.75
+    down.click(); // 0.75 → 0.625 (10px)
+    down.click(); // stay at 0.625
+    expect(document.documentElement.style.fontSize).toBe("0.625rem");
+    expect(localStorage.getItem("root-font-size")).toBe("0.625rem");
   });
 
   it("widens for overlay DHS actions beside the menu", () => {

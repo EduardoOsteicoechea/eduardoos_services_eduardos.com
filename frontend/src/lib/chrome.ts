@@ -9,7 +9,8 @@ import { startVoiceChat } from "./voice";
 import { go, startClientRouting } from "./router";
 import { checkServiceAccess } from "./serviceAccess";
 
-const FONT_STEPS = ["0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
+/** Root font-size steps (10px–22px at a 16px browser default). */
+const FONT_STEPS = ["0.625rem", "0.75rem", "0.875rem", "1rem", "1.125rem", "1.25rem", "1.375rem"];
 const ALL_PANELS = ["main-menu", "dynamic-header", "agent-sidebar"] as const;
 const PHONE_TRAY_MQ = "(max-width: 47.999rem)";
 /** Refresh before access JWT expiry (15m). Keep under accessTTL with headroom for background-tab timer throttling. */
