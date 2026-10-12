@@ -184,15 +184,19 @@ import Layout from "../layouts/Layout.astro";
       return entry;
     };
 
-    // Seed from publisher catalog so empty series stay visible (chapters stay hidden in UI).
+    // Prefer catalog display names when an article's series matches a catalog entry.
+    const catalogNames = new Map<string, string>();
     for (const node of catalog) {
       const name = (node.name ?? "").trim();
       if (!name) continue;
-      ensureSeries(name);
+      catalogNames.set(name.toLowerCase(), name);
     }
 
     for (const rec of records) {
-      ensureSeries((rec.series ?? "").trim() || UNASSIGNED_SERIES).items.push(rec);
+      const raw = (rec.series ?? "").trim() || UNASSIGNED_SERIES;
+      const key = raw.toLowerCase();
+      const displayName = catalogNames.get(key) || raw;
+      ensureSeries(displayName).items.push(rec);
     }
 
     const seriesKeys = [...seriesMap.keys()].sort((a, b) =>
@@ -202,6 +206,8 @@ import Layout from "../layouts/Layout.astro";
     let count = 0;
     for (const sKey of seriesKeys) {
       const bucket = seriesMap.get(sKey)!;
+      // Hide catalog-only series with zero public articles.
+      if (!bucket.items.length) continue;
       bucket.items.sort(compareArticlesInSeries);
       count += bucket.items.length;
       series.push({ name: bucket.displayName, count: bucket.items.length, items: bucket.items });
