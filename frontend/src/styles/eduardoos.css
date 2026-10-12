@@ -140,21 +140,46 @@ html[data-page="home"] .hero {
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
+  gap: 0;
   margin-bottom: 0;
   padding-top: var(--space-padding);
+  padding-bottom: var(--rail-gap);
+}
+
+/* Lead → 2rem → buttons; meta sits on the fold above the separator. */
+html[data-page="home"] .hero__lede {
+  margin-bottom: 2rem;
 }
 
 html[data-page="home"] .hero__actions {
-  margin-top: auto;
+  margin-top: 0;
 }
 
 html[data-page="home"] .hero__meta {
-  margin-top: 0;
+  margin-top: auto;
+  padding-top: var(--rail-gap);
 }
 
 /* 2rem between homepage sections (and hero → first section). */
 html[data-page="home"] .section {
   padding-block: 0;
+}
+
+html[data-page="home"] #services {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Two profile cards on top (icons already above titles). */
+html[data-page="home"] .home-profile__pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Education as icon-on-top cards: two per row, rest below. */
+html[data-page="home"] .home-profile__education {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
 }
 
 /* Tablet: portrait center sits 3.125rem (50px) from the right edge. */
@@ -174,6 +199,11 @@ html[data-page="home"] .section {
 
   html[data-page="home"] .hero__lede {
     inline-size: calc(var(--shell-viewport-width, var(--content-basis)) * 0.6);
+  }
+
+  html[data-page="home"] .home-profile__pair,
+  html[data-page="home"] .home-profile__education {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero__actions .btn {

@@ -87,12 +87,44 @@ export const profileExperience: ProfileExperience[] = [
   },
 ];
 
-export const profileEducation: string[] = [
-  "Bachelor of Architecture, Universidad de Los Andes (ULA), 2009–2017; graduated 2017 (Cum Laude). Architectural design, AutoCAD, SketchUp; BIM training at an Autodesk Authorized Training Center.",
-  "Autodesk Authorized Training Center Course (2011) — BIM-related training (not a conferred Master’s degree).",
-  "Advanced BIM Modeling Course, BIMMASTER.org.",
-  "Theology studies, Integridad & Sabiduría (online institute, Dominican Republic), through ~2023.",
-  "Full-stack web development self-study (2020–2023): HTML, CSS, JavaScript, Bootstrap, PHP, MySQL, and modern front-end practice.",
+export type ProfileEducationCard = {
+  title: string;
+  description: string;
+  /** Material Symbol ligature. */
+  icon: string;
+};
+
+/** Education items as icon-on-top cards (2-up grid on home). */
+export const profileEducation: ProfileEducationCard[] = [
+  {
+    title: "Bachelor of Architecture",
+    icon: "school",
+    description:
+      "Universidad de Los Andes (ULA), 2009–2017; graduated 2017 (Cum Laude). Architectural design, AutoCAD, SketchUp; BIM training at an Autodesk Authorized Training Center.",
+  },
+  {
+    title: "Autodesk ATC Course",
+    icon: "verified",
+    description:
+      "Autodesk Authorized Training Center Course (2011) — BIM-related training (not a conferred Master’s degree).",
+  },
+  {
+    title: "Advanced BIM Modeling",
+    icon: "view_in_ar",
+    description: "Advanced BIM Modeling Course, BIMMASTER.org.",
+  },
+  {
+    title: "Theology studies",
+    icon: "menu_book",
+    description:
+      "Integridad & Sabiduría (online institute, Dominican Republic), through ~2023.",
+  },
+  {
+    title: "Full-stack web development",
+    icon: "code",
+    description:
+      "Self-study (2020–2023): HTML, CSS, JavaScript, Bootstrap, PHP, MySQL, and modern front-end practice.",
+  },
 ];
 
 export type ProfileSkill = {
