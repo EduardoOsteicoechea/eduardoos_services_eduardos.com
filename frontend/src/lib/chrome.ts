@@ -782,7 +782,7 @@ export function startChrome(): void {
           clearMeCache();
           await refreshAuthChrome();
           closeAllPanels();
-          go("/session");
+          go("/");
         })();
         return;
       }
