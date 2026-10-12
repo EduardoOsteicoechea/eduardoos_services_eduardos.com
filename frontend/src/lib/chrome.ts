@@ -143,6 +143,10 @@ function dynamicHeaderHasActions(): boolean {
   if (!(dhs instanceof HTMLElement)) {
     return false;
   }
+  // Font / theme chrome is always the first DHS row on every route.
+  if (dhs.querySelector("[data-dhs-chrome]")) {
+    return true;
+  }
   // Row actions, pamphlet tools, or Homescool cycle/week/day/subject chrome.
   if (
     dhs.querySelector(

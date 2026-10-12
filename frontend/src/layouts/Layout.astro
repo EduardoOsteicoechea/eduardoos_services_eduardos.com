@@ -404,15 +404,9 @@ const jsonLdString =
 
       <aside id="main-menu" class="sidebar-left" hidden>
         <header class="sidebar-toolbar">
-          <button class="icon-btn" type="button" data-font="-" aria-label="Decrease font size" title="Decrease font size">
-            <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
-          </button>
-          <button class="icon-btn" type="button" data-font="+" aria-label="Increase font size" title="Increase font size">
-            <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
-          </button>
-          <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
-            <span class="material-symbols-outlined" aria-hidden="true">contrast</span>
-          </button>
+          <a href="/" class="icon-btn header-home" data-route aria-label="Home" title="Home">
+            <img class="header-home__img" src="/favicon.svg" width="28" height="28" alt="" />
+          </a>
           <button class="agent-fab icon-btn" type="button" aria-controls="agent-sidebar" aria-expanded="false" aria-label="Open AI agent" title="Open AI agent">
             <span class="agent-fab-label" aria-hidden="true">AI</span>
           </button>
@@ -429,9 +423,6 @@ const jsonLdString =
             <img class="header-session-photo" data-header-avatar-img hidden alt="" />
             <span class="material-symbols-outlined header-session-fallback" data-header-avatar-fallback aria-hidden="true">account_circle</span>
           </a>
-          <button class="icon-btn" type="button" data-close-menu aria-label="Close menu" title="Close menu">
-            <span class="material-symbols-outlined" aria-hidden="true">close</span>
-          </button>
         </header>
         <nav aria-label="Primary">
           <div class="sidebar-nav-section sidebar-nav-section--session-guest">
@@ -443,12 +434,6 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">logout</span>
               Log out
             </button>
-          </div>
-          <div class="sidebar-nav-section sidebar-nav-section--site">
-            <a href="/" data-route aria-current={path === "/" ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">home</span>
-              Home
-            </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--services">
             <a href="/articles" data-route aria-current={path.startsWith("/articles") ? "page" : undefined}>
@@ -514,6 +499,17 @@ const jsonLdString =
       </aside>
 
       <aside id="dynamic-header" class="sidebar-right" hidden>
+        <header class="sidebar-toolbar" data-dhs-chrome>
+          <button class="icon-btn" type="button" data-font="-" aria-label="Decrease font size" title="Decrease font size">
+            <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
+          </button>
+          <button class="icon-btn" type="button" data-font="+" aria-label="Increase font size" title="Increase font size">
+            <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
+          </button>
+          <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+            <span class="material-symbols-outlined" aria-hidden="true">contrast</span>
+          </button>
+        </header>
         <div id="header-dynamic-menu-host" class="header-dynamic-menu-host" data-hds-host></div>
         {hasDhsSlot ? <slot name="dhs" /> : null}
       </aside>
