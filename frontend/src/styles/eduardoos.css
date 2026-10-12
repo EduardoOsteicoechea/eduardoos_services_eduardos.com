@@ -23,7 +23,7 @@
 
 /* ---------- Page rhythm + technical grid ---------- */
 
-/* Page rhythm — full main width; gutters come only from main (--main-inline: 1rem). */
+/* Page rhythm — full main width; gutters come only from main (--main-inline). */
 .page,
 .session-grid,
 .diag,
@@ -568,7 +568,7 @@ main > .diag{
   grid-column: 1 / span var(--span-full);
   grid-row: 3;
   box-sizing: border-box;
-  /* main already supplies --main-inline / --main-padding (1rem). */
+  /* main already supplies --main-inline / --main-padding (2rem phone, 1rem else). */
   width: auto;
   max-width: min(
     var(--article-measure),
@@ -694,7 +694,15 @@ main > .diag{
   margin-top: auto;
 }
 
-/* Article body stays within the reading measure (1rem gutters from main only). */
+/* Phone: 2rem lateral gutters on articles list + reader (main --main-inline). */
+@media (max-width: 47.999rem) {
+  .shell:has(.article-page) > main,
+  .shell:has(.articles-page) > main {
+    --main-inline: 2rem;
+  }
+}
+
+/* Article body stays within the reading measure (gutters from main only). */
 @media (min-width: 48rem) {
   .article-page {
     padding-inline: 0;
