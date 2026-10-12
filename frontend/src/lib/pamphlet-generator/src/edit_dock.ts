@@ -436,10 +436,15 @@ export function setupEditDock(
         return app instanceof HTMLElement ? app.scrollTop : 0;
     }
 
-    function unlockPhonePageScroll(): void {
+    /**
+     * Fold phone app-scrollport offset into window scroll and clear body lock.
+     * `appScrollTop` must be captured while `.pamphlet-phone-dock-open` still makes
+     * `.pamphlet-app` overflow:auto — removing that class drops the scrollport and
+     * zeroes scrollTop before we can read it (save/close jumped to top on mobile).
+     */
+    function unlockPhonePageScroll(appScrollTop = phoneAppScrollTop()): void {
         if (!phoneScrollLocked) return;
-        // While locked, wheel/touch scroll moves to .pamphlet-app — fold that in.
-        const y = phoneLockedScrollY + phoneAppScrollTop();
+        const y = phoneLockedScrollY + appScrollTop;
         phoneScrollLocked = false;
         document.body.style.position = "";
         document.body.style.top = "";
@@ -531,11 +536,18 @@ export function setupEditDock(
             host.requestLayoutSync();
             return;
         }
+        // Read app scroll before dropping phone-dock-open (that class is the scrollport).
+        const wasPhoneScrollLocked = phoneScrollLocked;
+        const appScrollTop = wasPhoneScrollLocked ? phoneAppScrollTop() : 0;
+        unlockPhonePageScroll(appScrollTop);
         document.body.classList.remove(PHONE_DOCK_BODY_CLASS);
         document.documentElement.classList.remove(PHONE_DOCK_BODY_CLASS);
         dockRoot.removeAttribute("data-phone-pinned");
         clearPhoneDockInlinePin();
-        unlockPhonePageScroll();
+        // Re-apply window Y after html regains overflow:auto (class removal can clamp).
+        if (wasPhoneScrollLocked) {
+            window.scrollTo(0, phoneLockedScrollY);
+        }
         if (dockRoot.parentElement === document.body) {
             if (dockHomeNext && dockHomeNext.parentElement === dockHomeParent) {
                 dockHomeParent.insertBefore(dockRoot, dockHomeNext);

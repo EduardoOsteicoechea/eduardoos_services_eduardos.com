@@ -5,11 +5,23 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"net/http"
+	"sort"
 	"strings"
 	"time"
 
 	"github.com/EduardoOsteicoechea/eduardoos_services_eduardos.com/pkg/pdf"
 )
+
+// publicArticlesSeriesChapter is a catalog chapter name for /articles (no ids).
+type publicArticlesSeriesChapter struct {
+	Name string `json:"name"`
+}
+
+// publicArticlesSeriesNode is a catalog series skeleton so empty series stay visible.
+type publicArticlesSeriesNode struct {
+	Name     string                         `json:"name"`
+	Chapters []publicArticlesSeriesChapter   `json:"chapters"`
+}
 
 const articlesDefaultPublicPref = "articles_default_public"
 
@@ -312,6 +324,63 @@ func articleDescription(plain, title string) string {
 	return text
 }
 
+// publicArticlesSeriesCatalog returns publisher series/chapter names so /articles
+// can show empty series even when no public articles are listed under them.
+func (a *App) publicArticlesSeriesCatalog(r *http.Request, userIDs []string) ([]publicArticlesSeriesNode, error) {
+	type seriesSet struct {
+		display      string
+		chapterNames []string
+		chapterSeen  map[string]bool
+	}
+	byKey := map[string]*seriesSet{}
+	seriesOrder := make([]string, 0)
+	rid := requestIDFrom(r, nil)
+	for _, userID := range userIDs {
+		series, err := a.pamphlet.ListSeries(r.Context(), userID, rid)
+		if err != nil {
+			return nil, err
+		}
+		for _, s := range series {
+			name := strings.TrimSpace(s.Name)
+			if name == "" {
+				continue
+			}
+			key := strings.ToLower(name)
+			entry, ok := byKey[key]
+			if !ok {
+				entry = &seriesSet{display: name, chapterSeen: map[string]bool{}}
+				byKey[key] = entry
+				seriesOrder = append(seriesOrder, key)
+			}
+			for _, ch := range s.Chapters {
+				cname := strings.TrimSpace(ch.Name)
+				if cname == "" {
+					continue
+				}
+				ckey := strings.ToLower(cname)
+				if entry.chapterSeen[ckey] {
+					continue
+				}
+				entry.chapterSeen[ckey] = true
+				entry.chapterNames = append(entry.chapterNames, cname)
+			}
+		}
+	}
+	sort.SliceStable(seriesOrder, func(i, j int) bool {
+		return strings.ToLower(byKey[seriesOrder[i]].display) < strings.ToLower(byKey[seriesOrder[j]].display)
+	})
+	out := make([]publicArticlesSeriesNode, 0, len(seriesOrder))
+	for _, key := range seriesOrder {
+		entry := byKey[key]
+		chapters := make([]publicArticlesSeriesChapter, 0, len(entry.chapterNames))
+		for _, cname := range entry.chapterNames {
+			chapters = append(chapters, publicArticlesSeriesChapter{Name: cname})
+		}
+		out = append(out, publicArticlesSeriesNode{Name: entry.display, Chapters: chapters})
+	}
+	return out, nil
+}
+
 func (a *App) listArticlesHandler(w http.ResponseWriter, r *http.Request) {
 	userIDs, err := a.articlesPublisherUserIDs(r)
 	if err != nil {
@@ -319,7 +388,9 @@ func (a *App) listArticlesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if len(userIDs) == 0 {
-		writeJSON(w, http.StatusOK, map[string]any{"count": 0, "articles": []EpamRecord{}})
+		writeJSON(w, http.StatusOK, map[string]any{
+			"count": 0, "articles": []EpamRecord{}, "series": []publicArticlesSeriesNode{},
+		})
 		return
 	}
 	records, err := a.pamphlet.ListPublicEpamsByUsers(r.Context(), userIDs, requestIDFrom(r, nil))
@@ -335,7 +406,15 @@ func (a *App) listArticlesHandler(w http.ResponseWriter, r *http.Request) {
 		record.Body = nil
 		out = append(out, record)
 	}
-	writeJSON(w, http.StatusOK, map[string]any{"count": len(out), "articles": out})
+	series, err := a.publicArticlesSeriesCatalog(r, userIDs)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if series == nil {
+		series = []publicArticlesSeriesNode{}
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"count": len(out), "articles": out, "series": series})
 }
 
 func (a *App) getArticleHandler(w http.ResponseWriter, r *http.Request) {

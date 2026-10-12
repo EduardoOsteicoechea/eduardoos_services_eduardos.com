@@ -162,6 +162,43 @@ func TestPamphletRequiresEntitlement(t *testing.T) {
 	}
 }
 
+func TestArticlesListIncludesEmptySeriesFromCatalog(t *testing.T) {
+	app := newTestApp(false)
+	app.cfg.PublicArticlesOwnerEmail = "member@eduardoos.com"
+	_, err := app.pamphlet.SaveSeries(context.Background(), EpamSeriesProfile{
+		UserID: "member-1", SeriesID: "ser-empty", Name: "Empty Series",
+		Chapters: []EpamChapterProfile{{ChapterID: "ch-1", Name: "Chapter One"}},
+	}, "test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	list := httptest.NewRecorder()
+	app.Handler().ServeHTTP(list, httptest.NewRequest(http.MethodGet, "/api/articles", nil))
+	if list.Code != http.StatusOK {
+		t.Fatalf("articles list: %d %s", list.Code, list.Body.String())
+	}
+	payload := decodeMap(t, list)
+	if payload["count"] != float64(0) {
+		t.Fatalf("expected 0 articles, got %v", payload["count"])
+	}
+	series, _ := payload["series"].([]any)
+	if len(series) != 1 {
+		t.Fatalf("expected 1 catalog series, got %v", list.Body.String())
+	}
+	node, _ := series[0].(map[string]any)
+	if node["name"] != "Empty Series" {
+		t.Fatalf("series name: %v", node["name"])
+	}
+	chapters, _ := node["chapters"].([]any)
+	if len(chapters) != 1 {
+		t.Fatalf("expected 1 chapter, got %v", chapters)
+	}
+	ch, _ := chapters[0].(map[string]any)
+	if ch["name"] != "Chapter One" {
+		t.Fatalf("chapter name: %v", ch["name"])
+	}
+}
+
 func TestArticlesLoadOnlyPublicPamphletsForConfiguredOwner(t *testing.T) {
 	app := newTestApp(false)
 	app.cfg.PublicArticlesOwnerEmail = "member@eduardoos.com"
