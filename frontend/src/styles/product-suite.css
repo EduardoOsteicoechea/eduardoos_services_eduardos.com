@@ -114,6 +114,13 @@
   gap: var(--space-padding);
 }
 
+.subscription-page [data-authed] {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
 .subscription-page__grid {
   gap: var(--space-padding);
 }
