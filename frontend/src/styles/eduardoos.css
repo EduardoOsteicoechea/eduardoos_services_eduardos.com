@@ -563,7 +563,8 @@ main > .diag{
 }
 
 /* H1 + article share one centered measure. Collapse title bottom band so
-   the subtitle sits close under the heading. */
+   the subtitle sits close under the heading. Middle row grows with wraps
+   so multi-line titles never paint over meta/body. */
 .shell:has(.article-page) > main > .page-title {
   width: min(
     var(--article-measure),
@@ -572,8 +573,9 @@ main > .diag{
   max-width: var(--article-measure);
   margin-inline: auto;
   justify-self: center;
-  grid-template-rows: var(--space-padding) var(--menu-button-size) 0;
-  height: calc(var(--space-padding) + var(--menu-button-size));
+  grid-template-rows: var(--space-padding) minmax(var(--menu-button-size), auto) 0;
+  min-height: calc(var(--space-padding) + var(--menu-button-size));
+  height: auto;
 }
 
 .article-page{

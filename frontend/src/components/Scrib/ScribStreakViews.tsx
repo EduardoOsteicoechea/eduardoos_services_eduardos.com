@@ -20,6 +20,7 @@ import {
   fetchScribStreakDays,
   fetchScribStreakStats,
   fetchScribStreakToday,
+  patchScribStreakFlags,
   saveScribStreakConfig,
   type ScribStreakConfig,
   type ScribStreakItem,
@@ -206,9 +207,40 @@ export function ScribStreakConfigView() {
     }
     setOk("Configuración guardada.");
     if (res.config) {
+      setEnabled(res.config.enabled);
+      setReminderEnabled(res.config.reminderEnabled);
       setDrafts(res.config.items.map(itemToDraft));
       setStartDate(res.config.startDate);
     }
+  }
+
+  async function onFlagChange(
+    flag: "enabled" | "reminderEnabled",
+    next: boolean,
+  ) {
+    const prevEnabled = enabled;
+    const prevReminder = reminderEnabled;
+    if (flag === "enabled") setEnabled(next);
+    else setReminderEnabled(next);
+    setError("");
+    setOk("");
+    setBusy(true);
+    const res = await patchScribStreakFlags(
+      flag === "enabled" ? { enabled: next } : { reminderEnabled: next },
+    );
+    setBusy(false);
+    if (res.error) {
+      if (flag === "enabled") setEnabled(prevEnabled);
+      else setReminderEnabled(prevReminder);
+      setError(res.error);
+      return;
+    }
+    if (res.config) {
+      setEnabled(res.config.enabled);
+      setReminderEnabled(res.config.reminderEnabled);
+      if (res.config.startDate) setStartDate(res.config.startDate);
+    }
+    setOk("Preferencia guardada.");
   }
 
   function sheetsForBook(bookId: string) {
@@ -224,7 +256,8 @@ export function ScribStreakConfigView() {
           <input
             type="checkbox"
             checked={enabled}
-            onChange={(e) => setEnabled(e.target.checked)}
+            disabled={busy}
+            onChange={(e) => void onFlagChange("enabled", e.target.checked)}
           />
           Racha activa
         </label>
@@ -232,7 +265,10 @@ export function ScribStreakConfigView() {
           <input
             type="checkbox"
             checked={reminderEnabled}
-            onChange={(e) => setReminderEnabled(e.target.checked)}
+            disabled={busy}
+            onChange={(e) =>
+              void onFlagChange("reminderEnabled", e.target.checked)
+            }
           />
           Recordatorio diario (03:00 Caracas)
         </label>
@@ -487,7 +523,7 @@ export function ScribStreakTodayView() {
   }, [reload]);
 
   async function onComplete() {
-    if (!today || busy) return;
+    if (!today || busy || today.completed) return;
     setBusy(true);
     setError("");
     const res = await completeScribStreakDay(today.date);
@@ -517,7 +553,17 @@ export function ScribStreakTodayView() {
           <ul className="scrib-streak__list">
             {today.assignments.map((asg) => (
               <li key={asg.itemId} className="scrib-streak__list-item">
-                <strong>{asg.label}</strong>
+                <label className="scrib-streak__check">
+                  <input
+                    type="checkbox"
+                    checked={today.completed}
+                    disabled={busy || today.completed || !today.enabled}
+                    onChange={(e) => {
+                      if (e.target.checked) void onComplete();
+                    }}
+                  />
+                  <strong>{asg.label}</strong>
+                </label>
                 <span>
                   {asg.units.map((u) => u.label).join(", ") || "—"}
                 </span>

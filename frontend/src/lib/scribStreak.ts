@@ -112,16 +112,17 @@ export async function fetchScribStreakConfig(): Promise<{
   if (status < 200 || status >= 300) {
     return { config: null, error: errMsg(status, data, "Could not load streak config.") };
   }
+  return { config: normalizeConfig(data) };
+}
+
+function normalizeConfig(data: ScribStreakConfig | null | undefined): ScribStreakConfig | null {
+  if (!data) return null;
   return {
-    config: data
-      ? {
-          enabled: Boolean(data.enabled),
-          startDate: data.startDate || "",
-          reminderEnabled: Boolean(data.reminderEnabled),
-          items: Array.isArray(data.items) ? data.items : [],
-          updatedAt: data.updatedAt,
-        }
-      : null,
+    enabled: Boolean(data.enabled),
+    startDate: data.startDate || "",
+    reminderEnabled: Boolean(data.reminderEnabled),
+    items: Array.isArray(data.items) ? data.items : [],
+    updatedAt: data.updatedAt,
   };
 }
 
@@ -137,7 +138,29 @@ export async function saveScribStreakConfig(
     return { config: null, error: errMsg(status, data, "Could not save streak config.") };
   }
   if (mustLog) console.log("[scrib-streak] config saved", { items: data?.items?.length });
-  return { config: data ?? null };
+  return { config: normalizeConfig(data) };
+}
+
+/** Persist enabled / reminder flags without overwriting unsaved item drafts. */
+export async function patchScribStreakFlags(flags: {
+  enabled?: boolean;
+  reminderEnabled?: boolean;
+}): Promise<{ config: ScribStreakConfig | null; error?: string }> {
+  const current = await fetchScribStreakConfig();
+  if (current.error && !current.config) {
+    return { config: null, error: current.error };
+  }
+  const base = current.config ?? {
+    enabled: false,
+    reminderEnabled: true,
+    startDate: "",
+    items: [],
+  };
+  return saveScribStreakConfig({
+    ...base,
+    enabled: flags.enabled ?? base.enabled,
+    reminderEnabled: flags.reminderEnabled ?? base.reminderEnabled,
+  });
 }
 
 export async function fetchScribStreakToday(): Promise<{
