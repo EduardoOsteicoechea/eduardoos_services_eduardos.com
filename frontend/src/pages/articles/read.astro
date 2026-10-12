@@ -185,27 +185,27 @@ import Layout from "../../layouts/Layout.astro";
       host.appendChild(p);
       shown = true;
     }
-    if (author) {
-      const p = document.createElement("p");
-      p.className = "article-page__meta";
-      p.setAttribute("itemprop", "author");
-      p.textContent = author;
-      host.appendChild(p);
-      shown = true;
-    }
+    const metaBits: Array<{ text: string; itemprop?: string }> = [];
     if (series || chapter) {
-      const p = document.createElement("p");
-      p.className = "article-page__meta";
-      p.textContent = [series, chapter].filter(Boolean).join(" · ");
-      host.appendChild(p);
-      shown = true;
+      metaBits.push({ text: [series, chapter].filter(Boolean).join(" · ") });
+    }
+    if (author) {
+      metaBits.push({ text: author, itemprop: "author" });
     }
     if (date) {
-      const p = document.createElement("p");
-      p.className = "article-page__meta";
-      p.setAttribute("itemprop", "datePublished");
-      p.textContent = date;
-      host.appendChild(p);
+      metaBits.push({ text: date, itemprop: "datePublished" });
+    }
+    if (metaBits.length) {
+      const row = document.createElement("div");
+      row.className = "article-page__meta-row";
+      for (const bit of metaBits) {
+        const p = document.createElement("p");
+        p.className = "article-page__meta";
+        if (bit.itemprop) p.setAttribute("itemprop", bit.itemprop);
+        p.textContent = bit.text;
+        row.appendChild(p);
+      }
+      host.appendChild(row);
       shown = true;
     }
     host.hidden = !shown;
