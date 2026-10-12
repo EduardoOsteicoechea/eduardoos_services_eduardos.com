@@ -7,12 +7,20 @@ import { mustLog } from "./dev-log";
 import { showErrorModal } from "./error-modal";
 import { checkServiceAccess, type ServiceAccessResult } from "./serviceAccess";
 
+function safeFailMessage(raw: unknown, fallback: string): string {
+  const message = raw instanceof Error ? raw.message : typeof raw === "string" ? raw : "";
+  if (/signal is aborted|aborted without reason|The operation was aborted/i.test(message)) {
+    return "The request took too long. Please try again.";
+  }
+  return message.trim() || fallback;
+}
+
 export function apiFail(
   message: string,
   opts?: { requestId?: string; details?: string },
 ): void {
   showErrorModal({
-    message,
+    message: safeFailMessage(message, "Something went wrong."),
     requestId: opts?.requestId,
     details: opts?.details,
   });
@@ -30,7 +38,7 @@ export async function requireSession(): Promise<{
     console.log("[productGate] session", { ok, status: me.status, requestId: me.requestId });
   }
   if (!ok && me.status !== 401) {
-    apiFail(me.data.message || "Could not load the session.", {
+    apiFail(safeFailMessage(me.data.message, "Could not load the session."), {
       requestId: me.requestId,
       details: me.data.error ? `error=${me.data.error}` : undefined,
     });
@@ -108,7 +116,7 @@ export function onAstroPageLoad(
           });
         }
         if (my === seq && matches()) {
-          apiFail(err instanceof Error ? err.message : "Could not load this page.");
+          apiFail(safeFailMessage(err, "Could not load this page."));
         }
       }
     })();

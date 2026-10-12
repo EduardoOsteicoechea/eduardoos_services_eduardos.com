@@ -339,19 +339,28 @@ function fetchMeNetwork(): Promise<MeResult> {
       }
       sessionLog("session.me.unauthorized_try_refresh");
       const refreshed = await refreshSession();
-      if (refreshed.status !== 200 || !refreshed.data.id) {
+      if (refreshed.status === 200 && refreshed.data.id) {
+        if (epoch !== meCacheEpoch) {
+          return guestMeAfterStaleEpoch();
+        }
+        const retry = await apiSend<MeResponse>("/auth/me", {}, { skipAuthRetry: true });
+        if (epoch !== meCacheEpoch) {
+          return guestMeAfterStaleEpoch();
+        }
+        rememberMeCache(retry, epoch);
+        return retry;
+      }
+      // Only a definitive 401 means the refresh cookie is gone. Timeouts / 5xx
+      // must not clear the session hint or paint the visitor as a guest.
+      if (refreshed.status === 401) {
         clearSessionHint();
         return first;
       }
-      if (epoch !== meCacheEpoch) {
-        return guestMeAfterStaleEpoch();
-      }
-      const retry = await apiSend<MeResponse>("/auth/me", {}, { skipAuthRetry: true });
-      if (epoch !== meCacheEpoch) {
-        return guestMeAfterStaleEpoch();
-      }
-      rememberMeCache(retry, epoch);
-      return retry;
+      sessionLog("session.me.refresh_transient", {
+        status: refreshed.status,
+        error: refreshed.data.error,
+      });
+      return refreshed.status === 0 ? refreshed : timeoutResult<MeResponse>();
     })().finally(() => {
       meInFlight = null;
     });
@@ -479,6 +488,7 @@ function isUnsafe(method: string): boolean {
 const apiTimeoutMs = 12000;
 /** CSRF + refresh must outlive a slow VPS/Mongo round-trip; 12s was aborting mid-session renew. */
 const authTimeoutMs = 30000;
+const REQUEST_TIMEOUT_MESSAGE = "The request took too long. Please try again.";
 
 type ApiSendOpts = {
   skipAuthRetry?: boolean;
@@ -487,18 +497,44 @@ type ApiSendOpts = {
   timeoutMs?: number;
 };
 
+function timeoutAbortReason(): DOMException {
+  return new DOMException(REQUEST_TIMEOUT_MESSAGE, "AbortError");
+}
+
+function isAbortError(err: unknown): boolean {
+  if (err instanceof DOMException && err.name === "AbortError") return true;
+  if (err instanceof Error && err.name === "AbortError") return true;
+  const message = err instanceof Error ? err.message : String(err);
+  return /signal is aborted|aborted without reason|The operation was aborted/i.test(message);
+}
+
+function timeoutResult<T>(): { status: number; data: T & APIErrorBody; requestId: string } {
+  return {
+    status: 0,
+    data: {
+      error: "internal_error",
+      message: REQUEST_TIMEOUT_MESSAGE,
+    } as T & APIErrorBody,
+    requestId: "",
+  };
+}
+
 function timeoutSignal(
   existing?: AbortSignal | null,
   ms = apiTimeoutMs,
 ): { signal: AbortSignal; cancel: () => void } {
   const controller = new AbortController();
-  const timer = globalThis.setTimeout(() => controller.abort(), ms);
+  const timer = globalThis.setTimeout(() => controller.abort(timeoutAbortReason()), ms);
   const cancel = () => globalThis.clearTimeout(timer);
   if (existing) {
     if (existing.aborted) {
-      controller.abort();
+      controller.abort(existing.reason ?? timeoutAbortReason());
     } else {
-      existing.addEventListener("abort", () => controller.abort(), { once: true });
+      existing.addEventListener(
+        "abort",
+        () => controller.abort(existing.reason ?? timeoutAbortReason()),
+        { once: true },
+      );
     }
   }
   return { signal: controller.signal, cancel };
@@ -535,23 +571,24 @@ export async function apiSend<T>(
   const headers = new Headers(init.headers);
   headers.set("Accept", "application/json");
   const method = (init.method || "GET").toUpperCase();
-  if (isUnsafe(method)) {
-    await getCsrf(opts.forceCsrfRefresh);
-    if (csrfToken) {
-      headers.set("X-CSRF-Token", csrfToken);
-    }
-  }
-  const timed = timeoutSignal(init.signal, opts.timeoutMs ?? apiTimeoutMs);
-  const url = apiUrl(path);
-  sessionLog("api.request", {
-    method,
-    url,
-    hasCsrfHeader: headers.has("X-CSRF-Token"),
-    csrfInMemory: Boolean(csrfToken),
-    skipAuthRetry: Boolean(opts.skipAuthRetry),
-  });
-  sessionLogCookies(`before ${method} ${path}`);
+  let timed: { signal: AbortSignal; cancel: () => void } | null = null;
   try {
+    if (isUnsafe(method)) {
+      await getCsrf(opts.forceCsrfRefresh);
+      if (csrfToken) {
+        headers.set("X-CSRF-Token", csrfToken);
+      }
+    }
+    timed = timeoutSignal(init.signal, opts.timeoutMs ?? apiTimeoutMs);
+    const url = apiUrl(path);
+    sessionLog("api.request", {
+      method,
+      url,
+      hasCsrfHeader: headers.has("X-CSRF-Token"),
+      csrfInMemory: Boolean(csrfToken),
+      skipAuthRetry: Boolean(opts.skipAuthRetry),
+    });
+    sessionLogCookies(`before ${method} ${path}`);
     const response = await fetch(url, {
       ...init,
       headers,
@@ -623,19 +660,12 @@ export async function apiSend<T>(
       error: err instanceof Error ? err.name : "unknown",
       message: err instanceof Error ? err.message : String(err),
     });
-    if (err instanceof DOMException && err.name === "AbortError") {
-      return {
-        status: 0,
-        data: {
-          error: "internal_error",
-          message: "The request took too long. Please try again.",
-        } as T & APIErrorBody,
-        requestId: "",
-      };
+    if (isAbortError(err)) {
+      return timeoutResult<T>();
     }
     throw err;
   } finally {
-    timed.cancel();
+    timed?.cancel();
   }
 }
 
@@ -699,6 +729,11 @@ export async function getCsrf(force = false): Promise<string> {
           rememberCsrf(data.csrf);
         }
         return csrfToken;
+      } catch (err) {
+        if (isAbortError(err)) {
+          throw timeoutAbortReason();
+        }
+        throw err;
       } finally {
         timed.cancel();
         csrfInFlight = null;

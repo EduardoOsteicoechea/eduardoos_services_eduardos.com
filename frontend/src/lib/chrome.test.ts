@@ -173,6 +173,25 @@ describe("main-menu session chrome", () => {
     expect(checkServiceAccess).not.toHaveBeenCalled();
   });
 
+  it("does not demote an authed chrome state on transient getMe timeout", async () => {
+    vi.mocked(getMe).mockResolvedValueOnce({
+      status: 200,
+      requestId: "rid-me",
+      data: { id: "member-1", role: "user", avatar: "/api/profile/avatar?v=1" },
+    });
+    await refreshAuthChrome();
+    expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
+
+    vi.mocked(getMe).mockResolvedValueOnce({
+      status: 0,
+      requestId: "",
+      data: { error: "internal_error", message: "The request took too long. Please try again." },
+    });
+    await refreshAuthChrome();
+    expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
+    expect((document.querySelector("[data-guest-only]") as HTMLElement).hidden).toBe(true);
+  });
+
   it("does not render a shopping cart control", () => {
     expect(document.querySelector("[data-cart-fab]")).toBeNull();
     expect(document.querySelector(".header-cart")).toBeNull();

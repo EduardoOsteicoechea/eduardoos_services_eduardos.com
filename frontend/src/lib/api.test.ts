@@ -355,6 +355,59 @@ describe("api csrf and errors", () => {
     vi.useRealTimers();
   });
 
+  it("keeps the session hint when refresh times out after /auth/me 401", async () => {
+    vi.useFakeTimers();
+    markSessionHint();
+    const fetchMock = vi.fn().mockImplementation((url: string, init: RequestInit) => {
+      if (url === "/api/auth/me") {
+        return Promise.resolve(jsonResponse(401, { error: "unauthorized", message: "Sign in to continue." }));
+      }
+      if (url === "/api/auth/csrf") {
+        return Promise.resolve(jsonResponse(200, { csrf: "refresh-csrf" }));
+      }
+      if (url === "/api/auth/refresh") {
+        return new Promise((_, reject) => {
+          init.signal?.addEventListener("abort", () => {
+            reject(new DOMException("signal is aborted without reason", "AbortError"));
+          });
+        });
+      }
+      return Promise.resolve(jsonResponse(500, { error: "internal_error" }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const pending = getMe();
+    await vi.advanceTimersByTimeAsync(30000);
+    const result = await pending;
+    expect(result.status).toBe(0);
+    expect(result.data.message).toBe("The request took too long. Please try again.");
+    expect(hasSessionHint()).toBe(true);
+    vi.useRealTimers();
+  });
+
+  it("maps aborted CSRF mint to a timeout result instead of a raw abort message", async () => {
+    vi.useFakeTimers();
+    const fetchMock = vi.fn().mockImplementation((url: string, init: RequestInit) => {
+      if (url === "/api/auth/csrf") {
+        return new Promise((_, reject) => {
+          init.signal?.addEventListener("abort", () => {
+            reject(new DOMException("signal is aborted without reason", "AbortError"));
+          });
+        });
+      }
+      return Promise.resolve(jsonResponse(200, { ok: true }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const pending = postJSON("/scrib/books", { name: "A" });
+    await vi.advanceTimersByTimeAsync(30000);
+    const result = await pending;
+    expect(result.status).toBe(0);
+    expect(result.data.message).toBe("The request took too long. Please try again.");
+    expect(result.data.message).not.toMatch(/signal is aborted/i);
+    vi.useRealTimers();
+  });
+
   it("refreshes csrf before unsafe submissions and sends X-CSRF-Token", async () => {
     const fetchMock = vi
       .fn()

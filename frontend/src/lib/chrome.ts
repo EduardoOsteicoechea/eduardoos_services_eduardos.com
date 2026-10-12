@@ -1,4 +1,4 @@
-import { clearMeCache, clearSessionHint, getMe, postJSON, profileAvatarURL, refreshSession, resetCsrfMemory } from "./api";
+import { clearMeCache, clearSessionHint, getMe, hasSessionHint, postJSON, profileAvatarURL, refreshSession, resetCsrfMemory } from "./api";
 import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { exposeEreportConnectorGlobal, wireEreportConnectorMenu } from "./ereport-connector-modal";
@@ -508,9 +508,22 @@ function enforceGuestInstitutesAccess(authed: boolean): void {
   go("/session");
 }
 
+function isTransientAuthStatus(status: number): boolean {
+  return status === 0 || status === 429 || (status >= 500 && status <= 599);
+}
+
 export async function refreshAuthChrome(): Promise<void> {
   sessionLog("chrome.refreshAuth.start", {});
   const { status, data } = await getMe();
+  // Timeouts / overload must not flip chrome to guest — refresh cookie may still be valid.
+  if (isTransientAuthStatus(status)) {
+    sessionLog("chrome.refreshAuth.transient_keep", {
+      status,
+      error: data.error,
+      hadHint: hasSessionHint(),
+    });
+    return;
+  }
   const authed = status === 200 && Boolean(data.id);
   const isAdmin = authed && data.role === "admin";
   const isPlainUser = authed && !isAdmin;
