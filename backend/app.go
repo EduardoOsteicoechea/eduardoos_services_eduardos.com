@@ -331,6 +331,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/v1/epam/epams/{id}", a.withAPIKey(productEpam, a.epamV1GetHandler))
 	mux.HandleFunc("POST /api/v1/epam/epams", a.withAPIKey(productEpam, a.epamV1CreateHandler))
 	mux.HandleFunc("PUT /api/v1/epam/epams/{id}", a.withAPIKey(productEpam, a.epamV1UpdateHandler))
+	mux.HandleFunc("PATCH /api/v1/epam/epams/{id}/publication", a.withAPIKey(productEpam, a.epamV1PublicationHandler))
 
 	mux.HandleFunc("GET /api/latin/calvins-institutes", a.latinCalvinsInstitutesHandler)
 	mux.HandleFunc("GET /api/latin/calvins-institutes/paragraphs", a.latinCalvinsParagraphsHandler)

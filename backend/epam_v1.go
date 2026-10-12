@@ -162,6 +162,49 @@ func (a *App) epamV1CreateHandler(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusCreated, resp)
 }
 
+func (a *App) epamV1PublicationHandler(w http.ResponseWriter, r *http.Request) {
+	user := apiUserFrom(r)
+	id := strings.TrimSpace(r.PathValue("id"))
+	if id == "" {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	var body epamPublicationBody
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 8<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	if body.Published && !a.userHasArticlesPublishAccess(r, user) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	rid := requestIDFrom(r, nil)
+	existing, found, err := a.pamphlet.GetEpam(r.Context(), user.ID, id, rid)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if !found {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	existing.Public = body.Published
+	saved, err := a.pamphlet.SaveEpam(r.Context(), existing, rid)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.auditEvent(r, "epam_v1_publication", map[bool]string{true: "published", false: "unpublished"}[body.Published], user.ID)
+	writeJSON(w, http.StatusOK, map[string]any{
+		"ok":         true,
+		"epamId":     saved.EpamID,
+		"public":     saved.Public,
+		"published":  saved.Public,
+		"viewUrl":    a.epamViewURL(saved.EpamID),
+		"articleUrl": a.epamArticleURL(saved.EpamID),
+	})
+}
+
 func (a *App) epamV1UpdateHandler(w http.ResponseWriter, r *http.Request) {
 	user := apiUserFrom(r)
 	id := strings.TrimSpace(r.PathValue("id"))

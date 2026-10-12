@@ -56,6 +56,7 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 			{"method": http.MethodGet, "path": "/api/v1/epam/epams/{id}", "auth": "api_key", "summary": "EPAM — read meta + document + viewUrl + articleUrl."},
 			{"method": http.MethodPost, "path": "/api/v1/epam/epams", "auth": "api_key", "summary": "EPAM — create from pamphlet document JSON. Auto-publishes to /articles when configured.", "body": `{"document":{…}} or root pamphlet object`},
 			{"method": http.MethodPut, "path": "/api/v1/epam/epams/{id}", "auth": "api_key", "summary": "EPAM — replace document; confirmOverwrite:true required. Auto-publishes.", "body": `{"confirmOverwrite":true,"document":{…}}`},
+			{"method": http.MethodPatch, "path": "/api/v1/epam/epams/{id}/publication", "auth": "api_key", "summary": "EPAM — set /articles visibility for an owned pamphlet (published true|false). Publish requires Articles publisher access.", "body": `{"published":false}`},
 		},
 		"errors": map[string]any{
 			"report_storage_missing":         "eReport GET/POST when meta/payload cannot be read.",
