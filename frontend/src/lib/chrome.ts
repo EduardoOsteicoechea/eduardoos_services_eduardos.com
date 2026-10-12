@@ -551,8 +551,9 @@ export async function refreshAuthChrome(): Promise<void> {
       node.hidden = !isAdmin;
     }
   });
-  // Guests and admins keep marketing links. Institutes stay auth-gated.
+  // Guests and admins keep marketing / full-nav links when present.
   // Plain members keep subscriptions and session links; this site has no storefront.
+  // Institutes is Scrib-only (not in the general menu).
   document.querySelectorAll("[data-full-nav]").forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
     if (isPlainUser) {

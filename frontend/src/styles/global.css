@@ -3,6 +3,8 @@
   --space-padding: 1rem;
   --main-padding: 1rem;
   --main-padding-top: var(--main-padding);
+  /* Fixed contact footer on home + dashboards (50px at root 16px). */
+  --site-footer-height: 3.125rem;
   /* Page H1 band: global top padding + menu button + bottom margin */
   --page-title-height: calc(
     var(--space-padding) + var(--menu-button-size) + var(--space-margin)
@@ -1196,6 +1198,69 @@ main {
   padding-bottom: var(--main-padding);
   padding-left: var(--main-inline);
   padding-right: var(--main-inline);
+}
+
+html[data-site-footer] main {
+  padding-bottom: calc(var(--main-padding) + var(--site-footer-height));
+}
+
+.site-chrome-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-activity);
+  box-sizing: border-box;
+  min-height: var(--site-footer-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--rail-gap);
+  padding-inline: var(--main-inline);
+  background: var(--color-surface);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.site-chrome-footer__contacts {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rail-gap);
+  margin: 0;
+  min-width: 0;
+}
+
+.site-chrome-footer__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: calc(var(--site-footer-height) - (var(--rail-gap) * 2));
+  padding: 0 var(--control-padding-inline);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-text);
+  text-decoration: none;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+}
+
+.site-chrome-footer__btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+@media (max-width: 47.999rem) {
+  .site-chrome-footer__contacts {
+    flex-wrap: wrap;
+  }
+
+  html[data-site-footer] main {
+    padding-bottom: calc(var(--main-padding) + (var(--site-footer-height) * 2));
+  }
 }
 
 /* Workspaces: no main gutters (full-bleed). Homescool keeps left offset for DHS rail. */

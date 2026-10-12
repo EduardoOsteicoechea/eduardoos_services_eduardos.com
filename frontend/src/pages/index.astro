@@ -1,12 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import {
-  PROFILE_EMAIL,
-  PROFILE_GITHUB,
-  PROFILE_LINKEDIN,
-  PROFILE_WHATSAPP,
-  PROFILE_WHATSAPP_DISPLAY,
-  PROFILE_YOUTUBE,
   profileEducation,
   profileExperience,
   profileExpertiseAnswer,
@@ -113,34 +107,6 @@ const description =
         ))}
       </div>
       <p class="section__lede">{profileStack}</p>
-    </section>
-
-    <section class="section" aria-labelledby="contacts-heading">
-      <div class="split">
-        <div class="section__head">
-          <p class="eyebrow">Public contacts</p>
-          <h2 class="section__title" id="contacts-heading">Reach me directly</h2>
-          <p class="section__lede">
-            Email is the best first step for project inquiries. Everything else is public.
-          </p>
-          <div class="hero__actions">
-            <a class="btn btn--primary" href={`mailto:${PROFILE_EMAIL}`}>
-              <span class="material-symbols-outlined" aria-hidden="true">mail</span>
-              {PROFILE_EMAIL}
-            </a>
-          </div>
-        </div>
-        <div class="card">
-          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">link</span></span>
-          <h3 class="card__title">Elsewhere</h3>
-          <ul class="site-footer__list">
-            <li><a href={PROFILE_WHATSAPP} rel="noopener noreferrer" target="_blank">WhatsApp {PROFILE_WHATSAPP_DISPLAY}</a></li>
-            <li><a href={PROFILE_LINKEDIN} rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
-            <li><a href={PROFILE_GITHUB} rel="noopener noreferrer" target="_blank">GitHub</a></li>
-            <li><a href={PROFILE_YOUTUBE} rel="noopener noreferrer" target="_blank">YouTube</a></li>
-          </ul>
-        </div>
-      </div>
     </section>
 
     <section class="section" aria-labelledby="faq-heading">

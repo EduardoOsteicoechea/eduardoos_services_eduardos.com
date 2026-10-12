@@ -137,7 +137,6 @@ describe("main-menu session chrome", () => {
       isHomescoolStudent: false,
     });
     await refreshAuthChrome();
-    expect((document.querySelector('[href="/contact"]') as HTMLElement).hidden).toBe(false);
     expect((document.querySelector('[href="/payments/subscription"]') as HTMLElement).hidden).toBe(false);
     expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
     expect((document.querySelector("[data-admin-only]") as HTMLElement).hidden).toBe(true);

@@ -1,5 +1,12 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import {
+  PROFILE_EMAIL,
+  PROFILE_GITHUB,
+  PROFILE_LINKEDIN,
+  PROFILE_WHATSAPP,
+  PROFILE_YOUTUBE,
+} from "../lib/eduardoProfile";
 import "../styles/global.css";
 import "../styles/ereport-chrome.css";
 import "../styles/product-suite.css";
@@ -76,6 +83,13 @@ const privateByDefault =
   path.startsWith("/eoproject") ||
   path.startsWith("/publisher") ||
   path.startsWith("/payments");
+/** Fixed contact footer on home + product dashboards (not workspaces / session / admin / editor). */
+const showSiteFooter =
+  !isWorkspace &&
+  !path.startsWith("/session") &&
+  !path.startsWith("/admin") &&
+  !path.startsWith("/documents/pamphlet") &&
+  htmlPage !== "pamphlet";
 const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
 const canonical = new URL(Astro.url.pathname, Astro.site).toString().replace(/\/$/, "") || "https://eduardoos.com";
 const canonicalUrl = path === "/" ? "https://eduardoos.com/" : canonical;
@@ -85,7 +99,7 @@ const jsonLdString =
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark" data-page={htmlPage || undefined}>
+<html lang="en" data-theme="dark" data-page={htmlPage || undefined} data-site-footer={showSiteFooter ? "" : undefined}>
   <head>
     <meta charset="UTF-8" />
     <script is:inline>
@@ -435,10 +449,6 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">home</span>
               Home
             </a>
-            <a href="/contact" data-route aria-current={path === "/contact" ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">mail</span>
-              Contact
-            </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--services">
             <a href="/articles" data-route aria-current={path.startsWith("/articles") ? "page" : undefined}>
@@ -448,10 +458,6 @@ const jsonLdString =
             <a href="/scrib" data-route data-service="scrib" hidden aria-current={path === "/scrib" || path.startsWith("/scrib/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">edit_note</span>
               Scrib
-            </a>
-            <a href="/dashboard/latin/calvins-institutes" data-route data-authed-only data-full-nav hidden aria-current={path.includes("calvins-institutes") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
-              Institutes
             </a>
             <a href="/eoschool" data-route data-service="homescool" hidden aria-current={path === "/eoschool" || path.startsWith("/eoschool/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">school</span>
@@ -486,16 +492,6 @@ const jsonLdString =
             <a href="/api-docs" data-route data-service="api" hidden aria-current={path === "/api-docs" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">api</span>
               API docs
-            </a>
-            <a
-              href="/publisher"
-              data-route
-              data-admin-only
-              hidden
-              aria-current={path === "/publisher" || path.startsWith("/publisher/") ? "page" : undefined}
-            >
-              <span class="material-symbols-outlined" aria-hidden="true">campaign</span>
-              Publisher
             </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--subscriptions">
@@ -534,6 +530,19 @@ const jsonLdString =
         ) : null}
         <slot />
       </main>
+
+      {showSiteFooter ? (
+        <footer class="site-chrome-footer">
+          <nav class="site-chrome-footer__contacts" aria-label="Contact">
+            <a class="site-chrome-footer__btn" href="/contact" data-route>Contact</a>
+            <a class="site-chrome-footer__btn" href={`mailto:${PROFILE_EMAIL}`}>Email</a>
+            <a class="site-chrome-footer__btn" href={PROFILE_WHATSAPP} rel="noopener noreferrer" target="_blank">WhatsApp</a>
+            <a class="site-chrome-footer__btn" href={PROFILE_LINKEDIN} rel="noopener noreferrer" target="_blank">LinkedIn</a>
+            <a class="site-chrome-footer__btn" href={PROFILE_GITHUB} rel="noopener noreferrer" target="_blank">GitHub</a>
+            <a class="site-chrome-footer__btn" href={PROFILE_YOUTUBE} rel="noopener noreferrer" target="_blank">YouTube</a>
+          </nav>
+        </footer>
+      ) : null}
 
       <aside id="agent-sidebar" class="sidebar-right" hidden aria-label="Ask Eduardoos">
 <div class="agent-chat-log" data-agent-log>
