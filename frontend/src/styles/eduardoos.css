@@ -253,27 +253,46 @@ html[data-page="home"] .home-services__offer-desc {
 html[data-page="home"] .home-services__shot {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: flex-start;
   gap: var(--rail-gap);
   box-sizing: border-box;
   margin: 0;
-  min-height: 10rem;
+  min-height: 0;
   padding: var(--space-padding);
   background: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+html[data-page="home"] .home-services__shot-img {
+  display: block;
+  box-sizing: border-box;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 22rem;
+  object-fit: contain;
+  object-position: top center;
+  align-self: stretch;
+  border-radius: var(--border-radius);
 }
 
 html[data-page="home"] .home-services__shot .material-symbols-outlined {
+  align-self: center;
   font-size: var(--font-size-3xl);
   color: var(--color-accent);
+  min-height: 10rem;
+  display: inline-flex;
+  align-items: center;
 }
 
 html[data-page="home"] .home-services__shot figcaption {
   margin: 0;
   font-size: var(--font-size-sm);
   color: var(--color-muted);
+  text-align: center;
 }
 
 /* Tablet: portrait center sits 3.125rem (50px) from the right edge. */

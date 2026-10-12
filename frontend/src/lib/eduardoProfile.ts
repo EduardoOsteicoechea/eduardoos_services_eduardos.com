@@ -30,6 +30,8 @@ export type HomeServiceOffer = {
   focus: string;
   href: string;
   icon: string;
+  /** Public path under /homepage_services_screenshots when available. */
+  screenshot?: string;
 };
 
 /** Public productivity apps shown on the home Services column. */
@@ -42,6 +44,7 @@ export const homeServiceOffers: HomeServiceOffer[] = [
     focus: "Write and densify print-ready pamphlets with PDF-faithful columns.",
     href: "/documents/pamphlet",
     icon: "description",
+    screenshot: "/homepage_services_screenshots/epam.png",
   },
   {
     id: "articles",
@@ -51,6 +54,7 @@ export const homeServiceOffers: HomeServiceOffer[] = [
     focus: "Publish reading surfaces from pamphlet work with admin visibility control.",
     href: "/articles",
     icon: "article",
+    screenshot: "/homepage_services_screenshots/eread.png",
   },
   {
     id: "scrib",
@@ -60,6 +64,7 @@ export const homeServiceOffers: HomeServiceOffer[] = [
     focus: "Annotate, draw, and manage layered manuscript sheets.",
     href: "/scrib",
     icon: "edit_note",
+    screenshot: "/homepage_services_screenshots/escrib.png",
   },
   {
     id: "homescool",
@@ -69,6 +74,7 @@ export const homeServiceOffers: HomeServiceOffer[] = [
     focus: "Letter study materials, progress, and tutor–student flows.",
     href: "/eoschool",
     icon: "school",
+    screenshot: "/homepage_services_screenshots/eschool.png",
   },
   {
     id: "evoice",
@@ -78,6 +84,7 @@ export const homeServiceOffers: HomeServiceOffer[] = [
     focus: "Turn written work into spoken audio with cloud project storage.",
     href: "/evoice",
     icon: "record_voice_over",
+    screenshot: "/homepage_services_screenshots/evoice.png",
   },
   {
     id: "eoproject",
@@ -87,6 +94,7 @@ export const homeServiceOffers: HomeServiceOffer[] = [
     focus: "Track build progress, site photos, and model versions.",
     href: "/eoproject",
     icon: "foundation",
+    screenshot: "/homepage_services_screenshots/ebuild.png",
   },
   {
     id: "ereport",
@@ -96,6 +104,7 @@ export const homeServiceOffers: HomeServiceOffer[] = [
     focus: "Capture issues, statuses, images, and shared invites.",
     href: "/ereport",
     icon: "assignment",
+    screenshot: "/homepage_services_screenshots/ereport.png",
   },
   {
     id: "api",

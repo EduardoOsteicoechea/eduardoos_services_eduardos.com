@@ -162,7 +162,17 @@ const description =
                 <h3 class="home-services__offer-title">{service.label}</h3>
                 <p class="home-services__offer-desc">{service.focus}</p>
                 <figure class="home-services__shot" aria-label={`${service.label} preview`}>
-                  <span class="material-symbols-outlined" aria-hidden="true">{service.icon}</span>
+                  {service.screenshot ? (
+                    <img
+                      class="home-services__shot-img"
+                      src={service.screenshot}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <span class="material-symbols-outlined" aria-hidden="true">{service.icon}</span>
+                  )}
                   <figcaption>{service.shortName}</figcaption>
                 </figure>
               </article>
