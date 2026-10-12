@@ -80,6 +80,13 @@ export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
     icon: "record_voice_over",
   },
   {
+    id: "eoproject",
+    label: "eoProject",
+    description: "Construction project stages, photos, and IFC versions.",
+    monthlyUsd: 1,
+    icon: "architecture",
+  },
+  {
     id: "api",
     label: "API",
     description: "Create API keys and call product APIs from external apps.",
@@ -87,6 +94,32 @@ export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
     icon: "key",
   },
 ];
+
+/** Longer copy for the subscription service info modal (FE enrichment). */
+export const SUBSCRIPTION_SERVICE_DETAILS: Record<string, string> = {
+  epam:
+    "EPAM is the cloud pamphlet editor. Create and edit .epam documents, densify content into print columns, preview PDF layout, and export for print. Your documents stay in your account on eduardoos.com.",
+  articles:
+    "Articles connects eligible EPAM pamphlets to the public Articles queue. When you publish from the editor, the site admin can approve and surface the piece on /articles. Subscription unlocks the queue path; public visibility remains admin-controlled.",
+  homescool:
+    "Homescool is the learning workspace for study materials and curriculum sheets. Open the Homeschool hub, browse cycles and days, preview Letter study PDFs, and work with Homescool entitlements for teacher or student flows.",
+  scrib:
+    "Scrib is a layered US Letter manuscript surface. Keep cloud books and sheets, edit layered content, and export or share manuscript work from your account.",
+  ereport:
+    "eReport is the issue-tracker product. Create organizations and reports, track items with statuses, attach images, share invites, and keep report data in your cloud workspace.",
+  "ereport-connector":
+    "eReport Connector binds a website registration report for site feedback. Use the connector hub, quick-issue modal, and embed flows so visitors can file issues into your registered eReport without opening the full workspace.",
+  evoice:
+    "eVoice turns documents into spoken audio. Create text-to-audio projects, generate MP3 output, and keep project files under your eVoice cloud storage.",
+  eoproject:
+    "eoProject tracks construction project stages, site photos, and IFC model versions. Organize project progress and share selected project views from your account.",
+  api:
+    "API access lets you create eos_live_… keys and call product endpoints from external apps and Cursor connectors (EPAM, eReport, Homescool, and related routes). Keys stay owner-scoped; admin tools manage key lifecycle.",
+};
+
+export function subscriptionServiceDetails(service: SubscriptionService): string {
+  return SUBSCRIPTION_SERVICE_DETAILS[service.id]?.trim() || service.description;
+}
 
 export type PaymentIntentResponse = {
   intent_id: string;

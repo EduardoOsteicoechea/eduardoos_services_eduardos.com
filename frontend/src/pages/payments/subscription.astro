@@ -71,6 +71,24 @@ import Layout from "../../layouts/Layout.astro";
       </form>
     </div>
   </section>
+
+  <div id="subscription-service-modal" class="subscription-service-modal" hidden>
+    <div
+      class="subscription-service-modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="subscription-service-title"
+    >
+      <header class="subscription-service-modal__toolbar">
+        <h2 id="subscription-service-title" data-service-modal-title></h2>
+        <button class="icon-btn" type="button" data-service-modal-close aria-label="Close">
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        </button>
+      </header>
+      <p class="subscription-service-modal__price" data-service-modal-price></p>
+      <div class="subscription-service-modal__body" data-service-modal-body></div>
+    </div>
+  </div>
 </Layout>
 
 <script>
@@ -82,6 +100,7 @@ import Layout from "../../layouts/Layout.astro";
     fetchSubscriptionCatalog,
     paypalHostedButtonIdFallback,
     quoteSubscription,
+    subscriptionServiceDetails,
     type BillingPeriod,
     type PaymentIntentResponse,
     type SubscriptionService,
@@ -101,6 +120,10 @@ import Layout from "../../layouts/Layout.astro";
   const paypalButton = root.querySelector("[data-paypal-button]");
   const paypalCustom = root.querySelector("[data-paypal-custom]");
   const paypalSubmit = root.querySelector("[data-paypal-submit]");
+  const serviceModal = document.getElementById("subscription-service-modal");
+  const serviceModalTitle = serviceModal?.querySelector("[data-service-modal-title]");
+  const serviceModalPrice = serviceModal?.querySelector("[data-service-modal-price]");
+  const serviceModalBody = serviceModal?.querySelector("[data-service-modal-body]");
 
   let catalog: SubscriptionService[] = [];
   let selected: string[] = ["epam"];
@@ -108,6 +131,30 @@ import Layout from "../../layouts/Layout.astro";
   let email = "";
   let intent: PaymentIntentResponse | null = null;
   let paying = false;
+
+  function setServiceModalOpen(open: boolean): void {
+    if (!(serviceModal instanceof HTMLElement)) return;
+    serviceModal.hidden = !open;
+  }
+
+  function openServiceModal(service: SubscriptionService): void {
+    if (serviceModalTitle instanceof HTMLElement) {
+      serviceModalTitle.textContent = service.label;
+    }
+    if (serviceModalPrice instanceof HTMLElement) {
+      serviceModalPrice.textContent = `$${service.monthlyUsd.toFixed(2)}/mo`;
+    }
+    if (serviceModalBody instanceof HTMLElement) {
+      serviceModalBody.replaceChildren();
+      const details = subscriptionServiceDetails(service);
+      for (const paragraph of details.split(/\n+/).map((p) => p.trim()).filter(Boolean)) {
+        const p = document.createElement("p");
+        p.textContent = paragraph;
+        serviceModalBody.appendChild(p);
+      }
+    }
+    setServiceModalOpen(true);
+  }
 
   function setPeriod(next: BillingPeriod): void {
     billingPeriod = next;
@@ -141,6 +188,15 @@ import Layout from "../../layouts/Layout.astro";
         <span class="product-dash__card-head">
           <span class="material-symbols-outlined" aria-hidden="true">${service.icon}</span>
           <span class="product-dash__card-title">${service.label}</span>
+          <button
+            class="icon-btn subscription-page__info"
+            type="button"
+            data-service-info
+            aria-label="About ${service.label}"
+            title="About ${service.label}"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">info</span>
+          </button>
         </span>
         <span class="product-dash__card-desc">${service.description}</span>
         <span class="product-dash__card-desc">$${service.monthlyUsd.toFixed(2)}/mo</span>
@@ -152,6 +208,11 @@ import Layout from "../../layouts/Layout.astro";
         intent = null;
         renderServices();
         renderTotal();
+      });
+      label.querySelector("[data-service-info]")?.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        openServiceModal(service);
       });
       servicesEl.appendChild(label);
     }
@@ -241,6 +302,20 @@ import Layout from "../../layouts/Layout.astro";
   });
   document.querySelector("[data-sub-pay]")?.addEventListener("click", () => {
     void payWithPayPal();
+  });
+
+  serviceModal?.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    if (target.closest("[data-service-modal-close]") || target === serviceModal) {
+      setServiceModalOpen(false);
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    if (serviceModal instanceof HTMLElement && !serviceModal.hidden) {
+      setServiceModalOpen(false);
+    }
   });
 
   const session = await requireSession();
