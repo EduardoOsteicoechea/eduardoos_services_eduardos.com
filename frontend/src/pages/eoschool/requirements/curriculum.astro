@@ -95,133 +95,6 @@ function weekForPlanDay(planDay: number): number {
     data-curriculum-student-key={initialStudentKey || undefined}
   >
     <EoschoolDashBack />
-    <p class="lede">
-      {meta.grade ?? "3er grado"} · {meta.weeks} semanas × {meta.daysPerWeek ?? 5} días = {meta.totalPlanDays ?? bibleMeta.readingDays}{" "}
-      días escolares
-      {meta.schoolYearStart && meta.schoolYearEnd
-        ? ` (${meta.schoolYearStart} → ${meta.schoolYearEnd})`
-        : ""}
-      . Cada día: Biblia y Lenguaje. Días 1 y 3: Identidad y Ciencias. Días 2 y 4: Matemáticas. Día 5: exposiciones
-      de las cinco asignaturas. En feriados oficiales VE solo Biblia
-      {meta.holidays?.length ? ` (${meta.holidays.length} días)` : ""}. Abre un día para ver objetivo, aprendizaje y hoja PDF.
-    </p>
-    <p class="eoschool-curriculum__student" data-curriculum-student-banner hidden></p>
-
-    <p class="lede eoschool-curriculum__bible-report">
-      {bibleMeta.canon}: {bibleMeta.tracks.genEster.totalChapters}+{bibleMeta.tracks.jobMal.totalChapters}+
-      {bibleMeta.tracks.nt.totalChapters} capítulos en {bibleMeta.readingDays} días. NT hasta{" "}
-      {bibleMeta.tracks.nt.maxChaptersPerDay} cap./día; AT hasta {bibleMeta.tracks.genEster.maxChaptersPerDay} cap./día por pista.
-      Cobertura: Gén–Ester {bibleMeta.tracks.genEster.chaptersReadInPlan}/{bibleMeta.tracks.genEster.totalChapters}, Job–Mal{" "}
-      {bibleMeta.tracks.jobMal.chaptersReadInPlan}/{bibleMeta.tracks.jobMal.totalChapters}, NT {bibleMeta.tracks.nt.chaptersReadInPlan}/
-      {bibleMeta.tracks.nt.totalChapters}
-      {meta.totalPlanDays === 200 ? " (Plan 40 semanas · 200 días escolares · 3er grado)." : "."}
-    </p>
-
-    <nav class="eoschool-curriculum__index" data-curriculum-index aria-label="Índice por semana">
-      <div class="eoschool-curriculum__index-head">
-        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--sem">Sem</span>
-        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
-          Bibl
-          <button
-            type="button"
-            class="eoschool-curriculum__index-resizer"
-            data-resize-col="bib"
-            aria-label="Ajustar ancho de columna Biblia"
-          ></button>
-        </span>
-        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
-          Identidad
-          <button
-            type="button"
-            class="eoschool-curriculum__index-resizer"
-            data-resize-col="ide"
-            aria-label="Ajustar ancho de columna Identidad"
-          ></button>
-        </span>
-        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
-          Leng
-          <button
-            type="button"
-            class="eoschool-curriculum__index-resizer"
-            data-resize-col="len"
-            aria-label="Ajustar ancho de columna Lenguaje"
-          ></button>
-        </span>
-        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
-          Mat
-          <button
-            type="button"
-            class="eoschool-curriculum__index-resizer"
-            data-resize-col="mat"
-            aria-label="Ajustar ancho de columna Matemáticas"
-          ></button>
-        </span>
-        <span class="eoschool-curriculum__index-cell">Cienc</span>
-      </div>
-      {
-        indexRows.map((row) => (
-          <a class="eoschool-curriculum__index-row" href={`#week-${row.week}`}>
-            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--sem eoschool-curriculum__index-week">
-              S{row.week}
-            </span>
-            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.bib}</span>
-            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.ide}</span>
-            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.len}</span>
-            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.mat}</span>
-            <span class="eoschool-curriculum__index-cell">{row.cie}</span>
-          </a>
-        ))
-      }
-    </nav>
-
-    <section
-      class="product-dash__card eoschool-curriculum__holidays"
-      aria-labelledby="curriculum-holidays-title"
-    >
-      <h2 class="eoschool-curriculum__holidays-title" id="curriculum-holidays-title">
-        Feriados oficiales (VE)
-      </h2>
-      <div class="eoschool-curriculum__holidays-grid">
-        <div class="eoschool-curriculum__holidays-col">
-          <h3 class="eoschool-curriculum__holidays-subtitle">Fijos</h3>
-          <ul class="eoschool-curriculum__holidays-list">
-            {HOLIDAY_FIXED.map((h) => (
-              <li>
-                <span class="eoschool-curriculum__holidays-name">{h.name}</span>
-                <span class="eoschool-curriculum__holidays-when">{h.when}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div class="eoschool-curriculum__holidays-col">
-          <h3 class="eoschool-curriculum__holidays-subtitle">Móviles</h3>
-          <ul class="eoschool-curriculum__holidays-list">
-            {HOLIDAY_MOVABLE.map((h) => (
-              <li>
-                <span class="eoschool-curriculum__holidays-name">{h.name}</span>
-                <span class="eoschool-curriculum__holidays-when">{h.when}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      {planHolidays.length ? (
-        <div class="eoschool-curriculum__holidays-plan">
-          <h3 class="eoschool-curriculum__holidays-subtitle">
-            En este año escolar ({meta.schoolYearStart} → {meta.schoolYearEnd})
-          </h3>
-          <ul class="eoschool-curriculum__holidays-list eoschool-curriculum__holidays-list--plan">
-            {planHolidays.map((h) => (
-              <li>
-                <a href={`#week-${weekForPlanDay(h.planDay)}`}>
-                  {formatPlanDate(h.date)} · {h.name} · Día {h.planDay}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-    </section>
 
     <div class="eoschool-curriculum__weeks">
       {
@@ -340,11 +213,11 @@ function weekForPlanDay(planDay: number): number {
                                     check
                                   </span>
                                 </span>
+                                <h4 class="eoschool-curriculum__subject-title">
+                                  <span class="eoschool-curriculum__subject-num">{idx + 1}.</span>
+                                  {label}
+                                </h4>
                               </label>
-                              <h4 class="eoschool-curriculum__subject-title">
-                                <span class="eoschool-curriculum__subject-num">{idx + 1}.</span>
-                                {label}
-                              </h4>
                             </div>
                             <div class="eoschool-curriculum__subject-body eoschool-curriculum__subject-body--card">
                               {isHoliday ? (
@@ -400,6 +273,133 @@ function weekForPlanDay(planDay: number): number {
         })
       }
     </div>
+
+    <section
+      class="product-dash__card eoschool-curriculum__holidays"
+      aria-labelledby="curriculum-holidays-title"
+    >
+      <h2 class="eoschool-curriculum__holidays-title" id="curriculum-holidays-title">
+        Feriados oficiales (VE)
+      </h2>
+      <h3 class="eoschool-curriculum__holidays-subtitle">Fijos y móviles</h3>
+      <div class="eoschool-curriculum__holidays-cards">
+        {HOLIDAY_FIXED.map((h) => (
+          <article class="eoschool-curriculum__holiday-card">
+            <span class="eoschool-curriculum__holiday-card-kind">Fijo</span>
+            <span class="eoschool-curriculum__holidays-name">{h.name}</span>
+            <span class="eoschool-curriculum__holidays-when">{h.when}</span>
+          </article>
+        ))}
+        {HOLIDAY_MOVABLE.map((h) => (
+          <article class="eoschool-curriculum__holiday-card">
+            <span class="eoschool-curriculum__holiday-card-kind">Móvil</span>
+            <span class="eoschool-curriculum__holidays-name">{h.name}</span>
+            <span class="eoschool-curriculum__holidays-when">{h.when}</span>
+          </article>
+        ))}
+      </div>
+      {planHolidays.length ? (
+        <div class="eoschool-curriculum__holidays-plan">
+          <h3 class="eoschool-curriculum__holidays-subtitle">
+            En este año escolar ({meta.schoolYearStart} → {meta.schoolYearEnd})
+          </h3>
+          <div class="eoschool-curriculum__holidays-cards">
+            {planHolidays.map((h) => (
+              <a
+                class="eoschool-curriculum__holiday-card eoschool-curriculum__holiday-card--plan"
+                href={`#week-${weekForPlanDay(h.planDay)}`}
+              >
+                <span class="eoschool-curriculum__holidays-when">{formatPlanDate(h.date)}</span>
+                <span class="eoschool-curriculum__holidays-name">{h.name}</span>
+                <span class="eoschool-curriculum__holidays-when">Día {h.planDay}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </section>
+
+    <div class="eoschool-curriculum__meta">
+      <p class="lede">
+        {meta.grade ?? "3er grado"} · {meta.weeks} semanas × {meta.daysPerWeek ?? 5} días ={" "}
+        {meta.totalPlanDays ?? bibleMeta.readingDays} días escolares
+        {meta.schoolYearStart && meta.schoolYearEnd
+          ? ` (${meta.schoolYearStart} → ${meta.schoolYearEnd})`
+          : ""}
+        . Cada día: Biblia y Lenguaje. Días 1 y 3: Identidad y Ciencias. Días 2 y 4: Matemáticas. Día 5:
+        exposiciones de las cinco asignaturas. En feriados oficiales VE solo Biblia
+        {meta.holidays?.length ? ` (${meta.holidays.length} días)` : ""}. Abre un día para ver objetivo,
+        aprendizaje y hoja PDF.
+      </p>
+      <p class="eoschool-curriculum__student" data-curriculum-student-banner hidden></p>
+      <p class="lede eoschool-curriculum__bible-report">
+        {bibleMeta.canon}: {bibleMeta.tracks.genEster.totalChapters}+{bibleMeta.tracks.jobMal.totalChapters}+
+        {bibleMeta.tracks.nt.totalChapters} capítulos en {bibleMeta.readingDays} días. NT hasta{" "}
+        {bibleMeta.tracks.nt.maxChaptersPerDay} cap./día; AT hasta{" "}
+        {bibleMeta.tracks.genEster.maxChaptersPerDay} cap./día por pista. Cobertura: Gén–Ester{" "}
+        {bibleMeta.tracks.genEster.chaptersReadInPlan}/{bibleMeta.tracks.genEster.totalChapters}, Job–Mal{" "}
+        {bibleMeta.tracks.jobMal.chaptersReadInPlan}/{bibleMeta.tracks.jobMal.totalChapters}, NT{" "}
+        {bibleMeta.tracks.nt.chaptersReadInPlan}/{bibleMeta.tracks.nt.totalChapters}
+        {meta.totalPlanDays === 200 ? " (Plan 40 semanas · 200 días escolares · 3er grado)." : "."}
+      </p>
+    </div>
+
+    <nav class="eoschool-curriculum__index" data-curriculum-index aria-label="Índice por semana">
+      <div class="eoschool-curriculum__index-head">
+        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--sem">Sem</span>
+        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
+          Bibl
+          <button
+            type="button"
+            class="eoschool-curriculum__index-resizer"
+            data-resize-col="bib"
+            aria-label="Ajustar ancho de columna Biblia"
+          ></button>
+        </span>
+        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
+          Identidad
+          <button
+            type="button"
+            class="eoschool-curriculum__index-resizer"
+            data-resize-col="ide"
+            aria-label="Ajustar ancho de columna Identidad"
+          ></button>
+        </span>
+        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
+          Leng
+          <button
+            type="button"
+            class="eoschool-curriculum__index-resizer"
+            data-resize-col="len"
+            aria-label="Ajustar ancho de columna Lenguaje"
+          ></button>
+        </span>
+        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
+          Mat
+          <button
+            type="button"
+            class="eoschool-curriculum__index-resizer"
+            data-resize-col="mat"
+            aria-label="Ajustar ancho de columna Matemáticas"
+          ></button>
+        </span>
+        <span class="eoschool-curriculum__index-cell">Cienc</span>
+      </div>
+      {
+        indexRows.map((row) => (
+          <a class="eoschool-curriculum__index-row" href={`#week-${row.week}`}>
+            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--sem eoschool-curriculum__index-week">
+              S{row.week}
+            </span>
+            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.bib}</span>
+            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.ide}</span>
+            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.len}</span>
+            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.mat}</span>
+            <span class="eoschool-curriculum__index-cell">{row.cie}</span>
+          </a>
+        ))
+      }
+    </nav>
   </section>
 
   <div class="eoschool-curriculum-modal" data-curriculum-day-modal hidden>
@@ -542,9 +542,11 @@ function weekForPlanDay(planDay: number): number {
     display: flex;
     flex-direction: column;
     gap: var(--space-padding);
-    margin-block-end: var(--space-padding);
+    margin-block: var(--space-padding) 0;
     min-width: 0;
     width: 100%;
+    background: color-mix(in srgb, var(--color-text) 16%, var(--color-surface));
+    border-color: color-mix(in srgb, var(--color-text) 28%, var(--color-border));
   }
 
   .eoschool-curriculum__holidays-title {
@@ -555,38 +557,58 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__holidays-subtitle {
-    margin: 0 0 var(--rail-gap) 0;
+    margin: 0;
     font-size: var(--font-size-sm);
     font-weight: 650;
     color: var(--color-muted);
   }
 
-  .eoschool-curriculum__holidays-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-padding);
+  .eoschool-curriculum__holidays-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
     min-width: 0;
   }
 
-  .eoschool-curriculum__holidays-col,
   .eoschool-curriculum__holidays-plan {
-    min-width: 0;
-  }
-
-  .eoschool-curriculum__holidays-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
     display: flex;
     flex-direction: column;
     gap: var(--rail-gap);
+    min-width: 0;
   }
 
-  .eoschool-curriculum__holidays-list li {
+  .eoschool-curriculum__holiday-card {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--rail-gap);
-    line-height: 1.35;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 8rem;
+    max-width: 14rem;
+    flex: 1 1 8rem;
+    padding: var(--rail-gap) var(--space-padding);
+    border: var(--border-width) solid color-mix(in srgb, var(--color-text) 22%, var(--color-border));
+    border-radius: var(--border-radius);
+    background: color-mix(in srgb, var(--color-text) 10%, var(--color-bg));
+    color: var(--color-text);
+    line-height: 1.3;
+    text-decoration: none;
+  }
+
+  .eoschool-curriculum__holiday-card--plan {
+    color: inherit;
+  }
+
+  .eoschool-curriculum__holiday-card--plan:hover,
+  .eoschool-curriculum__holiday-card--plan:focus-visible {
+    border-color: var(--color-accent);
+    outline: none;
+  }
+
+  .eoschool-curriculum__holiday-card-kind {
+    font-size: var(--font-size-xs);
+    font-weight: 650;
+    color: var(--color-muted);
+    text-transform: uppercase;
   }
 
   .eoschool-curriculum__holidays-name {
@@ -596,22 +618,16 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__holidays-when {
     color: var(--color-muted);
+    font-size: var(--font-size-xs);
   }
 
-  .eoschool-curriculum__holidays-list--plan a {
-    color: var(--color-link);
-    text-decoration: none;
-  }
-
-  .eoschool-curriculum__holidays-list--plan a:hover,
-  .eoschool-curriculum__holidays-list--plan a:focus-visible {
-    text-decoration: underline;
-  }
-
-  @media (max-width: 47.999rem) {
-    .eoschool-curriculum__holidays-grid {
-      grid-template-columns: minmax(0, 1fr);
-    }
+  .eoschool-curriculum__meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    margin-block: var(--space-padding) 0;
+    min-width: 0;
+    width: 100%;
   }
 
   .eoschool-curriculum__student {
@@ -626,6 +642,7 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__index {
+    margin-block-start: var(--space-padding);
     --idx-sem: 2.25rem;
     --idx-bib: 1fr;
     --idx-ide: 1fr;
@@ -905,24 +922,30 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__subject-head {
     display: flex;
-    align-items: baseline;
-    gap: 0.375rem;
+    align-items: stretch;
+    min-width: 0;
+    width: 100%;
     margin-block-end: 0.25rem;
   }
 
   .eoschool-curriculum__section-check {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    justify-content: center;
+    gap: var(--rail-gap);
+    flex: 1;
+    min-width: 0;
+    width: 100%;
     cursor: pointer;
-    flex-shrink: 0;
     font-size: var(--font-size-sm);
     line-height: 1.45;
-    padding: 0;
+    padding: var(--rail-gap);
     margin: 0;
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+    color: var(--color-text);
   }
 
-  .eoschool-curriculum__section-check:has(input:focus-visible) .eoschool-curriculum__section-check-box {
+  .eoschool-curriculum__section-check:has(input:focus-visible) {
     outline: var(--border-width) solid var(--color-accent);
     outline-offset: 0.125rem;
   }
@@ -939,12 +962,20 @@ function weekForPlanDay(planDay: number): number {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
     width: 1em;
     height: 1em;
-    border: var(--border-width) solid var(--color-border);
+    border: var(--border-width) solid var(--color-bg);
     border-radius: var(--border-radius);
-    background: transparent;
-    color: var(--color-muted);
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  .eoschool-curriculum__section-check .eoschool-curriculum__subject-title {
+    margin: 0;
+    min-width: 0;
+    flex: 1;
+    color: inherit;
   }
 
   .eoschool-curriculum__day-card .eoschool-curriculum__section-check .material-symbols-outlined {
@@ -959,9 +990,14 @@ function weekForPlanDay(planDay: number): number {
     opacity: 0;
   }
 
+  .eoschool-curriculum__subject--done .eoschool-curriculum__section-check {
+    background: color-mix(in srgb, var(--color-ok) 18%, var(--color-bg));
+  }
+
   .eoschool-curriculum__subject--done .eoschool-curriculum__section-check-box {
-    border-color: var(--color-ok);
-    color: var(--color-ok);
+    border-color: var(--color-bg);
+    background: var(--color-ok);
+    color: var(--color-bg);
   }
 
   .eoschool-curriculum__subject--done .eoschool-curriculum__section-check-icon {
@@ -969,7 +1005,7 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__subject--done .eoschool-curriculum__subject-title {
-    color: var(--color-ok);
+    color: inherit;
   }
 
   .eoschool-curriculum__subject {
