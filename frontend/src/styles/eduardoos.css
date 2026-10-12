@@ -140,6 +140,10 @@ html[data-page="home"] main > * {
   background-clip: padding-box;
 }
 
+html[data-page="home"] .hero__lede {
+  font-size: calc(var(--font-size-lg) * 0.9);
+}
+
 .eyebrow{
   font-family: var(--eo-mono);
   letter-spacing: 0.18em;
