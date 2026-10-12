@@ -232,12 +232,14 @@ import Layout from "../../layouts/Layout.astro";
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--space-padding);
+    align-items: start;
     margin: 0;
     padding: 0;
   }
 
   .pamphlet-vanilla-dash__recent-card {
-    min-height: calc(var(--control-height) * 4);
+    min-height: 0;
+    height: auto;
     text-decoration: none;
   }
 
