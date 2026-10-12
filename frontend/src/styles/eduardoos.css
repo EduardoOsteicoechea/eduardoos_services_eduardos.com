@@ -107,7 +107,8 @@ html[data-page="home"] main {
   display: flex;
   flex-direction: column;
   min-height: var(--shell-viewport-height, 40rem);
-  padding-bottom: 0.5rem;
+  /* Keep fold spacing + fixed contact footer clearance. */
+  padding-bottom: calc(0.5rem + var(--site-footer-clearance));
   gap: 0;
   row-gap: 0;
 }

@@ -5,6 +5,8 @@
   --main-padding-top: var(--main-padding);
   /* Fixed contact footer on home + dashboards (40px at root 16px). */
   --site-footer-height: 2.5rem;
+  /* Extra main padding when the fixed contact footer is shown (html[data-site-footer]). */
+  --site-footer-clearance: 0rem;
   /* Page H1 band: global top padding + menu button + bottom margin */
   --page-title-height: calc(
     var(--space-padding) + var(--menu-button-size) + var(--space-margin)
@@ -1198,6 +1200,10 @@ a {
   }
 }
 
+html[data-site-footer] {
+  --site-footer-clearance: calc(var(--site-footer-height) + var(--space-padding));
+}
+
 main {
   position: relative;
   z-index: var(--z-content);
@@ -1207,13 +1213,9 @@ main {
   row-gap: var(--rail-gap);
   /* .page-title owns the top offset (aligns H1 with the menu button). */
   padding-top: 0;
-  padding-bottom: var(--main-padding);
+  padding-bottom: calc(var(--main-padding) + var(--site-footer-clearance));
   padding-left: var(--main-inline);
   padding-right: var(--main-inline);
-}
-
-html[data-site-footer] main {
-  padding-bottom: calc(var(--main-padding) + var(--site-footer-height));
 }
 
 .site-chrome-footer {
@@ -1285,8 +1287,9 @@ html[data-site-footer] main {
     flex-wrap: wrap;
   }
 
-  html[data-site-footer] main {
-    padding-bottom: calc(var(--main-padding) + (var(--site-footer-height) * 2));
+  /* Wrapping contact row can grow taller than one bar. */
+  html[data-site-footer] {
+    --site-footer-clearance: calc((var(--site-footer-height) * 2) + var(--space-padding));
   }
 }
 
@@ -2167,7 +2170,7 @@ section.diag .panel:not(form) {
 
   main {
     padding-top: 0;
-    padding-bottom: var(--main-padding);
+    padding-bottom: calc(var(--main-padding) + var(--site-footer-clearance));
   }
 
   
