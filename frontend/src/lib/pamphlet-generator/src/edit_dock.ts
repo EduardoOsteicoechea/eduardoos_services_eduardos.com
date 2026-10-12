@@ -323,6 +323,27 @@ export function setupEditDock(
         return rem * rootFontPx();
     }
 
+    /** Phone only: nearest overflow scrollport that can move the sheet under the dock. */
+    function phoneSheetScrollHost(from: HTMLElement): HTMLElement | null {
+        const app = document.querySelector(".pamphlet-app");
+        const workspace = document.querySelector(".pamphlet-layout-workspace");
+        const canScroll = (node: Element | null): node is HTMLElement =>
+            node instanceof HTMLElement && node.scrollHeight > node.clientHeight + 1;
+
+        if (canScroll(app)) return app;
+        if (canScroll(workspace)) return workspace;
+
+        let el: HTMLElement | null = from.parentElement;
+        while (el) {
+            const oy = getComputedStyle(el).overflowY;
+            if ((oy === "auto" || oy === "scroll" || oy === "overlay") && canScroll(el)) {
+                return el;
+            }
+            el = el.parentElement;
+        }
+        return app instanceof HTMLElement ? app : null;
+    }
+
     /**
      * Phone only: scroll the sheet host so the item in edit sits 0.5rem below
      * the pinned dock bottom. Tablet/desktop keep their own scroll (no-op).
@@ -333,15 +354,16 @@ export function setupEditDock(
         if (dockRoot.hidden || !dockRoot.hasAttribute("data-phone-pinned")) return;
 
         const el = host.findBodyItemContainer(loc);
-        const app = document.querySelector(".pamphlet-app");
-        if (!(el instanceof HTMLElement) || !(app instanceof HTMLElement)) return;
+        if (!(el instanceof HTMLElement)) return;
+        const scroller = phoneSheetScrollHost(el);
+        if (!scroller) return;
 
         syncPhoneDockViewportPin();
         const gapPx = remToPx(0.5);
         const targetTop = dockRoot.getBoundingClientRect().bottom + gapPx;
         const delta = el.getBoundingClientRect().top - targetTop;
         if (Math.abs(delta) < 0.5) return;
-        app.scrollTop += delta;
+        scroller.scrollTop += delta;
     }
 
     /** Run after withPreservedEditorScroll's double-rAF restore so it is not undone. */

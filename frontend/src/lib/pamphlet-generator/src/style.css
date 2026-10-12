@@ -3164,13 +3164,26 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
     padding-top: 0;
   }
 
-  body.page-pamphlet.pamphlet-phone-dock-open .pamphlet-layout-workspace,
+  /* Workspace locks; only .pamphlet-app scrolls under the fixed dock.
+     Dual padding + dual overflow left a second inset and stole scroll from app
+     (alignPhoneEditedItemUnderDock could not move the editing item). */
+  body.page-pamphlet.pamphlet-phone-dock-open .pamphlet-layout-workspace {
+    overflow: hidden;
+    height: 100%;
+    max-height: 100%;
+    min-height: 0;
+    padding-top: 0;
+    box-sizing: border-box;
+  }
+
   body.page-pamphlet.pamphlet-phone-dock-open .pamphlet-app {
     overflow-x: clip;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     height: 100%;
     max-height: 100%;
+    /* Beat mobile sheet-stack min-height so this host can actually scroll. */
+    min-height: 0;
     padding-top: 12.5rem;
     box-sizing: border-box;
   }
