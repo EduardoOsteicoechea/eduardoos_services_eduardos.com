@@ -103,6 +103,12 @@
   border-color: var(--color-accent);
 }
 
+.subscription-page__service .product-dash__card-head {
+  align-self: stretch;
+  width: auto;
+  min-width: 0;
+}
+
 .subscription-page__service-input {
   position: absolute;
   inset: 0;
