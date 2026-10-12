@@ -58,6 +58,15 @@ const description =
     </header>
 
     <section class="section" id="services" aria-label="Professional profile">
+      <div class="card-grid home-profile__education" id="education" aria-label="Education and training">
+        {profileEducation.map((item) => (
+          <article class="card">
+            <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">{item.icon}</span></span>
+            <h3 class="card__title">{item.title}</h3>
+            <p class="card__desc">{item.description}</p>
+          </article>
+        ))}
+      </div>
       <div class="card-grid home-profile__pair">
         <article class="card" id="expertise">
           <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">architecture</span></span>
@@ -69,15 +78,6 @@ const description =
           <h2 class="card__title">Current focus</h2>
           <p class="card__desc">{profileFocusAnswer}</p>
         </article>
-      </div>
-      <div class="card-grid home-profile__education" id="education" aria-label="Education and training">
-        {profileEducation.map((item) => (
-          <article class="card">
-            <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">{item.icon}</span></span>
-            <h3 class="card__title">{item.title}</h3>
-            <p class="card__desc">{item.description}</p>
-          </article>
-        ))}
       </div>
     </section>
 

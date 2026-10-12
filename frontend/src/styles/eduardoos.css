@@ -171,14 +171,14 @@ html[data-page="home"] #services {
   gap: 2rem;
 }
 
-/* Two profile cards on top (icons already above titles). */
+/* Specialization + Current focus under education. */
 html[data-page="home"] .home-profile__pair {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-/* Education as icon-on-top cards: two per row, rest below. */
+/* Five education cards in one desktop row. */
 html[data-page="home"] .home-profile__education {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 2rem;
 }
 
@@ -187,6 +187,10 @@ html[data-page="home"] .home-profile__education {
   html[data-page="home"] main::before {
     right: 3.125rem;
     transform: translateX(50%);
+  }
+
+  html[data-page="home"] .home-profile__education {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
