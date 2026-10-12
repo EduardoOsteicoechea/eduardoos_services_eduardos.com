@@ -542,7 +542,12 @@ const jsonLdString =
       ) : null}
 
       <aside id="agent-sidebar" class="sidebar-right" hidden aria-label="Ask Eduardoos">
-<div class="agent-chat-log" data-agent-log>
+        <header class="sidebar-toolbar agent-sidebar__phone-toolbar" data-agent-phone-toolbar>
+          <button class="icon-btn" type="button" data-close-agent aria-label="Close AI agent" title="Close AI agent">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </header>
+        <div class="agent-chat-log" data-agent-log>
           <p class="hint" data-agent-empty>Ask a short question about this site.</p>
         </div>
         <div class="agent-chat-select-bar" data-agent-select-bar hidden>

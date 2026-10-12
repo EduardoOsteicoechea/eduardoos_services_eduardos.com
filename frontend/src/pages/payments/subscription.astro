@@ -9,27 +9,36 @@ import Layout from "../../layouts/Layout.astro";
   robots="noindex,nofollow"
 >
   <Fragment slot="dhs">
-    <button class="dhs-action" type="button" data-sub-pay title="Pay with PayPal" aria-label="Pay with PayPal">
+    <button class="dhs-action" type="button" data-sub-pay data-authed-only hidden title="Pay with PayPal" aria-label="Pay with PayPal">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">payments</span>
       </span>
       Pay with PayPal
     </button>
-    <a class="dhs-action" href="/session" data-route title="Sign in" aria-label="Sign in">
+    <a class="dhs-action" href="/session" data-route data-guest-only title="Sign in" aria-label="Sign in">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">login</span>
       </span>
       Sign in
     </a>
+    <a class="dhs-action" href="/session/register" data-route data-guest-only title="Create account" aria-label="Create account">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">person_add</span>
+      </span>
+      Create account
+    </a>
   </Fragment>
 
   <section class="product-dash subscription-page" data-subscription>
 
-    <div data-guest hidden>
-      <p class="hint">Sign in so payment intents attach to your session email.</p>
-      <p class="hint session-links">
-        <a href="/session" data-route>Sign in</a>
+    <div class="panel subscription-page__guest" data-guest hidden>
+      <p class="subscription-page__guest-copy">
+        Sign in or create an account so payment intents attach to your session email.
       </p>
+      <div class="subscription-page__guest-actions">
+        <a class="btn btn--primary" href="/session" data-route>Sign in</a>
+        <a class="btn" href="/session/register" data-route>Create account</a>
+      </div>
     </div>
 
     <div data-authed hidden>
@@ -245,6 +254,13 @@ import Layout from "../../layouts/Layout.astro";
     if (mustLog) console.log("[subscription] create intent", { selected, billingPeriod });
     const result = await createSubscriptionIntent(email, selected, billingPeriod);
     if (!result.data?.intent_id) {
+      const msg = (result.error || "").toLowerCase();
+      if (msg.includes("unauthorized") || msg.includes("sign in")) {
+        email = "";
+        setHidden(guest, false);
+        setHidden(authed, true);
+        return null;
+      }
       showErrorModal({
         message: result.error || "Could not create PayPal checkout.",
         requestId: result.requestId,
@@ -257,6 +273,11 @@ import Layout from "../../layouts/Layout.astro";
 
   async function payWithPayPal(event?: Event): Promise<void> {
     event?.preventDefault();
+    if (!email) {
+      setHidden(guest, false);
+      setHidden(authed, true);
+      return;
+    }
     if (paying) return;
     paying = true;
     if (paypalSubmit instanceof HTMLButtonElement) paypalSubmit.disabled = true;
@@ -318,9 +339,11 @@ import Layout from "../../layouts/Layout.astro";
     }
   });
 
-  const session = await requireSession();
+  // Quiet: guests (and refresh timeouts) must see Sign in / Register, not the error modal.
+  const session = await requireSession({ quiet: true });
   catalog = await fetchSubscriptionCatalog();
   if (!session.ok) {
+    email = "";
     setHidden(guest, false);
     setHidden(authed, true);
   } else {

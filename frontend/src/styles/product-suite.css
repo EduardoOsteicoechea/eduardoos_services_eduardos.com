@@ -204,6 +204,32 @@
   gap: var(--space-padding);
 }
 
+.subscription-page__guest {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-padding);
+  padding: var(--space-padding);
+  max-width: 28rem;
+}
+
+.subscription-page__guest[hidden] {
+  display: none;
+}
+
+.subscription-page__guest-copy {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.subscription-page__guest-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rail-gap);
+}
+
 .subscription-page [data-authed] {
   display: flex;
   flex-direction: column;

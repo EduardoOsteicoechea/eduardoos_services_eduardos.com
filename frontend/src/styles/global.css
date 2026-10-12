@@ -863,12 +863,17 @@ a {
 }
 
 #agent-sidebar {
-  overflow: visible;
+  overflow: hidden;
   width: var(--agent-sidebar-width, var(--sidebar-width));
 }
 
 #agent-sidebar[hidden] {
   display: none !important;
+}
+
+/* Phone-only close bar; hidden on tablet/desktop. */
+.agent-sidebar__phone-toolbar {
+  display: none;
 }
 
 #agent-sidebar .icon-btn {
@@ -2241,10 +2246,10 @@ section.diag .panel:not(form) {
     --span-two-thirds: 6;
     --span-full: 8;
     --span-button: 4;
-    /* Phone: menu/DHS 50% each; AI docks at 50% beside menu. Compact toolbar fits. */
+    /* Phone: menu/DHS 50% each; AI alone at 75% (menu collapsed). Compact toolbar fits. */
     --tray-half-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.5);
     --sidebar-width: var(--tray-half-width);
-    --agent-sidebar-width: var(--tray-half-width);
+    --agent-sidebar-width: calc(var(--shell-viewport-width, var(--content-basis)) * 0.75);
     --sidebar-toolbar-band: calc(
       var(--rail-gap) + 1.5rem + var(--rail-gap) + var(--border-width)
     );
@@ -2259,9 +2264,17 @@ section.diag .panel:not(form) {
     left: var(--tray-half-width);
   }
 
-  #main-menu:not([hidden]) ~ #agent-sidebar:not([hidden]) {
-    width: var(--tray-half-width);
-    left: var(--tray-half-width);
+  /* AI chat replaces menu/DHS on phone: 75% width from the start edge. */
+  #agent-sidebar:not([hidden]) {
+    width: var(--agent-sidebar-width);
+    left: 0;
+  }
+
+  #agent-sidebar .agent-sidebar__phone-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    margin-bottom: 0;
   }
 
   .sidebar-toolbar {

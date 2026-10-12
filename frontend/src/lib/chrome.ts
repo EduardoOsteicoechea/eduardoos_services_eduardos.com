@@ -22,14 +22,18 @@ function isPhoneTray(): boolean {
   return window.matchMedia(PHONE_TRAY_MQ).matches;
 }
 
+/**
+ * Layout viewport only — do not chase visualViewport height.
+ * Mobile URL/search bars toggle visualViewport and thrash layout if we follow them.
+ */
 function syncShellViewportWidth(): void {
   const root = document.documentElement;
   const fontSize = parseFloat(getComputedStyle(root).fontSize);
   if (!Number.isFinite(fontSize) || fontSize <= 0) {
     return;
   }
-  const widthPx = window.visualViewport?.width ?? window.innerWidth;
-  const heightPx = window.visualViewport?.height ?? window.innerHeight;
+  const widthPx = document.documentElement.clientWidth || window.innerWidth;
+  const heightPx = window.innerHeight;
   root.style.setProperty("--shell-viewport-width", `${widthPx / fontSize}rem`);
   root.style.setProperty("--shell-viewport-height", `${heightPx / fontSize}rem`);
 }
@@ -181,11 +185,11 @@ function togglePanel(id: string): void {
   }
   const willOpen = node.hidden;
 
-  // Phone: keep menu, close DHS, dock chat at 66%. Tablet/desktop: dock after DHS or menu.
+  // Phone: collapse menu/DHS; chat alone at 75%. Tablet/desktop: dock beside menu (+ DHS).
   if (id === "agent-sidebar") {
     if (willOpen) {
       if (isPhoneTray()) {
-        setPanelHidden("main-menu", false);
+        setPanelHidden("main-menu", true);
         setPanelHidden("dynamic-header", true);
       } else {
         setPanelHidden("main-menu", false);
@@ -194,9 +198,6 @@ function togglePanel(id: string): void {
       setPanelHidden("agent-sidebar", false);
     } else {
       setPanelHidden("agent-sidebar", true);
-      if (isPhoneTray() && panelOpen("main-menu")) {
-        syncDynamicHeaderWithMenu();
-      }
     }
     syncExpanded();
     return;
@@ -757,11 +758,17 @@ export function startChrome(): void {
       closeAllPanels();
     });
     syncShellViewportWidth();
+    // Window resize / orientation only — never visualViewport (URL bar bounce).
     window.addEventListener("resize", syncShellViewportWidth);
-    window.visualViewport?.addEventListener("resize", syncShellViewportWidth);
 
     document.addEventListener("click", (event) => {
       const node = chromeClickTarget(event.target);
+      if (node?.closest("[data-close-agent]")) {
+        event.preventDefault();
+        setPanelHidden("agent-sidebar", true);
+        syncExpanded();
+        return;
+      }
       if (node?.closest("[data-logout]")) {
         event.preventDefault();
         void (async () => {

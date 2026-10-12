@@ -26,7 +26,10 @@ export function apiFail(
   });
 }
 
-export async function requireSession(): Promise<{
+export async function requireSession(opts?: {
+  /** When true, never open the error modal — callers render their own guest UI. */
+  quiet?: boolean;
+}): Promise<{
   ok: boolean;
   email: string;
   role: string;
@@ -37,7 +40,9 @@ export async function requireSession(): Promise<{
   if (mustLog) {
     console.log("[productGate] session", { ok, status: me.status, requestId: me.requestId });
   }
-  if (!ok && me.status !== 401) {
+  // Guest 401 is normal. Quiet mode skips the modal for any other failure too
+  // (e.g. refresh timeout) so pages like Subscription can show Sign in / Register.
+  if (!ok && me.status !== 401 && !opts?.quiet) {
     apiFail(safeFailMessage(me.data.message, "Could not load the session."), {
       requestId: me.requestId,
       details: me.data.error ? `error=${me.data.error}` : undefined,
