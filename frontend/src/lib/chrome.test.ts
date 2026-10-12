@@ -256,15 +256,6 @@ describe("menu toolbar span", () => {
     expect(document.documentElement.dataset.menuToolbar).toBe("menu");
   });
 
-  it("widens for global font/theme chrome in the DHS", () => {
-    (document.getElementById("main-menu") as HTMLElement).hidden = false;
-    const dhs = document.getElementById("dynamic-header") as HTMLElement;
-    dhs.hidden = false;
-    dhs.innerHTML = `<header class="sidebar-toolbar" data-dhs-chrome></header>`;
-    startChrome();
-    expect(document.documentElement.dataset.menuToolbar).toBe("menu-dhs");
-  });
-
   it("widens for overlay DHS actions beside the menu", () => {
     (document.getElementById("main-menu") as HTMLElement).hidden = false;
     const dhs = document.getElementById("dynamic-header") as HTMLElement;
