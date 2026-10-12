@@ -596,9 +596,10 @@ a {
   margin-top: 0;
 }
 
-/* When menu is open, docked trays clear the shared toolbar band so rows align. */
+/* When menu is open, docked trays clear the shared toolbar band so rows align.
+   DHS owns its font/theme toolbar as the first row — do not offset under the menu band. */
 #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) {
-  padding-top: calc(var(--sidebar-toolbar-band) + var(--tray-body-pad-top));
+  padding-top: 0;
 }
 
 #main-menu:not([hidden]) ~ #agent-sidebar:not([hidden]) {
@@ -731,6 +732,10 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
 
 .sidebar-toolbar .header-home {
   padding: 0;
+}
+
+#dynamic-header > .sidebar-toolbar[data-dhs-chrome] {
+  margin-bottom: var(--tray-body-pad-top);
 }
 
 .sidebar-left nav {

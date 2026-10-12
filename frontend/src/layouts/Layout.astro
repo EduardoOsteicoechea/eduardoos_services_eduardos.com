@@ -404,15 +404,6 @@ const jsonLdString =
 
       <aside id="main-menu" class="sidebar-left" hidden>
         <header class="sidebar-toolbar">
-          <button class="icon-btn" type="button" data-font="-" aria-label="Decrease font size" title="Decrease font size">
-            <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
-          </button>
-          <button class="icon-btn" type="button" data-font="+" aria-label="Increase font size" title="Increase font size">
-            <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
-          </button>
-          <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
-            <span class="material-symbols-outlined" aria-hidden="true">contrast</span>
-          </button>
           <a href="/" class="icon-btn header-home" data-route aria-label="Home" title="Home">
             <span class="material-symbols-outlined" aria-hidden="true">home</span>
           </a>
@@ -508,6 +499,17 @@ const jsonLdString =
       </aside>
 
       <aside id="dynamic-header" class="sidebar-right" hidden>
+        <header class="sidebar-toolbar" data-dhs-chrome>
+          <button class="icon-btn" type="button" data-font="-" aria-label="Decrease font size" title="Decrease font size">
+            <span class="material-symbols-outlined" aria-hidden="true">text_decrease</span>
+          </button>
+          <button class="icon-btn" type="button" data-font="+" aria-label="Increase font size" title="Increase font size">
+            <span class="material-symbols-outlined" aria-hidden="true">text_increase</span>
+          </button>
+          <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+            <span class="material-symbols-outlined" aria-hidden="true">contrast</span>
+          </button>
+        </header>
         <div id="header-dynamic-menu-host" class="header-dynamic-menu-host" data-hds-host></div>
         {hasDhsSlot ? <slot name="dhs" /> : null}
       </aside>
