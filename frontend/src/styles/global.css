@@ -84,7 +84,7 @@
   /*
     Session action (Log out/Sign in): control + bottom margin.
     Subscribe (next section): top margin + control + bottom margin.
-    DHS route tools offset by this so Dashboard lines up with eWrite.
+    DHS route tools offset by this so Dashboard lines up with eRead.
   */
   --menu-pre-product-offset: calc(
     var(--control-height) + var(--space-padding) +
@@ -340,12 +340,6 @@ a {
   padding-top: 0;
 }
 
-/* Separator above admin links (users / keys). */
-.sidebar-nav-section--admin {
-  margin-top: var(--space-padding);
-  padding-top: var(--space-padding);
-  border-top: var(--border-width) solid var(--color-border);
-}
 
 .sidebar-left[hidden],
 .sidebar-right[hidden],
@@ -727,8 +721,8 @@ a {
 }
 
 /*
-  After Log out/Sign in + Subscribe, product links start (eWrite…).
-  Offset DHS route tools so Dashboard lines up with eWrite / Articles.
+  After Log out/Sign in + Subscribe, product links start (eRead…).
+  Offset DHS route tools so Dashboard lines up with eRead.
 */
 #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) > .sidebar-toolbar[data-dhs-chrome] + * {
   margin-top: var(--menu-pre-product-offset);

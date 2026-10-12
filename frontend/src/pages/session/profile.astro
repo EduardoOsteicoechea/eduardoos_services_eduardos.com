@@ -53,11 +53,32 @@ import Layout from "../../layouts/Layout.astro";
       <div class="session-account-block session-links">
         <a href="/api-docs" data-route>API docs</a>
       </div>
-      <div class="session-account-block session-links" data-admin-only hidden>
-        <h2>Admin</h2>
-        <a href="/admin/users" data-route>Registered users</a>
-        <a href="/admin/api" data-route>API keys</a>
+    </div>
+    <div class="panel" data-authed-panel data-admin-only hidden id="api-keys">
+      <div class="session-account-block session-links">
+        <h2>API keys</h2>
+        <button class="btn" type="button" data-apikeys-refresh>Refresh</button>
       </div>
+      <section class="api-keys" data-api-keys>
+        <p class="status" data-apikeys-banner>Checking session…</p>
+        <div class="api-keys-body" data-apikeys-admin hidden>
+          <form class="api-keys-panel" data-apikey-form novalidate>
+            <div class="api-keys-row">
+              <div class="api-keys-field">
+                <label for="apikey-label">Label</label>
+                <input id="apikey-label" type="text" data-apikey-label maxlength="80" placeholder="catalog-import" required />
+              </div>
+              <button class="btn" type="submit" data-apikey-create>Create key</button>
+            </div>
+            <p class="api-keys-item-sub" data-apikey-error hidden></p>
+          </form>
+          <div class="api-keys-secret" data-apikey-secret hidden>
+            <p class="hint">Copy this key now. It is shown once and cannot be retrieved again.</p>
+            <code data-apikey-secret-value></code>
+          </div>
+          <ul class="api-keys-list" data-apikey-list></ul>
+        </div>
+      </section>
     </div>
     <form class="panel" data-authed-panel data-password-form hidden>
       <h2>Change password</h2>
@@ -88,6 +109,7 @@ import Layout from "../../layouts/Layout.astro";
 <script>
   import { fillProfile, onSessionPageReady, requireAuth, sessionCopy, setBanner } from "../../lib/session-ui";
   import { go } from "../../lib/router";
+  import { mountAPIKeysUI } from "../../lib/apikeys-ui";
 
   onSessionPageReady((root) => {
     const copy = sessionCopy();
@@ -100,6 +122,15 @@ import Layout from "../../layouts/Layout.astro";
       try {
         fillProfile(root, me);
         setBanner(root, "");
+        if (me.role === "admin") {
+          const keysRoot = root.querySelector("[data-api-keys]");
+          if (keysRoot instanceof HTMLElement) {
+            mountAPIKeysUI(keysRoot);
+          }
+          if (window.location.hash === "#api-keys") {
+            document.getElementById("api-keys")?.scrollIntoView({ block: "start" });
+          }
+        }
       } catch {
         setBanner(root, copy.loadError, "err");
       }

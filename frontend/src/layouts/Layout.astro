@@ -411,6 +411,18 @@ const jsonLdString =
             <span class="agent-fab-label" aria-hidden="true">AI</span>
           </button>
           <a
+            href="/admin/users"
+            class="icon-btn"
+            data-route
+            data-admin-only
+            hidden
+            aria-label="Users"
+            title="Users"
+            aria-current={path === "/admin/users" ? "page" : undefined}
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">group</span>
+          </a>
+          <a
             href="/session/profile"
             class="header-session icon-btn"
             data-route
@@ -447,7 +459,7 @@ const jsonLdString =
             </a>
             <a href="/articles" data-route aria-current={path.startsWith("/articles") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">article</span>
-              eWrite
+              eRead
             </a>
             <a href="/scrib" data-route data-service="scrib" hidden aria-current={path === "/scrib" || path.startsWith("/scrib/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">edit_note</span>
@@ -472,16 +484,6 @@ const jsonLdString =
             <a href="/ereport" data-route data-service="ereport" hidden aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
               eReport
-            </a>
-          </div>
-          <div class="sidebar-nav-section sidebar-nav-section--admin" data-admin-only hidden>
-            <a href="/admin/users" data-route aria-current={path === "/admin/users" ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">group</span>
-              users
-            </a>
-            <a href="/admin/api" data-route aria-current={path === "/admin/api" ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">key</span>
-              keys
             </a>
           </div>
         </nav>

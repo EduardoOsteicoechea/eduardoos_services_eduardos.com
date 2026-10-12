@@ -9,6 +9,11 @@
   min-width: 0;
 }
 
+/* Nested under session profile: stay inside the panel column. */
+.session-grid .api-keys {
+  grid-column: auto;
+}
+
 .api-keys-body {
   display: flex;
   flex-direction: column;
