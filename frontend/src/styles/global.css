@@ -1217,8 +1217,8 @@ html[data-site-footer] main {
   align-items: center;
   justify-content: flex-start;
   padding-inline: var(--main-inline);
-  background: transparent;
-  border-top: 0;
+  background: var(--color-surface);
+  border-top: var(--border-width) solid var(--color-border);
 }
 
 .site-chrome-footer__contacts {
@@ -1245,9 +1245,9 @@ html[data-site-footer] main {
   line-height: 1;
   color: var(--color-text);
   text-decoration: none;
-  border: var(--border-width) solid var(--color-border);
+  border: 0;
   border-radius: var(--border-radius);
-  background: var(--color-bg);
+  background: transparent;
 }
 
 .site-chrome-footer__btn .material-symbols-outlined {
@@ -1256,7 +1256,6 @@ html[data-site-footer] main {
 }
 
 .site-chrome-footer__btn:hover {
-  border-color: var(--color-accent);
   color: var(--color-accent);
 }
 
