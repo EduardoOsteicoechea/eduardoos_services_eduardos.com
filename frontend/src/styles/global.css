@@ -1209,7 +1209,8 @@ html[data-site-footer] main {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: var(--z-activity);
+  /* Below trays + tray-backdrop so the general menu overlays the footer. */
+  z-index: var(--z-content);
   box-sizing: border-box;
   height: var(--site-footer-height);
   min-height: var(--site-footer-height);
