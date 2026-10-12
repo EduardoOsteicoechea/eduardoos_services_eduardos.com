@@ -1277,8 +1277,10 @@ h1 {
 .page-title {
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: var(--space-padding) var(--menu-button-size) var(--space-margin);
-  height: var(--page-title-height);
+  /* Middle row grows when the H1 wraps so it never paints over page content. */
+  grid-template-rows: var(--space-padding) minmax(var(--menu-button-size), auto) var(--space-margin);
+  min-height: var(--page-title-height);
+  height: auto;
   margin: 0;
   padding: 0;
   min-width: 0;
@@ -1293,7 +1295,8 @@ h1 {
   min-width: 0;
   font-size: var(--font-size-xl);
   line-height: 1.2;
-  overflow: hidden;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 /* Phone: keep the title clear of the menu button (padding + button + 1rem gap). */

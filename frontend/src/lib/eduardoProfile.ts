@@ -14,7 +14,7 @@ export const PROFILE_YOUTUBE = "https://youtube.com/@EduardoOsteicoechea";
 export const PROFILE_GITHUB = "https://github.com/EduardoOsteicoechea";
 
 export const profileWhoAnswer =
-  "I am a licensed Building Architect, full-stack developer across desktop, web, and cloud, and AEC AI BIM technologist. I build software platforms and workflows to streamline processes, generate new approaches, and experiment on the edge of the building industry. I'm particularly enthusiastic about agentic workflows, pushing forward to discover how AI can boost the productivity of research and business use cases.";
+  "I am a licensed Building Architect, AEC AI BIM technologist, and Full-stack BIM Software Developer across desktop, web and cloud. I build software platforms and agentic workflows to streamline processes, generate new approaches, and experiment on the edge of the building industry.";
 
 export const profileExpertiseAnswer =
   "I specialize in Revit and AutoCAD API tooling, custom Revit add-ins and Dynamo workflows, .NET desktop apps, and full-stack web and cloud delivery. My work connects design technology with AI — clash detection, visualization, quantification, and multiplatform BIM products that learn from how teams actually build.";
