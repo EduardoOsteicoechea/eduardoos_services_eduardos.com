@@ -1,6 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import {
+  HOME_HEADING,
+  homeServiceOffers,
+  homeServicesFocus,
   profileEducation,
   profileExperience,
   profileExpertiseAnswer,
@@ -9,6 +12,7 @@ import {
   profileSkillCards,
   profileStack,
   profileWhoAnswer,
+  profileWhoLead2,
 } from "../lib/eduardoProfile";
 import {
   HOME_FAQS,
@@ -19,11 +23,11 @@ import {
 } from "../lib/seo";
 
 const description =
-  "Eduardo Osteicoechea — licensed Building Architect and AEC AI technologist. BIM tools, full-stack platforms, and careful craft at eduardoos.com.";
+  "AEC AI Consulting and productivity apps by Eduardo Osteicoechea — BIM tooling, full-stack platforms, writing apps, and Homescool on eduardoos.com.";
 ---
 
 <Layout
-  title="Architect. BIM Software Developer. AEC AI Technologist"
+  title={HOME_HEADING}
   description={description}
   jsonLd={graph(websiteSchema(), personSchema(), faqSchema(HOME_FAQS))}
   page="home"
@@ -36,6 +40,7 @@ const description =
         Licensed Building Architect · AEC AI Technologist
       </p>
       <p class="hero__lede">{profileWhoAnswer}</p>
+      <p class="hero__lede hero__lede--secondary">{profileWhoLead2}</p>
       <div class="hero__actions">
         <a class="btn btn--primary btn--lg" href="/payments/subscription" data-route>Subscribe</a>
       </div>
@@ -46,83 +51,154 @@ const description =
       </ul>
     </header>
 
-    <section class="section" id="services" aria-label="Professional profile">
-      <div class="card-grid home-profile__education" id="education" aria-label="Education and training">
-        {profileEducation.map((item) => (
-          <article class="card">
-            <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">{item.icon}</span></span>
-            <h3 class="card__title">{item.title}</h3>
-            <p class="card__desc">{item.description}</p>
-          </article>
-        ))}
-      </div>
-      <div class="card-grid home-profile__pair">
-        <article class="card" id="expertise">
-          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">architecture</span></span>
-          <h2 class="card__title">Specialization</h2>
-          <p class="card__desc">{profileExpertiseAnswer}</p>
-        </article>
-        <article class="card" id="focus">
-          <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">flag</span></span>
-          <h2 class="card__title">Current focus</h2>
-          <p class="card__desc">{profileFocusAnswer}</p>
-        </article>
-      </div>
-    </section>
+    <div class="home-split">
+      <div class="home-split__col home-split__col--profile">
+        <p class="eyebrow home-split__eyebrow">Profile</p>
 
-    <section class="section" aria-labelledby="experience-heading">
-      <div class="section__head">
-        <p class="eyebrow">Track record</p>
-        <h2 class="section__title" id="experience-heading">Professional experience</h2>
-      </div>
-      <div class="card-grid">
-        {profileExperience.map((job) => (
-          <article class="card">
-            <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">{job.icon}</span></span>
-            <h3 class="card__title">{job.org}</h3>
-            <p class="card__desc"><strong>{job.role}</strong> · {job.period}</p>
-            <p class="card__desc">{job.summary}</p>
-          </article>
-        ))}
-      </div>
-    </section>
+        <section class="section" id="profile" aria-label="Professional profile">
+          <div class="card-grid home-profile__pair">
+            <article class="card" id="expertise">
+              <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">architecture</span></span>
+              <h2 class="card__title">Specialization</h2>
+              <p class="card__desc">{profileExpertiseAnswer}</p>
+            </article>
+            <article class="card" id="focus">
+              <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">flag</span></span>
+              <h2 class="card__title">Current focus</h2>
+              <p class="card__desc">{profileFocusAnswer}</p>
+            </article>
+          </div>
+        </section>
 
-    <section class="section" aria-labelledby="skills-heading">
-      <div class="section__head">
-        <p class="eyebrow">Capabilities</p>
-        <h2 class="section__title" id="skills-heading">Skills</h2>
-      </div>
-      <div class="card-grid">
-        {profileSkillCards.map((skill) => (
-          <article class="card">
-            <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">{skill.icon}</span></span>
-            <h3 class="card__title">{skill.title}</h3>
-            <p class="card__desc">{skill.description}</p>
-          </article>
-        ))}
-      </div>
-      <p class="section__lede">{profileStack}</p>
-    </section>
+        <section class="section" aria-labelledby="experience-heading">
+          <div class="section__head">
+            <p class="eyebrow">Track record</p>
+            <h2 class="section__title" id="experience-heading">Professional experience</h2>
+          </div>
+          <div class="card-grid">
+            {profileExperience.map((job) => (
+              <article class="card">
+                <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">{job.icon}</span></span>
+                <h3 class="card__title">{job.org}</h3>
+                <p class="card__desc"><strong>{job.role}</strong> · {job.period}</p>
+                <p class="card__desc">{job.summary}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-    <section class="section" aria-labelledby="faq-heading">
-      <div class="section__head">
-        <p class="eyebrow">FAQ</p>
-        <h2 class="section__title" id="faq-heading">Questions</h2>
+        <section class="section" aria-labelledby="skills-heading">
+          <div class="section__head">
+            <p class="eyebrow">Capabilities</p>
+            <h2 class="section__title" id="skills-heading">Skills</h2>
+          </div>
+          <div class="card-grid">
+            {profileSkillCards.map((skill) => (
+              <article class="card">
+                <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">{skill.icon}</span></span>
+                <h3 class="card__title">{skill.title}</h3>
+                <p class="card__desc">{skill.description}</p>
+              </article>
+            ))}
+          </div>
+          <p class="section__lede">{profileStack}</p>
+        </section>
+
+        <section class="section" id="education" aria-labelledby="studies-heading">
+          <div class="section__head">
+            <p class="eyebrow">Studies</p>
+            <h2 class="section__title" id="studies-heading">Education and training</h2>
+          </div>
+          <div class="card-grid home-profile__education" aria-label="Education and training">
+            {profileEducation.map((item) => (
+              <article class="card">
+                <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">{item.icon}</span></span>
+                <h3 class="card__title">{item.title}</h3>
+                <p class="card__desc">{item.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <div class="home-split__cta">
+          <a class="btn btn--primary btn--lg" href="/contact" data-route>
+            <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+            Contact
+          </a>
+        </div>
+
+        <section class="section" aria-labelledby="faq-heading">
+          <div class="section__head">
+            <p class="eyebrow">FAQ</p>
+            <h2 class="section__title" id="faq-heading">Questions</h2>
+          </div>
+          <div class="faq">
+            {profileFaq.map((item) => (
+              <details>
+                <summary>{item.question}</summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+            {HOME_FAQS.map((item) => (
+              <details>
+                <summary>{item.question}</summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
       </div>
-      <div class="faq">
-        {profileFaq.map((item) => (
-          <details>
-            <summary>{item.question}</summary>
-            <p>{item.answer}</p>
-          </details>
-        ))}
-        {HOME_FAQS.map((item) => (
-          <details>
-            <summary>{item.question}</summary>
-            <p>{item.answer}</p>
-          </details>
-        ))}
+
+      <div class="home-split__col home-split__col--services">
+        <p class="eyebrow home-split__eyebrow">Services</p>
+
+        <section class="section" id="services" aria-labelledby="services-heading">
+          <div class="section__head">
+            <p class="eyebrow">Product apps</p>
+            <h2 class="section__title" id="services-heading">Productivity services</h2>
+          </div>
+          <div class="card-grid home-services__cards">
+            {homeServiceOffers.map((service) => (
+              <a class="card home-services__card" href={service.href} data-route>
+                <span class="card__icon"><span class="material-symbols-outlined" aria-hidden="true">{service.icon}</span></span>
+                <h3 class="card__title">{service.label}</h3>
+                <p class="card__desc">{service.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="services-focus-heading">
+          <div class="section__head">
+            <p class="eyebrow">Focus</p>
+            <h2 class="section__title" id="services-focus-heading">What the stack is for</h2>
+          </div>
+          <p class="section__lede">{homeServicesFocus}</p>
+        </section>
+
+        <section class="section" aria-labelledby="services-showcase-heading">
+          <div class="section__head">
+            <p class="eyebrow">Offers</p>
+            <h2 class="section__title" id="services-showcase-heading">Each service</h2>
+          </div>
+          <div class="home-services__showcase">
+            {homeServiceOffers.map((service) => (
+              <article class="home-services__offer">
+                <h3 class="home-services__offer-title">{service.label}</h3>
+                <p class="home-services__offer-desc">{service.focus}</p>
+                <figure class="home-services__shot" aria-label={`${service.label} preview`}>
+                  <span class="material-symbols-outlined" aria-hidden="true">{service.icon}</span>
+                  <figcaption>{service.shortName}</figcaption>
+                </figure>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <div class="home-split__cta home-split__cta--services">
+          <a class="btn btn--primary btn--lg" href="/payments/subscription" data-route>Subscribe</a>
+        </div>
       </div>
-    </section>
+    </div>
   </div>
 </Layout>

@@ -14,7 +14,102 @@ export const PROFILE_YOUTUBE = "https://www.youtube.com/@eduardoosvideos";
 export const PROFILE_GITHUB = "https://github.com/EduardoOsteicoechea";
 
 export const profileWhoAnswer =
-  "I am a licensed Building Architect, AEC AI BIM technologist, and Full-stack BIM Software Developer across desktop, web and cloud. I build software platforms and agentic workflows to streamline processes, generate new approaches, and experiment on the edge of the building industry.";
+  "I am a licensed Building Architect, AEC AI BIM technologist and Full-Stack Developer across Desktop, Web and Cloud. I build software platforms and agentic workflows to streamline processes, generate new approaches, and experiment on the edge of the various industries.";
+
+/** Second hero paragraph (home page lead). */
+export const profileWhoLead2 =
+  "In this page you'll find both my AEC Software profile broadcasting and my set of productivity services spanning from writing apps to a homeschool app. You can contact me through the information provided in this page or subscribe to my services and boost your productivity.";
+
+export const HOME_HEADING = "AEC AI Consulting - Productivity Apps";
+
+export type HomeServiceOffer = {
+  id: string;
+  label: string;
+  shortName: string;
+  description: string;
+  focus: string;
+  href: string;
+  icon: string;
+};
+
+/** Public productivity apps shown on the home Services column. */
+export const homeServiceOffers: HomeServiceOffer[] = [
+  {
+    id: "epam",
+    label: "ePam",
+    shortName: "EPAM",
+    description: "Cloud pamphlet editor, .epam documents, and print export.",
+    focus: "Write and densify print-ready pamphlets with PDF-faithful columns.",
+    href: "/documents/pamphlet",
+    icon: "description",
+  },
+  {
+    id: "articles",
+    label: "eRead",
+    shortName: "Articles",
+    description: "Public articles queue fed by eligible EPAM pamphlets.",
+    focus: "Publish reading surfaces from pamphlet work with admin visibility control.",
+    href: "/articles",
+    icon: "article",
+  },
+  {
+    id: "scrib",
+    label: "eScrib",
+    shortName: "Scrib",
+    description: "Layered US Letter manuscript sheets with cloud books.",
+    focus: "Annotate, draw, and manage layered manuscript sheets.",
+    href: "/scrib",
+    icon: "edit_note",
+  },
+  {
+    id: "homescool",
+    label: "eSchool",
+    shortName: "Homescool",
+    description: "Homeschool curriculum sheets and study workspace.",
+    focus: "Letter study materials, progress, and tutor–student flows.",
+    href: "/eoschool",
+    icon: "school",
+  },
+  {
+    id: "evoice",
+    label: "eVoice",
+    shortName: "eVoice",
+    description: "Text-to-audio projects from documents to MP3.",
+    focus: "Turn written work into spoken audio with cloud project storage.",
+    href: "/evoice",
+    icon: "record_voice_over",
+  },
+  {
+    id: "eoproject",
+    label: "eBuild",
+    shortName: "eoProject",
+    description: "Construction project stages, photos, and IFC versions.",
+    focus: "Track build progress, site photos, and model versions.",
+    href: "/eoproject",
+    icon: "foundation",
+  },
+  {
+    id: "ereport",
+    label: "eReport",
+    shortName: "eReport",
+    description: "Issue tracker reports with cloud storage and sharing.",
+    focus: "Capture issues, statuses, images, and shared invites.",
+    href: "/ereport",
+    icon: "assignment",
+  },
+  {
+    id: "api",
+    label: "API",
+    shortName: "API",
+    description: "API keys for external apps and Cursor connectors.",
+    focus: "Automate EPAM, eReport, Homescool, and related product routes.",
+    href: "/api-docs",
+    icon: "key",
+  },
+];
+
+export const homeServicesFocus =
+  "These productivity apps share one account on eduardoos.com: writing and publishing (ePam / eRead), manuscript work (eScrib), homeschool sheets (eSchool), spoken audio (eVoice), construction tracking (eBuild), issue tracking (eReport), and keyed API access for agentic workflows. Subscribe to unlock the surfaces you need and keep your work in one professional stack.";
 
 export const profileExpertiseAnswer =
   "I specialize in Revit and AutoCAD API tooling, custom Revit add-ins and Dynamo workflows, .NET desktop apps, and full-stack web and cloud delivery. My work connects design technology with AI — clash detection, visualization, quantification, and multiplatform BIM products that learn from how teams actually build.";
@@ -231,7 +326,7 @@ export function buildHomeProfileJsonLd(pageUrl: string): Record<string, unknown>
         "@type": "WebPage",
         "@id": `${pageUrl}#webpage`,
         url: pageUrl,
-        name: "Eduardo Osteicoechea — Architect. BIM Software Developer. AEC AI Technologist",
+        name: `Eduardo Osteicoechea — ${HOME_HEADING}`,
         description: profileWhoAnswer,
         isPartOf: { "@id": `${PROFILE_SITE}/#website` },
         about: { "@id": `${pageUrl}#person` },
@@ -253,7 +348,7 @@ export function buildHomeProfileJsonLd(pageUrl: string): Record<string, unknown>
         name: "Eduardo Osteicoechea",
         url: PROFILE_SITE,
         image: `${PROFILE_SITE}/personal_photo_1080x1920_side_placed.webp`,
-        jobTitle: "Architect. BIM Software Developer. AEC AI Technologist",
+        jobTitle: HOME_HEADING,
         description: profileWhoAnswer,
         email: PROFILE_EMAIL,
         sameAs: [PROFILE_LINKEDIN, PROFILE_GITHUB, PROFILE_YOUTUBE, PROFILE_SITE],
