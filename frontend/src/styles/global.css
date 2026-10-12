@@ -1217,8 +1217,8 @@ html[data-site-footer] main {
   align-items: center;
   justify-content: flex-start;
   padding-inline: var(--main-inline);
-  background: var(--color-surface);
-  border-top: var(--border-width) solid var(--color-border);
+  background: transparent;
+  border-top: 0;
 }
 
 .site-chrome-footer__contacts {
