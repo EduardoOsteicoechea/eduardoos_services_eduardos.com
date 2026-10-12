@@ -657,6 +657,78 @@ function restoreChromeAfterNavigation(): void {
   void refreshAuthChrome();
 }
 
+function setFooterEmailModalOpen(open: boolean): void {
+  const modal = document.getElementById("footer-email-modal");
+  if (!(modal instanceof HTMLElement)) return;
+  modal.hidden = !open;
+  if (open) {
+    const copy = modal.querySelector("[data-footer-email-copy]");
+    if (copy instanceof HTMLElement) copy.focus();
+  }
+}
+
+function startFooterEmailModal(): void {
+  const modal = document.getElementById("footer-email-modal");
+  if (!(modal instanceof HTMLElement)) return;
+
+  document.addEventListener("click", (event) => {
+    const node = event.target instanceof Element ? event.target : null;
+    if (!node) return;
+    if (node.closest("[data-footer-email-open]")) {
+      event.preventDefault();
+      setFooterEmailModalOpen(modal.hidden);
+      return;
+    }
+    if (node.closest("[data-footer-email-close]")) {
+      event.preventDefault();
+      setFooterEmailModalOpen(false);
+      return;
+    }
+    if (node.closest("[data-footer-email-copy]")) {
+      event.preventDefault();
+      const address =
+        modal.querySelector("[data-footer-email-address]")?.textContent?.trim() || "";
+      if (!address) return;
+      const btn = node.closest("[data-footer-email-copy]");
+      void (async () => {
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(address);
+          } else {
+            const ta = document.createElement("textarea");
+            ta.value = address;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.append(ta);
+            ta.select();
+            document.execCommand("copy");
+            ta.remove();
+          }
+          if (btn instanceof HTMLButtonElement) {
+            const prev = btn.textContent;
+            btn.textContent = "Copied";
+            window.setTimeout(() => {
+              btn.textContent = prev;
+            }, 1500);
+          }
+        } catch {
+          /* ignore clipboard failures */
+        }
+      })();
+      return;
+    }
+    if (node === modal) {
+      setFooterEmailModalOpen(false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || modal.hidden) return;
+    setFooterEmailModalOpen(false);
+  });
+}
+
 export function startChrome(): void {
   startClientRouting();
   exposeEreportConnectorGlobal();
@@ -673,6 +745,7 @@ export function startChrome(): void {
 
   if (!window.__chromeStarted) {
     window.__chromeStarted = true;
+    startFooterEmailModal();
     document.addEventListener("eos:close-trays", () => {
       closeAllPanels();
     });

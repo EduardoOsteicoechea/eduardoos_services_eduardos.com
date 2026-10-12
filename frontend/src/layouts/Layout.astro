@@ -530,14 +530,10 @@ const jsonLdString =
       {showSiteFooter ? (
         <footer class="site-chrome-footer">
           <nav class="site-chrome-footer__contacts" aria-label="Contact">
-            <a class="site-chrome-footer__btn" href="/contact" data-route>
-              <span class="material-symbols-outlined" aria-hidden="true">mail</span>
-              Contact
-            </a>
-            <a class="site-chrome-footer__btn" href={`mailto:${PROFILE_EMAIL}`}>
+            <button class="site-chrome-footer__btn" type="button" data-footer-email-open aria-haspopup="dialog">
               <span class="material-symbols-outlined" aria-hidden="true">alternate_email</span>
               Email
-            </a>
+            </button>
             <a class="site-chrome-footer__btn" href={PROFILE_WHATSAPP} rel="noopener noreferrer" target="_blank">
               <span class="material-symbols-outlined" aria-hidden="true">chat</span>
               WhatsApp
@@ -623,6 +619,25 @@ const jsonLdString =
         </div>
         <div class="error-modal-box" data-error-debug hidden></div>
         <button type="button" data-error-copy-debug hidden>Copy debug</button>
+      </div>
+    </div>
+    <div id="footer-email-modal" class="footer-email-modal" hidden>
+      <div
+        class="footer-email-modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="footer-email-title"
+      >
+        <header class="footer-email-modal__toolbar">
+          <h2 id="footer-email-title">Email</h2>
+          <button class="icon-btn" type="button" data-footer-email-close aria-label="Close">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </header>
+        <p class="footer-email-modal__address" data-footer-email-address>{PROFILE_EMAIL}</p>
+        <div class="footer-email-modal__actions">
+          <button type="button" data-footer-email-copy>Copy to clipboard</button>
+        </div>
       </div>
     </div>
     <script>

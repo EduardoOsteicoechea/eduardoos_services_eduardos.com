@@ -1241,6 +1241,7 @@ html[data-site-footer] main {
   height: calc(var(--site-footer-height) - (var(--rail-gap) * 0.75));
   min-height: 0;
   padding: 0 var(--control-padding-inline);
+  font: inherit;
   font-size: var(--font-size-sm);
   font-weight: 600;
   line-height: 1;
@@ -1249,6 +1250,7 @@ html[data-site-footer] main {
   border: 0;
   border-radius: var(--border-radius);
   background: transparent;
+  cursor: pointer;
 }
 
 .site-chrome-footer__btn .material-symbols-outlined {
@@ -1274,6 +1276,76 @@ html[data-site-footer] main {
   html[data-site-footer] main {
     padding-bottom: calc(var(--main-padding) + (var(--site-footer-height) * 2));
   }
+}
+
+.footer-email-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-padding);
+  background: color-mix(in srgb, var(--color-text) 28%, transparent);
+}
+
+.footer-email-modal[hidden] {
+  display: none;
+}
+
+.footer-email-modal__dialog {
+  box-sizing: border-box;
+  width: min(var(--modal-width, 28rem), calc(var(--shell-viewport-width, var(--content-basis)) - 2rem));
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.footer-email-modal__toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap);
+  margin: 0;
+}
+
+.footer-email-modal__toolbar h2 {
+  flex: 1;
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.footer-email-modal__address {
+  margin: 0;
+  padding: var(--rail-gap) var(--control-padding-inline);
+  font-size: var(--font-size-md);
+  line-height: 1.4;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow-wrap: anywhere;
+}
+
+.footer-email-modal__actions {
+  display: flex;
+  gap: var(--rail-gap);
+}
+
+.footer-email-modal__actions button {
+  box-sizing: border-box;
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font: inherit;
+  font-size: var(--font-size-md);
+  color: var(--color-button-fg);
+  background: var(--color-button-bg);
+  border: 0;
+  border-radius: var(--border-radius);
+  cursor: pointer;
 }
 
 /* Workspaces: no main gutters (full-bleed). Homescool keeps left offset for DHS rail. */
