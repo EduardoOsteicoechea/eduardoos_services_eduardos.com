@@ -326,10 +326,16 @@ a {
 }
 
 .sidebar-nav-section--session-guest,
-.sidebar-nav-section--services,
-.sidebar-nav-section--admin {
+.sidebar-nav-section--services {
   border-top: 0;
   padding-top: 0;
+}
+
+/* Separator above admin links (users / keys). */
+.sidebar-nav-section--admin {
+  margin-top: var(--space-padding);
+  padding-top: var(--space-padding);
+  border-top: var(--border-width) solid var(--color-border);
 }
 
 .sidebar-left[hidden],
@@ -779,8 +785,9 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   flex-shrink: 0;
 }
 
-/* Sign in and Log out share one slot; only :first-child had margin-top: 0 before. */
-#main-menu .sidebar-nav-section--session-guest .sidebar-nav-action {
+/* Sign in, Log out, and Subscribe share the filled action treatment. */
+#main-menu .sidebar-nav-section--session-guest .sidebar-nav-action,
+#main-menu .sidebar-nav-section--services > .sidebar-nav-action:first-child {
   margin-top: 0;
   padding-block: 0;
 }

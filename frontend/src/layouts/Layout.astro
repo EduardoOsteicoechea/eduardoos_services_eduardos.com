@@ -436,21 +436,30 @@ const jsonLdString =
             </button>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--services">
+            <a
+              class="sidebar-nav-action"
+              href="/payments/subscription"
+              data-route
+              aria-current={path.startsWith("/payments") ? "page" : undefined}
+            >
+              <span class="material-symbols-outlined" aria-hidden="true">payments</span>
+              Subscribe
+            </a>
             <a href="/articles" data-route aria-current={path.startsWith("/articles") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">article</span>
-              Articles
+              eWrite
             </a>
             <a href="/scrib" data-route data-service="scrib" hidden aria-current={path === "/scrib" || path.startsWith("/scrib/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">edit_note</span>
-              Scrib
+              eScrib
             </a>
             <a href="/eoschool" data-route data-service="homescool" hidden aria-current={path === "/eoschool" || path.startsWith("/eoschool/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">school</span>
-              Homeschool
+              eSchool
             </a>
             <a href="/documents/pamphlet" data-route data-service="epam" hidden aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">description</span>
-              Epam
+              ePam
             </a>
             <a href="/evoice" data-route data-service="evoice" hidden aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span>
@@ -458,41 +467,21 @@ const jsonLdString =
             </a>
             <a href="/eoproject" data-route data-service="eoproject" hidden aria-current={path === "/eoproject" || path.startsWith("/eoproject/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">foundation</span>
-              eoProject
+              eBuild
             </a>
             <a href="/ereport" data-route data-service="ereport" hidden aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
               eReport
             </a>
-            <button
-              type="button"
-              data-ereport-connector-open
-              data-service="ereport-connector"
-              hidden
-              aria-label="Open eReport connector"
-            >
-              <span class="material-symbols-outlined" aria-hidden="true">cable</span>
-              Connector
-            </button>
-            <a href="/api-docs" data-route data-service="api" hidden aria-current={path === "/api-docs" ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">api</span>
-              API docs
-            </a>
-          </div>
-          <div class="sidebar-nav-section sidebar-nav-section--subscriptions">
-            <a href="/payments/subscription" data-route aria-current={path.startsWith("/payments") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">payments</span>
-              Subscriptions
-            </a>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--admin" data-admin-only hidden>
             <a href="/admin/users" data-route aria-current={path === "/admin/users" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">group</span>
-              Users
+              users
             </a>
             <a href="/admin/api" data-route aria-current={path === "/admin/api" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">key</span>
-              API keys
+              keys
             </a>
           </div>
         </nav>
