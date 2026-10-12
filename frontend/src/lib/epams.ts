@@ -208,28 +208,30 @@ export async function recycleEpam(epamId: string): Promise<void> {
   }
 }
 
-export async function setEpamPublication(
+/** Admin-only: toggle Articles visibility for a publisher's pamphlet. */
+export async function setAdminArticlePublication(
   epamId: string,
+  ownerUserId: string,
   published: boolean,
 ): Promise<{ ok: boolean; epamId: string; public: boolean }> {
   const { status, data } = await apiRequest<{
-    ok?: boolean;
     epamId?: string;
+    published?: boolean;
     public?: boolean;
     message?: string;
-  }>(`/epams/${encodeURIComponent(epamId)}/publication`, {
-    method: "PATCH",
+  }>(`/admin/articles/${encodeURIComponent(epamId)}`, {
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ published }),
+    body: JSON.stringify({ ownerUserId, published }),
   });
-  if (mustLog) console.log("[epams] publication", { status, epamId, published });
+  if (mustLog) console.log("[epams] admin publication", { status, epamId, ownerUserId, published });
   if (status < 200 || status >= 300) {
     throw new Error(data.message || "Could not update article visibility.");
   }
   return {
-    ok: Boolean(data.ok),
+    ok: true,
     epamId: data.epamId || epamId,
-    public: Boolean(data.public),
+    public: Boolean(data.public ?? data.published ?? published),
   };
 }
 

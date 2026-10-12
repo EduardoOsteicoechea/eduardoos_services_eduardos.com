@@ -7,7 +7,6 @@ import { getAuthToken, isAuthenticated, refreshAuthSession } from "./auth";
 import {
   fetchEpamSeriesTree,
   recycleEpam,
-  setEpamPublication,
   type EpamSeriesTreeItem,
   type EpamSeriesTreeResponse,
 } from "./epams";
@@ -201,25 +200,11 @@ export function mountPamphletSeriesPage(root: HTMLElement): PamphletSeriesHandle
     title.textContent = item.title || item.fileName || item.epamId;
     const meta = document.createElement("span");
     meta.className = "pamphlet-manage__item-meta";
-    meta.textContent = item.public ? "Visible in Articles" : "Hidden from Articles";
+    meta.textContent = item.public
+      ? "Visible in Articles (admin)"
+      : "Hidden from Articles (admin)";
     const actions = document.createElement("div");
     actions.className = "pamphlet-manage__profile-actions";
-    const vis = document.createElement("button");
-    vis.type = "button";
-    vis.textContent = item.public ? "Hide" : "Show";
-    vis.addEventListener("click", () => {
-      void (async () => {
-        try {
-          await setEpamPublication(item.epamId, !item.public);
-          await refresh();
-          setStatus(item.public ? "Hidden from Articles." : "Visible in Articles.", "success");
-        } catch (err) {
-          const message = err instanceof Error ? err.message : String(err);
-          setStatus(message, "error");
-          openApiErrorModal(message, { title: "Series", summary: "Could not update visibility." });
-        }
-      })();
-    });
     const del = document.createElement("button");
     del.type = "button";
     del.textContent = "Delete";
@@ -237,7 +222,7 @@ export function mountPamphletSeriesPage(root: HTMLElement): PamphletSeriesHandle
         }
       })();
     });
-    actions.append(vis, del);
+    actions.append(del);
     row.append(title, meta, actions);
     parent.appendChild(row);
   }

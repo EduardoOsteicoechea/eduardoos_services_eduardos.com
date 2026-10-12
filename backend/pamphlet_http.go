@@ -199,7 +199,7 @@ func (a *App) createEpamHandler(w http.ResponseWriter, r *http.Request) {
 	if rec.Title == "" {
 		rec.Title = "Untitled pamphlet"
 	}
-	a.autoPublishEpamForArticles(user, &rec)
+	a.autoPublishEpamForArticles(r, user, &rec)
 	saved, err := a.pamphlet.SaveEpam(r.Context(), rec, requestIDFrom(r, nil))
 	if err != nil {
 		a.mustLogf(r, "epams.create.error", "err", err.Error())
@@ -283,8 +283,19 @@ type epamPublicationBody struct {
 }
 
 func (a *App) setEpamPublicationHandler(w http.ResponseWriter, r *http.Request) {
-	user := a.requirePamphletWrite(w, r)
+	// Articles visibility is admin-only. Owners cannot publish or hide pamphlets
+	// on /articles; use PUT /api/admin/articles/{id} instead.
+	if !a.requireUnsafe(w, r) {
+		return
+	}
+	user := a.currentUser(r)
 	if user == nil {
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	if user.Role != roleAdmin {
+		a.auditEvent(r, "epam_publication", "forbidden", user.ID)
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return
 	}
 	id := strings.TrimSpace(r.PathValue("id"))
@@ -297,8 +308,18 @@ func (a *App) setEpamPublicationHandler(w http.ResponseWriter, r *http.Request) 
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
+	// Prefer explicit owner; otherwise treat the path id as the admin's own EPAM.
+	ownerID := strings.TrimSpace(r.URL.Query().Get("ownerUserId"))
+	if ownerID == "" {
+		ownerID = user.ID
+	}
+	owner, err := a.store.UserByID(r.Context(), ownerID)
+	if err != nil || owner == nil || !a.userHasArticlesPublishAccess(r, owner) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
 	rid := requestIDFrom(r, nil)
-	existing, ok, err := a.pamphlet.GetEpam(r.Context(), user.ID, id, rid)
+	existing, ok, err := a.pamphlet.GetEpam(r.Context(), owner.ID, id, rid)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -314,7 +335,7 @@ func (a *App) setEpamPublicationHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	a.auditEvent(r, "epam_publication", map[bool]string{true: "published", false: "unpublished"}[body.Published], user.ID)
-	a.mustLogf(r, "epams.publication.ok", "epam_id", id, "published", body.Published)
+	a.mustLogf(r, "epams.publication.ok", "epam_id", id, "published", body.Published, "owner_user_id", owner.ID)
 	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "epamId": saved.EpamID, "public": saved.Public})
 }
 
@@ -406,7 +427,7 @@ func (a *App) copyEpamHandler(w http.ResponseWriter, r *http.Request) {
 		Author: src.Author, Date: src.Date, Body: body,
 	}
 	syncEpamMetaFromHeader(&copyRec)
-	a.autoPublishEpamForArticles(user, &copyRec)
+	a.autoPublishEpamForArticles(r, user, &copyRec)
 	saved, err := a.pamphlet.SaveEpam(r.Context(), copyRec, rid)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

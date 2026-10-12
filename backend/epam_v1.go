@@ -148,7 +148,7 @@ func (a *App) epamV1CreateHandler(w http.ResponseWriter, r *http.Request) {
 	if rec.Title == "" {
 		rec.Title = "Untitled EPAM"
 	}
-	a.autoPublishEpamForArticles(user, &rec)
+	a.autoPublishEpamForArticles(r, user, &rec)
 	saved, err := a.pamphlet.SaveEpam(r.Context(), rec, requestIDFrom(r, nil))
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

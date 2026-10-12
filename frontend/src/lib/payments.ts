@@ -17,22 +17,32 @@ export type SubscriptionService = {
 
 const SERVICE_ICONS: Record<string, string> = {
   pamphlet: "description",
+  epam: "description",
+  articles: "article",
   homescool: "school",
   scrib: "edit_note",
   ereport: "assignment",
   "ereport-connector": "cable",
   evoice: "record_voice_over",
+  eoproject: "architecture",
   api: "key",
 };
 
 /** Fallback catalog when API is unreachable (matches backend ServiceCatalog). */
 export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
   {
-    id: "pamphlet",
-    label: "Pamphlet",
-    description: "Cloud pamphlet editor and print export.",
+    id: "epam",
+    label: "EPAM",
+    description: "Cloud EPAM editor, .epam documents, and print export.",
     monthlyUsd: 1,
     icon: "description",
+  },
+  {
+    id: "articles",
+    label: "Articles",
+    description: "Eligible pamphlets appear in the admin Articles queue; the site admin controls public visibility.",
+    monthlyUsd: 1,
+    icon: "article",
   },
   {
     id: "homescool",

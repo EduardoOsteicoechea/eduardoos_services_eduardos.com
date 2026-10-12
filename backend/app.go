@@ -230,6 +230,8 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /profile/avatar", a.getAvatarHandler)
 	mux.HandleFunc("GET /api/admin/users", a.listUsersHandler)
 	mux.HandleFunc("PUT /api/admin/users/{id}/services", a.setUserServicesHandler)
+	mux.HandleFunc("PUT /api/admin/users/{id}/articles-default", a.setArticlesDefaultHandler)
+	mux.HandleFunc("GET /api/admin/articles", a.listAdminArticlesHandler)
 	mux.HandleFunc("PUT /api/admin/articles/{id}", a.setArticlePublicationHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/email-test", a.emailTestHandler)
 	mux.HandleFunc("POST /api/admin/diagnostics/ai-chat-test", a.aiChatTestHandler)

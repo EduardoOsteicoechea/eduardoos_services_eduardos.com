@@ -16,6 +16,7 @@ type serviceInfo struct {
 
 var serviceCatalog = []serviceInfo{
 	{ID: "epam", Label: "EPAM", Description: "Cloud EPAM editor, .epam documents, and print export.", MonthlyUSD: 1},
+	{ID: productArticles, Label: "Articles", Description: "Eligible pamphlets appear in the admin Articles queue; the site admin controls public visibility.", MonthlyUSD: 1},
 	{ID: "homescool", Label: "Homescool", Description: "Homescool learning surface.", MonthlyUSD: 1},
 	{ID: "scrib", Label: "Scrib", Description: "Layered US Letter manuscript sheets with cloud books.", MonthlyUSD: 1},
 	{ID: "ereport", Label: "eReport", Description: "Issue tracker reports with cloud storage and sharing.", MonthlyUSD: 1},

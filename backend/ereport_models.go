@@ -15,6 +15,7 @@ const (
 	productScrib            = "scrib"
 	productEpam             = "epam"
 	productPamphlet         = productEpam // legacy alias constant; storage/catalog id is "epam"
+	productArticles         = "articles"
 	productHomescool        = "homescool"
 	productAPI              = "api"
 	apiKeyPrefix      = "eos_live_"

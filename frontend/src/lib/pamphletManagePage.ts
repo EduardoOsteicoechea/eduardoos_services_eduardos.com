@@ -9,7 +9,6 @@ import {
   fetchEpamSeriesTree,
   recycleEpam,
   saveEpamToCloud,
-  setEpamPublication,
   type EpamRecord,
   type EpamSeriesTreeItem,
   type EpamSeriesTreeResponse,
@@ -51,7 +50,7 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
   const list = requireEl<HTMLElement>(root, "[data-manage-list]");
   const detail = requireEl<HTMLElement>(root, "[data-manage-detail]");
   const detailTitle = requireEl<HTMLElement>(root, "[data-manage-detail-title]");
-  const publicToggle = requireEl<HTMLInputElement>(root, "[data-manage-public]");
+  const publicHint = root.querySelector<HTMLElement>("[data-manage-public-hint]");
   const chromeForm = requireEl<HTMLFormElement>(root, "[data-manage-chrome-form]");
   const headerTitle = requireEl<HTMLInputElement>(root, "[data-manage-header-title]");
   const headerSubtitle = requireEl<HTMLInputElement>(root, "[data-manage-header-subtitle]");
@@ -105,7 +104,9 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
   function clearSelection(): void {
     managed = null;
     detail.hidden = true;
-    publicToggle.checked = false;
+    if (publicHint) {
+      publicHint.textContent = "Articles visibility is controlled by the site administrator.";
+    }
     list.querySelectorAll(".pamphlet-manage__item.is-selected").forEach((el) => {
       el.classList.remove("is-selected");
     });
@@ -332,7 +333,11 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
     managed = { meta, document };
     detail.hidden = false;
     detailTitle.textContent = meta.title || meta.fileName || meta.epamId;
-    publicToggle.checked = Boolean(meta.public);
+    if (publicHint) {
+      publicHint.textContent = meta.public
+        ? "Currently visible in Articles (admin-controlled)."
+        : "Currently hidden from Articles (admin-controlled).";
+    }
     fillChrome(document);
     list.querySelectorAll(".pamphlet-manage__item.is-selected").forEach((el) => {
       el.classList.remove("is-selected");
@@ -340,7 +345,7 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
     list
       .querySelector(`[data-manage-epam-id="${CSS.escape(epamId)}"]`)
       ?.classList.add("is-selected");
-    hint.textContent = "Hide from Articles, delete, edit header/footer, or apply a footer profile.";
+    hint.textContent = "Delete, edit header/footer, or apply a footer profile. Articles visibility is admin-controlled.";
     await refreshProfiles();
   }
 
@@ -433,8 +438,7 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
       const tree = await fetchEpamSeriesTree();
       renderTree(tree);
       if (tree.count > 0) {
-        hint.textContent =
-          "Select a pamphlet to hide from Articles, delete, or edit headers and footers.";
+        hint.textContent = "Select a pamphlet to delete or edit headers and footers.";
       }
       await refreshProfiles();
     } catch (err) {
@@ -454,34 +458,6 @@ export function mountPamphletManagePage(root: HTMLElement): PamphletManageHandle
       headerChapter.value,
       "Sin capítulo",
     );
-  });
-
-  on(publicToggle, "change", () => {
-    void (async () => {
-      if (!managed) return;
-      const published = publicToggle.checked;
-      publicToggle.disabled = true;
-      try {
-        const result = await setEpamPublication(managed.meta.epamId, published);
-        managed = { ...managed, meta: { ...managed.meta, public: result.public } };
-        setStatus(
-          result.public
-            ? "Pamphlet is visible in Articles."
-            : "Pamphlet hidden from Articles.",
-          "success",
-        );
-      } catch (err) {
-        publicToggle.checked = !published;
-        const message = err instanceof Error ? err.message : String(err);
-        setStatus(message, "error");
-        openApiErrorModal(message, {
-          title: "Manage pamphlet",
-          summary: "Could not update Articles visibility.",
-        });
-      } finally {
-        publicToggle.disabled = false;
-      }
-    })();
   });
 
   on(chromeForm, "submit", (event) => {

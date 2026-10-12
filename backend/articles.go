@@ -6,33 +6,109 @@ import (
 	"encoding/json"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/EduardoOsteicoechea/eduardoos_services_eduardos.com/pkg/pdf"
 )
 
-// Public articles are a projection of every pamphlet owned by the configured
-// publisher account (legacy eduardoos behavior). Callers never see another
-// account's pamphlets through these routes.
-func (a *App) publicArticleOwner(r *http.Request) (*User, bool) {
-	email := strings.ToLower(strings.TrimSpace(a.cfg.PublicArticlesOwnerEmail))
-	if email == "" {
-		return nil, false
-	}
-	owner, err := a.store.UserByEmail(r.Context(), email)
-	return owner, err == nil && owner != nil
+const articlesDefaultPublicPref = "articles_default_public"
+
+// legacyPublicArticlesOwner reports whether email is the configured legacy
+// Articles publisher (PUBLIC_ARTICLES_OWNER_EMAIL).
+func (a *App) legacyPublicArticlesOwner(email string) bool {
+	want := strings.ToLower(strings.TrimSpace(a.cfg.PublicArticlesOwnerEmail))
+	return want != "" && strings.ToLower(strings.TrimSpace(email)) == want
 }
 
-// autoPublishEpamForArticles marks pamphlets owned by the configured articles
-// publisher as public on create (not on later updates, so Manage hide sticks).
-func (a *App) autoPublishEpamForArticles(user *User, rec *EpamRecord) {
-	if user == nil || rec == nil {
+// userHasArticlesPublishAccess is true when the account may contribute pamphlets
+// to the Articles pipeline (subscription, admin grant, or legacy owner).
+// Admin role alone does not enroll every admin account.
+func (a *App) userHasArticlesPublishAccess(r *http.Request, user *User) bool {
+	if user == nil {
+		return false
+	}
+	if a.legacyPublicArticlesOwner(user.EmailNormalized) {
+		return true
+	}
+	if a.failClosedEnt {
+		return false
+	}
+	ents, err := a.store.EntitlementsByUser(r.Context(), user.ID)
+	if err != nil {
+		return false
+	}
+	if entitlementActiveProduct(ents, productArticles, time.Now().UTC()) {
+		return true
+	}
+	granted, unavailable := a.hasAdminServiceGrant(r, user.ID, productArticles)
+	return !unavailable && granted
+}
+
+func preferenceAsBool(value any, fallback bool) bool {
+	switch v := value.(type) {
+	case bool:
+		return v
+	case string:
+		switch strings.ToLower(strings.TrimSpace(v)) {
+		case "1", "true", "yes", "on":
+			return true
+		case "0", "false", "no", "off":
+			return false
+		}
+	case float64:
+		return v != 0
+	case int:
+		return v != 0
+	case int32:
+		return v != 0
+	case int64:
+		return v != 0
+	}
+	return fallback
+}
+
+// articlesDefaultPublic is an admin-only policy: when true, new pamphlets for
+// that publisher are marked public on create. Missing pref: legacy owner → true.
+func (a *App) articlesDefaultPublic(r *http.Request, user *User) bool {
+	if user == nil {
+		return false
+	}
+	pref, err := a.store.UserPreferenceByKey(r.Context(), user.ID, articlesDefaultPublicPref)
+	if err == nil && pref != nil {
+		return preferenceAsBool(pref.Value, false)
+	}
+	return a.legacyPublicArticlesOwner(user.EmailNormalized)
+}
+
+func (a *App) articlesPublisherUserIDs(r *http.Request) ([]string, error) {
+	users, err := a.store.ListUsers(r.Context())
+	if err != nil {
+		return nil, err
+	}
+	out := make([]string, 0)
+	seen := map[string]bool{}
+	for _, user := range users {
+		if user == nil || seen[user.ID] || !a.userHasArticlesPublishAccess(r, user) {
+			continue
+		}
+		seen[user.ID] = true
+		out = append(out, user.ID)
+	}
+	return out, nil
+}
+
+// autoPublishEpamForArticles marks new pamphlets public only when the owner is
+// an Articles publisher and admin policy defaultPublic is on. Never on updates.
+func (a *App) autoPublishEpamForArticles(r *http.Request, user *User, rec *EpamRecord) {
+	if user == nil || rec == nil || r == nil {
 		return
 	}
-	email := strings.ToLower(strings.TrimSpace(a.cfg.PublicArticlesOwnerEmail))
-	if email == "" || user.EmailNormalized != email {
+	if !a.userHasArticlesPublishAccess(r, user) {
 		return
 	}
-	rec.Public = true
+	if a.articlesDefaultPublic(r, user) {
+		rec.Public = true
+	}
 }
 
 func asStringMap(v any) map[string]any {
@@ -237,12 +313,16 @@ func articleDescription(plain, title string) string {
 }
 
 func (a *App) listArticlesHandler(w http.ResponseWriter, r *http.Request) {
-	owner, ok := a.publicArticleOwner(r)
-	if !ok {
+	userIDs, err := a.articlesPublisherUserIDs(r)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if len(userIDs) == 0 {
 		writeJSON(w, http.StatusOK, map[string]any{"count": 0, "articles": []EpamRecord{}})
 		return
 	}
-	records, err := a.pamphlet.ListEpams(r.Context(), owner.ID, requestIDFrom(r, nil))
+	records, err := a.pamphlet.ListPublicEpamsByUsers(r.Context(), userIDs, requestIDFrom(r, nil))
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -259,12 +339,13 @@ func (a *App) listArticlesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) getArticleHandler(w http.ResponseWriter, r *http.Request) {
-	owner, ok := a.publicArticleOwner(r)
-	if !ok {
-		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+	userIDs, err := a.articlesPublisherUserIDs(r)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	record, found, err := a.pamphlet.GetEpam(r.Context(), owner.ID, strings.TrimSpace(r.PathValue("id")), requestIDFrom(r, nil))
+	id := strings.TrimSpace(r.PathValue("id"))
+	record, found, err := a.pamphlet.GetPublicEpamByUsers(r.Context(), userIDs, id, requestIDFrom(r, nil))
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -286,7 +367,6 @@ func (a *App) getArticleHandler(w http.ResponseWriter, r *http.Request) {
 	sum := sha256.Sum256([]byte(plain))
 	meta := record
 	meta.Body = nil
-	id := strings.TrimSpace(r.PathValue("id"))
 	writeJSON(w, http.StatusOK, map[string]any{
 		"meta": meta, "title": title, "description": articleDescription(plain, title),
 		"byline": byline, "blocks": blocks, "footer": footer, "plainText": plain,
@@ -297,13 +377,13 @@ func (a *App) getArticleHandler(w http.ResponseWriter, r *http.Request) {
 
 // GET /api/articles/{id}/pdf — public pamphlet PDF for a published article only.
 func (a *App) getArticlePDFHandler(w http.ResponseWriter, r *http.Request) {
-	owner, ok := a.publicArticleOwner(r)
-	if !ok {
-		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+	userIDs, err := a.articlesPublisherUserIDs(r)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	id := strings.TrimSpace(r.PathValue("id"))
-	record, found, err := a.pamphlet.GetEpam(r.Context(), owner.ID, id, requestIDFrom(r, nil))
+	record, found, err := a.pamphlet.GetPublicEpamByUsers(r.Context(), userIDs, id, requestIDFrom(r, nil))
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -348,6 +428,61 @@ type articlePublicationBody struct {
 	Published   bool   `json:"published"`
 }
 
+type articlesDefaultBody struct {
+	DefaultPublic bool `json:"defaultPublic"`
+}
+
+func (a *App) listAdminArticlesHandler(w http.ResponseWriter, r *http.Request) {
+	admin := a.requireAdminRead(w, r)
+	if admin == nil {
+		return
+	}
+	users, err := a.store.ListUsers(r.Context())
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	publishers := make([]map[string]any, 0)
+	total := 0
+	for _, user := range users {
+		if user == nil || !a.userHasArticlesPublishAccess(r, user) {
+			continue
+		}
+		records, err := a.pamphlet.ListEpams(r.Context(), user.ID, requestIDFrom(r, nil))
+		if err != nil {
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+		items := make([]map[string]any, 0, len(records))
+		for _, rec := range records {
+			items = append(items, map[string]any{
+				"epamId":        rec.EpamID,
+				"title":         rec.Title,
+				"series":        rec.Series,
+				"seriesChapter": rec.SeriesChapter,
+				"author":        rec.Author,
+				"date":          rec.Date,
+				"public":        rec.Public,
+				"updatedAt":     rec.UpdatedAt,
+			})
+		}
+		total += len(items)
+		publishers = append(publishers, map[string]any{
+			"userId":        user.ID,
+			"email":         user.Email,
+			"username":      user.Username,
+			"defaultPublic": a.articlesDefaultPublic(r, user),
+			"pamphlets":     items,
+			"count":         len(items),
+		})
+	}
+	a.auditEvent(r, "admin_articles", "listed", admin.ID)
+	writeJSON(w, http.StatusOK, map[string]any{
+		"publishers": publishers,
+		"count":      total,
+	})
+}
+
 func (a *App) setArticlePublicationHandler(w http.ResponseWriter, r *http.Request) {
 	if !a.requireUnsafe(w, r) {
 		return
@@ -362,7 +497,7 @@ func (a *App) setArticlePublicationHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	owner, err := a.store.UserByID(r.Context(), strings.TrimSpace(body.OwnerUserID))
-	if err != nil || owner.EmailNormalized != strings.ToLower(strings.TrimSpace(a.cfg.PublicArticlesOwnerEmail)) {
+	if err != nil || owner == nil || !a.userHasArticlesPublishAccess(r, owner) {
 		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return
 	}
@@ -382,5 +517,46 @@ func (a *App) setArticlePublicationHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	a.auditEvent(r, "article_publication", map[bool]string{true: "published", false: "unpublished"}[body.Published], admin.ID)
-	writeJSON(w, http.StatusOK, map[string]any{"epamId": id, "published": body.Published})
+	writeJSON(w, http.StatusOK, map[string]any{
+		"epamId": id, "ownerUserId": owner.ID, "published": body.Published, "public": body.Published,
+	})
+}
+
+func (a *App) setArticlesDefaultHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.requireUnsafe(w, r) {
+		return
+	}
+	admin := a.requireAdminRead(w, r)
+	if admin == nil {
+		return
+	}
+	targetID := strings.TrimSpace(r.PathValue("id"))
+	target, err := a.store.UserByID(r.Context(), targetID)
+	if err != nil || target == nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	if !a.userHasArticlesPublishAccess(r, target) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	var body articlesDefaultBody
+	if err := json.NewDecoder(http.MaxBytesReader(w, r.Body, 8<<10)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	if err := a.store.UpsertUserPreference(r.Context(), &UserPreference{
+		ID:        target.ID + "\x00" + articlesDefaultPublicPref,
+		UserID:    target.ID,
+		Key:       articlesDefaultPublicPref,
+		Value:     body.DefaultPublic,
+		UpdatedAt: time.Now().UTC(),
+	}); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.auditEvent(r, "articles_default_public", map[bool]string{true: "enabled", false: "disabled"}[body.DefaultPublic], admin.ID)
+	writeJSON(w, http.StatusOK, map[string]any{
+		"userId": target.ID, "defaultPublic": body.DefaultPublic,
+	})
 }

@@ -297,7 +297,7 @@ func TestArticlePDFForPublicPamphlet(t *testing.T) {
 	}
 }
 
-func TestEpamOwnerPublicationToggle(t *testing.T) {
+func TestMemberCannotToggleEpamPublication(t *testing.T) {
 	app := newTestApp(false)
 	app.cfg.PublicArticlesOwnerEmail = "member@eduardoos.com"
 	_ = app.grantEntitlement("member-1", productEpam)
@@ -308,10 +308,31 @@ func TestEpamOwnerPublicationToggle(t *testing.T) {
 		t.Fatal(err)
 	}
 	hide := app.doJSON(t, "member@eduardoos.com", http.MethodPatch, "/api/epams/toggle-me/publication", `{"published":false}`)
-	if hide.Code != http.StatusOK {
-		t.Fatalf("hide: %d %s", hide.Code, hide.Body.String())
+	if hide.Code != http.StatusForbidden {
+		t.Fatalf("owner must not toggle visibility: %d %s", hide.Code, hide.Body.String())
 	}
 	rec, ok, err := app.pamphlet.GetEpam(context.Background(), "member-1", "toggle-me", "test")
+	if err != nil || !ok || !rec.Public {
+		t.Fatalf("expected still public after forbidden toggle: %#v ok=%t err=%v", rec, ok, err)
+	}
+}
+
+func TestAdminTogglesArticlePublicationAndDefault(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEpam)
+	_ = app.grantEntitlement("member-1", productArticles)
+	if _, err := app.pamphlet.SaveEpam(context.Background(), EpamRecord{
+		UserID: "member-1", EpamID: "admin-toggle", Title: "Admin Toggle", Public: true,
+		Body: map[string]any{"header": map[string]any{"title": "Admin Toggle"}, "footer": map[string]any{}},
+	}, "test"); err != nil {
+		t.Fatal(err)
+	}
+	hide := app.doJSON(t, "admin@eduardoos.com", http.MethodPut, "/api/admin/articles/admin-toggle",
+		`{"ownerUserId":"member-1","published":false}`)
+	if hide.Code != http.StatusOK {
+		t.Fatalf("admin hide: %d %s", hide.Code, hide.Body.String())
+	}
+	rec, ok, err := app.pamphlet.GetEpam(context.Background(), "member-1", "admin-toggle", "test")
 	if err != nil || !ok || rec.Public {
 		t.Fatalf("expected unpublished: %#v ok=%t err=%v", rec, ok, err)
 	}
@@ -320,13 +341,40 @@ func TestEpamOwnerPublicationToggle(t *testing.T) {
 	if list.Code != http.StatusOK || decodeMap(t, list)["count"] != float64(0) {
 		t.Fatalf("hidden article still listed: %d %s", list.Code, list.Body.String())
 	}
-	show := app.doJSON(t, "member@eduardoos.com", http.MethodPatch, "/api/epams/toggle-me/publication", `{"published":true}`)
-	if show.Code != http.StatusOK {
-		t.Fatalf("show: %d %s", show.Code, show.Body.String())
+	def := app.doJSON(t, "admin@eduardoos.com", http.MethodPut, "/api/admin/users/member-1/articles-default",
+		`{"defaultPublic":true}`)
+	if def.Code != http.StatusOK {
+		t.Fatalf("set default: %d %s", def.Code, def.Body.String())
 	}
-	rec, ok, err = app.pamphlet.GetEpam(context.Background(), "member-1", "toggle-me", "test")
-	if err != nil || !ok || !rec.Public {
-		t.Fatalf("expected published: %#v ok=%t err=%v", rec, ok, err)
+	adminList := app.doJSON(t, "admin@eduardoos.com", http.MethodGet, "/api/admin/articles", "")
+	if adminList.Code != http.StatusOK {
+		t.Fatalf("admin articles: %d %s", adminList.Code, adminList.Body.String())
+	}
+	payload := decodeMap(t, adminList)
+	if payload["count"] != float64(1) {
+		t.Fatalf("expected 1 pamphlet in admin list, got %#v", payload["count"])
+	}
+}
+
+func TestArticlesSubscriptionPublisherWithoutDefaultStaysPrivate(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEpam)
+	_ = app.grantEntitlement("member-1", productArticles)
+	create := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/epams", `{
+		"title":"Private by default",
+		"document":{"id":"priv-default","type":"pamphlet_single_sheet","header":{"title":"Private by default"},"footer":{},"column_1":[]}
+	}`)
+	if create.Code != http.StatusCreated {
+		t.Fatalf("create: %d %s", create.Code, create.Body.String())
+	}
+	rec, ok, err := app.pamphlet.GetEpam(context.Background(), "member-1", "priv-default", "test")
+	if err != nil || !ok || rec.Public {
+		t.Fatalf("new articles subscriber pamphlet must stay private without defaultPublic: %#v ok=%t err=%v", rec, ok, err)
+	}
+	list := httptest.NewRecorder()
+	app.Handler().ServeHTTP(list, httptest.NewRequest(http.MethodGet, "/api/articles", nil))
+	if list.Code != http.StatusOK || decodeMap(t, list)["count"] != float64(0) {
+		t.Fatalf("private pamphlet must not list: %d %s", list.Code, list.Body.String())
 	}
 }
 

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"strings"
 	"sync"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -24,6 +25,9 @@ type PamphletStore interface {
 	SaveEpam(ctx context.Context, rec EpamRecord, correlationID string) (EpamRecord, error)
 	GetEpam(ctx context.Context, userID, epamID, correlationID string) (EpamRecord, bool, error)
 	ListEpams(ctx context.Context, userID, correlationID string) ([]EpamRecord, error)
+	ListEpamsByUsers(ctx context.Context, userIDs []string, correlationID string) ([]EpamRecord, error)
+	ListPublicEpamsByUsers(ctx context.Context, userIDs []string, correlationID string) ([]EpamRecord, error)
+	GetPublicEpamByUsers(ctx context.Context, userIDs []string, epamID, correlationID string) (EpamRecord, bool, error)
 	DeleteEpam(ctx context.Context, userID, epamID, correlationID string) error
 
 	SaveFooter(ctx context.Context, rec FooterProfile, correlationID string) (FooterProfile, error)
@@ -109,6 +113,17 @@ func (s *memoryPamphletStore) GetEpam(_ context.Context, userID, epamID, _ strin
 	return rec, true, nil
 }
 
+func memoryUserIDSet(userIDs []string) map[string]bool {
+	set := make(map[string]bool, len(userIDs))
+	for _, id := range userIDs {
+		id = strings.TrimSpace(id)
+		if id != "" {
+			set[id] = true
+		}
+	}
+	return set
+}
+
 func (s *memoryPamphletStore) ListEpams(_ context.Context, userID, _ string) ([]EpamRecord, error) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
@@ -121,6 +136,70 @@ func (s *memoryPamphletStore) ListEpams(_ context.Context, userID, _ string) ([]
 		}
 	}
 	return out, nil
+}
+
+func (s *memoryPamphletStore) ListEpamsByUsers(_ context.Context, userIDs []string, _ string) ([]EpamRecord, error) {
+	set := memoryUserIDSet(userIDs)
+	if len(set) == 0 {
+		return []EpamRecord{}, nil
+	}
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	out := make([]EpamRecord, 0)
+	for _, rec := range s.epams {
+		if set[rec.UserID] {
+			cp := rec
+			cp.Body = nil
+			out = append(out, cp)
+		}
+	}
+	return out, nil
+}
+
+func (s *memoryPamphletStore) ListPublicEpamsByUsers(ctx context.Context, userIDs []string, correlationID string) ([]EpamRecord, error) {
+	all, err := s.ListEpamsByUsers(ctx, userIDs, correlationID)
+	if err != nil {
+		return nil, err
+	}
+	out := make([]EpamRecord, 0, len(all))
+	for _, rec := range all {
+		if rec.Public {
+			out = append(out, rec)
+		}
+	}
+	return out, nil
+}
+
+func (s *memoryPamphletStore) GetPublicEpamByUsers(ctx context.Context, userIDs []string, epamID, correlationID string) (EpamRecord, bool, error) {
+	epamID = strings.TrimSpace(epamID)
+	if epamID == "" {
+		return EpamRecord{}, false, nil
+	}
+	set := memoryUserIDSet(userIDs)
+	if len(set) == 0 {
+		return EpamRecord{}, false, nil
+	}
+	s.mu.RLock()
+	var meta EpamRecord
+	found := false
+	for _, rec := range s.epams {
+		if rec.EpamID == epamID && set[rec.UserID] && rec.Public {
+			meta = rec
+			found = true
+			break
+		}
+	}
+	if !found {
+		s.mu.RUnlock()
+		return EpamRecord{}, false, nil
+	}
+	body, ok := s.bodies[epamDocID(meta.UserID, meta.EpamID)]
+	s.mu.RUnlock()
+	if !ok {
+		return EpamRecord{}, false, nil
+	}
+	meta.Body = body
+	return meta, true, nil
 }
 
 func (s *memoryPamphletStore) DeleteEpam(_ context.Context, userID, epamID, _ string) error {
@@ -342,6 +421,107 @@ func (s *mongoPamphletStore) ListEpams(ctx context.Context, userID, _ string) ([
 		out = append(out, doc.toRecord())
 	}
 	return out, cur.Err()
+}
+
+func (s *mongoPamphletStore) ListEpamsByUsers(ctx context.Context, userIDs []string, _ string) ([]EpamRecord, error) {
+	ids := make([]string, 0, len(userIDs))
+	for _, id := range userIDs {
+		id = strings.TrimSpace(id)
+		if id != "" {
+			ids = append(ids, id)
+		}
+	}
+	if len(ids) == 0 {
+		return []EpamRecord{}, nil
+	}
+	cur, err := s.epams().Find(ctx, bson.M{"user_id": bson.M{"$in": ids}})
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+	out := make([]EpamRecord, 0)
+	for cur.Next(ctx) {
+		var doc epamMetaDoc
+		if err := cur.Decode(&doc); err != nil {
+			return nil, err
+		}
+		out = append(out, doc.toRecord())
+	}
+	return out, cur.Err()
+}
+
+func (s *mongoPamphletStore) ListPublicEpamsByUsers(ctx context.Context, userIDs []string, _ string) ([]EpamRecord, error) {
+	ids := make([]string, 0, len(userIDs))
+	for _, id := range userIDs {
+		id = strings.TrimSpace(id)
+		if id != "" {
+			ids = append(ids, id)
+		}
+	}
+	if len(ids) == 0 {
+		return []EpamRecord{}, nil
+	}
+	// Explicit public:true — unpublished pamphlets must never appear in Articles.
+	cur, err := s.epams().Find(ctx, bson.M{"user_id": bson.M{"$in": ids}, "public": true})
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+	out := make([]EpamRecord, 0)
+	for cur.Next(ctx) {
+		var doc epamMetaDoc
+		if err := cur.Decode(&doc); err != nil {
+			return nil, err
+		}
+		if !doc.Public {
+			continue
+		}
+		out = append(out, doc.toRecord())
+	}
+	return out, cur.Err()
+}
+
+func (s *mongoPamphletStore) GetPublicEpamByUsers(ctx context.Context, userIDs []string, epamID, _ string) (EpamRecord, bool, error) {
+	epamID = strings.TrimSpace(epamID)
+	if epamID == "" {
+		return EpamRecord{}, false, nil
+	}
+	ids := make([]string, 0, len(userIDs))
+	for _, id := range userIDs {
+		id = strings.TrimSpace(id)
+		if id != "" {
+			ids = append(ids, id)
+		}
+	}
+	if len(ids) == 0 {
+		return EpamRecord{}, false, nil
+	}
+	var doc epamMetaDoc
+	err := s.epams().FindOne(ctx, bson.M{
+		"epam_id": epamID,
+		"public":  true,
+		"user_id": bson.M{"$in": ids},
+	}).Decode(&doc)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return EpamRecord{}, false, nil
+	}
+	if err != nil {
+		return EpamRecord{}, false, err
+	}
+	if !doc.Public {
+		return EpamRecord{}, false, nil
+	}
+	rec := doc.toRecord()
+	var body epamBodyDoc
+	err = s.bodies().FindOne(ctx, bson.M{"_id": epamDocID(rec.UserID, rec.EpamID), "user_id": rec.UserID}).Decode(&body)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return EpamRecord{}, false, nil
+	}
+	if err != nil {
+		return EpamRecord{}, false, err
+	}
+	rec.Body = body.Body
+	return rec, true, nil
 }
 
 func (s *mongoPamphletStore) DeleteEpam(ctx context.Context, userID, epamID, _ string) error {
