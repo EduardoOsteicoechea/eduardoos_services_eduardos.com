@@ -30,6 +30,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--rail-gap);
+  margin-top: var(--space-padding);
 }
 
 .product-dash__section-title {
