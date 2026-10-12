@@ -25,6 +25,51 @@ const areaDefs = [
   { num: 5, label: "Ciencias Naturales", kind: "cie" as const, sectionId: "cie" as const },
 ];
 const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
+
+const HOLIDAY_FIXED = [
+  { name: "Año Nuevo", when: "1 de enero" },
+  { name: "Declaración de la Independencia", when: "19 de abril" },
+  { name: "Día del Trabajador", when: "1 de mayo" },
+  { name: "Batalla de Carabobo", when: "24 de junio" },
+  { name: "Día de la Independencia", when: "5 de julio" },
+  { name: "Natalicio de Simón Bolívar", when: "24 de julio" },
+  { name: "Día de la Resistencia Indígena", when: "12 de octubre" },
+  { name: "Nochebuena", when: "24 de diciembre" },
+  { name: "Navidad", when: "25 de diciembre" },
+  { name: "Fin de Año", when: "31 de diciembre" },
+] as const;
+
+const HOLIDAY_MOVABLE = [
+  { name: "Lunes de Carnaval", when: "móvil (2 días antes del Miércoles de Ceniza)" },
+  { name: "Martes de Carnaval", when: "móvil (1 día antes del Miércoles de Ceniza)" },
+  { name: "Jueves Santo", when: "móvil (Semana Santa)" },
+  { name: "Viernes Santo", when: "móvil (Semana Santa)" },
+] as const;
+
+const planHolidays = meta.holidays ?? [];
+
+function formatPlanDate(iso: string | undefined): string {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-");
+  if (!y || !m || !d) return iso;
+  return `${d}/${m}/${y}`;
+}
+
+function weekStartDate(weekPlan: (typeof weeks)[number]): string | undefined {
+  const rows = weekPlan.blocks
+    .flatMap((block) =>
+      (block.bible?.days ?? []).map((bibleDay) => ({
+        dayInPlan: bibleDay.dayInPlan,
+        calendarDate: block.calendarDate,
+      })),
+    )
+    .sort((a, b) => a.dayInPlan - b.dayInPlan);
+  return rows[0]?.calendarDate;
+}
+
+function weekForPlanDay(planDay: number): number {
+  return Math.ceil(planDay / (meta.daysPerWeek ?? 5));
+}
 ---
 
 <Layout
@@ -129,12 +174,62 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
       }
     </nav>
 
+    <section
+      class="product-dash__card eoschool-curriculum__holidays"
+      aria-labelledby="curriculum-holidays-title"
+    >
+      <h2 class="eoschool-curriculum__holidays-title" id="curriculum-holidays-title">
+        Feriados oficiales (VE)
+      </h2>
+      <div class="eoschool-curriculum__holidays-grid">
+        <div class="eoschool-curriculum__holidays-col">
+          <h3 class="eoschool-curriculum__holidays-subtitle">Fijos</h3>
+          <ul class="eoschool-curriculum__holidays-list">
+            {HOLIDAY_FIXED.map((h) => (
+              <li>
+                <span class="eoschool-curriculum__holidays-name">{h.name}</span>
+                <span class="eoschool-curriculum__holidays-when">{h.when}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="eoschool-curriculum__holidays-col">
+          <h3 class="eoschool-curriculum__holidays-subtitle">Móviles</h3>
+          <ul class="eoschool-curriculum__holidays-list">
+            {HOLIDAY_MOVABLE.map((h) => (
+              <li>
+                <span class="eoschool-curriculum__holidays-name">{h.name}</span>
+                <span class="eoschool-curriculum__holidays-when">{h.when}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      {planHolidays.length ? (
+        <div class="eoschool-curriculum__holidays-plan">
+          <h3 class="eoschool-curriculum__holidays-subtitle">
+            En este año escolar ({meta.schoolYearStart} → {meta.schoolYearEnd})
+          </h3>
+          <ul class="eoschool-curriculum__holidays-list eoschool-curriculum__holidays-list--plan">
+            {planHolidays.map((h) => (
+              <li>
+                <a href={`#week-${weekForPlanDay(h.planDay)}`}>
+                  {formatPlanDate(h.date)} · {h.name} · Día {h.planDay}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </section>
+
     <div class="eoschool-curriculum__weeks">
       {
         weeks.map((weekPlan) => {
           const weekPlanDays = weekPlan.blocks
             .flatMap((block) => (block.bible?.days ?? []).map((bibleDay) => bibleDay.dayInPlan))
             .sort((a, b) => a - b);
+          const weekDateLabel = formatPlanDate(weekStartDate(weekPlan));
           return (
           <section
             class="product-dash__card eoschool-curriculum__week"
@@ -156,7 +251,7 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
                   <span class="material-symbols-outlined" aria-hidden="true">print</span>
                 </button>
                 <h2 class="eoschool-curriculum__week-title" id={`week-title-${weekPlan.week}`}>
-                  Semana {weekPlan.week}
+                  Semana {weekPlan.week}{weekDateLabel ? ` · ${weekDateLabel}` : ""}
                 </h2>
               </div>
 
@@ -164,7 +259,7 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
               {weekPlan.blocks
                 .flatMap((block) => (block.bible?.days ?? []).map((bibleDay) => ({ block, bibleDay })))
                 .sort((a, b) => a.bibleDay.dayInPlan - b.bibleDay.dayInPlan)
-                .map(({ block, bibleDay }) => {
+                .map(({ block, bibleDay }, daySlot) => {
                 const dayId = `d${bibleDay.dayInPlan}`;
                 const blockId = `w${weekPlan.week}-b${block.block}`;
                 const scheduled = scheduledSectionsForBlock(block);
@@ -185,12 +280,14 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
                     class:list={[
                       "product-dash__card",
                       "eoschool-curriculum__day-card",
+                      daySlot === 4 && "eoschool-curriculum__day-card--slot5",
                       isExpo && "eoschool-curriculum__day-card--expo",
                       isHoliday && "eoschool-curriculum__day-card--holiday",
                     ]}
                     data-curriculum-day={dayId}
                     data-curriculum-block={blockId}
                     data-plan-day={bibleDay.dayInPlan}
+                    data-curriculum-day-slot={daySlot + 1}
                     data-curriculum-scheduled={scheduled.join(",")}
                     data-curriculum-day-kind={block.dayKind ?? "teach"}
                     data-curriculum-day-trigger
@@ -400,6 +497,7 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
 
 <script>
   import { initCurriculumIndexResize } from "../../../lib/eoschool-curriculum-index-resize";
+  import { initCurriculumDayHeights } from "../../../lib/eoschool-curriculum-day-heights";
   import { initCurriculumDayModal } from "../../../lib/eoschool-curriculum-day-modal";
   import { initCurriculumProgress } from "../../../lib/eoschool-curriculum-progress";
   import { bindCurriculumTreatModal } from "../../../lib/eoschool-curriculum-treat-modal";
@@ -426,6 +524,7 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
     }
     initCurriculumDayModal(root);
     initCurriculumWeekPrint(root);
+    initCurriculumDayHeights(root);
   }
 
   bootCurriculumChrome();
@@ -436,6 +535,83 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
   .eoschool-curriculum {
     min-width: 0;
     max-width: 100%;
+    font-size: var(--font-size-sm);
+  }
+
+  .eoschool-curriculum__holidays {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    margin-block-end: var(--space-padding);
+    min-width: 0;
+    width: 100%;
+  }
+
+  .eoschool-curriculum__holidays-title {
+    margin: 0;
+    font-size: var(--font-size-md);
+    font-weight: 650;
+    line-height: 1.3;
+  }
+
+  .eoschool-curriculum__holidays-subtitle {
+    margin: 0 0 var(--rail-gap) 0;
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+    color: var(--color-muted);
+  }
+
+  .eoschool-curriculum__holidays-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-padding);
+    min-width: 0;
+  }
+
+  .eoschool-curriculum__holidays-col,
+  .eoschool-curriculum__holidays-plan {
+    min-width: 0;
+  }
+
+  .eoschool-curriculum__holidays-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum__holidays-list li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
+    line-height: 1.35;
+  }
+
+  .eoschool-curriculum__holidays-name {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .eoschool-curriculum__holidays-when {
+    color: var(--color-muted);
+  }
+
+  .eoschool-curriculum__holidays-list--plan a {
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  .eoschool-curriculum__holidays-list--plan a:hover,
+  .eoschool-curriculum__holidays-list--plan a:focus-visible {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 47.999rem) {
+    .eoschool-curriculum__holidays-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 
   .eoschool-curriculum__student {
@@ -656,9 +832,18 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
     gap: var(--rail-gap);
     min-width: 0;
     flex: 1;
-    overflow-y: auto;
     overflow-x: hidden;
-    max-height: 40rem;
+    overflow-y: visible;
+    max-height: none;
+  }
+
+  .eoschool-curriculum__day-card--slot5 {
+    overflow: hidden;
+  }
+
+  .eoschool-curriculum__day-card--slot5 .eoschool-curriculum__day-body {
+    overflow-y: auto;
+    min-height: 0;
   }
 
   .eoschool-curriculum__day-card:hover,
@@ -928,10 +1113,6 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
 
     .eoschool-curriculum__learnings {
       padding-inline-start: 0.875rem;
-    }
-
-    .eoschool-curriculum__day-body {
-      max-height: 32rem;
     }
   }
 
