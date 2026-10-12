@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 159,
   "week": 32,
   "grade": "3er grado",
   "title": "Día 159",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Nuestro Mundo",
-      "learning": "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
-      "mode": "directo",
-      "activityKind": "mapPlaces",
-      "minutesEstimate": 18,
-      "topicShort": "las características de su vivienda y de un caserío campesino…",
-      "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Resuelve en el cuaderno: 367 + 428 = 10000 − 4567 = 12 × 9 = 72 ÷ 6 =. Muestra el procedimiento en al menos 2.",
         "Elige 1 resultado y explica con palabras por qué tiene sentido."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Energía – materia — La energía en las comunidades",
-      "learning": "Reconoce la importancia del acceso a la energía en el desarrollo comunitario.",
-      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
-      "mode": "directo",
-      "activityKind": "observation",
-      "minutesEstimate": 18,
-      "topicShort": "la importancia del acceso a la energía en el desarrollo…",
-      "activities": [
-        "Observa 15 min algo de la importancia del acceso a la energía en el desarrollo…; tabla con 3 filas de datos.",
-        "Compara 2 filas: similitud y diferencia."
       ]
     }
   ]

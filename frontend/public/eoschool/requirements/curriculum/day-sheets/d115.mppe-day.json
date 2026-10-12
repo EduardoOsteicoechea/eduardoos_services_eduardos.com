@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 115,
   "week": 23,
   "grade": "3er grado",
-  "title": "Día 115",
+  "title": "Día 115 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: 1 Samuel 14, 15 · Job–Mal: Isaías 39, 40 · NT: 1 Corintios 16; 2 Corintios 1",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: 1 Samuel 14, 15 · Job–Mal: Isaías 39, 40 · NT: 1 Corintios 16; 2 Corintios 1",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
-        "Responde: ¿qué pasó? — 2 frases."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "Venezuela en el Mundo",
-      "learning": "Conoce superficie, estados y capitales; y la ciudad capital, Caracas.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
-      "mode": "directo",
-      "activityKind": "mapPlaces",
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · Venezuela en el Mundo",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Conoce superficie, estados y capitales; y la ciudad capital, Caracas.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "superficie, estados y capitales",
       "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
+        "Prepara una exposición de 1 minuto sobre superficie, estados y capitales: 3 hechos y por qué importa en tu comunidad.",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Conocer personajes destacados de la historia venezolana.",
-      "learning": "Conoce nombres y datos fundamentales de tres o cuatro venezolanos(As) ilustres: Simón Bolívar, Simón Rodríguez, Francisco de Miranda. Si es el caso, epónimos de la escuela, el estado, municipio o parroquia donde reside.",
-      "canDo": "Al terminar puedes resumir la idea central en 4 oraciones.",
-      "mode": "fragmentado",
-      "activityKind": "default",
-      "minutesEstimate": 15,
-      "topicShort": "nombres y datos fundamentales de tres o cuatro venezolanos(As) ilustres:…",
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Comentar acerca de textos y temas de interés.",
+      "learning": "Prepara una exposición sobre: Comenta con otras personas acerca de textos y temas de su interés.",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 18,
+      "topicShort": "comenta con otras personas acerca de textos y temas de…",
       "activities": [
-        "4 oraciones que expliquen la idea central de nombres y datos fundamentales de tres o cuatro venezolanos(As)…",
-        "Dibuja un ícono que represente la idea."
+        "Escribe 4 oraciones o un párrafo corto que resuma comenta con otras personas acerca de textos y temas de… para tu…",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Magnitudes y medidas",
-      "learning": "Diferencia medidas convencionales y no convencionales.",
-      "canDo": "Al terminar puedes medir, registrar y comparar dos longitudes con unidades.",
-      "mode": "directo",
-      "activityKind": "measurement",
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Magnitudes y medidas",
+      "learning": "Prepara una exposición sobre: Diferencia medidas convencionales y no convencionales.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "diferencia medidas convencionales y no convencionales",
       "activities": [
-        "Mide 4 objetos con regla o cinta; tabla: objeto, medida, unidad.",
-        "Compara dos medidas: ¿cuánto más largo es uno? Escribe la resta."
+        "Resuelve en el cuaderno 1 problema o croquis sobre diferencia medidas convencionales y no convencionales y etiqueta…",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "El ambiente y sus interacciones — Biodiversidad",
-      "learning": "Valora y protege la biodiversidad.",
-      "canDo": "Al terminar puedes clasificar evidencia local con criterio.",
-      "mode": "apalancado",
-      "activityKind": "biodiversity",
-      "minutesEstimate": 20,
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · El ambiente y sus interacciones — Biodiversidad",
+      "learning": "Prepara una exposición sobre: Valora y protege la biodiversidad.",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 18,
       "topicShort": "valora y protege la biodiversidad",
       "activities": [
-        "Fotos o dibujos de 6 organismos; clasifica en 2 grupos y justifica.",
-        "Escribe 3 oraciones sobre biodiversidad en tu zona."
+        "Prepara una exposición sobre valora y protege la biodiversidad.",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

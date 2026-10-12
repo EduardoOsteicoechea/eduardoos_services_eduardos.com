@@ -8,6 +8,7 @@ import {
   buildWeekIndexRow,
   groupLearningRefs,
   identityGroups,
+  scheduledSectionsForBlock,
 } from "../../../lib/eoschool-mppe-curriculum-view";
 
 const { meta, weeks } = MPPE_40WEEK_CURRICULUM;
@@ -23,6 +24,7 @@ const areaDefs = [
   { num: 4, label: "Matemáticas", kind: "mat" as const, sectionId: "mat" as const },
   { num: 5, label: "Ciencias Naturales", kind: "cie" as const, sectionId: "cie" as const },
 ];
+const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
 ---
 
 <Layout
@@ -50,8 +52,8 @@ const areaDefs = [
     <EoschoolDashBack />
     <p class="lede">
       {meta.grade ?? "3er grado"} · {meta.weeks} semanas × {meta.daysPerWeek ?? 5} días = {meta.totalPlanDays ?? bibleMeta.readingDays}{" "}
-      días escolares. Cada día: lectura bíblica (tres pistas) más Identidad, Lenguaje, Matemáticas y Ciencias. Abre un día para ver
-      objetivo, aprendizaje y clase PDF.
+      días escolares. Cada día: Biblia y Lenguaje. Días 1 y 3: Identidad y Ciencias. Días 2 y 4: Matemáticas. Día 5: exposiciones
+      de las cinco asignaturas. Abre un día para ver objetivo, aprendizaje y hoja PDF.
     </p>
     <p class="eoschool-curriculum__student" data-curriculum-student-banner hidden></p>
 
@@ -160,34 +162,56 @@ const areaDefs = [
                 .map(({ block, bibleDay }) => {
                 const dayId = `d${bibleDay.dayInPlan}`;
                 const blockId = `w${weekPlan.week}-b${block.block}`;
+                const scheduled = scheduledSectionsForBlock(block);
+                const isExpo = block.dayKind === "exposition";
                 return (
                   <article
-                    class="product-dash__card eoschool-curriculum__day-card"
+                    class:list={[
+                      "product-dash__card",
+                      "eoschool-curriculum__day-card",
+                      isExpo && "eoschool-curriculum__day-card--expo",
+                    ]}
                     data-curriculum-day={dayId}
                     data-curriculum-block={blockId}
                     data-plan-day={bibleDay.dayInPlan}
+                    data-curriculum-scheduled={scheduled.join(",")}
+                    data-curriculum-day-kind={block.dayKind ?? "teach"}
                     data-curriculum-day-trigger
                     tabindex="0"
                     role="button"
-                    aria-label={`Abrir día ${bibleDay.dayInPlan}`}
+                    aria-label={
+                      isExpo
+                        ? `Abrir día ${bibleDay.dayInPlan}, exposiciones`
+                        : `Abrir día ${bibleDay.dayInPlan}`
+                    }
                   >
                     <header class="eoschool-curriculum__day-head">
-                      <h3 class="eoschool-curriculum__day-title">Día {bibleDay.dayInPlan}</h3>
+                      <h3 class="eoschool-curriculum__day-title">
+                        Día {bibleDay.dayInPlan}
+                        {isExpo ? " · Exposiciones" : ""}
+                      </h3>
                       <span class="eoschool-curriculum__day-open-hint" aria-hidden="true">
                         <span class="material-symbols-outlined">open_in_full</span>
                       </span>
                     </header>
 
                     <div class="eoschool-curriculum__day-body">
-                      {areaDefs.map((area) => {
+                      {scheduled.map((sectionId, idx) => {
+                        const area = areaBySection[sectionId];
+                        if (!area) return null;
                         const groups =
                           area.kind === "bible"
                             ? bibleGroupsForDay(bibleDay)
                             : area.kind === "identity"
                               ? identityGroups(block)
                               : groupLearningRefs(
-                                  area.kind === "len" ? block.len : area.kind === "mat" ? block.mat : block.cie,
+                                  (area.kind === "len"
+                                    ? block.len
+                                    : area.kind === "mat"
+                                      ? block.mat
+                                      : block.cie) ?? [],
                                 );
+                        const label = isExpo ? `${area.label} · Expo` : area.label;
                         return (
                           <div
                             class="eoschool-curriculum__subject"
@@ -196,7 +220,7 @@ const areaDefs = [
                             <div class="eoschool-curriculum__subject-head">
                               <label class="eoschool-curriculum__section-check">
                                 <input type="checkbox" data-curriculum-section-check />
-                                <span class="page-title-sr">Sección completada: {area.label}</span>
+                                <span class="page-title-sr">Sección completada: {label}</span>
                                 <span class="eoschool-curriculum__section-check-box" aria-hidden="true">
                                   <span class="material-symbols-outlined eoschool-curriculum__section-check-icon">
                                     check
@@ -204,11 +228,14 @@ const areaDefs = [
                                 </span>
                               </label>
                               <h4 class="eoschool-curriculum__subject-title">
-                                <span class="eoschool-curriculum__subject-num">{area.num}.</span>
-                                {area.label}
+                                <span class="eoschool-curriculum__subject-num">{idx + 1}.</span>
+                                {label}
                               </h4>
                             </div>
                             <div class="eoschool-curriculum__subject-body eoschool-curriculum__subject-body--card">
+                              {isExpo ? (
+                                <p class="eoschool-curriculum__expo-hint">Preparar exposición de la semana</p>
+                              ) : null}
                               {groups.some((g) => g.learnings.length) ? (
                                 <ul class="eoschool-curriculum__learnings eoschool-curriculum__learnings--card">
                                   {groups.flatMap((group) =>
@@ -224,7 +251,7 @@ const areaDefs = [
                                 <div class="eoschool-curriculum__objective-block">
                                   <p class="eoschool-curriculum__objective">
                                     <span class="eoschool-curriculum__objective-label">Objetivo</span>
-                                    {group.objective}
+                                    {isExpo ? `Exposición · ${group.objective}` : group.objective}
                                   </p>
                                   {group.learnings.length ? (
                                     <div class="eoschool-curriculum__specific-learning">
@@ -296,7 +323,7 @@ const areaDefs = [
         </section>
         <section class="eoschool-curriculum-modal__panel eoschool-curriculum-modal__panel--pdf" aria-label="Clase PDF">
           <div class="eoschool-curriculum-modal__panel-head">
-            <h3 class="eoschool-curriculum-modal__panel-title">Hoja del día (5 materias)</h3>
+            <h3 class="eoschool-curriculum-modal__panel-title">Hoja del día (materias del día)</h3>
             <button type="button" class="eoschool-curriculum-modal__download" data-curriculum-modal-download disabled>
               Descargar PDF
             </button>
@@ -825,6 +852,16 @@ const areaDefs = [
     margin: 0;
     font-size: var(--font-size-sm);
     color: var(--color-muted);
+  }
+
+  .eoschool-curriculum__expo-hint {
+    margin: 0 0 var(--rail-gap) 0;
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+  }
+
+  .eoschool-curriculum__day-card--expo .eoschool-curriculum__day-title {
+    font-weight: 600;
   }
 
   .eoschool-curriculum__learnings {

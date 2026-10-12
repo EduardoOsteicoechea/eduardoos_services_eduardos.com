@@ -25,32 +25,43 @@ This route is a **separate product surface** from Homescool workspace classes. D
 1. **MPPE Venezuela (3.er grado)** — marco, consulta de contenidos, plan 40 semanas / 200 días: `ministerio_de_educacion_de_venezuela/`, `eoschool-mppe-40week-curriculum.json`.
 2. **Homescool / eoschool METHOD** applies only to `/homescool/*` and published `.eoschool` media — not to this route.
 
+## Weekly subject rotation
+
+Within each week (day-in-week 1–5):
+
+| Day | Sections | Notes |
+| --- | --- | --- |
+| 1, 3 | `bib`, `len`, `ide`, `cie` | Teach |
+| 2, 4 | `bib`, `len`, `mat` | Teach |
+| 5 | `bib`, `ide`, `len`, `mat`, `cie` | **Exposition** — rehearse week focus; no new teach buckets |
+
+`bib` + `len` appear every day. Progress keys stay `dN:sectionId` (no renumbering / no Mongo migration). Day complete = all **scheduled** sections that day (not always 5/5).
+
 ## Day content format (required)
 
 Static JSON per plan day:
 
 - Path: `frontend/public/eoschool/requirements/curriculum/day-sheets/d{N}.mppe-day.json`
 - `format`: `"mppe-curriculum-day"` (not `"eoschool"`)
-- Five sections `bib | ide | len | mat | cie`, each with:
-  - `objective` (objetivo MPPE / unidad)
-  - `learning` (aprendizaje específico del día)
-  - `activities` (plainificación 3.er grado — 2 ítems; rotan por **semana + día 1–5** vía `build-mppe-day-sheets.mjs`, aunque el aprendizaje se repita)
+- Fields: `dayKind` (`teach` \| `exposition`), `scheduledSections`, `sections[]` (only scheduled ids)
+- Each section: `objective`, `learning`, `activities` (2 items), optional `mode` / `canDo` / `activityKind`
+- Exposition Friday: `mode: "exposition"`; labels may include «Exposición»
 
-Regenerate: `node frontend/scripts/build-40week-mppe-curriculum.mjs` then `node frontend/scripts/build-mppe-day-sheets.mjs`. Days with no new mat/cie/len aprendizaje **repeat the previous day's refs** (forward-fill in the 40-week builder).
+Regenerate: `node frontend/scripts/build-40week-mppe-curriculum.mjs` then `node frontend/scripts/build-mppe-day-sheets.mjs`. Forward-fill learnings **within** each subject’s teaching days only (mat on D2/D4; ide+cie on D1/D3; len every day).
 
 Manifest: `day-sheets-manifest.json` (not `plan-classes-manifest.json` / not per-subject `.eoschool.json`).
 
 ## UI
 
-- **Card:** solo aprendizaje(s); **modal:** objetivo + aprendizaje específico + **materiales por asignatura**.
-- **PDF:** una sola hoja carta con **5 tarjetas** (rejilla 3+2), tipografía **9 pt** títulos de tarjeta, **8 pt** cuerpo — generada por el API MPPE, no por `/api/homescool/preview`.
+- **Card:** only scheduled subjects that day; **modal:** tabs for scheduled sections + materiales.
+- **PDF:** one letter page with **3 / 4 / 5 cards** by section count (not always 5), via API MPPE — not `/api/homescool/preview`.
 - **Materiales (modal, por tab/asignatura):** roles `teacher_guide` | `child` | `proof`; kinds `image` | `audio` | `document` | `url`. Scope: `owner + studentKey + dayId + sectionId`.
 - **Treat (al marcar sección completa):** modal de celebración con confeti + chiste/adivinanza. Corpus: `frontend/src/data/homescool/jokes-riddles-1000.json` (keys `dN:section`, 1000 ítems); regenerar con `scripts/generate_homescool_jokes_riddles.py`.
 
 ## API
 
-- `POST /api/eoschool/curriculum/day-preview` — body = full `mppe-curriculum-day` JSON → PDF base64 (5 cards).
-- Progress Mongo: `/api/eoschool/curriculum/progress*` (por niño; default Elías).
+- `POST /api/eoschool/curriculum/day-preview` — body = full `mppe-curriculum-day` JSON → PDF base64 (variable cards).
+- Progress Mongo: `/api/eoschool/curriculum/progress*` (por niño; default Elías). Keys `dN:bib|ide|len|mat|cie` unchanged.
 - Materials (cookie + Homescool entitlement + CSRF on writes):
   - `GET /api/eoschool/curriculum/materials?studentKey=&dayId=&sectionId=`
   - `POST /api/eoschool/curriculum/materials` (multipart file + role + optional title/description)
@@ -68,10 +79,11 @@ Manifest: `day-sheets-manifest.json` (not `plan-classes-manifest.json` / not per
 - Generating or requiring Homescool `lesson.kind`, `quiz`, `slotSequence`, or `layout: letter-grid-v2` for MPPE day sheets.
 - Using `POST /api/homescool/preview` for the curriculum day modal PDF.
 - Copying Homescool week themes as the spine instead of the 40-week MPPE plan data.
-- Embedding section materials into the 5-card day PDF unless explicitly requested.
+- Embedding section materials into the day PDF unless explicitly requested.
+- Renaming section ids or renumbering plan days (breaks progress tracking).
 
 ## When editing
 
-1. Subdivide saberes según el plan 40×200, no hardcodear 28 semanas.
+1. Subdivide saberes según el plan 40×200 y el patrón semanal, no hardcodear 28 semanas ni “siempre 5 materias”.
 2. Keep activities age-appropriate (3.er grado).
 3. After JSON changes, rebuild day sheets and smoke-test PDF preview + modal.

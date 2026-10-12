@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 122,
   "week": 25,
   "grade": "3er grado",
   "title": "Día 122",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee por turnos una pista cada persona.",
         "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Pueblos Afrovenezolanos",
-      "learning": "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
-      "canDo": "Al terminar puedes registrar 3 hechos culturales y una conexión personal.",
-      "mode": "directo",
-      "activityKind": "culture",
-      "minutesEstimate": 18,
-      "topicShort": "que los pueblos afrovenezolanos son los trabajadores que sostienen a…",
-      "activities": [
-        "3 hechos de Pueblos Afrovenezolanos (comida, música o fiesta); viñetas.",
-        "«En mi casa nosotros…» — 2 frases."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Mide 4 objetos con regla o cinta; tabla: objeto, medida, unidad.",
         "Compara dos medidas: ¿cuánto más largo es uno? Escribe la resta."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Seres vivos — Las plantas",
-      "learning": "Identifica y clasifica diferentes tipos de plantas de su entorno, y describe sus partes principales y sus funciones.",
-      "canDo": "Al terminar puedes observar una planta y registrar partes y función.",
-      "mode": "directo",
-      "activityKind": "plants",
-      "minutesEstimate": 18,
-      "topicShort": "y clasifica diferentes tipos de plantas de su entorno, y…",
-      "activities": [
-        "Observa una planta 10 min; dibujo etiquetado (raíz, tallo, hoja).",
-        "2 frases: qué necesita para vivir según y clasifica diferentes tipos de plantas de su entorno, y…."
       ]
     }
   ]

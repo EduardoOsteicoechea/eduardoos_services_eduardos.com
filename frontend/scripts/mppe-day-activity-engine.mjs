@@ -1357,6 +1357,69 @@ function tplBib(ctx) {
   };
 }
 
+/** Friday exposition: rehearse a short talk on the week's focus (no new teach content). */
+export function buildExpositionPack(sectionId, input) {
+  const { learning, learningPhrase, finalizeActivity, planDay } = input;
+  const topic = topicShort(learningPhrase, learning) || "el tema de la semana";
+  const ceiling = sectionId === "bib" ? MINUTES.bib : MINUTES.academic;
+  const bySection = {
+    bib: {
+      canDo: "contar en 1 minuto la idea del pasaje y una aplicación en casa",
+      activities: [
+        `Lee en voz alta el pasaje de la semana sobre ${topic}; subraya 3 palabras clave.`,
+        `Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa.`,
+      ],
+    },
+    ide: {
+      canDo: "explicar el tema de Identidad de la semana con un ejemplo personal",
+      activities: [
+        `Prepara una exposición de 1 minuto sobre ${topic}: 3 hechos y por qué importa en tu comunidad.`,
+        `Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto.`,
+      ],
+    },
+    len: {
+      canDo: "exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto",
+      activities: [
+        `Escribe 4 oraciones o un párrafo corto que resuma ${topic} para tu exposición.`,
+        `Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste.`,
+      ],
+    },
+    mat: {
+      canDo: "mostrar un ejemplo resuelto y explicar los pasos en voz alta",
+      activities: [
+        `Resuelve en el cuaderno 1 problema o croquis sobre ${topic} y etiqueta los pasos.`,
+        `Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta.`,
+      ],
+    },
+    cie: {
+      canDo: "explicar la idea científica de la semana con una evidencia u observación",
+      activities: [
+        `Prepara una exposición sobre ${topic}: observa o recuerda una evidencia y anota 3 datos.`,
+        `Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo.`,
+      ],
+    },
+  };
+  const raw = bySection[sectionId] || bySection.len;
+  let activities = raw.activities.map((line) => String(line));
+  activities = sanitizeActivities(activities, learning, topic);
+  activities = activities.map((t) => (finalizeActivity ? finalizeActivity(t) : t));
+  const canDo = raw.canDo.startsWith("Al terminar")
+    ? raw.canDo
+    : `Al terminar puedes ${raw.canDo}.`;
+  const pack = {
+    mode: "exposition",
+    kind: "exposition",
+    minutesEstimate: Math.min(ceiling, sectionId === "bib" ? 12 : 18),
+    canDo,
+    topicShort: topic,
+    activities,
+  };
+  for (const f of qaHardRules(sectionId, pack, learning)) {
+    if (process.env.MPPE_QA_STRICT) throw new Error(`d${planDay} ${sectionId} expo: ${f}`);
+  }
+  return pack;
+}
+
 export function buildSectionPack(sectionId, input) {
   const {
     planDay,
@@ -1366,7 +1429,19 @@ export function buildSectionPack(sectionId, input) {
     objective,
     ideTitle,
     finalizeActivity,
+    exposition,
   } = input;
+  if (exposition) {
+    return buildExpositionPack(sectionId, {
+      planDay,
+      week,
+      learning,
+      learningPhrase,
+      objective,
+      ideTitle,
+      finalizeActivity,
+    });
+  }
   const dayInWeek = ((planDay - 1) % 5) + 1;
   const mode = classifyMode(sectionId, learning || "", objective || "");
   const kind = classifyKind(sectionId, learning || "", objective || "");
@@ -1450,8 +1525,10 @@ export function qaSection(sectionId, pack, learning) {
   if (!pack.canDo || !/al terminar puedes/i.test(pack.canDo)) failures.push("missing canDo");
   if ((pack.minutesEstimate ?? 0) > ceiling) failures.push("minutes over ceiling");
   if (!pack.mode) failures.push("missing mode");
+  const isExpo = pack.mode === "exposition" || pack.kind === "exposition";
   const rs = rubricScoreSection(sectionId, pack);
-  if (rs < 3) failures.push(`rubric ${rs}/4`);
+  if (!isExpo && rs < 3) failures.push(`rubric ${rs}/4`);
+  if (isExpo && rs < 2) failures.push(`expo rubric ${rs}/4`);
   failures.push(...qaHardRules(sectionId, { ...pack, kind: pack.kind }, learning));
   for (const act of pack.activities ?? []) {
     if (MINISTERIAL_START.test(act)) failures.push("ministerial verb in activity");

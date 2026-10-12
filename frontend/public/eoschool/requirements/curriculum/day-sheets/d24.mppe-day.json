@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 24,
   "week": 5,
   "grade": "3er grado",
   "title": "Día 24",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Elige solo NT o AT si el día es muy largo; lee una sección.",
         "Dibuja un símbolo del pasaje. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Pueblos Afrovenezolanos",
-      "learning": "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
-      "canDo": "Al terminar puedes registrar 3 hechos culturales y una conexión personal.",
-      "mode": "directo",
-      "activityKind": "culture",
-      "minutesEstimate": 18,
-      "topicShort": "que los pueblos afrovenezolanos son los trabajadores que sostienen a…",
-      "activities": [
-        "3 hechos de Pueblos Afrovenezolanos (comida, música o fiesta); viñetas.",
-        "«En mi casa nosotros…» — 2 frases."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Dibuja un croquis de tu cuarto y marca norte, puerta y ventana; escribe 4 instrucciones para ir de la puerta a la…",
         "Intercambia con un adulto: sigue sus instrucciones en el croquis y corrige si algo no cuadra."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Salud integral — La alimentación en Venezuela",
-      "learning": "Reconoce los platos típicos de Venezuela y sus ingredientes principales.",
-      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
-      "mode": "directo",
-      "activityKind": "observation",
-      "minutesEstimate": 18,
-      "topicShort": "los platos típicos de Venezuela y sus ingredientes principales",
-      "activities": [
-        "Observa 15 min algo de los platos típicos de Venezuela y sus ingredientes principales; tabla con 3 filas de datos.",
-        "Compara 2 filas: similitud y diferencia."
       ]
     }
   ]

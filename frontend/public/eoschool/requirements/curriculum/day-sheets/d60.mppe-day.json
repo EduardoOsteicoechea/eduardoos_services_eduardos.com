@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 60,
   "week": 12,
   "grade": "3er grado",
-  "title": "Día 60",
+  "title": "Día 60 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Números 13, 14 · Job–Mal: Salmos 104, 105, 106 · NT: Juan 10",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: Números 13, 14 · Job–Mal: Salmos 104, 105, 106 · NT: Juan 10",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Elige solo NT o AT si el día es muy largo; lee una sección.",
-        "Dibuja un símbolo del pasaje. Cierra con 1 frase de aplicación en familia."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "Nuestro Mundo",
-      "learning": "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
-      "mode": "directo",
-      "activityKind": "mapPlaces",
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · Nuestro Mundo",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "las características de su vivienda y de un caserío campesino…",
       "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
+        "Prepara una exposición de 1 minuto sobre las características de su vivienda y de un caserío campesino…: 3 hechos y…",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Participar en intercambios de grupo sobre respuestas a instrumentos de evaluación.",
-      "learning": "Participa en la comparación de respuestas a instrumentos de evaluación mediante intercambios con el grupo de compañeras/ os y docente.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Recomendar obras literarias.",
+      "learning": "Prepara una exposición sobre: Recomienda obras literarias informando títulos y autores/autoras de un repertorio de cuentos y poemas que conoce.",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "la comparación de respuestas a instrumentos de evaluación mediante intercambios…",
+      "topicShort": "obras literarias informando títulos y autores/autoras de un repertorio de…",
       "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+        "Escribe 4 oraciones o un párrafo corto que resuma obras literarias informando títulos y autores/autoras de un…",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Identifica los elementos de los cuerpos geométricos.",
-      "canDo": "Al terminar puedes practicar el contenido de hoy con procedimiento escrito.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Geometría",
+      "learning": "Prepara una exposición sobre: Identifica los elementos de los cuerpos geométricos.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "identificar los elementos de los cuerpos geométricos",
       "activities": [
-        "Resuelve: 589 + 211 = 4500 − 1893 = 25 × 4 = 63 ÷ 7 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
-        "Explica en 2 oraciones qué estrategia usaste."
+        "Resuelve en el cuaderno 1 problema o croquis sobre identificar los elementos de los cuerpos geométricos y etiqueta…",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Identifica diferentes métodos sencillos para separar componentes en mezclas y describe cómo funcionan.",
-      "canDo": "Al terminar puedes probar 3 mezclas seguras y registrar qué pasa.",
-      "mode": "directo",
-      "activityKind": "mixture",
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · Ciencia, tecnología y sociedad — Las mezclas",
+      "learning": "Prepara una exposición sobre: Identifica diferentes métodos sencillos para separar componentes en mezclas y describe cómo funcionan.",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "diferentes métodos sencillos para separar componentes en mezclas y describe…",
       "activities": [
-        "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
-        "Clasifica: ¿se disuelve o no? Una frase con evidencia."
+        "Prepara una exposición sobre diferentes métodos sencillos para separar componentes en mezclas y describe…: observa…",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

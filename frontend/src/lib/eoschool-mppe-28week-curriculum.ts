@@ -39,14 +39,25 @@ export type BibleTrackReport = {
   daysWithTwoOrMore: number;
 };
 
+export type CurriculumPlanSectionId = "bib" | "ide" | "len" | "mat" | "cie";
+
 export type CurriculumBlock = {
   block: number;
   days: number;
+  /** Present on 40-week plan: teach vs Friday exposition. */
+  dayKind?: "teach" | "exposition";
+  /** Sections shown / tracked that day (40-week rotation). */
+  scheduledSections?: CurriculumPlanSectionId[];
   bible: BibleBlock;
-  identity: CurriculumIdentityBlock;
-  len: CurriculumLearningRef[];
-  mat: CurriculumLearningRef[];
-  cie: CurriculumLearningRef[];
+  identity?: CurriculumIdentityBlock & {
+    weekFocus?: string;
+    grade?: string;
+    week?: number;
+    dayInWeek?: number;
+  };
+  len?: CurriculumLearningRef[];
+  mat?: CurriculumLearningRef[];
+  cie?: CurriculumLearningRef[];
 };
 
 export type CurriculumWeek = {

@@ -15,8 +15,6 @@ func BuildMPPECurriculumProgramPDF(docs []MPPECurriculumDayDoc) ([]byte, error) 
 	margin := MmToPoints(EoschoolMarginMm)
 	gap := MmToPoints(mppeDayCardGapMm)
 	pad := MmToPoints(mppeDayCardPadMm)
-	usableW := pageW - 2*margin
-	colW := (usableW - 2*gap) / 3
 
 	var streams []string
 	streams = append(streams, renderMPPEProgramCover(docs, pageW, pageH, margin))
@@ -26,7 +24,7 @@ func BuildMPPECurriculumProgramPDF(docs []MPPECurriculumDayDoc) ([]byte, error) 
 		streams = append(streams, renderMPPEWeekIndexPage(w.week, w.docs, pageW, pageH, margin))
 	}
 	for _, doc := range docs {
-		streams = append(streams, renderMPPECurriculumDayPageContent(doc, pageW, pageH, margin, gap, colW, pad))
+		streams = append(streams, renderMPPECurriculumDayPageContent(doc, pageW, pageH, margin, gap, pad))
 	}
 
 	n := len(streams)

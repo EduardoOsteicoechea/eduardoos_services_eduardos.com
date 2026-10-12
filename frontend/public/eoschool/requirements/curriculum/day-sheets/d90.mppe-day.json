@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 90,
   "week": 18,
   "grade": "3er grado",
-  "title": "Día 90",
+  "title": "Día 90 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Josué 8, 9 · Job–Mal: Proverbios 28, 29, 30 · NT: Hechos 28",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: Josué 8, 9 · Job–Mal: Proverbios 28, 29, 30 · NT: Hechos 28",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee por turnos una pista cada persona.",
-        "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "Nación Petrolera",
-      "learning": "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
-      "canDo": "Al terminar puedes quedarte con 3 hitos del tema de hoy.",
-      "mode": "fragmentado",
-      "activityKind": "historyMilestones",
-      "minutesEstimate": 15,
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · Nación Petrolera",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 18,
       "topicShort": "hitos de la historia reciente de Venezuela",
       "activities": [
-        "Solo 3 hitos (no toda la lista del plan); viñetas con año o lugar.",
-        "Mapa o dibujo con 3 etiquetas."
+        "Prepara una exposición de 1 minuto sobre hitos de la historia reciente de Venezuela: 3 hechos y por qué importa en…",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Divertirse y entretener a otros con diversas expresiones lúdicas del lenguaje.",
-      "learning": "Conoce y comparte con otras personas un repertorio de expresiones lúdicas de la lengua: chistes, trabalenguas, adivinanzas, cuentos de nunca acabar, retahílas…",
-      "canDo": "Al terminar puedes escribir un párrafo narrativo de 6 líneas.",
-      "mode": "directo",
-      "activityKind": "narrative",
-      "minutesEstimate": 20,
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Divertirse y entretener a otros con diversas expresiones lúdicas del lenguaje.",
+      "learning": "Prepara una exposición sobre: Conoce y comparte con otras personas un repertorio de expresiones lúdicas de la lengua: chistes, trabalenguas, adivinanzas, cuentos de nunca acabar, retahílas…",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 18,
       "topicShort": "juegos de palabras y cuentos cortos",
       "activities": [
-        "Lee un texto corto del tema; escribe un final alternativo de 6 líneas.",
-        "Subraya verbo y sustantivo en 3 oraciones."
+        "Escribe 4 oraciones o un párrafo corto que resuma juegos de palabras y cuentos cortos para tu exposición.",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Diferencia recta y punto, y la traza en un plano.",
-      "canDo": "Al terminar puedes trazar rectas y puntos o clasificar figuras con vocabulario de geometría.",
-      "mode": "directo",
-      "activityKind": "geometry",
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Geometría",
+      "learning": "Prepara una exposición sobre: Diferencia recta y punto, y la traza en un plano.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "diferencia recta y punto, y la traza en un plano",
       "activities": [
-        "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
-        "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+        "Resuelve en el cuaderno 1 problema o croquis sobre diferencia recta y punto, y la traza en un plano y etiqueta los…",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "El ambiente y sus interacciones — Biodiversidad",
-      "learning": "Reconoce el papel fundamental del agua en la vida de los organismos.",
-      "canDo": "Al terminar puedes explicar por qué el agua es vital con evidencia de observación.",
-      "mode": "directo",
-      "activityKind": "water",
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · El ambiente y sus interacciones — Biodiversidad",
+      "learning": "Prepara una exposición sobre: Reconoce el papel fundamental del agua en la vida de los organismos.",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "el agua y la vida",
       "activities": [
-        "Observa cómo usas el agua en casa hoy; anota 4 usos en lista.",
-        "Escribe 2 oraciones: «Los seres vivos necesitan agua porque…» con un ejemplo que viste."
+        "Prepara una exposición sobre el agua y la vida: observa o recuerda una evidencia y anota 3 datos.",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

@@ -47,6 +47,30 @@ function activityIntegrityDefects(act: string): string[] {
 }
 
 describe("MPPE day sheets (200 días)", () => {
+  it("follows weekly subject rotation (bib+len daily; ide+cie / mat / expo)", () => {
+    for (let planDay = 1; planDay <= 200; planDay++) {
+      const file = path.join(sheetsDir, `d${planDay}.mppe-day.json`);
+      const raw = JSON.parse(fs.readFileSync(file, "utf8")) as {
+        dayKind?: string;
+        scheduledSections?: string[];
+        sections: Array<{ id: string }>;
+      };
+      const dayInWeek = ((planDay - 1) % 5) + 1;
+      const ids = raw.sections.map((s) => s.id);
+      if (dayInWeek === 5) {
+        expect(raw.dayKind).toBe("exposition");
+        expect(ids).toEqual(["bib", "ide", "len", "mat", "cie"]);
+      } else if (dayInWeek === 1 || dayInWeek === 3) {
+        expect(raw.dayKind).toBe("teach");
+        expect(ids).toEqual(["bib", "len", "ide", "cie"]);
+      } else {
+        expect(raw.dayKind).toBe("teach");
+        expect(ids).toEqual(["bib", "len", "mat"]);
+      }
+      expect(raw.scheduledSections).toEqual(ids);
+    }
+  });
+
   it("has no placeholder objectives, learnings, or stub activities", () => {
     const failures: string[] = [];
 
@@ -58,6 +82,7 @@ describe("MPPE day sheets (200 días)", () => {
           id: string;
           objective: string;
           learning: string;
+          canDo?: string;
           activities: string[];
         }>;
       };

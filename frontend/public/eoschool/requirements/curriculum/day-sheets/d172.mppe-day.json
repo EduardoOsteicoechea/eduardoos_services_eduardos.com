@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 172,
   "week": 35,
   "grade": "3er grado",
   "title": "Día 172",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Elige solo NT o AT si el día es muy largo; lee una sección.",
         "Dibuja un símbolo del pasaje. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Pueblos Afrovenezolanos",
-      "learning": "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
-      "canDo": "Al terminar puedes registrar 3 hechos culturales y una conexión personal.",
-      "mode": "directo",
-      "activityKind": "culture",
-      "minutesEstimate": 18,
-      "topicShort": "que los pueblos afrovenezolanos son los trabajadores que sostienen a…",
-      "activities": [
-        "3 hechos de Pueblos Afrovenezolanos (comida, música o fiesta); viñetas.",
-        "«En mi casa nosotros…» — 2 frases."
       ]
     },
     {
@@ -55,30 +46,15 @@
       "id": "mat",
       "label": "Matemáticas",
       "objective": "Números y operaciones",
-      "learning": "Realiza adiciones, sus propiedades y sustracciones con números hasta diez mil.",
-      "canDo": "Al terminar puedes resolver 4 ítems y explicar un procedimiento en el cuaderno.",
+      "learning": "Cuenta y lee cantidades hasta el diez mil.",
+      "canDo": "Al terminar puedes practicar el contenido de hoy con procedimiento escrito.",
       "mode": "directo",
-      "activityKind": "operations",
-      "minutesEstimate": 20,
-      "topicShort": "realiza adiciones, sus propiedades y sustracciones con números hasta diez…",
-      "activities": [
-        "Resuelve en el cuaderno: 589 + 211 = 4500 − 1893 = 25 × 4 = 63 ÷ 7 =. Muestra el procedimiento en al menos 2.",
-        "Elige 1 resultado y explica con palabras por qué tiene sentido."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Energía – materia — La energía en las comunidades",
-      "learning": "Demuestra una actitud responsable hacia el consumo de energía.",
-      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
-      "mode": "directo",
-      "activityKind": "observation",
+      "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "demuestra una actitud responsable hacia el consumo de energía",
+      "topicShort": "cuenta y lee cantidades hasta el diez mil",
       "activities": [
-        "Observa 15 min algo de demuestra una actitud responsable hacia el consumo de energía; tabla con 3 filas de datos.",
-        "Compara 2 filas: similitud y diferencia."
+        "Resuelve: 589 + 211 = 4500 − 1893 = 25 × 4 = 63 ÷ 7 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
+        "Explica en 2 oraciones qué estrategia usaste."
       ]
     }
   ]

@@ -1,10 +1,17 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 186,
   "week": 38,
   "grade": "3er grado",
   "title": "Día 186",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "ide",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +26,6 @@
       "activities": [
         "Lee por turnos una pista cada persona.",
         "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Nación Petrolera",
-      "learning": "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
-      "canDo": "Al terminar puedes quedarte con 3 hitos del tema de hoy.",
-      "mode": "fragmentado",
-      "activityKind": "historyMilestones",
-      "minutesEstimate": 15,
-      "topicShort": "hitos de la historia reciente de Venezuela",
-      "activities": [
-        "Solo 3 hitos (no toda la lista del plan); viñetas con año o lugar.",
-        "Mapa o dibujo con 3 etiquetas."
       ]
     },
     {
@@ -52,18 +44,18 @@
       ]
     },
     {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Números y operaciones",
-      "learning": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero.",
-      "canDo": "Al terminar puedes resolver 4 ítems y explicar un procedimiento en el cuaderno.",
-      "mode": "directo",
-      "activityKind": "operations",
-      "minutesEstimate": 20,
-      "topicShort": "realiza cálculos de multiplicaciones con dos dígitos y por la…",
+      "id": "ide",
+      "label": "Identidad",
+      "objective": "Nación Petrolera",
+      "learning": "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
+      "canDo": "Al terminar puedes quedarte con 3 hitos del tema de hoy.",
+      "mode": "fragmentado",
+      "activityKind": "historyMilestones",
+      "minutesEstimate": 15,
+      "topicShort": "hitos de la historia reciente de Venezuela",
       "activities": [
-        "Resuelve en el cuaderno: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Muestra el procedimiento en al menos 2.",
-        "Elige 1 resultado y explica con palabras por qué tiene sentido."
+        "Solo 3 hitos (no toda la lista del plan); viñetas con año o lugar.",
+        "Mapa o dibujo con 3 etiquetas."
       ]
     },
     {

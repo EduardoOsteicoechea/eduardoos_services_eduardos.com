@@ -247,6 +247,7 @@ function emitSectionActivities(sectionId, planDay, week, refs, prevRefs, extra =
     objective: ctx.objective,
     ideTitle: extra.ideTitle,
     finalizeActivity,
+    exposition: Boolean(extra.exposition),
   });
   const qaFails = qaDaySheet({
     planDay,
@@ -273,10 +274,32 @@ function requireRefsField(sectionId, planDay, value) {
   throw new Error(`plan day ${planDay}: missing MPPE ${sectionId} objective/learning (regenerate 40-week plan)`);
 }
 
+function sectionFromPack(id, label, objective, learning, pack, exposition) {
+  const baseLabel = exposition && id !== "bib" ? `${label} · Exposición` : label;
+  const bibLabel = exposition && id === "bib" ? "Biblia · Exposición" : label;
+  return {
+    id,
+    label: id === "bib" ? bibLabel : baseLabel,
+    objective,
+    learning,
+    canDo: pack.canDo,
+    mode: pack.mode,
+    activityKind: pack.kind,
+    minutesEstimate: pack.minutesEstimate,
+    topicShort: pack.topicShort,
+    activities: pack.activities,
+  };
+}
+
 function buildDaySheet(planDay, weeks, prevBlock) {
   const ctx = findPlanDay(weeks, planDay);
   if (!ctx) throw new Error(`missing plan day ${planDay}`);
   const { mppeWeek, block, bibleDay } = ctx;
+  const scheduled =
+    block.scheduledSections?.length > 0
+      ? block.scheduledSections
+      : SECTION_ORDER.map((s) => s.id);
+  const exposition = block.dayKind === "exposition";
   const ide = block.identity ?? {};
   const bibLearn = [
     `Gén–Ester: ${formatTrack(bibleDay.genEster)}`,
@@ -286,63 +309,110 @@ function buildDaySheet(planDay, weeks, prevBlock) {
 
   const ideTitle = dedupeObjectiveTitle(ide.title ?? "Identidad");
   const ideLearning = (ide.learnings ?? []).join(" ") || (ide.contenidos ?? []).join("; ") || "—";
+  const expoExtra = exposition ? { exposition: true } : {};
 
-  const bibPack = emitSectionActivities("bib", planDay, mppeWeek, null, null);
-  const idePack = emitSectionActivities("ide", planDay, mppeWeek, block.identity, prevBlock?.identity, {
-    ideTitle,
-    objective: ideTitle,
-    learning: ideLearning,
-  });
-  const lenPack = emitSectionActivities("len", planDay, mppeWeek, block.len, prevBlock?.len);
-  const matPack = emitSectionActivities("mat", planDay, mppeWeek, block.mat, prevBlock?.mat);
-  const ciePack = emitSectionActivities("cie", planDay, mppeWeek, block.cie, prevBlock?.cie);
+  const builders = {
+    bib: () => {
+      const pack = emitSectionActivities("bib", planDay, mppeWeek, null, null, expoExtra);
+      const objective = exposition
+        ? "Exposición bíblica (repaso de la semana)"
+        : "Lectura bíblica diaria (tres pistas)";
+      const learning = exposition
+        ? `Prepara una exposición breve sobre la lectura de la semana. ${bibLearn}`
+        : bibLearn;
+      return sectionFromPack("bib", "Biblia", objective, learning, pack, exposition);
+    },
+    ide: () => {
+      if (!block.identity) {
+        throw new Error(`plan day ${planDay}: ide scheduled but identity missing`);
+      }
+      const pack = emitSectionActivities("ide", planDay, mppeWeek, block.identity, prevBlock?.identity, {
+        ideTitle,
+        objective: ideTitle,
+        learning: ideLearning,
+        ...expoExtra,
+      });
+      const objective = exposition ? `Exposición · ${ideTitle}` : ideTitle;
+      const learning = exposition
+        ? `Prepara una exposición sobre el foco de Identidad de la semana: ${ideLearning}`
+        : ideLearning;
+      return sectionFromPack("ide", "Identidad", objective, learning, pack, exposition);
+    },
+    len: () => {
+      const pack = emitSectionActivities("len", planDay, mppeWeek, block.len, prevBlock?.len, expoExtra);
+      const objective = requireRefsField(
+        "len",
+        planDay,
+        dedupeObjectiveTitle(objectiveFromRefs(block.len)),
+      );
+      const learning = requireRefsField("len", planDay, primaryLearning(block.len));
+      return sectionFromPack(
+        "len",
+        "Prácticas del Lenguaje",
+        exposition ? `Exposición · ${objective}` : objective,
+        exposition ? `Prepara una exposición sobre: ${learning}` : learning,
+        pack,
+        exposition,
+      );
+    },
+    mat: () => {
+      if (!block.mat?.length) {
+        throw new Error(`plan day ${planDay}: mat scheduled but refs missing`);
+      }
+      const pack = emitSectionActivities("mat", planDay, mppeWeek, block.mat, prevBlock?.mat, expoExtra);
+      const objective = requireRefsField(
+        "mat",
+        planDay,
+        dedupeObjectiveTitle(objectiveFromRefs(block.mat)),
+      );
+      const learning = requireRefsField("mat", planDay, primaryLearning(block.mat));
+      return sectionFromPack(
+        "mat",
+        "Matemáticas",
+        exposition ? `Exposición · ${objective}` : objective,
+        exposition ? `Prepara una exposición sobre: ${learning}` : learning,
+        pack,
+        exposition,
+      );
+    },
+    cie: () => {
+      if (!block.cie?.length) {
+        throw new Error(`plan day ${planDay}: cie scheduled but refs missing`);
+      }
+      const pack = emitSectionActivities("cie", planDay, mppeWeek, block.cie, prevBlock?.cie, expoExtra);
+      const objective = requireRefsField(
+        "cie",
+        planDay,
+        dedupeObjectiveTitle(objectiveFromRefs(block.cie)),
+      );
+      const learning = requireRefsField("cie", planDay, primaryLearning(block.cie));
+      return sectionFromPack(
+        "cie",
+        "Ciencias Naturales",
+        exposition ? `Exposición · ${objective}` : objective,
+        exposition ? `Prepara una exposición sobre: ${learning}` : learning,
+        pack,
+        exposition,
+      );
+    },
+  };
 
-  const sectionFromPack = (id, label, objective, learning, pack) => ({
-    id,
-    label,
-    objective,
-    learning,
-    canDo: pack.canDo,
-    mode: pack.mode,
-    activityKind: pack.kind,
-    minutesEstimate: pack.minutesEstimate,
-    topicShort: pack.topicShort,
-    activities: pack.activities,
-  });
-
-  const sections = [
-    sectionFromPack("bib", "Biblia", "Lectura bíblica diaria (tres pistas)", bibLearn, bibPack),
-    sectionFromPack("ide", "Identidad", ideTitle, ideLearning, idePack),
-    sectionFromPack(
-      "len",
-      "Prácticas del Lenguaje",
-      requireRefsField("len", planDay, dedupeObjectiveTitle(objectiveFromRefs(block.len))),
-      requireRefsField("len", planDay, primaryLearning(block.len)),
-      lenPack,
-    ),
-    sectionFromPack(
-      "mat",
-      "Matemáticas",
-      requireRefsField("mat", planDay, dedupeObjectiveTitle(objectiveFromRefs(block.mat))),
-      requireRefsField("mat", planDay, primaryLearning(block.mat)),
-      matPack,
-    ),
-    sectionFromPack(
-      "cie",
-      "Ciencias Naturales",
-      requireRefsField("cie", planDay, dedupeObjectiveTitle(objectiveFromRefs(block.cie))),
-      requireRefsField("cie", planDay, primaryLearning(block.cie)),
-      ciePack,
-    ),
-  ];
+  const sections = [];
+  for (const id of scheduled) {
+    const build = builders[id];
+    if (!build) throw new Error(`plan day ${planDay}: unknown section ${id}`);
+    sections.push(build());
+  }
 
   return {
     format: "mppe-curriculum-day",
-    version: 2,
+    version: 3,
     planDay,
     week: mppeWeek,
     grade: "3er grado",
-    title: `Día ${planDay}`,
+    title: exposition ? `Día ${planDay} · Exposiciones` : `Día ${planDay}`,
+    dayKind: exposition ? "exposition" : "teach",
+    scheduledSections: scheduled,
     sections,
   };
 }
@@ -368,9 +438,10 @@ for (let planDay = 1; planDay <= total; planDay++) {
 
 const manifest = {
   format: "mppe-curriculum-day-manifest",
-  version: 2,
-  contentRevision: 7,
+  version: 3,
+  contentRevision: 8,
   grade: "3er grado",
+  weeklyPattern: curriculum.meta?.weeklyPattern ?? null,
   totalPlanDays: total,
   planDays: manifestDays,
 };
@@ -382,15 +453,16 @@ fs.writeFileSync(
 console.log("Wrote", total, "MPPE day sheets to", outDir);
 
 const sampleFailures = [];
+let sampleSectionCount = 0;
 for (const planDay of SAMPLE_DAYS) {
   const file = path.join(outDir, `d${planDay}.mppe-day.json`);
   const sheet = JSON.parse(fs.readFileSync(file, "utf8"));
+  sampleSectionCount += sheet.sections?.length ?? 0;
   sampleFailures.push(...qaDaySheet(sheet));
 }
-const sampleChecks = SAMPLE_DAYS.length * 5;
-const samplePass = sampleChecks > 0 ? 1 - sampleFailures.length / sampleChecks : 1;
+const samplePass = sampleSectionCount > 0 ? 1 - sampleFailures.length / sampleSectionCount : 1;
 console.log(
-  `QA sample (${SAMPLE_DAYS.length} days): ${(samplePass * 100).toFixed(1)}% pass; failures=${sampleFailures.length}`,
+  `QA sample (${SAMPLE_DAYS.length} days, ${sampleSectionCount} sections): ${(samplePass * 100).toFixed(1)}% pass; failures=${sampleFailures.length}`,
 );
 if (sampleFailures.length && sampleFailures.length <= 30) {
   for (const f of sampleFailures) console.warn(`  d${f.planDay} ${f.section}: ${f.cause}`);

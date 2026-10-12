@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 7,
   "week": 2,
   "grade": "3er grado",
   "title": "Día 7",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Nuestro Mundo",
-      "learning": "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
-      "mode": "directo",
-      "activityKind": "mapPlaces",
-      "minutesEstimate": 18,
-      "topicShort": "las características de su vivienda y de un caserío campesino…",
-      "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Dibuja un croquis de tu cuarto y marca norte, puerta y ventana; escribe 4 instrucciones para ir de la puerta a la…",
         "Intercambia con un adulto: sigue sus instrucciones en el croquis y corrige si algo no cuadra."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Salud integral — La alimentación en Venezuela",
-      "learning": "Comprende qué es una alimentación saludable e identifica los diferentes grupos de alimentos.",
-      "canDo": "Al terminar puedes clasificar alimentos en grupos y elegir una comida equilibrada.",
-      "mode": "directo",
-      "activityKind": "nutrition",
-      "minutesEstimate": 18,
-      "topicShort": "alimentación saludable y grupos de alimentos",
-      "activities": [
-        "Dibuja o lista 8 alimentos de tu cocina; clasifica en 3 grupos (energía, construcción, protección).",
-        "Marca con ✓ una merienda saludable y explica en 2 frases."
       ]
     }
   ]

@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 20,
   "week": 4,
   "grade": "3er grado",
-  "title": "Día 20",
+  "title": "Día 20 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Génesis 42, 43, 44 · Job–Mal: Salmos 6, 7 · NT: Mateo 26",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: Génesis 42, 43, 44 · Job–Mal: Salmos 6, 7 · NT: Mateo 26",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Elige solo NT o AT si el día es muy largo; lee una sección.",
-        "Dibuja un símbolo del pasaje. Cierra con 1 frase de aplicación en familia."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "Pueblos Indígenas",
-      "learning": "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · Pueblos Indígenas",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "el significado y la importancia de la resistencia indígena y…",
       "activities": [
-        "Investiga con un adulto 4 hechos de Pueblos Indígenas; escríbelos en oraciones.",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
+        "Prepara una exposición de 1 minuto sobre el significado y la importancia de la resistencia indígena y…: 3 hechos y…",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Seleccionar lo que se desea leer aplicando criterios de preferencia.",
-      "learning": "Usa criterios de preferencia para elegir lo que desea leer.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Conocer funciones y usos de los signos de interrogación y exclamación.",
+      "learning": "Prepara una exposición sobre: Diferencia oraciones interrogativas y exclamativas, y comienza a utilizar los signos convencionales en la escritura de esas clases de oraciones.",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "usa criterios de preferencia para elegir lo que desea leer",
+      "topicShort": "diferencia oraciones interrogativas y exclamativas, y comienza a utilizar los…",
       "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+        "Escribe 4 oraciones o un párrafo corto que resuma diferencia oraciones interrogativas y exclamativas, y comienza a…",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Se orienta temporalmente.",
-      "canDo": "Al terminar puedes leer un croquis y seguir 4 instrucciones con palabras de posición.",
-      "mode": "directo",
-      "activityKind": "spatialOrientation",
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Geometría",
+      "learning": "Prepara una exposición sobre: Se orienta temporalmente.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "se orienta temporalmente",
       "activities": [
-        "Dibuja un croquis de tu cuarto y marca norte, puerta y ventana; escribe 4 instrucciones para ir de la puerta a la…",
-        "Intercambia con un adulto: sigue sus instrucciones en el croquis y corrige si algo no cuadra."
+        "Resuelve en el cuaderno 1 problema o croquis sobre se orienta temporalmente y etiqueta los pasos.",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Salud integral — La alimentación en Venezuela",
-      "learning": "Reconoce los platos típicos de Venezuela y sus ingredientes principales.",
-      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
-      "mode": "directo",
-      "activityKind": "observation",
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · Salud integral — La alimentación en Venezuela",
+      "learning": "Prepara una exposición sobre: Reconoce los platos típicos de Venezuela y sus ingredientes principales.",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "los platos típicos de Venezuela y sus ingredientes principales",
       "activities": [
-        "Observa 15 min algo de los platos típicos de Venezuela y sus ingredientes principales; tabla con 3 filas de datos.",
-        "Compara 2 filas: similitud y diferencia."
+        "Prepara una exposición sobre los platos típicos de Venezuela y sus ingredientes principales: observa o recuerda una…",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

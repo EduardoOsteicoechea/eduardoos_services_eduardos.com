@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 57,
   "week": 12,
   "grade": "3er grado",
   "title": "Día 57",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
         "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Nuestro Mundo",
-      "learning": "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
-      "mode": "directo",
-      "activityKind": "mapPlaces",
-      "minutesEstimate": 18,
-      "topicShort": "las características de su vivienda y de un caserío campesino…",
-      "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Resuelve: 234 + 156 = 8000 − 325 = 47 × 6 = 84 ÷ 4 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
         "Explica en 2 oraciones qué estrategia usaste."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Describe las propiedades de las mezclas homogéneas y heterogéneas.",
-      "canDo": "Al terminar puedes probar 3 mezclas seguras y registrar qué pasa.",
-      "mode": "directo",
-      "activityKind": "mixture",
-      "minutesEstimate": 18,
-      "topicShort": "describe las propiedades de las mezclas homogéneas y heterogéneas",
-      "activities": [
-        "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
-        "Clasifica: ¿se disuelve o no? Una frase con evidencia."
       ]
     }
   ]

@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 69,
   "week": 14,
   "grade": "3er grado",
   "title": "Día 69",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
         "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Pueblos Indígenas",
-      "learning": "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "el significado y la importancia de la resistencia indígena y…",
-      "activities": [
-        "Investiga con un adulto 4 hechos de Pueblos Indígenas; escríbelos en oraciones.",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Busca 2 objetos (plato, aro, moneda); marca si ves círculo relleno o solo borde.",
         "Tabla: objeto → círculo o circunferencia → por qué."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Desarrolla la curiosidad científica a través de la realización de experimentos simples que impliquen la mezcla de materiales, observando los cambios que ocurren.",
-      "canDo": "Al terminar puedes probar 3 mezclas seguras y registrar qué pasa.",
-      "mode": "directo",
-      "activityKind": "mixture",
-      "minutesEstimate": 18,
-      "topicShort": "la curiosidad científica a través de la realización de experimentos…",
-      "activities": [
-        "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
-        "Clasifica: ¿se disuelve o no? Una frase con evidencia."
       ]
     }
   ]

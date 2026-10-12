@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 187,
   "week": 38,
   "grade": "3er grado",
   "title": "Día 187",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Nación Petrolera",
-      "learning": "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
-      "canDo": "Al terminar puedes quedarte con 3 hitos del tema de hoy.",
-      "mode": "fragmentado",
-      "activityKind": "historyMilestones",
-      "minutesEstimate": 15,
-      "topicShort": "hitos de la historia reciente de Venezuela",
-      "activities": [
-        "Solo 3 hitos (no toda la lista del plan); viñetas con año o lugar.",
-        "Mapa o dibujo con 3 etiquetas."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Resuelve en el cuaderno: 367 + 428 = 10000 − 4567 = 12 × 9 = 72 ÷ 6 =. Muestra el procedimiento en al menos 2.",
         "Elige 1 resultado y explica con palabras por qué tiene sentido."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "La Tierra en el universo — La fuerza de gravedad",
-      "learning": "Comprende el origen y la importancia de la fuerza de gravedad para mantener a los objetos en su lugar tanto en la Tierra como en el espacio.",
-      "canDo": "Al terminar puedes registrar 3 caídas o empujes y describir la dirección.",
-      "mode": "directo",
-      "activityKind": "forces",
-      "minutesEstimate": 18,
-      "topicShort": "el origen y la importancia de la fuerza de gravedad…",
-      "activities": [
-        "3 pruebas seguras de caída o rodar; anota altura y qué pasó.",
-        "Frase: «La fuerza de gravedad hace que…»."
       ]
     }
   ]

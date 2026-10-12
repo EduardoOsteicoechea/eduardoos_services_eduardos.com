@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 114,
   "week": 23,
   "grade": "3er grado",
   "title": "Día 114",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee por turnos una pista cada persona.",
         "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Venezuela en el Mundo",
-      "learning": "Conoce superficie, estados y capitales; y la ciudad capital, Caracas.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
-      "mode": "directo",
-      "activityKind": "mapPlaces",
-      "minutesEstimate": 18,
-      "topicShort": "superficie, estados y capitales",
-      "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Mide 4 objetos con regla o cinta; tabla: objeto, medida, unidad.",
         "Compara dos medidas: ¿cuánto más largo es uno? Escribe la resta."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "El ambiente y sus interacciones — Biodiversidad",
-      "learning": "Valora y protege la biodiversidad.",
-      "canDo": "Al terminar puedes clasificar evidencia local con criterio.",
-      "mode": "apalancado",
-      "activityKind": "biodiversity",
-      "minutesEstimate": 20,
-      "topicShort": "valora y protege la biodiversidad",
-      "activities": [
-        "Fotos o dibujos de 6 organismos; clasifica en 2 grupos y justifica.",
-        "Escribe 3 oraciones sobre biodiversidad en tu zona."
       ]
     }
   ]

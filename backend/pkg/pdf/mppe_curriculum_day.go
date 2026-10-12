@@ -5,7 +5,8 @@ import (
 	"strings"
 )
 
-// MPPE curriculum day sheet: one US Letter portrait page (EoschoolPage*), 1 cm margins, five cards (3+2).
+// MPPE curriculum day sheet: one US Letter portrait page (EoschoolPage*), 1 cm margins,
+// variable cards (3 / 4 / 5) from scheduledSections.
 //
 // Layout policy (measure ≡ draw): row heights are the max measured card height per row — never
 // uniformly scaled below measured content (that caused silent clipping). If the grid exceeds the
@@ -160,19 +161,58 @@ func (l mppeDayLayout) measureCard(sec MPPECurriculumDaySection) float64 {
 }
 
 type mppeDayGridPlan struct {
-	layout     mppeDayLayout
-	rowHeights [2]float64
-	cardHeights [5]float64
-	maxGridH   float64
+	layout      mppeDayLayout
+	cols        int
+	positions   [][2]int
+	rowHeights  []float64
+	cardHeights []float64
+	maxGridH    float64
 }
 
-func planMPPECurriculumDayGrid(doc MPPECurriculumDayDoc, pageW, pageH, margin, gap, colW, pad, gridTop float64) mppeDayGridPlan {
-	secs := doc.Sections
-	for len(secs) < 5 {
-		secs = append(secs, MPPECurriculumDaySection{})
+// mppeDayPositions returns column count and (col,row) for n scheduled sections.
+func mppeDayPositions(n int) (cols int, positions [][2]int) {
+	if n < 1 {
+		n = 1
 	}
-	positions := [][2]int{{0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}}
+	if n > 5 {
+		n = 5
+	}
+	switch n {
+	case 1:
+		return 1, [][2]int{{0, 0}}
+	case 2:
+		return 2, [][2]int{{0, 0}, {1, 0}}
+	case 3:
+		return 3, [][2]int{{0, 0}, {1, 0}, {2, 0}}
+	case 4:
+		return 2, [][2]int{{0, 0}, {1, 0}, {0, 1}, {1, 1}}
+	default: // 5
+		return 3, [][2]int{{0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}}
+	}
+}
+
+func planMPPECurriculumDayGrid(doc MPPECurriculumDayDoc, pageW, pageH, margin, gap, pad, gridTop float64) mppeDayGridPlan {
+	secs := doc.Sections
+	if len(secs) == 0 {
+		secs = []MPPECurriculumDaySection{{}}
+	}
+	if len(secs) > 5 {
+		secs = secs[:5]
+	}
+	cols, positions := mppeDayPositions(len(secs))
+	usableW := pageW - 2*margin
+	colW := usableW
+	if cols > 1 {
+		colW = (usableW - float64(cols-1)*gap) / float64(cols)
+	}
 	maxGridH := gridTop - margin
+	maxRow := 0
+	for _, pos := range positions {
+		if pos[1] > maxRow {
+			maxRow = pos[1]
+		}
+	}
+	rowCount := maxRow + 1
 
 	var best mppeDayGridPlan
 	best.maxGridH = maxGridH
@@ -193,21 +233,32 @@ func planMPPECurriculumDayGrid(doc MPPECurriculumDayDoc, pageW, pageH, margin, g
 			canDoMaxLines:  mppeDayCanDoMaxLines,
 		}
 
-		var cardHeights [5]float64
+		cardHeights := make([]float64, len(positions))
 		for i := range positions {
 			cardHeights[i] = layout.measureCard(secs[i])
 		}
 		minCardH := layout.areaLH + pad + padBottom + bodyLH*2
-		rowHeights := [2]float64{minCardH, minCardH}
+		rowHeights := make([]float64, rowCount)
+		for r := range rowHeights {
+			rowHeights[r] = minCardH
+		}
 		for i, pos := range positions {
 			row := pos[1]
 			if cardHeights[i] > rowHeights[row] {
 				rowHeights[row] = cardHeights[i]
 			}
 		}
-		total := rowHeights[0] + gap + rowHeights[1]
+		total := 0.0
+		for r, h := range rowHeights {
+			total += h
+			if r < len(rowHeights)-1 {
+				total += gap
+			}
+		}
 		plan := mppeDayGridPlan{
 			layout:      layout,
+			cols:        cols,
+			positions:   positions,
 			rowHeights:  rowHeights,
 			cardHeights: cardHeights,
 			maxGridH:    maxGridH,
@@ -220,7 +271,7 @@ func planMPPECurriculumDayGrid(doc MPPECurriculumDayDoc, pageW, pageH, margin, g
 	return best
 }
 
-func renderMPPECurriculumDayPageContent(doc MPPECurriculumDayDoc, pageW, pageH, margin, gap, colW, pad float64) string {
+func renderMPPECurriculumDayPageContent(doc MPPECurriculumDayDoc, pageW, pageH, margin, gap, pad float64) string {
 	var sb strings.Builder
 	yTop := pageH - margin
 
@@ -247,10 +298,19 @@ func renderMPPECurriculumDayPageContent(doc MPPECurriculumDayDoc, pageW, pageH, 
 	}
 
 	gridTop := yTop - MmToPoints(5) - MmToPoints(5) - MmToPoints(mppeDayHeaderBelowMm)
-	plan := planMPPECurriculumDayGrid(doc, pageW, pageH, margin, gap, colW, pad, gridTop)
+	plan := planMPPECurriculumDayGrid(doc, pageW, pageH, margin, gap, pad, gridTop)
 	layout := plan.layout
 	bodyLH := layout.bodyLH
 	areaLH := layout.areaLH
+	cols := plan.cols
+	if cols < 1 {
+		cols = 1
+	}
+	usableW := pageW - 2*margin
+	colW := usableW
+	if cols > 1 {
+		colW = (usableW - float64(cols-1)*gap) / float64(cols)
+	}
 
 	writeWrapped := func(font string, x, y, maxW, size, lineH float64, text string, maxLines int) float64 {
 		lines := layout.wrappedLines(text, maxLines)
@@ -269,10 +329,12 @@ func renderMPPECurriculumDayPageContent(doc MPPECurriculumDayDoc, pageW, pageH, 
 	}
 
 	secs := doc.Sections
-	for len(secs) < 5 {
-		secs = append(secs, MPPECurriculumDaySection{})
+	if len(secs) == 0 {
+		secs = []MPPECurriculumDaySection{{}}
 	}
-	positions := [][2]int{{0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}}
+	if len(secs) > len(plan.positions) {
+		secs = secs[:len(plan.positions)]
+	}
 
 	rowBottomY := func(row int) float64 {
 		y := gridTop
@@ -350,7 +412,10 @@ func renderMPPECurriculumDayPageContent(doc MPPECurriculumDayDoc, pageW, pageH, 
 		}
 	}
 
-	for i, pos := range positions {
+	for i, pos := range plan.positions {
+		if i >= len(secs) {
+			break
+		}
 		drawCard(pos[0], pos[1], secs[i], plan.rowHeights[pos[1]])
 	}
 	return sb.String()
@@ -366,12 +431,10 @@ func BuildMPPECurriculumDaysPDF(docs []MPPECurriculumDayDoc) ([]byte, error) {
 	margin := MmToPoints(EoschoolMarginMm)
 	gap := MmToPoints(mppeDayCardGapMm)
 	pad := MmToPoints(mppeDayCardPadMm)
-	usableW := pageW - 2*margin
-	colW := (usableW - 2*gap) / 3
 
 	streams := make([]string, len(docs))
 	for i, doc := range docs {
-		streams[i] = renderMPPECurriculumDayPageContent(doc, pageW, pageH, margin, gap, colW, pad)
+		streams[i] = renderMPPECurriculumDayPageContent(doc, pageW, pageH, margin, gap, pad)
 	}
 
 	n := len(streams)
@@ -402,7 +465,7 @@ func BuildMPPECurriculumDaysPDF(docs []MPPECurriculumDayDoc) ([]byte, error) {
 	return assemblePDF(objs), nil
 }
 
-// BuildMPPECurriculumDayPDF renders 5 cards on one portrait letter page.
+// BuildMPPECurriculumDayPDF renders scheduled section cards on one portrait letter page.
 func BuildMPPECurriculumDayPDF(doc MPPECurriculumDayDoc) ([]byte, error) {
 	return BuildMPPECurriculumDaysPDF([]MPPECurriculumDayDoc{doc})
 }

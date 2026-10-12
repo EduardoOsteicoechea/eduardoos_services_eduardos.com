@@ -1,8 +1,40 @@
 {
   "format": "mppe-curriculum-day-manifest",
-  "version": 2,
-  "contentRevision": 7,
+  "version": 3,
+  "contentRevision": 8,
   "grade": "3er grado",
+  "weeklyPattern": {
+    "day1": [
+      "bib",
+      "len",
+      "ide",
+      "cie"
+    ],
+    "day2": [
+      "bib",
+      "len",
+      "mat"
+    ],
+    "day3": [
+      "bib",
+      "len",
+      "ide",
+      "cie"
+    ],
+    "day4": [
+      "bib",
+      "len",
+      "mat"
+    ],
+    "day5": [
+      "bib",
+      "ide",
+      "len",
+      "mat",
+      "cie"
+    ],
+    "day5Mode": "exposition"
+  },
   "totalPlanDays": 200,
   "planDays": [
     {

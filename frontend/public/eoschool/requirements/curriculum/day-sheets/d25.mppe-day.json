@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 25,
   "week": 5,
   "grade": "3er grado",
-  "title": "Día 25",
+  "title": "Día 25 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Éxodo 3, 4, 5 · Job–Mal: Salmos 18, 19, 20 · NT: Marcos 4, 5",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: Éxodo 3, 4, 5 · Job–Mal: Salmos 18, 19, 20 · NT: Marcos 4, 5",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
-        "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "Pueblos Afrovenezolanos",
-      "learning": "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
-      "canDo": "Al terminar puedes registrar 3 hechos culturales y una conexión personal.",
-      "mode": "directo",
-      "activityKind": "culture",
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · Pueblos Afrovenezolanos",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "que los pueblos afrovenezolanos son los trabajadores que sostienen a…",
       "activities": [
-        "3 hechos de Pueblos Afrovenezolanos (comida, música o fiesta); viñetas.",
-        "«En mi casa nosotros…» — 2 frases."
+        "Prepara una exposición de 1 minuto sobre que los pueblos afrovenezolanos son los trabajadores que sostienen a…: 3…",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Utilizar el índice de libros para ubicar el contenido que se necesita o desea leer.",
-      "learning": "Explora índices de libros para ubicar temas que desea o necesita leer.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Expresarse con diversas intenciones: manifestar sentimientos, solicitar, reclamar, narrar, opinar, describir, explicar, argumentar…",
+      "learning": "Prepara una exposición sobre: Actúa como hablante-oyente reflexivo y crítico en diversas situaciones comunicativas.",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "explora índices de libros para ubicar temas que desea o…",
+      "topicShort": "actúa como hablante-oyente reflexivo y crítico en diversas situaciones comunicativas",
       "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+        "Escribe 4 oraciones o un párrafo corto que resuma actúa como hablante-oyente reflexivo y crítico en diversas…",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Se orienta temporalmente.",
-      "canDo": "Al terminar puedes leer un croquis y seguir 4 instrucciones con palabras de posición.",
-      "mode": "directo",
-      "activityKind": "spatialOrientation",
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Geometría",
+      "learning": "Prepara una exposición sobre: Se orienta temporalmente.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "se orienta temporalmente",
       "activities": [
-        "Dibuja un croquis de tu cuarto y marca norte, puerta y ventana; escribe 4 instrucciones para ir de la puerta a la…",
-        "Intercambia con un adulto: sigue sus instrucciones en el croquis y corrige si algo no cuadra."
+        "Resuelve en el cuaderno 1 problema o croquis sobre se orienta temporalmente y etiqueta los pasos.",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Salud integral — La alimentación en Venezuela",
-      "learning": "Reconoce los platos típicos de Venezuela y sus ingredientes principales.",
-      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
-      "mode": "directo",
-      "activityKind": "observation",
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · Salud integral — La alimentación en Venezuela",
+      "learning": "Prepara una exposición sobre: Reconoce los platos típicos de Venezuela y sus ingredientes principales.",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "los platos típicos de Venezuela y sus ingredientes principales",
       "activities": [
-        "Observa 15 min algo de los platos típicos de Venezuela y sus ingredientes principales; tabla con 3 filas de datos.",
-        "Compara 2 filas: similitud y diferencia."
+        "Prepara una exposición sobre los platos típicos de Venezuela y sus ingredientes principales: observa o recuerda una…",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

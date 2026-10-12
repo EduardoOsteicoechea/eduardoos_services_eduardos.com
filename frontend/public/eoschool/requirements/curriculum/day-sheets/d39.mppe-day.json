@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 39,
   "week": 8,
   "grade": "3er grado",
   "title": "Día 39",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Nación Petrolera",
-      "learning": "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
-      "canDo": "Al terminar puedes quedarte con 3 hitos del tema de hoy.",
-      "mode": "fragmentado",
-      "activityKind": "historyMilestones",
-      "minutesEstimate": 15,
-      "topicShort": "hitos de la historia reciente de Venezuela",
-      "activities": [
-        "Solo 3 hitos (no toda la lista del plan); viñetas con año o lugar.",
-        "Mapa o dibujo con 3 etiquetas."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Recorta o dibuja 6 figuras; ordena en tabla: nombre, número de lados, número de vértices.",
         "Elige 2 figuras y explica en una oración qué las hace diferentes."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Salud integral — La alimentación en Venezuela",
-      "learning": "Valora la importancia de una alimentación saludable para el bienestar comunitario.",
-      "canDo": "Al terminar puedes clasificar alimentos en grupos y elegir una comida equilibrada.",
-      "mode": "directo",
-      "activityKind": "nutrition",
-      "minutesEstimate": 18,
-      "topicShort": "alimentación saludable y grupos de alimentos",
-      "activities": [
-        "Dibuja o lista 8 alimentos de tu cocina; clasifica en 3 grupos (energía, construcción, protección).",
-        "Marca con ✓ una merienda saludable y explica en 2 frases."
       ]
     }
   ]

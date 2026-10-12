@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 5,
   "week": 1,
   "grade": "3er grado",
-  "title": "Día 5",
+  "title": "Día 5 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Génesis 10, 11 · Job–Mal: Job 11, 12 · NT: Mateo 6, 7",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: Génesis 10, 11 · Job–Mal: Job 11, 12 · NT: Mateo 6, 7",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
-        "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "La Humanidad",
-      "learning": "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero.",
-      "canDo": "Al terminar puedes anotar 3 hitos históricos con fecha o lugar.",
-      "mode": "directo",
-      "activityKind": "historyMilestones",
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · La Humanidad",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "los períodos de la Historia de Venezuela",
       "activities": [
-        "Lee con un adulto sobre los períodos de la Historia de Venezuela; 3 hitos en línea de tiempo (fecha o siglo + hecho).",
-        "Dibuja un símbolo por hito (petróleo, independencia, etc. si aplica)."
+        "Prepara una exposición de 1 minuto sobre los períodos de la Historia de Venezuela: 3 hechos y por qué importa en tu…",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Escribir ideas relevantes sobre temas leídos.",
-      "learning": "Registra por escrito contenidos fundamentales sobre diversos temas, a partir de la lectura de textos.",
-      "canDo": "Al terminar puedes leer un párrafo y anotar ideas clave en oraciones propias.",
-      "mode": "directo",
-      "activityKind": "readingNotes",
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Escribir ideas relevantes sobre temas leídos.",
+      "learning": "Prepara una exposición sobre: Registra por escrito contenidos fundamentales sobre diversos temas, a partir de la lectura de textos.",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "ideas de un texto leído",
       "activities": [
-        "Lee un párrafo corto con un adulto; anota 3 ideas clave en lista.",
-        "Escribe 4 oraciones completas usando esas ideas (no copies el texto)."
+        "Escribe 4 oraciones o un párrafo corto que resuma ideas de un texto leído para tu exposición.",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Se orienta espacialmente.",
-      "canDo": "Al terminar puedes leer un croquis y seguir 4 instrucciones con palabras de posición.",
-      "mode": "directo",
-      "activityKind": "spatialOrientation",
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Geometría",
+      "learning": "Prepara una exposición sobre: Se orienta espacialmente.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "orientarte en el espacio",
       "activities": [
-        "Dibuja un croquis de tu cuarto y marca norte, puerta y ventana; escribe 4 instrucciones para ir de la puerta a la…",
-        "Intercambia con un adulto: sigue sus instrucciones en el croquis y corrige si algo no cuadra."
+        "Resuelve en el cuaderno 1 problema o croquis sobre orientarte en el espacio y etiqueta los pasos.",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Salud integral — La alimentación en Venezuela",
-      "learning": "Comprende qué es una alimentación saludable e identifica los diferentes grupos de alimentos.",
-      "canDo": "Al terminar puedes clasificar alimentos en grupos y elegir una comida equilibrada.",
-      "mode": "directo",
-      "activityKind": "nutrition",
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · Salud integral — La alimentación en Venezuela",
+      "learning": "Prepara una exposición sobre: Comprende qué es una alimentación saludable e identifica los diferentes grupos de alimentos.",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "alimentación saludable y grupos de alimentos",
       "activities": [
-        "Dibuja o lista 8 alimentos de tu cocina; clasifica en 3 grupos (energía, construcción, protección).",
-        "Marca con ✓ una merienda saludable y explica en 2 frases."
+        "Prepara una exposición sobre alimentación saludable y grupos de alimentos: observa o recuerda una evidencia y anota…",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 72,
   "week": 15,
   "grade": "3er grado",
   "title": "Día 72",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Elige solo NT o AT si el día es muy largo; lee una sección.",
         "Dibuja un símbolo del pasaje. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Pueblos Afrovenezolanos",
-      "learning": "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
-      "canDo": "Al terminar puedes registrar 3 hechos culturales y una conexión personal.",
-      "mode": "directo",
-      "activityKind": "culture",
-      "minutesEstimate": 18,
-      "topicShort": "que los pueblos afrovenezolanos son los trabajadores que sostienen a…",
-      "activities": [
-        "3 hechos de Pueblos Afrovenezolanos (comida, música o fiesta); viñetas.",
-        "«En mi casa nosotros…» — 2 frases."
       ]
     },
     {
@@ -55,30 +46,15 @@
       "id": "mat",
       "label": "Matemáticas",
       "objective": "Geometría",
-      "learning": "Diferencia círculo de una circunferencia.",
-      "canDo": "Al terminar puedes comparar círculo y circunferencia en objetos de la casa.",
-      "mode": "apalancado",
-      "activityKind": "geometryCircles",
-      "minutesEstimate": 20,
-      "topicShort": "diferencia círculo de una circunferencia",
-      "activities": [
-        "Busca 2 objetos (plato, aro, moneda); marca si ves círculo relleno o solo borde.",
-        "Tabla: objeto → círculo o circunferencia → por qué."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Desarrolla la curiosidad científica a través de la realización de experimentos simples que impliquen la mezcla de materiales, observando los cambios que ocurren.",
-      "canDo": "Al terminar puedes probar 3 mezclas seguras y registrar qué pasa.",
+      "learning": "Es capaz de trazar un croquis partiendo de un punto de referencia.",
+      "canDo": "Al terminar puedes trazar rectas y puntos o clasificar figuras con vocabulario de geometría.",
       "mode": "directo",
-      "activityKind": "mixture",
+      "activityKind": "geometry",
       "minutesEstimate": 18,
-      "topicShort": "la curiosidad científica a través de la realización de experimentos…",
+      "topicShort": "es capaz de trazar un croquis partiendo de un punto…",
       "activities": [
-        "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
-        "Clasifica: ¿se disuelve o no? Una frase con evidencia."
+        "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
+        "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
       ]
     }
   ]

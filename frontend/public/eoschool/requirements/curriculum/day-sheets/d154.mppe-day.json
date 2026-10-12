@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 154,
   "week": 31,
   "grade": "3er grado",
   "title": "Día 154",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee por turnos una pista cada persona.",
         "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "La Humanidad",
-      "learning": "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero.",
-      "canDo": "Al terminar puedes anotar 3 hitos históricos con fecha o lugar.",
-      "mode": "directo",
-      "activityKind": "historyMilestones",
-      "minutesEstimate": 18,
-      "topicShort": "los períodos de la Historia de Venezuela",
-      "activities": [
-        "Lee con un adulto sobre los períodos de la Historia de Venezuela; 3 hitos en línea de tiempo (fecha o siglo + hecho).",
-        "Dibuja un símbolo por hito (petróleo, independencia, etc. si aplica)."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Resuelve en el cuaderno: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Muestra el procedimiento en al menos 2.",
         "Elige 1 resultado y explica con palabras por qué tiene sentido."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Energía – materia — La energía en las comunidades",
-      "learning": "Comprende la presencia de la energía en el ambiente, sus diferentes formas y fuentes.",
-      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
-      "mode": "directo",
-      "activityKind": "observation",
-      "minutesEstimate": 18,
-      "topicShort": "la presencia de la energía en el ambiente, sus diferentes…",
-      "activities": [
-        "Observa 15 min algo de la presencia de la energía en el ambiente, sus diferentes…; tabla con 3 filas de datos.",
-        "Compara 2 filas: similitud y diferencia."
       ]
     }
   ]

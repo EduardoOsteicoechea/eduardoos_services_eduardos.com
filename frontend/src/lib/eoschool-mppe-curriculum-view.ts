@@ -169,5 +169,17 @@ export function buildWeekIndexRow(week: CurriculumWeek): WeekIndexRow {
 }
 
 export function identityGroups(block: CurriculumBlock): SubjectObjectiveGroup[] {
-  return [{ objective: block.identity.title, learnings: block.identity.learnings }];
+  if (!block.identity?.title) return [];
+  return [{ objective: block.identity.title, learnings: block.identity.learnings ?? [] }];
+}
+
+/** Sections scheduled for a plan block (falls back to content presence). */
+export function scheduledSectionsForBlock(block: CurriculumBlock): Array<"bib" | "ide" | "len" | "mat" | "cie"> {
+  if (block.scheduledSections?.length) return [...block.scheduledSections];
+  const out: Array<"bib" | "ide" | "len" | "mat" | "cie"> = ["bib"];
+  if (block.identity) out.push("ide");
+  if (block.len?.length) out.push("len");
+  if (block.mat?.length) out.push("mat");
+  if (block.cie?.length) out.push("cie");
+  return out;
 }

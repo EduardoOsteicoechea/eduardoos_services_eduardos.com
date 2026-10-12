@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 127,
   "week": 26,
   "grade": "3er grado",
   "title": "Día 127",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Libertador Simón Bolívar",
-      "learning": "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "cómo es la juventud de Bolívar, sus viajes a Europa,…",
-      "activities": [
-        "Investiga con un adulto 4 hechos de Libertador Simón Bolívar; escríbelos en oraciones.",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Mide 4 objetos con regla o cinta; tabla: objeto, medida, unidad.",
         "Compara dos medidas: ¿cuánto más largo es uno? Escribe la resta."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Seres vivos — Las plantas",
-      "learning": "Reconoce las etapas del crecimiento y desarrollo de una planta.",
-      "canDo": "Al terminar puedes observar una planta y registrar partes y función.",
-      "mode": "directo",
-      "activityKind": "plants",
-      "minutesEstimate": 18,
-      "topicShort": "las etapas del crecimiento y desarrollo de una planta",
-      "activities": [
-        "Observa una planta 10 min; dibujo etiquetado (raíz, tallo, hoja).",
-        "2 frases: qué necesita para vivir según las etapas del crecimiento y desarrollo de una planta."
       ]
     }
   ]

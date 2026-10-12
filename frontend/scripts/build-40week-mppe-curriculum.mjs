@@ -1,6 +1,10 @@
 /**
  * Builds 40-week / 200-day MPPE plan (3er grado) from the 28-week source JSON.
- * Subdivides len/mat/cie learnings across 200 days; stretches bible to 200 reading days.
+ *
+ * Weekly pattern (day in week 1–5):
+ *   1,3 → bib + len + ide + cie
+ *   2,4 → bib + len + mat
+ *   5   → exposition of all five (week focus; no new teach buckets)
  *
  * Run: node frontend/scripts/build-40week-mppe-curriculum.mjs
  */
@@ -15,6 +19,18 @@ const outPath = path.join(__dirname, "..", "src", "lib", "eoschool-mppe-40week-c
 const WEEKS = 40;
 const DAYS_PER_WEEK = 5;
 const TOTAL_DAYS = WEEKS * DAYS_PER_WEEK;
+
+/** @param {number} planDay 1-based */
+function dayInWeek(planDay) {
+  return ((planDay - 1) % DAYS_PER_WEEK) + 1;
+}
+
+/** @param {number} d day in week 1–5 */
+function scheduledSectionsForDayInWeek(d) {
+  if (d === 5) return ["bib", "ide", "len", "mat", "cie"];
+  if (d === 1 || d === 3) return ["bib", "len", "ide", "cie"];
+  return ["bib", "len", "mat"]; // 2, 4
+}
 
 function extractOrderedPlanDays(weeks) {
   const days = [];
@@ -42,7 +58,7 @@ function flattenTrack(planDays, key) {
 /** Split array into n contiguous buckets (as equal as possible). */
 function contiguousBuckets(items, n) {
   const buckets = Array.from({ length: n }, () => []);
-  if (!items.length) return buckets;
+  if (!items.length || n <= 0) return buckets;
   let start = 0;
   for (let i = 0; i < n; i++) {
     const end = Math.round(((i + 1) * items.length) / n);
@@ -71,6 +87,20 @@ function forwardFillBuckets(buckets) {
     }
   }
   return out;
+}
+
+/**
+ * Distribute learnings across selected plan-day indices only (0-based).
+ * Returns TOTAL_DAYS-length array; non-selected days are null.
+ */
+function bucketsForDayIndices(items, dayIndices) {
+  const byDay = Array.from({ length: TOTAL_DAYS }, () => null);
+  if (!dayIndices.length) return byDay;
+  const filled = forwardFillBuckets(contiguousBuckets(items, dayIndices.length));
+  dayIndices.forEach((dayIdx, slot) => {
+    byDay[dayIdx] = filled[slot];
+  });
+  return byDay;
 }
 
 function collectUniqueRefs(planDays, key) {
@@ -114,6 +144,13 @@ function identityForWeek(identities, weekIndex) {
   };
 }
 
+function lastNonNull(byDay, fromIdx, stepBackMax) {
+  for (let i = fromIdx; i >= 0 && fromIdx - i <= stepBackMax; i--) {
+    if (byDay[i]?.length) return byDay[i];
+  }
+  return null;
+}
+
 function build40WeekCurriculum(source) {
   const planDays = extractOrderedPlanDays(source.weeks);
   const genEsterBuckets = contiguousBuckets(flattenTrack(planDays, "genEster"), TOTAL_DAYS);
@@ -123,9 +160,20 @@ function build40WeekCurriculum(source) {
   const lenAll = collectUniqueRefs(planDays, "len");
   const matAll = collectUniqueRefs(planDays, "mat");
   const cieAll = collectUniqueRefs(planDays, "cie");
-  const lenBuckets = forwardFillBuckets(contiguousBuckets(lenAll, TOTAL_DAYS));
-  const matBuckets = forwardFillBuckets(contiguousBuckets(matAll, TOTAL_DAYS));
-  const cieBuckets = forwardFillBuckets(contiguousBuckets(cieAll, TOTAL_DAYS));
+
+  /** Len every calendar day (including exposition Friday). */
+  const lenByDay = forwardFillBuckets(contiguousBuckets(lenAll, TOTAL_DAYS));
+
+  const matDayIndices = [];
+  const ideCieDayIndices = [];
+  for (let i = 0; i < TOTAL_DAYS; i++) {
+    const d = dayInWeek(i + 1);
+    if (d === 2 || d === 4) matDayIndices.push(i);
+    if (d === 1 || d === 3) ideCieDayIndices.push(i);
+  }
+
+  const matByDay = bucketsForDayIndices(matAll, matDayIndices);
+  const cieByDay = bucketsForDayIndices(cieAll, ideCieDayIndices);
 
   const identities = collectIdentities(planDays);
   const weeks = [];
@@ -136,9 +184,15 @@ function build40WeekCurriculum(source) {
     for (let d = 1; d <= DAYS_PER_WEEK; d++) {
       const dayInPlan = (w - 1) * DAYS_PER_WEEK + d;
       const idx = dayInPlan - 1;
-      blocks.push({
+      const scheduledSections = scheduledSectionsForDayInWeek(d);
+      const isExpo = d === 5;
+      const dayKind = isExpo ? "exposition" : "teach";
+
+      const block = {
         block: d,
         days: 1,
+        dayKind,
+        scheduledSections,
         bible: {
           days: [
             {
@@ -149,7 +203,11 @@ function build40WeekCurriculum(source) {
             },
           ],
         },
-        identity: {
+        len: lenByDay[idx] ?? [],
+      };
+
+      if (d === 1 || d === 3 || isExpo) {
+        block.identity = {
           title: identity.title,
           contenidos: identity.contenidos,
           learnings: identity.learnings,
@@ -157,11 +215,31 @@ function build40WeekCurriculum(source) {
           grade: "3er grado",
           week: w,
           dayInWeek: d,
-        },
-        len: lenBuckets[idx],
-        mat: matBuckets[idx],
-        cie: cieBuckets[idx],
-      });
+        };
+      }
+
+      if (d === 2 || d === 4 || isExpo) {
+        const matRefs = isExpo
+          ? lastNonNull(matByDay, idx - 1, 4) ?? matByDay[matDayIndices[0]] ?? []
+          : matByDay[idx] ?? [];
+        block.mat = matRefs.map((r) => ({ ...r }));
+      }
+
+      if (d === 1 || d === 3 || isExpo) {
+        const cieRefs = isExpo
+          ? lastNonNull(cieByDay, idx - 1, 4) ?? cieByDay[ideCieDayIndices[0]] ?? []
+          : cieByDay[idx] ?? [];
+        block.cie = cieRefs.map((r) => ({ ...r }));
+      }
+
+      // Exposition Friday: len should reflect week's teaching focus (prefer day 4 / last filled).
+      if (isExpo) {
+        const weekStart = (w - 1) * DAYS_PER_WEEK;
+        const weekLen = lastNonNull(lenByDay, weekStart + 3, 3) ?? lenByDay[idx];
+        block.len = (weekLen ?? []).map((r) => ({ ...r }));
+      }
+
+      blocks.push(block);
     }
     weeks.push({ week: w, blocks });
   }
@@ -176,6 +254,24 @@ function build40WeekCurriculum(source) {
       totalBlocks: WEEKS * DAYS_PER_WEEK,
       identityObjectives: identities.length,
       source: "derived-from-28week-v1",
+      weeklyPattern: {
+        day1: ["bib", "len", "ide", "cie"],
+        day2: ["bib", "len", "mat"],
+        day3: ["bib", "len", "ide", "cie"],
+        day4: ["bib", "len", "mat"],
+        day5: ["bib", "ide", "len", "mat", "cie"],
+        day5Mode: "exposition",
+      },
+      teachingDays: {
+        bib: TOTAL_DAYS,
+        len: TOTAL_DAYS,
+        ide: ideCieDayIndices.length + WEEKS, // teach + expo Friday
+        mat: matDayIndices.length + WEEKS,
+        cie: ideCieDayIndices.length + WEEKS,
+        teachIdeCie: ideCieDayIndices.length,
+        teachMat: matDayIndices.length,
+        exposition: WEEKS,
+      },
       counts: {
         lenLearnings: lenAll.length,
         matLearnings: matAll.length,
@@ -194,4 +290,12 @@ function build40WeekCurriculum(source) {
 const source = JSON.parse(fs.readFileSync(srcPath, "utf8"));
 const out = build40WeekCurriculum(source);
 fs.writeFileSync(outPath, `${JSON.stringify(out, null, 2)}\n`, "utf8");
-console.log("Wrote", outPath, "—", WEEKS, "weeks,", TOTAL_DAYS, "days");
+console.log(
+  "Wrote",
+  outPath,
+  "—",
+  WEEKS,
+  "weeks,",
+  TOTAL_DAYS,
+  "days; pattern D1/D3 ide+cie, D2/D4 mat, D5 exposition",
+);

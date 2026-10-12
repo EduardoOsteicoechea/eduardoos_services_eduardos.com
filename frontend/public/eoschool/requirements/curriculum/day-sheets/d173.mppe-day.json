@@ -1,10 +1,17 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 173,
   "week": 35,
   "grade": "3er grado",
   "title": "Día 173",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "ide",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +26,6 @@
       "activities": [
         "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
         "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Pueblos Afrovenezolanos",
-      "learning": "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
-      "canDo": "Al terminar puedes registrar 3 hechos culturales y una conexión personal.",
-      "mode": "directo",
-      "activityKind": "culture",
-      "minutesEstimate": 18,
-      "topicShort": "que los pueblos afrovenezolanos son los trabajadores que sostienen a…",
-      "activities": [
-        "3 hechos de Pueblos Afrovenezolanos (comida, música o fiesta); viñetas.",
-        "«En mi casa nosotros…» — 2 frases."
       ]
     },
     {
@@ -52,32 +44,32 @@
       ]
     },
     {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Números y operaciones",
-      "learning": "Cuenta y lee cantidades hasta el diez mil.",
-      "canDo": "Al terminar puedes practicar el contenido de hoy con procedimiento escrito.",
+      "id": "ide",
+      "label": "Identidad",
+      "objective": "Pueblos Afrovenezolanos",
+      "learning": "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
+      "canDo": "Al terminar puedes registrar 3 hechos culturales y una conexión personal.",
       "mode": "directo",
-      "activityKind": "default",
+      "activityKind": "culture",
       "minutesEstimate": 18,
-      "topicShort": "cuenta y lee cantidades hasta el diez mil",
+      "topicShort": "que los pueblos afrovenezolanos son los trabajadores que sostienen a…",
       "activities": [
-        "Resuelve: 234 + 156 = 8000 − 325 = 47 × 6 = 84 ÷ 4 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
-        "Explica en 2 oraciones qué estrategia usaste."
+        "3 hechos de Pueblos Afrovenezolanos (comida, música o fiesta); viñetas.",
+        "«En mi casa nosotros…» — 2 frases."
       ]
     },
     {
       "id": "cie",
       "label": "Ciencias Naturales",
       "objective": "Energía – materia — La energía en las comunidades",
-      "learning": "Demuestra una actitud responsable hacia el consumo de energía.",
+      "learning": "Valorar la importancia de hacer buen uso de la energía en la comunidad para un uso sostenible de la misma.",
       "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
       "mode": "directo",
       "activityKind": "observation",
       "minutesEstimate": 18,
-      "topicShort": "demuestra una actitud responsable hacia el consumo de energía",
+      "topicShort": "valorar la importancia de hacer buen uso de la energía…",
       "activities": [
-        "Observa 15 min algo de demuestra una actitud responsable hacia el consumo de energía; tabla con 3 filas de datos.",
+        "Observa 15 min algo de valorar la importancia de hacer buen uso de la energía…; tabla con 3 filas de datos.",
         "Compara 2 filas: similitud y diferencia."
       ]
     }

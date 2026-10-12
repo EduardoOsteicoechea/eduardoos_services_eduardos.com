@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 195,
   "week": 39,
   "grade": "3er grado",
-  "title": "Día 195",
+  "title": "Día 195 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Nehemías 11, 12 · Job–Mal: Zacarías 4, 5, 6 · NT: Apocalipsis 15, 16",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: Nehemías 11, 12 · Job–Mal: Zacarías 4, 5, 6 · NT: Apocalipsis 15, 16",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
-        "Responde: ¿qué pasó? — 2 frases."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "Cultura Venezolana",
-      "learning": "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · Cultura Venezolana",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán…",
       "activities": [
-        "Investiga con un adulto 4 hechos de Cultura Venezolana; escríbelos en oraciones.",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
+        "Prepara una exposición de 1 minuto sobre a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán…: 3…",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Utilizar en la escritura recursos ortográficos fundamentales.",
-      "learning": "Escribe utilizando algunos recursos ortográficos básicos: mayúsculas en nombres propios y de lugares, al inicio de un texto; el punto al final de un texto.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Producir textos a partir de diferentes inicios.",
+      "learning": "Prepara una exposición sobre: Crea textos a partir de diferentes inicios: sueño con…; si yo fuera escritor/a…; cuando sea grande…; si yo fuera un caballo…; Simón Bolívar fue…",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "escribe utilizando algunos recursos ortográficos básicos",
+      "topicShort": "crea textos a partir de diferentes inicios",
       "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+        "Escribe 4 oraciones o un párrafo corto que resuma crea textos a partir de diferentes inicios para tu exposición.",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Estadística y probabilidad",
-      "learning": "Recopila, organiza, clasifica y representa gráficamente datos.",
-      "canDo": "Al terminar puedes armar un pictograma o barras con 4 datos y leerlo.",
-      "mode": "directo",
-      "activityKind": "data",
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Estadística y probabilidad",
+      "learning": "Prepara una exposición sobre: Recopila, organiza, clasifica y representa gráficamente datos.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "organiza, clasifica y representa gráficamente datos",
       "activities": [
-        "Encuesta a 4 personas: «¿Cuál es tu fruta favorita?»; registra y haz barras o pictograma.",
-        "Escribe 2 preguntas que se respondan mirando tu gráfico."
+        "Resuelve en el cuaderno 1 problema o croquis sobre organiza, clasifica y representa gráficamente datos y etiqueta…",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "La Tierra en el universo — La fuerza de gravedad",
-      "learning": "Realiza actividades prácticas para observar los efectos de la fuerza de gravedad en diferentes objetos (caída libre, peso).",
-      "canDo": "Al terminar puedes registrar 3 caídas o empujes y describir la dirección.",
-      "mode": "directo",
-      "activityKind": "forces",
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · La Tierra en el universo — La fuerza de gravedad",
+      "learning": "Prepara una exposición sobre: Realiza actividades prácticas para observar los efectos de la fuerza de gravedad en diferentes objetos (caída libre, peso).",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "realiza actividades prácticas para observar los efectos de la fuerza…",
       "activities": [
-        "3 pruebas seguras de caída o rodar; anota altura y qué pasó.",
-        "Frase: «La fuerza de gravedad hace que…»."
+        "Prepara una exposición sobre realiza actividades prácticas para observar los efectos de la fuerza…: observa o…",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

@@ -1,10 +1,17 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 136,
   "week": 28,
   "grade": "3er grado",
   "title": "Día 136",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "ide",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +26,6 @@
       "activities": [
         "Elige solo NT o AT si el día es muy largo; lee una sección.",
         "Dibuja un símbolo del pasaje. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Nación Petrolera",
-      "learning": "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
-      "canDo": "Al terminar puedes quedarte con 3 hitos del tema de hoy.",
-      "mode": "fragmentado",
-      "activityKind": "historyMilestones",
-      "minutesEstimate": 15,
-      "topicShort": "hitos de la historia reciente de Venezuela",
-      "activities": [
-        "Solo 3 hitos (no toda la lista del plan); viñetas con año o lugar.",
-        "Mapa o dibujo con 3 etiquetas."
       ]
     },
     {
@@ -52,18 +44,18 @@
       ]
     },
     {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Magnitudes y medidas",
-      "learning": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos.",
-      "canDo": "Al terminar puedes medir, registrar y comparar dos longitudes con unidades.",
-      "mode": "directo",
-      "activityKind": "measurement",
-      "minutesEstimate": 18,
-      "topicShort": "utiliza las medidas de longitud, masa, capacidad y tiempo para…",
+      "id": "ide",
+      "label": "Identidad",
+      "objective": "Nación Petrolera",
+      "learning": "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
+      "canDo": "Al terminar puedes quedarte con 3 hitos del tema de hoy.",
+      "mode": "fragmentado",
+      "activityKind": "historyMilestones",
+      "minutesEstimate": 15,
+      "topicShort": "hitos de la historia reciente de Venezuela",
       "activities": [
-        "Mide 4 objetos con regla o cinta; tabla: objeto, medida, unidad.",
-        "Compara dos medidas: ¿cuánto más largo es uno? Escribe la resta."
+        "Solo 3 hitos (no toda la lista del plan); viñetas con año o lugar.",
+        "Mapa o dibujo con 3 etiquetas."
       ]
     },
     {

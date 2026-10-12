@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 200,
   "week": 40,
   "grade": "3er grado",
-  "title": "Día 200",
+  "title": "Día 200 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Ester 9, 10 · Job–Mal: Malaquías 3, 4 · NT: Apocalipsis 22",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: Ester 9, 10 · Job–Mal: Malaquías 3, 4 · NT: Apocalipsis 22",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Elige solo NT o AT si el día es muy largo; lee una sección.",
-        "Dibuja un símbolo del pasaje. Cierra con 1 frase de aplicación en familia."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
-      "learning": "Reconoce la importancia de las normas y reglas para la convivencia en la escuela y desarrolla habilidades para el trabajo en equipo, incluyendo la colaboración y la distribución de tareas.",
-      "canDo": "Al terminar puedes listar 5 normas de convivencia y cumplir un rol en equipo.",
-      "mode": "directo",
-      "activityKind": "normsTeam",
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Reconoce la importancia de las normas y reglas para la convivencia en la escuela y desarrolla habilidades para el trabajo en equipo, incluyendo la colaboración y la distribución de tareas.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "normas de convivencia y trabajo en equipo",
       "activities": [
-        "Con un adulto, lista 5 normas para convivir en casa o salón; escríbelas en cartel.",
-        "Tarea compartida 10 min (ordenar, cocinar, juego): elige tu rol y cuéntalo en 3 frases."
+        "Prepara una exposición de 1 minuto sobre normas de convivencia y trabajo en equipo: 3 hechos y por qué importa en…",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Escribir convencionalmente palabras con sílabas complejas.",
-      "learning": "Comienza a escribir convencionalmente las palabras que contienen sílabas del grupo consonante-consonante-vocal (CCV): clase, copla, tropa, fruta, flor, cobre, grama, drama, grillo…",
-      "canDo": "Al terminar puedes resumir la idea central en 4 oraciones.",
-      "mode": "fragmentado",
-      "activityKind": "default",
-      "minutesEstimate": 15,
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Escribir convencionalmente palabras con sílabas complejas.",
+      "learning": "Prepara una exposición sobre: Comienza a escribir convencionalmente las palabras que contienen sílabas del grupo consonante-consonante-vocal (CCV): clase, copla, tropa, fruta, flor, cobre, grama, drama, grillo…",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 18,
       "topicShort": "comienza a escribir convencionalmente las palabras que contienen sílabas del…",
       "activities": [
-        "4 oraciones que expliquen la idea central de comienza a escribir convencionalmente las palabras que contienen…",
-        "Dibuja un ícono que represente la idea."
+        "Escribe 4 oraciones o un párrafo corto que resuma comienza a escribir convencionalmente las palabras que contienen…",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Estadística y probabilidad",
-      "learning": "Recopila, organiza, clasifica y representa gráficamente datos.",
-      "canDo": "Al terminar puedes armar un pictograma o barras con 4 datos y leerlo.",
-      "mode": "directo",
-      "activityKind": "data",
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Estadística y probabilidad",
+      "learning": "Prepara una exposición sobre: Recopila, organiza, clasifica y representa gráficamente datos.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "organiza, clasifica y representa gráficamente datos",
       "activities": [
-        "Encuesta a 4 personas: «¿Cuál es tu fruta favorita?»; registra y haz barras o pictograma.",
-        "Escribe 2 preguntas que se respondan mirando tu gráfico."
+        "Resuelve en el cuaderno 1 problema o croquis sobre organiza, clasifica y representa gráficamente datos y etiqueta…",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "La Tierra en el universo — La fuerza de gravedad",
-      "learning": "Desarrolla habilidades para observar y registrar fenómenos astronómicos.",
-      "canDo": "Al terminar puedes registrar 3 caídas o empujes y describir la dirección.",
-      "mode": "directo",
-      "activityKind": "forces",
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · La Tierra en el universo — La fuerza de gravedad",
+      "learning": "Prepara una exposición sobre: Desarrolla habilidades para observar y registrar fenómenos astronómicos.",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "observar y registrar fenómenos astronómicos",
       "activities": [
-        "3 pruebas seguras de caída o rodar; anota altura y qué pasó.",
-        "Frase: «La fuerza de gravedad hace que…»."
+        "Prepara una exposición sobre observar y registrar fenómenos astronómicos: observa o recuerda una evidencia y anota…",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

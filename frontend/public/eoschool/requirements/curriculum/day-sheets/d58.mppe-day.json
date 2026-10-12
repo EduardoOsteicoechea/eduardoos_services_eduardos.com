@@ -1,10 +1,17 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 58,
   "week": 12,
   "grade": "3er grado",
   "title": "Día 58",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "ide",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +26,6 @@
       "activities": [
         "Lee por turnos una pista cada persona.",
         "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Nuestro Mundo",
-      "learning": "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
-      "mode": "directo",
-      "activityKind": "mapPlaces",
-      "minutesEstimate": 18,
-      "topicShort": "las características de su vivienda y de un caserío campesino…",
-      "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
       ]
     },
     {
@@ -52,18 +44,18 @@
       ]
     },
     {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Identifica los elementos de los cuerpos geométricos.",
-      "canDo": "Al terminar puedes practicar el contenido de hoy con procedimiento escrito.",
+      "id": "ide",
+      "label": "Identidad",
+      "objective": "Nuestro Mundo",
+      "learning": "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
+      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
       "mode": "directo",
-      "activityKind": "default",
+      "activityKind": "mapPlaces",
       "minutesEstimate": 18,
-      "topicShort": "identificar los elementos de los cuerpos geométricos",
+      "topicShort": "las características de su vivienda y de un caserío campesino…",
       "activities": [
-        "Resuelve: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
-        "Explica en 2 oraciones qué estrategia usaste."
+        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
+        "2 frases: «___ está al ___ de ___»."
       ]
     },
     {

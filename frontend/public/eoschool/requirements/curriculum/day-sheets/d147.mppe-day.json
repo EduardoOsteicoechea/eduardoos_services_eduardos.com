@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 147,
   "week": 30,
   "grade": "3er grado",
   "title": "Día 147",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
-      "learning": "Conoce el origen de nuestra moneda nacional, el Bolívar.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "el origen de nuestra moneda nacional, el Bolívar",
-      "activities": [
-        "Investiga con un adulto 4 hechos de Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía; escríbelos…",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "3 precios de realiza cálculos con cambios de la moneda nacional; suma el total y simula pago con billetes/monedas…",
         "Un problema de vuelto en 2 pasos; muestra cuentas."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Seres vivos — Las plantas",
-      "learning": "Reflexiona sobre la importancia de las plantas en el ambiente y su rol en la producción de oxígeno.",
-      "canDo": "Al terminar puedes observar una planta y registrar partes y función.",
-      "mode": "directo",
-      "activityKind": "plants",
-      "minutesEstimate": 18,
-      "topicShort": "reflexiona sobre la importancia de las plantas en el ambiente…",
-      "activities": [
-        "Observa una planta 10 min; dibujo etiquetado (raíz, tallo, hoja).",
-        "2 frases: qué necesita para vivir según reflexiona sobre la importancia de las plantas en el ambiente…."
       ]
     }
   ]

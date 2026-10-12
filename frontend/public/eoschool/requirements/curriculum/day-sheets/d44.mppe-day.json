@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 44,
   "week": 9,
   "grade": "3er grado",
   "title": "Día 44",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Elige solo NT o AT si el día es muy largo; lee una sección.",
         "Dibuja un símbolo del pasaje. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Cultura Venezolana",
-      "learning": "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán…",
-      "activities": [
-        "Investiga con un adulto 4 hechos de Cultura Venezolana; escríbelos en oraciones.",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Recorta o dibuja 6 figuras; ordena en tabla: nombre, número de lados, número de vértices.",
         "Elige 2 figuras y explica en una oración qué las hace diferentes."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas, a partir de experiencias prácticas.",
-      "canDo": "Al terminar puedes probar 3 mezclas seguras y registrar qué pasa.",
-      "mode": "directo",
-      "activityKind": "mixture",
-      "minutesEstimate": 18,
-      "topicShort": "observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas, a…",
-      "activities": [
-        "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
-        "Clasifica: ¿se disuelve o no? Una frase con evidencia."
       ]
     }
   ]

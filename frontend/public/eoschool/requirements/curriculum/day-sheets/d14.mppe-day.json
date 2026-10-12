@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 14,
   "week": 3,
   "grade": "3er grado",
   "title": "Día 14",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee por turnos una pista cada persona.",
         "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Venezuela en el Mundo",
-      "learning": "Conoce superficie, estados y capitales; y la ciudad capital, Caracas.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
-      "mode": "directo",
-      "activityKind": "mapPlaces",
-      "minutesEstimate": 18,
-      "topicShort": "superficie, estados y capitales",
-      "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Dibuja un croquis de tu cuarto y marca norte, puerta y ventana; escribe 4 instrucciones para ir de la puerta a la…",
         "Intercambia con un adulto: sigue sus instrucciones en el croquis y corrige si algo no cuadra."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Salud integral — La alimentación en Venezuela",
-      "learning": "Reconoce la importancia de la alimentación saludable, para mantener un estado óptimo de salud.",
-      "canDo": "Al terminar puedes clasificar alimentos en grupos y elegir una comida equilibrada.",
-      "mode": "directo",
-      "activityKind": "nutrition",
-      "minutesEstimate": 18,
-      "topicShort": "alimentación saludable y grupos de alimentos",
-      "activities": [
-        "Dibuja o lista 8 alimentos de tu cocina; clasifica en 3 grupos (energía, construcción, protección).",
-        "Marca con ✓ una merienda saludable y explica en 2 frases."
       ]
     }
   ]

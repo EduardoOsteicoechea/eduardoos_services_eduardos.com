@@ -1,10 +1,17 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 148,
   "week": 30,
   "grade": "3er grado",
   "title": "Día 148",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "ide",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +26,6 @@
       "activities": [
         "Elige solo NT o AT si el día es muy largo; lee una sección.",
         "Dibuja un símbolo del pasaje. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
-      "learning": "Conoce el origen de nuestra moneda nacional, el Bolívar.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "el origen de nuestra moneda nacional, el Bolívar",
-      "activities": [
-        "Investiga con un adulto 4 hechos de Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía; escríbelos…",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -52,33 +44,33 @@
       ]
     },
     {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Magnitudes y medidas",
-      "learning": "Realiza cálculos con cambios de la moneda nacional.",
-      "canDo": "Al terminar puedes calcular un total y un vuelto con bolívares.",
+      "id": "ide",
+      "label": "Identidad",
+      "objective": "Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
+      "learning": "Conoce el origen de nuestra moneda nacional, el Bolívar.",
+      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
       "mode": "directo",
-      "activityKind": "money",
+      "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "realiza cálculos con cambios de la moneda nacional",
+      "topicShort": "el origen de nuestra moneda nacional, el Bolívar",
       "activities": [
-        "3 precios de realiza cálculos con cambios de la moneda nacional; suma el total y simula pago con billetes/monedas…",
-        "Un problema de vuelto en 2 pasos; muestra cuentas."
+        "Investiga con un adulto 4 hechos de Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía; escríbelos…",
+        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
       "id": "cie",
       "label": "Ciencias Naturales",
-      "objective": "Seres vivos — Las plantas",
-      "learning": "Reflexiona sobre la importancia de las plantas en el ambiente y su rol en la producción de oxígeno.",
-      "canDo": "Al terminar puedes observar una planta y registrar partes y función.",
+      "objective": "Energía – materia — La energía en las comunidades",
+      "learning": "Comprende la presencia de la energía en el ambiente, sus diferentes formas y fuentes.",
+      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
       "mode": "directo",
-      "activityKind": "plants",
+      "activityKind": "observation",
       "minutesEstimate": 18,
-      "topicShort": "reflexiona sobre la importancia de las plantas en el ambiente…",
+      "topicShort": "la presencia de la energía en el ambiente, sus diferentes…",
       "activities": [
-        "Observa una planta 10 min; dibujo etiquetado (raíz, tallo, hoja).",
-        "2 frases: qué necesita para vivir según reflexiona sobre la importancia de las plantas en el ambiente…."
+        "Observa 15 min algo de la presencia de la energía en el ambiente, sus diferentes…; tabla con 3 filas de datos.",
+        "Compara 2 filas: similitud y diferencia."
       ]
     }
   ]

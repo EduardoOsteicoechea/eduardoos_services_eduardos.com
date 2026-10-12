@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 62,
   "week": 13,
   "grade": "3er grado",
   "title": "Día 62",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee por turnos una pista cada persona.",
         "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Venezuela en el Mundo",
-      "learning": "Conoce superficie, estados y capitales; y la ciudad capital, Caracas.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
-      "mode": "directo",
-      "activityKind": "mapPlaces",
-      "minutesEstimate": 18,
-      "topicShort": "superficie, estados y capitales",
-      "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Busca 2 objetos (plato, aro, moneda); marca si ves círculo relleno o solo borde.",
         "Tabla: objeto → círculo o circunferencia → por qué."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Identifica diferentes métodos sencillos para separar componentes en mezclas y describe cómo funcionan.",
-      "canDo": "Al terminar puedes probar 3 mezclas seguras y registrar qué pasa.",
-      "mode": "directo",
-      "activityKind": "mixture",
-      "minutesEstimate": 18,
-      "topicShort": "diferentes métodos sencillos para separar componentes en mezclas y describe…",
-      "activities": [
-        "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
-        "Clasifica: ¿se disuelve o no? Una frase con evidencia."
       ]
     }
   ]

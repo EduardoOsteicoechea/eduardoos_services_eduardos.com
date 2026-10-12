@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 190,
   "week": 38,
   "grade": "3er grado",
-  "title": "Día 190",
+  "title": "Día 190 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Esdras 10; Nehemías 1 · Job–Mal: Nahúm 3; Habacuc 1 · NT: Apocalipsis 9",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: Esdras 10; Nehemías 1 · Job–Mal: Nahúm 3; Habacuc 1 · NT: Apocalipsis 9",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee por turnos una pista cada persona.",
-        "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "Nación Petrolera",
-      "learning": "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
-      "canDo": "Al terminar puedes quedarte con 3 hitos del tema de hoy.",
-      "mode": "fragmentado",
-      "activityKind": "historyMilestones",
-      "minutesEstimate": 15,
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · Nación Petrolera",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 18,
       "topicShort": "hitos de la historia reciente de Venezuela",
       "activities": [
-        "Solo 3 hitos (no toda la lista del plan); viñetas con año o lugar.",
-        "Mapa o dibujo con 3 etiquetas."
+        "Prepara una exposición de 1 minuto sobre hitos de la historia reciente de Venezuela: 3 hechos y por qué importa en…",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Escribir reseñas de obras literarias.",
-      "learning": "Recomienda obras literarias mediante breves reseñas escritas.",
-      "canDo": "Al terminar puedes escribir una reseña corta de 6–8 líneas.",
-      "mode": "directo",
-      "activityKind": "review",
-      "minutesEstimate": 20,
-      "topicShort": "escribir reseñas de libros",
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Usar en la escritura ciertas restricciones del sistema de escritura alfabético.",
+      "learning": "Prepara una exposición sobre: Aplica a la escritura algunas restricciones del sistema de escritura alfabético: dígrafo gu en gue-gui; qu en que-qui.",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 18,
+      "topicShort": "aplica a la escritura algunas restricciones del sistema de escritura…",
       "activities": [
-        "Reseña: título, de qué trata, parte que más te gustó y por qué (6–8 líneas).",
-        "Ilustra la escena favorita en un dibujo pequeño."
+        "Escribe 4 oraciones o un párrafo corto que resuma aplica a la escritura algunas restricciones del sistema de…",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Números y operaciones",
-      "learning": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero.",
-      "canDo": "Al terminar puedes resolver 4 ítems y explicar un procedimiento en el cuaderno.",
-      "mode": "directo",
-      "activityKind": "operations",
-      "minutesEstimate": 20,
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Números y operaciones",
+      "learning": "Prepara una exposición sobre: Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 18,
       "topicShort": "realiza cálculos de multiplicaciones con dos dígitos y por la…",
       "activities": [
-        "Resuelve en el cuaderno: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Muestra el procedimiento en al menos 2.",
-        "Elige 1 resultado y explica con palabras por qué tiene sentido."
+        "Resuelve en el cuaderno 1 problema o croquis sobre realiza cálculos de multiplicaciones con dos dígitos y por la… y…",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "La Tierra en el universo — La fuerza de gravedad",
-      "learning": "Realiza actividades prácticas para observar los efectos de la fuerza de gravedad en diferentes objetos (caída libre, peso).",
-      "canDo": "Al terminar puedes registrar 3 caídas o empujes y describir la dirección.",
-      "mode": "directo",
-      "activityKind": "forces",
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · La Tierra en el universo — La fuerza de gravedad",
+      "learning": "Prepara una exposición sobre: Realiza actividades prácticas para observar los efectos de la fuerza de gravedad en diferentes objetos (caída libre, peso).",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "realiza actividades prácticas para observar los efectos de la fuerza…",
       "activities": [
-        "3 pruebas seguras de caída o rodar; anota altura y qué pasó.",
-        "Frase: «La fuerza de gravedad hace que…»."
+        "Prepara una exposición sobre realiza actividades prácticas para observar los efectos de la fuerza…: observa o…",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

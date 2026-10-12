@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 85,
   "week": 17,
   "grade": "3er grado",
-  "title": "Día 85",
+  "title": "Día 85 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Deuteronomio 31, 32 · Job–Mal: Proverbios 16, 17, 18 · NT: Hechos 21, 22",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: Deuteronomio 31, 32 · Job–Mal: Proverbios 16, 17, 18 · NT: Hechos 21, 22",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
-        "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "Nación Agrícola",
-      "learning": "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · Nación Agrícola",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "al general Ezequiel Zamora, líder de las luchas campesinas y…",
       "activities": [
-        "Investiga con un adulto 4 hechos de Nación Agrícola; escríbelos en oraciones.",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
+        "Prepara una exposición de 1 minuto sobre al general Ezequiel Zamora, líder de las luchas campesinas y…: 3 hechos y…",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Exponer informaciones sobre distintas áreas del conocimiento.",
-      "learning": "Comunica al grupo del salón información sobre temas de interés.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Exponer informaciones sobre distintas áreas del conocimiento.",
+      "learning": "Prepara una exposición sobre: Comunica al grupo del salón información sobre temas de interés.",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "comunica al grupo del salón información sobre temas de interés",
       "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+        "Escribe 4 oraciones o un párrafo corto que resuma comunica al grupo del salón información sobre temas de interés…",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Diferencia recta y punto, y la traza en un plano.",
-      "canDo": "Al terminar puedes trazar rectas y puntos o clasificar figuras con vocabulario de geometría.",
-      "mode": "directo",
-      "activityKind": "geometry",
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Geometría",
+      "learning": "Prepara una exposición sobre: Diferencia recta y punto, y la traza en un plano.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "diferencia recta y punto, y la traza en un plano",
       "activities": [
-        "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
-        "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+        "Resuelve en el cuaderno 1 problema o croquis sobre diferencia recta y punto, y la traza en un plano y etiqueta los…",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "El ambiente y sus interacciones — Biodiversidad",
-      "learning": "Observa y describe la biodiversidad y su importancia en los ecosistemas de su entorno.",
-      "canDo": "Al terminar puedes listar 5 seres vivos locales y su hábitat.",
-      "mode": "directo",
-      "activityKind": "biodiversity",
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · El ambiente y sus interacciones — Biodiversidad",
+      "learning": "Prepara una exposición sobre: Observa y describe la biodiversidad y su importancia en los ecosistemas de su entorno.",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "observa y describe la biodiversidad y su importancia en los…",
       "activities": [
-        "Camina o mira por la ventana; lista 5 seres y hábitat.",
-        "¿Cuál depende de otro? Una frase causa-efecto."
+        "Prepara una exposición sobre observa y describe la biodiversidad y su importancia en los…: observa o recuerda una…",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

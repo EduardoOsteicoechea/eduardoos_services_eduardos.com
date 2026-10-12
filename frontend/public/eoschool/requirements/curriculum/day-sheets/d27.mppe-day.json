@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 27,
   "week": 6,
   "grade": "3er grado",
   "title": "Día 27",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Libertador Simón Bolívar",
-      "learning": "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "cómo es la juventud de Bolívar, sus viajes a Europa,…",
-      "activities": [
-        "Investiga con un adulto 4 hechos de Libertador Simón Bolívar; escríbelos en oraciones.",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Dibuja un croquis de tu cuarto y marca norte, puerta y ventana; escribe 4 instrucciones para ir de la puerta a la…",
         "Intercambia con un adulto: sigue sus instrucciones en el croquis y corrige si algo no cuadra."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Salud integral — La alimentación en Venezuela",
-      "learning": "Demuestra gusto por las tradiciones culinarias venezolanas y la diversidad alimentaria.",
-      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
-      "mode": "directo",
-      "activityKind": "observation",
-      "minutesEstimate": 18,
-      "topicShort": "demuestra gusto por las tradiciones culinarias venezolanas y la diversidad…",
-      "activities": [
-        "Observa 15 min algo de demuestra gusto por las tradiciones culinarias venezolanas y la diversidad…; tabla con 3…",
-        "Compara 2 filas: similitud y diferencia."
       ]
     }
   ]

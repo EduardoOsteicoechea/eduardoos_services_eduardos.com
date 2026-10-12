@@ -242,7 +242,12 @@ function openModal(card: HTMLElement): void {
   const planDay = parsePlanDay(card);
   const dayId = card.dataset.curriculumDay ?? "";
   const titleEl = modal.querySelector("[data-curriculum-modal-title]");
-  if (titleEl) titleEl.textContent = planDay ? `Día ${planDay}` : `Día ${dayId.replace(/^d/, "")}`;
+  const scheduledRaw = card.dataset.curriculumScheduled?.split(",").map((s) => s.trim()) ?? [];
+  const isExpo = card.dataset.curriculumDayKind === "exposition";
+  if (titleEl) {
+    const base = planDay ? `Día ${planDay}` : `Día ${dayId.replace(/^d/, "")}`;
+    titleEl.textContent = isExpo ? `${base} · Exposiciones` : base;
+  }
 
   modal.hidden = false;
   document.body.classList.add("eoschool-curriculum-modal-open");
@@ -255,14 +260,22 @@ function openModal(card: HTMLElement): void {
   loadPromise
     .then((loaded) => {
       sheet = loaded;
+      const scheduled =
+        loaded?.scheduledSections?.length
+          ? loaded.scheduledSections
+          : scheduledRaw.length
+            ? scheduledRaw
+            : loaded?.sections.map((s) => s.id) ?? ["bib"];
       tabs.forEach((tab) => {
         const sid = tab.dataset.curriculumModalTab as CurriculumPlanSectionId;
-        const has = loaded?.sections.some((s) => s.id === sid) ?? false;
-        tab.disabled = false;
+        const has = scheduled.includes(sid);
+        tab.disabled = !has;
+        tab.hidden = !has;
         tab.classList.toggle("eoschool-curriculum-modal__tab--no-class", !has);
       });
       void showDayPdf(modal, loaded);
-      activateTab(modal, card, "bib", loaded);
+      const first = (scheduled[0] as CurriculumPlanSectionId | undefined) ?? "bib";
+      activateTab(modal, card, first, loaded);
     })
     .catch((err: unknown) => {
       showErrorModal({

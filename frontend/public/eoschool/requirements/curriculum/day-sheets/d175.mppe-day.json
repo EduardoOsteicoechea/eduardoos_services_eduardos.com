@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 175,
   "week": 35,
   "grade": "3er grado",
-  "title": "Día 175",
+  "title": "Día 175 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: 2 Crónicas 13, 14, 15 · Job–Mal: Oseas 4, 5 · NT: 1 Pedro 5; 2 Pedro 1",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: 2 Crónicas 13, 14, 15 · Job–Mal: Oseas 4, 5 · NT: 1 Pedro 5; 2 Pedro 1",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
-        "Responde: ¿qué pasó? — 2 frases."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "Pueblos Afrovenezolanos",
-      "learning": "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
-      "canDo": "Al terminar puedes registrar 3 hechos culturales y una conexión personal.",
-      "mode": "directo",
-      "activityKind": "culture",
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · Pueblos Afrovenezolanos",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "que los pueblos afrovenezolanos son los trabajadores que sostienen a…",
       "activities": [
-        "3 hechos de Pueblos Afrovenezolanos (comida, música o fiesta); viñetas.",
-        "«En mi casa nosotros…» — 2 frases."
+        "Prepara una exposición de 1 minuto sobre que los pueblos afrovenezolanos son los trabajadores que sostienen a…: 3…",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Conocer y usar en la escritura la diferencia singular / plural.",
-      "learning": "Distingue la oposición singular/plural y la usa en la escritura, en los casos en que el plural se forma agregando s al singular y en casos conocidos en que se agrega un sufijo (Lápiz/lápices; cartel/carteles; letra/ letras).",
-      "canDo": "Al terminar puedes escribir 6 palabras con r o rr sin confundirlas.",
-      "mode": "fragmentado",
-      "activityKind": "orthography",
-      "minutesEstimate": 15,
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Conocer y usar en la escritura la diferencia singular / plural.",
+      "learning": "Prepara una exposición sobre: Distingue la oposición singular/plural y la usa en la escritura, en los casos en que el plural se forma agregando s al singular y en casos conocidos en que se agrega un sufijo (Lápiz/lápices; cartel/carteles; letra/ letras).",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 18,
       "topicShort": "distingue la oposición singular/plural y la usa en la escritura,…",
       "activities": [
-        "Solo 6 palabras hoy; corrige con un adulto.",
-        "2 oraciones con la palabra más difícil."
+        "Escribe 4 oraciones o un párrafo corto que resuma distingue la oposición singular/plural y la usa en la escritura,…",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Números y operaciones",
-      "learning": "Cuenta y lee cantidades hasta el diez mil.",
-      "canDo": "Al terminar puedes practicar el contenido de hoy con procedimiento escrito.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Números y operaciones",
+      "learning": "Prepara una exposición sobre: Cuenta y lee cantidades hasta el diez mil.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "cuenta y lee cantidades hasta el diez mil",
       "activities": [
-        "Resuelve: 367 + 428 = 10000 − 4567 = 12 × 9 = 72 ÷ 6 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
-        "Explica en 2 oraciones qué estrategia usaste."
+        "Resuelve en el cuaderno 1 problema o croquis sobre cuenta y lee cantidades hasta el diez mil y etiqueta los pasos.",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Energía – materia — La energía en las comunidades",
-      "learning": "Valorar la importancia de hacer buen uso de la energía en la comunidad para un uso sostenible de la misma.",
-      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
-      "mode": "directo",
-      "activityKind": "observation",
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · Energía – materia — La energía en las comunidades",
+      "learning": "Prepara una exposición sobre: Valorar la importancia de hacer buen uso de la energía en la comunidad para un uso sostenible de la misma.",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "valorar la importancia de hacer buen uso de la energía…",
       "activities": [
-        "Observa 15 min algo de valorar la importancia de hacer buen uso de la energía…; tabla con 3 filas de datos.",
-        "Compara 2 filas: similitud y diferencia."
+        "Prepara una exposición sobre valorar la importancia de hacer buen uso de la energía…: observa o recuerda una…",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 179,
   "week": 36,
   "grade": "3er grado",
   "title": "Día 179",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Libertador Simón Bolívar",
-      "learning": "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "cómo es la juventud de Bolívar, sus viajes a Europa,…",
-      "activities": [
-        "Investiga con un adulto 4 hechos de Libertador Simón Bolívar; escríbelos en oraciones.",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Resuelve: 367 + 428 = 10000 − 4567 = 12 × 9 = 72 ÷ 6 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
         "Explica en 2 oraciones qué estrategia usaste."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Energía – materia — La energía en las comunidades",
-      "learning": "Valorar la importancia de hacer buen uso de la energía en la comunidad para un uso sostenible de la misma.",
-      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
-      "mode": "directo",
-      "activityKind": "observation",
-      "minutesEstimate": 18,
-      "topicShort": "valorar la importancia de hacer buen uso de la energía…",
-      "activities": [
-        "Observa 15 min algo de valorar la importancia de hacer buen uso de la energía…; tabla con 3 filas de datos.",
-        "Compara 2 filas: similitud y diferencia."
       ]
     }
   ]

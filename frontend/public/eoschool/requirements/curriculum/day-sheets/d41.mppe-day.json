@@ -1,10 +1,17 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 41,
   "week": 9,
   "grade": "3er grado",
   "title": "Día 41",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "ide",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +26,6 @@
       "activities": [
         "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
         "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Cultura Venezolana",
-      "learning": "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán…",
-      "activities": [
-        "Investiga con un adulto 4 hechos de Cultura Venezolana; escríbelos en oraciones.",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -52,33 +44,33 @@
       ]
     },
     {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Diferencia los polígonos de acuerdo al número de lados.",
-      "canDo": "Al terminar puedes clasificar figuras por lados y vértices y nombrarlas con precisión.",
+      "id": "ide",
+      "label": "Identidad",
+      "objective": "Cultura Venezolana",
+      "learning": "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro.",
+      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
       "mode": "directo",
-      "activityKind": "geometryShapes",
+      "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "diferencia los polígonos de acuerdo al número de lados",
+      "topicShort": "a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán…",
       "activities": [
-        "Recorta o dibuja 6 figuras; ordena en tabla: nombre, número de lados, número de vértices.",
-        "Elige 2 figuras y explica en una oración qué las hace diferentes."
+        "Investiga con un adulto 4 hechos de Cultura Venezolana; escríbelos en oraciones.",
+        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
       "id": "cie",
       "label": "Ciencias Naturales",
-      "objective": "Salud integral — La alimentación en Venezuela",
-      "learning": "Valora la importancia de una alimentación saludable para el bienestar comunitario.",
-      "canDo": "Al terminar puedes clasificar alimentos en grupos y elegir una comida equilibrada.",
+      "objective": "Ciencia, tecnología y sociedad — Las mezclas",
+      "learning": "Observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas, a partir de experiencias prácticas.",
+      "canDo": "Al terminar puedes probar 3 mezclas seguras y registrar qué pasa.",
       "mode": "directo",
-      "activityKind": "nutrition",
+      "activityKind": "mixture",
       "minutesEstimate": 18,
-      "topicShort": "alimentación saludable y grupos de alimentos",
+      "topicShort": "observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas, a…",
       "activities": [
-        "Dibuja o lista 8 alimentos de tu cocina; clasifica en 3 grupos (energía, construcción, protección).",
-        "Marca con ✓ una merienda saludable y explica en 2 frases."
+        "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
+        "Clasifica: ¿se disuelve o no? Una frase con evidencia."
       ]
     }
   ]

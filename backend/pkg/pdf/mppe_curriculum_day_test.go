@@ -50,6 +50,50 @@ func TestBuildMPPECurriculumDayPDF(t *testing.T) {
 	}
 }
 
+func TestBuildMPPECurriculumDayPDFThreeSections(t *testing.T) {
+	raw, err := BuildMPPECurriculumDayPDF(MPPECurriculumDayDoc{
+		PlanDay: 2,
+		Week:    1,
+		Grade:   "3er grado",
+		Title:   "Dia 2",
+		Sections: []MPPECurriculumDaySection{
+			{ID: "bib", Label: "Biblia", Objective: "Lectura", Learning: "Job 1", Activities: []string{"Lee en voz alta el pasaje."}},
+			{ID: "len", Label: "Lenguaje", Objective: "Biografias", Learning: "Datos clave", Activities: []string{"Escribe 3 oraciones."}},
+			{ID: "mat", Label: "Matematicas", Objective: "Geometria", Learning: "Orientarse", Activities: []string{"Dibuja un croquis."}},
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.HasPrefix(string(raw), "%PDF") {
+		t.Fatal("missing PDF header")
+	}
+	if !strings.Contains(string(raw), "Biblia") {
+		t.Fatal("missing Biblia card")
+	}
+	if !strings.Contains(string(raw), "Lenguaje") {
+		t.Fatal("missing Lenguaje card")
+	}
+	if !strings.Contains(string(raw), "Matematicas") {
+		t.Fatal("missing Matematicas card")
+	}
+}
+
+func TestMppeDayPositions(t *testing.T) {
+	cols, pos := mppeDayPositions(3)
+	if cols != 3 || len(pos) != 3 {
+		t.Fatalf("3 sections: cols=%d len=%d", cols, len(pos))
+	}
+	cols, pos = mppeDayPositions(4)
+	if cols != 2 || len(pos) != 4 {
+		t.Fatalf("4 sections: cols=%d len=%d", cols, len(pos))
+	}
+	cols, pos = mppeDayPositions(5)
+	if cols != 3 || len(pos) != 5 {
+		t.Fatalf("5 sections: cols=%d len=%d", cols, len(pos))
+	}
+}
+
 func longMPPECurriculumDayDoc() MPPECurriculumDayDoc {
 	longLearn := strings.Repeat("Contenido del aprendizaje oficial con detalle para el adulto. ", 4)
 	longAct := "Dibuja un croquis de tu cuarto y marca norte, puerta y ventana; escribe 4 instrucciones para ir de la puerta a la ventana usando izquierda, derecha, delante y detrás."
@@ -86,23 +130,26 @@ func TestMPPECurriculumDayLayoutFitsMeasuredContent(t *testing.T) {
 	margin := MmToPoints(EoschoolMarginMm)
 	gap := MmToPoints(mppeDayCardGapMm)
 	pad := MmToPoints(mppeDayCardPadMm)
-	usableW := pageW - 2*margin
-	colW := (usableW - 2 * gap) / 3
 	yTop := pageH - margin
 	gridTop := yTop - MmToPoints(5) - MmToPoints(5) - MmToPoints(mppeDayHeaderBelowMm)
 
-	plan := planMPPECurriculumDayGrid(doc, pageW, pageH, margin, gap, colW, pad, gridTop)
-	positions := [][2]int{{0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1}}
+	plan := planMPPECurriculumDayGrid(doc, pageW, pageH, margin, gap, pad, gridTop)
 	secs := doc.Sections
 
-	for i, pos := range positions {
+	for i, pos := range plan.positions {
 		row := pos[1]
 		measured := plan.layout.measureCard(secs[i])
 		if plan.rowHeights[row]+0.01 < measured {
 			t.Fatalf("card %d row %d: row height %.2f < measured %.2f", i, row, plan.rowHeights[row], measured)
 		}
 	}
-	total := plan.rowHeights[0] + gap + plan.rowHeights[1]
+	total := 0.0
+	for r, h := range plan.rowHeights {
+		total += h
+		if r < len(plan.rowHeights)-1 {
+			total += gap
+		}
+	}
 	if total > plan.maxGridH+0.5 {
 		t.Fatalf("grid still overflows page: total %.2f > max %.2f", total, plan.maxGridH)
 	}

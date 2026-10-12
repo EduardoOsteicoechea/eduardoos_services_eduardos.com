@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 87,
   "week": 18,
   "grade": "3er grado",
   "title": "Día 87",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Nación Petrolera",
-      "learning": "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
-      "canDo": "Al terminar puedes quedarte con 3 hitos del tema de hoy.",
-      "mode": "fragmentado",
-      "activityKind": "historyMilestones",
-      "minutesEstimate": 15,
-      "topicShort": "hitos de la historia reciente de Venezuela",
-      "activities": [
-        "Solo 3 hitos (no toda la lista del plan); viñetas con año o lugar.",
-        "Mapa o dibujo con 3 etiquetas."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
         "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "El ambiente y sus interacciones — Biodiversidad",
-      "learning": "Observa y describe la biodiversidad y su importancia en los ecosistemas de su entorno.",
-      "canDo": "Al terminar puedes listar 5 seres vivos locales y su hábitat.",
-      "mode": "directo",
-      "activityKind": "biodiversity",
-      "minutesEstimate": 18,
-      "topicShort": "observa y describe la biodiversidad y su importancia en los…",
-      "activities": [
-        "Camina o mira por la ventana; lista 5 seres y hábitat.",
-        "¿Cuál depende de otro? Una frase causa-efecto."
       ]
     }
   ]

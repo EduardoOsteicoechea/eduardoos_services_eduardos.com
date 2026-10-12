@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 109,
   "week": 22,
   "grade": "3er grado",
   "title": "Día 109",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
         "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Nuestro Mundo",
-      "learning": "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
-      "mode": "directo",
-      "activityKind": "mapPlaces",
-      "minutesEstimate": 18,
-      "topicShort": "las características de su vivienda y de un caserío campesino…",
-      "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
       ]
     },
     {
@@ -64,21 +55,6 @@
       "activities": [
         "Mide 4 objetos con regla o cinta; tabla: objeto, medida, unidad.",
         "Compara dos medidas: ¿cuánto más largo es uno? Escribe la resta."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "El ambiente y sus interacciones — Biodiversidad",
-      "learning": "Reconoce los efectos del cambio climático y sus consecuencias sobre la biodiversidad.",
-      "canDo": "Al terminar puedes nombrar 2 efectos del clima local y 1 acción de cuidado.",
-      "mode": "directo",
-      "activityKind": "climate",
-      "minutesEstimate": 18,
-      "topicShort": "el clima y su cuidado",
-      "activities": [
-        "Observa el clima de hoy y de ayer; anota 2 efectos (lluvia, calor, viento) en tu cuaderno.",
-        "1 acción concreta para cuidar el ambiente (basura, agua, plantas) y 1 frase «porque»."
       ]
     }
   ]

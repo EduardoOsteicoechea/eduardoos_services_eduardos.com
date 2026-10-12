@@ -1,10 +1,16 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 194,
   "week": 39,
   "grade": "3er grado",
   "title": "Día 194",
+  "dayKind": "teach",
+  "scheduledSections": [
+    "bib",
+    "len",
+    "mat"
+  ],
   "sections": [
     {
       "id": "bib",
@@ -19,21 +25,6 @@
       "activities": [
         "Lee por turnos una pista cada persona.",
         "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Cultura Venezolana",
-      "learning": "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán…",
-      "activities": [
-        "Investiga con un adulto 4 hechos de Cultura Venezolana; escríbelos en oraciones.",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -54,31 +45,16 @@
     {
       "id": "mat",
       "label": "Matemáticas",
-      "objective": "Números y operaciones",
-      "learning": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero.",
-      "canDo": "Al terminar puedes resolver 4 ítems y explicar un procedimiento en el cuaderno.",
+      "objective": "Estadística y probabilidad",
+      "learning": "Recopila, organiza, clasifica y representa gráficamente datos.",
+      "canDo": "Al terminar puedes armar un pictograma o barras con 4 datos y leerlo.",
       "mode": "directo",
-      "activityKind": "operations",
-      "minutesEstimate": 20,
-      "topicShort": "realiza cálculos de multiplicaciones con dos dígitos y por la…",
-      "activities": [
-        "Resuelve en el cuaderno: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Muestra el procedimiento en al menos 2.",
-        "Elige 1 resultado y explica con palabras por qué tiene sentido."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "La Tierra en el universo — La fuerza de gravedad",
-      "learning": "Realiza actividades prácticas para observar los efectos de la fuerza de gravedad en diferentes objetos (caída libre, peso).",
-      "canDo": "Al terminar puedes registrar 3 caídas o empujes y describir la dirección.",
-      "mode": "directo",
-      "activityKind": "forces",
+      "activityKind": "data",
       "minutesEstimate": 18,
-      "topicShort": "realiza actividades prácticas para observar los efectos de la fuerza…",
+      "topicShort": "organiza, clasifica y representa gráficamente datos",
       "activities": [
-        "3 pruebas seguras de caída o rodar; anota altura y qué pasó.",
-        "Frase: «La fuerza de gravedad hace que…»."
+        "Encuesta a 4 personas: «¿Cuál es tu fruta favorita?»; registra y haz barras o pictograma.",
+        "Escribe 2 preguntas que se respondan mirando tu gráfico."
       ]
     }
   ]

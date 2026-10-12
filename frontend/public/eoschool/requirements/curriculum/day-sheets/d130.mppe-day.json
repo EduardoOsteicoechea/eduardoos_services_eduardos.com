@@ -1,84 +1,92 @@
 {
   "format": "mppe-curriculum-day",
-  "version": 2,
+  "version": 3,
   "planDay": 130,
   "week": 26,
   "grade": "3er grado",
-  "title": "Día 130",
+  "title": "Día 130 · Exposiciones",
+  "dayKind": "exposition",
+  "scheduledSections": [
+    "bib",
+    "ide",
+    "len",
+    "mat",
+    "cie"
+  ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: 2 Samuel 15, 16 · Job–Mal: Jeremías 10, 11 · NT: Efesios 1",
-      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
-      "activityKind": "bible",
-      "minutesEstimate": 10,
+      "label": "Biblia · Exposición",
+      "objective": "Exposición bíblica (repaso de la semana)",
+      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: 2 Samuel 15, 16 · Job–Mal: Jeremías 10, 11 · NT: Efesios 1",
+      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
+      "mode": "exposition",
+      "activityKind": "exposition",
+      "minutesEstimate": 12,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee por turnos una pista cada persona.",
-        "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
+        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
+        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
       ]
     },
     {
       "id": "ide",
-      "label": "Identidad",
-      "objective": "Libertador Simón Bolívar",
-      "learning": "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez.",
-      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Identidad · Exposición",
+      "objective": "Exposición · Libertador Simón Bolívar",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez.",
+      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "cómo es la juventud de Bolívar, sus viajes a Europa,…",
       "activities": [
-        "Investiga con un adulto 4 hechos de Libertador Simón Bolívar; escríbelos en oraciones.",
-        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
+        "Prepara una exposición de 1 minuto sobre cómo es la juventud de Bolívar, sus viajes a Europa,…: 3 hechos y por qué…",
+        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Conocer la función de ciertos documentos legales.",
-      "learning": "Conoce el sentido de la partida de nacimiento y la cédula de identidad.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
-      "activityKind": "default",
+      "label": "Prácticas del Lenguaje · Exposición",
+      "objective": "Exposición · Conocer la función de ciertos documentos legales.",
+      "learning": "Prepara una exposición sobre: Conoce el sentido de la partida de nacimiento y la cédula de identidad.",
+      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "el sentido de la partida de nacimiento y la cédula…",
       "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+        "Escribe 4 oraciones o un párrafo corto que resuma el sentido de la partida de nacimiento y la cédula… para tu…",
+        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Magnitudes y medidas",
-      "learning": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos.",
-      "canDo": "Al terminar puedes medir, registrar y comparar dos longitudes con unidades.",
-      "mode": "directo",
-      "activityKind": "measurement",
+      "label": "Matemáticas · Exposición",
+      "objective": "Exposición · Magnitudes y medidas",
+      "learning": "Prepara una exposición sobre: Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos.",
+      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "utiliza las medidas de longitud, masa, capacidad y tiempo para…",
       "activities": [
-        "Mide 4 objetos con regla o cinta; tabla: objeto, medida, unidad.",
-        "Compara dos medidas: ¿cuánto más largo es uno? Escribe la resta."
+        "Resuelve en el cuaderno 1 problema o croquis sobre utiliza las medidas de longitud, masa, capacidad y tiempo para…",
+        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Seres vivos — Las plantas",
-      "learning": "Reconoce las etapas del crecimiento y desarrollo de una planta.",
-      "canDo": "Al terminar puedes observar una planta y registrar partes y función.",
-      "mode": "directo",
-      "activityKind": "plants",
+      "label": "Ciencias Naturales · Exposición",
+      "objective": "Exposición · Seres vivos — Las plantas",
+      "learning": "Prepara una exposición sobre: Reconoce las etapas del crecimiento y desarrollo de una planta.",
+      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
+      "mode": "exposition",
+      "activityKind": "exposition",
       "minutesEstimate": 18,
       "topicShort": "las etapas del crecimiento y desarrollo de una planta",
       "activities": [
-        "Observa una planta 10 min; dibujo etiquetado (raíz, tallo, hoja).",
-        "2 frases: qué necesita para vivir según las etapas del crecimiento y desarrollo de una planta."
+        "Prepara una exposición sobre las etapas del crecimiento y desarrollo de una planta: observa o recuerda una…",
+        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
       ]
     }
   ]

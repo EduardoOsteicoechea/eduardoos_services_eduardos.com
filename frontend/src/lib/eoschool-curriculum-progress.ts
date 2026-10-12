@@ -5,20 +5,32 @@ import {
   patchCurriculumSection,
   type CurriculumStudent,
 } from "./eoschool-curriculum-api";
+import { daySectionsComplete, sectionProgressKey } from "./eoschool-curriculum-progress-status";
 import { openCurriculumTreatModal } from "./eoschool-curriculum-treat-modal";
 import { showErrorModal } from "./error-modal";
 import { mustLog } from "./dev-log";
 
-export function sectionProgressKey(dayId: string, sectionId: CurriculumPlanSectionId): string {
-  return `${dayId}:${sectionId}`;
-}
+export { sectionProgressKey };
 
 function daysInWeek(weekEl: HTMLElement): HTMLElement[] {
   return [...weekEl.querySelectorAll<HTMLElement>("[data-curriculum-day]")];
 }
 
-function dayComplete(dayId: string, done: Set<string>): boolean {
-  return CURRICULUM_SECTION_IDS.every((sectionId) => done.has(sectionProgressKey(dayId, sectionId)));
+function scheduledForCard(card: HTMLElement): CurriculumPlanSectionId[] {
+  const raw = card.dataset.curriculumScheduled?.split(",").map((s) => s.trim()) ?? [];
+  const list = raw.filter((id): id is CurriculumPlanSectionId =>
+    CURRICULUM_SECTION_IDS.includes(id as CurriculumPlanSectionId),
+  );
+  if (list.length) return list;
+  // Fallback: sections actually rendered on the card.
+  const fromDom = [...card.querySelectorAll<HTMLElement>("[data-curriculum-section]")]
+    .map((el) => el.dataset.curriculumSection as CurriculumPlanSectionId | undefined)
+    .filter((id): id is CurriculumPlanSectionId => Boolean(id) && CURRICULUM_SECTION_IDS.includes(id));
+  return fromDom.length ? fromDom : [...CURRICULUM_SECTION_IDS];
+}
+
+function dayComplete(card: HTMLElement, dayId: string, done: Set<string>): boolean {
+  return daySectionsComplete(dayId, done, scheduledForCard(card));
 }
 
 function applyProgress(root: HTMLElement, done: Set<string>): void {
@@ -36,7 +48,7 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
       if (input) input.checked = checked;
     });
 
-    const complete = dayComplete(dayId, done);
+    const complete = dayComplete(card, dayId, done);
     card.classList.toggle("eoschool-curriculum__day-card--done", complete);
     card.classList.toggle("product-dash__card--done", complete);
   });
@@ -45,7 +57,7 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
     const dayCards = daysInWeek(week);
     const doneCount = dayCards.filter((c) => {
       const id = c.dataset.curriculumDay;
-      return id && dayComplete(id, done);
+      return id && dayComplete(c, id, done);
     }).length;
     const total = dayCards.length;
     const complete = total > 0 && doneCount === total;
