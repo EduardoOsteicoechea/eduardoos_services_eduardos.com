@@ -534,12 +534,30 @@ const jsonLdString =
       {showSiteFooter ? (
         <footer class="site-chrome-footer">
           <nav class="site-chrome-footer__contacts" aria-label="Contact">
-            <a class="site-chrome-footer__btn" href="/contact" data-route>Contact</a>
-            <a class="site-chrome-footer__btn" href={`mailto:${PROFILE_EMAIL}`}>Email</a>
-            <a class="site-chrome-footer__btn" href={PROFILE_WHATSAPP} rel="noopener noreferrer" target="_blank">WhatsApp</a>
-            <a class="site-chrome-footer__btn" href={PROFILE_LINKEDIN} rel="noopener noreferrer" target="_blank">LinkedIn</a>
-            <a class="site-chrome-footer__btn" href={PROFILE_GITHUB} rel="noopener noreferrer" target="_blank">GitHub</a>
-            <a class="site-chrome-footer__btn" href={PROFILE_YOUTUBE} rel="noopener noreferrer" target="_blank">YouTube</a>
+            <a class="site-chrome-footer__btn" href="/contact" data-route>
+              <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+              Contact
+            </a>
+            <a class="site-chrome-footer__btn" href={`mailto:${PROFILE_EMAIL}`}>
+              <span class="material-symbols-outlined" aria-hidden="true">alternate_email</span>
+              Email
+            </a>
+            <a class="site-chrome-footer__btn" href={PROFILE_WHATSAPP} rel="noopener noreferrer" target="_blank">
+              <span class="material-symbols-outlined" aria-hidden="true">chat</span>
+              WhatsApp
+            </a>
+            <a class="site-chrome-footer__btn" href={PROFILE_LINKEDIN} rel="noopener noreferrer" target="_blank">
+              <span class="material-symbols-outlined" aria-hidden="true">work</span>
+              LinkedIn
+            </a>
+            <a class="site-chrome-footer__btn" href={PROFILE_GITHUB} rel="noopener noreferrer" target="_blank">
+              <span class="material-symbols-outlined" aria-hidden="true">code</span>
+              GitHub
+            </a>
+            <a class="site-chrome-footer__btn" href={PROFILE_YOUTUBE} rel="noopener noreferrer" target="_blank">
+              <span class="material-symbols-outlined" aria-hidden="true">play_circle</span>
+              YouTube
+            </a>
           </nav>
         </footer>
       ) : null}

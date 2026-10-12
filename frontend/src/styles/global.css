@@ -3,8 +3,8 @@
   --space-padding: 1rem;
   --main-padding: 1rem;
   --main-padding-top: var(--main-padding);
-  /* Fixed contact footer on home + dashboards (50px at root 16px). */
-  --site-footer-height: 3.125rem;
+  /* Fixed contact footer on home + dashboards (40px at root 16px). */
+  --site-footer-height: 2.5rem;
   /* Page H1 band: global top padding + menu button + bottom margin */
   --page-title-height: calc(
     var(--space-padding) + var(--menu-button-size) + var(--space-margin)
@@ -1211,11 +1211,11 @@ html[data-site-footer] main {
   right: 0;
   z-index: var(--z-activity);
   box-sizing: border-box;
+  height: var(--site-footer-height);
   min-height: var(--site-footer-height);
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding-block: var(--rail-gap);
+  justify-content: flex-start;
   padding-inline: var(--main-inline);
   background: var(--color-surface);
   border-top: var(--border-width) solid var(--color-border);
@@ -1225,7 +1225,7 @@ html[data-site-footer] main {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--rail-gap);
   margin: 0;
   min-width: 0;
@@ -1235,17 +1235,24 @@ html[data-site-footer] main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: calc(var(--rail-gap) * 0.5);
   box-sizing: border-box;
-  min-height: calc(var(--site-footer-height) - (var(--rail-gap) * 2));
+  height: calc(var(--site-footer-height) - (var(--rail-gap) * 0.75));
+  min-height: 0;
   padding: 0 var(--control-padding-inline);
   font-size: var(--font-size-sm);
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1;
   color: var(--color-text);
   text-decoration: none;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
   background: var(--color-bg);
+}
+
+.site-chrome-footer__btn .material-symbols-outlined {
+  font-size: var(--font-size-md);
+  line-height: 1;
 }
 
 .site-chrome-footer__btn:hover {
@@ -1254,6 +1261,12 @@ html[data-site-footer] main {
 }
 
 @media (max-width: 47.999rem) {
+  .site-chrome-footer {
+    height: auto;
+    min-height: var(--site-footer-height);
+    padding-block: var(--rail-gap);
+  }
+
   .site-chrome-footer__contacts {
     flex-wrap: wrap;
   }
