@@ -107,8 +107,10 @@ html[data-page="home"] main {
   display: flex;
   flex-direction: column;
   min-height: var(--shell-viewport-height, 40rem);
-  /* Keep fold spacing + fixed contact footer clearance. */
-  padding-bottom: calc(0.5rem + var(--site-footer-clearance));
+  /* Clear the fixed contact footer + breathing room below the last cards. */
+  padding-bottom: calc(
+    var(--site-footer-height) + var(--space-padding) + var(--space-padding)
+  );
   gap: 0;
   row-gap: 0;
 }
@@ -326,6 +328,13 @@ html[data-page="home"] .home-services__shot figcaption {
 }
 
 @media (max-width: 47.999rem) {
+  html[data-page="home"] main {
+    /* Phone contact row can wrap to two bars. */
+    padding-bottom: calc(
+      (var(--site-footer-height) * 2) + var(--space-padding) + var(--space-padding)
+    );
+  }
+
   html[data-page="home"] main::before {
     /* Only the left half of the portrait is visible on phone. */
     width: 25.2rem;
