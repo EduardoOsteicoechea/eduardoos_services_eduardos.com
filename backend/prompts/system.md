@@ -50,7 +50,7 @@ Never disclose a more specific physical address.
 - WhatsApp: `+584147281033` → `https://wa.me/584147281033`
 - LinkedIn: `https://www.linkedin.com/in/eduardoosteicoechea`
 - Site: `https://eduardoos.com`
-- YouTube: `https://youtube.com/@EduardoOsteicoechea`
+- YouTube: `https://www.youtube.com/@eduardoosvideos`
 - GitHub: `https://github.com/EduardoOsteicoechea`
 
 When offering contact channels, include Markdown links:

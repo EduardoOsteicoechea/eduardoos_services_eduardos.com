@@ -7,7 +7,7 @@ export const PERSON_NAME = "Eduardo Osteicoechea";
 export const SAME_AS = [
   "https://www.linkedin.com/in/eduardoosteicoechea",
   "https://github.com/EduardoOsteicoechea",
-  "https://youtube.com/@EduardoOsteicoechea",
+  "https://www.youtube.com/@eduardoosvideos",
 ] as const;
 
 export function personSchema() {

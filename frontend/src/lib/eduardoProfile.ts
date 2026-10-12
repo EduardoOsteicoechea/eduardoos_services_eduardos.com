@@ -10,7 +10,7 @@ export const PROFILE_EMAIL = "eduardooost@gmail.com";
 export const PROFILE_WHATSAPP = "https://wa.me/584147281033";
 export const PROFILE_WHATSAPP_DISPLAY = "+58 414 728 1033";
 export const PROFILE_SITE = "https://eduardoos.com";
-export const PROFILE_YOUTUBE = "https://youtube.com/@EduardoOsteicoechea";
+export const PROFILE_YOUTUBE = "https://www.youtube.com/@eduardoosvideos";
 export const PROFILE_GITHUB = "https://github.com/EduardoOsteicoechea";
 
 export const profileWhoAnswer =
