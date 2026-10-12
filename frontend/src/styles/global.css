@@ -81,15 +81,6 @@
   --sidebar-toolbar-band: calc(
     var(--space-padding) + var(--rail-button-size) + var(--space-padding) + var(--border-width)
   );
-  /*
-    Session action (Log out/Sign in): control + bottom margin.
-    Subscribe (next section): top margin + control + bottom margin.
-    DHS route tools offset by this so Dashboard lines up with eRead.
-  */
-  --menu-pre-product-offset: calc(
-    var(--control-height) + var(--space-padding) +
-    var(--space-padding) + var(--control-height) + var(--space-padding)
-  );
   --font-family: "Raleway", ui-sans-serif, system-ui, sans-serif;
   --font-family-display: "Raleway", ui-sans-serif, system-ui, sans-serif;
   --font-family-ui: "Raleway", ui-sans-serif, system-ui, sans-serif;
@@ -720,12 +711,9 @@ a {
   z-index: 1;
 }
 
-/*
-  After Log out/Sign in + Subscribe, product links start (eRead…).
-  Offset DHS route tools so Dashboard lines up with eRead.
-*/
+/* Route tools start immediately under the DHS font/theme row. */
 #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) > .sidebar-toolbar[data-dhs-chrome] + * {
-  margin-top: var(--menu-pre-product-offset);
+  margin-top: 0;
 }
 
 .sidebar-left nav {

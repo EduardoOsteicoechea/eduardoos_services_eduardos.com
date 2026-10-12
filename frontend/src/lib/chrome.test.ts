@@ -270,9 +270,9 @@ describe("menu toolbar span", () => {
     expect(css).toMatch(
       /#main-menu:not\(\[hidden\]\) ~ #dynamic-header:not\(\[hidden\]\) \{[^}]*padding-top: 0;/,
     );
-    expect(css).toContain("--menu-pre-product-offset");
+    expect(css).not.toContain("--menu-pre-product-offset");
     expect(css).toMatch(
-      /#main-menu:not\(\[hidden\]\) ~ #dynamic-header:not\(\[hidden\]\) > \.sidebar-toolbar\[data-dhs-chrome\] \+ \*/,
+      /#main-menu:not\(\[hidden\]\) ~ #dynamic-header:not\(\[hidden\]\) > \.sidebar-toolbar\[data-dhs-chrome\] \+ \* \{\s*margin-top: 0;/,
     );
     expect(css).toContain("#main-menu .sidebar-toolbar::after");
     expect(css).toContain("content: none");
