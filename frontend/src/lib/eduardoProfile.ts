@@ -18,7 +18,7 @@ export const profileWhoAnswer =
 
 /** Second hero paragraph (home page lead). */
 export const profileWhoLead2 =
-  "In this page you'll find both my AEC Software profile broadcasting and my set of productivity services spanning from writing apps to a homeschool app. You can contact me through the information provided in this page or subscribe to my services and boost your productivity.";
+  "In this page you'll find both my AEC Software profile and my set of productivity services spanning from writing apps to text to audio conversion and even a homeschool app. Contact me through the information provided in this page or Subscribe to my services to boost your productivity.";
 
 export const HOME_HEADING = "AEC AI Consulting - Productivity Apps";
 
