@@ -71,30 +71,88 @@ func asAnySlice(v any) []any {
 	return out
 }
 
-func articleBlocks(title string, body map[string]any) ([]map[string]string, string) {
+func articleBlocks(title string, body map[string]any) ([]map[string]any, string) {
 	blocks, _, plain, _ := articleProjection(title, body)
 	return blocks, plain
 }
 
-func articleProjection(title string, body map[string]any) (blocks, footer []map[string]string, plain string, byline map[string]string) {
+// articleStyleIndexes keeps pamphlet style_indexes[0] bold ranges for the
+// public article reader. Bounds match the editor's JS string indexes; the
+// reader clamps. Image pan/zoom slots are omitted.
+func articleStyleIndexes(raw any) [][]int {
+	if raw == nil {
+		return nil
+	}
+	rows := asAnySlice(raw)
+	if len(rows) == 0 {
+		return nil
+	}
+	boldRow := asAnySlice(rows[0])
+	if len(boldRow) < 2 {
+		return nil
+	}
+	start := intFromAny(boldRow[0])
+	end := intFromAny(boldRow[1])
+	if end <= start || start < 0 {
+		return nil
+	}
+	return [][]int{{start, end}}
+}
+
+func intFromAny(v any) int {
+	switch n := v.(type) {
+	case int:
+		return n
+	case int32:
+		return int(n)
+	case int64:
+		return int(n)
+	case float64:
+		return int(n)
+	case float32:
+		return int(n)
+	case json.Number:
+		i, err := n.Int64()
+		if err != nil {
+			return 0
+		}
+		return int(i)
+	default:
+		return 0
+	}
+}
+
+func articleProjection(title string, body map[string]any) (blocks, footer []map[string]any, plain string, byline map[string]string) {
 	body = asStringMap(body)
 	byline = map[string]string{}
-	appendTo := func(dst *[]map[string]string, kind, text string) {
-		text = strings.TrimSpace(text)
-		if text == "" {
+	appendTo := func(dst *[]map[string]any, kind, text string, styleIndexes any) {
+		if strings.TrimSpace(text) == "" {
 			return
 		}
 		if kind != "heading_1" && kind != "paragraph" && kind != "image" && kind != "meta" {
 			kind = "paragraph"
 		}
-		*dst = append(*dst, map[string]string{"type": kind, "content": text})
+		// Keep original content when bold ranges are present so indexes stay valid.
+		content := text
+		var styles [][]int
+		if kind != "image" {
+			styles = articleStyleIndexes(styleIndexes)
+		}
+		if styles == nil {
+			content = strings.TrimSpace(text)
+		}
+		block := map[string]any{"type": kind, "content": content}
+		if styles != nil {
+			block["style_indexes"] = styles
+		}
+		*dst = append(*dst, block)
 	}
-	appendItems := func(dst *[]map[string]string, raw any) {
+	appendItems := func(dst *[]map[string]any, raw any) {
 		for _, rawItem := range asAnySlice(raw) {
 			item := asStringMap(rawItem)
 			if item == nil {
 				if s := stringFromAny(rawItem); s != "" {
-					appendTo(dst, "paragraph", s)
+					appendTo(dst, "paragraph", s, nil)
 				}
 				continue
 			}
@@ -106,7 +164,7 @@ func articleProjection(title string, body map[string]any) (blocks, footer []map[
 			if kind == "" && text != "" {
 				kind = "paragraph"
 			}
-			appendTo(dst, kind, text)
+			appendTo(dst, kind, text, item["style_indexes"])
 		}
 	}
 	header := asStringMap(body["header"])
@@ -124,30 +182,34 @@ func articleProjection(title string, body map[string]any) (blocks, footer []map[
 	}
 	foot := asStringMap(body["footer"])
 	if action := stringFromAny(foot["action"]); action != "" {
-		appendTo(&footer, "paragraph", action)
+		appendTo(&footer, "paragraph", action, nil)
 	}
 	if message := stringFromAny(foot["message"]); message != "" {
-		appendTo(&footer, "paragraph", message)
+		appendTo(&footer, "paragraph", message, nil)
 	}
 	appendItems(&footer, foot["items"])
 	if len(blocks) == 0 {
 		appendItems(&blocks, body["blocks"])
 	}
-	if len(blocks) > 0 && blocks[0]["type"] == "heading_1" && strings.EqualFold(blocks[0]["content"], resolvedTitle) {
-		blocks = blocks[1:]
+	if len(blocks) > 0 {
+		firstType := stringFromAny(blocks[0]["type"])
+		firstContent := stringFromAny(blocks[0]["content"])
+		if firstType == "heading_1" && strings.EqualFold(firstContent, resolvedTitle) {
+			blocks = blocks[1:]
+		}
 	}
 	parts := make([]string, 0, len(blocks)+len(footer)+1)
 	if resolvedTitle != "" {
 		parts = append(parts, resolvedTitle)
 	}
 	for _, block := range blocks {
-		if block["type"] != "image" {
-			parts = append(parts, block["content"])
+		if stringFromAny(block["type"]) != "image" {
+			parts = append(parts, stringFromAny(block["content"]))
 		}
 	}
 	for _, block := range footer {
-		if block["type"] != "image" {
-			parts = append(parts, block["content"])
+		if stringFromAny(block["type"]) != "image" {
+			parts = append(parts, stringFromAny(block["content"]))
 		}
 	}
 	plain = strings.Join(parts, "\n\n")
@@ -214,8 +276,8 @@ func (a *App) getArticleHandler(w http.ResponseWriter, r *http.Request) {
 	a.applyLinkedFooter(r, &record)
 	title := strings.TrimSpace(record.Title)
 	blocks, footer, plain, byline := articleProjection(title, record.Body)
-	if title == "" && len(blocks) > 0 && blocks[0]["type"] == "heading_1" {
-		title = blocks[0]["content"]
+	if title == "" && len(blocks) > 0 && stringFromAny(blocks[0]["type"]) == "heading_1" {
+		title = stringFromAny(blocks[0]["content"])
 		blocks = blocks[1:]
 	}
 	if plain == "" && title != "" {

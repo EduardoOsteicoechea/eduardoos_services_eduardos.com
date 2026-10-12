@@ -217,6 +217,37 @@ func TestArticlesLoadOnlyPublicPamphletsForConfiguredOwner(t *testing.T) {
 	}
 }
 
+func TestArticleProjectionKeepsPamphletBoldRanges(t *testing.T) {
+	blocks, _, plain, _ := articleProjection("Bold piece", map[string]any{
+		"header": map[string]any{"title": "Bold piece"},
+		"column_1": []any{
+			map[string]any{
+				"type":    "paragraph",
+				"content": "Hello bold world",
+				"style_indexes": []any{
+					[]any{6.0, 10.0},
+					[]any{0.0, 0.0},
+					[]any{100.0, 0.0},
+				},
+			},
+		},
+		"footer": map[string]any{},
+	})
+	if !strings.Contains(plain, "Hello bold world") {
+		t.Fatalf("plainText missing content: %q", plain)
+	}
+	if len(blocks) != 1 {
+		t.Fatalf("expected 1 block, got %d", len(blocks))
+	}
+	styles, ok := blocks[0]["style_indexes"].([][]int)
+	if !ok || len(styles) == 0 || len(styles[0]) < 2 {
+		t.Fatalf("expected style_indexes bold range, got %#v", blocks[0]["style_indexes"])
+	}
+	if styles[0][0] != 6 || styles[0][1] != 10 {
+		t.Fatalf("bold range want [6 10], got %v", styles[0])
+	}
+}
+
 func TestArticlePDFForPublicPamphlet(t *testing.T) {
 	app := newTestApp(false)
 	app.cfg.PublicArticlesOwnerEmail = "member@eduardoos.com"

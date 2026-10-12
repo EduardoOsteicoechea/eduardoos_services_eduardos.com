@@ -656,6 +656,11 @@ main > .diag{
   overflow-wrap: break-word;
 }
 
+.article-page__body b,
+.article-page__body strong{
+  font-weight: 700;
+}
+
 .article-page__body h2{
   font-family: var(--font-family-display);
   font-size: var(--font-size-xl);

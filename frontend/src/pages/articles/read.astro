@@ -82,12 +82,55 @@ import Layout from "../../layouts/Layout.astro";
   import { applyArticleSeo } from "../../lib/article-seo";
   import { downloadPublicArticlePdf } from "../../lib/epams";
 
-  type ArticleBlock = { type?: string; content?: string };
+  type ArticleBlock = {
+    type?: string;
+    content?: string;
+    style_indexes?: number[][];
+  };
 
-  function appendBlock(host: HTMLElement, text: string, heading = false, meta = false) {
-    const value = text.trim();
-    if (!value) return;
-    if (!heading && !meta) {
+  /** Mirror pamphlet applyStyledContent bold ranges (style_indexes[0]). */
+  function fillStyledText(el: HTMLElement, content: string, styleIndexes?: number[][]) {
+    const bold = styleIndexes?.[0];
+    const boldStart = Number.isFinite(bold?.[0]) ? Number(bold![0]) : 0;
+    const boldEnd = Number.isFinite(bold?.[1]) ? Number(bold![1]) : 0;
+    const hasBold =
+      boldEnd > boldStart && boldStart >= 0 && boldEnd <= content.length;
+    if (!hasBold) {
+      el.textContent = content;
+      return;
+    }
+    el.replaceChildren();
+    const points = [0, boldStart, boldEnd, content.length]
+      .filter((n, i, arr) => i === 0 || n !== arr[i - 1])
+      .sort((a, b) => a - b);
+    for (let i = 0; i < points.length - 1; i++) {
+      const a = points[i];
+      const b = points[i + 1];
+      if (b <= a) continue;
+      const slice = content.slice(a, b);
+      if (a >= boldStart && b <= boldEnd) {
+        const boldEl = document.createElement("b");
+        boldEl.textContent = slice;
+        el.appendChild(boldEl);
+      } else {
+        el.appendChild(document.createTextNode(slice));
+      }
+    }
+  }
+
+  function appendBlock(
+    host: HTMLElement,
+    text: string,
+    heading = false,
+    meta = false,
+    styleIndexes?: number[][],
+  ) {
+    const hasBold =
+      Array.isArray(styleIndexes?.[0]) &&
+      Number(styleIndexes![0][1]) > Number(styleIndexes![0][0]);
+    const value = hasBold ? text : text.trim();
+    if (!value.trim()) return;
+    if (!heading && !meta && !hasBold) {
       for (const para of value.split(/\n\n+/)) {
         const chunk = para.trim();
         if (!chunk) continue;
@@ -99,27 +142,31 @@ import Layout from "../../layouts/Layout.astro";
     }
     const node = document.createElement(heading ? "h2" : "p");
     if (meta) node.className = "article-page__meta";
-    node.textContent = value;
+    fillStyledText(node, value, styleIndexes);
     host.appendChild(node);
   }
 
   function renderBlocks(host: HTMLElement, blocks: ArticleBlock[] | undefined) {
     for (const block of blocks ?? []) {
-      const text = (block.content || "").trim();
-      if (!text) continue;
+      const raw = block.content || "";
+      const styles = block.style_indexes;
+      const hasBold =
+        Array.isArray(styles?.[0]) && Number(styles![0][1]) > Number(styles![0][0]);
+      const text = hasBold ? raw : raw.trim();
+      if (!text.trim()) continue;
       if (block.type === "image") {
         const img = document.createElement("img");
-        img.src = text;
+        img.src = text.trim();
         img.alt = "";
         img.loading = "lazy";
         host.appendChild(img);
         continue;
       }
       if (block.type === "meta") {
-        appendBlock(host, text, false, true);
+        appendBlock(host, text, false, true, styles);
         continue;
       }
-      appendBlock(host, text, block.type === "heading_1");
+      appendBlock(host, text, block.type === "heading_1", false, styles);
     }
   }
 
