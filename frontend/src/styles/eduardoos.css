@@ -147,26 +147,18 @@ html[data-page="home"] .hero {
   padding-bottom: var(--rail-gap);
 }
 
-/* Lead stack → 2rem → buttons; meta sits on the fold above the separator. */
+/* Lead stack → 2rem → meta; remaining fold space sits under meta above the separator. */
 html[data-page="home"] .hero__lede {
   margin-bottom: 0;
 }
 
 html[data-page="home"] .hero__lede + .hero__lede {
   margin-top: var(--rail-gap);
-}
-
-html[data-page="home"] .hero__lede--secondary {
   margin-bottom: 2rem;
 }
 
-html[data-page="home"] .hero__actions {
-  margin-top: 0;
-}
-
-/* Buttons → 2rem → meta; remaining fold space sits under meta above the separator. */
 html[data-page="home"] .hero__meta {
-  margin-top: 2rem;
+  margin-top: 0;
 }
 
 html[data-page="home"] .hero::after {
@@ -197,14 +189,19 @@ html[data-page="home"] .home-split__col {
   min-width: 0;
 }
 
-html[data-page="home"] .home-split__eyebrow {
+html[data-page="home"] .home-split__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rail-gap);
   margin: 0;
 }
 
-html[data-page="home"] .home-split__cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--rail-gap);
+html[data-page="home"] .home-split__title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 650;
 }
 
 html[data-page="home"] .home-profile__pair {
@@ -312,13 +309,6 @@ html[data-page="home"] .home-services__shot figcaption {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .hero__actions .btn {
-    background: color-mix(in srgb, var(--color-surface) 90%, transparent);
-  }
-
-  .hero__actions .btn--primary {
-    background: var(--color-button-bg);
-  }
 }
 
 .hero{
@@ -330,11 +320,6 @@ html[data-page="home"] .home-services__shot figcaption {
 
 html[data-page="home"] .hero__lede {
   font-size: calc(var(--font-size-lg) * 0.9);
-}
-
-html[data-page="home"] .hero__lede--secondary {
-  font-size: var(--font-size-sm);
-  color: var(--color-muted);
 }
 
 .eyebrow{
