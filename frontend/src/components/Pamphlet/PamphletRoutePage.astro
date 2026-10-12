@@ -57,6 +57,17 @@ import Layout from "../../layouts/Layout.astro";
           <span class="pamphlet-vanilla-dash__card-title">Footers</span>
           <span class="pamphlet-vanilla-dash__card-desc">Footer profiles.</span>
         </a>
+        <a
+          class="pamphlet-vanilla-dash__card"
+          href="/documents/pamphlet/publishers"
+          data-pamphlet-nav="publishers"
+          data-admin-only
+          hidden
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">article</span>
+          <span class="pamphlet-vanilla-dash__card-title">Publishers</span>
+          <span class="pamphlet-vanilla-dash__card-desc">Control Articles visibility by publisher.</span>
+        </a>
       </div>
     </section>
   </section>
@@ -188,6 +199,23 @@ import Layout from "../../layouts/Layout.astro";
       <p class="pamphlet-manage__hint">Show/hide in Articles or delete pamphlets.</p>
       <div class="pamphlet-manage__list" data-series-articles role="list"></div>
     </section>
+  </section>
+
+  <section id="pamphlet-publishers" class="pamphlet-manage admin-articles" aria-label="Articles publishers" hidden>
+    <header class="pamphlet-manage__head">
+      <a class="pamphlet-manage__back" href="/documents/pamphlet" data-pamphlet-nav="dashboard">← Back to EPAM</a>
+      <button class="dhs-action" type="button" data-articles-refresh title="Refresh list" aria-label="Refresh list">
+        <span class="icon-btn" aria-hidden="true">
+          <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+        </span>
+        Refresh
+      </button>
+      <p class="status" data-banner>Checking session…</p>
+    </header>
+    <div class="admin-articles__panel" data-table-wrap hidden>
+      <p class="hint" data-count></p>
+      <ul class="admin-articles__list" data-publishers></ul>
+    </div>
   </section>
 
   <div id="pamphlet-root" class="pamphlet-route-root pamphlet-layout-workspace" hidden></div>
@@ -472,12 +500,98 @@ import Layout from "../../layouts/Layout.astro";
       min-width: 0;
     }
   }
+
+  .admin-articles {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+  }
+
+  .admin-articles__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .admin-articles__publisher {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+  }
+
+  .admin-articles__publisher-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rail-gap);
+  }
+
+  .admin-articles__email {
+    margin: 0;
+    font-size: var(--font-size-md);
+    font-weight: 650;
+  }
+
+  .admin-articles__meta {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  .admin-articles__default {
+    display: flex;
+    align-items: center;
+    gap: var(--rail-gap);
+    margin-left: auto;
+    font-size: var(--font-size-sm);
+  }
+
+  .admin-articles__items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .admin-articles__item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rail-gap);
+    padding: var(--rail-gap);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+  }
+
+  .admin-articles__item-title {
+    flex: 1;
+    min-width: 0;
+    font-size: var(--font-size-sm);
+  }
+
+  .admin-articles__empty {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
 </style>
 
 <script>
   import { fetchEpams } from "../../lib/epams";
   import { mountPamphletManagePage } from "../../lib/pamphletManagePage";
   import type { PamphletManageHandle } from "../../lib/pamphletManagePage";
+  import { mountPamphletPublishersPage } from "../../lib/pamphletPublishersPage";
+  import type { PamphletPublishersHandle } from "../../lib/pamphletPublishersPage";
   import { mountPamphletSeriesPage } from "../../lib/pamphletSeriesPage";
   import type { PamphletSeriesHandle } from "../../lib/pamphletSeriesPage";
   import { mountPamphletGenerator } from "../../lib/pamphlet-generator/src/index.ts";
@@ -485,11 +599,21 @@ import Layout from "../../layouts/Layout.astro";
   import { pushClientUrl, replaceClientUrl } from "../../lib/router";
 
   const PAMPHLET_BASE = "/documents/pamphlet";
-  const PAMPHLET_VIEWS = new Set(["new", "open", "recent", "manage", "series", "footers", "edit"]);
+  const PAMPHLET_VIEWS = new Set([
+    "new",
+    "open",
+    "recent",
+    "manage",
+    "series",
+    "footers",
+    "publishers",
+    "edit",
+  ]);
 
   let handle: PamphletMountHandle | null = null;
   let manageHandle: PamphletManageHandle | null = null;
   let seriesHandle: PamphletSeriesHandle | null = null;
+  let publishersHandle: PamphletPublishersHandle | null = null;
 
   function formatEpamDate(value: string | undefined): string {
     if (!value) return "";
@@ -618,14 +742,21 @@ import Layout from "../../layouts/Layout.astro";
     seriesHandle = null;
   }
 
+  function destroyPublishers(): void {
+    publishersHandle?.destroy();
+    publishersHandle = null;
+  }
+
   function hideAllSurfaces(): void {
     const dash = document.getElementById("pamphlet-dash");
     const manage = document.getElementById("pamphlet-manage");
     const series = document.getElementById("pamphlet-series");
+    const publishers = document.getElementById("pamphlet-publishers");
     const host = document.getElementById("pamphlet-root");
     if (dash) dash.hidden = true;
     if (manage) manage.hidden = true;
     if (series) series.hidden = true;
+    if (publishers) publishers.hidden = true;
     if (host) host.hidden = true;
   }
 
@@ -633,6 +764,7 @@ import Layout from "../../layouts/Layout.astro";
     destroyEditor();
     destroyManage();
     destroySeries();
+    destroyPublishers();
     clearBleed();
     hideAllSurfaces();
     const dash = document.getElementById("pamphlet-dash");
@@ -644,6 +776,7 @@ import Layout from "../../layouts/Layout.astro";
     destroyEditor();
     destroyManage();
     destroySeries();
+    destroyPublishers();
     clearBleed();
     hideAllSurfaces();
     const manage = document.getElementById("pamphlet-manage");
@@ -665,6 +798,7 @@ import Layout from "../../layouts/Layout.astro";
     destroyEditor();
     destroyManage();
     destroySeries();
+    destroyPublishers();
     clearBleed();
     hideAllSurfaces();
     const series = document.getElementById("pamphlet-series");
@@ -682,6 +816,28 @@ import Layout from "../../layouts/Layout.astro";
     }
   }
 
+  function showPublishers(): void {
+    destroyEditor();
+    destroyManage();
+    destroySeries();
+    destroyPublishers();
+    clearBleed();
+    hideAllSurfaces();
+    const publishers = document.getElementById("pamphlet-publishers");
+    if (!publishers) {
+      console.error("[pamphlet] missing #pamphlet-publishers");
+      return;
+    }
+    publishers.hidden = false;
+    try {
+      publishersHandle = mountPamphletPublishersPage(publishers);
+    } catch (err) {
+      console.error("[pamphlet] publishers mount failed", err);
+      const message = err instanceof Error ? err.message : String(err);
+      publishers.textContent = `Could not open publishers page: ${message}`;
+    }
+  }
+
   function showEditor(view: string, epamId = ""): void {
     const host = document.getElementById("pamphlet-root");
     if (!host) {
@@ -692,6 +848,7 @@ import Layout from "../../layouts/Layout.astro";
     destroyEditor();
     destroyManage();
     destroySeries();
+    destroyPublishers();
     hideAllSurfaces();
     host.hidden = false;
     applyBleed();
@@ -716,6 +873,7 @@ import Layout from "../../layouts/Layout.astro";
     if (view === "dashboard") showDashboard();
     else if (view === "manage") showManage();
     else if (view === "series") showSeries();
+    else if (view === "publishers") showPublishers();
     else showEditor(view, epamId);
   }
 
@@ -749,6 +907,7 @@ import Layout from "../../layouts/Layout.astro";
     setViewInUrl(view);
     if (view === "manage") showManage();
     else if (view === "series") showSeries();
+    else if (view === "publishers") showPublishers();
     else showEditor(view);
   }
 
@@ -762,6 +921,7 @@ import Layout from "../../layouts/Layout.astro";
       destroyEditor();
       destroyManage();
       destroySeries();
+      destroyPublishers();
       clearBleed();
       document.removeEventListener("click", onClick);
       window.removeEventListener("popstate", syncFromUrl);
