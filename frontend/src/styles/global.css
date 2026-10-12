@@ -767,6 +767,7 @@ a {
   display: flex;
   align-items: center;
   gap: var(--rail-gap);
+  box-sizing: border-box;
   margin: var(--space-padding);
   padding-inline: var(--space-padding);
   min-height: var(--control-height);
@@ -784,6 +785,13 @@ a {
   text-align: center;
 }
 
+/* Sign in / Log out: outline only — fg border, text, icon; no fill. */
+#main-menu .sidebar-nav-section--session-guest .sidebar-nav-action {
+  background: transparent;
+  color: var(--color-text);
+  border: var(--border-width) solid var(--color-text);
+}
+
 .sidebar-left nav .sidebar-nav-action > .material-symbols-outlined {
   font-size: var(--tray-nav-icon-size);
 }
@@ -792,6 +800,19 @@ a {
 .sidebar-left nav .sidebar-nav-action:focus-visible {
   background: var(--color-accent);
   color: var(--color-bg);
+}
+
+#main-menu .sidebar-nav-section--session-guest .sidebar-nav-action:hover,
+#main-menu .sidebar-nav-section--session-guest .sidebar-nav-action:focus-visible {
+  background: transparent;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+#main-menu .sidebar-nav-section--session-guest .sidebar-nav-action[aria-current="page"] {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-text);
 }
 
 .sidebar-left nav a:not(.sidebar-nav-action),
