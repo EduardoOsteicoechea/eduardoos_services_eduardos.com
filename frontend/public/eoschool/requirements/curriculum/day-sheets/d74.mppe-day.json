@@ -4,57 +4,28 @@
   "planDay": 74,
   "week": 15,
   "grade": "3er grado",
-  "title": "Día 74",
-  "dayKind": "teach",
+  "title": "Día 74 · Feriado — Fin de Año",
+  "dayKind": "holiday",
+  "calendarDate": "2026-12-31",
+  "holidayName": "Fin de Año",
+  "holidayDate": "2026-12-31",
   "scheduledSections": [
-    "bib",
-    "len",
-    "mat"
+    "bib"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Deuteronomio 7, 8 · Job–Mal: Salmos 139, 140 · NT: Hechos 7",
+      "label": "Biblia · Feriado",
+      "objective": "Feriado nacional — Fin de Año",
+      "learning": "Lectura bíblica del día (feriado). Gén–Ester: Deuteronomio 7, 8 · Job–Mal: Salmos 139, 140 · NT: Hechos 7",
       "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
+      "mode": "holiday",
       "activityKind": "bible",
       "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
         "Lee por turnos una pista cada persona.",
         "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Interpretar metáforas.",
-      "learning": "Comprende metáforas sencillas en textos literarios.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "metáforas sencillas en textos literarios",
-      "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
-      ]
-    },
-    {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Es capaz de trazar un croquis partiendo de un punto de referencia.",
-      "canDo": "Al terminar puedes trazar rectas y puntos o clasificar figuras con vocabulario de geometría.",
-      "mode": "directo",
-      "activityKind": "geometry",
-      "minutesEstimate": 18,
-      "topicShort": "es capaz de trazar un croquis partiendo de un punto…",
-      "activities": [
-        "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
-        "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
       ]
     }
   ]

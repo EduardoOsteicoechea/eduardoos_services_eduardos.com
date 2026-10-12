@@ -52,8 +52,13 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
     <EoschoolDashBack />
     <p class="lede">
       {meta.grade ?? "3er grado"} · {meta.weeks} semanas × {meta.daysPerWeek ?? 5} días = {meta.totalPlanDays ?? bibleMeta.readingDays}{" "}
-      días escolares. Cada día: Biblia y Lenguaje. Días 1 y 3: Identidad y Ciencias. Días 2 y 4: Matemáticas. Día 5: exposiciones
-      de las cinco asignaturas. Abre un día para ver objetivo, aprendizaje y hoja PDF.
+      días escolares
+      {meta.schoolYearStart && meta.schoolYearEnd
+        ? ` (${meta.schoolYearStart} → ${meta.schoolYearEnd})`
+        : ""}
+      . Cada día: Biblia y Lenguaje. Días 1 y 3: Identidad y Ciencias. Días 2 y 4: Matemáticas. Día 5: exposiciones
+      de las cinco asignaturas. En feriados oficiales VE solo Biblia
+      {meta.holidays?.length ? ` (${meta.holidays.length} días)` : ""}. Abre un día para ver objetivo, aprendizaje y hoja PDF.
     </p>
     <p class="eoschool-curriculum__student" data-curriculum-student-banner hidden></p>
 
@@ -164,12 +169,24 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
                 const blockId = `w${weekPlan.week}-b${block.block}`;
                 const scheduled = scheduledSectionsForBlock(block);
                 const isExpo = block.dayKind === "exposition";
+                const isHoliday = block.dayKind === "holiday";
+                const dayTitleSuffix = isHoliday
+                  ? ` · Feriado — ${block.holidayName ?? "Feriado"}`
+                  : isExpo
+                    ? " · Exposiciones"
+                    : "";
+                const ariaDay = isHoliday
+                  ? `Abrir día ${bibleDay.dayInPlan}, feriado ${block.holidayName ?? ""}`
+                  : isExpo
+                    ? `Abrir día ${bibleDay.dayInPlan}, exposiciones`
+                    : `Abrir día ${bibleDay.dayInPlan}`;
                 return (
                   <article
                     class:list={[
                       "product-dash__card",
                       "eoschool-curriculum__day-card",
                       isExpo && "eoschool-curriculum__day-card--expo",
+                      isHoliday && "eoschool-curriculum__day-card--holiday",
                     ]}
                     data-curriculum-day={dayId}
                     data-curriculum-block={blockId}
@@ -179,16 +196,12 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
                     data-curriculum-day-trigger
                     tabindex="0"
                     role="button"
-                    aria-label={
-                      isExpo
-                        ? `Abrir día ${bibleDay.dayInPlan}, exposiciones`
-                        : `Abrir día ${bibleDay.dayInPlan}`
-                    }
+                    aria-label={ariaDay}
                   >
                     <header class="eoschool-curriculum__day-head">
                       <h3 class="eoschool-curriculum__day-title">
                         Día {bibleDay.dayInPlan}
-                        {isExpo ? " · Exposiciones" : ""}
+                        {dayTitleSuffix}
                       </h3>
                       <span class="eoschool-curriculum__day-open-hint" aria-hidden="true">
                         <span class="material-symbols-outlined">open_in_full</span>
@@ -211,7 +224,11 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
                                       ? block.mat
                                       : block.cie) ?? [],
                                 );
-                        const label = isExpo ? `${area.label} · Expo` : area.label;
+                        const label = isHoliday
+                          ? `${area.label} · Feriado`
+                          : isExpo
+                            ? `${area.label} · Expo`
+                            : area.label;
                         return (
                           <div
                             class="eoschool-curriculum__subject"
@@ -233,6 +250,12 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
                               </h4>
                             </div>
                             <div class="eoschool-curriculum__subject-body eoschool-curriculum__subject-body--card">
+                              {isHoliday ? (
+                                <p class="eoschool-curriculum__expo-hint">
+                                  Feriado: solo lectura bíblica
+                                  {block.calendarDate ? ` · ${block.calendarDate}` : ""}
+                                </p>
+                              ) : null}
                               {isExpo ? (
                                 <p class="eoschool-curriculum__expo-hint">Preparar exposición de la semana</p>
                               ) : null}
@@ -860,7 +883,8 @@ const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
     color: var(--color-muted);
   }
 
-  .eoschool-curriculum__day-card--expo .eoschool-curriculum__day-title {
+  .eoschool-curriculum__day-card--expo .eoschool-curriculum__day-title,
+  .eoschool-curriculum__day-card--holiday .eoschool-curriculum__day-title {
     font-weight: 600;
   }
 

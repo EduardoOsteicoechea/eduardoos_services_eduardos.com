@@ -4,89 +4,28 @@
   "planDay": 135,
   "week": 27,
   "grade": "3er grado",
-  "title": "Día 135 · Exposiciones",
-  "dayKind": "exposition",
+  "title": "Día 135 · Feriado — Viernes Santo",
+  "dayKind": "holiday",
+  "calendarDate": "2027-03-26",
+  "holidayName": "Viernes Santo",
+  "holidayDate": "2027-03-26",
   "scheduledSections": [
-    "bib",
-    "ide",
-    "len",
-    "mat",
-    "cie"
+    "bib"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia · Exposición",
-      "objective": "Exposición bíblica (repaso de la semana)",
-      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: 1 Reyes 2, 3 · Job–Mal: Jeremías 22, 23, 24 · NT: Filipenses 1, 2",
-      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 12,
+      "label": "Biblia · Feriado",
+      "objective": "Feriado nacional — Viernes Santo",
+      "learning": "Lectura bíblica del día (feriado). Gén–Ester: 1 Reyes 2, 3 · Job–Mal: Jeremías 22, 23, 24 · NT: Filipenses 1, 2",
+      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
+      "mode": "holiday",
+      "activityKind": "bible",
+      "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
-        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad · Exposición",
-      "objective": "Exposición · Nación Agrícola",
-      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero.",
-      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "al general Ezequiel Zamora, líder de las luchas campesinas y…",
-      "activities": [
-        "Prepara una exposición de 1 minuto sobre al general Ezequiel Zamora, líder de las luchas campesinas y…: 3 hechos y…",
-        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
-      ]
-    },
-    {
-      "id": "len",
-      "label": "Prácticas del Lenguaje · Exposición",
-      "objective": "Exposición · Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
-      "learning": "Prepara una exposición sobre: Escribe convencionalmente su nombre y un repertorio de palabras familiares (Nombres propios y otras de uso común).",
-      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "escribe convencionalmente su nombre y un repertorio de palabras familiares…",
-      "activities": [
-        "Escribe 4 oraciones o un párrafo corto que resuma escribe convencionalmente su nombre y un repertorio de palabras…",
-        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
-      ]
-    },
-    {
-      "id": "mat",
-      "label": "Matemáticas · Exposición",
-      "objective": "Exposición · Magnitudes y medidas",
-      "learning": "Prepara una exposición sobre: Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos.",
-      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "utiliza las medidas de longitud, masa, capacidad y tiempo para…",
-      "activities": [
-        "Resuelve en el cuaderno 1 problema o croquis sobre utiliza las medidas de longitud, masa, capacidad y tiempo para…",
-        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales · Exposición",
-      "objective": "Exposición · Seres vivos — Las plantas",
-      "learning": "Prepara una exposición sobre: Comprende la importancia de la fotosíntesis para las plantas y otros seres vivos.",
-      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "la importancia de la fotosíntesis para las plantas y otros…",
-      "activities": [
-        "Prepara una exposición sobre la importancia de la fotosíntesis para las plantas y otros…: observa o recuerda una…",
-        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+        "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
+        "Responde: ¿qué pasó? — 2 frases."
       ]
     }
   ]

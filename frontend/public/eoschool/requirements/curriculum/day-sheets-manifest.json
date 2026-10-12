@@ -1,8 +1,67 @@
 {
   "format": "mppe-curriculum-day-manifest",
   "version": 3,
-  "contentRevision": 8,
+  "contentRevision": 9,
   "grade": "3er grado",
+  "schoolYearStart": "2026-09-21",
+  "schoolYearEnd": "2027-06-25",
+  "holidays": [
+    {
+      "planDay": 16,
+      "date": "2026-10-12",
+      "name": "Día de la Resistencia Indígena"
+    },
+    {
+      "planDay": 69,
+      "date": "2026-12-24",
+      "name": "Nochebuena"
+    },
+    {
+      "planDay": 70,
+      "date": "2026-12-25",
+      "name": "Navidad"
+    },
+    {
+      "planDay": 74,
+      "date": "2026-12-31",
+      "name": "Fin de Año"
+    },
+    {
+      "planDay": 75,
+      "date": "2027-01-01",
+      "name": "Año Nuevo"
+    },
+    {
+      "planDay": 101,
+      "date": "2027-02-08",
+      "name": "Lunes de Carnaval"
+    },
+    {
+      "planDay": 102,
+      "date": "2027-02-09",
+      "name": "Martes de Carnaval"
+    },
+    {
+      "planDay": 134,
+      "date": "2027-03-25",
+      "name": "Jueves Santo"
+    },
+    {
+      "planDay": 135,
+      "date": "2027-03-26",
+      "name": "Viernes Santo"
+    },
+    {
+      "planDay": 151,
+      "date": "2027-04-19",
+      "name": "Declaración de la Independencia"
+    },
+    {
+      "planDay": 199,
+      "date": "2027-06-24",
+      "name": "Batalla de Carabobo"
+    }
+  ],
   "weeklyPattern": {
     "day1": [
       "bib",
@@ -33,7 +92,10 @@
       "mat",
       "cie"
     ],
-    "day5Mode": "exposition"
+    "day5Mode": "exposition",
+    "holidayOverride": [
+      "bib"
+    ]
   },
   "totalPlanDays": 200,
   "planDays": [

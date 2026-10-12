@@ -8,6 +8,65 @@
     "totalBlocks": 200,
     "identityObjectives": 10,
     "source": "derived-from-28week-v1",
+    "schoolYearStart": "2026-09-21",
+    "schoolYearEnd": "2027-06-25",
+    "holidays": [
+      {
+        "planDay": 16,
+        "date": "2026-10-12",
+        "name": "Día de la Resistencia Indígena"
+      },
+      {
+        "planDay": 69,
+        "date": "2026-12-24",
+        "name": "Nochebuena"
+      },
+      {
+        "planDay": 70,
+        "date": "2026-12-25",
+        "name": "Navidad"
+      },
+      {
+        "planDay": 74,
+        "date": "2026-12-31",
+        "name": "Fin de Año"
+      },
+      {
+        "planDay": 75,
+        "date": "2027-01-01",
+        "name": "Año Nuevo"
+      },
+      {
+        "planDay": 101,
+        "date": "2027-02-08",
+        "name": "Lunes de Carnaval"
+      },
+      {
+        "planDay": 102,
+        "date": "2027-02-09",
+        "name": "Martes de Carnaval"
+      },
+      {
+        "planDay": 134,
+        "date": "2027-03-25",
+        "name": "Jueves Santo"
+      },
+      {
+        "planDay": 135,
+        "date": "2027-03-26",
+        "name": "Viernes Santo"
+      },
+      {
+        "planDay": 151,
+        "date": "2027-04-19",
+        "name": "Declaración de la Independencia"
+      },
+      {
+        "planDay": 199,
+        "date": "2027-06-24",
+        "name": "Batalla de Carabobo"
+      }
+    ],
     "weeklyPattern": {
       "day1": [
         "bib",
@@ -38,17 +97,21 @@
         "mat",
         "cie"
       ],
-      "day5Mode": "exposition"
+      "day5Mode": "exposition",
+      "holidayOverride": [
+        "bib"
+      ]
     },
     "teachingDays": {
       "bib": 200,
-      "len": 200,
-      "ide": 120,
-      "mat": 120,
-      "cie": 120,
-      "teachIdeCie": 80,
-      "teachMat": 80,
-      "exposition": 40
+      "len": 189,
+      "ide": 114,
+      "mat": 112,
+      "cie": 114,
+      "teachIdeCie": 77,
+      "teachMat": 75,
+      "exposition": 37,
+      "holiday": 11
     },
     "counts": {
       "lenLearnings": 85,
@@ -105,6 +168,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-09-21",
           "bible": {
             "days": [
               {
@@ -177,6 +241,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-09-22",
           "bible": {
             "days": [
               {
@@ -245,6 +310,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-09-23",
           "bible": {
             "days": [
               {
@@ -321,6 +387,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-09-24",
           "bible": {
             "days": [
               {
@@ -386,6 +453,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-09-25",
           "bible": {
             "days": [
               {
@@ -476,6 +544,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-09-28",
           "bible": {
             "days": [
               {
@@ -552,6 +621,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-09-29",
           "bible": {
             "days": [
               {
@@ -612,6 +682,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-09-30",
           "bible": {
             "days": [
               {
@@ -651,10 +722,10 @@
           },
           "len": [
             {
-              "id": "len:1",
-              "unitTitle": "Leer para conocer sobre la vida y obra de personajes destacados en diferentes áreas. (Biografías).",
-              "axis": "Lectura",
-              "text": "Conoce datos y hechos fundamentales de la biografía de varios personajes destacados: Simón Bolívar, Simón Rodríguez; los epónimos de su estado, municipio e institución escolar (si es el caso); nombres y motivo de la fama de personajes destacados de su localidad."
+              "id": "len:57",
+              "unitTitle": "Escribir convencionalmente palabras que contienen sílabas indirectas (VC) y del grupo silábico CVC.",
+              "axis": "Escritura",
+              "text": "Escribe, en forma convencional, palabras con sílabas indirectas (VC): antonio, asterisco, olmo, elsa, intriga, alto, usted…"
             }
           ],
           "identity": {
@@ -688,6 +759,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-10-01",
           "bible": {
             "days": [
               {
@@ -757,6 +829,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-10-02",
           "bible": {
             "days": [
               {
@@ -847,6 +920,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-10-05",
           "bible": {
             "days": [
               {
@@ -919,6 +993,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-10-06",
           "bible": {
             "days": [
               {
@@ -987,6 +1062,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-10-07",
           "bible": {
             "days": [
               {
@@ -1059,6 +1135,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-10-08",
           "bible": {
             "days": [
               {
@@ -1128,6 +1205,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-10-09",
           "bible": {
             "days": [
               {
@@ -1211,13 +1289,13 @@
         {
           "block": 1,
           "days": 1,
-          "dayKind": "teach",
+          "dayKind": "holiday",
           "scheduledSections": [
-            "bib",
-            "len",
-            "ide",
-            "cie"
+            "bib"
           ],
+          "calendarDate": "2026-10-12",
+          "holidayName": "Día de la Resistencia Indígena",
+          "holidayDate": "2026-10-12",
           "bible": {
             "days": [
               {
@@ -1250,36 +1328,7 @@
                 ]
               }
             ]
-          },
-          "len": [
-            {
-              "id": "len:3",
-              "unitTitle": "Leer para informarse y aprender sobre diversas áreas del conocimiento. (Textos informativos: científicos, noticias).",
-              "axis": "Lectura",
-              "text": "Se interesa por saber acerca del acontecer diario (Lectura de noticias)."
-            }
-          ],
-          "identity": {
-            "title": "Pueblos Indígenas",
-            "contenidos": [
-              "Resistencia indígena"
-            ],
-            "learnings": [
-              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
-            ],
-            "weekFocus": "Resistencia indígena",
-            "grade": "3er grado",
-            "week": 4,
-            "dayInWeek": 1
-          },
-          "cie": [
-            {
-              "id": "cie:1",
-              "unitTitle": "Salud integral — La alimentación en Venezuela",
-              "axis": null,
-              "text": "Reconoce la importancia de la alimentación saludable, para mantener un estado óptimo de salud."
-            }
-          ]
+          }
         },
         {
           "block": 2,
@@ -1290,6 +1339,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-10-13",
           "bible": {
             "days": [
               {
@@ -1354,6 +1404,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-10-14",
           "bible": {
             "days": [
               {
@@ -1410,10 +1461,10 @@
           },
           "cie": [
             {
-              "id": "cie:2",
+              "id": "cie:1",
               "unitTitle": "Salud integral — La alimentación en Venezuela",
               "axis": null,
-              "text": "Reconoce los platos típicos de Venezuela y sus ingredientes principales."
+              "text": "Reconoce la importancia de la alimentación saludable, para mantener un estado óptimo de salud."
             }
           ]
         },
@@ -1426,6 +1477,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-10-15",
           "bible": {
             "days": [
               {
@@ -1495,6 +1547,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-10-16",
           "bible": {
             "days": [
               {
@@ -1563,10 +1616,10 @@
           ],
           "cie": [
             {
-              "id": "cie:2",
+              "id": "cie:1",
               "unitTitle": "Salud integral — La alimentación en Venezuela",
               "axis": null,
-              "text": "Reconoce los platos típicos de Venezuela y sus ingredientes principales."
+              "text": "Reconoce la importancia de la alimentación saludable, para mantener un estado óptimo de salud."
             }
           ]
         }
@@ -1585,6 +1638,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-10-19",
           "bible": {
             "days": [
               {
@@ -1661,6 +1715,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-10-20",
           "bible": {
             "days": [
               {
@@ -1725,6 +1780,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-10-21",
           "bible": {
             "days": [
               {
@@ -1801,6 +1857,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-10-22",
           "bible": {
             "days": [
               {
@@ -1862,6 +1919,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-10-23",
           "bible": {
             "days": [
               {
@@ -1960,6 +2018,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-10-26",
           "bible": {
             "days": [
               {
@@ -2016,10 +2075,10 @@
           },
           "cie": [
             {
-              "id": "cie:3",
+              "id": "cie:2",
               "unitTitle": "Salud integral — La alimentación en Venezuela",
               "axis": null,
-              "text": "Demuestra gusto por las tradiciones culinarias venezolanas y la diversidad alimentaria."
+              "text": "Reconoce los platos típicos de Venezuela y sus ingredientes principales."
             }
           ]
         },
@@ -2032,6 +2091,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-10-27",
           "bible": {
             "days": [
               {
@@ -2071,18 +2131,18 @@
           },
           "len": [
             {
-              "id": "len:5",
-              "unitTitle": "Utilizar el índice de libros para ubicar el contenido que se necesita o desea leer.",
-              "axis": "Lectura",
-              "text": "Explora índices de libros para ubicar temas que desea o necesita leer."
+              "id": "len:61",
+              "unitTitle": "Utilizar ciertas expresiones de la lengua formal en diferentes contextos de comunicación.",
+              "axis": "Oralidad",
+              "text": "Usa diversas fórmulas sociales para interactuar con otros en situaciones de la vida cotidiana: gracias, de nada, por favor, con permiso, buenos días, etc."
             }
           ],
           "mat": [
             {
-              "id": "mat:1",
+              "id": "mat:2",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Se orienta temporalmente."
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
             }
           ]
         },
@@ -2096,6 +2156,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-10-28",
           "bible": {
             "days": [
               {
@@ -2168,6 +2229,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-10-29",
           "bible": {
             "days": [
               {
@@ -2207,10 +2269,10 @@
           },
           "len": [
             {
-              "id": "len:61",
-              "unitTitle": "Utilizar ciertas expresiones de la lengua formal en diferentes contextos de comunicación.",
-              "axis": "Oralidad",
-              "text": "Usa diversas fórmulas sociales para interactuar con otros en situaciones de la vida cotidiana: gracias, de nada, por favor, con permiso, buenos días, etc."
+              "id": "len:6",
+              "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
+              "axis": "Lectura",
+              "text": "Lee aplicando la modalidad exploratoria del texto para localizar determinados datos."
             }
           ],
           "mat": [
@@ -2233,6 +2295,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-10-30",
           "bible": {
             "days": [
               {
@@ -2272,10 +2335,10 @@
           },
           "len": [
             {
-              "id": "len:61",
-              "unitTitle": "Utilizar ciertas expresiones de la lengua formal en diferentes contextos de comunicación.",
-              "axis": "Oralidad",
-              "text": "Usa diversas fórmulas sociales para interactuar con otros en situaciones de la vida cotidiana: gracias, de nada, por favor, con permiso, buenos días, etc."
+              "id": "len:6",
+              "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
+              "axis": "Lectura",
+              "text": "Lee aplicando la modalidad exploratoria del texto para localizar determinados datos."
             }
           ],
           "identity": {
@@ -2323,6 +2386,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-11-02",
           "bible": {
             "days": [
               {
@@ -2399,6 +2463,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-11-03",
           "bible": {
             "days": [
               {
@@ -2467,6 +2532,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-11-04",
           "bible": {
             "days": [
               {
@@ -2523,10 +2589,10 @@
           },
           "cie": [
             {
-              "id": "cie:4",
+              "id": "cie:3",
               "unitTitle": "Salud integral — La alimentación en Venezuela",
               "axis": null,
-              "text": "Valora la importancia de una alimentación saludable para el bienestar comunitario."
+              "text": "Demuestra gusto por las tradiciones culinarias venezolanas y la diversidad alimentaria."
             }
           ]
         },
@@ -2539,6 +2605,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-11-05",
           "bible": {
             "days": [
               {
@@ -2578,10 +2645,10 @@
           },
           "len": [
             {
-              "id": "len:62",
-              "unitTitle": "Hacer escuchar la voz propia y considerar la de otros en la toma de decisiones colectivas.",
-              "axis": "Oralidad",
-              "text": "Aporta ideas para la toma de decisiones durante la construcción y revisión permanente de las normas de convivencia en el salón y en otros espacios de la institución escolar."
+              "id": "len:7",
+              "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
+              "axis": "Lectura",
+              "text": "Lee en forma acuciosa con la finalidad de aprender e informar a otros."
             }
           ],
           "mat": [
@@ -2604,6 +2671,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-11-06",
           "bible": {
             "days": [
               {
@@ -2643,10 +2711,10 @@
           },
           "len": [
             {
-              "id": "len:62",
-              "unitTitle": "Hacer escuchar la voz propia y considerar la de otros en la toma de decisiones colectivas.",
-              "axis": "Oralidad",
-              "text": "Aporta ideas para la toma de decisiones durante la construcción y revisión permanente de las normas de convivencia en el salón y en otros espacios de la institución escolar."
+              "id": "len:7",
+              "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
+              "axis": "Lectura",
+              "text": "Lee en forma acuciosa con la finalidad de aprender e informar a otros."
             }
           ],
           "identity": {
@@ -2672,10 +2740,10 @@
           ],
           "cie": [
             {
-              "id": "cie:4",
+              "id": "cie:3",
               "unitTitle": "Salud integral — La alimentación en Venezuela",
               "axis": null,
-              "text": "Valora la importancia de una alimentación saludable para el bienestar comunitario."
+              "text": "Demuestra gusto por las tradiciones culinarias venezolanas y la diversidad alimentaria."
             }
           ]
         }
@@ -2694,6 +2762,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-11-09",
           "bible": {
             "days": [
               {
@@ -2733,10 +2802,10 @@
           },
           "len": [
             {
-              "id": "len:7",
-              "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
-              "axis": "Lectura",
-              "text": "Lee en forma acuciosa con la finalidad de aprender e informar a otros."
+              "id": "len:63",
+              "unitTitle": "Actuar en intercambios grupales para confrontar interpretaciones y puntos de vista acerca de textos leídos por la/el docente (Cuentos, biografías, noticias, historietas, textos informativos sobre diversos temas).",
+              "axis": "Oralidad",
+              "text": "Manifiesta sus interpretaciones y puntos de vista sobre textos leídos por la/el docente."
             }
           ],
           "identity": {
@@ -2770,6 +2839,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-11-10",
           "bible": {
             "days": [
               {
@@ -2817,10 +2887,10 @@
           ],
           "mat": [
             {
-              "id": "mat:2",
+              "id": "mat:3",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
+              "text": "Diferencia los polígonos de acuerdo al número de lados."
             }
           ]
         },
@@ -2834,6 +2904,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-11-11",
           "bible": {
             "days": [
               {
@@ -2873,10 +2944,10 @@
           },
           "len": [
             {
-              "id": "len:63",
-              "unitTitle": "Actuar en intercambios grupales para confrontar interpretaciones y puntos de vista acerca de textos leídos por la/el docente (Cuentos, biografías, noticias, historietas, textos informativos sobre diversos temas).",
-              "axis": "Oralidad",
-              "text": "Manifiesta sus interpretaciones y puntos de vista sobre textos leídos por la/el docente."
+              "id": "len:8",
+              "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
+              "axis": "Lectura",
+              "text": "Lee para buscar información que requiere para redactar un texto."
             }
           ],
           "identity": {
@@ -2910,6 +2981,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-11-12",
           "bible": {
             "days": [
               {
@@ -2975,6 +3047,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-11-13",
           "bible": {
             "days": [
               {
@@ -3065,6 +3138,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-11-16",
           "bible": {
             "days": [
               {
@@ -3100,10 +3174,10 @@
           },
           "len": [
             {
-              "id": "len:8",
-              "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
-              "axis": "Lectura",
-              "text": "Lee para buscar información que requiere para redactar un texto."
+              "id": "len:64",
+              "unitTitle": "Actuar en intercambios grupales para confrontar interpretaciones y puntos de vista acerca de textos leídos por la/el docente (Cuentos, biografías, noticias, historietas, textos informativos sobre diversos temas).",
+              "axis": "Oralidad",
+              "text": "Escucha con respeto los puntos de vista del otro/otra y defiende los propios con explicaciones y argumentos."
             }
           ],
           "identity": {
@@ -3121,10 +3195,10 @@
           },
           "cie": [
             {
-              "id": "cie:5",
-              "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
+              "id": "cie:4",
+              "unitTitle": "Salud integral — La alimentación en Venezuela",
               "axis": null,
-              "text": "Observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas, a partir de experiencias prácticas."
+              "text": "Valora la importancia de una alimentación saludable para el bienestar comunitario."
             }
           ]
         },
@@ -3137,6 +3211,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-11-17",
           "bible": {
             "days": [
               {
@@ -3209,6 +3284,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-11-18",
           "bible": {
             "days": [
               {
@@ -3244,10 +3320,10 @@
           },
           "len": [
             {
-              "id": "len:64",
-              "unitTitle": "Actuar en intercambios grupales para confrontar interpretaciones y puntos de vista acerca de textos leídos por la/el docente (Cuentos, biografías, noticias, historietas, textos informativos sobre diversos temas).",
-              "axis": "Oralidad",
-              "text": "Escucha con respeto los puntos de vista del otro/otra y defiende los propios con explicaciones y argumentos."
+              "id": "len:9",
+              "unitTitle": "Ordenar palabras para formar textos, previa información del escrito que debe resultar.",
+              "axis": "Lectura",
+              "text": "Ordena palabras escritas sin orden predeterminado para formar oraciones. Ej.: Simón Bolívar nació en Caracas; Caracas es la capital de Venezuela; Simón Rodríguez fue un gran maestro."
             }
           ],
           "identity": {
@@ -3281,6 +3357,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-11-19",
           "bible": {
             "days": [
               {
@@ -3342,6 +3419,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-11-20",
           "bible": {
             "days": [
               {
@@ -3436,6 +3514,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-11-23",
           "bible": {
             "days": [
               {
@@ -3508,6 +3587,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-11-24",
           "bible": {
             "days": [
               {
@@ -3547,18 +3627,18 @@
           },
           "len": [
             {
-              "id": "len:65",
-              "unitTitle": "Dialogar con diferentes intenciones y propósitos.",
-              "axis": "Oralidad",
-              "text": "Participa en diálogos en variados contextos comunicativos, considerando los puntos de vista de otros/otras: para resolver diferencias, acordar reglas de un juego, manifestar y resolver desacuerdos…"
+              "id": "len:10",
+              "unitTitle": "Participar en actividades lúdicas y significativas para conocer los nombres de todas las letras del alfabeto.",
+              "axis": "Lectura",
+              "text": "Menciona las letras del alfabeto por sus nombres y las usa en la escritura con su valor sonoro."
             }
           ],
           "mat": [
             {
-              "id": "mat:3",
+              "id": "mat:4",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia los polígonos de acuerdo al número de lados."
+              "text": "Identifica los elementos de los cuerpos geométricos."
             }
           ]
         },
@@ -3572,6 +3652,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-11-25",
           "bible": {
             "days": [
               {
@@ -3611,10 +3692,10 @@
           },
           "len": [
             {
-              "id": "len:65",
-              "unitTitle": "Dialogar con diferentes intenciones y propósitos.",
-              "axis": "Oralidad",
-              "text": "Participa en diálogos en variados contextos comunicativos, considerando los puntos de vista de otros/otras: para resolver diferencias, acordar reglas de un juego, manifestar y resolver desacuerdos…"
+              "id": "len:10",
+              "unitTitle": "Participar en actividades lúdicas y significativas para conocer los nombres de todas las letras del alfabeto.",
+              "axis": "Lectura",
+              "text": "Menciona las letras del alfabeto por sus nombres y las usa en la escritura con su valor sonoro."
             }
           ],
           "identity": {
@@ -3632,10 +3713,10 @@
           },
           "cie": [
             {
-              "id": "cie:6",
+              "id": "cie:5",
               "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
               "axis": null,
-              "text": "Describe las propiedades de las mezclas homogéneas y heterogéneas."
+              "text": "Observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas, a partir de experiencias prácticas."
             }
           ]
         },
@@ -3648,6 +3729,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-11-26",
           "bible": {
             "days": [
               {
@@ -3691,10 +3773,10 @@
           },
           "len": [
             {
-              "id": "len:10",
-              "unitTitle": "Participar en actividades lúdicas y significativas para conocer los nombres de todas las letras del alfabeto.",
-              "axis": "Lectura",
-              "text": "Menciona las letras del alfabeto por sus nombres y las usa en la escritura con su valor sonoro."
+              "id": "len:66",
+              "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
+              "axis": "Oralidad",
+              "text": "Pregunta y responde sobre contenidos de estudio tratados en el aula."
             }
           ],
           "mat": [
@@ -3717,6 +3799,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-11-27",
           "bible": {
             "days": [
               {
@@ -3752,10 +3835,10 @@
           },
           "len": [
             {
-              "id": "len:10",
-              "unitTitle": "Participar en actividades lúdicas y significativas para conocer los nombres de todas las letras del alfabeto.",
-              "axis": "Lectura",
-              "text": "Menciona las letras del alfabeto por sus nombres y las usa en la escritura con su valor sonoro."
+              "id": "len:66",
+              "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
+              "axis": "Oralidad",
+              "text": "Pregunta y responde sobre contenidos de estudio tratados en el aula."
             }
           ],
           "identity": {
@@ -3781,10 +3864,10 @@
           ],
           "cie": [
             {
-              "id": "cie:6",
+              "id": "cie:5",
               "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
               "axis": null,
-              "text": "Describe las propiedades de las mezclas homogéneas y heterogéneas."
+              "text": "Observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas, a partir de experiencias prácticas."
             }
           ]
         }
@@ -3803,6 +3886,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-11-30",
           "bible": {
             "days": [
               {
@@ -3879,6 +3963,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-12-01",
           "bible": {
             "days": [
               {
@@ -3918,10 +4003,10 @@
           },
           "len": [
             {
-              "id": "len:66",
-              "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
-              "axis": "Oralidad",
-              "text": "Pregunta y responde sobre contenidos de estudio tratados en el aula."
+              "id": "len:11",
+              "unitTitle": "Diferenciar entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos.",
+              "axis": "Lectura",
+              "text": "Diferencia entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos, y expresa algunos rasgos que los distinguen."
             }
           ],
           "mat": [
@@ -3943,6 +4028,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-12-02",
           "bible": {
             "days": [
               {
@@ -4023,6 +4109,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-12-03",
           "bible": {
             "days": [
               {
@@ -4058,10 +4145,10 @@
           },
           "len": [
             {
-              "id": "len:11",
-              "unitTitle": "Diferenciar entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos.",
-              "axis": "Lectura",
-              "text": "Diferencia entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos, y expresa algunos rasgos que los distinguen."
+              "id": "len:67",
+              "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
+              "axis": "Oralidad",
+              "text": "Pregunta para solicitar la información requerida en diversas situaciones."
             }
           ],
           "mat": [
@@ -4084,6 +4171,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-12-04",
           "bible": {
             "days": [
               {
@@ -4127,10 +4215,10 @@
           },
           "len": [
             {
-              "id": "len:11",
-              "unitTitle": "Diferenciar entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos.",
-              "axis": "Lectura",
-              "text": "Diferencia entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos, y expresa algunos rasgos que los distinguen."
+              "id": "len:67",
+              "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
+              "axis": "Oralidad",
+              "text": "Pregunta para solicitar la información requerida en diversas situaciones."
             }
           ],
           "identity": {
@@ -4178,6 +4266,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-12-07",
           "bible": {
             "days": [
               {
@@ -4213,10 +4302,10 @@
           },
           "len": [
             {
-              "id": "len:67",
-              "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
-              "axis": "Oralidad",
-              "text": "Pregunta para solicitar la información requerida en diversas situaciones."
+              "id": "len:12",
+              "unitTitle": "Recomendar obras literarias.",
+              "axis": "Lectura",
+              "text": "Recomienda obras literarias informando títulos y autores/autoras de un repertorio de cuentos y poemas que conoce."
             }
           ],
           "identity": {
@@ -4250,6 +4339,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-12-08",
           "bible": {
             "days": [
               {
@@ -4289,18 +4379,18 @@
           },
           "len": [
             {
-              "id": "len:67",
-              "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
-              "axis": "Oralidad",
-              "text": "Pregunta para solicitar la información requerida en diversas situaciones."
+              "id": "len:12",
+              "unitTitle": "Recomendar obras literarias.",
+              "axis": "Lectura",
+              "text": "Recomienda obras literarias informando títulos y autores/autoras de un repertorio de cuentos y poemas que conoce."
             }
           ],
           "mat": [
             {
-              "id": "mat:4",
+              "id": "mat:5",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Identifica los elementos de los cuerpos geométricos."
+              "text": "Diferencia círculo de una circunferencia."
             }
           ]
         },
@@ -4314,6 +4404,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-12-09",
           "bible": {
             "days": [
               {
@@ -4349,10 +4440,10 @@
           },
           "len": [
             {
-              "id": "len:12",
-              "unitTitle": "Recomendar obras literarias.",
-              "axis": "Lectura",
-              "text": "Recomienda obras literarias informando títulos y autores/autoras de un repertorio de cuentos y poemas que conoce."
+              "id": "len:68",
+              "unitTitle": "Participar en intercambios de grupo sobre respuestas a instrumentos de evaluación.",
+              "axis": "Oralidad",
+              "text": "Participa en la comparación de respuestas a instrumentos de evaluación mediante intercambios con el grupo de compañeras/ os y docente."
             }
           ],
           "identity": {
@@ -4386,6 +4477,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-12-10",
           "bible": {
             "days": [
               {
@@ -4429,18 +4521,18 @@
           },
           "len": [
             {
-              "id": "len:12",
-              "unitTitle": "Recomendar obras literarias.",
-              "axis": "Lectura",
-              "text": "Recomienda obras literarias informando títulos y autores/autoras de un repertorio de cuentos y poemas que conoce."
+              "id": "len:68",
+              "unitTitle": "Participar en intercambios de grupo sobre respuestas a instrumentos de evaluación.",
+              "axis": "Oralidad",
+              "text": "Participa en la comparación de respuestas a instrumentos de evaluación mediante intercambios con el grupo de compañeras/ os y docente."
             }
           ],
           "mat": [
             {
-              "id": "mat:4",
+              "id": "mat:5",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Identifica los elementos de los cuerpos geométricos."
+              "text": "Diferencia círculo de una circunferencia."
             }
           ]
         },
@@ -4455,6 +4547,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-12-11",
           "bible": {
             "days": [
               {
@@ -4494,10 +4587,10 @@
           },
           "len": [
             {
-              "id": "len:12",
-              "unitTitle": "Recomendar obras literarias.",
-              "axis": "Lectura",
-              "text": "Recomienda obras literarias informando títulos y autores/autoras de un repertorio de cuentos y poemas que conoce."
+              "id": "len:68",
+              "unitTitle": "Participar en intercambios de grupo sobre respuestas a instrumentos de evaluación.",
+              "axis": "Oralidad",
+              "text": "Participa en la comparación de respuestas a instrumentos de evaluación mediante intercambios con el grupo de compañeras/ os y docente."
             }
           ],
           "identity": {
@@ -4515,10 +4608,10 @@
           },
           "mat": [
             {
-              "id": "mat:4",
+              "id": "mat:5",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Identifica los elementos de los cuerpos geométricos."
+              "text": "Diferencia círculo de una circunferencia."
             }
           ],
           "cie": [
@@ -4545,6 +4638,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-12-14",
           "bible": {
             "days": [
               {
@@ -4580,10 +4674,10 @@
           },
           "len": [
             {
-              "id": "len:68",
-              "unitTitle": "Participar en intercambios de grupo sobre respuestas a instrumentos de evaluación.",
-              "axis": "Oralidad",
-              "text": "Participa en la comparación de respuestas a instrumentos de evaluación mediante intercambios con el grupo de compañeras/ os y docente."
+              "id": "len:13",
+              "unitTitle": "Comprender la estructura de textos narrativos.",
+              "axis": "Lectura",
+              "text": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos."
             }
           ],
           "identity": {
@@ -4617,6 +4711,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-12-15",
           "bible": {
             "days": [
               {
@@ -4660,10 +4755,10 @@
           },
           "len": [
             {
-              "id": "len:68",
-              "unitTitle": "Participar en intercambios de grupo sobre respuestas a instrumentos de evaluación.",
-              "axis": "Oralidad",
-              "text": "Participa en la comparación de respuestas a instrumentos de evaluación mediante intercambios con el grupo de compañeras/ os y docente."
+              "id": "len:13",
+              "unitTitle": "Comprender la estructura de textos narrativos.",
+              "axis": "Lectura",
+              "text": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos."
             }
           ],
           "mat": [
@@ -4685,6 +4780,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-12-16",
           "bible": {
             "days": [
               {
@@ -4720,10 +4816,10 @@
           },
           "len": [
             {
-              "id": "len:13",
-              "unitTitle": "Comprender la estructura de textos narrativos.",
-              "axis": "Lectura",
-              "text": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos."
+              "id": "len:69",
+              "unitTitle": "Participar en cine foros.",
+              "axis": "Oralidad",
+              "text": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos."
             }
           ],
           "identity": {
@@ -4757,6 +4853,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-12-17",
           "bible": {
             "days": [
               {
@@ -4800,10 +4897,10 @@
           },
           "len": [
             {
-              "id": "len:13",
-              "unitTitle": "Comprender la estructura de textos narrativos.",
-              "axis": "Lectura",
-              "text": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos."
+              "id": "len:69",
+              "unitTitle": "Participar en cine foros.",
+              "axis": "Oralidad",
+              "text": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos."
             }
           ],
           "mat": [
@@ -4826,6 +4923,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2026-12-18",
           "bible": {
             "days": [
               {
@@ -4865,10 +4963,10 @@
           },
           "len": [
             {
-              "id": "len:13",
-              "unitTitle": "Comprender la estructura de textos narrativos.",
-              "axis": "Lectura",
-              "text": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos."
+              "id": "len:69",
+              "unitTitle": "Participar en cine foros.",
+              "axis": "Oralidad",
+              "text": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos."
             }
           ],
           "identity": {
@@ -4916,6 +5014,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-12-21",
           "bible": {
             "days": [
               {
@@ -4955,10 +5054,10 @@
           },
           "len": [
             {
-              "id": "len:69",
-              "unitTitle": "Participar en cine foros.",
-              "axis": "Oralidad",
-              "text": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos."
+              "id": "len:14",
+              "unitTitle": "Resolver instrumentos de evaluación.",
+              "axis": "Lectura",
+              "text": "Resuelve problemas de lectura y escritura planteados en instrumentos de evaluación dirigidos a estimar los avances en el aprendizaje y los efectos de la enseñanza."
             }
           ],
           "identity": {
@@ -4992,6 +5091,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-12-22",
           "bible": {
             "days": [
               {
@@ -5027,10 +5127,10 @@
           },
           "len": [
             {
-              "id": "len:69",
-              "unitTitle": "Participar en cine foros.",
+              "id": "len:70",
+              "unitTitle": "Utilizar en la expresión un repertorio léxico cada vez más amplio.",
               "axis": "Oralidad",
-              "text": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos."
+              "text": "Utiliza un repertorio de nuevas palabras que trascienden el léxico utilizado cotidianamente para interactuar en diversidad de situaciones comunicativas y satisfacer distintas necesidades."
             }
           ],
           "mat": [
@@ -5052,6 +5152,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-12-23",
           "bible": {
             "days": [
               {
@@ -5091,10 +5192,10 @@
           },
           "len": [
             {
-              "id": "len:14",
-              "unitTitle": "Resolver instrumentos de evaluación.",
-              "axis": "Lectura",
-              "text": "Resuelve problemas de lectura y escritura planteados en instrumentos de evaluación dirigidos a estimar los avances en el aprendizaje y los efectos de la enseñanza."
+              "id": "len:70",
+              "unitTitle": "Utilizar en la expresión un repertorio léxico cada vez más amplio.",
+              "axis": "Oralidad",
+              "text": "Utiliza un repertorio de nuevas palabras que trascienden el léxico utilizado cotidianamente para interactuar en diversidad de situaciones comunicativas y satisfacer distintas necesidades."
             }
           ],
           "identity": {
@@ -5122,12 +5223,13 @@
         {
           "block": 4,
           "days": 1,
-          "dayKind": "teach",
+          "dayKind": "holiday",
           "scheduledSections": [
-            "bib",
-            "len",
-            "mat"
+            "bib"
           ],
+          "calendarDate": "2026-12-24",
+          "holidayName": "Nochebuena",
+          "holidayDate": "2026-12-24",
           "bible": {
             "days": [
               {
@@ -5164,35 +5266,18 @@
                 ]
               }
             ]
-          },
-          "len": [
-            {
-              "id": "len:14",
-              "unitTitle": "Resolver instrumentos de evaluación.",
-              "axis": "Lectura",
-              "text": "Resuelve problemas de lectura y escritura planteados en instrumentos de evaluación dirigidos a estimar los avances en el aprendizaje y los efectos de la enseñanza."
-            }
-          ],
-          "mat": [
-            {
-              "id": "mat:5",
-              "unitTitle": "Geometría",
-              "axis": null,
-              "text": "Diferencia círculo de una circunferencia."
-            }
-          ]
+          }
         },
         {
           "block": 5,
           "days": 1,
-          "dayKind": "exposition",
+          "dayKind": "holiday",
           "scheduledSections": [
-            "bib",
-            "ide",
-            "len",
-            "mat",
-            "cie"
+            "bib"
           ],
+          "calendarDate": "2026-12-25",
+          "holidayName": "Navidad",
+          "holidayDate": "2026-12-25",
           "bible": {
             "days": [
               {
@@ -5233,44 +5318,7 @@
                 ]
               }
             ]
-          },
-          "len": [
-            {
-              "id": "len:14",
-              "unitTitle": "Resolver instrumentos de evaluación.",
-              "axis": "Lectura",
-              "text": "Resuelve problemas de lectura y escritura planteados en instrumentos de evaluación dirigidos a estimar los avances en el aprendizaje y los efectos de la enseñanza."
-            }
-          ],
-          "identity": {
-            "title": "Pueblos Indígenas",
-            "contenidos": [
-              "Lucha ancestral"
-            ],
-            "learnings": [
-              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
-            ],
-            "weekFocus": "Lucha ancestral",
-            "grade": "3er grado",
-            "week": 14,
-            "dayInWeek": 5
-          },
-          "mat": [
-            {
-              "id": "mat:5",
-              "unitTitle": "Geometría",
-              "axis": null,
-              "text": "Diferencia círculo de una circunferencia."
-            }
-          ],
-          "cie": [
-            {
-              "id": "cie:8",
-              "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
-              "axis": null,
-              "text": "Desarrolla la curiosidad científica a través de la realización de experimentos simples que impliquen la mezcla de materiales, observando los cambios que ocurren."
-            }
-          ]
+          }
         }
       ]
     },
@@ -5287,6 +5335,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-12-28",
           "bible": {
             "days": [
               {
@@ -5322,10 +5371,10 @@
           },
           "len": [
             {
-              "id": "len:70",
-              "unitTitle": "Utilizar en la expresión un repertorio léxico cada vez más amplio.",
-              "axis": "Oralidad",
-              "text": "Utiliza un repertorio de nuevas palabras que trascienden el léxico utilizado cotidianamente para interactuar en diversidad de situaciones comunicativas y satisfacer distintas necesidades."
+              "id": "len:15",
+              "unitTitle": "Interpretar metáforas.",
+              "axis": "Lectura",
+              "text": "Comprende metáforas sencillas en textos literarios."
             }
           ],
           "identity": {
@@ -5359,6 +5408,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2026-12-29",
           "bible": {
             "days": [
               {
@@ -5423,6 +5473,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2026-12-30",
           "bible": {
             "days": [
               {
@@ -5493,12 +5544,13 @@
         {
           "block": 4,
           "days": 1,
-          "dayKind": "teach",
+          "dayKind": "holiday",
           "scheduledSections": [
-            "bib",
-            "len",
-            "mat"
+            "bib"
           ],
+          "calendarDate": "2026-12-31",
+          "holidayName": "Fin de Año",
+          "holidayDate": "2026-12-31",
           "bible": {
             "days": [
               {
@@ -5531,35 +5583,18 @@
                 ]
               }
             ]
-          },
-          "len": [
-            {
-              "id": "len:15",
-              "unitTitle": "Interpretar metáforas.",
-              "axis": "Lectura",
-              "text": "Comprende metáforas sencillas en textos literarios."
-            }
-          ],
-          "mat": [
-            {
-              "id": "mat:6",
-              "unitTitle": "Geometría",
-              "axis": null,
-              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
-            }
-          ]
+          }
         },
         {
           "block": 5,
           "days": 1,
-          "dayKind": "exposition",
+          "dayKind": "holiday",
           "scheduledSections": [
-            "bib",
-            "ide",
-            "len",
-            "mat",
-            "cie"
+            "bib"
           ],
+          "calendarDate": "2027-01-01",
+          "holidayName": "Año Nuevo",
+          "holidayDate": "2027-01-01",
           "bible": {
             "days": [
               {
@@ -5604,44 +5639,7 @@
                 ]
               }
             ]
-          },
-          "len": [
-            {
-              "id": "len:15",
-              "unitTitle": "Interpretar metáforas.",
-              "axis": "Lectura",
-              "text": "Comprende metáforas sencillas en textos literarios."
-            }
-          ],
-          "identity": {
-            "title": "Pueblos Afrovenezolanos",
-            "contenidos": [
-              "Crianza y labores en el hogar"
-            ],
-            "learnings": [
-              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
-            ],
-            "weekFocus": "Crianza y labores en el hogar",
-            "grade": "3er grado",
-            "week": 15,
-            "dayInWeek": 5
-          },
-          "mat": [
-            {
-              "id": "mat:6",
-              "unitTitle": "Geometría",
-              "axis": null,
-              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
-            }
-          ],
-          "cie": [
-            {
-              "id": "cie:9",
-              "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
-              "axis": null,
-              "text": "Desarrolla habilidades para formular preguntas, hacer observaciones y sacar conclusiones basadas en la experiencia con mezclas y la separación de sus componentes."
-            }
-          ]
+          }
         }
       ]
     },
@@ -5658,6 +5656,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-01-04",
           "bible": {
             "days": [
               {
@@ -5730,6 +5729,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-01-05",
           "bible": {
             "days": [
               {
@@ -5769,10 +5769,10 @@
           },
           "len": [
             {
-              "id": "len:16",
-              "unitTitle": "Interpretar la función de ciertos signos ortográficos.",
-              "axis": "Lectura",
-              "text": "Interpreta las funciones de los signos de interrogación y exclamación en la lectura de textos."
+              "id": "len:71",
+              "unitTitle": "Narrar cuentos conocidos para distintas audiencias.",
+              "axis": "Oralidad",
+              "text": "Narra cuentos conocidos siguiendo la secuencia de los hechos y utilizando descriptores para caracterizar personajes y otros recursos de la narración."
             }
           ],
           "mat": [
@@ -5794,6 +5794,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-01-06",
           "bible": {
             "days": [
               {
@@ -5866,6 +5867,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-01-07",
           "bible": {
             "days": [
               {
@@ -5909,10 +5911,10 @@
           },
           "len": [
             {
-              "id": "len:72",
-              "unitTitle": "Narrar cuentos conocidos para distintas audiencias.",
-              "axis": "Oralidad",
-              "text": "Utiliza algunas fórmulas de inicio propias de la narración, al relatar sus propios cuentos: había una vez… / En un lugar llamado… / Hace mucho tiempo…"
+              "id": "len:16",
+              "unitTitle": "Interpretar la función de ciertos signos ortográficos.",
+              "axis": "Lectura",
+              "text": "Interpreta las funciones de los signos de interrogación y exclamación en la lectura de textos."
             }
           ],
           "mat": [
@@ -5935,6 +5937,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-01-08",
           "bible": {
             "days": [
               {
@@ -5970,10 +5973,10 @@
           },
           "len": [
             {
-              "id": "len:72",
-              "unitTitle": "Narrar cuentos conocidos para distintas audiencias.",
-              "axis": "Oralidad",
-              "text": "Utiliza algunas fórmulas de inicio propias de la narración, al relatar sus propios cuentos: había una vez… / En un lugar llamado… / Hace mucho tiempo…"
+              "id": "len:16",
+              "unitTitle": "Interpretar la función de ciertos signos ortográficos.",
+              "axis": "Lectura",
+              "text": "Interpreta las funciones de los signos de interrogación y exclamación en la lectura de textos."
             }
           ],
           "identity": {
@@ -6021,6 +6024,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-01-11",
           "bible": {
             "days": [
               {
@@ -6101,6 +6105,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-01-12",
           "bible": {
             "days": [
               {
@@ -6165,6 +6170,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-01-13",
           "bible": {
             "days": [
               {
@@ -6241,6 +6247,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-01-14",
           "bible": {
             "days": [
               {
@@ -6302,6 +6309,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-01-15",
           "bible": {
             "days": [
               {
@@ -6396,6 +6404,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-01-18",
           "bible": {
             "days": [
               {
@@ -6431,10 +6440,10 @@
           },
           "len": [
             {
-              "id": "len:18",
-              "unitTitle": "Conocer algunas particularidades de la lengua.",
-              "axis": "Lectura",
-              "text": "Analiza algunas “curiosidades” de nuestra lengua. Palíndromos: palabras que se leen igual al derecho y al revés. Ej. Ana, ada, ojo, oro, radar, somos, rapar, reconocer, arepera. Palabras que repiten una misma vocal en todas las sílabas: maraca, cántara / monólogo, fósforo / efervescente, pelele / infringir, incidir… Palabras pentavocálicas (Contienen las cinco vocales). Ej.: aurelio, orquídea, riachuelo, murciélago, comunicarse, educación…"
+              "id": "len:73",
+              "unitTitle": "Exponer informaciones sobre distintas áreas del conocimiento.",
+              "axis": "Oralidad",
+              "text": "Comunica al grupo del salón información sobre temas de interés."
             }
           ],
           "identity": {
@@ -6468,6 +6477,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-01-19",
           "bible": {
             "days": [
               {
@@ -6532,6 +6542,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-01-20",
           "bible": {
             "days": [
               {
@@ -6608,6 +6619,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-01-21",
           "bible": {
             "days": [
               {
@@ -6673,6 +6685,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-01-22",
           "bible": {
             "days": [
               {
@@ -6763,6 +6776,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-01-25",
           "bible": {
             "days": [
               {
@@ -6835,6 +6849,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-01-26",
           "bible": {
             "days": [
               {
@@ -6907,6 +6922,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-01-27",
           "bible": {
             "days": [
               {
@@ -6979,6 +6995,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-01-28",
           "bible": {
             "days": [
               {
@@ -7044,6 +7061,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-01-29",
           "bible": {
             "days": [
               {
@@ -7134,6 +7152,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-02-01",
           "bible": {
             "days": [
               {
@@ -7210,6 +7229,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-02-02",
           "bible": {
             "days": [
               {
@@ -7270,6 +7290,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-02-03",
           "bible": {
             "days": [
               {
@@ -7350,6 +7371,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-02-04",
           "bible": {
             "days": [
               {
@@ -7415,6 +7437,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-02-05",
           "bible": {
             "days": [
               {
@@ -7498,13 +7521,13 @@
         {
           "block": 1,
           "days": 1,
-          "dayKind": "teach",
+          "dayKind": "holiday",
           "scheduledSections": [
-            "bib",
-            "len",
-            "ide",
-            "cie"
+            "bib"
           ],
+          "calendarDate": "2027-02-08",
+          "holidayName": "Lunes de Carnaval",
+          "holidayDate": "2027-02-08",
           "bible": {
             "days": [
               {
@@ -7537,46 +7560,18 @@
                 ]
               }
             ]
-          },
-          "len": [
-            {
-              "id": "len:21",
-              "unitTitle": "Localizar datos en mapas y gráficos.",
-              "axis": "Lectura",
-              "text": "Interpreta informaciones contenidas en diferentes representaciones gráficas."
-            }
-          ],
-          "identity": {
-            "title": "La Humanidad",
-            "contenidos": [
-              "Comunicación humana en el tiempo"
-            ],
-            "learnings": [
-              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
-            ],
-            "weekFocus": "Comunicación humana en el tiempo",
-            "grade": "3er grado",
-            "week": 21,
-            "dayInWeek": 1
-          },
-          "cie": [
-            {
-              "id": "cie:12",
-              "unitTitle": "El ambiente y sus interacciones — Biodiversidad",
-              "axis": null,
-              "text": "Participa en proyectos sobre conservación del agua y biodiversidad local."
-            }
-          ]
+          }
         },
         {
           "block": 2,
           "days": 1,
-          "dayKind": "teach",
+          "dayKind": "holiday",
           "scheduledSections": [
-            "bib",
-            "len",
-            "mat"
+            "bib"
           ],
+          "calendarDate": "2027-02-09",
+          "holidayName": "Martes de Carnaval",
+          "holidayDate": "2027-02-09",
           "bible": {
             "days": [
               {
@@ -7613,23 +7608,7 @@
                 ]
               }
             ]
-          },
-          "len": [
-            {
-              "id": "len:21",
-              "unitTitle": "Localizar datos en mapas y gráficos.",
-              "axis": "Lectura",
-              "text": "Interpreta informaciones contenidas en diferentes representaciones gráficas."
-            }
-          ],
-          "mat": [
-            {
-              "id": "mat:8",
-              "unitTitle": "Geometría",
-              "axis": null,
-              "text": "Diferencia rectas paralelas y perpendiculares."
-            }
-          ]
+          }
         },
         {
           "block": 3,
@@ -7641,6 +7620,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-02-10",
           "bible": {
             "days": [
               {
@@ -7684,10 +7664,10 @@
           },
           "len": [
             {
-              "id": "len:77",
-              "unitTitle": "Denominar sonidos que emiten animales conocidos.",
-              "axis": "Oralidad",
-              "text": "Conoce palabras para denominar sonidos de animales comunes. Además de los vistos en grados anteriores, incluye, por ejemplo: abeja, oveja, elefante, búho…"
+              "id": "len:21",
+              "unitTitle": "Localizar datos en mapas y gráficos.",
+              "axis": "Lectura",
+              "text": "Interpreta informaciones contenidas en diferentes representaciones gráficas."
             }
           ],
           "identity": {
@@ -7721,6 +7701,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-02-11",
           "bible": {
             "days": [
               {
@@ -7782,6 +7763,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-02-12",
           "bible": {
             "days": [
               {
@@ -7876,6 +7858,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-02-15",
           "bible": {
             "days": [
               {
@@ -7948,6 +7931,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-02-16",
           "bible": {
             "days": [
               {
@@ -8012,6 +7996,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-02-17",
           "bible": {
             "days": [
               {
@@ -8047,10 +8032,10 @@
           },
           "len": [
             {
-              "id": "len:78",
-              "unitTitle": "Inventar historietas y cuentos a partir de imágenes.",
-              "axis": "Oralidad",
-              "text": "Expresa verbalmente historietas y cuentos creados a partir de imágenes."
+              "id": "len:22",
+              "unitTitle": "Localizar datos en mapas y gráficos.",
+              "axis": "Lectura",
+              "text": "Explora el mapamundi en busca de algunos países específicos y otros datos geográficos."
             }
           ],
           "identity": {
@@ -8084,6 +8069,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-02-18",
           "bible": {
             "days": [
               {
@@ -8157,6 +8143,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-02-19",
           "bible": {
             "days": [
               {
@@ -8243,6 +8230,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-02-22",
           "bible": {
             "days": [
               {
@@ -8319,6 +8307,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-02-23",
           "bible": {
             "days": [
               {
@@ -8358,10 +8347,10 @@
           },
           "len": [
             {
-              "id": "len:79",
-              "unitTitle": "Comentar acerca de textos y temas de interés.",
-              "axis": "Oralidad",
-              "text": "Comenta con otras personas acerca de textos y temas de su interés."
+              "id": "len:23",
+              "unitTitle": "Entender el significado de algunos elementos de la señalética.",
+              "axis": "Lectura",
+              "text": "Identifica algunas señales básicas: no pase, peligro, alta tensión, baño de damas / caballeros, algunas señales de tránsito."
             }
           ],
           "mat": [
@@ -8383,6 +8372,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-02-24",
           "bible": {
             "days": [
               {
@@ -8459,6 +8449,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-02-25",
           "bible": {
             "days": [
               {
@@ -8524,6 +8515,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-02-26",
           "bible": {
             "days": [
               {
@@ -8614,6 +8606,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-03-01",
           "bible": {
             "days": [
               {
@@ -8690,6 +8683,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-03-02",
           "bible": {
             "days": [
               {
@@ -8725,10 +8719,10 @@
           },
           "len": [
             {
-              "id": "len:80",
-              "unitTitle": "Utilizar un repertorio de adjetivos para describir objetos y situaciones del entorno.",
-              "axis": "Oralidad",
-              "text": "Utiliza un repertorio amplio de adjetivos para describir objetos y situaciones del entorno."
+              "id": "len:24",
+              "unitTitle": "Conocer personajes destacados de la historia venezolana.",
+              "axis": "Lectura",
+              "text": "Conoce nombres y datos fundamentales de tres o cuatro venezolanos(As) ilustres: Simón Bolívar, Simón Rodríguez, Francisco de Miranda. Si es el caso, epónimos de la escuela, el estado, municipio o parroquia donde reside."
             }
           ],
           "mat": [
@@ -8750,6 +8744,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-03-03",
           "bible": {
             "days": [
               {
@@ -8826,6 +8821,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-03-04",
           "bible": {
             "days": [
               {
@@ -8865,10 +8861,10 @@
           },
           "len": [
             {
-              "id": "len:25",
-              "unitTitle": "Conocer derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela.",
-              "axis": "Lectura",
-              "text": "Conoce algunos derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela."
+              "id": "len:80",
+              "unitTitle": "Utilizar un repertorio de adjetivos para describir objetos y situaciones del entorno.",
+              "axis": "Oralidad",
+              "text": "Utiliza un repertorio amplio de adjetivos para describir objetos y situaciones del entorno."
             }
           ],
           "mat": [
@@ -8891,6 +8887,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-03-05",
           "bible": {
             "days": [
               {
@@ -8934,10 +8931,10 @@
           },
           "len": [
             {
-              "id": "len:25",
-              "unitTitle": "Conocer derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela.",
-              "axis": "Lectura",
-              "text": "Conoce algunos derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela."
+              "id": "len:80",
+              "unitTitle": "Utilizar un repertorio de adjetivos para describir objetos y situaciones del entorno.",
+              "axis": "Oralidad",
+              "text": "Utiliza un repertorio amplio de adjetivos para describir objetos y situaciones del entorno."
             }
           ],
           "identity": {
@@ -8985,6 +8982,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-03-08",
           "bible": {
             "days": [
               {
@@ -9057,6 +9055,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-03-09",
           "bible": {
             "days": [
               {
@@ -9125,6 +9124,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-03-10",
           "bible": {
             "days": [
               {
@@ -9197,6 +9197,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-03-11",
           "bible": {
             "days": [
               {
@@ -9262,6 +9263,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-03-12",
           "bible": {
             "days": [
               {
@@ -9356,6 +9358,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-03-15",
           "bible": {
             "days": [
               {
@@ -9432,6 +9435,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-03-16",
           "bible": {
             "days": [
               {
@@ -9475,10 +9479,10 @@
           ],
           "mat": [
             {
-              "id": "mat:10",
+              "id": "mat:11",
               "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Utiliza su cuerpo para medir distintas superficies."
+              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
             }
           ]
         },
@@ -9492,6 +9496,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-03-17",
           "bible": {
             "days": [
               {
@@ -9568,6 +9573,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-03-18",
           "bible": {
             "days": [
               {
@@ -9633,6 +9639,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-03-19",
           "bible": {
             "days": [
               {
@@ -9719,6 +9726,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-03-22",
           "bible": {
             "days": [
               {
@@ -9799,6 +9807,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-03-23",
           "bible": {
             "days": [
               {
@@ -9863,6 +9872,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-03-24",
           "bible": {
             "days": [
               {
@@ -9933,12 +9943,13 @@
         {
           "block": 4,
           "days": 1,
-          "dayKind": "teach",
+          "dayKind": "holiday",
           "scheduledSections": [
-            "bib",
-            "len",
-            "mat"
+            "bib"
           ],
+          "calendarDate": "2027-03-25",
+          "holidayName": "Jueves Santo",
+          "holidayDate": "2027-03-25",
           "bible": {
             "days": [
               {
@@ -9971,35 +9982,18 @@
                 ]
               }
             ]
-          },
-          "len": [
-            {
-              "id": "len:28",
-              "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
-              "axis": "Escritura",
-              "text": "Escribe convencionalmente su nombre y un repertorio de palabras familiares (Nombres propios y otras de uso común)."
-            }
-          ],
-          "mat": [
-            {
-              "id": "mat:11",
-              "unitTitle": "Magnitudes y medidas",
-              "axis": null,
-              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
-            }
-          ]
+          }
         },
         {
           "block": 5,
           "days": 1,
-          "dayKind": "exposition",
+          "dayKind": "holiday",
           "scheduledSections": [
-            "bib",
-            "ide",
-            "len",
-            "mat",
-            "cie"
+            "bib"
           ],
+          "calendarDate": "2027-03-26",
+          "holidayName": "Viernes Santo",
+          "holidayDate": "2027-03-26",
           "bible": {
             "days": [
               {
@@ -10040,44 +10034,7 @@
                 ]
               }
             ]
-          },
-          "len": [
-            {
-              "id": "len:28",
-              "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
-              "axis": "Escritura",
-              "text": "Escribe convencionalmente su nombre y un repertorio de palabras familiares (Nombres propios y otras de uso común)."
-            }
-          ],
-          "identity": {
-            "title": "Nación Agrícola",
-            "contenidos": [
-              "Defensa de la soberanía"
-            ],
-            "learnings": [
-              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
-            ],
-            "weekFocus": "Defensa de la soberanía",
-            "grade": "3er grado",
-            "week": 27,
-            "dayInWeek": 5
-          },
-          "mat": [
-            {
-              "id": "mat:11",
-              "unitTitle": "Magnitudes y medidas",
-              "axis": null,
-              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
-            }
-          ],
-          "cie": [
-            {
-              "id": "cie:17",
-              "unitTitle": "Seres vivos — Las plantas",
-              "axis": null,
-              "text": "Comprende la importancia de la fotosíntesis para las plantas y otros seres vivos."
-            }
-          ]
+          }
         }
       ]
     },
@@ -10094,6 +10051,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-03-29",
           "bible": {
             "days": [
               {
@@ -10129,10 +10087,10 @@
           },
           "len": [
             {
-              "id": "len:84",
-              "unitTitle": "Actuar como espectador en diversidad de espectáculos artísticos.",
-              "axis": "Oralidad",
-              "text": "Mantiene el interés frente a espectáculos y emite opiniones sobre el contenido de las obras."
+              "id": "len:28",
+              "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
+              "axis": "Escritura",
+              "text": "Escribe convencionalmente su nombre y un repertorio de palabras familiares (Nombres propios y otras de uso común)."
             }
           ],
           "identity": {
@@ -10166,6 +10124,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-03-30",
           "bible": {
             "days": [
               {
@@ -10234,6 +10193,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-03-31",
           "bible": {
             "days": [
               {
@@ -10269,10 +10229,10 @@
           },
           "len": [
             {
-              "id": "len:29",
-              "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
-              "axis": "Escritura",
-              "text": "Conoce y usa la mayúscula inicial en la escritura de nombres propios de personas y lugares."
+              "id": "len:84",
+              "unitTitle": "Actuar como espectador en diversidad de espectáculos artísticos.",
+              "axis": "Oralidad",
+              "text": "Mantiene el interés frente a espectáculos y emite opiniones sobre el contenido de las obras."
             }
           ],
           "identity": {
@@ -10306,6 +10266,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-04-01",
           "bible": {
             "days": [
               {
@@ -10349,18 +10310,18 @@
           },
           "len": [
             {
-              "id": "len:29",
-              "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
-              "axis": "Escritura",
-              "text": "Conoce y usa la mayúscula inicial en la escritura de nombres propios de personas y lugares."
+              "id": "len:84",
+              "unitTitle": "Actuar como espectador en diversidad de espectáculos artísticos.",
+              "axis": "Oralidad",
+              "text": "Mantiene el interés frente a espectáculos y emite opiniones sobre el contenido de las obras."
             }
           ],
           "mat": [
             {
-              "id": "mat:12",
+              "id": "mat:11",
               "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Realiza cálculos con cambios de la moneda nacional."
+              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
             }
           ]
         },
@@ -10375,6 +10336,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-04-02",
           "bible": {
             "days": [
               {
@@ -10410,10 +10372,10 @@
           },
           "len": [
             {
-              "id": "len:29",
-              "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
-              "axis": "Escritura",
-              "text": "Conoce y usa la mayúscula inicial en la escritura de nombres propios de personas y lugares."
+              "id": "len:84",
+              "unitTitle": "Actuar como espectador en diversidad de espectáculos artísticos.",
+              "axis": "Oralidad",
+              "text": "Mantiene el interés frente a espectáculos y emite opiniones sobre el contenido de las obras."
             }
           ],
           "identity": {
@@ -10431,10 +10393,10 @@
           },
           "mat": [
             {
-              "id": "mat:12",
+              "id": "mat:11",
               "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Realiza cálculos con cambios de la moneda nacional."
+              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
             }
           ],
           "cie": [
@@ -10461,6 +10423,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-04-05",
           "bible": {
             "days": [
               {
@@ -10500,10 +10463,10 @@
           },
           "len": [
             {
-              "id": "len:30",
+              "id": "len:29",
               "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
               "axis": "Escritura",
-              "text": "Usa la tilde en la escritura de sus nombres y apellidos, y en un repertorio de palabras familiares."
+              "text": "Conoce y usa la mayúscula inicial en la escritura de nombres propios de personas y lugares."
             }
           ],
           "identity": {
@@ -10537,6 +10500,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-04-06",
           "bible": {
             "days": [
               {
@@ -10605,6 +10569,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-04-07",
           "bible": {
             "days": [
               {
@@ -10640,10 +10605,10 @@
           },
           "len": [
             {
-              "id": "len:31",
-              "unitTitle": "Participar en la escritura de normas de convivencia y deberes.",
+              "id": "len:30",
+              "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
               "axis": "Escritura",
-              "text": "Participa en la revisión permanente y rescritura de las normas de convivencia en la escuela, los deberes con respecto a las demás personas, el cuido del ambiente y el respeto a la patria."
+              "text": "Usa la tilde en la escritura de sus nombres y apellidos, y en un repertorio de palabras familiares."
             }
           ],
           "identity": {
@@ -10677,6 +10642,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-04-08",
           "bible": {
             "days": [
               {
@@ -10742,6 +10708,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-04-09",
           "bible": {
             "days": [
               {
@@ -10832,6 +10799,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-04-12",
           "bible": {
             "days": [
               {
@@ -10908,6 +10876,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-04-13",
           "bible": {
             "days": [
               {
@@ -10968,6 +10937,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-04-14",
           "bible": {
             "days": [
               {
@@ -11048,6 +11018,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-04-15",
           "bible": {
             "days": [
               {
@@ -11095,10 +11066,10 @@
           ],
           "mat": [
             {
-              "id": "mat:13",
-              "unitTitle": "Números y operaciones",
+              "id": "mat:12",
+              "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Utilizan el cartel de valores para ubicar números o cantidades, hasta el diez mil."
+              "text": "Realiza cálculos con cambios de la moneda nacional."
             }
           ]
         },
@@ -11113,6 +11084,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-04-16",
           "bible": {
             "days": [
               {
@@ -11173,10 +11145,10 @@
           },
           "mat": [
             {
-              "id": "mat:13",
-              "unitTitle": "Números y operaciones",
+              "id": "mat:12",
+              "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Utilizan el cartel de valores para ubicar números o cantidades, hasta el diez mil."
+              "text": "Realiza cálculos con cambios de la moneda nacional."
             }
           ],
           "cie": [
@@ -11196,13 +11168,13 @@
         {
           "block": 1,
           "days": 1,
-          "dayKind": "teach",
+          "dayKind": "holiday",
           "scheduledSections": [
-            "bib",
-            "len",
-            "ide",
-            "cie"
+            "bib"
           ],
+          "calendarDate": "2027-04-19",
+          "holidayName": "Declaración de la Independencia",
+          "holidayDate": "2027-04-19",
           "bible": {
             "days": [
               {
@@ -11235,36 +11207,7 @@
                 ]
               }
             ]
-          },
-          "len": [
-            {
-              "id": "len:34",
-              "unitTitle": "Tomar conciencia de la duda ortográfica.",
-              "axis": "Escritura",
-              "text": "Tiene conciencia de nociones ortográficas básicas y resuelve sus dudas recurriendo a diversas fuentes (Preguntar a otros, consultar materiales escritos a disposición)."
-            }
-          ],
-          "identity": {
-            "title": "La Humanidad",
-            "contenidos": [
-              "Las formas del conocimiento."
-            ],
-            "learnings": [
-              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
-            ],
-            "weekFocus": "Las formas del conocimiento.",
-            "grade": "3er grado",
-            "week": 31,
-            "dayInWeek": 1
-          },
-          "cie": [
-            {
-              "id": "cie:19",
-              "unitTitle": "Energía – materia — La energía en las comunidades",
-              "axis": null,
-              "text": "Comprende la presencia de la energía en el ambiente, sus diferentes formas y fuentes."
-            }
-          ]
+          }
         },
         {
           "block": 2,
@@ -11275,6 +11218,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-04-20",
           "bible": {
             "days": [
               {
@@ -11318,10 +11262,10 @@
           },
           "len": [
             {
-              "id": "len:35",
-              "unitTitle": "Usar en la escritura la noción de concordancia sustantivo-adjetivo.",
+              "id": "len:34",
+              "unitTitle": "Tomar conciencia de la duda ortográfica.",
               "axis": "Escritura",
-              "text": "Escribe pares de palabras, y usa en la escritura de textos, la noción de concordancia “sustantivo-adjetivo”: niña talentosa / camisa marrón / blusa pequeña / niño alto."
+              "text": "Tiene conciencia de nociones ortográficas básicas y resuelve sus dudas recurriendo a diversas fuentes (Preguntar a otros, consultar materiales escritos a disposición)."
             }
           ],
           "mat": [
@@ -11343,6 +11287,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-04-21",
           "bible": {
             "days": [
               {
@@ -11382,10 +11327,10 @@
           },
           "len": [
             {
-              "id": "len:35",
-              "unitTitle": "Usar en la escritura la noción de concordancia sustantivo-adjetivo.",
+              "id": "len:34",
+              "unitTitle": "Tomar conciencia de la duda ortográfica.",
               "axis": "Escritura",
-              "text": "Escribe pares de palabras, y usa en la escritura de textos, la noción de concordancia “sustantivo-adjetivo”: niña talentosa / camisa marrón / blusa pequeña / niño alto."
+              "text": "Tiene conciencia de nociones ortográficas básicas y resuelve sus dudas recurriendo a diversas fuentes (Preguntar a otros, consultar materiales escritos a disposición)."
             }
           ],
           "identity": {
@@ -11419,6 +11364,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-04-22",
           "bible": {
             "days": [
               {
@@ -11484,6 +11430,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-04-23",
           "bible": {
             "days": [
               {
@@ -11574,6 +11521,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-04-26",
           "bible": {
             "days": [
               {
@@ -11650,6 +11598,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-04-27",
           "bible": {
             "days": [
               {
@@ -11685,10 +11634,10 @@
           },
           "len": [
             {
-              "id": "len:37",
+              "id": "len:36",
               "unitTitle": "Planificar la escritura de cuentos y otros textos.",
               "axis": "Escritura",
-              "text": "Dicta textos intentando ajustar la voz y el ritmo a los requerimientos del destinatario."
+              "text": "Trabaja en equipo para planificar la escritura de textos que serán dictados a la/el docente o escritos por sí mismo."
             }
           ],
           "mat": [
@@ -11710,6 +11659,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-04-28",
           "bible": {
             "days": [
               {
@@ -11782,6 +11732,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-04-29",
           "bible": {
             "days": [
               {
@@ -11829,10 +11780,10 @@
           },
           "len": [
             {
-              "id": "len:38",
-              "unitTitle": "Ordenar conjuntos de palabras para formar oraciones (Previa información acerca de cuál es la oración que debe formarse).",
+              "id": "len:37",
+              "unitTitle": "Planificar la escritura de cuentos y otros textos.",
               "axis": "Escritura",
-              "text": "Construye textos ordenando entre tres y cinco palabras escritas sin orden lógico. Por ejemplo: Francisco de Miranda nació en Caracas / Venezuela es mi patria / me gusta mucho leer cuentos / el araguaney es el árbol nacional / la vaca es un animal mamífero."
+              "text": "Dicta textos intentando ajustar la voz y el ritmo a los requerimientos del destinatario."
             }
           ],
           "mat": [
@@ -11855,6 +11806,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-04-30",
           "bible": {
             "days": [
               {
@@ -11890,10 +11842,10 @@
           },
           "len": [
             {
-              "id": "len:38",
-              "unitTitle": "Ordenar conjuntos de palabras para formar oraciones (Previa información acerca de cuál es la oración que debe formarse).",
+              "id": "len:37",
+              "unitTitle": "Planificar la escritura de cuentos y otros textos.",
               "axis": "Escritura",
-              "text": "Construye textos ordenando entre tres y cinco palabras escritas sin orden lógico. Por ejemplo: Francisco de Miranda nació en Caracas / Venezuela es mi patria / me gusta mucho leer cuentos / el araguaney es el árbol nacional / la vaca es un animal mamífero."
+              "text": "Dicta textos intentando ajustar la voz y el ritmo a los requerimientos del destinatario."
             }
           ],
           "identity": {
@@ -11941,6 +11893,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-05-03",
           "bible": {
             "days": [
               {
@@ -12017,6 +11970,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-05-04",
           "bible": {
             "days": [
               {
@@ -12056,10 +12010,10 @@
           },
           "len": [
             {
-              "id": "len:39",
-              "unitTitle": "Escribir de manera relativamente legible de acuerdo con las convenciones básicas del sistema de escritura.",
+              "id": "len:38",
+              "unitTitle": "Ordenar conjuntos de palabras para formar oraciones (Previa información acerca de cuál es la oración que debe formarse).",
               "axis": "Escritura",
-              "text": "Escribe por sí mismo diferentes tipos de textos de extensiones variables (En una o varias sesiones), de acuerdo con su nivel de escritura: listas de nombres propios, de animales, lugares, etc., cuentos, carteles, entre otros."
+              "text": "Construye textos ordenando entre tres y cinco palabras escritas sin orden lógico. Por ejemplo: Francisco de Miranda nació en Caracas / Venezuela es mi patria / me gusta mucho leer cuentos / el araguaney es el árbol nacional / la vaca es un animal mamífero."
             }
           ],
           "mat": [
@@ -12081,6 +12035,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-05-05",
           "bible": {
             "days": [
               {
@@ -12157,6 +12112,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-05-06",
           "bible": {
             "days": [
               {
@@ -12196,10 +12152,10 @@
           },
           "len": [
             {
-              "id": "len:40",
-              "unitTitle": "Copiar con diversos propósitos reales.",
+              "id": "len:39",
+              "unitTitle": "Escribir de manera relativamente legible de acuerdo con las convenciones básicas del sistema de escritura.",
               "axis": "Escritura",
-              "text": "Copia textos con diversos propósitos: para conservar lo que desea recordar, para compartir con otros, para llevar registros de informaciones de interés."
+              "text": "Escribe por sí mismo diferentes tipos de textos de extensiones variables (En una o varias sesiones), de acuerdo con su nivel de escritura: listas de nombres propios, de animales, lugares, etc., cuentos, carteles, entre otros."
             }
           ],
           "mat": [
@@ -12222,6 +12178,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-05-07",
           "bible": {
             "days": [
               {
@@ -12265,10 +12222,10 @@
           },
           "len": [
             {
-              "id": "len:40",
-              "unitTitle": "Copiar con diversos propósitos reales.",
+              "id": "len:39",
+              "unitTitle": "Escribir de manera relativamente legible de acuerdo con las convenciones básicas del sistema de escritura.",
               "axis": "Escritura",
-              "text": "Copia textos con diversos propósitos: para conservar lo que desea recordar, para compartir con otros, para llevar registros de informaciones de interés."
+              "text": "Escribe por sí mismo diferentes tipos de textos de extensiones variables (En una o varias sesiones), de acuerdo con su nivel de escritura: listas de nombres propios, de animales, lugares, etc., cuentos, carteles, entre otros."
             }
           ],
           "identity": {
@@ -12316,6 +12273,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-05-10",
           "bible": {
             "days": [
               {
@@ -12351,10 +12309,10 @@
           },
           "len": [
             {
-              "id": "len:41",
-              "unitTitle": "Tomar dictados con propósitos definidos.",
+              "id": "len:40",
+              "unitTitle": "Copiar con diversos propósitos reales.",
               "axis": "Escritura",
-              "text": "Toma dictado de textos cortos con propósitos específicos; por ejemplo, para comparar y corregir el escrito con un compañero/o; para registrar información de interés."
+              "text": "Copia textos con diversos propósitos: para conservar lo que desea recordar, para compartir con otros, para llevar registros de informaciones de interés."
             }
           ],
           "identity": {
@@ -12388,6 +12346,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-05-11",
           "bible": {
             "days": [
               {
@@ -12452,6 +12411,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-05-12",
           "bible": {
             "days": [
               {
@@ -12524,6 +12484,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-05-13",
           "bible": {
             "days": [
               {
@@ -12593,6 +12554,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-05-14",
           "bible": {
             "days": [
               {
@@ -12683,6 +12645,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-05-17",
           "bible": {
             "days": [
               {
@@ -12722,10 +12685,10 @@
           },
           "len": [
             {
-              "id": "len:43",
-              "unitTitle": "Cuidar la estética y legibilidad de la escritura con propósitos específicos.",
+              "id": "len:42",
+              "unitTitle": "Revisar y corregir textos destinados a la publicación.",
               "axis": "Escritura",
-              "text": "Practica el trazo artístico de las letras con fines funcionales y de diseño. Utiliza la caligrafía como forma de expresión artística que vincula la escritura con otras artes como el dibujo y la pintura."
+              "text": "Aplica estrategias de revisión y edición de textos que serán publicados, trabajando en equipo con otros y con el apoyo de la/el docente."
             }
           ],
           "identity": {
@@ -12759,6 +12722,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-05-18",
           "bible": {
             "days": [
               {
@@ -12823,6 +12787,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-05-19",
           "bible": {
             "days": [
               {
@@ -12858,10 +12823,10 @@
           },
           "len": [
             {
-              "id": "len:44",
-              "unitTitle": "Conocer y usar en la escritura la diferencia singular / plural.",
+              "id": "len:43",
+              "unitTitle": "Cuidar la estética y legibilidad de la escritura con propósitos específicos.",
               "axis": "Escritura",
-              "text": "Distingue la oposición singular/plural y la usa en la escritura, en los casos en que el plural se forma agregando s al singular y en casos conocidos en que se agrega un sufijo (Lápiz/lápices; cartel/carteles; letra/ letras)."
+              "text": "Practica el trazo artístico de las letras con fines funcionales y de diseño. Utiliza la caligrafía como forma de expresión artística que vincula la escritura con otras artes como el dibujo y la pintura."
             }
           ],
           "identity": {
@@ -12895,6 +12860,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-05-20",
           "bible": {
             "days": [
               {
@@ -12960,6 +12926,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-05-21",
           "bible": {
             "days": [
               {
@@ -13054,6 +13021,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-05-24",
           "bible": {
             "days": [
               {
@@ -13130,6 +13098,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-05-25",
           "bible": {
             "days": [
               {
@@ -13190,6 +13159,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-05-26",
           "bible": {
             "days": [
               {
@@ -13266,6 +13236,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-05-27",
           "bible": {
             "days": [
               {
@@ -13331,6 +13302,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-05-28",
           "bible": {
             "days": [
               {
@@ -13421,6 +13393,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-05-31",
           "bible": {
             "days": [
               {
@@ -13497,6 +13470,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-06-01",
           "bible": {
             "days": [
               {
@@ -13548,10 +13522,10 @@
           ],
           "mat": [
             {
-              "id": "mat:15",
+              "id": "mat:16",
               "unitTitle": "Números y operaciones",
               "axis": null,
-              "text": "Cuenta y lee cantidades hasta el diez mil."
+              "text": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero."
             }
           ]
         },
@@ -13565,6 +13539,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-06-02",
           "bible": {
             "days": [
               {
@@ -13637,6 +13612,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-06-03",
           "bible": {
             "days": [
               {
@@ -13702,6 +13678,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-06-04",
           "bible": {
             "days": [
               {
@@ -13792,6 +13769,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-06-07",
           "bible": {
             "days": [
               {
@@ -13864,6 +13842,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-06-08",
           "bible": {
             "days": [
               {
@@ -13907,10 +13886,10 @@
           },
           "len": [
             {
-              "id": "len:49",
-              "unitTitle": "Crear nuevas versiones de cuentos conocidos.",
+              "id": "len:50",
+              "unitTitle": "Usar en la escritura ciertas restricciones del sistema de escritura alfabético.",
               "axis": "Escritura",
-              "text": "Escribe nuevas versiones de cuentos conocidos."
+              "text": "Aplica a la escritura algunas restricciones del sistema de escritura alfabético: dígrafo gu en gue-gui; qu en que-qui."
             }
           ],
           "mat": [
@@ -13932,6 +13911,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-06-09",
           "bible": {
             "days": [
               {
@@ -14004,6 +13984,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-06-10",
           "bible": {
             "days": [
               {
@@ -14047,10 +14028,10 @@
           },
           "len": [
             {
-              "id": "len:50",
-              "unitTitle": "Usar en la escritura ciertas restricciones del sistema de escritura alfabético.",
+              "id": "len:51",
+              "unitTitle": "Escribir reseñas de obras literarias.",
               "axis": "Escritura",
-              "text": "Aplica a la escritura algunas restricciones del sistema de escritura alfabético: dígrafo gu en gue-gui; qu en que-qui."
+              "text": "Recomienda obras literarias mediante breves reseñas escritas."
             }
           ],
           "mat": [
@@ -14073,6 +14054,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-06-11",
           "bible": {
             "days": [
               {
@@ -14108,10 +14090,10 @@
           },
           "len": [
             {
-              "id": "len:50",
-              "unitTitle": "Usar en la escritura ciertas restricciones del sistema de escritura alfabético.",
+              "id": "len:51",
+              "unitTitle": "Escribir reseñas de obras literarias.",
               "axis": "Escritura",
-              "text": "Aplica a la escritura algunas restricciones del sistema de escritura alfabético: dígrafo gu en gue-gui; qu en que-qui."
+              "text": "Recomienda obras literarias mediante breves reseñas escritas."
             }
           ],
           "identity": {
@@ -14159,6 +14141,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-06-14",
           "bible": {
             "days": [
               {
@@ -14235,6 +14218,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-06-15",
           "bible": {
             "days": [
               {
@@ -14286,10 +14270,10 @@
           ],
           "mat": [
             {
-              "id": "mat:16",
-              "unitTitle": "Números y operaciones",
+              "id": "mat:17",
+              "unitTitle": "Estadística y probabilidad",
               "axis": null,
-              "text": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero."
+              "text": "Recopila, organiza, clasifica y representa gráficamente datos."
             }
           ]
         },
@@ -14303,6 +14287,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-06-16",
           "bible": {
             "days": [
               {
@@ -14379,6 +14364,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-06-17",
           "bible": {
             "days": [
               {
@@ -14414,10 +14400,10 @@
           },
           "len": [
             {
-              "id": "len:52",
-              "unitTitle": "Producir textos a partir de diferentes inicios.",
+              "id": "len:53",
+              "unitTitle": "Utilizar en la escritura recursos ortográficos fundamentales.",
               "axis": "Escritura",
-              "text": "Crea textos a partir de diferentes inicios: sueño con…; si yo fuera escritor/a…; cuando sea grande…; si yo fuera un caballo…; Simón Bolívar fue…"
+              "text": "Escribe utilizando algunos recursos ortográficos básicos: mayúsculas en nombres propios y de lugares, al inicio de un texto; el punto al final de un texto."
             }
           ],
           "mat": [
@@ -14440,6 +14426,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-06-18",
           "bible": {
             "days": [
               {
@@ -14483,10 +14470,10 @@
           },
           "len": [
             {
-              "id": "len:52",
-              "unitTitle": "Producir textos a partir de diferentes inicios.",
+              "id": "len:53",
+              "unitTitle": "Utilizar en la escritura recursos ortográficos fundamentales.",
               "axis": "Escritura",
-              "text": "Crea textos a partir de diferentes inicios: sueño con…; si yo fuera escritor/a…; cuando sea grande…; si yo fuera un caballo…; Simón Bolívar fue…"
+              "text": "Escribe utilizando algunos recursos ortográficos básicos: mayúsculas en nombres propios y de lugares, al inicio de un texto; el punto al final de un texto."
             }
           ],
           "identity": {
@@ -14534,6 +14521,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-06-21",
           "bible": {
             "days": [
               {
@@ -14569,10 +14557,10 @@
           },
           "len": [
             {
-              "id": "len:53",
-              "unitTitle": "Utilizar en la escritura recursos ortográficos fundamentales.",
+              "id": "len:54",
+              "unitTitle": "Conocer nociones ortográficas del sistema de escritura.",
               "axis": "Escritura",
-              "text": "Escribe utilizando algunos recursos ortográficos básicos: mayúsculas en nombres propios y de lugares, al inicio de un texto; el punto al final de un texto."
+              "text": "Usa en la escritura ciertas reglas ortográficas básicas: al principio y al final de palabras siempre va una sola r (Rama, reto, risa, ruta, rosa / cantar, trepar, nacer, radar, hangar). Identifica cambios de significado según el uso de r/rr al interior de palabras: carro/ caro; perra/pera; cerro/cero."
             }
           ],
           "identity": {
@@ -14606,6 +14594,7 @@
             "len",
             "mat"
           ],
+          "calendarDate": "2027-06-22",
           "bible": {
             "days": [
               {
@@ -14670,6 +14659,7 @@
             "ide",
             "cie"
           ],
+          "calendarDate": "2027-06-23",
           "bible": {
             "days": [
               {
@@ -14709,10 +14699,10 @@
           },
           "len": [
             {
-              "id": "len:54",
-              "unitTitle": "Conocer nociones ortográficas del sistema de escritura.",
+              "id": "len:55",
+              "unitTitle": "Escribir convencionalmente palabras con sílabas complejas.",
               "axis": "Escritura",
-              "text": "Usa en la escritura ciertas reglas ortográficas básicas: al principio y al final de palabras siempre va una sola r (Rama, reto, risa, ruta, rosa / cantar, trepar, nacer, radar, hangar). Identifica cambios de significado según el uso de r/rr al interior de palabras: carro/ caro; perra/pera; cerro/cero."
+              "text": "Comienza a escribir convencionalmente las palabras que contienen sílabas del grupo consonante-consonante-vocal (CCV): clase, copla, tropa, fruta, flor, cobre, grama, drama, grillo…"
             }
           ],
           "identity": {
@@ -14740,12 +14730,13 @@
         {
           "block": 4,
           "days": 1,
-          "dayKind": "teach",
+          "dayKind": "holiday",
           "scheduledSections": [
-            "bib",
-            "len",
-            "mat"
+            "bib"
           ],
+          "calendarDate": "2027-06-24",
+          "holidayName": "Batalla de Carabobo",
+          "holidayDate": "2027-06-24",
           "bible": {
             "days": [
               {
@@ -14786,23 +14777,7 @@
                 ]
               }
             ]
-          },
-          "len": [
-            {
-              "id": "len:55",
-              "unitTitle": "Escribir convencionalmente palabras con sílabas complejas.",
-              "axis": "Escritura",
-              "text": "Comienza a escribir convencionalmente las palabras que contienen sílabas del grupo consonante-consonante-vocal (CCV): clase, copla, tropa, fruta, flor, cobre, grama, drama, grillo…"
-            }
-          ],
-          "mat": [
-            {
-              "id": "mat:17",
-              "unitTitle": "Estadística y probabilidad",
-              "axis": null,
-              "text": "Recopila, organiza, clasifica y representa gráficamente datos."
-            }
-          ]
+          }
         },
         {
           "block": 5,
@@ -14815,6 +14790,7 @@
             "mat",
             "cie"
           ],
+          "calendarDate": "2027-06-25",
           "bible": {
             "days": [
               {

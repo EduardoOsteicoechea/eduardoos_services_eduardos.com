@@ -4,89 +4,28 @@
   "planDay": 75,
   "week": 15,
   "grade": "3er grado",
-  "title": "Día 75 · Exposiciones",
-  "dayKind": "exposition",
+  "title": "Día 75 · Feriado — Año Nuevo",
+  "dayKind": "holiday",
+  "calendarDate": "2027-01-01",
+  "holidayName": "Año Nuevo",
+  "holidayDate": "2027-01-01",
   "scheduledSections": [
-    "bib",
-    "ide",
-    "len",
-    "mat",
-    "cie"
+    "bib"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia · Exposición",
-      "objective": "Exposición bíblica (repaso de la semana)",
-      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: Deuteronomio 9, 10, 11 · Job–Mal: Salmos 141, 142, 143 · NT: Hechos 8, 9",
-      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 12,
+      "label": "Biblia · Feriado",
+      "objective": "Feriado nacional — Año Nuevo",
+      "learning": "Lectura bíblica del día (feriado). Gén–Ester: Deuteronomio 9, 10, 11 · Job–Mal: Salmos 141, 142, 143 · NT: Hechos 8, 9",
+      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
+      "mode": "holiday",
+      "activityKind": "bible",
+      "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
-        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad · Exposición",
-      "objective": "Exposición · Pueblos Afrovenezolanos",
-      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
-      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "que los pueblos afrovenezolanos son los trabajadores que sostienen a…",
-      "activities": [
-        "Prepara una exposición de 1 minuto sobre que los pueblos afrovenezolanos son los trabajadores que sostienen a…: 3…",
-        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
-      ]
-    },
-    {
-      "id": "len",
-      "label": "Prácticas del Lenguaje · Exposición",
-      "objective": "Exposición · Interpretar metáforas.",
-      "learning": "Prepara una exposición sobre: Comprende metáforas sencillas en textos literarios.",
-      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "metáforas sencillas en textos literarios",
-      "activities": [
-        "Escribe 4 oraciones o un párrafo corto que resuma metáforas sencillas en textos literarios para tu exposición.",
-        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
-      ]
-    },
-    {
-      "id": "mat",
-      "label": "Matemáticas · Exposición",
-      "objective": "Exposición · Geometría",
-      "learning": "Prepara una exposición sobre: Es capaz de trazar un croquis partiendo de un punto de referencia.",
-      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "es capaz de trazar un croquis partiendo de un punto…",
-      "activities": [
-        "Resuelve en el cuaderno 1 problema o croquis sobre es capaz de trazar un croquis partiendo de un punto….",
-        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales · Exposición",
-      "objective": "Exposición · Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Prepara una exposición sobre: Desarrolla habilidades para formular preguntas, hacer observaciones y sacar conclusiones basadas en la experiencia con mezclas y la separación de sus componentes.",
-      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "formular preguntas, hacer observaciones y sacar conclusiones basadas en la…",
-      "activities": [
-        "Prepara una exposición sobre formular preguntas, hacer observaciones y sacar conclusiones basadas en la…: observa o…",
-        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+        "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
+        "Responde: ¿qué pasó? — 2 frases."
       ]
     }
   ]

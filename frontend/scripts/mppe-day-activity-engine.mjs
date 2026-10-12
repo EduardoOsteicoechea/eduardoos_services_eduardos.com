@@ -1526,9 +1526,11 @@ export function qaSection(sectionId, pack, learning) {
   if ((pack.minutesEstimate ?? 0) > ceiling) failures.push("minutes over ceiling");
   if (!pack.mode) failures.push("missing mode");
   const isExpo = pack.mode === "exposition" || pack.kind === "exposition";
+  const isHoliday = pack.mode === "holiday";
   const rs = rubricScoreSection(sectionId, pack);
-  if (!isExpo && rs < 3) failures.push(`rubric ${rs}/4`);
+  if (!isExpo && !isHoliday && rs < 3) failures.push(`rubric ${rs}/4`);
   if (isExpo && rs < 2) failures.push(`expo rubric ${rs}/4`);
+  if (isHoliday && rs < 2) failures.push(`holiday rubric ${rs}/4`);
   failures.push(...qaHardRules(sectionId, { ...pack, kind: pack.kind }, learning));
   for (const act of pack.activities ?? []) {
     if (MINISTERIAL_START.test(act)) failures.push("ministerial verb in activity");

@@ -1,10 +1,13 @@
 /**
  * Builds 40-week / 200-day MPPE plan (3er grado) from the 28-week source JSON.
  *
- * Weekly pattern (day in week 1–5):
+ * Weekly pattern (day in week 1–5), unless the calendar day is a VE holiday:
  *   1,3 → bib + len + ide + cie
  *   2,4 → bib + len + mat
  *   5   → exposition of all five (week focus; no new teach buckets)
+ * Holiday → bib only (overrides teach/exposition); content redistributed elsewhere.
+ *
+ * School year anchor: plan day 1 = 2026-09-21 (Monday).
  *
  * Run: node frontend/scripts/build-40week-mppe-curriculum.mjs
  */
@@ -19,6 +22,7 @@ const outPath = path.join(__dirname, "..", "src", "lib", "eoschool-mppe-40week-c
 const WEEKS = 40;
 const DAYS_PER_WEEK = 5;
 const TOTAL_DAYS = WEEKS * DAYS_PER_WEEK;
+const SCHOOL_YEAR_START = "2026-09-21";
 
 /** @param {number} planDay 1-based */
 function dayInWeek(planDay) {
@@ -30,6 +34,99 @@ function scheduledSectionsForDayInWeek(d) {
   if (d === 5) return ["bib", "ide", "len", "mat", "cie"];
   if (d === 1 || d === 3) return ["bib", "len", "ide", "cie"];
   return ["bib", "len", "mat"]; // 2, 4
+}
+
+/** Anonymous Gregorian algorithm → Easter Sunday as Date (UTC noon to avoid TZ drift). */
+function easterSunday(year) {
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31); // 3=March, 4=April
+  const day = ((h + l - 7 * m + 114) % 31) + 1;
+  return new Date(Date.UTC(year, month - 1, day, 12));
+}
+
+function addUtcDays(date, n) {
+  const d = new Date(date.getTime());
+  d.setUTCDate(d.getUTCDate() + n);
+  return d;
+}
+
+function ymd(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function parseYmd(s) {
+  const [y, m, d] = s.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d, 12));
+}
+
+/** Mon–Fri school days starting at SCHOOL_YEAR_START. */
+function buildSchoolCalendar(totalDays) {
+  const dates = [];
+  let cur = parseYmd(SCHOOL_YEAR_START);
+  while (dates.length < totalDays) {
+    const wd = cur.getUTCDay(); // 0 Sun … 6 Sat
+    if (wd >= 1 && wd <= 5) dates.push(new Date(cur.getTime()));
+    cur = addUtcDays(cur, 1);
+  }
+  return dates;
+}
+
+/**
+ * Official VE holidays (LOTTT + Ley de Fiestas Nacionales) that can fall on weekdays.
+ * Returns Map<ymd, name> for years covering the school calendar.
+ */
+function venezuelaHolidayNamesByDate(yearStart, yearEnd) {
+  const map = new Map();
+  const add = (date, name) => map.set(ymd(date), name);
+
+  for (let year = yearStart; year <= yearEnd; year++) {
+    add(new Date(Date.UTC(year, 0, 1, 12)), "Año Nuevo");
+    add(new Date(Date.UTC(year, 3, 19, 12)), "Declaración de la Independencia");
+    add(new Date(Date.UTC(year, 4, 1, 12)), "Día del Trabajador");
+    add(new Date(Date.UTC(year, 5, 24, 12)), "Batalla de Carabobo");
+    add(new Date(Date.UTC(year, 6, 5, 12)), "Día de la Independencia");
+    add(new Date(Date.UTC(year, 6, 24, 12)), "Natalicio de Simón Bolívar");
+    add(new Date(Date.UTC(year, 9, 12, 12)), "Día de la Resistencia Indígena");
+    add(new Date(Date.UTC(year, 11, 24, 12)), "Nochebuena");
+    add(new Date(Date.UTC(year, 11, 25, 12)), "Navidad");
+    add(new Date(Date.UTC(year, 11, 31, 12)), "Fin de Año");
+
+    const easter = easterSunday(year);
+    // Ash Wednesday = Easter − 46; Carnival Mon/Tue = two days before Ash Wednesday.
+    const ash = addUtcDays(easter, -46);
+    add(addUtcDays(ash, -2), "Lunes de Carnaval");
+    add(addUtcDays(ash, -1), "Martes de Carnaval");
+    add(addUtcDays(easter, -3), "Jueves Santo");
+    add(addUtcDays(easter, -2), "Viernes Santo");
+  }
+  return map;
+}
+
+function buildHolidayIndex(schoolDates) {
+  const y0 = schoolDates[0].getUTCFullYear();
+  const y1 = schoolDates[schoolDates.length - 1].getUTCFullYear();
+  const names = venezuelaHolidayNamesByDate(y0, y1);
+  /** @type {Map<number, { planDay: number, date: string, name: string }>} */
+  const byPlanDay = new Map();
+  schoolDates.forEach((dt, i) => {
+    const key = ymd(dt);
+    const name = names.get(key);
+    if (!name) return;
+    const planDay = i + 1;
+    byPlanDay.set(planDay, { planDay, date: key, name });
+  });
+  return byPlanDay;
 }
 
 function extractOrderedPlanDays(weeks) {
@@ -152,6 +249,10 @@ function lastNonNull(byDay, fromIdx, stepBackMax) {
 }
 
 function build40WeekCurriculum(source) {
+  const schoolDates = buildSchoolCalendar(TOTAL_DAYS);
+  const holidayByPlanDay = buildHolidayIndex(schoolDates);
+  const isHoliday = (planDay) => holidayByPlanDay.has(planDay);
+
   const planDays = extractOrderedPlanDays(source.weeks);
   const genEsterBuckets = contiguousBuckets(flattenTrack(planDays, "genEster"), TOTAL_DAYS);
   const jobMalBuckets = contiguousBuckets(flattenTrack(planDays, "jobMal"), TOTAL_DAYS);
@@ -161,17 +262,22 @@ function build40WeekCurriculum(source) {
   const matAll = collectUniqueRefs(planDays, "mat");
   const cieAll = collectUniqueRefs(planDays, "cie");
 
-  /** Len every calendar day (including exposition Friday). */
-  const lenByDay = forwardFillBuckets(contiguousBuckets(lenAll, TOTAL_DAYS));
-
+  const lenDayIndices = [];
   const matDayIndices = [];
   const ideCieDayIndices = [];
+  let expositionCount = 0;
+
   for (let i = 0; i < TOTAL_DAYS; i++) {
-    const d = dayInWeek(i + 1);
+    const planDay = i + 1;
+    if (isHoliday(planDay)) continue;
+    const d = dayInWeek(planDay);
+    lenDayIndices.push(i);
     if (d === 2 || d === 4) matDayIndices.push(i);
     if (d === 1 || d === 3) ideCieDayIndices.push(i);
+    if (d === 5) expositionCount += 1;
   }
 
+  const lenByDay = bucketsForDayIndices(lenAll, lenDayIndices);
   const matByDay = bucketsForDayIndices(matAll, matDayIndices);
   const cieByDay = bucketsForDayIndices(cieAll, ideCieDayIndices);
 
@@ -184,15 +290,42 @@ function build40WeekCurriculum(source) {
     for (let d = 1; d <= DAYS_PER_WEEK; d++) {
       const dayInPlan = (w - 1) * DAYS_PER_WEEK + d;
       const idx = dayInPlan - 1;
-      const scheduledSections = scheduledSectionsForDayInWeek(d);
+      const calendarDate = ymd(schoolDates[idx]);
+      const holiday = holidayByPlanDay.get(dayInPlan);
+
+      if (holiday) {
+        blocks.push({
+          block: d,
+          days: 1,
+          dayKind: "holiday",
+          scheduledSections: ["bib"],
+          calendarDate,
+          holidayName: holiday.name,
+          holidayDate: holiday.date,
+          bible: {
+            days: [
+              {
+                dayInPlan,
+                genEster: genEsterBuckets[idx],
+                jobMal: jobMalBuckets[idx],
+                nt: ntBuckets[idx],
+              },
+            ],
+          },
+        });
+        continue;
+      }
+
       const isExpo = d === 5;
       const dayKind = isExpo ? "exposition" : "teach";
+      const scheduledSections = scheduledSectionsForDayInWeek(d);
 
       const block = {
         block: d,
         days: 1,
         dayKind,
         scheduledSections,
+        calendarDate,
         bible: {
           days: [
             {
@@ -203,7 +336,7 @@ function build40WeekCurriculum(source) {
             },
           ],
         },
-        len: lenByDay[idx] ?? [],
+        len: (lenByDay[idx] ?? []).map((r) => ({ ...r })),
       };
 
       if (d === 1 || d === 3 || isExpo) {
@@ -220,19 +353,22 @@ function build40WeekCurriculum(source) {
 
       if (d === 2 || d === 4 || isExpo) {
         const matRefs = isExpo
-          ? lastNonNull(matByDay, idx - 1, 4) ?? matByDay[matDayIndices[0]] ?? []
+          ? lastNonNull(matByDay, idx - 1, 4) ??
+            (matDayIndices.length ? matByDay[matDayIndices[0]] : null) ??
+            []
           : matByDay[idx] ?? [];
         block.mat = matRefs.map((r) => ({ ...r }));
       }
 
       if (d === 1 || d === 3 || isExpo) {
         const cieRefs = isExpo
-          ? lastNonNull(cieByDay, idx - 1, 4) ?? cieByDay[ideCieDayIndices[0]] ?? []
+          ? lastNonNull(cieByDay, idx - 1, 4) ??
+            (ideCieDayIndices.length ? cieByDay[ideCieDayIndices[0]] : null) ??
+            []
           : cieByDay[idx] ?? [];
         block.cie = cieRefs.map((r) => ({ ...r }));
       }
 
-      // Exposition Friday: len should reflect week's teaching focus (prefer day 4 / last filled).
       if (isExpo) {
         const weekStart = (w - 1) * DAYS_PER_WEEK;
         const weekLen = lastNonNull(lenByDay, weekStart + 3, 3) ?? lenByDay[idx];
@@ -244,6 +380,8 @@ function build40WeekCurriculum(source) {
     weeks.push({ week: w, blocks });
   }
 
+  const holidays = [...holidayByPlanDay.values()].sort((a, b) => a.planDay - b.planDay);
+
   return {
     meta: {
       weeks: WEEKS,
@@ -254,6 +392,9 @@ function build40WeekCurriculum(source) {
       totalBlocks: WEEKS * DAYS_PER_WEEK,
       identityObjectives: identities.length,
       source: "derived-from-28week-v1",
+      schoolYearStart: ymd(schoolDates[0]),
+      schoolYearEnd: ymd(schoolDates[schoolDates.length - 1]),
+      holidays,
       weeklyPattern: {
         day1: ["bib", "len", "ide", "cie"],
         day2: ["bib", "len", "mat"],
@@ -261,16 +402,18 @@ function build40WeekCurriculum(source) {
         day4: ["bib", "len", "mat"],
         day5: ["bib", "ide", "len", "mat", "cie"],
         day5Mode: "exposition",
+        holidayOverride: ["bib"],
       },
       teachingDays: {
         bib: TOTAL_DAYS,
-        len: TOTAL_DAYS,
-        ide: ideCieDayIndices.length + WEEKS, // teach + expo Friday
-        mat: matDayIndices.length + WEEKS,
-        cie: ideCieDayIndices.length + WEEKS,
+        len: lenDayIndices.length,
+        ide: ideCieDayIndices.length + expositionCount,
+        mat: matDayIndices.length + expositionCount,
+        cie: ideCieDayIndices.length + expositionCount,
         teachIdeCie: ideCieDayIndices.length,
         teachMat: matDayIndices.length,
-        exposition: WEEKS,
+        exposition: expositionCount,
+        holiday: holidays.length,
       },
       counts: {
         lenLearnings: lenAll.length,
@@ -297,5 +440,8 @@ console.log(
   WEEKS,
   "weeks,",
   TOTAL_DAYS,
-  "days; pattern D1/D3 ide+cie, D2/D4 mat, D5 exposition",
+  "days; holidays",
+  out.meta.holidays.length,
+  "; start",
+  out.meta.schoolYearStart,
 );

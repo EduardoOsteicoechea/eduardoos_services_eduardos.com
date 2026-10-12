@@ -44,10 +44,14 @@ export type CurriculumPlanSectionId = "bib" | "ide" | "len" | "mat" | "cie";
 export type CurriculumBlock = {
   block: number;
   days: number;
-  /** Present on 40-week plan: teach vs Friday exposition. */
-  dayKind?: "teach" | "exposition";
+  /** Present on 40-week plan: teach vs Friday exposition vs VE holiday. */
+  dayKind?: "teach" | "exposition" | "holiday";
   /** Sections shown / tracked that day (40-week rotation). */
   scheduledSections?: CurriculumPlanSectionId[];
+  /** Civil date for the school day (YYYY-MM-DD), when anchored. */
+  calendarDate?: string;
+  holidayName?: string;
+  holidayDate?: string;
   bible: BibleBlock;
   identity?: CurriculumIdentityBlock & {
     weekFocus?: string;

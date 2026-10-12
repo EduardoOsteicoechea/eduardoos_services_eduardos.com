@@ -46,18 +46,31 @@ function activityIntegrityDefects(act: string): string[] {
   return defects;
 }
 
+const curriculumPath = path.join(__dirname, "eoschool-mppe-40week-curriculum.json");
+
 describe("MPPE day sheets (200 días)", () => {
-  it("follows weekly subject rotation (bib+len daily; ide+cie / mat / expo)", () => {
+  it("follows weekly subject rotation; holidays are bib-only", () => {
+    const curriculum = JSON.parse(fs.readFileSync(curriculumPath, "utf8")) as {
+      meta?: { holidays?: Array<{ planDay: number; name: string }> };
+    };
+    const holidayDays = new Set((curriculum.meta?.holidays ?? []).map((h) => h.planDay));
+    expect(holidayDays.size).toBeGreaterThan(0);
+
     for (let planDay = 1; planDay <= 200; planDay++) {
       const file = path.join(sheetsDir, `d${planDay}.mppe-day.json`);
       const raw = JSON.parse(fs.readFileSync(file, "utf8")) as {
         dayKind?: string;
+        holidayName?: string | null;
         scheduledSections?: string[];
         sections: Array<{ id: string }>;
       };
       const dayInWeek = ((planDay - 1) % 5) + 1;
       const ids = raw.sections.map((s) => s.id);
-      if (dayInWeek === 5) {
+      if (holidayDays.has(planDay)) {
+        expect(raw.dayKind).toBe("holiday");
+        expect(ids).toEqual(["bib"]);
+        expect(raw.holidayName).toBeTruthy();
+      } else if (dayInWeek === 5) {
         expect(raw.dayKind).toBe("exposition");
         expect(ids).toEqual(["bib", "ide", "len", "mat", "cie"]);
       } else if (dayInWeek === 1 || dayInWeek === 3) {
@@ -69,6 +82,34 @@ describe("MPPE day sheets (200 días)", () => {
       }
       expect(raw.scheduledSections).toEqual(ids);
     }
+  });
+
+  it("keeps all unique len/mat/cie learnings on non-holiday days", () => {
+    const curriculum = JSON.parse(fs.readFileSync(curriculumPath, "utf8")) as {
+      meta: { counts: { lenLearnings: number; matLearnings: number; cieLearnings: number } };
+      weeks: Array<{
+        blocks: Array<{
+          dayKind?: string;
+          len?: Array<{ id: string }>;
+          mat?: Array<{ id: string }>;
+          cie?: Array<{ id: string }>;
+        }>;
+      }>;
+    };
+    const len = new Set<string>();
+    const mat = new Set<string>();
+    const cie = new Set<string>();
+    for (const week of curriculum.weeks) {
+      for (const block of week.blocks) {
+        if (block.dayKind === "holiday") continue;
+        for (const r of block.len ?? []) len.add(r.id);
+        for (const r of block.mat ?? []) mat.add(r.id);
+        for (const r of block.cie ?? []) cie.add(r.id);
+      }
+    }
+    expect(len.size).toBe(curriculum.meta.counts.lenLearnings);
+    expect(mat.size).toBe(curriculum.meta.counts.matLearnings);
+    expect(cie.size).toBe(curriculum.meta.counts.cieLearnings);
   });
 
   it("has no placeholder objectives, learnings, or stub activities", () => {

@@ -4,57 +4,28 @@
   "planDay": 69,
   "week": 14,
   "grade": "3er grado",
-  "title": "Día 69",
-  "dayKind": "teach",
+  "title": "Día 69 · Feriado — Nochebuena",
+  "dayKind": "holiday",
+  "calendarDate": "2026-12-24",
+  "holidayName": "Nochebuena",
+  "holidayDate": "2026-12-24",
   "scheduledSections": [
-    "bib",
-    "len",
-    "mat"
+    "bib"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Números 32, 33 · Job–Mal: Salmos 127, 128 · NT: Juan 21; Hechos 1",
+      "label": "Biblia · Feriado",
+      "objective": "Feriado nacional — Nochebuena",
+      "learning": "Lectura bíblica del día (feriado). Gén–Ester: Números 32, 33 · Job–Mal: Salmos 127, 128 · NT: Juan 21; Hechos 1",
       "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
+      "mode": "holiday",
       "activityKind": "bible",
       "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
         "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
         "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Resolver instrumentos de evaluación.",
-      "learning": "Resuelve problemas de lectura y escritura planteados en instrumentos de evaluación dirigidos a estimar los avances en el aprendizaje y los efectos de la enseñanza.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "resuelve problemas de lectura y escritura planteados en instrumentos de…",
-      "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
-      ]
-    },
-    {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Diferencia círculo de una circunferencia.",
-      "canDo": "Al terminar puedes comparar círculo y circunferencia en objetos de la casa.",
-      "mode": "apalancado",
-      "activityKind": "geometryCircles",
-      "minutesEstimate": 20,
-      "topicShort": "diferencia círculo de una circunferencia",
-      "activities": [
-        "Busca 2 objetos (plato, aro, moneda); marca si ves círculo relleno o solo borde.",
-        "Tabla: objeto → círculo o circunferencia → por qué."
       ]
     }
   ]

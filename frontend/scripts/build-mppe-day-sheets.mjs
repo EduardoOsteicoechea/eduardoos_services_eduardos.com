@@ -299,6 +299,7 @@ function buildDaySheet(planDay, weeks, prevBlock) {
     block.scheduledSections?.length > 0
       ? block.scheduledSections
       : SECTION_ORDER.map((s) => s.id);
+  const isHoliday = block.dayKind === "holiday";
   const exposition = block.dayKind === "exposition";
   const ide = block.identity ?? {};
   const bibLearn = [
@@ -314,6 +315,21 @@ function buildDaySheet(planDay, weeks, prevBlock) {
   const builders = {
     bib: () => {
       const pack = emitSectionActivities("bib", planDay, mppeWeek, null, null, expoExtra);
+      if (isHoliday) {
+        const name = block.holidayName || "Feriado";
+        return {
+          id: "bib",
+          label: "Biblia · Feriado",
+          objective: `Feriado nacional — ${name}`,
+          learning: `Lectura bíblica del día (feriado). ${bibLearn}`,
+          canDo: pack.canDo,
+          mode: "holiday",
+          activityKind: pack.kind,
+          minutesEstimate: pack.minutesEstimate,
+          topicShort: pack.topicShort,
+          activities: pack.activities,
+        };
+      }
       const objective = exposition
         ? "Exposición bíblica (repaso de la semana)"
         : "Lectura bíblica diaria (tres pistas)";
@@ -404,14 +420,22 @@ function buildDaySheet(planDay, weeks, prevBlock) {
     sections.push(build());
   }
 
+  const dayKind = isHoliday ? "holiday" : exposition ? "exposition" : "teach";
+  let title = `Día ${planDay}`;
+  if (isHoliday) title = `Día ${planDay} · Feriado — ${block.holidayName || "Feriado"}`;
+  else if (exposition) title = `Día ${planDay} · Exposiciones`;
+
   return {
     format: "mppe-curriculum-day",
     version: 3,
     planDay,
     week: mppeWeek,
     grade: "3er grado",
-    title: exposition ? `Día ${planDay} · Exposiciones` : `Día ${planDay}`,
-    dayKind: exposition ? "exposition" : "teach",
+    title,
+    dayKind,
+    calendarDate: block.calendarDate ?? null,
+    holidayName: isHoliday ? block.holidayName ?? null : null,
+    holidayDate: isHoliday ? block.holidayDate ?? null : null,
     scheduledSections: scheduled,
     sections,
   };
@@ -439,8 +463,11 @@ for (let planDay = 1; planDay <= total; planDay++) {
 const manifest = {
   format: "mppe-curriculum-day-manifest",
   version: 3,
-  contentRevision: 8,
+  contentRevision: 9,
   grade: "3er grado",
+  schoolYearStart: curriculum.meta?.schoolYearStart ?? null,
+  schoolYearEnd: curriculum.meta?.schoolYearEnd ?? null,
+  holidays: curriculum.meta?.holidays ?? [],
   weeklyPattern: curriculum.meta?.weeklyPattern ?? null,
   totalPlanDays: total,
   planDays: manifestDays,

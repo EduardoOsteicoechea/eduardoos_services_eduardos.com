@@ -9,7 +9,7 @@ export type MppeCurriculumDaySection = {
   learning: string;
   /** Meta observable para el niño («Al terminar puedes…»). */
   canDo?: string;
-  mode?: "directo" | "apalancado" | "fragmentado" | "exposition";
+  mode?: "directo" | "apalancado" | "fragmentado" | "exposition" | "holiday";
   activityKind?: string;
   minutesEstimate?: number;
   topicShort?: string;
@@ -23,7 +23,10 @@ export type MppeCurriculumDaySheet = {
   week: number;
   grade: string;
   title: string;
-  dayKind?: "teach" | "exposition";
+  dayKind?: "teach" | "exposition" | "holiday";
+  calendarDate?: string | null;
+  holidayName?: string | null;
+  holidayDate?: string | null;
   scheduledSections?: MppeCurriculumSectionId[];
   sections: MppeCurriculumDaySection[];
 };

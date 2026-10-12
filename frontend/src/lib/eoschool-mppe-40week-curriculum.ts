@@ -19,6 +19,9 @@ export type Mppe40WeekCurriculum = {
     totalBlocks: number;
     identityObjectives: number;
     source?: string;
+    schoolYearStart?: string;
+    schoolYearEnd?: string;
+    holidays?: Array<{ planDay: number; date: string; name: string }>;
     weeklyPattern?: {
       day1: string[];
       day2: string[];
@@ -26,6 +29,7 @@ export type Mppe40WeekCurriculum = {
       day4: string[];
       day5: string[];
       day5Mode?: string;
+      holidayOverride?: string[];
     };
     teachingDays?: Record<string, number>;
     counts: { lenLearnings: number; matLearnings: number; cieLearnings: number };

@@ -243,10 +243,17 @@ function openModal(card: HTMLElement): void {
   const dayId = card.dataset.curriculumDay ?? "";
   const titleEl = modal.querySelector("[data-curriculum-modal-title]");
   const scheduledRaw = card.dataset.curriculumScheduled?.split(",").map((s) => s.trim()) ?? [];
-  const isExpo = card.dataset.curriculumDayKind === "exposition";
+  const dayKind = card.dataset.curriculumDayKind ?? "teach";
   if (titleEl) {
     const base = planDay ? `Día ${planDay}` : `Día ${dayId.replace(/^d/, "")}`;
-    titleEl.textContent = isExpo ? `${base} · Exposiciones` : base;
+    if (dayKind === "holiday") {
+      const holidayTitle = card.querySelector(".eoschool-curriculum__day-title")?.textContent?.trim();
+      titleEl.textContent = holidayTitle || `${base} · Feriado`;
+    } else if (dayKind === "exposition") {
+      titleEl.textContent = `${base} · Exposiciones`;
+    } else {
+      titleEl.textContent = base;
+    }
   }
 
   modal.hidden = false;

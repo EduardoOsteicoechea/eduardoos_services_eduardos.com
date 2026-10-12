@@ -4,57 +4,28 @@
   "planDay": 199,
   "week": 40,
   "grade": "3er grado",
-  "title": "Día 199",
-  "dayKind": "teach",
+  "title": "Día 199 · Feriado — Batalla de Carabobo",
+  "dayKind": "holiday",
+  "calendarDate": "2027-06-24",
+  "holidayName": "Batalla de Carabobo",
+  "holidayDate": "2027-06-24",
   "scheduledSections": [
-    "bib",
-    "len",
-    "mat"
+    "bib"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Ester 7, 8 · Job–Mal: Zacarías 14; Malaquías 1, 2 · NT: Apocalipsis 20, 21",
+      "label": "Biblia · Feriado",
+      "objective": "Feriado nacional — Batalla de Carabobo",
+      "learning": "Lectura bíblica del día (feriado). Gén–Ester: Ester 7, 8 · Job–Mal: Zacarías 14; Malaquías 1, 2 · NT: Apocalipsis 20, 21",
       "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
+      "mode": "holiday",
       "activityKind": "bible",
       "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
-      ]
-    },
-    {
-      "id": "len",
-      "label": "Prácticas del Lenguaje",
-      "objective": "Escribir convencionalmente palabras con sílabas complejas.",
-      "learning": "Comienza a escribir convencionalmente las palabras que contienen sílabas del grupo consonante-consonante-vocal (CCV): clase, copla, tropa, fruta, flor, cobre, grama, drama, grillo…",
-      "canDo": "Al terminar puedes resumir la idea central en 4 oraciones.",
-      "mode": "fragmentado",
-      "activityKind": "default",
-      "minutesEstimate": 15,
-      "topicShort": "comienza a escribir convencionalmente las palabras que contienen sílabas del…",
-      "activities": [
-        "4 oraciones que expliquen la idea central de comienza a escribir convencionalmente las palabras que contienen…",
-        "Dibuja un ícono que represente la idea."
-      ]
-    },
-    {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Estadística y probabilidad",
-      "learning": "Recopila, organiza, clasifica y representa gráficamente datos.",
-      "canDo": "Al terminar puedes armar un pictograma o barras con 4 datos y leerlo.",
-      "mode": "directo",
-      "activityKind": "data",
-      "minutesEstimate": 18,
-      "topicShort": "organiza, clasifica y representa gráficamente datos",
-      "activities": [
-        "Encuesta a 4 personas: «¿Cuál es tu fruta favorita?»; registra y haz barras o pictograma.",
-        "Escribe 2 preguntas que se respondan mirando tu gráfico."
       ]
     }
   ]

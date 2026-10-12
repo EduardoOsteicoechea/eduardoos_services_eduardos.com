@@ -25,17 +25,25 @@ This route is a **separate product surface** from Homescool workspace classes. D
 1. **MPPE Venezuela (3.er grado)** — marco, consulta de contenidos, plan 40 semanas / 200 días: `ministerio_de_educacion_de_venezuela/`, `eoschool-mppe-40week-curriculum.json`.
 2. **Homescool / eoschool METHOD** applies only to `/homescool/*` and published `.eoschool` media — not to this route.
 
+## School calendar + VE holidays
+
+- Plan day 1 = **2026-09-21** (Monday); 200 Mon–Fri days → end **2027-06-25**.
+- Meta: `schoolYearStart`, `schoolYearEnd`, `holidays[]` (`planDay`, `date`, `name`).
+- Official holidays (LOTTT + Fiestas Nacionales, fixed + Carnaval/Semana Santa) that fall on a school day → `dayKind: "holiday"`, `scheduledSections: ["bib"]` only (overrides teach/exposition).
+- `len` / `mat` / `ide` / `cie` are redistributed onto non-holiday slots so unique learnings are not dropped. Do not renumber `dN`.
+
 ## Weekly subject rotation
 
-Within each week (day-in-week 1–5):
+Within each week (day-in-week 1–5), unless holiday:
 
 | Day | Sections | Notes |
 | --- | --- | --- |
 | 1, 3 | `bib`, `len`, `ide`, `cie` | Teach |
 | 2, 4 | `bib`, `len`, `mat` | Teach |
 | 5 | `bib`, `ide`, `len`, `mat`, `cie` | **Exposition** — rehearse week focus; no new teach buckets |
+| holiday | `bib` | Feriado nacional — solo Biblia |
 
-`bib` + `len` appear every day. Progress keys stay `dN:sectionId` (no renumbering / no Mongo migration). Day complete = all **scheduled** sections that day (not always 5/5).
+Progress keys stay `dN:sectionId` (no renumbering / no Mongo migration). Day complete = all **scheduled** sections that day (not always 5/5).
 
 ## Day content format (required)
 
@@ -43,11 +51,11 @@ Static JSON per plan day:
 
 - Path: `frontend/public/eoschool/requirements/curriculum/day-sheets/d{N}.mppe-day.json`
 - `format`: `"mppe-curriculum-day"` (not `"eoschool"`)
-- Fields: `dayKind` (`teach` \| `exposition`), `scheduledSections`, `sections[]` (only scheduled ids)
+- Fields: `dayKind` (`teach` \| `exposition` \| `holiday`), `scheduledSections`, `sections[]` (only scheduled ids); holiday sheets may include `holidayName` / `calendarDate`
 - Each section: `objective`, `learning`, `activities` (2 items), optional `mode` / `canDo` / `activityKind`
-- Exposition Friday: `mode: "exposition"`; labels may include «Exposición»
+- Exposition Friday: `mode: "exposition"`; holiday: `mode: "holiday"`
 
-Regenerate: `node frontend/scripts/build-40week-mppe-curriculum.mjs` then `node frontend/scripts/build-mppe-day-sheets.mjs`. Forward-fill learnings **within** each subject’s teaching days only (mat on D2/D4; ide+cie on D1/D3; len every day).
+Regenerate: `node frontend/scripts/build-40week-mppe-curriculum.mjs` then `node frontend/scripts/build-mppe-day-sheets.mjs`. Forward-fill learnings **within** each subject’s non-holiday teaching days only.
 
 Manifest: `day-sheets-manifest.json` (not `plan-classes-manifest.json` / not per-subject `.eoschool.json`).
 
