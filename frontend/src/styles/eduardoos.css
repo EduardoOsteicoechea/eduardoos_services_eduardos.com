@@ -155,9 +155,16 @@ html[data-page="home"] .hero__actions {
   margin-top: 0;
 }
 
+/* Buttons → 2rem → meta; remaining fold space sits under meta above the separator. */
 html[data-page="home"] .hero__meta {
-  margin-top: auto;
-  padding-top: var(--rail-gap);
+  margin-top: 2rem;
+}
+
+html[data-page="home"] .hero::after {
+  content: "";
+  flex: 1 1 auto;
+  min-height: 0;
+  pointer-events: none;
 }
 
 /* 2rem between homepage sections (and hero → first section). */
