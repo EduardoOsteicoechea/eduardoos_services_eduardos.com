@@ -169,7 +169,8 @@ function syncDynamicHeaderWithMenu(): void {
     setPanelHidden("dynamic-header", true);
     return;
   }
-  setPanelHidden("dynamic-header", !dynamicHeaderHasActions());
+  // Always dock DHS beside the menu: font/theme chrome is the first DHS row on every route.
+  setPanelHidden("dynamic-header", false);
 }
 
 function togglePanel(id: string): void {
@@ -187,7 +188,7 @@ function togglePanel(id: string): void {
         setPanelHidden("dynamic-header", true);
       } else {
         setPanelHidden("main-menu", false);
-        setPanelHidden("dynamic-header", !dynamicHeaderHasActions());
+        setPanelHidden("dynamic-header", false);
       }
       setPanelHidden("agent-sidebar", false);
     } else {
@@ -204,7 +205,8 @@ function togglePanel(id: string): void {
     if (willOpen) {
       setPanelHidden("agent-sidebar", true);
       setPanelHidden("main-menu", false);
-      setPanelHidden("dynamic-header", !dynamicHeaderHasActions());
+      // Font/theme live in DHS — always open it with the menu.
+      setPanelHidden("dynamic-header", false);
     } else {
       setPanelHidden("main-menu", true);
       setPanelHidden("dynamic-header", true);

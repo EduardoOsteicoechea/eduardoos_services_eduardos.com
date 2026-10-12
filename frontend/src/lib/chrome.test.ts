@@ -265,6 +265,33 @@ describe("menu toolbar span", () => {
     expect(document.documentElement.dataset.menuToolbar).toBe("menu-dhs");
   });
 
+  it("keeps font/theme chrome as the first DHS row when the menu is open", () => {
+    const css = readFileSync(join(here, "../styles/global.css"), "utf8");
+    expect(css).toMatch(
+      /#main-menu:not\(\[hidden\]\) ~ #dynamic-header:not\(\[hidden\]\) \{[^}]*padding-top: calc\(var\(--sidebar-toolbar-band\)/,
+    );
+    expect(css).toMatch(
+      /html\[data-menu-toolbar="menu-dhs"\] #main-menu \.sidebar-toolbar::after/,
+    );
+    expect(css).toContain('content: none');
+
+    (document.getElementById("main-menu") as HTMLElement).hidden = false;
+    const dhs = document.getElementById("dynamic-header") as HTMLElement;
+    dhs.hidden = false;
+    dhs.innerHTML = `
+      <header class="sidebar-toolbar" data-dhs-chrome>
+        <button type="button" data-font="-">-</button>
+        <button type="button" data-font="+">+</button>
+        <button type="button" data-theme-toggle>theme</button>
+      </header>
+      <div id="header-dynamic-menu-host"></div>
+    `;
+    startChrome();
+    expect(document.documentElement.dataset.menuToolbar).toBe("menu-dhs");
+    expect(dhs.querySelectorAll("[data-font], [data-theme-toggle]").length).toBe(3);
+    expect(dhs.querySelector("[data-dhs-chrome]")?.compareDocumentPosition(dhs.querySelector("#header-dynamic-menu-host")!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
   it("widens for overlay DHS actions beside the menu", () => {
     (document.getElementById("main-menu") as HTMLElement).hidden = false;
     const dhs = document.getElementById("dynamic-header") as HTMLElement;

@@ -597,9 +597,11 @@ a {
 }
 
 /* When menu is open, docked trays clear the shared toolbar band so rows align.
-   DHS owns its font/theme toolbar as the first row — do not offset under the menu band. */
+   Font/theme chrome is the first DHS *content* row — sit it under the painted band
+   so #main-menu .sidebar-toolbar::after cannot cover the buttons. */
 #main-menu:not([hidden]) ~ #dynamic-header:not([hidden]) {
-  padding-top: 0;
+  padding-top: calc(var(--sidebar-toolbar-band) + var(--tray-body-pad-top));
+  z-index: calc(var(--z-sidebar) + 1);
 }
 
 #main-menu:not([hidden]) ~ #agent-sidebar:not([hidden]) {
@@ -734,8 +736,19 @@ html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
   padding: 0;
 }
 
+/* First row of the dynamic menu: font − / + / theme (below the shared top band). */
 #dynamic-header > .sidebar-toolbar[data-dhs-chrome] {
+  margin: 0;
   margin-bottom: var(--tray-body-pad-top);
+  border-bottom: var(--border-width) solid var(--color-border);
+  position: relative;
+  z-index: 1;
+}
+
+/* DHS paints its own chrome row — do not extend the menu toolbar band over it. */
+html[data-menu-toolbar="menu-dhs"] #main-menu .sidebar-toolbar::after,
+html[data-menu-toolbar="menu-dhs-agent"] #main-menu .sidebar-toolbar::after {
+  content: none;
 }
 
 .sidebar-left nav {
