@@ -419,6 +419,11 @@
   background: #454545;
 }
 
+.item-type-options button.is-selected {
+  background: #555;
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
 .item-type-options button:disabled {
   opacity: 0.45;
   cursor: not-allowed;

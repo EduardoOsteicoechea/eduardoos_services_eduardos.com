@@ -160,6 +160,12 @@ body.page-pamphlet .item-type-options button:hover {
   background: color-mix(in srgb, var(--color-text) 22%, var(--color-bg));
 }
 
+body.page-pamphlet .item-type-options button.is-selected {
+  background: color-mix(in srgb, var(--color-text) 28%, var(--color-bg));
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: 0;
+}
+
 /* Pamphlet rail: menu → session avatar. */
 body.page-pamphlet .header-cluster--menu .header-menu--desktop {
   order: 0;

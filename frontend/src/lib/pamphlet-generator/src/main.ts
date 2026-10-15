@@ -2456,6 +2456,14 @@ function openItemTypeModal(insert: PendingInsert): void {
     if (!itemTypeModal.open) {
         itemTypeModal.showModal();
     }
+    const typeButtons = itemTypeModal.querySelectorAll<HTMLButtonElement>("[data-item-type]");
+    let paragraphBtn: HTMLButtonElement | null = null;
+    typeButtons.forEach((btn) => {
+        const isParagraph = btn.dataset.itemType === "paragraph";
+        btn.classList.toggle("is-selected", isParagraph);
+        if (isParagraph) paragraphBtn = btn;
+    });
+    paragraphBtn?.focus();
 }
 
 function closeItemTypeModal(): void {
