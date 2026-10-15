@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"sort"
 	"strings"
@@ -217,13 +218,13 @@ func articleProjection(title string, body map[string]any) (blocks, footer []map[
 		if strings.TrimSpace(text) == "" {
 			return
 		}
-		if kind != "heading_1" && kind != "paragraph" && kind != "image" && kind != "meta" {
+		if kind != "heading_1" && kind != "paragraph" && kind != "image" && kind != "meta" && kind != "quiz" {
 			kind = "paragraph"
 		}
 		// Keep original content when bold ranges are present so indexes stay valid.
 		content := text
 		var styles [][]int
-		if kind != "image" {
+		if kind != "image" && kind != "quiz" {
 			styles = articleStyleIndexes(styleIndexes)
 		}
 		if styles == nil {
@@ -234,6 +235,30 @@ func articleProjection(title string, body map[string]any) (blocks, footer []map[
 			block["style_indexes"] = styles
 		}
 		*dst = append(*dst, block)
+	}
+	appendQuiz := func(dst *[]map[string]any, item map[string]any) {
+		question := stringFromAny(item["content"])
+		if question == "" {
+			question = stringFromAny(item["text"])
+		}
+		var lines []string
+		if strings.TrimSpace(question) != "" {
+			lines = append(lines, strings.TrimSpace(question))
+		}
+		choiceN := 0
+		for _, rawOpt := range asAnySlice(item["options"]) {
+			opt := stringFromAny(rawOpt)
+			if strings.TrimSpace(opt) == "" {
+				lines = append(lines, "_______________")
+				continue
+			}
+			choiceN++
+			lines = append(lines, fmt.Sprintf("%d. %s", choiceN, opt))
+		}
+		if len(lines) == 0 {
+			return
+		}
+		appendTo(dst, "quiz", strings.Join(lines, "\n"), nil)
 	}
 	appendItems := func(dst *[]map[string]any, raw any) {
 		for _, rawItem := range asAnySlice(raw) {
@@ -248,6 +273,10 @@ func articleProjection(title string, body map[string]any) (blocks, footer []map[
 			text := stringFromAny(item["content"])
 			if text == "" {
 				text = stringFromAny(item["text"])
+			}
+			if kind == "quiz" {
+				appendQuiz(dst, item)
+				continue
 			}
 			if kind == "" && text != "" {
 				kind = "paragraph"

@@ -1,6 +1,6 @@
 export type StyleIndexes = [[number, number], [number, number], [number, number]];
 
-export type PamphletItemType = "paragraph" | "heading_1" | "image";
+export type PamphletItemType = "paragraph" | "heading_1" | "image" | "quiz";
 
 export interface PamphletNoteEntry {
     id: string;
@@ -26,6 +26,11 @@ export interface PamphletItem {
     height_mm: number;
     /** Optional editor notes; omitted when empty. */
     notes?: PamphletItemNotes;
+    /**
+     * Quiz options (type === "quiz" only). Empty string = fill-in answer line;
+     * non-empty = numbered multiple-choice option.
+     */
+    options?: string[];
 }
 
 export interface PamphletHeader {
@@ -534,8 +539,8 @@ const FOOTER_KEYS = [
 ] as const;
 const LAST_EDITED_KEYS = ["column", "index"] as const;
 const ITEM_REQUIRED_KEYS = ["type", "content", "style_indexes", "height_mm"] as const;
-const ITEM_OPTIONAL_KEYS = ["notes"] as const;
-const ITEM_TYPES = new Set<string>(["paragraph", "heading_1", "image"]);
+const ITEM_OPTIONAL_KEYS = ["notes", "options"] as const;
+const ITEM_TYPES = new Set<string>(["paragraph", "heading_1", "image", "quiz"]);
 
 /** Pull text out of a legacy footer.items[] entry. */
 function legacyFooterItemText(item: unknown): string {
@@ -714,7 +719,7 @@ function assertPamphletItem(value: unknown, label: string): asserts value is Pam
     const item = value as Record<string, unknown>;
     assertString(item.type, `${label}.type`);
     if (!ITEM_TYPES.has(item.type)) {
-        throw new Error(`${label}.type must be "paragraph", "heading_1", or "image"`);
+        throw new Error(`${label}.type must be "paragraph", "heading_1", "image", or "quiz"`);
     }
     assertString(item.content, `${label}.content`);
     assertStyleIndexes(item.style_indexes, `${label}.style_indexes`);
@@ -726,6 +731,19 @@ function assertPamphletItem(value: unknown, label: string): asserts value is Pam
     }
     if ("notes" in item && item.notes !== undefined) {
         assertItemNotes(item.notes, `${label}.notes`);
+    }
+    if ("options" in item && item.options !== undefined) {
+        if (!Array.isArray(item.options)) {
+            throw new Error(`${label}.options must be an array of strings`);
+        }
+        for (let i = 0; i < item.options.length; i++) {
+            if (typeof item.options[i] !== "string") {
+                throw new Error(`${label}.options[${i}] must be a string`);
+            }
+        }
+        if (item.type !== "quiz") {
+            throw new Error(`${label}.options is only allowed when type is "quiz"`);
+        }
     }
 }
 
@@ -753,14 +771,18 @@ export function normalizePamphletData(data: unknown): unknown {
     const normalizeItem = (item: unknown): unknown => {
         if (typeof item !== "object" || item === null || Array.isArray(item)) return item;
         const rec = item as Record<string, unknown>;
-        if (typeof rec.height_mm === "number" && Number.isFinite(rec.height_mm)) {
-            return rec;
+        let next: Record<string, unknown> = rec;
+        if (!(typeof rec.height_mm === "number" && Number.isFinite(rec.height_mm))) {
+            const type = rec.type;
+            next = {
+                ...rec,
+                height_mm: type === "image" ? DEFAULT_IMAGE_HEIGHT_MM : 0,
+            };
         }
-        const type = rec.type;
-        return {
-            ...rec,
-            height_mm: type === "image" ? DEFAULT_IMAGE_HEIGHT_MM : 0,
-        };
+        if (next.type === "quiz" && !Array.isArray(next.options)) {
+            next = { ...next, options: [] };
+        }
+        return next;
     };
 
     const normalizeList = (list: unknown): unknown => {
@@ -878,9 +900,23 @@ export function createImageItem(
     };
 }
 
+export function createQuizItem(
+    content = "Write here",
+    options: string[] = ["", ""],
+): PamphletItem {
+    return {
+        type: "quiz",
+        content,
+        style_indexes: structuredClone(DEFAULT_STYLE_INDEXES),
+        height_mm: 0,
+        options: options.map((o) => (typeof o === "string" ? o : "")),
+    };
+}
+
 export function createItemByType(type: PamphletItemType): PamphletItem {
     if (type === "heading_1") return createHeadingItem();
     if (type === "image") return createImageItem();
+    if (type === "quiz") return createQuizItem();
     return createParagraphItem();
 }
 
@@ -999,7 +1035,7 @@ export function migrateStructuredLeadsToEvenColumns(doc: PamphletStructure): Pam
 
 export function itemTypeToTag(type: PamphletItemType): string {
     if (type === "heading_1") return "h1";
-    if (type === "image") return "div";
+    if (type === "image" || type === "quiz") return "div";
     return "p";
 }
 

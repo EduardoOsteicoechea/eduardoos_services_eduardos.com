@@ -1574,6 +1574,8 @@
 .pamphlet-column-6 { grid-column: 8; grid-row: 9; }
 
 .pamphlet-app .pamphlet-item[data-item-type="paragraph"] p,
+.pamphlet-app .pamphlet-item[data-item-type="quiz"] .pamphlet-quiz-question,
+.pamphlet-app .pamphlet-item[data-item-type="quiz"] .pamphlet-quiz-option,
 .pamphlet-app main.pamphlet-sheet p {
   max-width: 100%;
   overflow-wrap: break-word;
@@ -1582,6 +1584,24 @@
   font-size: 3mm;
   line-height: 1.25;
   color: var(--pamphlet-ink, var(--site-body-fg));
+}
+
+/* Quiz is one item: no inter-paragraph gap between question and options. */
+.pamphlet-app .pamphlet-item[data-item-type="quiz"] {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pamphlet-app .pamphlet-item[data-item-type="quiz"] .pamphlet-quiz-question,
+.pamphlet-app .pamphlet-item[data-item-type="quiz"] .pamphlet-quiz-option {
+  margin: 0;
+  padding: 0;
+}
+
+.pamphlet-app .pamphlet-item[data-item-type="quiz"] .pamphlet-quiz-option--blank {
+  border-bottom: 0.15mm solid var(--pamphlet-ink, var(--site-body-fg));
+  min-height: calc(3mm * 1.25);
 }
 
 /* Bold in a paragraph stays body size (3mm) — never heading scale (4.25mm). */
@@ -3021,6 +3041,80 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
   min-height: 0;
   border: 0;
   background: transparent;
+}
+
+.pamphlet-edit-dock__quiz {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap, 0.5rem);
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.pamphlet-edit-dock__quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap, 0.5rem);
+  max-height: 16rem;
+  overflow: auto;
+}
+
+.pamphlet-edit-dock__quiz-row {
+  display: flex;
+  align-items: center;
+  gap: var(--rail-gap, 0.5rem);
+}
+
+.pamphlet-edit-dock__quiz-row input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: var(--control-height, 2.5rem);
+  padding: var(--control-padding-block, 0.5rem) var(--control-padding-inline, 0.75rem);
+  font-size: var(--font-size-md, 1rem);
+  font-family: inherit;
+  box-sizing: border-box;
+  border: var(--border-width, 0.0625rem) solid var(--color-border, #888);
+  border-radius: var(--border-radius, 0.25rem);
+  background: var(--color-surface, transparent);
+  color: var(--color-text, inherit);
+}
+
+.pamphlet-edit-dock__quiz-delete {
+  flex: 0 0 auto;
+  width: var(--button-size, 2.5rem);
+  height: var(--button-size, 2.5rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: var(--border-width, 0.0625rem) solid var(--color-err, #b00020);
+  border-radius: var(--border-radius, 0.25rem);
+  background: var(--color-err, #b00020);
+  color: #fff;
+  cursor: pointer;
+}
+
+.pamphlet-edit-dock__quiz-delete .material-symbols-outlined {
+  font-size: var(--icon-size, 1.5rem);
+  line-height: 1;
+}
+
+.pamphlet-edit-dock__quiz-delete img {
+  width: var(--icon-size, 1.5rem);
+  height: var(--icon-size, 1.5rem);
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
+.pamphlet-edit-dock__quiz-delete img {
+  width: var(--icon-size, 1.5rem);
+  height: var(--icon-size, 1.5rem);
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
+.pamphlet-edit-dock__quiz-add {
+  align-self: flex-start;
 }
 
 .pamphlet-edit-dock__image-row {

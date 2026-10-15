@@ -166,6 +166,14 @@ import Layout from "../../layouts/Layout.astro";
         appendBlock(host, text, false, true, styles);
         continue;
       }
+      if (block.type === "quiz") {
+        for (const line of text.split("\n")) {
+          const trimmed = line.trimEnd();
+          if (!trimmed.trim()) continue;
+          appendBlock(host, trimmed, false, false, undefined);
+        }
+        continue;
+      }
       appendBlock(host, text, block.type === "heading_1", false, styles);
     }
   }

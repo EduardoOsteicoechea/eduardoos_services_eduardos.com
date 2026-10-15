@@ -667,6 +667,42 @@ func TestWrapWordsStaysInsideColumn(t *testing.T) {
 	}
 }
 
+func TestBuildPamphletPDFQuizItem(t *testing.T) {
+	pdfBytes, layout, _ := BuildPamphletPDFWithLayout(PamphletDocument{
+		Type: "pamphlet_single_sheet",
+		Header: PamphletHeader{
+			Title: "Quiz",
+		},
+		Column1: []PamphletItem{{
+			Type:    "quiz",
+			Content: "Pregunta de prueba",
+			Options: []string{"Opcion A", "", "Opcion B"},
+		}},
+	})
+	out := string(pdfBytes)
+	if !strings.Contains(out, "Pregunta") {
+		t.Fatalf("expected quiz question in PDF")
+	}
+	if !strings.Contains(out, "Opcion A") {
+		t.Fatalf("expected numbered choice in PDF")
+	}
+	if !strings.Contains(out, "Opcion B") {
+		t.Fatalf("expected second choice in PDF")
+	}
+	foundQuiz := false
+	for _, hit := range layout.Hits {
+		if hit.Kind == "quiz" && hit.Column == 1 && hit.Index == 0 {
+			foundQuiz = true
+			if hit.HMm <= 0 {
+				t.Fatalf("quiz hit height must be positive, got %.2f", hit.HMm)
+			}
+		}
+	}
+	if !foundQuiz {
+		t.Fatalf("expected layout hit kind=quiz")
+	}
+}
+
 func TestBuildPamphletPDFEmbedsJPEG(t *testing.T) {
 	dataURL := tinyJPEGDataURL(t)
 	data := BuildPamphletPDF(PamphletDocument{

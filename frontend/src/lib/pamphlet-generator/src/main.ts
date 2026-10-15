@@ -111,6 +111,7 @@ import {
     parseItemNotes,
     parseStyleIndexes,
     applyStyledContent,
+    fillQuizElement,
 } from "./pamphlet_io";
 import {
     FOOTER_COLUMN,
@@ -1131,7 +1132,7 @@ function childPackHeightMm(el: HTMLElement, columnEl: HTMLElement): number {
         return PACK_ITEM_GAP_MM;
     }
     const type = el.getAttribute("data-item-type");
-    if (type === "paragraph") {
+    if (type === "paragraph" || type === "quiz") {
         return packHeightOnLineGridMm(measured, PACK_BODY_LINE_MM);
     }
     if (type === "heading_1") {
@@ -2334,6 +2335,20 @@ function syncMobileLiveContent(loc: LastEditedElement, content: string): void {
     if (!isColsViewMode()) return;
     const el = findBodyItemContainer(loc);
     if (!el || el.getAttribute("data-item-type") === "image") return;
+    if (el.getAttribute("data-item-type") === "quiz") {
+        const optionsRaw = el.getAttribute("data-options");
+        let options: string[] = [];
+        try {
+            const parsed = optionsRaw ? JSON.parse(optionsRaw) : [];
+            if (Array.isArray(parsed)) {
+                options = parsed.map((o) => (typeof o === "string" ? o : ""));
+            }
+        } catch {
+            options = [];
+        }
+        fillQuizElement(el, content, options);
+        return;
+    }
     const inner = el.firstElementChild as HTMLElement | null;
     if (!inner) return;
     const styles = parseStyleIndexes(el.getAttribute("data-style-indexes"));
@@ -4127,7 +4142,14 @@ on(createSaveCloudBtn, "click", async () => {
 itemTypeModal.querySelectorAll<HTMLButtonElement>("[data-item-type]").forEach((btn) => {
     on(btn, "click", () => {
         const type = btn.dataset.itemType as PamphletItemType | undefined;
-        if (type !== "paragraph" && type !== "heading_1" && type !== "image") return;
+        if (
+            type !== "paragraph" &&
+            type !== "heading_1" &&
+            type !== "image" &&
+            type !== "quiz"
+        ) {
+            return;
+        }
         void confirmItemType(type);
     });
 });

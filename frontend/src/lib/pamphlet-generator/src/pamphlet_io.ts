@@ -30,6 +30,7 @@ export const STYLE_INDEXES_ATTR = "data-style-indexes";
 export const ITEM_TYPE_ATTR = "data-item-type";
 export const HEIGHT_MM_ATTR = "data-height-mm";
 export const NOTES_ATTR = "data-notes";
+export const OPTIONS_ATTR = "data-options";
 
 const HEADER_FIELD_CLASSES: Record<HeaderFieldKey, string> = {
     title: "pamphlet-header-title",
@@ -186,6 +187,63 @@ function applyItemMeta(container: HTMLElement, item: PamphletItem): void {
         container.removeAttribute(NOTES_ATTR);
         container.classList.remove("pamphlet-item--has-notes");
     }
+    if (item.type === "quiz") {
+        container.setAttribute(OPTIONS_ATTR, JSON.stringify(item.options ?? []));
+    } else {
+        container.removeAttribute(OPTIONS_ATTR);
+    }
+}
+
+export function parseItemOptions(raw: string | null): string[] {
+    if (!raw) return [];
+    try {
+        const parsed = JSON.parse(raw) as unknown;
+        if (!Array.isArray(parsed)) return [];
+        return parsed.map((o) => (typeof o === "string" ? o : ""));
+    } catch {
+        return [];
+    }
+}
+
+/** Fill quiz container children from question + options (sheet + live sync). */
+export function fillQuizElement(
+    container: HTMLElement,
+    question: string,
+    options: string[],
+): void {
+    container.replaceChildren();
+    const q = document.createElement("p");
+    q.className = "pamphlet-quiz-question";
+    q.textContent = question;
+    container.appendChild(q);
+
+    let choiceN = 0;
+    for (const opt of options) {
+        const line = document.createElement("p");
+        if (opt.trim() === "") {
+            line.className = "pamphlet-quiz-option pamphlet-quiz-option--blank";
+            line.innerHTML = "&nbsp;";
+        } else {
+            choiceN += 1;
+            line.className = "pamphlet-quiz-option pamphlet-quiz-option--choice";
+            line.textContent = `${choiceN}. ${opt}`;
+        }
+        container.appendChild(line);
+    }
+}
+
+function createQuizItemElement(item: PamphletItem): HTMLElement {
+    const container = document.createElement("div");
+    container.className = "pamphlet-item";
+    container.setAttribute("data-tray-mode", "full");
+    applyItemMeta(container, item);
+    fillQuizElement(container, item.content, item.options ?? []);
+    container.addEventListener("click", (event: MouseEvent) => {
+        const target = event.target as Element | null;
+        if (target?.closest(".pamphlet-note-mark")) return;
+        openItemEditTray(container);
+    });
+    return container;
 }
 
 export function parseItemNotes(raw: string | null): PamphletItemNotes | undefined {
@@ -247,6 +305,9 @@ function createImageItemElement(item: PamphletItem, lead = false): HTMLElement {
 export function createItemElement(item: PamphletItem, opts?: { lead?: boolean }): HTMLElement {
     if (item.type === "image") {
         return createImageItemElement(item, Boolean(opts?.lead));
+    }
+    if (item.type === "quiz") {
+        return createQuizItemElement(item);
     }
 
     const tag = itemTypeToTag(item.type);
@@ -525,7 +586,12 @@ export function renderFromPamphlet(main: HTMLElement, data: PamphletStructure): 
 
 function parseItemType(container: HTMLElement, fallbackTag: string): PamphletItemType {
     const typeAttr = container.getAttribute(ITEM_TYPE_ATTR);
-    if (typeAttr === "heading_1" || typeAttr === "paragraph" || typeAttr === "image") {
+    if (
+        typeAttr === "heading_1" ||
+        typeAttr === "paragraph" ||
+        typeAttr === "image" ||
+        typeAttr === "quiz"
+    ) {
         return typeAttr;
     }
     return tagToItemType(fallbackTag);
@@ -545,6 +611,19 @@ function serializeItem(container: HTMLElement): PamphletItem {
             content: img?.getAttribute("src") ?? "",
             style_indexes: parseStyleIndexes(container.getAttribute(STYLE_INDEXES_ATTR)),
             height_mm,
+            ...(notes ? { notes } : {}),
+        };
+    }
+
+    if (type === "quiz") {
+        const questionEl = container.querySelector<HTMLElement>(":scope > .pamphlet-quiz-question");
+        const options = parseItemOptions(container.getAttribute(OPTIONS_ATTR));
+        return {
+            type,
+            content: questionEl?.textContent ?? "",
+            style_indexes: parseStyleIndexes(container.getAttribute(STYLE_INDEXES_ATTR)),
+            height_mm: 0,
+            options,
             ...(notes ? { notes } : {}),
         };
     }
@@ -774,7 +853,8 @@ export function serializePamphlet(
 }
 
 export function syncItemContentFromTextarea(container: HTMLElement): void {
-    if (container.getAttribute(ITEM_TYPE_ATTR) === "image") return;
+    const type = container.getAttribute(ITEM_TYPE_ATTR);
+    if (type === "image" || type === "quiz") return;
 
     const tray = container.querySelector<HTMLTextAreaElement>(".edit_tray_text_area");
     const inner = container.firstElementChild as HTMLElement | null;

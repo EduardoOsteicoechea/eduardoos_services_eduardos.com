@@ -57,7 +57,7 @@ export interface CreateElementOptions {
     headerField?: string;
     footerField?: string;
     extraClasses?: string[];
-    itemType?: "paragraph" | "heading_1" | "image";
+    itemType?: "paragraph" | "heading_1" | "image" | "quiz";
 }
 
 const MAX_IMAGE_EDGE_PX = 1600;

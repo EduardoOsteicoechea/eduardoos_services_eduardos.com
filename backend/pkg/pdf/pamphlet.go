@@ -243,10 +243,11 @@ type PamphletFooter struct {
 }
 
 type PamphletItem struct {
-	Type         string  `json:"type"`
-	Content      string  `json:"content"`
-	StyleIndexes [][]int `json:"style_indexes"`
-	HeightMm     float64 `json:"height_mm"`
+	Type         string   `json:"type"`
+	Content      string   `json:"content"`
+	StyleIndexes [][]int  `json:"style_indexes"`
+	HeightMm     float64  `json:"height_mm"`
+	Options      []string `json:"options,omitempty"`
 }
 
 // PamphletHit is one clickable region on a rendered PDF page (mm from page top-left).
@@ -1943,6 +1944,18 @@ func drawStackedItems(
 			}
 			continue
 		}
+		if item.Type == "quiz" {
+			used := drawQuizItem(s, item, x, cursorTop, width, floor, bodyPt, bodyLH)
+			if used <= 0 {
+				break
+			}
+			sink.add(page, col, idx, "quiz", x, cursorTop, width, used)
+			cursorTop -= used
+			if i < len(items)-1 {
+				cursorTop -= PamphletItemGapMm
+			}
+			continue
+		}
 		sizePt := bodyPt
 		sizeMm := bodyPt * 25.4 / 72.0
 		lh := bodyLH
@@ -1974,6 +1987,52 @@ func drawStackedItems(
 			cursorTop -= PamphletItemGapMm
 		}
 	}
+}
+
+// drawQuizItem paints a question paragraph then option lines with no inter-item gap.
+// Blank options are answer underlines; non-blank options are numbered 1..n among choices.
+func drawQuizItem(
+	s *strings.Builder,
+	item PamphletItem,
+	x, top, width, floorMm, bodyPt, bodyLH float64,
+) float64 {
+	sizeMm := bodyPt * 25.4 / 72.0
+	lineH := bodyPt * bodyLH * 25.4 / 72.0
+	cursorTop := top
+	y := cursorTop - cssBaselineOffsetMm(sizeMm, bodyLH)
+	usedQ := writeWrapped(s, "F1", bodyPt, bodyLH, x, y, width, item.Content, floorMm)
+	cursorTop -= usedQ
+
+	choiceN := 0
+	for _, opt := range item.Options {
+		if cursorTop-lineH < floorMm-0.01 {
+			break
+		}
+		if strings.TrimSpace(opt) == "" {
+			baseline := cursorTop - cssBaselineOffsetMm(sizeMm, bodyLH)
+			// Answer line slightly below the alphabetic baseline.
+			strokeHorizontalRuleMm(s, x, baseline-0.35, width, 0.15)
+			cursorTop -= lineH
+			continue
+		}
+		choiceN++
+		label := fmt.Sprintf("%d. %s", choiceN, opt)
+		oy := cursorTop - cssBaselineOffsetMm(sizeMm, bodyLH)
+		used := writeWrapped(s, "F1", bodyPt, bodyLH, x, oy, width, label, floorMm)
+		if used <= 0 {
+			break
+		}
+		cursorTop -= used
+	}
+
+	used := top - cursorTop
+	if used <= 0 && (strings.TrimSpace(item.Content) != "" || len(item.Options) > 0) {
+		// Empty question with no room: still reserve one line so densify sees the item.
+		if cursorTop-lineH >= floorMm-0.01 {
+			return lineH
+		}
+	}
+	return used
 }
 
 func drawLeadDoubleBorder(s *strings.Builder, x, top, width, heightMm float64) {

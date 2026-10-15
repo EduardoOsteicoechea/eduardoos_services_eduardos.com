@@ -221,6 +221,17 @@ export function updateItemContent(
     reconcileItemNotes(item);
 }
 
+export function updateItemOptions(
+    data: PamphletStructure,
+    loc: FlatRef,
+    options: string[],
+): void {
+    const items = getRegionItems(data, loc.column);
+    const item = items[loc.index];
+    if (!item || item.type !== "quiz") return;
+    item.options = options.map((o) => (typeof o === "string" ? o : ""));
+}
+
 export function newNoteId(): string {
     if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
         return crypto.randomUUID();

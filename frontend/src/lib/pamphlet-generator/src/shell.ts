@@ -480,6 +480,7 @@ export function renderShell(_menuIconSrc?: string): string {
       <button type="button" data-item-type="paragraph">Paragraph</button>
       <button type="button" data-item-type="heading_1">Heading</button>
       <button type="button" data-item-type="image">Image</button>
+      <button type="button" data-item-type="quiz">Quiz</button>
     </div>
     <div class="create-modal-actions">
       <button type="button" id="item-type-cancel">Cancel</button>
@@ -558,6 +559,10 @@ export function renderShell(_menuIconSrc?: string): string {
           <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-zoom-out" title="Alejar" aria-label="Alejar">－</button>
           <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="img-zoom-in" title="Acercar" aria-label="Acercar">＋</button>
         </div>
+      </div>
+      <div id="pamphlet-edit-dock-quiz" class="pamphlet-edit-dock__quiz" hidden>
+        <div id="pamphlet-edit-dock-quiz-options" class="pamphlet-edit-dock__quiz-options" role="list"></div>
+        <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text pamphlet-edit-dock__quiz-add" data-dock-action="quiz-add-option" title="Añadir opción" aria-label="Añadir opción">+</button>
       </div>
     </div>
     <div class="pamphlet-edit-dock__footer" role="group" aria-label="Confirmar edición">

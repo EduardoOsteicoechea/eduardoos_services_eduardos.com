@@ -12,9 +12,11 @@ import {
     moveItemUp,
     updateItemContent,
     updateItemHeightMm,
+    updateItemOptions,
     updateItemStyleIndexes,
     type FlatRef,
 } from "./pamphlet_doc";
+import { fillQuizElement, OPTIONS_ATTR } from "./pamphlet_io";
 import {
     DEFAULT_IMAGE_HEIGHT_MM,
     DEFAULT_IMAGE_SCALE,
@@ -95,8 +97,10 @@ type EditDockSession = {
     loc: FlatRef;
     kind: string;
     imageMode: boolean;
+    quizMode: boolean;
     chromeMode: boolean;
     initialContent: string;
+    initialOptions: string[];
     initialHeightMm: number;
     initialStyles: StyleIndexes;
 };
@@ -293,9 +297,11 @@ export function setupEditDock(
 ): EditDockController {
     const textarea = dockRoot.querySelector<HTMLTextAreaElement>("#pamphlet-edit-dock-textarea");
     const imagePanel = dockRoot.querySelector<HTMLElement>("#pamphlet-edit-dock-image");
+    const quizPanel = dockRoot.querySelector<HTMLElement>("#pamphlet-edit-dock-quiz");
+    const quizOptionsRoot = dockRoot.querySelector<HTMLElement>("#pamphlet-edit-dock-quiz-options");
     const fileInput = dockRoot.querySelector<HTMLInputElement>("#pamphlet-edit-dock-file");
     const idleHint = dockRoot.querySelector<HTMLElement>("[data-dock-idle-hint]");
-    if (!textarea || !imagePanel || !fileInput) {
+    if (!textarea || !imagePanel || !quizPanel || !quizOptionsRoot || !fileInput) {
         throw new Error("Edit dock markup missing required controls.");
     }
 
@@ -573,6 +579,8 @@ export function setupEditDock(
             textarea.hidden = true;
             textarea.value = "";
             imagePanel.hidden = true;
+            quizPanel.hidden = true;
+            quizOptionsRoot.replaceChildren();
             fileInput.value = "";
             host.setSelected(null, null);
             host.highlightBodyItem(null);
@@ -639,6 +647,78 @@ export function setupEditDock(
         }
     }
 
+    function readQuizOptionsFromUi(): string[] {
+        const inputs = quizOptionsRoot.querySelectorAll<HTMLInputElement>(
+            "input[data-quiz-option]",
+        );
+        return Array.from(inputs).map((input) => input.value);
+    }
+
+    function syncQuizDom(question: string, options: string[]): void {
+        if (!session) return;
+        const el = host.findBodyItemContainer(session.loc);
+        if (!el || el.getAttribute("data-item-type") !== "quiz") return;
+        el.setAttribute(OPTIONS_ATTR, JSON.stringify(options));
+        fillQuizElement(el, question, options);
+        el.classList.add("is-editing");
+    }
+
+    function applyLiveQuiz(question: string, options: string[]): void {
+        const current = host.getDoc();
+        if (!current || !session || !session.quizMode) return;
+        updateItemContent(current, session.loc, question);
+        updateItemOptions(current, session.loc, options);
+        const withId = host.ensureDocumentId(current);
+        host.setDoc(withId);
+        syncQuizDom(question, options);
+        host.highlightBodyItem(session.loc);
+        host.schedulePersist();
+        host.schedulePreview();
+        log("live-quiz", {
+            column: session.loc.column,
+            index: session.loc.index,
+            chars: question.length,
+            options: options.length,
+        });
+    }
+
+    function renderQuizOptionsUi(options: string[]): void {
+        quizOptionsRoot.replaceChildren();
+        options.forEach((opt, index) => {
+            const row = document.createElement("div");
+            row.className = "pamphlet-edit-dock__quiz-row";
+            row.setAttribute("role", "listitem");
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.value = opt;
+            input.setAttribute("data-quiz-option", String(index));
+            input.placeholder = "Opción (vacío = línea de respuesta)";
+            input.autocomplete = "off";
+            input.addEventListener("input", () => {
+                if (suppressInput || !session?.quizMode) return;
+                scheduleLiveText(textarea.value);
+            });
+
+            const del = document.createElement("button");
+            del.type = "button";
+            del.className = "pamphlet-edit-dock__quiz-delete";
+            del.title = "Eliminar opción";
+            del.setAttribute("aria-label", "Eliminar opción");
+            setDockButtonIcon(del, ICONS.delete, "Eliminar opción");
+            del.addEventListener("click", () => {
+                if (!session?.quizMode) return;
+                const next = readQuizOptionsFromUi().filter((_, i) => i !== index);
+                renderQuizOptionsUi(next);
+                applyLiveQuiz(textarea.value, next);
+            });
+
+            row.appendChild(input);
+            row.appendChild(del);
+            quizOptionsRoot.appendChild(row);
+        });
+    }
+
     function applyLiveText(value: string): void {
         const current = host.getDoc();
         if (!current || !session || session.imageMode) return;
@@ -654,6 +734,10 @@ export function setupEditDock(
                 index: session.loc.index,
                 chars: value.length,
             });
+            return;
+        }
+        if (session.quizMode) {
+            applyLiveQuiz(value, readQuizOptionsFromUi());
             return;
         }
         updateItemContent(current, session.loc, value);
@@ -708,8 +792,10 @@ export function setupEditDock(
                     loc: { column: resolved.column, index: resolved.index },
                     kind: kindHint || field,
                     imageMode: false,
+                    quizMode: false,
                     chromeMode: true,
                     initialContent: content,
+                    initialOptions: [],
                     initialHeightMm: 0,
                     initialStyles: [
                         [0, 0],
@@ -728,6 +814,7 @@ export function setupEditDock(
                 showShell();
                 setIdle(false);
                 imagePanel.hidden = true;
+                quizPanel.hidden = true;
                 textarea.hidden = false;
                 suppressInput = true;
                 textarea.value = content;
@@ -768,13 +855,19 @@ export function setupEditDock(
             }
 
             const imageMode = item.type === "image";
+            const quizMode = item.type === "quiz";
             const styles = structuredClone(item.style_indexes) as StyleIndexes;
+            const initialOptions = quizMode
+                ? [...(item.options ?? [])]
+                : [];
             session = {
                 loc: { column: loc.column, index: loc.index },
                 kind: kindHint || item.type,
                 imageMode,
+                quizMode,
                 chromeMode: false,
                 initialContent: item.content,
+                initialOptions,
                 initialHeightMm: item.height_mm || DEFAULT_IMAGE_HEIGHT_MM,
                 initialStyles: styles,
             };
@@ -786,11 +879,24 @@ export function setupEditDock(
             showShell();
             setIdle(false);
             suppressInput = true;
+            textarea.removeAttribute("maxLength");
             if (imageMode) {
                 textarea.hidden = true;
                 imagePanel.hidden = false;
+                quizPanel.hidden = true;
+            } else if (quizMode) {
+                imagePanel.hidden = true;
+                quizPanel.hidden = false;
+                textarea.hidden = false;
+                textarea.value = item.content;
+                renderQuizOptionsUi(initialOptions);
+                requestAnimationFrame(() => {
+                    focusWithoutScroll(textarea);
+                    if (textarea.value === "Write here") textarea.select();
+                });
             } else {
                 imagePanel.hidden = true;
+                quizPanel.hidden = true;
                 textarea.hidden = false;
                 textarea.value = item.content;
                 requestAnimationFrame(() => {
@@ -814,7 +920,12 @@ export function setupEditDock(
                     `[data-dock-action="${action}"]`,
                 );
                 if (!btn) continue;
-                if (imageMode && (action === "bold" || action === "notes" || action === "copy")) {
+                if (
+                    (imageMode || quizMode) &&
+                    (action === "bold" || action === "notes")
+                ) {
+                    btn.hidden = true;
+                } else if (imageMode && action === "copy") {
                     btn.hidden = true;
                 } else {
                     btn.hidden = false;
@@ -826,6 +937,7 @@ export function setupEditDock(
                 index: loc.index,
                 kind: session.kind,
                 imageMode,
+                quizMode,
             });
         });
         // Phone only: after scroll-preserve restore, pin item 0.5rem under dock.
@@ -893,6 +1005,9 @@ export function setupEditDock(
                     if (!snap) return;
                     mutateDoc((data, l) => {
                         updateItemContent(data, l, snap.initialContent);
+                        if (snap.quizMode) {
+                            updateItemOptions(data, l, snap.initialOptions);
+                        }
                         if (snap.imageMode) {
                             updateItemHeightMm(data, l, snap.initialHeightMm);
                             updateItemStyleIndexes(data, l, snap.initialStyles);
@@ -900,6 +1015,18 @@ export function setupEditDock(
                     });
                     close();
                 });
+                return;
+            }
+            case "quiz-add-option": {
+                if (!session.quizMode) return;
+                const next = [...readQuizOptionsFromUi(), ""];
+                renderQuizOptionsUi(next);
+                applyLiveQuiz(textarea.value, next);
+                const inputs = quizOptionsRoot.querySelectorAll<HTMLInputElement>(
+                    "input[data-quiz-option]",
+                );
+                const last = inputs[inputs.length - 1];
+                if (last) focusWithoutScroll(last);
                 return;
             }
             case "move-up": {
@@ -945,7 +1072,7 @@ export function setupEditDock(
                 return;
             }
             case "bold": {
-                if (session.imageMode) return;
+                if (session.imageMode || session.quizMode) return;
                 host.pushUndoSnapshot();
                 const start = textarea.selectionStart;
                 const end = textarea.selectionEnd;
@@ -979,7 +1106,7 @@ export function setupEditDock(
                 return;
             }
             case "notes": {
-                if (session.imageMode) return;
+                if (session.imageMode || session.quizMode) return;
                 applyLiveText(textarea.value);
                 const container = host.findBodyItemContainer(loc);
                 if (!container) {
