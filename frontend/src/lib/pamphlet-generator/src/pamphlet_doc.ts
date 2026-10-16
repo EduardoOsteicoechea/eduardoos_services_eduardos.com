@@ -1,5 +1,7 @@
 import {
     COLUMN_KEYS,
+    DEFAULT_IMAGE_HEIGHT_MM,
+    DEFAULT_STYLE_INDEXES,
     FOOTER_COLUMN,
     HEADER_COLUMN,
     columnKey,
@@ -13,6 +15,10 @@ import {
     type PamphletStructure,
     type StyleIndexes,
 } from "./pamphlet_schema";
+
+function isImageDataUrl(content: string): boolean {
+    return /^data:image\//i.test(content.trim());
+}
 
 export interface FlatRef {
     column: number;
@@ -230,6 +236,55 @@ export function updateItemOptions(
     const item = items[loc.index];
     if (!item || item.type !== "quiz") return;
     item.options = options.map((o) => (typeof o === "string" ? o : ""));
+}
+
+/** Convert a body item to another type; preserves text content when sensible. */
+export function changeItemType(
+    data: PamphletStructure,
+    loc: FlatRef,
+    nextType: PamphletItemType,
+): void {
+    const items = getRegionItems(data, loc.column);
+    const item = items[loc.index];
+    if (!item || item.type === nextType) return;
+
+    const rawContent = item.content ?? "";
+    const textContent =
+        item.type === "image" || isImageDataUrl(rawContent)
+            ? "Write here"
+            : rawContent || "Write here";
+
+    if (nextType === "image") {
+        item.type = "image";
+        item.content = "";
+        item.height_mm = DEFAULT_IMAGE_HEIGHT_MM;
+        item.style_indexes = structuredClone(DEFAULT_STYLE_INDEXES);
+        delete item.options;
+        delete item.notes;
+        return;
+    }
+
+    if (nextType === "quiz") {
+        item.type = "quiz";
+        item.content = textContent;
+        item.height_mm = 0;
+        item.style_indexes = structuredClone(DEFAULT_STYLE_INDEXES);
+        item.options = Array.isArray(item.options) && item.options.length > 0
+            ? item.options.map((o) => (typeof o === "string" ? o : ""))
+            : ["", ""];
+        delete item.notes;
+        return;
+    }
+
+    // paragraph | heading_1
+    item.type = nextType;
+    item.content = textContent;
+    item.height_mm = 0;
+    item.style_indexes = structuredClone(DEFAULT_STYLE_INDEXES);
+    delete item.options;
+    if (item.notes) {
+        reconcileItemNotes(item);
+    }
 }
 
 export function newNoteId(): string {

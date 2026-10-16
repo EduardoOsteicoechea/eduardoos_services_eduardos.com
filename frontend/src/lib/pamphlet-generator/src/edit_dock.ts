@@ -5,6 +5,7 @@ import { normalizeImageDataUrlToJpeg, setChromeStatus } from "./create_element";
 import { ICONS } from "./icons";
 import {
     applyBoldRange,
+    changeItemType,
     clonePamphlet,
     deleteItem,
     getRegionItems,
@@ -40,6 +41,7 @@ import {
     type HeaderFieldKey,
     type LastEditedElement,
     type PamphletItem,
+    type PamphletItemType,
     type PamphletStructure,
     type StyleIndexes,
 } from "./pamphlet_schema";
@@ -77,7 +79,8 @@ export type EditDockHost = {
     setUndoSnapshot: (doc: PamphletStructure | null) => void;
     commitDocument: (doc: PamphletStructure, openEdit: boolean) => void;
     applyLocalDoc: (doc: PamphletStructure, opts?: { openEdit?: boolean; skipPreview?: boolean }) => void;
-    openItemTypeModal: (insert: EditDockInsertRequest) => void;
+    /** Insert a new body item (default paragraph) without the type modal. */
+    insertNewItem: (insert: EditDockInsertRequest, type?: PamphletItemType) => void;
     openNotesModal: (detail: EditDockNotesRequest) => Promise<void>;
     findBodyItemContainer: (loc: LastEditedElement) => HTMLElement | null;
     /** Mobile stacked sheet: highlight the item being edited. */
@@ -299,10 +302,21 @@ export function setupEditDock(
     const imagePanel = dockRoot.querySelector<HTMLElement>("#pamphlet-edit-dock-image");
     const quizPanel = dockRoot.querySelector<HTMLElement>("#pamphlet-edit-dock-quiz");
     const quizOptionsRoot = dockRoot.querySelector<HTMLElement>("#pamphlet-edit-dock-quiz-options");
+    const typeSelect = dockRoot.querySelector<HTMLSelectElement>("#pamphlet-edit-dock-type");
     const fileInput = dockRoot.querySelector<HTMLInputElement>("#pamphlet-edit-dock-file");
     const idleHint = dockRoot.querySelector<HTMLElement>("[data-dock-idle-hint]");
-    if (!textarea || !imagePanel || !quizPanel || !quizOptionsRoot || !fileInput) {
+    if (!textarea || !imagePanel || !quizPanel || !quizOptionsRoot || !typeSelect || !fileInput) {
         throw new Error("Edit dock markup missing required controls.");
+    }
+
+    function setTypeSelectVisible(visible: boolean, type?: PamphletItemType): void {
+        const wrap = typeSelect.closest<HTMLElement>(".pamphlet-edit-dock__type");
+        if (wrap) wrap.hidden = !visible;
+        typeSelect.hidden = !visible;
+        typeSelect.disabled = !visible;
+        if (visible && type) {
+            typeSelect.value = type;
+        }
     }
 
     let session: EditDockSession | null = null;
@@ -581,6 +595,7 @@ export function setupEditDock(
             imagePanel.hidden = true;
             quizPanel.hidden = true;
             quizOptionsRoot.replaceChildren();
+            setTypeSelectVisible(false);
             fileInput.value = "";
             host.setSelected(null, null);
             host.highlightBodyItem(null);
@@ -645,6 +660,7 @@ export function setupEditDock(
                 btn.hidden = false;
             }
         }
+        if (chrome) setTypeSelectVisible(false);
     }
 
     function readQuizOptionsFromUi(): string[] {
@@ -815,6 +831,7 @@ export function setupEditDock(
                 setIdle(false);
                 imagePanel.hidden = true;
                 quizPanel.hidden = true;
+                setTypeSelectVisible(false);
                 textarea.hidden = false;
                 suppressInput = true;
                 textarea.value = content;
@@ -880,6 +897,7 @@ export function setupEditDock(
             setIdle(false);
             suppressInput = true;
             textarea.removeAttribute("maxLength");
+            setTypeSelectVisible(true, item.type);
             if (imageMode) {
                 textarea.hidden = true;
                 imagePanel.hidden = false;
@@ -1054,21 +1072,21 @@ export function setupEditDock(
                 return;
             }
             case "add-above": {
-                host.openItemTypeModal({
+                host.insertNewItem({
                     mode: "relative",
                     column: loc.column,
                     index: loc.index,
                     where: "above",
-                });
+                }, "paragraph");
                 return;
             }
             case "add-below": {
-                host.openItemTypeModal({
+                host.insertNewItem({
                     mode: "relative",
                     column: loc.column,
                     index: loc.index,
                     where: "below",
-                });
+                }, "paragraph");
                 return;
             }
             case "bold": {
@@ -1210,6 +1228,29 @@ export function setupEditDock(
         if (!action) return;
         event.preventDefault();
         void handleAction(action);
+    });
+
+    on(typeSelect, "change", () => {
+        if (suppressInput || !session || session.chromeMode) return;
+        const nextType = typeSelect.value as PamphletItemType;
+        if (
+            nextType !== "paragraph" &&
+            nextType !== "heading_1" &&
+            nextType !== "image" &&
+            nextType !== "quiz"
+        ) {
+            return;
+        }
+        const loc = session.loc;
+        flushLiveText();
+        const current = host.getDoc();
+        if (!current) return;
+        host.pushUndoSnapshot();
+        const next = clonePamphlet(current);
+        changeItemType(next, loc, nextType);
+        next.last_edited_element = { column: loc.column, index: loc.index };
+        close();
+        host.commitDocument(next, true);
     });
 
     on(textarea, "input", () => {

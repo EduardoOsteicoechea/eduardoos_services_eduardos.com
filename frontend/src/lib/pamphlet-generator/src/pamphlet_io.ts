@@ -32,6 +32,9 @@ export const HEIGHT_MM_ATTR = "data-height-mm";
 export const NOTES_ATTR = "data-notes";
 export const OPTIONS_ATTR = "data-options";
 
+/** Display-only bleed between quiz choice number and text (FE / PDF / articles lockstep). */
+export const QUIZ_OPTION_BLEED = "    ";
+
 const HEADER_FIELD_CLASSES: Record<HeaderFieldKey, string> = {
     title: "pamphlet-header-title",
     subtitle: "pamphlet-header-subtitle",
@@ -226,7 +229,7 @@ export function fillQuizElement(
         } else {
             choiceN += 1;
             line.className = "pamphlet-quiz-option pamphlet-quiz-option--choice";
-            line.textContent = `${choiceN}. ${opt}`;
+            line.textContent = `${choiceN}.${QUIZ_OPTION_BLEED}${opt}`;
         }
         container.appendChild(line);
     }

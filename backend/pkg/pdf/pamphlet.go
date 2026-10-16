@@ -2016,7 +2016,7 @@ func drawQuizItem(
 			continue
 		}
 		choiceN++
-		label := fmt.Sprintf("%d. %s", choiceN, opt)
+		label := fmt.Sprintf("%d.    %s", choiceN, opt)
 		oy := cursorTop - cssBaselineOffsetMm(sizeMm, bodyLH)
 		used := writeWrapped(s, "F1", bodyPt, bodyLH, x, oy, width, label, floorMm)
 		if used <= 0 {

@@ -1006,22 +1006,18 @@ function stripTrailingItemSpacer(parent: HTMLElement): number {
     return mm;
 }
 
-/** Probe how much vertical space a new starter item (+ spacer) and the + button need. */
+/** Probe how much vertical space a new starter item (+ spacer) needs. FAB is fixed and uses 0 column mm. */
 function measureAddControlsMm(_host: HTMLElement): { newItemMm: number; buttonMm: number } {
     const { column } = ensureMeasureRoot();
     const probeItem = createItemElement(createParagraphItem());
     const probeSpacer = createItemSpacer();
-    const probeBtn = createAddItemButton(0);
     column.appendChild(probeItem);
     column.appendChild(probeSpacer);
-    column.appendChild(probeBtn);
     void column.offsetWidth;
     const newItemMm = measureLayoutHeightMm(probeItem) + measureLayoutHeightMm(probeSpacer);
-    const buttonMm = measureLayoutHeightMm(probeBtn);
     probeItem.remove();
     probeSpacer.remove();
-    probeBtn.remove();
-    return { newItemMm, buttonMm };
+    return { newItemMm, buttonMm: 0 };
 }
 
 /** Keep header-menu chrome tokens stable when the user zooms the page. */
@@ -1054,12 +1050,11 @@ function setStatus(_message: string, _kind: ToastKind = "info"): void {
     // Status toasts removed.
 }
 
-function placeColumnAddButton(
+function resolveAddTargetColumn(
     container: HTMLElement,
     filledByColumn: Map<number, number>,
     lastFilledColumn: number,
-): void {
-    // "+" is absolutely positioned below the ink box (does not consume column mm).
+): number {
     // Prefer the last filled column that still has room for a starter item; else last filled.
     const { newItemMm } = measureAddControlsMm(container);
     let colIdx = lastFilledColumn;
@@ -1068,25 +1063,37 @@ function placeColumnAddButton(
     for (;;) {
         const max = maxHeightForColumn(colIdx);
         if (filledContent + newItemMm <= max + PACK_FIT_EPSILON_MM) {
-            const col = container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colIdx}`);
-            if (col) {
-                col.querySelector(":scope > .pamphlet-add-item-button")?.remove();
-                col.appendChild(createAddItemButton(colIdx));
-            }
-            return;
+            return colIdx;
         }
         const nextCol = nextBodyColumnInReadingOrder(colIdx);
         if (nextCol === null) {
-            const col = container.querySelector<HTMLElement>(`:scope > .pamphlet-column-${colIdx}`);
-            if (col) {
-                col.querySelector(":scope > .pamphlet-add-item-button")?.remove();
-                col.appendChild(createAddItemButton(colIdx));
-            }
-            return;
+            return colIdx;
         }
         colIdx = nextCol;
         filledContent = 0;
     }
+}
+
+/** One fixed FAB on the app host; target column is densify-driven. */
+function placeColumnAddButton(
+    container: HTMLElement,
+    filledByColumn: Map<number, number>,
+    lastFilledColumn: number,
+): void {
+    // Remove any leftover column-scoped add buttons from prior layout.
+    container.querySelectorAll(".pamphlet-add-item-button").forEach((el) => {
+        el.remove();
+    });
+
+    const colIdx = resolveAddTargetColumn(container, filledByColumn, lastFilledColumn);
+    let fab = appRoot.querySelector<HTMLButtonElement>(":scope > .pamphlet-add-item-button");
+    if (!fab) {
+        fab = createAddItemButton(colIdx);
+        appRoot.appendChild(fab);
+    } else {
+        fab.dataset.addColumn = String(colIdx);
+    }
+    fab.hidden = !hasEditableSession();
 }
 
 /**
@@ -2307,7 +2314,7 @@ editDock = setupEditDock(editDockRoot, {
     },
     commitDocument: (doc, openEdit) => commitDocument(doc, openEdit),
     applyLocalDoc: (doc, opts) => applyLocalDoc(doc, opts),
-    openItemTypeModal,
+    insertNewItem: (insert, type) => insertNewItem(insert, type ?? "paragraph"),
     openNotesModal: async (detail) => {
         await openNotesModal(detail);
     },
@@ -2488,15 +2495,15 @@ function closeItemTypeModal(): void {
     }
 }
 
-async function confirmItemType(type: PamphletItemType): Promise<void> {
-    if (!currentDoc || !hasEditableSession() || !pendingInsert) {
-        closeItemTypeModal();
+type InsertRequest =
+    | { mode: "end"; column: number }
+    | { mode: "relative"; column: number; index: number; where: "above" | "below" };
+
+function insertNewItem(insert: InsertRequest, type: PamphletItemType = "paragraph"): void {
+    if (!currentDoc || !hasEditableSession()) {
+        setError("No pamphlet file is open.");
         return;
     }
-
-    const insert = pendingInsert;
-    pendingInsert = null;
-    if (itemTypeModal.open) itemTypeModal.close();
 
     const base = serializePamphlet(main, currentDoc.last_edited_element, currentDoc);
     const item = createTypedItem(type);
@@ -2518,13 +2525,25 @@ async function confirmItemType(type: PamphletItemType): Promise<void> {
     commitDocument(base, true);
 }
 
+async function confirmItemType(type: PamphletItemType): Promise<void> {
+    if (!currentDoc || !hasEditableSession() || !pendingInsert) {
+        closeItemTypeModal();
+        return;
+    }
+
+    const insert = pendingInsert;
+    pendingInsert = null;
+    if (itemTypeModal.open) itemTypeModal.close();
+    insertNewItem(insert, type);
+}
+
 async function handleAddItemButton(column: number): Promise<void> {
     if (!currentDoc || !hasEditableSession()) {
         setError("No pamphlet file is open.");
         return;
     }
     if (column < 1 || column > 8) return;
-    openItemTypeModal({ mode: "end", column });
+    insertNewItem({ mode: "end", column }, "paragraph");
 }
 
 
@@ -2828,28 +2847,27 @@ async function handleTrayAction(detail: PamphletTrayAction): Promise<void> {
             break;
         }
         case "add-above": {
-            // Keep current tray/DOM; insert after type is chosen (avoids reflow shifting indexes)
-            base.last_edited_element = loc;
-            currentDoc = base;
-            currentHeader = { ...base.header };
-            openItemTypeModal({
-                mode: "relative",
-                column: loc.column,
-                index: loc.index,
-                where: "above",
-            });
+            insertNewItem(
+                {
+                    mode: "relative",
+                    column: loc.column,
+                    index: loc.index,
+                    where: "above",
+                },
+                "paragraph",
+            );
             return;
         }
         case "add-below": {
-            base.last_edited_element = loc;
-            currentDoc = base;
-            currentHeader = { ...base.header };
-            openItemTypeModal({
-                mode: "relative",
-                column: loc.column,
-                index: loc.index,
-                where: "below",
-            });
+            insertNewItem(
+                {
+                    mode: "relative",
+                    column: loc.column,
+                    index: loc.index,
+                    where: "below",
+                },
+                "paragraph",
+            );
             return;
         }
         case "bold": {
@@ -2912,13 +2930,19 @@ on(main, "click", (event: MouseEvent) => {
         }
     }
 
+}, true);
+
+on(appRoot, "click", (event: MouseEvent) => {
+    const target = event.target as HTMLElement | null;
+    if (!target) return;
     const btn = target.closest<HTMLButtonElement>(".pamphlet-add-item-button");
-    if (!btn || !main.contains(btn)) return;
+    if (!btn || btn.parentElement !== appRoot) return;
     const column = Number(btn.dataset.addColumn);
     if (!Number.isFinite(column)) return;
     event.preventDefault();
+    event.stopPropagation();
     void handleAddItemButton(column);
-}, true);
+});
 
 on(main, "pamphlet-tray-action", (event: Event) => {
     const custom = event as CustomEvent<PamphletTrayAction>;
@@ -3931,7 +3955,7 @@ function markCreatedSessionInUrl(): void {
 function finishCreatedPamphlet(data: PamphletStructure): void {
     markCreatedSessionInUrl();
     loadPamphlet(data);
-    openDialogSoon(() => openItemTypeModal({ mode: "end", column: 1 }));
+    openDialogSoon(() => insertNewItem({ mode: "end", column: 1 }, "paragraph"));
 }
 
 function closeCreateSourceModal(): void {

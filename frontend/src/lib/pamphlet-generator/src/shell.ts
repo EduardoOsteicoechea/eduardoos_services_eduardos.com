@@ -534,6 +534,14 @@ export function renderShell(_menuIconSrc?: string): string {
     <div class="pamphlet-edit-dock__toolbar" role="toolbar" aria-label="Acciones de edición">
       <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="move-up" title="Mover arriba" aria-label="Mover arriba"></button>
       <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="move-down" title="Mover abajo" aria-label="Mover abajo"></button>
+      <label class="pamphlet-edit-dock__type">
+        <select id="pamphlet-edit-dock-type" aria-label="Tipo de elemento" title="Tipo de elemento">
+          <option value="paragraph">Paragraph</option>
+          <option value="heading_1">Heading</option>
+          <option value="image">Image</option>
+          <option value="quiz">Quiz</option>
+        </select>
+      </label>
       <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="add-above" title="Añadir arriba" aria-label="Añadir arriba"></button>
       <button type="button" class="pamphlet-edit-dock__btn" data-dock-action="add-below" title="Añadir abajo" aria-label="Añadir abajo"></button>
       <button type="button" class="pamphlet-edit-dock__btn pamphlet-edit-dock__btn--text" data-dock-action="bold" title="Negrita" aria-label="Negrita">B</button>

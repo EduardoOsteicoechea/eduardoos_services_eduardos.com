@@ -253,7 +253,7 @@ func articleProjection(title string, body map[string]any) (blocks, footer []map[
 				continue
 			}
 			choiceN++
-			lines = append(lines, fmt.Sprintf("%d. %s", choiceN, opt))
+			lines = append(lines, fmt.Sprintf("%d.    %s", choiceN, opt))
 		}
 		if len(lines) == 0 {
 			return

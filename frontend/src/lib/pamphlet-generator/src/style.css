@@ -1269,30 +1269,36 @@
 }
 
 .pamphlet-add-item-button {
-    /* Outside the clipped ink box — does not consume column height_mm (spec 007). */
-    position: absolute;
-    left: 0;
-    top: 100%;
-    flex: 0 0 auto;
-    align-self: flex-start;
-    width: 9mm;
-    height: 9mm;
-    margin-top: 0.5mm;
+    /* Fixed viewport FAB — not attached under a column (does not consume column mm). */
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    width: var(--menu-button-size, 3.5rem);
+    height: var(--menu-button-size, 3.5rem);
+    min-width: var(--menu-button-size, 3.5rem);
+    min-height: var(--menu-button-size, 3.5rem);
+    margin: 0;
     padding: 0;
     display: inline-grid;
     place-items: center;
-    border: 1px solid #1565c0;
+    border: var(--border-width, 0.0625rem) solid #1565c0;
+    border-radius: 50%;
     background: #1976d2;
     color: #fff;
     font-size: 0;
     line-height: 0;
     cursor: pointer;
-    z-index: 6;
+    z-index: var(--z-activity, 20);
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.25);
+}
+
+.pamphlet-add-item-button[hidden] {
+    display: none;
 }
 
 .pamphlet-add-item-button::before {
     content: "+";
-    font-size: 6mm;
+    font-size: var(--font-size-2xl, 2rem);
     font-weight: 700;
     line-height: 1;
     /* Optical center: + glyphs sit slightly high/left in most UI fonts */
@@ -1922,20 +1928,24 @@
   --edit-tray-ctrl-size: calc(44px * var(--mobile-inv-scale, 1));
 }
 
-/* Mobile: + item matches pamphlet menu (30px visual) after column scale */
+/* Mobile/tablet: keep the same fixed FAB (viewport-anchored, rem sizes). */
 .pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .pamphlet-add-item-button {
-  width: calc(30px * var(--mobile-inv-scale, 1));
-  height: calc(30px * var(--mobile-inv-scale, 1));
-  min-width: calc(30px * var(--mobile-inv-scale, 1));
-  min-height: calc(30px * var(--mobile-inv-scale, 1));
-  max-width: calc(30px * var(--mobile-inv-scale, 1));
-  max-height: calc(30px * var(--mobile-inv-scale, 1));
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  width: var(--menu-button-size, 3.5rem);
+  height: var(--menu-button-size, 3.5rem);
+  min-width: var(--menu-button-size, 3.5rem);
+  min-height: var(--menu-button-size, 3.5rem);
+  max-width: none;
+  max-height: none;
   padding: 0;
   box-sizing: border-box;
+  border-radius: 50%;
 }
 
 .pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .pamphlet-add-item-button::before {
-  font-size: calc(18px * var(--mobile-inv-scale, 1));
+  font-size: var(--font-size-2xl, 2rem);
 }
 
 .pamphlet-app:is([data-view-mode="mobile"], [data-view-mode="tablet"]) .element_edit_tray_buttons_container {
@@ -2853,6 +2863,37 @@ html[data-theme="light"] .pamphlet-pdf-page__canvas {
   flex: 0 0 auto;
   padding: 1rem 1rem 0;
   box-sizing: border-box;
+}
+
+.pamphlet-edit-dock__type {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+}
+
+.pamphlet-edit-dock__type[hidden],
+.pamphlet-edit-dock__type:has(select[hidden]) {
+  display: none;
+}
+
+.pamphlet-edit-dock__type select {
+  box-sizing: border-box;
+  height: var(--control-height, 2.5rem);
+  min-height: var(--control-height, 2.5rem);
+  padding: 0 var(--control-padding-inline, 0.75rem);
+  border: var(--border-width, 0.0625rem) solid var(--color-border, rgba(0, 0, 0, 0.3));
+  border-radius: var(--border-radius, 0.25rem);
+  background: var(--color-bg, transparent);
+  color: var(--color-text, inherit);
+  font-family: inherit;
+  font-size: var(--font-size-sm, 0.875rem);
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.pamphlet-edit-dock__type select:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
 
 .pamphlet-edit-dock__btn {
