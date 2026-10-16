@@ -902,7 +902,7 @@ export function createImageItem(
 
 export function createQuizItem(
     content = "Write here",
-    options: string[] = ["", ""],
+    options: string[] = [],
 ): PamphletItem {
     return {
         type: "quiz",

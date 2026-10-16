@@ -222,15 +222,12 @@ export function fillQuizElement(
 
     let choiceN = 0;
     for (const opt of options) {
+        // Blank options are dock-only placeholders — sheet shows text choices only.
+        if (opt.trim() === "") continue;
+        choiceN += 1;
         const line = document.createElement("p");
-        if (opt.trim() === "") {
-            line.className = "pamphlet-quiz-option pamphlet-quiz-option--blank";
-            line.innerHTML = "&nbsp;";
-        } else {
-            choiceN += 1;
-            line.className = "pamphlet-quiz-option pamphlet-quiz-option--choice";
-            line.textContent = `${choiceN}.${QUIZ_OPTION_BLEED}${opt}`;
-        }
+        line.className = "pamphlet-quiz-option pamphlet-quiz-option--choice";
+        line.textContent = `${choiceN}.${QUIZ_OPTION_BLEED}${opt}`;
         container.appendChild(line);
     }
 }

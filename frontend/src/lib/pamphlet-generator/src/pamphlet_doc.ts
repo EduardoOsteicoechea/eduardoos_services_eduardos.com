@@ -271,7 +271,7 @@ export function changeItemType(
         item.style_indexes = structuredClone(DEFAULT_STYLE_INDEXES);
         item.options = Array.isArray(item.options) && item.options.length > 0
             ? item.options.map((o) => (typeof o === "string" ? o : ""))
-            : ["", ""];
+            : [];
         delete item.notes;
         return;
     }

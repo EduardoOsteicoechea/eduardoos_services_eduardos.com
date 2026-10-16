@@ -432,10 +432,10 @@ export function setupEditDock(
         dockRoot.style.width = pxToRem(widthPx);
         dockRoot.style.right = "auto";
         dockRoot.style.bottom = "auto";
-        /* 12.5rem + 50px @16 root → 15.625rem (keep CSS --pamphlet-phone-dock-height in sync). */
-        dockRoot.style.height = "15.625rem";
-        dockRoot.style.maxHeight = "15.625rem";
-        dockRoot.style.minHeight = "15.625rem";
+        /* Keep CSS --pamphlet-phone-dock-height in sync. */
+        dockRoot.style.height = "18.75rem";
+        dockRoot.style.maxHeight = "18.75rem";
+        dockRoot.style.minHeight = "18.75rem";
         dockRoot.style.margin = "0";
         dockRoot.style.zIndex = "39";
         dockRoot.style.transform = "translateZ(0)";
@@ -876,7 +876,7 @@ export function setupEditDock(
             const quizMode = item.type === "quiz";
             const styles = structuredClone(item.style_indexes) as StyleIndexes;
             const initialOptions = quizMode
-                ? [...(item.options ?? [])]
+                ? (item.options && item.options.length > 0 ? [...item.options] : [""])
                 : [];
             session = {
                 loc: { column: loc.column, index: loc.index },

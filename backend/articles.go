@@ -249,7 +249,6 @@ func articleProjection(title string, body map[string]any) (blocks, footer []map[
 		for _, rawOpt := range asAnySlice(item["options"]) {
 			opt := stringFromAny(rawOpt)
 			if strings.TrimSpace(opt) == "" {
-				lines = append(lines, "_______________")
 				continue
 			}
 			choiceN++

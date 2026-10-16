@@ -1989,8 +1989,8 @@ func drawStackedItems(
 	}
 }
 
-// drawQuizItem paints a question paragraph then option lines with no inter-item gap.
-// Blank options are answer underlines; non-blank options are numbered 1..n among choices.
+// drawQuizItem paints a question paragraph then numbered choice text with no inter-item gap.
+// Blank options are ignored (dock placeholders only) — no answer underlines.
 func drawQuizItem(
 	s *strings.Builder,
 	item PamphletItem,
@@ -2009,10 +2009,6 @@ func drawQuizItem(
 			break
 		}
 		if strings.TrimSpace(opt) == "" {
-			baseline := cursorTop - cssBaselineOffsetMm(sizeMm, bodyLH)
-			// Answer line slightly below the alphabetic baseline.
-			strokeHorizontalRuleMm(s, x, baseline-0.35, width, 0.15)
-			cursorTop -= lineH
 			continue
 		}
 		choiceN++
