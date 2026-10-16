@@ -2146,42 +2146,65 @@ func writeWrapped(s *strings.Builder, font string, sizePt, lineHeight, xMm, yMm,
 }
 
 func wrapWordsToWidth(text string, sizePt, maxWidthPt float64, bold bool) []string {
-	words := strings.Fields(text)
-	if len(words) == 0 {
+	// Split on ASCII spaces only so intentional runs (quiz "1.    opt") survive.
+	// strings.Fields would collapse them to a single space.
+	parts := strings.Split(text, " ")
+	hasWord := false
+	for _, p := range parts {
+		if p != "" {
+			hasWord = true
+			break
+		}
+	}
+	if !hasWord {
 		return nil
 	}
 	spaceW := glyphWidthEm(' ', bold) * sizePt
 	var lines []string
 	var cur strings.Builder
 	curWidth := 0.0
-	for _, w := range words {
-		ww := stringWidthPt(w, sizePt, bold)
-		if cur.Len() == 0 {
-			if ww > maxWidthPt {
-				lines = append(lines, splitLongWord(w, sizePt, maxWidthPt, bold)...)
-				cur.Reset()
-				curWidth = 0
-				continue
+	for i, part := range parts {
+		if part == "" {
+			// Extra space from a multi-space run (delimiter already counted via i>0 path).
+			if i > 0 && cur.Len() > 0 {
+				if curWidth+spaceW > maxWidthPt {
+					lines = append(lines, cur.String())
+					cur.Reset()
+					curWidth = 0
+				} else {
+					cur.WriteByte(' ')
+					curWidth += spaceW
+				}
 			}
-			cur.WriteString(w)
-			curWidth = ww
 			continue
 		}
-		if curWidth+spaceW+ww > maxWidthPt {
+		ww := stringWidthPt(part, sizePt, bold)
+		needSpace := i > 0 && cur.Len() > 0
+		extra := 0.0
+		if needSpace {
+			extra = spaceW
+		}
+		if cur.Len() > 0 && curWidth+extra+ww > maxWidthPt {
 			lines = append(lines, cur.String())
 			cur.Reset()
+			curWidth = 0
+			needSpace = false
+		}
+		if cur.Len() == 0 {
 			if ww > maxWidthPt {
-				lines = append(lines, splitLongWord(w, sizePt, maxWidthPt, bold)...)
-				curWidth = 0
+				lines = append(lines, splitLongWord(part, sizePt, maxWidthPt, bold)...)
 				continue
 			}
-			cur.WriteString(w)
+			cur.WriteString(part)
 			curWidth = ww
 			continue
 		}
-		cur.WriteByte(' ')
-		cur.WriteString(w)
-		curWidth += spaceW + ww
+		if needSpace {
+			cur.WriteByte(' ')
+			curWidth += spaceW
+		}
+		cur.WriteString(part)
+		curWidth += ww
 	}
 	if cur.Len() > 0 {
 		lines = append(lines, cur.String())

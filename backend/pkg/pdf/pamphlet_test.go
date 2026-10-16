@@ -667,6 +667,16 @@ func TestWrapWordsStaysInsideColumn(t *testing.T) {
 	}
 }
 
+func TestWrapWordsToWidthPreservesMultiSpaceBleed(t *testing.T) {
+	lines := wrapWordsToWidth("1.    Opcion A", 9, 200, false)
+	if len(lines) != 1 {
+		t.Fatalf("expected 1 line, got %d %q", len(lines), lines)
+	}
+	if !strings.Contains(lines[0], ".    ") {
+		t.Fatalf("expected 4-space bleed after period, got %q", lines[0])
+	}
+}
+
 func TestBuildPamphletPDFQuizItem(t *testing.T) {
 	pdfBytes, layout, _ := BuildPamphletPDFWithLayout(PamphletDocument{
 		Type: "pamphlet_single_sheet",
@@ -688,6 +698,9 @@ func TestBuildPamphletPDFQuizItem(t *testing.T) {
 	}
 	if !strings.Contains(out, "Opcion B") {
 		t.Fatalf("expected second choice in PDF")
+	}
+	if !strings.Contains(out, "1.    Opcion A") {
+		t.Fatalf("expected 4-space bleed before choice text in PDF stream")
 	}
 	foundQuiz := false
 	for _, hit := range layout.Hits {

@@ -68,6 +68,10 @@ import Layout from "../../layouts/Layout.astro";
     margin: 0;
   }
 
+  .article-page__quiz-line {
+    white-space: pre-wrap;
+  }
+
   .article-page[hidden],
   .article-page__byline[hidden],
   .article-page__footer[hidden] {
@@ -170,7 +174,10 @@ import Layout from "../../layouts/Layout.astro";
         for (const line of text.split("\n")) {
           const trimmed = line.trimEnd();
           if (!trimmed.trim()) continue;
-          appendBlock(host, trimmed, false, false, undefined);
+          const node = document.createElement("p");
+          node.className = "article-page__quiz-line";
+          node.textContent = trimmed;
+          host.appendChild(node);
         }
         continue;
       }
