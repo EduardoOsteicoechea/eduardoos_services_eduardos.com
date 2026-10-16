@@ -365,8 +365,8 @@ export function setupEditDock(
     }
 
     /**
-     * Phone only: scroll the sheet host so the item in edit sits 0.5rem below
-     * the pinned dock bottom. Tablet/desktop keep their own scroll (no-op).
+     * Phone only: scroll the sheet host so the item in edit sits 7.5rem (120px @16)
+     * below the pinned dock bottom. Tablet/desktop keep their own scroll (no-op).
      */
     function alignPhoneEditedItemUnderDock(loc: FlatRef): void {
         if (destroyed || !phoneMq.matches || isPersistent()) return;
@@ -379,7 +379,7 @@ export function setupEditDock(
         if (!scroller) return;
 
         syncPhoneDockViewportPin();
-        const gapPx = remToPx(0.5);
+        const gapPx = remToPx(7.5);
         const targetTop = dockRoot.getBoundingClientRect().bottom + gapPx;
         const delta = el.getBoundingClientRect().top - targetTop;
         if (Math.abs(delta) < 0.5) return;
@@ -432,9 +432,10 @@ export function setupEditDock(
         dockRoot.style.width = pxToRem(widthPx);
         dockRoot.style.right = "auto";
         dockRoot.style.bottom = "auto";
-        dockRoot.style.height = "12.5rem";
-        dockRoot.style.maxHeight = "12.5rem";
-        dockRoot.style.minHeight = "12.5rem";
+        /* 12.5rem + 50px @16 root → 15.625rem (keep CSS --pamphlet-phone-dock-height in sync). */
+        dockRoot.style.height = "15.625rem";
+        dockRoot.style.maxHeight = "15.625rem";
+        dockRoot.style.minHeight = "15.625rem";
         dockRoot.style.margin = "0";
         dockRoot.style.zIndex = "39";
         dockRoot.style.transform = "translateZ(0)";

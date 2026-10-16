@@ -3249,6 +3249,11 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
 
 /* Phone: dock pinned to visualViewport top:0 (covers menu); page scroll moves to app host. */
 @media (max-width: 47.999rem) {
+  body.page-pamphlet {
+    /* Was 12.5rem; +50px @16 root. Keep edit_dock.ts inline pin in sync. */
+    --pamphlet-phone-dock-height: 15.625rem;
+  }
+
   .pamphlet-workspace {
     position: relative;
     flex-direction: column;
@@ -3268,9 +3273,9 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
     flex: none;
     display: flex;
     flex-direction: column;
-    height: 12.5rem;
-    max-height: 12.5rem;
-    min-height: 12.5rem;
+    height: var(--pamphlet-phone-dock-height, 15.625rem);
+    max-height: var(--pamphlet-phone-dock-height, 15.625rem);
+    min-height: var(--pamphlet-phone-dock-height, 15.625rem);
     /* Above activity menu button; below error modal */
     z-index: calc(var(--z-modal, 40) - 1);
     border-radius: 0;
@@ -3280,8 +3285,31 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
     background: var(--color-surface, var(--pamphlet-paper-bg, #fff));
   }
 
+  /* Dock chrome at 0.75× so the taller phone editor keeps usable textarea room. */
+  body.page-pamphlet #pamphlet-edit-dock[data-phone-pinned]:not([hidden]) .pamphlet-edit-dock__btn,
+  body.page-pamphlet.pamphlet-phone-dock-open #pamphlet-edit-dock:not([hidden]) .pamphlet-edit-dock__btn {
+    width: calc(var(--rail-button-size, 1.75rem) * 1.25 * 0.75);
+    height: calc(var(--rail-button-size, 1.75rem) * 1.25 * 0.75);
+    min-width: calc(var(--rail-button-size, 1.75rem) * 1.25 * 0.75);
+    min-height: calc(var(--rail-button-size, 1.75rem) * 1.25 * 0.75);
+  }
+
+  body.page-pamphlet #pamphlet-edit-dock[data-phone-pinned]:not([hidden]) .pamphlet-edit-dock__type select,
+  body.page-pamphlet.pamphlet-phone-dock-open #pamphlet-edit-dock:not([hidden]) .pamphlet-edit-dock__type select {
+    height: calc(var(--control-height, 2.5rem) * 0.75);
+    min-height: calc(var(--control-height, 2.5rem) * 0.75);
+    font-size: calc(var(--font-size-sm, 0.875rem) * 0.75);
+    padding-inline: calc(var(--control-padding-inline, 0.75rem) * 0.75);
+  }
+
+  body.page-pamphlet #pamphlet-edit-dock[data-phone-pinned]:not([hidden]) .pamphlet-edit-dock__quiz-delete,
+  body.page-pamphlet.pamphlet-phone-dock-open #pamphlet-edit-dock:not([hidden]) .pamphlet-edit-dock__quiz-delete {
+    width: calc(var(--button-size, 2.5rem) * 0.75);
+    height: calc(var(--button-size, 2.5rem) * 0.75);
+  }
+
   .pamphlet-workspace:has(> .pamphlet-edit-dock:not([hidden])) main.pamphlet-sheet {
-    margin-top: 12.5rem;
+    margin-top: var(--pamphlet-phone-dock-height, 15.625rem);
   }
 
   /* Document scroll is locked on html/body; sheet scrolls under the fixed dock */
@@ -3324,7 +3352,7 @@ html.dark .pamphlet-edit-dock__toolbar .pamphlet-edit-dock__btn img {
     max-height: 100%;
     /* Beat mobile sheet-stack min-height so this host can actually scroll. */
     min-height: 0;
-    padding-top: 12.5rem;
+    padding-top: var(--pamphlet-phone-dock-height, 15.625rem);
     box-sizing: border-box;
   }
 
