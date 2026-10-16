@@ -843,6 +843,13 @@ a {
   display: none;
 }
 
+.sidebar-left nav a.sidebar-nav--locked,
+.sidebar-left nav a[data-service][aria-disabled="true"] {
+  color: var(--color-muted);
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 .sidebar-left nav a[aria-current="page"] {
   color: var(--color-accent);
 }

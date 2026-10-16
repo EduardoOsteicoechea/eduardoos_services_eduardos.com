@@ -422,6 +422,24 @@ async function syncEreportConnectorGate(authed: boolean, isAdmin = false): Promi
   sessionLog("chrome.ereportConnectorGate", { binding: Boolean(binding), entitled, count: nodes.length });
 }
 
+/** Menu services stay visible; lock (grey + non-navigable) when the user lacks access. */
+function setServiceNavLocked(node: HTMLElement, locked: boolean): void {
+  node.hidden = false;
+  if (locked) {
+    node.classList.add("sidebar-nav--locked");
+    node.setAttribute("aria-disabled", "true");
+    node.setAttribute("tabindex", "-1");
+    node.setAttribute("title", "Subscription required");
+    return;
+  }
+  node.classList.remove("sidebar-nav--locked");
+  node.removeAttribute("aria-disabled");
+  node.removeAttribute("tabindex");
+  if (node.getAttribute("title") === "Subscription required") {
+    node.removeAttribute("title");
+  }
+}
+
 async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<void> {
   const nodes = [...document.querySelectorAll("[data-service]")].filter(
     (node): node is HTMLElement => node instanceof HTMLElement,
@@ -433,14 +451,15 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
     for (const node of nodes) {
       // Connector buttons are gated separately (website registration binding).
       if (isEreportConnectorNode(node)) continue;
-      node.hidden = false;
+      setServiceNavLocked(node, false);
     }
     sessionLog("chrome.refreshAuth.services", { mode: "admin", count: nodes.length });
     return;
   }
   if (!authed) {
     for (const node of nodes) {
-      node.hidden = true;
+      if (isEreportConnectorNode(node)) continue;
+      setServiceNavLocked(node, true);
     }
     sessionLog("chrome.refreshAuth.services", { mode: "guest", count: nodes.length });
     return;
@@ -449,7 +468,7 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
     ...new Set(
       nodes
         .map((node) => (node.getAttribute("data-service") || "").trim().toLowerCase())
-        .filter(Boolean),
+        .filter((id) => id && id !== "ereport-connector"),
     ),
   ];
   const allowed = new Map<string, boolean>();
@@ -458,17 +477,17 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
       const access = await checkServiceAccess(id);
       // Homescool linked students may use `allowed` without a paid entitlement.
       // Every other service (including eVoice) needs an active subscription.
-      const show =
+      const unlocked =
         id === "homescool"
           ? Boolean(access.allowed)
           : Boolean(access.hasEntitlement);
-      allowed.set(id, show);
+      allowed.set(id, unlocked);
     }),
   );
   for (const node of nodes) {
     if (isEreportConnectorNode(node)) continue;
     const id = (node.getAttribute("data-service") || "").trim().toLowerCase();
-    node.hidden = !allowed.get(id);
+    setServiceNavLocked(node, !allowed.get(id));
   }
   sessionLog("chrome.refreshAuth.services", {
     mode: "entitlements",
@@ -763,6 +782,14 @@ export function startChrome(): void {
 
     document.addEventListener("click", (event) => {
       const node = chromeClickTarget(event.target);
+      const lockedService = node?.closest(
+        "#main-menu [data-service].sidebar-nav--locked, #main-menu [data-service][aria-disabled='true']",
+      );
+      if (lockedService) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
       if (node?.closest("[data-close-agent]")) {
         event.preventDefault();
         setPanelHidden("agent-sidebar", true);

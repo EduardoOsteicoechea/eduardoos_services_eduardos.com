@@ -36,9 +36,9 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
       <button class="sidebar-nav-action" type="button" data-logout data-authed-only ${authedHidden}>Log out</button>
       <a href="/contact">Contact</a>
       <a class="sidebar-nav-action" href="/payments/subscription">Subscribe</a>
-      <a href="/scrib" data-service="scrib" hidden>Scrib</a>
-      <a href="/evoice" data-service="evoice" hidden>eVoice</a>
-      <a href="/ereport" data-service="ereport" hidden>eReport</a>
+      <a href="/scrib" data-service="scrib" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1">Scrib</a>
+      <a href="/evoice" data-service="evoice" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1">eVoice</a>
+      <a href="/ereport" data-service="ereport" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1">eReport</a>
       <a href="/dashboard/latin/calvins-institutes" data-authed-only data-full-nav ${authedHidden}>Institutes</a>
       <a href="/admin/users" data-admin-only hidden>Users</a>
     </aside>
@@ -94,19 +94,23 @@ describe("main-menu session chrome", () => {
     expect(document.querySelector('[href="/session/change-password"]')).toBeNull();
   });
 
-  it("shows every data-service link for admins", async () => {
+  it("unlocks every data-service link for admins", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
       requestId: "rid-admin",
       data: { id: "admin-1", role: "admin" },
     });
     await refreshAuthChrome();
-    expect((document.querySelector('[data-service="scrib"]') as HTMLElement).hidden).toBe(false);
-    expect((document.querySelector('[data-service="ereport"]') as HTMLElement).hidden).toBe(false);
+    const scrib = document.querySelector('[data-service="scrib"]') as HTMLElement;
+    const ereport = document.querySelector('[data-service="ereport"]') as HTMLElement;
+    expect(scrib.hidden).toBe(false);
+    expect(ereport.hidden).toBe(false);
+    expect(scrib.classList.contains("sidebar-nav--locked")).toBe(false);
+    expect(ereport.getAttribute("aria-disabled")).toBeNull();
     expect(checkServiceAccess).not.toHaveBeenCalled();
   });
 
-  it("shows only entitled service links for members", async () => {
+  it("shows all services for members but locks those without a subscription", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
       requestId: "rid-member",
@@ -119,9 +123,17 @@ describe("main-menu session chrome", () => {
       isHomescoolStudent: false,
     }));
     await refreshAuthChrome();
-    expect((document.querySelector('[data-service="scrib"]') as HTMLElement).hidden).toBe(false);
-    expect((document.querySelector('[data-service="ereport"]') as HTMLElement).hidden).toBe(true);
-    expect((document.querySelector('[data-service="evoice"]') as HTMLElement).hidden).toBe(true);
+    const scrib = document.querySelector('[data-service="scrib"]') as HTMLElement;
+    const ereport = document.querySelector('[data-service="ereport"]') as HTMLElement;
+    const evoice = document.querySelector('[data-service="evoice"]') as HTMLElement;
+    expect(scrib.hidden).toBe(false);
+    expect(ereport.hidden).toBe(false);
+    expect(evoice.hidden).toBe(false);
+    expect(scrib.classList.contains("sidebar-nav--locked")).toBe(false);
+    expect(scrib.getAttribute("aria-disabled")).toBeNull();
+    expect(ereport.classList.contains("sidebar-nav--locked")).toBe(true);
+    expect(ereport.getAttribute("aria-disabled")).toBe("true");
+    expect(evoice.classList.contains("sidebar-nav--locked")).toBe(true);
   });
 
   it("keeps subscriptions and session links for plain members but hides admin", async () => {
@@ -159,15 +171,19 @@ describe("main-menu session chrome", () => {
     expect(go).not.toHaveBeenCalledWith("/");
   });
 
-  it("keeps service links and Institutes hidden for guests", async () => {
+  it("shows service links locked for guests and keeps Institutes hidden", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 401,
       requestId: "rid-guest",
       data: { error: "unauthorized" },
     });
     await refreshAuthChrome();
-    expect((document.querySelector('[data-service="scrib"]') as HTMLElement).hidden).toBe(true);
-    expect((document.querySelector('[data-service="ereport"]') as HTMLElement).hidden).toBe(true);
+    const scrib = document.querySelector('[data-service="scrib"]') as HTMLElement;
+    const ereport = document.querySelector('[data-service="ereport"]') as HTMLElement;
+    expect(scrib.hidden).toBe(false);
+    expect(ereport.hidden).toBe(false);
+    expect(scrib.classList.contains("sidebar-nav--locked")).toBe(true);
+    expect(ereport.getAttribute("aria-disabled")).toBe("true");
     expect((document.querySelector('[href="/dashboard/latin/calvins-institutes"]') as HTMLElement).hidden).toBe(true);
     expect(checkServiceAccess).not.toHaveBeenCalled();
   });
