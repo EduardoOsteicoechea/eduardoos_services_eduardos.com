@@ -14,6 +14,7 @@ import "../styles/scrib.css";
 import "../styles/pamphlet-layout.css";
 import "../styles/pamphlet-hub.css";
 import "../styles/evoice.css";
+import "../styles/emusic.css";
 import "../styles/eoproject.css";
 import "../styles/apikeys.css";
 import "../styles/eduardoos.css";
@@ -80,6 +81,7 @@ const privateByDefault =
   path.startsWith("/homeschool") ||
   path.startsWith("/documents/pamphlet") ||
   path.startsWith("/evoice") ||
+  path.startsWith("/emusic") ||
   path.startsWith("/eoproject") ||
   path.startsWith("/publisher") ||
   path.startsWith("/payments");
@@ -476,6 +478,10 @@ const jsonLdString =
             <a href="/evoice" data-route data-service="evoice" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span>
               eVoice
+            </a>
+            <a href="/emusic" data-route data-service="emusic" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/emusic" || path.startsWith("/emusic/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">library_music</span>
+              eMusic
             </a>
             <a href="/eoproject" data-route data-service="eoproject" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/eoproject" || path.startsWith("/eoproject/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">foundation</span>

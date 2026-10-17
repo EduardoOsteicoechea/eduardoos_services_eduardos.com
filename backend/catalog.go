@@ -22,6 +22,7 @@ var serviceCatalog = []serviceInfo{
 	{ID: "ereport", Label: "eReport", Description: "Issue tracker reports with cloud storage and sharing.", MonthlyUSD: 1},
 	{ID: productEreportConnector, Label: "eReport Connector", Description: "Use the eReport site connector (website registration binding, quick issue modal, and embed).", MonthlyUSD: 1},
 	{ID: "evoice", Label: "eVoice", Description: "Text-to-audio projects (docs → MP3).", MonthlyUSD: 1},
+	{ID: "emusic", Label: "eMusic", Description: "Curated music library with section playlists.", MonthlyUSD: 1},
 	{ID: "eoproject", Label: "eoProject", Description: "Construction project stages, photos, and IFC versions.", MonthlyUSD: 1},
 	{ID: "api", Label: "API", Description: "Create API keys and call product APIs from external apps.", MonthlyUSD: 3},
 }

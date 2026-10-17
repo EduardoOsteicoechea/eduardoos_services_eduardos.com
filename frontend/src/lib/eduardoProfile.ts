@@ -87,6 +87,15 @@ export const homeServiceOffers: HomeServiceOffer[] = [
     screenshot: "/homepage_services_screenshots/evoice.png",
   },
   {
+    id: "emusic",
+    label: "eMusic",
+    shortName: "eMusic",
+    description: "Curated music library with section playlists.",
+    focus: "Listen to curated sections such as Salmo 1 from your account.",
+    href: "/emusic",
+    icon: "library_music",
+  },
+  {
     id: "eoproject",
     label: "eBuild",
     shortName: "eoProject",
@@ -118,7 +127,7 @@ export const homeServiceOffers: HomeServiceOffer[] = [
 ];
 
 export const homeServicesFocus =
-  "These productivity apps share one account on eduardoos.com: writing and publishing (ePam / eRead), manuscript work (eScrib), homeschool sheets (eSchool), spoken audio (eVoice), construction tracking (eBuild), issue tracking (eReport), and keyed API access for agentic workflows. Subscribe to unlock the surfaces you need and keep your work in one professional stack.";
+  "These productivity apps share one account on eduardoos.com: writing and publishing (ePam / eRead), manuscript work (eScrib), homeschool sheets (eSchool), spoken audio (eVoice), curated music (eMusic), construction tracking (eBuild), issue tracking (eReport), and keyed API access for agentic workflows. Subscribe to unlock the surfaces you need and keep your work in one professional stack.";
 
 export const profileExpertiseAnswer =
   "I specialize in Revit and AutoCAD API tooling, custom Revit add-ins and Dynamo workflows, .NET desktop apps, and full-stack web and cloud delivery. My work connects design technology with AI — clash detection, visualization, quantification, and multiplatform BIM products that learn from how teams actually build.";

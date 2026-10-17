@@ -24,6 +24,7 @@ const SERVICE_ICONS: Record<string, string> = {
   ereport: "assignment",
   "ereport-connector": "cable",
   evoice: "record_voice_over",
+  emusic: "library_music",
   eoproject: "architecture",
   api: "key",
 };
@@ -80,6 +81,13 @@ export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
     icon: "record_voice_over",
   },
   {
+    id: "emusic",
+    label: "eMusic",
+    description: "Curated music library with section playlists.",
+    monthlyUsd: 1,
+    icon: "library_music",
+  },
+  {
     id: "eoproject",
     label: "eoProject",
     description: "Construction project stages, photos, and IFC versions.",
@@ -111,6 +119,8 @@ export const SUBSCRIPTION_SERVICE_DETAILS: Record<string, string> = {
     "eReport Connector binds a website registration report for site feedback. Use the connector hub, quick-issue modal, and embed flows so visitors can file issues into your registered eReport without opening the full workspace.",
   evoice:
     "eVoice turns documents into spoken audio. Create text-to-audio projects, generate MP3 output, and keep project files under your eVoice cloud storage.",
+  emusic:
+    "eMusic is a curated music library organized by sections. Subscribe to listen to section playlists such as Salmo 1 from your account on eduardoos.com.",
   eoproject:
     "eoProject tracks construction project stages, site photos, and IFC model versions. Organize project progress and share selected project views from your account.",
   api:
