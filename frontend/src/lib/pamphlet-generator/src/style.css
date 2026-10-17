@@ -1605,7 +1605,7 @@
   padding: 0;
 }
 
-/* Keep the 4-space bleed after "N." (HTML collapses normal spaces). */
+/* Keep the 4-space leading indent before "N." (HTML collapses normal spaces). */
 .pamphlet-app .pamphlet-item[data-item-type="quiz"] .pamphlet-quiz-option--choice {
   white-space: pre-wrap;
 }

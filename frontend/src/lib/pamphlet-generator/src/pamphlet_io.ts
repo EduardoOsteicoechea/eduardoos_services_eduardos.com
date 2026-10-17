@@ -32,7 +32,7 @@ export const HEIGHT_MM_ATTR = "data-height-mm";
 export const NOTES_ATTR = "data-notes";
 export const OPTIONS_ATTR = "data-options";
 
-/** Display-only bleed between quiz choice number and text (FE / PDF / articles lockstep). */
+/** Display-only leading indent before quiz choice number (FE / PDF / articles lockstep). */
 export const QUIZ_OPTION_BLEED = "    ";
 
 const HEADER_FIELD_CLASSES: Record<HeaderFieldKey, string> = {
@@ -227,7 +227,7 @@ export function fillQuizElement(
         choiceN += 1;
         const line = document.createElement("p");
         line.className = "pamphlet-quiz-option pamphlet-quiz-option--choice";
-        line.textContent = `${choiceN}.${QUIZ_OPTION_BLEED}${opt}`;
+        line.textContent = `${QUIZ_OPTION_BLEED}${choiceN}. ${opt}`;
         container.appendChild(line);
     }
 }

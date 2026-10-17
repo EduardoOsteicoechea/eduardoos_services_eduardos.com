@@ -2012,7 +2012,7 @@ func drawQuizItem(
 			continue
 		}
 		choiceN++
-		label := fmt.Sprintf("%d.    %s", choiceN, opt)
+		label := fmt.Sprintf("    %d. %s", choiceN, opt)
 		oy := cursorTop - cssBaselineOffsetMm(sizeMm, bodyLH)
 		used := writeWrapped(s, "F1", bodyPt, bodyLH, x, oy, width, label, floorMm)
 		if used <= 0 {
@@ -2115,10 +2115,12 @@ func writeText(s *strings.Builder, font string, sizePt float64, xMm, yMm, widthM
 }
 
 func writeWrapped(s *strings.Builder, font string, sizePt, lineHeight, xMm, yMm, widthMm float64, text string, floorMm float64) float64 {
-	text = strings.TrimSpace(toWinAnsi(text))
-	if text == "" {
+	text = toWinAnsi(text)
+	if strings.TrimSpace(text) == "" {
 		return 0
 	}
+	// Keep leading spaces (quiz choice indent); drop trailing only.
+	text = strings.TrimRight(text, " \t\r\n")
 	if lineHeight < 1.0 {
 		lineHeight = 1.25
 	}
@@ -2146,69 +2148,78 @@ func writeWrapped(s *strings.Builder, font string, sizePt, lineHeight, xMm, yMm,
 }
 
 func wrapWordsToWidth(text string, sizePt, maxWidthPt float64, bold bool) []string {
-	// Split on ASCII spaces only so intentional runs (quiz "1.    opt") survive.
-	// strings.Fields would collapse them to a single space.
-	parts := strings.Split(text, " ")
-	hasWord := false
-	for _, p := range parts {
-		if p != "" {
-			hasWord = true
-			break
-		}
-	}
-	if !hasWord {
+	// Preserve intentional space runs (quiz leading indent "    1. opt").
+	// strings.Fields would collapse them.
+	if strings.TrimSpace(text) == "" {
 		return nil
 	}
 	spaceW := glyphWidthEm(' ', bold) * sizePt
 	var lines []string
 	var cur strings.Builder
 	curWidth := 0.0
-	for i, part := range parts {
-		if part == "" {
-			// Extra space from a multi-space run (delimiter already counted via i>0 path).
-			if i > 0 && cur.Len() > 0 {
-				if curWidth+spaceW > maxWidthPt {
-					lines = append(lines, cur.String())
-					cur.Reset()
-					curWidth = 0
-				} else {
-					cur.WriteByte(' ')
-					curWidth += spaceW
-				}
-			}
-			continue
-		}
-		ww := stringWidthPt(part, sizePt, bold)
-		needSpace := i > 0 && cur.Len() > 0
-		extra := 0.0
-		if needSpace {
-			extra = spaceW
-		}
-		if cur.Len() > 0 && curWidth+extra+ww > maxWidthPt {
+	flush := func() {
+		if cur.Len() > 0 {
 			lines = append(lines, cur.String())
 			cur.Reset()
 			curWidth = 0
-			needSpace = false
 		}
-		if cur.Len() == 0 {
-			if ww > maxWidthPt {
-				lines = append(lines, splitLongWord(part, sizePt, maxWidthPt, bold)...)
-				continue
+	}
+	i := 0
+	for i < len(text) {
+		if text[i] == ' ' {
+			j := i
+			for j < len(text) && text[j] == ' ' {
+				j++
 			}
-			cur.WriteString(part)
-			curWidth = ww
+			for k := i; k < j; k++ {
+				if cur.Len() == 0 {
+					// Leading indent on the line.
+					cur.WriteByte(' ')
+					curWidth += spaceW
+					continue
+				}
+				if curWidth+spaceW > maxWidthPt {
+					flush()
+					continue
+				}
+				cur.WriteByte(' ')
+				curWidth += spaceW
+			}
+			i = j
 			continue
 		}
-		if needSpace {
-			cur.WriteByte(' ')
-			curWidth += spaceW
+		j := i
+		for j < len(text) && text[j] != ' ' {
+			j++
 		}
-		cur.WriteString(part)
+		word := text[i:j]
+		ww := stringWidthPt(word, sizePt, bold)
+		if cur.Len() == 0 {
+			if ww > maxWidthPt {
+				lines = append(lines, splitLongWord(word, sizePt, maxWidthPt, bold)...)
+			} else {
+				cur.WriteString(word)
+				curWidth = ww
+			}
+			i = j
+			continue
+		}
+		if curWidth+ww > maxWidthPt {
+			flush()
+			if ww > maxWidthPt {
+				lines = append(lines, splitLongWord(word, sizePt, maxWidthPt, bold)...)
+			} else {
+				cur.WriteString(word)
+				curWidth = ww
+			}
+			i = j
+			continue
+		}
+		cur.WriteString(word)
 		curWidth += ww
+		i = j
 	}
-	if cur.Len() > 0 {
-		lines = append(lines, cur.String())
-	}
+	flush()
 	return lines
 }
 
@@ -2267,7 +2278,8 @@ func toWinAnsi(s string) string {
 		}
 		i += size
 	}
-	return strings.TrimSpace(b.String())
+	// Trim trailing only — leading spaces are intentional (quiz choice indent).
+	return strings.TrimRight(b.String(), " \t\r\n")
 }
 
 // Common typography outside Latin-1 that still appears in pamphlets.
