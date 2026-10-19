@@ -120,7 +120,7 @@ export const SUBSCRIPTION_SERVICE_DETAILS: Record<string, string> = {
   evoice:
     "eVoice turns documents into spoken audio. Create text-to-audio projects, generate MP3 output, and keep project files under your eVoice cloud storage.",
   emusic:
-    "eMusic is a curated music library organized by sections. Subscribe to listen to section playlists such as Salmo 1, Salmo 2, Dreamer, and Learner from your account on eduardoos.com.",
+    "eMusic is a curated music library with synchronized lyrics and admin playlists. Subscribe to listen to Salmo 1, Salmo 2, Dreamer, Learner, and saved playlists on eduardoos.com.",
   eoproject:
     "eoProject tracks construction project stages, site photos, and IFC model versions. Organize project progress and share selected project views from your account.",
   api:

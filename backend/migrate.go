@@ -26,6 +26,8 @@ const (
 	colPaymentIntents     = "payment_intents"
 	colUserPreferences    = "user_preferences"
 	colSchemaMigrations   = "schema_migrations"
+	colEmusicDocuments    = "emusic_documents"
+	colEmusicPlaylists    = "emusic_playlists"
 	confirmBackupToken    = "I_HAVE_A_BACKUP"
 	testDatabaseSuffix    = "_gotest"
 	migrationSetupTimeout = 45 * time.Second
@@ -289,6 +291,17 @@ func safeSchemaMigrations() []schemaMigration {
 				}, Unique: true},
 				{Collection: colEoschoolCurriculumTutorAssignments, Keys: bson.D{{Key: "tutor_user_id", Value: 1}, {Key: "student_key", Value: 1}}},
 				{Collection: colEoschoolCurriculumTutorAssignments, Keys: bson.D{{Key: "owner_user_id", Value: 1}}},
+			},
+		},
+		{
+			ID:          "017_emusic_lyrics_playlists",
+			Description: "Create eMusic timed lyrics documents and admin playlists",
+			Collections: []string{colEmusicDocuments, colEmusicPlaylists},
+			Indexes: []indexSpec{
+				{Collection: colEmusicDocuments, Keys: bson.D{{Key: "track_id", Value: 1}}, Unique: true},
+				{Collection: colEmusicDocuments, Keys: bson.D{{Key: "slug", Value: 1}}, Unique: true},
+				{Collection: colEmusicPlaylists, Keys: bson.D{{Key: "owner_id", Value: 1}, {Key: "updated_at", Value: -1}}},
+				{Collection: colEmusicPlaylists, Keys: bson.D{{Key: "updated_at", Value: -1}}},
 			},
 		},
 	}

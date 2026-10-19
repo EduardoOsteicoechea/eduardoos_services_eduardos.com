@@ -4,11 +4,23 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout
   title="eMusic"
-  description="Curated music library with section playlists."
+  description="Curated music library with synchronized lyrics and playlists."
   page="emusic"
   robots="noindex,nofollow"
 >
   <Fragment slot="dhs">
+    <button
+      class="dhs-action"
+      type="button"
+      data-emusic-refresh
+      title="Refresh library"
+      aria-label="Refresh library"
+    >
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
     <a
       class="dhs-action"
       href="/payments/subscription"
@@ -35,117 +47,128 @@ import Layout from "../../layouts/Layout.astro";
       </p>
     </div>
 
-    <div data-authed hidden>
-      <div class="emusic__player">
-        <p class="emusic__now-playing" data-now-playing>Select a track</p>
-        <audio class="emusic__audio" data-audio controls preload="none"></audio>
+    <div data-authed hidden class="emusic__app" data-emusic-app>
+      <aside class="emusic__rail product-dash__card">
+        <div class="emusic__rail-head">
+          <label class="emusic__field">
+            <span class="emusic__label">Playlist</span>
+            <select data-emusic-playlist aria-label="Active playlist">
+              <option value="">Library</option>
+            </select>
+          </label>
+          <div class="emusic__rail-tools">
+            <button type="button" class="icon-btn" data-emusic-all title="Queue all" aria-label="Queue all">
+              <span class="material-symbols-outlined" aria-hidden="true">playlist_add_check</span>
+            </button>
+            <button type="button" class="icon-btn" data-emusic-none title="Clear queue" aria-label="Clear queue">
+              <span class="material-symbols-outlined" aria-hidden="true">playlist_remove</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="emusic__admin-playlists" data-emusic-playlist-admin hidden>
+          <form class="emusic__admin-row" data-emusic-playlist-new>
+            <input name="name" type="text" maxlength="80" required placeholder="New playlist name" autocomplete="off" />
+            <button type="submit">Create</button>
+          </form>
+          <label class="emusic__field">
+            <span class="emusic__label">Name</span>
+            <input data-emusic-playlist-name type="text" maxlength="80" autocomplete="off" />
+          </label>
+          <div class="emusic__admin-row">
+            <select data-emusic-add-track aria-label="Add track from library">
+              <option value="">Add track…</option>
+            </select>
+            <button type="button" data-emusic-add-track-btn>Add</button>
+          </div>
+          <div class="emusic__admin-row">
+            <button type="button" data-emusic-playlist-save>Save playlist</button>
+            <button type="button" class="emusic__danger" data-emusic-playlist-delete>Delete</button>
+          </div>
+        </div>
+
+        <ol class="emusic__queue" data-emusic-tracks></ol>
+      </aside>
+
+      <div class="emusic__stage">
+        <div class="emusic__player product-dash__card">
+          <p class="emusic__now-meta" data-emusic-section></p>
+          <h2 class="emusic__now-title" data-emusic-title>Select a track</h2>
+          <audio class="emusic__audio" data-emusic-audio controls preload="metadata"></audio>
+          <div class="emusic__transport">
+            <button class="icon-btn" type="button" data-emusic-prev title="Previous" aria-label="Previous">
+              <span class="material-symbols-outlined" aria-hidden="true">skip_previous</span>
+            </button>
+            <button class="icon-btn" type="button" data-emusic-toggle title="Play" aria-label="Play">
+              <span class="material-symbols-outlined" aria-hidden="true">play_arrow</span>
+            </button>
+            <button class="icon-btn" type="button" data-emusic-next title="Next" aria-label="Next">
+              <span class="material-symbols-outlined" aria-hidden="true">skip_next</span>
+            </button>
+            <button class="icon-btn" type="button" data-emusic-loop title="Repeat queue" aria-label="Repeat queue" aria-pressed="true">
+              <span class="material-symbols-outlined" aria-hidden="true">repeat</span>
+            </button>
+          </div>
+          <p class="status emusic__status" data-emusic-status></p>
+        </div>
+
+        <div class="emusic__lyrics-panel product-dash__card">
+          <div class="emusic__lyrics-head">
+            <h2 class="product-dash__section-title">Lyrics</h2>
+          </div>
+          <div class="emusic__lyrics" data-emusic-lyrics aria-live="polite"></div>
+
+          <div class="emusic__admin-lyrics" data-emusic-lyrics-tools hidden>
+            <label class="emusic__field">
+              <span class="emusic__label">Paste lyrics</span>
+              <textarea data-emusic-lyrics-paste rows="4" placeholder="One line per verse line. Use CORO / ESTROFA markers."></textarea>
+            </label>
+            <div class="emusic__admin-row">
+              <button type="button" data-emusic-lyrics-apply>Apply text</button>
+              <button type="button" data-emusic-lyrics-mark title="Mark current word at playhead (M)">Mark now</button>
+              <label class="emusic__file">
+                Import .emusic
+                <input type="file" accept=".emusic,application/json" data-emusic-lyrics-import hidden />
+              </label>
+              <button type="button" data-emusic-lyrics-save>Save lyrics</button>
+            </div>
+            <div class="emusic__word-edit" data-emusic-word-edit hidden>
+              <label class="emusic__field">Word <input data-emusic-word-text type="text" /></label>
+              <label class="emusic__field">Start <input data-emusic-word-start type="number" step="0.01" min="0" /></label>
+              <label class="emusic__field">End <input data-emusic-word-end type="number" step="0.01" min="0" /></label>
+            </div>
+          </div>
+        </div>
       </div>
-      <div data-sections></div>
     </div>
   </section>
 </Layout>
 
 <script>
-  import { EMUSIC_SECTIONS, type EmusicTrack } from "../../lib/emusic";
   import { mustLog } from "../../lib/dev-log";
   import { onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
-
-  let root: Element | null = null;
-  let banner: Element | null = null;
-  let gate: Element | null = null;
-  let authed: Element | null = null;
-  let sectionsEl: Element | null = null;
-  let audioEl: HTMLAudioElement | null = null;
-  let nowPlayingEl: Element | null = null;
-  let activeTrackId = "";
-
-  function setBanner(text: string): void {
-    if (banner instanceof HTMLElement) {
-      banner.hidden = false;
-      banner.textContent = text;
-    }
-  }
-
-  function playTrack(track: EmusicTrack): void {
-    if (!audioEl) return;
-    activeTrackId = track.id;
-    audioEl.src = track.src;
-    void audioEl.play().catch(() => {
-      /* autoplay may be blocked; controls remain usable */
-    });
-    if (nowPlayingEl instanceof HTMLElement) {
-      nowPlayingEl.textContent = track.title;
-    }
-    markActive();
-    if (mustLog) console.log("[emusic] play", { id: track.id, src: track.src });
-  }
-
-  function markActive(): void {
-    if (!sectionsEl) return;
-    sectionsEl.querySelectorAll<HTMLButtonElement>("[data-track-id]").forEach((btn) => {
-      const id = btn.getAttribute("data-track-id") || "";
-      btn.classList.toggle("emusic__track--active", id === activeTrackId);
-    });
-  }
-
-  function renderSections(): void {
-    if (!(sectionsEl instanceof HTMLElement)) return;
-    sectionsEl.replaceChildren();
-    for (const section of EMUSIC_SECTIONS) {
-      const sectionEl = document.createElement("section");
-      sectionEl.className = "emusic__section";
-      sectionEl.setAttribute("aria-labelledby", `emusic-section-${section.id}`);
-
-      const heading = document.createElement("h2");
-      heading.className = "product-dash__section-title";
-      heading.id = `emusic-section-${section.id}`;
-      heading.textContent = section.title;
-      sectionEl.appendChild(heading);
-
-      const list = document.createElement("ul");
-      list.className = "emusic__track-list";
-      for (const track of section.tracks) {
-        const li = document.createElement("li");
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "emusic__track";
-        btn.setAttribute("data-track-id", track.id);
-        btn.setAttribute("aria-label", `Play ${track.title}`);
-        const icon = document.createElement("span");
-        icon.className = "material-symbols-outlined emusic__track-icon";
-        icon.setAttribute("aria-hidden", "true");
-        icon.textContent = "play_arrow";
-        const titleEl = document.createElement("span");
-        titleEl.className = "emusic__track-title";
-        titleEl.textContent = track.title;
-        btn.append(icon, titleEl);
-        btn.addEventListener("click", () => playTrack(track));
-        li.appendChild(btn);
-        list.appendChild(li);
-      }
-      sectionEl.appendChild(list);
-      sectionsEl.appendChild(sectionEl);
-    }
-    markActive();
-  }
+  import { startEmusicPage } from "../../lib/emusic-page";
+  import { refreshAuthSession, isPlatformAdmin } from "../../lib/auth";
 
   onAstroPageLoad("emusic", async () => {
-    root = document.querySelector("[data-emusic-hub]");
-    banner = root?.querySelector("[data-banner]") ?? null;
-    gate = root?.querySelector("[data-gate]") ?? null;
-    authed = root?.querySelector("[data-authed]") ?? null;
-    sectionsEl = root?.querySelector("[data-sections]") ?? null;
-    audioEl = root?.querySelector("[data-audio]") ?? null;
-    nowPlayingEl = root?.querySelector("[data-now-playing]") ?? null;
+    const root = document.querySelector("[data-emusic-hub]");
+    const banner = root?.querySelector("[data-banner]") ?? null;
+    const gate = root?.querySelector("[data-gate]") ?? null;
+    const authed = root?.querySelector("[data-authed]") ?? null;
+    const appRoot = root?.querySelector("[data-emusic-app]");
 
     if (banner instanceof HTMLElement) {
       banner.hidden = false;
       banner.textContent = "Loading…";
     }
 
+    await refreshAuthSession();
     const gateResult = await requireService("emusic");
     if (!gateResult.sessionOk || !gateResult.access.allowed) {
-      setBanner(gateResult.sessionOk ? "Subscription required." : "Sign in required.");
+      if (banner instanceof HTMLElement) {
+        banner.hidden = false;
+        banner.textContent = gateResult.sessionOk ? "Subscription required." : "Sign in required.";
+      }
       setHidden(gate, false);
       setHidden(authed, true);
       return;
@@ -154,6 +177,10 @@ import Layout from "../../layouts/Layout.astro";
     setHidden(gate, true);
     setHidden(authed, false);
     if (banner instanceof HTMLElement) banner.hidden = true;
-    renderSections();
+
+    if (appRoot instanceof HTMLElement) {
+      startEmusicPage(appRoot, { admin: isPlatformAdmin() });
+      if (mustLog) console.log("[emusic] app started", { admin: isPlatformAdmin() });
+    }
   });
 </script>

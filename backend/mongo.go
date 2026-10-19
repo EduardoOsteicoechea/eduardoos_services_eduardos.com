@@ -44,6 +44,12 @@ func (s *mongoStore) paymentIntents() *mongo.Collection {
 func (s *mongoStore) userPreferences() *mongo.Collection {
 	return s.db.Collection(colUserPreferences)
 }
+func (s *mongoStore) emusicDocuments() *mongo.Collection {
+	return s.db.Collection(colEmusicDocuments)
+}
+func (s *mongoStore) emusicPlaylists() *mongo.Collection {
+	return s.db.Collection(colEmusicPlaylists)
+}
 
 func (s *mongoStore) otpCol(purpose string) *mongo.Collection {
 	if purpose == otpPasswordReset {
@@ -476,4 +482,80 @@ func (s *mongoStore) UserPreferenceGet(ctx context.Context, userID, key string) 
 
 func (s *mongoStore) UserPreferencePut(ctx context.Context, pref *UserPreference) error {
 	return s.UpsertUserPreference(ctx, pref)
+}
+
+func (s *mongoStore) UpsertEmusic(ctx context.Context, record *EmusicRecord) error {
+	_, err := s.emusicDocuments().UpdateOne(ctx, bson.M{"track_id": record.TrackID}, bson.M{"$set": record}, options.Update().SetUpsert(true))
+	return err
+}
+
+func (s *mongoStore) EmusicByTrackID(ctx context.Context, trackID string) (*EmusicRecord, error) {
+	var record EmusicRecord
+	err := s.emusicDocuments().FindOne(ctx, bson.M{"track_id": trackID}).Decode(&record)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return nil, errNotFound
+	}
+	return &record, err
+}
+
+func (s *mongoStore) EmusicBySlug(ctx context.Context, slug string) (*EmusicRecord, error) {
+	var record EmusicRecord
+	err := s.emusicDocuments().FindOne(ctx, bson.M{"slug": slug}).Decode(&record)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return nil, errNotFound
+	}
+	return &record, err
+}
+
+func (s *mongoStore) ListEmusicPlaylists(ctx context.Context) ([]*EmusicPlaylist, error) {
+	cur, err := s.emusicPlaylists().Find(ctx, bson.M{}, options.Find().SetSort(bson.D{{Key: "updated_at", Value: -1}, {Key: "name", Value: 1}}))
+	if err != nil {
+		return nil, err
+	}
+	defer cur.Close(ctx)
+	var playlists []*EmusicPlaylist
+	if err := cur.All(ctx, &playlists); err != nil {
+		return nil, err
+	}
+	return playlists, nil
+}
+
+func (s *mongoStore) EmusicPlaylistByID(ctx context.Context, id string) (*EmusicPlaylist, error) {
+	var playlist EmusicPlaylist
+	err := s.emusicPlaylists().FindOne(ctx, bson.M{"_id": id}).Decode(&playlist)
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return nil, errNotFound
+	}
+	return &playlist, err
+}
+
+func (s *mongoStore) InsertEmusicPlaylist(ctx context.Context, playlist *EmusicPlaylist) error {
+	_, err := s.emusicPlaylists().InsertOne(ctx, playlist)
+	return err
+}
+
+func (s *mongoStore) UpdateEmusicPlaylist(ctx context.Context, playlist *EmusicPlaylist) error {
+	res, err := s.emusicPlaylists().UpdateOne(ctx, bson.M{"_id": playlist.ID}, bson.M{"$set": bson.M{
+		"name":       playlist.Name,
+		"track_ids":  playlist.TrackIDs,
+		"updated_at": playlist.UpdatedAt,
+	}})
+	if err != nil {
+		return err
+	}
+	if res.MatchedCount == 0 {
+		return errNotFound
+	}
+	return nil
+}
+
+func (s *mongoStore) DeleteEmusicPlaylist(ctx context.Context, id string) error {
+	res, err := s.emusicPlaylists().DeleteOne(ctx, bson.M{"_id": id})
+	if err != nil {
+		return err
+	}
+	if res.DeletedCount == 0 {
+		return errNotFound
+	}
+	return nil
 }

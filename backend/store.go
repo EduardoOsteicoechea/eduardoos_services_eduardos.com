@@ -177,6 +177,14 @@ type DataStore interface {
 	UpsertUserPreference(ctx context.Context, pref *UserPreference) error
 	UserPreferenceGet(ctx context.Context, userID, key string) (*UserPreference, error)
 	UserPreferencePut(ctx context.Context, pref *UserPreference) error
+	UpsertEmusic(ctx context.Context, record *EmusicRecord) error
+	EmusicByTrackID(ctx context.Context, trackID string) (*EmusicRecord, error)
+	EmusicBySlug(ctx context.Context, slug string) (*EmusicRecord, error)
+	ListEmusicPlaylists(ctx context.Context) ([]*EmusicPlaylist, error)
+	EmusicPlaylistByID(ctx context.Context, id string) (*EmusicPlaylist, error)
+	InsertEmusicPlaylist(ctx context.Context, playlist *EmusicPlaylist) error
+	UpdateEmusicPlaylist(ctx context.Context, playlist *EmusicPlaylist) error
+	DeleteEmusicPlaylist(ctx context.Context, id string) error
 }
 
 // PaymentIntent is a PayPal checkout intent persisted in Mongo (or memory for tests).
@@ -225,35 +233,41 @@ func (p *UserPreference) clone() *UserPreference {
 }
 
 type memoryStore struct {
-	mu            sync.Mutex
-	users         map[string]*User
-	email         map[string]string
-	username      map[string]string
-	sessions      map[string]*Session
-	refresh       map[string]string
-	otps          map[string]*OTPRecord
-	csrf          map[string]*CSRFChallenge
-	entitlements  map[string]*Entitlement
-	apiKeys       map[string]*APIKeyRecord
-	apiKeyHash    map[string]string
+	mu             sync.Mutex
+	users          map[string]*User
+	email          map[string]string
+	username       map[string]string
+	sessions       map[string]*Session
+	refresh        map[string]string
+	otps           map[string]*OTPRecord
+	csrf           map[string]*CSRFChallenge
+	entitlements   map[string]*Entitlement
+	apiKeys        map[string]*APIKeyRecord
+	apiKeyHash     map[string]string
 	paymentIntents map[string]*PaymentIntent
-	preferences   map[string]*UserPreference // keyed by userID + "\x00" + key
+	preferences    map[string]*UserPreference // keyed by userID + "\x00" + key
+	emusic         map[string]*EmusicRecord
+	emusicSlug     map[string]string
+	emusicPlaylists map[string]*EmusicPlaylist
 }
 
 func newMemoryStore() *memoryStore {
 	return &memoryStore{
-		users:          map[string]*User{},
-		email:          map[string]string{},
-		username:       map[string]string{},
-		sessions:       map[string]*Session{},
-		refresh:        map[string]string{},
-		otps:           map[string]*OTPRecord{},
-		csrf:           map[string]*CSRFChallenge{},
-		entitlements:   map[string]*Entitlement{},
-		apiKeys:        map[string]*APIKeyRecord{},
-		apiKeyHash:     map[string]string{},
-		paymentIntents: map[string]*PaymentIntent{},
-		preferences:    map[string]*UserPreference{},
+		users:           map[string]*User{},
+		email:           map[string]string{},
+		username:        map[string]string{},
+		sessions:        map[string]*Session{},
+		refresh:         map[string]string{},
+		otps:            map[string]*OTPRecord{},
+		csrf:            map[string]*CSRFChallenge{},
+		entitlements:    map[string]*Entitlement{},
+		apiKeys:         map[string]*APIKeyRecord{},
+		apiKeyHash:      map[string]string{},
+		paymentIntents:  map[string]*PaymentIntent{},
+		preferences:     map[string]*UserPreference{},
+		emusic:          map[string]*EmusicRecord{},
+		emusicSlug:      map[string]string{},
+		emusicPlaylists: map[string]*EmusicPlaylist{},
 	}
 }
 
@@ -653,6 +667,111 @@ func (s *memoryStore) UserPreferenceGet(ctx context.Context, userID, key string)
 
 func (s *memoryStore) UserPreferencePut(ctx context.Context, pref *UserPreference) error {
 	return s.UpsertUserPreference(ctx, pref)
+}
+
+func cloneEmusicRecord(record *EmusicRecord) *EmusicRecord {
+	if record == nil {
+		return nil
+	}
+	cp := *record
+	return &cp
+}
+
+func cloneEmusicPlaylist(playlist *EmusicPlaylist) *EmusicPlaylist {
+	if playlist == nil {
+		return nil
+	}
+	cp := *playlist
+	cp.TrackIDs = append([]string{}, playlist.TrackIDs...)
+	return &cp
+}
+
+func (s *memoryStore) UpsertEmusic(_ context.Context, record *EmusicRecord) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if oldID := s.emusicSlug[record.Slug]; oldID != "" && oldID != record.TrackID {
+		delete(s.emusic, oldID)
+	}
+	s.emusic[record.TrackID] = cloneEmusicRecord(record)
+	s.emusicSlug[record.Slug] = record.TrackID
+	return nil
+}
+
+func (s *memoryStore) EmusicByTrackID(_ context.Context, trackID string) (*EmusicRecord, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	record := s.emusic[trackID]
+	if record == nil {
+		return nil, errNotFound
+	}
+	return cloneEmusicRecord(record), nil
+}
+
+func (s *memoryStore) EmusicBySlug(_ context.Context, slug string) (*EmusicRecord, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	id := s.emusicSlug[slug]
+	if id == "" {
+		return nil, errNotFound
+	}
+	record := s.emusic[id]
+	if record == nil {
+		return nil, errNotFound
+	}
+	return cloneEmusicRecord(record), nil
+}
+
+func (s *memoryStore) ListEmusicPlaylists(_ context.Context) ([]*EmusicPlaylist, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	out := make([]*EmusicPlaylist, 0, len(s.emusicPlaylists))
+	for _, playlist := range s.emusicPlaylists {
+		out = append(out, cloneEmusicPlaylist(playlist))
+	}
+	sort.Slice(out, func(i, j int) bool {
+		if out[i].UpdatedAt.Equal(out[j].UpdatedAt) {
+			return out[i].Name < out[j].Name
+		}
+		return out[i].UpdatedAt.After(out[j].UpdatedAt)
+	})
+	return out, nil
+}
+
+func (s *memoryStore) EmusicPlaylistByID(_ context.Context, id string) (*EmusicPlaylist, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	playlist := s.emusicPlaylists[id]
+	if playlist == nil {
+		return nil, errNotFound
+	}
+	return cloneEmusicPlaylist(playlist), nil
+}
+
+func (s *memoryStore) InsertEmusicPlaylist(_ context.Context, playlist *EmusicPlaylist) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.emusicPlaylists[playlist.ID] = cloneEmusicPlaylist(playlist)
+	return nil
+}
+
+func (s *memoryStore) UpdateEmusicPlaylist(_ context.Context, playlist *EmusicPlaylist) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.emusicPlaylists[playlist.ID] == nil {
+		return errNotFound
+	}
+	s.emusicPlaylists[playlist.ID] = cloneEmusicPlaylist(playlist)
+	return nil
+}
+
+func (s *memoryStore) DeleteEmusicPlaylist(_ context.Context, id string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.emusicPlaylists[id] == nil {
+		return errNotFound
+	}
+	delete(s.emusicPlaylists, id)
+	return nil
 }
 
 type AuditEvent struct {

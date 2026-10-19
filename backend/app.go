@@ -439,6 +439,7 @@ func (a *App) Handler() http.Handler {
 
 	a.registerEvoiceRoutes(mux)
 	a.registerEoprojectRoutes(mux)
+	a.registerEmusicRoutes(mux)
 	a.registerVoiceRoutes(mux)
 
 	return a.withObservability(mux)
