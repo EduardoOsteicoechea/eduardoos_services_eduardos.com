@@ -3161,76 +3161,239 @@ function buildPdfReportElement(data) {
   return el;
 }
 
-/** Block top/bottom in canvas pixels — cuts should land between these ranges. */
-function collectPdfBlockRanges(report, scale) {
-  const root = report.getBoundingClientRect();
-  const ranges = [];
-  report.querySelectorAll(".pdf-block").forEach((node) => {
-    const r = node.getBoundingClientRect();
-    const top = Math.max(0, (r.top - root.top) * scale);
-    const bottom = Math.max(top + 1, (r.bottom - root.top) * scale);
-    ranges.push({ top, bottom });
+function pdfHexRgb(hex) {
+  const h = String(hex || "").replace("#", "");
+  if (h.length !== 6) return [0, 0, 0];
+  return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+}
+
+/** Map fancy punctuation to WinAnsi-safe glyphs for Helvetica. */
+function pdfSafeText(s) {
+  return String(s ?? "")
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/[\u2013\u2014]/g, "-")
+    .replace(/\u2026/g, "...")
+    .replace(/\u00A0/g, " ");
+}
+
+function pdfImageDataUrl(im) {
+  if (!im || typeof im !== "object") return "";
+  const src = String(im.dataUrl || im.url || "").trim();
+  return src.startsWith("data:") ? src : "";
+}
+
+function pdfProbeImage(dataUrl) {
+  return new Promise((resolve) => {
+    if (!dataUrl) {
+      resolve(null);
+      return;
+    }
+    const img = new Image();
+    img.onload = () =>
+      resolve({
+        src: dataUrl,
+        w: Math.max(1, img.naturalWidth || img.width || 1),
+        h: Math.max(1, img.naturalHeight || img.height || 1),
+      });
+    img.onerror = () => resolve(null);
+    img.src = dataUrl;
   });
-  ranges.sort((a, b) => a.top - b.top || a.bottom - b.bottom);
-  return ranges;
 }
 
-/** Prefer ending a page at the bottom of a card/header instead of mid-block. */
-function findPdfPageEnd(startY, maxEnd, canvasH, ranges) {
-  const hard = Math.min(maxEnd, canvasH);
-  if (hard >= canvasH) return canvasH;
-  const minAdvance = 24;
-  let inside = null;
-  for (let i = 0; i < ranges.length; i++) {
-    const b = ranges[i];
-    if (b.top < hard && b.bottom > hard) {
-      inside = b;
-      break;
-    }
+/**
+ * Native jsPDF builder — does not use html2canvas (blank pages on dark/WebKit/iframe).
+ * Helvetica/WinAnsi covers Spanish accents used in reports.
+ */
+async function buildNativeJsPdf(data) {
+  if (!window.jspdf || !window.jspdf.jsPDF) {
+    throw new Error("PDF libraries missing");
   }
-  if (inside) {
-    if (inside.top > startY + minAdvance) return Math.ceil(inside.top);
-    // Block taller than one page: allow a hard split.
-    return Math.floor(hard);
-  }
-  let best = 0;
-  for (let i = 0; i < ranges.length; i++) {
-    const b = ranges[i];
-    if (b.bottom > startY + minAdvance && b.bottom <= hard) {
-      best = Math.max(best, b.bottom);
-    }
-  }
-  if (best > startY + minAdvance) return Math.ceil(best);
-  return Math.floor(hard);
-}
-
-function appendCanvasPagesAvoidingBlockSplits(pdf, canvas, ranges) {
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
   const pageW = pdf.internal.pageSize.getWidth();
   const pageH = pdf.internal.pageSize.getHeight();
-  const margin = 28;
-  const usableW = pageW - margin * 2;
-  const usableH = pageH - margin * 2;
-  const pxPerPt = canvas.width / usableW;
-  const pageContentPx = usableH * pxPerPt;
-  let y = 0;
-  let first = true;
-  while (y < canvas.height - 0.5) {
-    const end = findPdfPageEnd(y, y + pageContentPx, canvas.height, ranges);
-    const sliceH = Math.max(1, Math.ceil(end - y));
-    const pageCanvas = document.createElement("canvas");
-    pageCanvas.width = canvas.width;
-    pageCanvas.height = sliceH;
-    const ctx = pageCanvas.getContext("2d");
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-    ctx.drawImage(canvas, 0, y, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
-    const imgData = pageCanvas.toDataURL("image/jpeg", 0.92);
-    const drawH = sliceH / pxPerPt;
-    if (!first) pdf.addPage();
-    first = false;
-    pdf.addImage(imgData, "JPEG", margin, margin, usableW, drawH);
-    y += sliceH;
+  const margin = 36;
+  const maxW = pageW - margin * 2;
+  const lineGap = 1.25;
+  let y = margin;
+
+  const ensure = (need) => {
+    if (y + need > pageH - margin) {
+      pdf.addPage();
+      y = margin;
+    }
+  };
+
+  const writeLines = (text, opts = {}) => {
+    const size = opts.size || 10;
+    const color = opts.color || "#000000";
+    const style = opts.style || "normal";
+    const indent = opts.indent || 0;
+    const width = Math.max(40, maxW - indent);
+    pdf.setFont("helvetica", style);
+    pdf.setFontSize(size);
+    const [r, g, b] = pdfHexRgb(color);
+    pdf.setTextColor(r, g, b);
+    const lines = pdf.splitTextToSize(pdfSafeText(text), width);
+    const lineH = size * lineGap;
+    for (const line of lines) {
+      ensure(lineH);
+      pdf.text(line, margin + indent, y + size * 0.85);
+      y += lineH;
+    }
+  };
+
+  const writeSpacer = (h = 8) => {
+    ensure(h);
+    y += h;
+  };
+
+  const drawBanner = () => {
+    const title = data.reportName || data.appTitle || "Issue Tracker";
+    const meta1 = `Organization: ${data.orgName || "-"}`;
+    const meta2 = `Report Date: ${data.reportDate || "-"}  |  Report Code: ${data.reportNumber || "-"}`;
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(16);
+    const titleLines = pdf.splitTextToSize(pdfSafeText(title), maxW - 24);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(10);
+    const m1 = pdf.splitTextToSize(pdfSafeText(meta1), maxW - 24);
+    const m2 = pdf.splitTextToSize(pdfSafeText(meta2), maxW - 24);
+    const bannerH = 18 + titleLines.length * 18 + (m1.length + m2.length) * 13 + 16;
+    ensure(bannerH + 8);
+    pdf.setFillColor(0, 0, 0);
+    pdf.rect(margin, y, maxW, bannerH, "F");
+    pdf.setFillColor(249, 168, 37);
+    pdf.rect(margin, y + bannerH - 4, maxW, 4, "F");
+    let ty = y + 16;
+    pdf.setTextColor(255, 255, 255);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(16);
+    for (const line of titleLines) {
+      pdf.text(line, margin + 12, ty);
+      ty += 18;
+    }
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(10);
+    ty += 4;
+    for (const line of m1) {
+      pdf.text(line, margin + 12, ty);
+      ty += 13;
+    }
+    for (const line of m2) {
+      pdf.text(line, margin + 12, ty);
+      ty += 13;
+    }
+    y += bannerH + 12;
+    pdf.setTextColor(0, 0, 0);
+  };
+
+  const writeImages = async (images) => {
+    const list = (images || []).map(pdfImageDataUrl).filter(Boolean);
+    if (!list.length) return;
+    const colGap = 8;
+    const cols = 3;
+    const cellW = (maxW - colGap * (cols - 1)) / cols;
+    const maxCellH = 90;
+    let col = 0;
+    let rowTop = y;
+    let rowH = 0;
+    for (const src of list) {
+      const probed = await pdfProbeImage(src);
+      if (!probed) continue;
+      let drawW = cellW;
+      let drawH = (probed.h / probed.w) * drawW;
+      if (drawH > maxCellH) {
+        drawH = maxCellH;
+        drawW = (probed.w / probed.h) * drawH;
+      }
+      if (col === 0) {
+        ensure(drawH + 6);
+        rowTop = y;
+        rowH = 0;
+      }
+      const x = margin + col * (cellW + colGap);
+      try {
+        const fmt = src.indexOf("image/png") >= 0 ? "PNG" : "JPEG";
+        pdf.addImage(src, fmt, x, rowTop, drawW, drawH);
+      } catch (_) {
+        /* skip broken image */
+      }
+      rowH = Math.max(rowH, drawH);
+      col += 1;
+      if (col >= cols) {
+        y = rowTop + rowH + 8;
+        col = 0;
+        rowH = 0;
+      }
+    }
+    if (col > 0) y = rowTop + rowH + 8;
+  };
+
+  const writeItem = async (it, idx, fallbackName) => {
+    if (!itemStarted(it) && !(it.incidencia || "").trim() && !(it.solucion || "").trim()) return;
+    const eff = effectiveStatus(it);
+    const st = eff === "aprobado" ? "APROBADO" : eff === "reprobado" ? "REPROBADO" : "WARNING";
+    const stColor = eff === "aprobado" ? "#2e7d32" : eff === "reprobado" ? "#c62828" : "#f9a825";
+    const name = (it.nombre && it.nombre.trim()) || fallbackName || `Item ${idx + 1}`;
+    writeSpacer(6);
+    writeLines(`${name} | ${st}`, { size: 10, style: "bold", color: stColor });
+    const checks = (it.checklist || [])
+      .map((c) => `${c.checked ? "[x]" : "[ ]"} ${c.label || "UX Test"}`)
+      .join("  |  ");
+    if (checks) writeLines(checks, { size: 8, color: "#333333" });
+    const incDate = it.fechaIncidencia ? ` (${String(it.fechaIncidencia).replace("T", " ")})` : "";
+    writeLines(`Incidencia${incDate}`, { size: 10, style: "bold" });
+    writeLines(it.incidencia || "-", { size: 10 });
+    await writeImages(it.imagesIncidencia);
+    const solDate = it.fechaSolucion ? ` (${String(it.fechaSolucion).replace("T", " ")})` : "";
+    writeLines(`Solución${solDate}`, { size: 10, style: "bold" });
+    writeLines(it.solucion || "-", { size: 10 });
+    await writeImages(it.imagesSolucion);
+    writeSpacer(4);
+    pdf.setDrawColor(215, 222, 226);
+    ensure(2);
+    pdf.line(margin, y, margin + maxW, y);
+    y += 6;
+  };
+
+  drawBanner();
+  for (const sec of data.sections || []) {
+    writeSpacer(10);
+    writeLines(sec.title || "Section", { size: 14, style: "bold" });
+    pdf.setDrawColor(0, 0, 0);
+    ensure(3);
+    pdf.setLineWidth(1.5);
+    pdf.line(margin, y, margin + maxW, y);
+    pdf.setLineWidth(0.5);
+    y += 8;
+    if (sec.productHistory) {
+      writeLines(`Product history: ${sec.productHistory}`, { size: 9, color: "#333333" });
+    }
+    if ((sec.items || []).length) {
+      writeLines("Open issues", { size: 12, style: "bold" });
+      let i = 0;
+      for (const it of sec.items || []) {
+        await writeItem(it, i, `Open issue ${i + 1}`);
+        i += 1;
+      }
+    }
+    for (const grp of sec.groups || []) {
+      writeSpacer(6);
+      writeLines(grp.title || "Group", { size: 12, style: "bold" });
+      if (grp.productHistory) {
+        writeLines(`Product history: ${grp.productHistory}`, { size: 9, color: "#333333" });
+      }
+      let i = 0;
+      for (const it of grp.items || []) {
+        await writeItem(it, i, `Fila ${i + 1}`);
+        i += 1;
+      }
+    }
   }
+
+  return pdf;
 }
 
 function blobToDataURL(blob) {
@@ -3240,34 +3403,6 @@ function blobToDataURL(blob) {
     fr.onerror = () => reject(fr.error || new Error("No se pudo leer la imagen."));
     fr.readAsDataURL(blob);
   });
-}
-
-/** Fetch same-origin API images with cookies so html2canvas can paint them. */
-async function inlineImagesForPdf(root) {
-  const imgs = Array.from(root.querySelectorAll("img"));
-  await Promise.all(
-    imgs.map(async (img) => {
-      const src = String(img.getAttribute("src") || "").trim();
-      if (!src || src.startsWith("data:")) return;
-      try {
-        const res = await fetch(src, { credentials: "include", cache: "force-cache" });
-        if (!res.ok) return;
-        const blob = await res.blob();
-        if (!blob || !blob.size) return;
-        img.src = await blobToDataURL(blob);
-      } catch (_) {
-        /* leave original src; text still exports */
-      }
-    }),
-  );
-  await Promise.all(
-    imgs.map((img) => {
-      if (typeof img.decode === "function") {
-        return img.decode().catch(() => undefined);
-      }
-      return Promise.resolve();
-    }),
-  );
 }
 
 async function embedImageRecord(im) {
@@ -3309,123 +3444,6 @@ async function embedImagesInPayload(raw) {
   return data;
 }
 
-/** Dark color-scheme makes html2canvas paint white/invisible glyphs on light PDF sheets. */
-function forceLightPdfChrome(doc) {
-  if (!doc) return;
-  const root = doc.documentElement;
-  const body = doc.body;
-  if (root) {
-    root.style.colorScheme = "light";
-    root.style.setProperty("color-scheme", "light");
-  }
-  if (body) {
-    body.classList.remove("theme-dark");
-    body.style.colorScheme = "light";
-    body.style.setProperty("color-scheme", "light");
-    body.style.background = "#ffffff";
-    body.style.color = "#000000";
-    body.style.setProperty("--bg", "#ffffff");
-    body.style.setProperty("--ink", "#000000");
-    body.style.setProperty("--muted", "#555555");
-    body.style.setProperty("--card", "#ffffff");
-    body.style.setProperty("--surface", "#f3f3f3");
-    body.style.setProperty("--line", "#cccccc");
-    body.style.setProperty("--section-head-bg", "#dcdcdc");
-    body.style.setProperty("--inverse-bg", "#000000");
-    body.style.setProperty("--inverse-ink", "#ffffff");
-  }
-}
-
-function preparePdfCloneForCapture(cloned, clonedDoc) {
-  const doc = clonedDoc || (cloned && cloned.ownerDocument) || null;
-  forceLightPdfChrome(doc);
-  cloned.style.transform = "none";
-  cloned.style.opacity = "1";
-  cloned.style.visibility = "visible";
-  cloned.style.color = "#000000";
-  cloned.style.background = "#ffffff";
-  cloned.style.fontFamily = "Arial, Helvetica, sans-serif";
-  cloned.style.webkitFontSmoothing = "antialiased";
-  cloned.style.letterSpacing = "0.01px";
-  if (cloned.parentElement) {
-    const parent = cloned.parentElement;
-    parent.style.transform = "none";
-    parent.style.opacity = "1";
-    parent.style.left = "0";
-    parent.style.top = "0";
-    parent.style.visibility = "visible";
-  }
-  cloned.querySelectorAll(".pdf-block, p, h1, h2, h3, div, span, strong").forEach((node) => {
-    if (!(node instanceof HTMLElement)) return;
-    if (node.closest(".pdf-banner")) {
-      if (!node.style.color) node.style.color = "#ffffff";
-      return;
-    }
-    const inline = String(node.getAttribute("style") || "");
-    if (!/color\s*:/.test(inline)) node.style.color = "#000000";
-  });
-}
-
-/** Temporarily drop dark theme so the live capture host paints black ink. */
-function withLightPdfCapture(run) {
-  const html = document.documentElement;
-  const body = document.body;
-  const prevHtmlScheme = html.style.colorScheme;
-  const prevBodyScheme = body.style.colorScheme;
-  const prevHtmlAttr = html.getAttribute("style");
-  const prevBodyAttr = body.getAttribute("style");
-  const hadDark = body.classList.contains("theme-dark");
-  // Class + color-scheme only on the live DOM (clone gets full forceLightPdfChrome).
-  body.classList.remove("theme-dark");
-  html.style.colorScheme = "light";
-  body.style.colorScheme = "light";
-  return Promise.resolve()
-    .then(run)
-    .finally(() => {
-      if (prevHtmlAttr == null) html.removeAttribute("style");
-      else html.setAttribute("style", prevHtmlAttr);
-      if (prevBodyAttr == null) body.removeAttribute("style");
-      else body.setAttribute("style", prevBodyAttr);
-      html.style.colorScheme = prevHtmlScheme;
-      body.style.colorScheme = prevBodyScheme;
-      if (hadDark) body.classList.add("theme-dark");
-      else body.classList.remove("theme-dark");
-      adoptHostTheme();
-    });
-}
-
-function mountPdfCaptureHost(report) {
-  // Tablets (esp. landscape/WebKit) drop text when the capture node is obscured
-  // or transformed off-screen. Keep the report ON TOP of the veil so glyphs paint.
-  const veil = document.createElement("div");
-  veil.setAttribute("data-pdf-capture-veil", "1");
-  veil.style.cssText =
-    "position:fixed;inset:0;z-index:2147482990;background:#ffffff;pointer-events:none;";
-  const host = document.createElement("div");
-  host.setAttribute("data-pdf-capture-host", "1");
-  host.style.cssText =
-    "position:fixed;left:0;top:0;width:56.25rem;max-width:100%;z-index:2147483000;overflow:visible;background:#ffffff;pointer-events:none;box-sizing:border-box;";
-  const status = document.createElement("div");
-  status.style.cssText =
-    "position:sticky;top:0;z-index:1;padding:0.75rem 1rem;background:#111111;color:#ffffff;font:600 0.95rem Arial,Helvetica,sans-serif;";
-  status.textContent = "Generando PDF…";
-  report.style.background = "#ffffff";
-  report.style.color = "#000000";
-  report.style.maxWidth = "100%";
-  host.appendChild(status);
-  host.appendChild(report);
-  document.body.appendChild(veil);
-  document.body.appendChild(host);
-  return {
-    host,
-    veil,
-    cleanup() {
-      if (host.parentNode) host.parentNode.removeChild(host);
-      if (veil.parentNode) veil.parentNode.removeChild(veil);
-    },
-  };
-}
-
 async function saveAll() {
   collectFromDom();
   updateStatus();
@@ -3443,66 +3461,10 @@ async function saveAll() {
   downloadBlob(base + ".ereport", new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
   downloadBlob(base + ".html", new Blob([buildSavedHtml(data)], { type: "text/html;charset=utf-8" }));
 
-  let capture = null;
   try {
-    if (!window.html2canvas || !window.jspdf || !window.jspdf.jsPDF) {
-      throw new Error("PDF libraries missing");
-    }
-    await withLightPdfCapture(async () => {
-      const report = buildPdfReportElement(data);
-      capture = mountPdfCaptureHost(report);
-      await inlineImagesForPdf(report);
-      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-      const pdfScale = 1.25;
-      const blockRanges = collectPdfBlockRanges(report, pdfScale);
-      const canvas = await html2canvas(report, {
-        scale: pdfScale,
-        useCORS: true,
-        allowTaint: false,
-        backgroundColor: "#ffffff",
-        logging: false,
-        imageTimeout: 20000,
-        foreignObjectRendering: false,
-        width: Math.max(report.scrollWidth || 0, report.offsetWidth || 0, 900),
-        height: Math.max(report.scrollHeight || 0, report.offsetHeight || 0, 200),
-        windowWidth: Math.max(report.scrollWidth || 0, 900),
-        windowHeight: Math.max(report.scrollHeight || 0, 200),
-        onclone: (clonedDoc, cloned) => preparePdfCloneForCapture(cloned, clonedDoc),
-      });
-      capture.cleanup();
-      capture = null;
-      if (!canvas || canvas.width < 8 || canvas.height < 8) {
-        throw new Error("PDF canvas empty");
-      }
-      // Detect near-blank canvases (all white / transparent) — sample corners + center.
-      try {
-        const probe = canvas.getContext("2d");
-        if (probe) {
-          const spots = [
-            [0, 0],
-            [Math.max(0, canvas.width - 40), 0],
-            [0, Math.max(0, canvas.height - 40)],
-            [Math.floor(canvas.width / 2), Math.floor(canvas.height / 2)],
-          ];
-          let ink = 0;
-          for (const [sx, sy] of spots) {
-            const sample = probe.getImageData(sx, sy, Math.min(40, canvas.width - sx), Math.min(40, canvas.height - sy)).data;
-            for (let i = 0; i < sample.length; i += 4) {
-              if (sample[i] < 250 || sample[i + 1] < 250 || sample[i + 2] < 250) ink++;
-            }
-          }
-          if (ink < 8) throw new Error("PDF canvas blank");
-        }
-      } catch (probeErr) {
-        if (String(probeErr && probeErr.message || "").includes("blank")) throw probeErr;
-      }
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
-      appendCanvasPagesAvoidingBlockSplits(pdf, canvas, blockRanges);
-      pdf.save(base + ".pdf");
-    });
+    const pdf = await buildNativeJsPdf(data);
+    pdf.save(base + ".pdf");
   } catch (err) {
-    if (capture) capture.cleanup();
     console.error(err);
     toast(".ereport y HTML OK. PDF falló. Abrí impresión como respaldo.");
     const w = window.open("", "_blank");

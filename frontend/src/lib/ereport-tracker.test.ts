@@ -125,35 +125,22 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain('window.addEventListener("pagehide", saveMainScroll)');
   });
 
-  it("embeds API images into exports and captures PDF on-screen under a veil for tablet text", () => {
+  it("embeds API images into exports and builds PDF with native jsPDF (no html2canvas capture)", () => {
     expect(tracker).toContain("function embedImagesInPayload(");
-    expect(tracker).toContain("function inlineImagesForPdf(");
-    expect(tracker).toContain("function mountPdfCaptureHost(");
-    expect(tracker).toContain("function preparePdfCloneForCapture(");
-    expect(tracker).toContain("function forceLightPdfChrome(");
-    expect(tracker).toContain("function withLightPdfCapture(");
-    expect(tracker).toContain("color-scheme: light !important");
+    expect(tracker).toContain("function buildNativeJsPdf(");
+    expect(tracker).toContain("async function buildNativeJsPdf(");
     expect(tracker).toContain('credentials: "include"');
-    expect(tracker).toContain("Generando PDF");
-    expect(tracker).toContain("data-pdf-capture-host");
-    expect(tracker).toContain("z-index:2147483000");
+    expect(tracker).toContain("pdf.save(base + \".pdf\")");
+    expect(tracker).toContain("splitTextToSize");
+    expect(tracker).not.toContain("function mountPdfCaptureHost(");
+    expect(tracker).not.toContain("function inlineImagesForPdf(");
+    expect(tracker).not.toContain("html2canvas(report");
     expect(tracker).not.toContain("translate(-120vw,-120vh)");
-    expect(tracker).not.toContain("opacity:0;pointer-events:none;z-index:-1");
-    expect(tracker).toContain("PDF canvas empty");
-    expect(tracker).toContain("PDF canvas blank");
-    expect(tracker).toContain("Arial,Helvetica,sans-serif");
+    expect(tracker).toContain("color-scheme: light !important");
   });
 
   it("stacks tracker columns through tablet landscape widths", () => {
     expect(tracker).toContain("@media (max-width: 90rem)");
     expect(tracker).toContain(".qa-pair { grid-template-columns: 1fr; }");
-  });
-
-  it("slices PDF pages between pdf-block cards instead of mid-card", () => {
-    expect(tracker).toContain('class="pdf-block"');
-    expect(tracker).toContain("function collectPdfBlockRanges(");
-    expect(tracker).toContain("function findPdfPageEnd(");
-    expect(tracker).toContain("function appendCanvasPagesAvoidingBlockSplits(");
-    expect(tracker).not.toContain("heightLeft -= pageH - margin * 2");
   });
 });
