@@ -1081,6 +1081,24 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 }
 
 @media print {
+  /* Browsers often skip dark backgrounds; white ink on white paper = blank print. */
+  html, body {
+    color-scheme: light !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  body.theme-dark {
+    --bg: #ffffff;
+    --ink: #000000;
+    --muted: #555555;
+    --card: #ffffff;
+    --surface: #f3f3f3;
+    --line: #cccccc;
+    --section-head-bg: #dcdcdc;
+    --inverse-bg: #000000;
+    --inverse-ink: #ffffff;
+    color-scheme: light !important;
+  }
   .topbar, .sidebar, .howto, .group-actions, .section-actions button, .app-actions, .item-top button, .nav-tip, .toast, .thumb-del, .collapse-toggle { display: none !important; }
   .section-body, .group-body, .item-body { display: block !important; }
   .layout { display: block; }
@@ -3291,7 +3309,36 @@ async function embedImagesInPayload(raw) {
   return data;
 }
 
-function preparePdfCloneForCapture(cloned) {
+/** Dark color-scheme makes html2canvas paint white/invisible glyphs on light PDF sheets. */
+function forceLightPdfChrome(doc) {
+  if (!doc) return;
+  const root = doc.documentElement;
+  const body = doc.body;
+  if (root) {
+    root.style.colorScheme = "light";
+    root.style.setProperty("color-scheme", "light");
+  }
+  if (body) {
+    body.classList.remove("theme-dark");
+    body.style.colorScheme = "light";
+    body.style.setProperty("color-scheme", "light");
+    body.style.background = "#ffffff";
+    body.style.color = "#000000";
+    body.style.setProperty("--bg", "#ffffff");
+    body.style.setProperty("--ink", "#000000");
+    body.style.setProperty("--muted", "#555555");
+    body.style.setProperty("--card", "#ffffff");
+    body.style.setProperty("--surface", "#f3f3f3");
+    body.style.setProperty("--line", "#cccccc");
+    body.style.setProperty("--section-head-bg", "#dcdcdc");
+    body.style.setProperty("--inverse-bg", "#000000");
+    body.style.setProperty("--inverse-ink", "#ffffff");
+  }
+}
+
+function preparePdfCloneForCapture(cloned, clonedDoc) {
+  const doc = clonedDoc || (cloned && cloned.ownerDocument) || null;
+  forceLightPdfChrome(doc);
   cloned.style.transform = "none";
   cloned.style.opacity = "1";
   cloned.style.visibility = "visible";
@@ -3317,6 +3364,34 @@ function preparePdfCloneForCapture(cloned) {
     const inline = String(node.getAttribute("style") || "");
     if (!/color\s*:/.test(inline)) node.style.color = "#000000";
   });
+}
+
+/** Temporarily drop dark theme so the live capture host paints black ink. */
+function withLightPdfCapture(run) {
+  const html = document.documentElement;
+  const body = document.body;
+  const prevHtmlScheme = html.style.colorScheme;
+  const prevBodyScheme = body.style.colorScheme;
+  const prevHtmlAttr = html.getAttribute("style");
+  const prevBodyAttr = body.getAttribute("style");
+  const hadDark = body.classList.contains("theme-dark");
+  // Class + color-scheme only on the live DOM (clone gets full forceLightPdfChrome).
+  body.classList.remove("theme-dark");
+  html.style.colorScheme = "light";
+  body.style.colorScheme = "light";
+  return Promise.resolve()
+    .then(run)
+    .finally(() => {
+      if (prevHtmlAttr == null) html.removeAttribute("style");
+      else html.setAttribute("style", prevHtmlAttr);
+      if (prevBodyAttr == null) body.removeAttribute("style");
+      else body.setAttribute("style", prevBodyAttr);
+      html.style.colorScheme = prevHtmlScheme;
+      body.style.colorScheme = prevBodyScheme;
+      if (hadDark) body.classList.add("theme-dark");
+      else body.classList.remove("theme-dark");
+      adoptHostTheme();
+    });
 }
 
 function mountPdfCaptureHost(report) {
@@ -3373,49 +3448,59 @@ async function saveAll() {
     if (!window.html2canvas || !window.jspdf || !window.jspdf.jsPDF) {
       throw new Error("PDF libraries missing");
     }
-    const report = buildPdfReportElement(data);
-    capture = mountPdfCaptureHost(report);
-    await inlineImagesForPdf(report);
-    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-    const pdfScale = 1.25;
-    const blockRanges = collectPdfBlockRanges(report, pdfScale);
-    const canvas = await html2canvas(report, {
-      scale: pdfScale,
-      useCORS: true,
-      allowTaint: false,
-      backgroundColor: "#ffffff",
-      logging: false,
-      imageTimeout: 20000,
-      foreignObjectRendering: false,
-      width: Math.max(report.scrollWidth || 0, report.offsetWidth || 0, 900),
-      height: Math.max(report.scrollHeight || 0, report.offsetHeight || 0, 200),
-      windowWidth: Math.max(report.scrollWidth || 0, 900),
-      windowHeight: Math.max(report.scrollHeight || 0, 200),
-      onclone: (_doc, cloned) => preparePdfCloneForCapture(cloned),
-    });
-    capture.cleanup();
-    capture = null;
-    if (!canvas || canvas.width < 8 || canvas.height < 8) {
-      throw new Error("PDF canvas empty");
-    }
-    // Detect near-blank canvases (all white / transparent).
-    try {
-      const probe = canvas.getContext("2d");
-      if (probe) {
-        const sample = probe.getImageData(0, 0, Math.min(canvas.width, 40), Math.min(canvas.height, 40)).data;
-        let ink = 0;
-        for (let i = 0; i < sample.length; i += 4) {
-          if (sample[i] < 250 || sample[i + 1] < 250 || sample[i + 2] < 250) ink++;
-        }
-        if (ink < 8) throw new Error("PDF canvas blank");
+    await withLightPdfCapture(async () => {
+      const report = buildPdfReportElement(data);
+      capture = mountPdfCaptureHost(report);
+      await inlineImagesForPdf(report);
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      const pdfScale = 1.25;
+      const blockRanges = collectPdfBlockRanges(report, pdfScale);
+      const canvas = await html2canvas(report, {
+        scale: pdfScale,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: "#ffffff",
+        logging: false,
+        imageTimeout: 20000,
+        foreignObjectRendering: false,
+        width: Math.max(report.scrollWidth || 0, report.offsetWidth || 0, 900),
+        height: Math.max(report.scrollHeight || 0, report.offsetHeight || 0, 200),
+        windowWidth: Math.max(report.scrollWidth || 0, 900),
+        windowHeight: Math.max(report.scrollHeight || 0, 200),
+        onclone: (clonedDoc, cloned) => preparePdfCloneForCapture(cloned, clonedDoc),
+      });
+      capture.cleanup();
+      capture = null;
+      if (!canvas || canvas.width < 8 || canvas.height < 8) {
+        throw new Error("PDF canvas empty");
       }
-    } catch (probeErr) {
-      if (String(probeErr && probeErr.message || "").includes("blank")) throw probeErr;
-    }
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
-    appendCanvasPagesAvoidingBlockSplits(pdf, canvas, blockRanges);
-    pdf.save(base + ".pdf");
+      // Detect near-blank canvases (all white / transparent) — sample corners + center.
+      try {
+        const probe = canvas.getContext("2d");
+        if (probe) {
+          const spots = [
+            [0, 0],
+            [Math.max(0, canvas.width - 40), 0],
+            [0, Math.max(0, canvas.height - 40)],
+            [Math.floor(canvas.width / 2), Math.floor(canvas.height / 2)],
+          ];
+          let ink = 0;
+          for (const [sx, sy] of spots) {
+            const sample = probe.getImageData(sx, sy, Math.min(40, canvas.width - sx), Math.min(40, canvas.height - sy)).data;
+            for (let i = 0; i < sample.length; i += 4) {
+              if (sample[i] < 250 || sample[i + 1] < 250 || sample[i + 2] < 250) ink++;
+            }
+          }
+          if (ink < 8) throw new Error("PDF canvas blank");
+        }
+      } catch (probeErr) {
+        if (String(probeErr && probeErr.message || "").includes("blank")) throw probeErr;
+      }
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
+      appendCanvasPagesAvoidingBlockSplits(pdf, canvas, blockRanges);
+      pdf.save(base + ".pdf");
+    });
   } catch (err) {
     if (capture) capture.cleanup();
     console.error(err);
@@ -3423,13 +3508,21 @@ async function saveAll() {
     const w = window.open("", "_blank");
     if (w) {
       w.document.write(
-        "<html><head><title>PDF</title><style>body{font-family:Arial,Helvetica,sans-serif;color:#000;background:#fff;padding:1rem}</style></head><body>" +
+        "<!DOCTYPE html><html><head><meta charset=\"utf-8\" /><title>PDF</title>" +
+          "<style>html,body{color-scheme:light;background:#fff;color:#000;font-family:Arial,Helvetica,sans-serif;padding:1rem}</style>" +
+          "</head><body>" +
           buildPdfReportElement(data).innerHTML +
           "</body></html>",
       );
       w.document.close();
-      w.focus();
-      w.print();
+      const doPrint = () => {
+        try {
+          w.focus();
+          w.print();
+        } catch (_) { /* ignore */ }
+      };
+      if (w.document.readyState === "complete") setTimeout(doPrint, 50);
+      else w.addEventListener("load", () => setTimeout(doPrint, 50));
     }
   }
   toast("Exportación iniciada: .ereport + HTML + PDF");

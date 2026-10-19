@@ -130,6 +130,9 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain("function inlineImagesForPdf(");
     expect(tracker).toContain("function mountPdfCaptureHost(");
     expect(tracker).toContain("function preparePdfCloneForCapture(");
+    expect(tracker).toContain("function forceLightPdfChrome(");
+    expect(tracker).toContain("function withLightPdfCapture(");
+    expect(tracker).toContain("color-scheme: light !important");
     expect(tracker).toContain('credentials: "include"');
     expect(tracker).toContain("Generando PDF");
     expect(tracker).toContain("data-pdf-capture-host");
