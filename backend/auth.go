@@ -239,6 +239,7 @@ func (a *App) issueSession(w http.ResponseWriter, user *User) (*Session, error) 
 		AbsoluteExpiresAt: now.Add(refreshAbsolute),
 		FamilyCreatedAt:   now,
 		CreatedAt:         now,
+		UpdatedAt:         now,
 		LastUsedAt:        now,
 	}
 	if err := a.store.InsertSession(context.Background(), sess); err != nil {
@@ -276,19 +277,25 @@ func (a *App) rotateSession(w http.ResponseWriter, old *Session, user *User) (*S
 		AbsoluteExpiresAt: old.AbsoluteExpiresAt,
 		FamilyCreatedAt:   old.FamilyCreatedAt,
 		CreatedAt:         now,
+		UpdatedAt:         now,
 		LastUsedAt:        now,
 	}
-	old.Revoked = true
-	old.RevokeReason = "rotation"
-	old.ReplacedBySessionID = next.SessionID
-	if err := a.store.UpdateSession(context.Background(), old); err != nil {
+	// Insert successor first so grace lookups never see a dangling ReplacedBySessionID.
+	if err := a.store.InsertSession(context.Background(), next); err != nil {
 		return nil, err
 	}
-	if err := a.store.InsertSession(context.Background(), next); err != nil {
+	// CAS: only one concurrent rotator may claim the old session.
+	if err := a.store.ClaimSessionRotation(context.Background(), old.SessionID, old.RefreshTokenHash, next.SessionID); err != nil {
+		next.Revoked = true
+		next.RevokeReason = "rotate_abort"
+		next.UpdatedAt = time.Now().UTC()
+		_ = a.store.UpdateSession(context.Background(), next)
+		a.sessionCache.invalidate(next.SessionID)
 		return nil, err
 	}
 	a.sessionCache.invalidate(old.SessionID)
 	a.sessionCache.invalidate(next.SessionID)
+	a.sessionCache.invalidateFamily(old.FamilyID)
 	token, err := a.signAccess(user.ID, next.SessionID)
 	if err != nil {
 		return nil, err
@@ -296,6 +303,40 @@ func (a *App) rotateSession(w http.ResponseWriter, old *Session, user *User) (*S
 	a.setCookie(w, a.accessCookieName(), token, int(accessTTL.Seconds()))
 	a.setCookie(w, a.refreshCookieName(), refresh, int(time.Until(expires).Seconds()))
 	return next, nil
+}
+
+func rotationGraceEligible(sess *Session) bool {
+	if sess == nil || !sess.Revoked || sess.RevokeReason != "rotation" || sess.ReplacedBySessionID == "" {
+		return false
+	}
+	if sess.UpdatedAt.IsZero() {
+		return false
+	}
+	return time.Since(sess.UpdatedAt.UTC()) <= refreshRotationGrace
+}
+
+// aliveSuccessor walks a short rotation chain to the current alive tip.
+func (a *App) aliveSuccessor(ctx context.Context, revoked *Session) *Session {
+	if revoked == nil {
+		return nil
+	}
+	id := revoked.ReplacedBySessionID
+	for i := 0; i < 8 && id != ""; i++ {
+		sess, err := a.store.SessionByID(ctx, id)
+		if err != nil {
+			return nil
+		}
+		if refreshSessionAlive(sess) {
+			return sess
+		}
+		// Keep walking any linked replacement (rotation winners); skip dead ends.
+		if sess.ReplacedBySessionID != "" {
+			id = sess.ReplacedBySessionID
+			continue
+		}
+		return nil
+	}
+	return nil
 }
 
 func (a *App) clearAuthCookies(w http.ResponseWriter) {
@@ -425,13 +466,17 @@ func (a *App) validCSRF(r *http.Request) bool {
 }
 
 func (a *App) requireUnsafe(w http.ResponseWriter, r *http.Request) bool {
+	start := time.Now().UTC()
 	originOK := a.validOrigin(r)
 	csrfOK := a.validCSRF(r)
+	csrfReason := a.csrfFailureReason(r)
 	if !originOK || !csrfOK {
 		a.logAuthDebug(r, "require_unsafe_denied",
 			slog.Bool("origin_ok", originOK),
 			slog.Bool("csrf_ok", csrfOK),
-			slog.String("csrf_reason", a.csrfFailureReason(r)),
+			slog.String("csrf_reason", csrfReason),
+			slog.String("reason", "csrf_or_origin"),
+			slog.Int64("duration_ms", time.Since(start).Milliseconds()),
 		)
 		a.writeSafeError(w, r, http.StatusForbidden, "csrf_invalid")
 		return false
@@ -439,7 +484,8 @@ func (a *App) requireUnsafe(w http.ResponseWriter, r *http.Request) bool {
 	a.logAuthDebug(r, "require_unsafe_ok",
 		slog.Bool("origin_ok", originOK),
 		slog.Bool("csrf_ok", csrfOK),
-		slog.String("csrf_reason", a.csrfFailureReason(r)),
+		slog.String("csrf_reason", csrfReason),
+		slog.Int64("duration_ms", time.Since(start).Milliseconds()),
 	)
 	return true
 }
@@ -471,19 +517,34 @@ func (a *App) safeProfile(user *User) map[string]any {
 }
 
 func (a *App) csrfHandler(w http.ResponseWriter, r *http.Request) {
+	start := time.Now().UTC()
 	token := a.mintCSRF(w, r)
-	a.logAuthDebug(r, "csrf_minted", slog.Bool("has_token", token != ""))
+	a.logAuthDebug(r, "csrf_minted",
+		slog.Bool("has_token", token != ""),
+		slog.String("session_state", a.sessionDebugState(r)),
+		slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+	)
 	writeJSON(w, http.StatusOK, map[string]string{"csrf": token})
 }
 
 func (a *App) meHandler(w http.ResponseWriter, r *http.Request) {
+	start := time.Now().UTC()
 	user := a.currentUser(r)
 	if user == nil {
-		a.logAuthDebug(r, "me_guest", slog.String("session_state", a.sessionDebugState(r)))
+		a.logAuthDebug(r, "me_guest",
+			slog.String("reason", "unauthorized"),
+			slog.String("session_state", a.sessionDebugState(r)),
+			slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+		)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
-	a.logAuthDebug(r, "me_authed", slog.String("user_id", user.ID), slog.String("role", user.Role))
+	a.logAuthDebug(r, "me_authed",
+		slog.String("reason", "ok"),
+		slog.String("user_id", user.ID),
+		slog.String("role", user.Role),
+		slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+	)
 	writeJSON(w, http.StatusOK, a.safeProfile(user))
 }
 
@@ -507,6 +568,7 @@ func (a *App) dummyPasswordCheck(password string) {
 }
 
 func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
+	start := time.Now().UTC()
 	a.logAuthDebug(r, "login_start")
 	if !a.requireUnsafe(w, r) {
 		return
@@ -518,6 +580,7 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		a.logValidation(r, "invalid_json")
+		a.auditEvent(r, "login", "failure", "")
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
@@ -545,12 +608,20 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		ident = usernameNorm
 	}
 	if !a.loginIPLimit.allow(ip) || !a.loginIDLimit.allow(ident) {
-		a.logAuthDebug(r, "login_rate_limited")
+		a.logAuthDebug(r, "login_rate_limited",
+			slog.String("reason", "rate_limited"),
+			slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+		)
+		a.auditEvent(r, "login", "failure", "")
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
 	if (hasEmail && !emailOK) || (!hasEmail && !usernameOK) {
-		a.logAuthDebug(r, "login_denied", slog.String("reason", "invalid_identifier"))
+		a.logAuthDebug(r, "login_denied",
+			slog.String("reason", "invalid_identifier"),
+			slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+		)
+		a.auditEvent(r, "login", "failure", "")
 		a.dummyPasswordCheck(body.Password)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
@@ -561,69 +632,95 @@ func (a *App) loginHandler(w http.ResponseWriter, r *http.Request) {
 		if user == nil {
 			a.dummyPasswordCheck(body.Password)
 		}
+		reason := loginDenialReason(user, passwordOK)
 		a.logAuthDebug(r, "login_denied",
-			slog.String("reason", loginDenialReason(user, passwordOK)),
+			slog.String("reason", reason),
 			slog.Bool("has_user", user != nil),
+			slog.Int64("duration_ms", time.Since(start).Milliseconds()),
 		)
+		// Always-on audit uses stable success/failure; reason codes stay in auth_debug.
 		a.auditEvent(r, "login", "failure", "")
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
 	sess, err := a.issueSessionLogged(w, r, user)
 	if err != nil {
-		a.logAuthDebug(r, "login_session_failed", slog.String("reason", redactLogValue(err.Error())))
+		a.logAuthDebug(r, "login_session_failed",
+			slog.String("reason", "issue_session_failed"),
+			slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+		)
 		a.auditEvent(r, "login", "failure", "")
 		a.writeSafeError(w, r, http.StatusUnauthorized, "invalid_credentials")
 		return
 	}
 	a.auditEvent(r, "login", "success", user.ID)
-	a.logAuthDebug(r, "login_success", slog.String("user_id", user.ID))
+	a.logAuthDebug(r, "login_success",
+		slog.String("reason", "success"),
+		slog.String("user_id", user.ID),
+		slog.String("session_id", sess.SessionID),
+		slog.String("family_id", sess.FamilyID),
+		slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+	)
 	profile := a.safeProfile(user)
 	profile["csrf"] = sess.CSRF
 	writeJSON(w, http.StatusOK, profile)
 }
 
 func (a *App) logoutHandler(w http.ResponseWriter, r *http.Request) {
+	start := time.Now().UTC()
 	a.logAuthDebug(r, "logout_start")
 	if !a.requireUnsafe(w, r) {
 		return
 	}
 	a.logAuthDebug(r, "logout_csrf_ok")
+	var sessionID, familyID string
 	if sess := a.currentSession(r); sess != nil {
+		sessionID, familyID = sess.SessionID, sess.FamilyID
 		a.logAuthDebug(r, "logout_revoke_access_session",
-			slog.String("session_id", sess.SessionID),
-			slog.String("family_id", sess.FamilyID),
+			slog.String("session_id", sessionID),
+			slog.String("family_id", familyID),
 		)
 		_ = a.revokeFamily(r.Context(), sess.FamilyID, "logout")
 		a.sessionCache.invalidate(sess.SessionID)
 	} else if cookie, err := r.Cookie(a.refreshCookieName()); err == nil && cookie.Value != "" {
 		if sess, err := a.store.SessionByRefreshHash(r.Context(), a.hashOpaque("refresh", cookie.Value)); err == nil {
+			sessionID, familyID = sess.SessionID, sess.FamilyID
 			a.logAuthDebug(r, "logout_revoke_refresh_session",
-				slog.String("session_id", sess.SessionID),
-				slog.String("family_id", sess.FamilyID),
+				slog.String("session_id", sessionID),
+				slog.String("family_id", familyID),
 			)
 			_ = a.revokeFamily(r.Context(), sess.FamilyID, "logout")
 			a.sessionCache.invalidate(sess.SessionID)
 		} else {
-			a.logAuthDebug(r, "logout_refresh_lookup_failed")
+			a.logAuthDebug(r, "logout_refresh_lookup_failed", slog.String("reason", "session_not_found"))
 		}
 	} else {
-		a.logAuthDebug(r, "logout_no_session")
+		a.logAuthDebug(r, "logout_no_session", slog.String("reason", "no_session"))
 	}
 	a.clearAuthCookies(w)
 	a.auditEvent(r, "logout", "success", "")
-	a.logAuthDebug(r, "logout_success")
+	a.logAuthDebug(r, "logout_success",
+		slog.String("reason", "success"),
+		slog.String("session_id", sessionID),
+		slog.String("family_id", familyID),
+		slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+	)
 	writeJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
 
 func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
+	start := time.Now().UTC()
 	a.logAuthDebug(r, "refresh_start")
 	if !a.requireUnsafe(w, r) {
 		return
 	}
 	cookie, err := r.Cookie(a.refreshCookieName())
 	if err != nil || cookie.Value == "" {
-		a.logAuthDebug(r, "refresh_denied", slog.String("reason", "missing_refresh_cookie"))
+		a.logAuthDebug(r, "refresh_denied",
+			slog.String("reason", "missing_refresh_cookie"),
+			slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+		)
+		a.auditEvent(r, "refresh", "missing_refresh_cookie", "")
 		a.clearAuthCookies(w)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
@@ -631,29 +728,136 @@ func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
 	hash := a.hashOpaque("refresh", cookie.Value)
 	sess, err := a.store.SessionByRefreshHash(r.Context(), hash)
 	if err != nil {
-		a.logAuthDebug(r, "refresh_denied", slog.String("reason", "session_not_found"))
-		a.clearAuthCookies(w)
-		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
-		return
-	}
-	if sess.Revoked {
 		a.logAuthDebug(r, "refresh_denied",
-			slog.String("reason", "refresh_reuse"),
-			slog.String("session_id", sess.SessionID),
-			slog.String("family_id", sess.FamilyID),
+			slog.String("reason", "session_not_found"),
+			slog.Int64("duration_ms", time.Since(start).Milliseconds()),
 		)
-		_ = a.revokeFamily(r.Context(), sess.FamilyID, "reuse")
-		a.sessionCache.invalidate(sess.SessionID)
+		a.auditEvent(r, "refresh", "session_not_found", "")
 		a.clearAuthCookies(w)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
+
+	finishOK := func(user *User, next *Session, reason string) {
+		a.auditEvent(r, "refresh", reason, user.ID)
+		a.logAuthDebug(r, "refresh_success",
+			slog.String("reason", reason),
+			slog.String("user_id", user.ID),
+			slog.String("session_id", next.SessionID),
+			slog.String("family_id", next.FamilyID),
+			slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+		)
+		writeJSON(w, http.StatusOK, a.safeProfile(user))
+	}
+
+	denyReuse := func(s *Session, reason string) {
+		a.logAuthDebug(r, "refresh_denied",
+			slog.String("reason", reason),
+			slog.String("session_id", s.SessionID),
+			slog.String("family_id", s.FamilyID),
+			slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+		)
+		a.auditEvent(r, "refresh", reason, "")
+		_ = a.revokeFamily(r.Context(), s.FamilyID, "reuse")
+		a.sessionCache.invalidate(s.SessionID)
+		a.clearAuthCookies(w)
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+	}
+
+	tryGraceRotate := func(revoked *Session, user *User) bool {
+		if !rotationGraceEligible(revoked) {
+			return false
+		}
+		for attempt := 0; attempt < 8; attempt++ {
+			tip := a.aliveSuccessor(r.Context(), revoked)
+			if tip == nil {
+				return false
+			}
+			a.logAuthDebug(r, "refresh_grace",
+				slog.String("reason", "ok_rotation_grace"),
+				slog.String("session_id", revoked.SessionID),
+				slog.String("family_id", revoked.FamilyID),
+				slog.String("successor_id", tip.SessionID),
+				slog.Int("attempt", attempt),
+			)
+			next, rotErr := a.rotateSession(w, tip, user)
+			if rotErr == nil {
+				finishOK(user, next, "grace_ok")
+				return true
+			}
+			if !errors.Is(rotErr, errConflict) {
+				a.logAuthDebug(r, "refresh_rotate_failed",
+					slog.String("reason", "rotate_fail"),
+					slog.String("session_id", tip.SessionID),
+				)
+				a.auditEvent(r, "refresh", "rotate_fail", user.ID)
+				a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+				return true // handled
+			}
+			// Concurrent rotator won on this tip — walk the chain and retry.
+		}
+		// Still inside grace but lost every CAS race: soft-fail without killing the family.
+		a.logAuthDebug(r, "refresh_grace_exhausted",
+			slog.String("reason", "rotate_fail"),
+			slog.String("session_id", revoked.SessionID),
+			slog.String("family_id", revoked.FamilyID),
+		)
+		a.auditEvent(r, "refresh", "rotate_fail", user.ID)
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+		return true
+	}
+
+	loadUser := func(s *Session) (*User, bool) {
+		user, uerr := a.store.UserByID(r.Context(), s.UserID)
+		if uerr != nil || user.Status != statusVerified {
+			a.logAuthDebug(r, "refresh_denied",
+				slog.String("reason", "user_unavailable"),
+				slog.String("session_id", s.SessionID),
+				slog.Bool("user_found", uerr == nil),
+				slog.Int64("duration_ms", time.Since(start).Milliseconds()),
+			)
+			a.auditEvent(r, "refresh", "user_unavailable", "")
+			_ = a.revokeFamily(r.Context(), s.FamilyID, "disable")
+			a.sessionCache.invalidate(s.SessionID)
+			a.clearAuthCookies(w)
+			a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+			return nil, false
+		}
+		return user, true
+	}
+
+	if sess.Revoked {
+		user, ok := loadUser(sess)
+		if !ok {
+			return
+		}
+		if tryGraceRotate(sess, user) {
+			return
+		}
+		// Inside the grace window a missing tip is a soft failure — never kill the family.
+		if rotationGraceEligible(sess) {
+			a.logAuthDebug(r, "refresh_grace_no_tip",
+				slog.String("reason", "rotate_fail"),
+				slog.String("session_id", sess.SessionID),
+				slog.String("family_id", sess.FamilyID),
+			)
+			a.auditEvent(r, "refresh", "rotate_fail", user.ID)
+			a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+			return
+		}
+		denyReuse(sess, "reuse")
+		return
+	}
+
 	now := time.Now().UTC()
 	if now.After(sess.ExpiresAt) || now.After(sess.AbsoluteExpiresAt) {
 		a.logAuthDebug(r, "refresh_denied",
-			slog.String("reason", "session_expired"),
+			slog.String("reason", "expired"),
 			slog.String("session_id", sess.SessionID),
+			slog.String("family_id", sess.FamilyID),
+			slog.Int64("duration_ms", time.Since(start).Milliseconds()),
 		)
+		a.auditEvent(r, "refresh", "expired", "")
 		_ = a.revokeFamily(r.Context(), sess.FamilyID, "expired")
 		a.sessionCache.invalidate(sess.SessionID)
 		a.clearAuthCookies(w)
@@ -661,34 +865,57 @@ func (a *App) refreshHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !a.refreshLimit.allow(sess.SessionID) {
-		a.logAuthDebug(r, "refresh_rate_limited", slog.String("session_id", sess.SessionID))
+		a.logAuthDebug(r, "refresh_rate_limited",
+			slog.String("reason", "rate_limited"),
+			slog.String("session_id", sess.SessionID),
+		)
+		a.auditEvent(r, "refresh", "rate_limited", "")
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
-	user, err := a.store.UserByID(r.Context(), sess.UserID)
-	if err != nil || user.Status != statusVerified {
-		a.logAuthDebug(r, "refresh_denied",
-			slog.String("reason", "user_unavailable"),
-			slog.String("session_id", sess.SessionID),
-			slog.Bool("user_found", err == nil),
-		)
-		_ = a.revokeFamily(r.Context(), sess.FamilyID, "disable")
-		a.sessionCache.invalidate(sess.SessionID)
-		a.clearAuthCookies(w)
-		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+	user, ok := loadUser(sess)
+	if !ok {
 		return
 	}
 	a.logAuthDebug(r, "refresh_rotating",
 		slog.String("session_id", sess.SessionID),
+		slog.String("family_id", sess.FamilyID),
 		slog.String("user_id", user.ID),
 	)
-	if _, err := a.rotateSession(w, sess, user); err != nil {
-		a.logAuthDebug(r, "refresh_rotate_failed", slog.String("reason", redactLogValue(err.Error())))
+	next, rotErr := a.rotateSession(w, sess, user)
+	if rotErr != nil {
+		if errors.Is(rotErr, errConflict) {
+			// Concurrent refresh already rotated — fall through to grace/reuse on the same hash.
+			again, lookErr := a.store.SessionByRefreshHash(r.Context(), hash)
+			if lookErr == nil && again.Revoked {
+				if tryGraceRotate(again, user) {
+					return
+				}
+				if rotationGraceEligible(again) {
+					a.auditEvent(r, "refresh", "rotate_fail", user.ID)
+					a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+					return
+				}
+				denyReuse(again, "reuse")
+				return
+			}
+			a.logAuthDebug(r, "refresh_rotate_failed",
+				slog.String("reason", "rotate_conflict"),
+				slog.String("session_id", sess.SessionID),
+			)
+			a.auditEvent(r, "refresh", "rotate_fail", user.ID)
+			a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+			return
+		}
+		a.logAuthDebug(r, "refresh_rotate_failed",
+			slog.String("reason", "rotate_fail"),
+			slog.String("session_id", sess.SessionID),
+		)
+		a.auditEvent(r, "refresh", "rotate_fail", user.ID)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return
 	}
-	a.logAuthDebug(r, "refresh_success", slog.String("user_id", user.ID))
-	writeJSON(w, http.StatusOK, a.safeProfile(user))
+	finishOK(user, next, "ok")
 }
 
 func (a *App) issueOTP(user *User, purpose, emailNorm string) (string, error) {

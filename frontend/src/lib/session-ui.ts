@@ -1,6 +1,18 @@
-import { deleteAvatar, getCsrf, getMe, loginPayload, markSessionHint, postJSON, profileAvatarURL, resetCsrfMemory, uploadAvatar, type MeResponse } from "./api";
+import {
+  deleteAvatar,
+  getCsrf,
+  getMe,
+  isTransientAuthStatus,
+  loginPayload,
+  markSessionHint,
+  postJSON,
+  profileAvatarURL,
+  resetCsrfMemory,
+  uploadAvatar,
+  type MeResponse,
+} from "./api";
 import { syncAntibotAction, consumeAntibot, isAntibotArmed } from "./antibot";
-import { sessionLog, sessionLogCookies, sessionLogStorage } from "./dev-log";
+import { sessionLog, sessionLogCookies } from "./dev-log";
 
 declare global {
   interface Window {
@@ -12,6 +24,12 @@ import { showErrorModal } from "./error-modal";
 import { go } from "./router";
 
 export { profileAvatarURL };
+
+function antibotNotArmedMessage(): string {
+  return document.documentElement.lang.startsWith("es")
+    ? "Completa la verificación de seguridad antes de continuar."
+    : "Complete the security check before continuing.";
+}
 
 export type SessionCopy = {
   loading: string;
@@ -448,29 +466,60 @@ export function redirectAfterAuth(): void {
   go(next ?? "/");
 }
 
+async function getMeWithTransientRetry(
+  label: "requireGuest" | "requireAuth",
+): Promise<{ status: number; data: MeResponse; requestId: string }> {
+  let result = await getMe();
+  sessionLog(`session.${label}.me`, {
+    status: result.status,
+    userId: result.data.id,
+    role: result.data.role,
+    error: result.data.error,
+    attempt: 1,
+  });
+  if (isTransientAuthStatus(result.status)) {
+    sessionLog(`session.${label}.transient_retry`, { status: result.status });
+    result = await getMe({ force: true });
+    sessionLog(`session.${label}.me`, {
+      status: result.status,
+      userId: result.data.id,
+      role: result.data.role,
+      error: result.data.error,
+      attempt: 2,
+    });
+  }
+  return result;
+}
+
 export async function requireGuest(root: HTMLElement, copy: SessionCopy): Promise<boolean> {
   setBanner(root, copy.loading);
   sessionLog("session.requireGuest.start");
   try {
-    const { status, data } = await getMe();
-    sessionLog("session.requireGuest.me", { status, userId: data.id, error: data.error });
+    const { status, data } = await getMeWithTransientRetry("requireGuest");
     if (status === 200) {
       redirectAfterAuth();
       return false;
     }
-    if (status !== 401) {
-      setBanner(root, copy.loadError, "err");
-      showErrorModal({
-        message: data.message || copy.loadError,
-        requestId: data.request_id,
-        details: data.request_id ? `request_id=${data.request_id}` : "",
-        debug: data.debug,
-      });
+    if (status === 401) {
+      setBanner(root, copy.signInPrompt);
       return true;
     }
-    setBanner(root, copy.signInPrompt);
+    if (isTransientAuthStatus(status)) {
+      // Still transient after one retry — keep the form usable; no hard modal yet.
+      sessionLog("session.requireGuest.transient_keep", { status });
+      setBanner(root, copy.signInPrompt);
+      return true;
+    }
+    setBanner(root, copy.loadError, "err");
+    showErrorModal({
+      message: data.message || copy.loadError,
+      requestId: data.request_id,
+      details: data.request_id ? `request_id=${data.request_id}` : "",
+      debug: data.debug,
+    });
     return true;
   } catch {
+    sessionLog("session.requireGuest.throw");
     setBanner(root, copy.loadError, "err");
     showErrorModal({ message: copy.loadError });
     return true;
@@ -491,8 +540,7 @@ export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise
   };
 
   try {
-    const { status, data } = await getMe();
-    sessionLog("session.requireAuth.me", { status, userId: data.id, role: data.role, error: data.error });
+    const { status, data } = await getMeWithTransientRetry("requireAuth");
     if (status === 401) {
       if (fallback instanceof HTMLElement) fallback.hidden = false;
       setPanelsHidden(true);
@@ -501,23 +549,32 @@ export async function requireAuth(root: HTMLElement, copy: SessionCopy): Promise
       setBanner(root, fallback instanceof HTMLElement ? "" : copy.unauthorized);
       return null;
     }
-    if (status !== 200) {
+    if (status === 200) {
+      if (fallback instanceof HTMLElement) fallback.hidden = true;
+      setPanelsHidden(false);
+      await refreshAuthChrome();
+      return data;
+    }
+    if (isTransientAuthStatus(status)) {
+      // Still transient after one retry — do not hard-fail the page on first wave.
+      sessionLog("session.requireAuth.transient_keep", { status });
       if (fallback instanceof HTMLElement) fallback.hidden = false;
       setPanelsHidden(true);
-      setBanner(root, copy.loadError, "err");
-      showErrorModal({
-        message: data.message || copy.loadError,
-        requestId: data.request_id,
-        details: data.request_id ? `request_id=${data.request_id}` : "",
-        debug: data.debug,
-      });
+      setBanner(root, fallback instanceof HTMLElement ? "" : copy.loadError, fallback instanceof HTMLElement ? "" : "err");
       return null;
     }
-    if (fallback instanceof HTMLElement) fallback.hidden = true;
-    setPanelsHidden(false);
-    await refreshAuthChrome();
-    return data;
+    if (fallback instanceof HTMLElement) fallback.hidden = false;
+    setPanelsHidden(true);
+    setBanner(root, copy.loadError, "err");
+    showErrorModal({
+      message: data.message || copy.loadError,
+      requestId: data.request_id,
+      details: data.request_id ? `request_id=${data.request_id}` : "",
+      debug: data.debug,
+    });
+    return null;
   } catch {
+    sessionLog("session.requireAuth.throw");
     if (fallback instanceof HTMLElement) fallback.hidden = false;
     setPanelsHidden(true);
     setBanner(root, copy.loadError, "err");
@@ -639,6 +696,8 @@ async function persistLoginForm(form: HTMLFormElement): Promise<void> {
     form.querySelector<HTMLButtonElement>("button[data-session-login], button[type='submit']") ??
     form.querySelector<HTMLButtonElement>("button");
   if (actionBtn && !isAntibotArmed(actionBtn)) {
+    sessionLog("session.login.antibot_not_armed");
+    setBanner(root, antibotNotArmedMessage(), "err");
     return;
   }
   if (!form.reportValidity()) {

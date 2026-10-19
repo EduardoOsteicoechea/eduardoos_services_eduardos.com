@@ -1,4 +1,15 @@
-import { clearMeCache, clearSessionHint, getMe, hasSessionHint, postJSON, profileAvatarURL, refreshSession, resetCsrfMemory } from "./api";
+import {
+  clearMeCache,
+  clearSessionHint,
+  getMe,
+  hasSessionHint,
+  isTransientAuthStatus,
+  postJSON,
+  profileAvatarURL,
+  refreshSession,
+  resetCsrfMemory,
+  subscribeSessionBroadcast,
+} from "./api";
 import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { exposeEreportConnectorGlobal, wireEreportConnectorMenu } from "./ereport-connector-modal";
@@ -17,6 +28,7 @@ const PHONE_TRAY_MQ = "(max-width: 47.999rem)";
 const SESSION_REFRESH_MS = 8 * 60 * 1000;
 
 let sessionRefreshTimer: ReturnType<typeof setInterval> | undefined;
+let sessionBroadcastUnsub: (() => void) | undefined;
 
 function isPhoneTray(): boolean {
   return window.matchMedia(PHONE_TRAY_MQ).matches;
@@ -301,24 +313,77 @@ function clearSessionRefreshTimer(): void {
   }
 }
 
+function applyRefreshResult(
+  result: { status: number; data: { id?: string } },
+  opts?: { rescheduleOnOk?: boolean },
+): void {
+  if (result.status === 200 && result.data.id) {
+    void refreshAuthChrome();
+    if (opts?.rescheduleOnOk) {
+      scheduleSessionRefresh();
+    }
+    return;
+  }
+  // Only stop on definitive auth loss. Timeouts / 429 / 5xx must not kill the timer —
+  // otherwise the access cookie expires (~15m) with no further proactive refresh.
+  if (result.status === 401) {
+    sessionLog("chrome.session.refresh.unauthorized", { status: result.status });
+    clearSessionRefreshTimer();
+    clearMeCache();
+    clearSessionHint();
+    resetCsrfMemory();
+    void refreshAuthChrome();
+    return;
+  }
+  if (isTransientAuthStatus(result.status)) {
+    sessionLog("chrome.session.refresh.transient_keep", { status: result.status });
+  }
+}
+
+/**
+ * Proactive renew: probe /auth/me first. If the access cookie is still valid,
+ * skip refresh-token rotation (another tab or recent activity may have renewed it).
+ */
+async function runProactiveSessionRenew(reason: "timer" | "visibility"): Promise<void> {
+  sessionLog(reason === "timer" ? "chrome.session.timer_tick" : "chrome.visibility.refresh");
+  try {
+    const me = await getMe({ force: true });
+    if (me.status === 200 && me.data.id) {
+      sessionLog("chrome.session.skip_refresh_because_me_ok", { reason, userId: me.data.id });
+      if (reason === "timer") {
+        scheduleSessionRefresh();
+      } else {
+        void refreshAuthChrome();
+        scheduleSessionRefresh();
+      }
+      return;
+    }
+    if (isTransientAuthStatus(me.status)) {
+      sessionLog("chrome.session.me_probe_transient", { reason, status: me.status });
+    }
+  } catch {
+    sessionLog("chrome.session.me_probe_error", { reason });
+  }
+  const result = await refreshSession();
+  applyRefreshResult(result, { rescheduleOnOk: reason === "visibility" });
+}
+
+function bindSessionBroadcast(): void {
+  if (sessionBroadcastUnsub) {
+    return;
+  }
+  sessionBroadcastUnsub = subscribeSessionBroadcast(() => {
+    sessionLog("chrome.session.broadcast_refreshed");
+    // Another tab already rotated refresh — sync chrome only; do not post /auth/refresh again.
+    void refreshAuthChrome();
+  });
+}
+
 function scheduleSessionRefresh(): void {
   clearSessionRefreshTimer();
+  bindSessionBroadcast();
   sessionRefreshTimer = setInterval(() => {
-    void refreshSession().then((result) => {
-      if (result.status === 200 && result.data.id) {
-        void refreshAuthChrome();
-        return;
-      }
-      // Only stop on definitive auth loss. Timeouts / 429 / 5xx must not kill the timer —
-      // otherwise the access cookie expires (~15m) with no further proactive refresh.
-      if (result.status === 401) {
-        clearSessionRefreshTimer();
-        clearMeCache();
-        clearSessionHint();
-        resetCsrfMemory();
-        void refreshAuthChrome();
-      }
-    });
+    void runProactiveSessionRenew("timer");
   }, SESSION_REFRESH_MS);
   if (typeof document !== "undefined" && !document.documentElement.dataset.sessionVisBound) {
     document.documentElement.dataset.sessionVisBound = "1";
@@ -326,21 +391,7 @@ function scheduleSessionRefresh(): void {
       if (document.visibilityState !== "visible") {
         return;
       }
-      sessionLog("chrome.visibility.refresh");
-      void refreshSession().then((result) => {
-        if (result.status === 200 && result.data.id) {
-          void refreshAuthChrome();
-          scheduleSessionRefresh();
-          return;
-        }
-        if (result.status === 401) {
-          clearSessionRefreshTimer();
-          clearMeCache();
-          clearSessionHint();
-          resetCsrfMemory();
-          void refreshAuthChrome();
-        }
-      });
+      void runProactiveSessionRenew("visibility");
     });
   }
 }
@@ -535,10 +586,6 @@ function enforceGuestInstitutesAccess(authed: boolean): void {
   go("/session");
 }
 
-function isTransientAuthStatus(status: number): boolean {
-  return status === 0 || status === 429 || (status >= 500 && status <= 599);
-}
-
 export async function refreshAuthChrome(): Promise<void> {
   sessionLog("chrome.refreshAuth.start", {});
   const { status, data } = await getMe();
@@ -548,6 +595,7 @@ export async function refreshAuthChrome(): Promise<void> {
       status,
       error: data.error,
       hadHint: hasSessionHint(),
+      keepChrome: true,
     });
     return;
   }

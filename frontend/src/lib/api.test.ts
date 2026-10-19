@@ -8,6 +8,7 @@ import {
   getCsrf,
   getMe,
   hasSessionHint,
+  isTransientAuthStatus,
   loginPayload,
   markSessionHint,
   patchJSON,
@@ -16,6 +17,7 @@ import {
   refreshSession,
   resetCsrfMemory,
   setAgentRoutePayload,
+  subscribeSessionBroadcast,
   uploadAvatar,
 } from "./api";
 
@@ -72,11 +74,106 @@ describe("api csrf and errors", () => {
     });
     vi.stubGlobal("fetch", fetchMock);
     const pending = getMe();
-    await vi.advanceTimersByTimeAsync(12000);
+    // /auth/me restore uses authTimeoutMs (30s), not the default 12s API timeout.
+    await vi.advanceTimersByTimeAsync(30000);
     const result = await pending;
     expect(result.status).toBe(0);
     expect(result.data.error).toBe("internal_error");
     vi.useRealTimers();
+  });
+
+  it("classifies transient auth statuses", () => {
+    expect(isTransientAuthStatus(0)).toBe(true);
+    expect(isTransientAuthStatus(429)).toBe(true);
+    expect(isTransientAuthStatus(500)).toBe(true);
+    expect(isTransientAuthStatus(503)).toBe(true);
+    expect(isTransientAuthStatus(401)).toBe(false);
+    expect(isTransientAuthStatus(403)).toBe(false);
+    expect(isTransientAuthStatus(200)).toBe(false);
+  });
+
+  it("retries unsafe POST once on csrf_invalid", async () => {
+    resetCsrfMemory();
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse(200, { csrf: "csrf-1" }))
+      .mockResolvedValueOnce(
+        jsonResponse(403, { error: "csrf_invalid", message: "CSRF check failed." }, { "X-Request-ID": "rid-csrf-bad" }),
+      )
+      .mockResolvedValueOnce(jsonResponse(200, { csrf: "csrf-2" }))
+      .mockResolvedValueOnce(jsonResponse(200, { ok: true }, { "X-Request-ID": "rid-csrf-ok" }));
+    vi.stubGlobal("fetch", fetchMock);
+    const result = await postJSON("/scrib/books", { name: "A" });
+    expect(result.status).toBe(200);
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/csrf")).toHaveLength(2);
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/scrib/books")).toHaveLength(2);
+  });
+
+  it("does not remint CSRF on generic forbidden (entitlements)", async () => {
+    resetCsrfMemory();
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse(200, { csrf: "csrf-1" }))
+      .mockResolvedValueOnce(
+        jsonResponse(403, { error: "forbidden", message: "Missing entitlement." }, { "X-Request-ID": "rid-forbid" }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+    const result = await postJSON("/scrib/books", { name: "A" });
+    expect(result.status).toBe(403);
+    expect(result.data.error).toBe("forbidden");
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/auth/csrf")).toHaveLength(1);
+    expect(fetchMock.mock.calls.filter((call) => call[0] === "/api/scrib/books")).toHaveLength(1);
+  });
+
+  it("skips localStorage refresh when another tab holds a fresh lock", async () => {
+    vi.useFakeTimers();
+    const originalDescriptor = Object.getOwnPropertyDescriptor(Navigator.prototype, "locks")
+      ?? Object.getOwnPropertyDescriptor(navigator, "locks");
+    Object.defineProperty(navigator, "locks", { value: undefined, configurable: true });
+    // Hold the lock longer than the wait loop so we never acquire.
+    localStorage.setItem("eduardoos.refresh-lock", String(Date.now() + 60_000));
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    try {
+      const pending = refreshSession();
+      await vi.advanceTimersByTimeAsync(15_000);
+      const result = await pending;
+      expect(result.status).toBe(0);
+      expect(fetchMock).not.toHaveBeenCalled();
+    } finally {
+      localStorage.removeItem("eduardoos.refresh-lock");
+      if (originalDescriptor) {
+        Object.defineProperty(navigator, "locks", originalDescriptor);
+      } else {
+        delete (navigator as { locks?: unknown }).locks;
+      }
+      vi.useRealTimers();
+    }
+  });
+
+  it("exposes subscribeSessionBroadcast for cross-tab chrome sync", () => {
+    const handlers: Array<(event: MessageEvent) => void> = [];
+    class FakeBroadcastChannel {
+      name: string;
+      constructor(name: string) {
+        this.name = name;
+      }
+      addEventListener(_type: string, handler: (event: MessageEvent) => void) {
+        handlers.push(handler);
+      }
+      removeEventListener() {}
+      close() {}
+      postMessage() {}
+    }
+    vi.stubGlobal("BroadcastChannel", FakeBroadcastChannel);
+    const seen: unknown[] = [];
+    const unsub = subscribeSessionBroadcast((msg) => seen.push(msg));
+    expect(handlers).toHaveLength(1);
+    handlers[0]({ data: { type: "session-refreshed", at: 1 } } as MessageEvent);
+    expect(seen).toEqual([{ type: "session-refreshed", at: 1 }]);
+    handlers[0]({ data: { type: "other" } } as MessageEvent);
+    expect(seen).toHaveLength(1);
+    unsub();
   });
 
   it("attempts refresh on /api/auth/me after a browser restart", async () => {
@@ -344,7 +441,7 @@ describe("api csrf and errors", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     const pending = getMe();
-    await vi.advanceTimersByTimeAsync(12000);
+    await vi.advanceTimersByTimeAsync(30000);
     const failed = await pending;
     expect(failed.status).toBe(0);
 

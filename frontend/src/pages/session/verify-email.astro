@@ -35,6 +35,7 @@ import Layout from "../../layouts/Layout.astro";
 <script>
   import { attachFormAntibot, consumeAntibot, isAntibotArmed } from "../../lib/antibot";
   import { postJSON, type MeResponse } from "../../lib/api";
+  import { sessionLog } from "../../lib/dev-log";
   import { afterAuthChange, emailFromQuery, prefillEmailFields, reportFailure, onSessionPageReady, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
   import { go } from "../../lib/router";
 
@@ -52,10 +53,12 @@ import Layout from "../../layouts/Layout.astro";
       if (!(form instanceof HTMLFormElement)) return;
       setBusy(form, true);
       const data = new FormData(form);
+      sessionLog("session.verify.start", { email: String(data.get("email") ?? "") });
       const result = await postJSON<MeResponse>("/auth/verify-email", {
         email: String(data.get("email") ?? ""),
         otp: String(data.get("otp") ?? ""),
       });
+      sessionLog("session.verify.result", { status: result.status, error: result.data.error });
       setBusy(form, false);
       const message = reportFailure(copy, result.status, result.data, "Verification accepted.");
       setBanner(root, message.text, message.kind);
@@ -69,11 +72,23 @@ import Layout from "../../layouts/Layout.astro";
       const form = event.currentTarget;
       if (!(form instanceof HTMLFormElement)) return;
       const actionBtn = form.querySelector<HTMLButtonElement>("button[type='submit']");
-      if (!isAntibotArmed(actionBtn)) return;
+      if (!isAntibotArmed(actionBtn)) {
+        sessionLog("session.resend.antibot_not_armed");
+        setBanner(
+          root,
+          document.documentElement.lang.startsWith("es")
+            ? "Completa la verificación de seguridad antes de continuar."
+            : "Complete the security check before continuing.",
+          "err",
+        );
+        return;
+      }
       consumeAntibot(actionBtn);
       setBusy(form, true);
       const data = new FormData(form);
+      sessionLog("session.resend.start", { email: String(data.get("email") ?? "") });
       const result = await postJSON<MeResponse>("/auth/resend-verification", { email: String(data.get("email") ?? "") });
+      sessionLog("session.resend.result", { status: result.status, error: result.data.error });
       setBusy(form, false);
       const message = reportFailure(copy, result.status, result.data, "If that account needs verification, a new code was sent.");
       setBanner(root, message.text, message.kind);

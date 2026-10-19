@@ -254,6 +254,17 @@ func TestRefreshRotationAndReuseRevokesFamily(t *testing.T) {
 		t.Fatal("refresh must rotate the opaque token")
 	}
 
+	// Expire the rotation grace window so presenting the old token is real reuse.
+	oldHash := app.hashOpaque("refresh", firstRefresh)
+	oldSess, err := app.store.SessionByRefreshHash(context.Background(), oldHash)
+	if err != nil {
+		t.Fatal(err)
+	}
+	oldSess.UpdatedAt = time.Now().UTC().Add(-(refreshRotationGrace + time.Second))
+	if err := app.store.UpdateSession(context.Background(), oldSess); err != nil {
+		t.Fatal(err)
+	}
+
 	reuse := httptest.NewRequest(http.MethodPost, "/api/auth/refresh", bytes.NewBufferString(`{}`))
 	reuse.Header.Set("Content-Type", "application/json")
 	reuse.Header.Set("Origin", app.cfg.AllowedOrigins[0])

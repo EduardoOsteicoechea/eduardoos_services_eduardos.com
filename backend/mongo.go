@@ -203,12 +203,37 @@ func (s *mongoStore) InsertSession(ctx context.Context, sess *Session) error {
 }
 
 func (s *mongoStore) UpdateSession(ctx context.Context, sess *Session) error {
+	if sess.UpdatedAt.IsZero() {
+		sess.UpdatedAt = time.Now().UTC()
+	}
 	res, err := s.sessions().ReplaceOne(ctx, bson.M{"session_id": sess.SessionID}, sess)
 	if err != nil {
 		return err
 	}
 	if res.MatchedCount == 0 {
 		return errNotFound
+	}
+	return nil
+}
+
+func (s *mongoStore) ClaimSessionRotation(ctx context.Context, sessionID, expectedRefreshHash, nextSessionID string) error {
+	now := time.Now().UTC()
+	res, err := s.sessions().UpdateOne(ctx, bson.M{
+		"session_id":         sessionID,
+		"revoked":            false,
+		"refresh_token_hash": expectedRefreshHash,
+	}, bson.M{"$set": bson.M{
+		"revoked":                true,
+		"revoke_reason":          "rotation",
+		"replaced_by_session_id": nextSessionID,
+		"updated_at":             now,
+		"last_used_at":           now,
+	}})
+	if err != nil {
+		return err
+	}
+	if res.MatchedCount == 0 {
+		return errConflict
 	}
 	return nil
 }
@@ -238,15 +263,17 @@ func (s *mongoStore) SessionByRefreshHash(ctx context.Context, hash string) (*Se
 }
 
 func (s *mongoStore) RevokeFamily(ctx context.Context, familyID, reason string) error {
+	now := time.Now().UTC()
 	_, err := s.sessions().UpdateMany(ctx, bson.M{"family_id": familyID, "revoked": false}, bson.M{
-		"$set": bson.M{"revoked": true, "revoke_reason": reason},
+		"$set": bson.M{"revoked": true, "revoke_reason": reason, "updated_at": now},
 	})
 	return err
 }
 
 func (s *mongoStore) RevokeUserSessions(ctx context.Context, userID, reason string) error {
+	now := time.Now().UTC()
 	_, err := s.sessions().UpdateMany(ctx, bson.M{"user_id": userID, "revoked": false}, bson.M{
-		"$set": bson.M{"revoked": true, "revoke_reason": reason},
+		"$set": bson.M{"revoked": true, "revoke_reason": reason, "updated_at": now},
 	})
 	return err
 }

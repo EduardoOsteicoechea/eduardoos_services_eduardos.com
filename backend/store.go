@@ -24,13 +24,14 @@ const (
 	roleAdmin        = "admin"
 	otpEmailVerify   = "email_verify"
 	otpPasswordReset = "password_reset"
-	refreshRolling   = 30 * 24 * time.Hour
-	refreshAbsolute  = 90 * 24 * time.Hour
-	accessTTL        = 15 * time.Minute
-	otpTTL           = 10 * time.Minute
-	otpMaxAttempts   = 5
-	maxAvatarBytes   = 5 << 20
-	maxAvatarEdge    = 2048
+	refreshRolling        = 30 * 24 * time.Hour
+	refreshAbsolute       = 90 * 24 * time.Hour
+	accessTTL             = 15 * time.Minute
+	refreshRotationGrace  = 30 * time.Second
+	otpTTL                = 10 * time.Minute
+	otpMaxAttempts        = 5
+	maxAvatarBytes        = 5 << 20
+	maxAvatarEdge         = 2048
 )
 
 type User struct {
@@ -85,6 +86,7 @@ type Session struct {
 	AbsoluteExpiresAt   time.Time `bson:"absolute_expires_at"`
 	FamilyCreatedAt     time.Time `bson:"family_created_at"`
 	CreatedAt           time.Time `bson:"created_at"`
+	UpdatedAt           time.Time `bson:"updated_at,omitempty"`
 	LastUsedAt          time.Time `bson:"last_used_at"`
 }
 
@@ -148,6 +150,9 @@ type DataStore interface {
 	ListUsers(ctx context.Context) ([]*User, error)
 	InsertSession(ctx context.Context, sess *Session) error
 	UpdateSession(ctx context.Context, sess *Session) error
+	// ClaimSessionRotation marks an active session as rotated iff the refresh hash still matches.
+	// Returns errConflict when another rotator already won (or the session is otherwise inactive).
+	ClaimSessionRotation(ctx context.Context, sessionID, expectedRefreshHash, nextSessionID string) error
 	SessionByID(ctx context.Context, id string) (*Session, error)
 	SessionByRefreshHash(ctx context.Context, hash string) (*Session, error)
 	RevokeFamily(ctx context.Context, familyID, reason string) error
@@ -357,6 +362,9 @@ func (s *memoryStore) InsertSession(_ context.Context, sess *Session) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	cp := sess.clone()
+	if cp.UpdatedAt.IsZero() {
+		cp.UpdatedAt = cp.CreatedAt
+	}
 	s.sessions[sess.SessionID] = cp
 	s.refresh[sess.RefreshTokenHash] = sess.SessionID
 	return nil
@@ -373,7 +381,30 @@ func (s *memoryStore) UpdateSession(_ context.Context, sess *Session) error {
 		delete(s.refresh, old.RefreshTokenHash)
 		s.refresh[sess.RefreshTokenHash] = sess.SessionID
 	}
-	s.sessions[sess.SessionID] = sess.clone()
+	cp := sess.clone()
+	if cp.UpdatedAt.IsZero() {
+		cp.UpdatedAt = time.Now().UTC()
+	}
+	s.sessions[sess.SessionID] = cp
+	return nil
+}
+
+func (s *memoryStore) ClaimSessionRotation(_ context.Context, sessionID, expectedRefreshHash, nextSessionID string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	sess, ok := s.sessions[sessionID]
+	if !ok {
+		return errNotFound
+	}
+	if sess.Revoked || sess.RefreshTokenHash != expectedRefreshHash {
+		return errConflict
+	}
+	now := time.Now().UTC()
+	sess.Revoked = true
+	sess.RevokeReason = "rotation"
+	sess.ReplacedBySessionID = nextSessionID
+	sess.UpdatedAt = now
+	sess.LastUsedAt = now
 	return nil
 }
 
@@ -400,10 +431,12 @@ func (s *memoryStore) SessionByRefreshHash(_ context.Context, hash string) (*Ses
 func (s *memoryStore) RevokeFamily(_ context.Context, familyID, reason string) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	now := time.Now().UTC()
 	for _, sess := range s.sessions {
 		if sess.FamilyID == familyID && !sess.Revoked {
 			sess.Revoked = true
 			sess.RevokeReason = reason
+			sess.UpdatedAt = now
 		}
 	}
 	return nil
@@ -412,10 +445,12 @@ func (s *memoryStore) RevokeFamily(_ context.Context, familyID, reason string) e
 func (s *memoryStore) RevokeUserSessions(_ context.Context, userID, reason string) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	now := time.Now().UTC()
 	for _, sess := range s.sessions {
 		if sess.UserID == userID && !sess.Revoked {
 			sess.Revoked = true
 			sess.RevokeReason = reason
+			sess.UpdatedAt = now
 		}
 	}
 	return nil

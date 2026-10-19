@@ -95,12 +95,17 @@ func (a *App) csrfFailureReason(r *http.Request) string {
 				}
 				return "csrf_mismatch_refresh_session"
 			}
-			if sess.Revoked {
-				return "refresh_session_revoked_fallback_bind"
+			// Mirror validCSRF: revoked refresh on /api/auth/refresh is an allowed probe path.
+			if sess.Revoked && r.URL.Path == "/api/auth/refresh" {
+				if hmacEqual(want, sess.CSRFHash) {
+					return "ok_refresh_reuse_probe"
+				}
+				return "csrf_mismatch_revoked_refresh"
 			}
-			return "refresh_session_expired_fallback_bind"
+			// Dead refresh on other routes falls through to guest csrfbind (same as validCSRF).
+		} else {
+			return "refresh_session_lookup_failed"
 		}
-		return "refresh_session_lookup_failed"
 	}
 	cookie, err := r.Cookie(a.csrfBindCookieName())
 	if err != nil || cookie.Value == "" {

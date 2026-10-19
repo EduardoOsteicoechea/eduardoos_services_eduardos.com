@@ -289,6 +289,7 @@ func (a *App) changePasswordHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	a.logAuthDebug(r, "change_password_revoking_sessions", slog.String("user_id", user.ID))
 	_ = a.revokeUserSessions(r.Context(), user.ID, "password_change")
+	a.auditEvent(r, "password_revoke", "password_change", user.ID)
 	if _, err := a.issueSessionLogged(w, r, user); err != nil {
 		a.logAuthDebug(r, "change_password_session_failed")
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
@@ -430,6 +431,7 @@ func (a *App) resetPasswordHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	a.logAuthDebug(r, "password_reset_revoking_sessions", slog.String("user_id", user.ID))
 	_ = a.revokeUserSessions(r.Context(), user.ID, "reset")
+	a.auditEvent(r, "password_revoke", "reset", user.ID)
 	a.clearAuthCookies(w)
 	a.auditEvent(r, "password_reset", "success", user.ID)
 	a.logAuthDebug(r, "password_reset_success", slog.String("user_id", user.ID))

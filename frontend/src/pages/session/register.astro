@@ -36,6 +36,7 @@ import Layout from "../../layouts/Layout.astro";
 <script>
   import { attachFormAntibot, consumeAntibot, isAntibotArmed } from "../../lib/antibot";
   import { postJSON, type MeResponse } from "../../lib/api";
+  import { sessionLog } from "../../lib/dev-log";
   import { go } from "../../lib/router";
   import { reportFailure, onSessionPageReady, requireGuest, sessionCopy, setBanner, setBusy } from "../../lib/session-ui";
 
@@ -51,15 +52,27 @@ import Layout from "../../layouts/Layout.astro";
       const form = event.currentTarget;
       if (!(form instanceof HTMLFormElement)) return;
       const actionBtn = form.querySelector<HTMLButtonElement>("button[type='submit']");
-      if (!isAntibotArmed(actionBtn)) return;
+      if (!isAntibotArmed(actionBtn)) {
+        sessionLog("session.register.antibot_not_armed");
+        setBanner(
+          root,
+          document.documentElement.lang.startsWith("es")
+            ? "Completa la verificación de seguridad antes de continuar."
+            : "Complete the security check before continuing.",
+          "err",
+        );
+        return;
+      }
       consumeAntibot(actionBtn);
       setBusy(form, true);
       const data = new FormData(form);
+      sessionLog("session.register.start", { email: String(data.get("email") ?? "") });
       const result = await postJSON<MeResponse>("/auth/register", {
         email: String(data.get("email") ?? ""),
         username: String(data.get("username") ?? ""),
         password: String(data.get("password") ?? ""),
       });
+      sessionLog("session.register.result", { status: result.status, error: result.data.error });
       setBusy(form, false);
       const message = reportFailure(copy, result.status, result.data, "If that email can be used, a verification code was sent.");
       if (result.status === 200 && message.kind === "ok") {

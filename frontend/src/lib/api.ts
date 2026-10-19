@@ -1,4 +1,4 @@
-import { sessionLog, sessionLogCookies } from "./dev-log";
+import { beginSessionTrace, sessionDebugEnabled, sessionLog, sessionLogCookies } from "./dev-log";
 
 export type HealthResponse = {
   status: string;
@@ -236,6 +236,76 @@ let meCacheEpoch = 0;
 const SESSION_HINT_KEY = "eduardoos.session-hint";
 const REFRESH_LOCK_KEY = "eduardoos.refresh-lock";
 const REFRESH_LOCK_MS = 15000;
+const SESSION_BC_NAME = "eduardoos-session";
+
+const apiTimeoutMs = 12000;
+/** CSRF + refresh + /auth/me restore must outlive a slow VPS/Mongo round-trip; 12s was aborting mid-session renew. */
+const authTimeoutMs = 30000;
+const REQUEST_TIMEOUT_MESSAGE = "The request took too long. Please try again.";
+
+export type SessionBroadcastMessage = {
+  type: "session-refreshed";
+  at: number;
+};
+
+/** True for network timeout (0), rate limit (429), or server errors (5xx). */
+export function isTransientAuthStatus(status: number): boolean {
+  return status === 0 || status === 429 || (status >= 500 && status <= 599);
+}
+
+function isRefreshLockHeldFresh(): boolean {
+  try {
+    const raw = localStorage.getItem(REFRESH_LOCK_KEY);
+    const until = raw ? Number(raw) : 0;
+    return Boolean(until && until >= Date.now());
+  } catch {
+    return false;
+  }
+}
+
+function broadcastSessionRefreshed(): void {
+  if (typeof BroadcastChannel === "undefined") {
+    return;
+  }
+  try {
+    const channel = new BroadcastChannel(SESSION_BC_NAME);
+    const message: SessionBroadcastMessage = { type: "session-refreshed", at: Date.now() };
+    channel.postMessage(message);
+    channel.close();
+    sessionLog("session.broadcast.posted", { type: message.type });
+  } catch {
+    /* BroadcastChannel unavailable */
+  }
+}
+
+/**
+ * Subscribe to cross-tab session events (e.g. successful refresh in another tab).
+ * Returns an unsubscribe function.
+ */
+export function subscribeSessionBroadcast(
+  handler: (message: SessionBroadcastMessage) => void,
+): () => void {
+  if (typeof BroadcastChannel === "undefined") {
+    return () => {};
+  }
+  try {
+    const channel = new BroadcastChannel(SESSION_BC_NAME);
+    const onMessage = (event: MessageEvent) => {
+      const data = event.data;
+      if (!data || typeof data !== "object" || (data as { type?: string }).type !== "session-refreshed") {
+        return;
+      }
+      handler(data as SessionBroadcastMessage);
+    };
+    channel.addEventListener("message", onMessage);
+    return () => {
+      channel.removeEventListener("message", onMessage);
+      channel.close();
+    };
+  } catch {
+    return () => {};
+  }
+}
 
 function apiUrl(path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
@@ -269,6 +339,10 @@ export function markSessionHint(): void {
 }
 
 export function clearMeCache(): void {
+  sessionLog("session.me.cache.clear", {
+    hadCache: meCache !== null,
+    epoch: meCacheEpoch,
+  });
   meCache = null;
   meCacheEpoch += 1;
 }
@@ -323,8 +397,11 @@ function guestMeAfterStaleEpoch(): MeResult {
 function fetchMeNetwork(): Promise<MeResult> {
   if (!meInFlight) {
     const epoch = meCacheEpoch;
+    beginSessionTrace();
+    sessionLog("session.me.cache.miss", { forceNetwork: true, epoch });
     meInFlight = (async () => {
-      const first = await apiSend<MeResponse>("/auth/me", {}, { skipAuthRetry: true });
+      const meOpts = { skipAuthRetry: true, timeoutMs: authTimeoutMs };
+      const first = await apiSend<MeResponse>("/auth/me", {}, meOpts);
       if (first.status === 200 && first.data.id) {
         if (epoch !== meCacheEpoch) {
           return guestMeAfterStaleEpoch();
@@ -343,7 +420,7 @@ function fetchMeNetwork(): Promise<MeResult> {
         if (epoch !== meCacheEpoch) {
           return guestMeAfterStaleEpoch();
         }
-        const retry = await apiSend<MeResponse>("/auth/me", {}, { skipAuthRetry: true });
+        const retry = await apiSend<MeResponse>("/auth/me", {}, meOpts);
         if (epoch !== meCacheEpoch) {
           return guestMeAfterStaleEpoch();
         }
@@ -370,6 +447,7 @@ function fetchMeNetwork(): Promise<MeResult> {
 
 function revalidateMeInBackground(): void {
   if (meInFlight || meRevalidateInFlight) return;
+  sessionLog("session.me.swr.start");
   meRevalidateInFlight = fetchMeNetwork().finally(() => {
     meRevalidateInFlight = null;
   });
@@ -397,25 +475,49 @@ function isAuthPath(path: string): boolean {
   );
 }
 
-async function withRefreshLock<T>(fn: () => Promise<T>): Promise<T> {
+async function withRefreshLock<T>(fn: () => Promise<T>): Promise<T | { status: number; data: APIErrorBody; requestId: string }> {
   const locks = typeof navigator !== "undefined" ? navigator.locks : undefined;
   if (locks?.request) {
-    return locks.request("eduardoos-session-refresh", fn);
+    sessionLog("session.refresh.lock.acquire", { via: "navigator.locks" });
+    return locks.request("eduardoos-session-refresh", async () => {
+      sessionLog("session.refresh.lock.held", { via: "navigator.locks" });
+      return fn();
+    });
   }
+
+  sessionLog("session.refresh.lock.fallback", { via: "localStorage" });
   const started = Date.now();
+  let acquired = false;
+
   while (Date.now() - started < REFRESH_LOCK_MS) {
     try {
-      const raw = localStorage.getItem(REFRESH_LOCK_KEY);
-      const until = raw ? Number(raw) : 0;
-      if (!until || until < Date.now()) {
-        localStorage.setItem(REFRESH_LOCK_KEY, String(Date.now() + REFRESH_LOCK_MS));
+      if (isRefreshLockHeldFresh()) {
+        sessionLog("session.refresh.lock.wait", {
+          remainingMs: Math.max(0, Number(localStorage.getItem(REFRESH_LOCK_KEY) || 0) - Date.now()),
+        });
+        await new Promise((r) => setTimeout(r, 50));
+        continue;
+      }
+      localStorage.setItem(REFRESH_LOCK_KEY, String(Date.now() + REFRESH_LOCK_MS));
+      // Confirm we still own a fresh lock after the write (lost race → wait).
+      if (isRefreshLockHeldFresh()) {
+        acquired = true;
+        sessionLog("session.refresh.lock.acquire", { via: "localStorage" });
         break;
       }
     } catch {
+      // localStorage unavailable — run without cross-tab lock.
+      acquired = true;
       break;
     }
-    await new Promise((r) => setTimeout(r, 50));
   }
+
+  if (!acquired) {
+    // Another tab still holds a fresh lock — do not start a second refresh POST.
+    sessionLog("session.refresh.lock.skip_held");
+    return timeoutResult<APIErrorBody>();
+  }
+
   try {
     return await fn();
   } finally {
@@ -485,11 +587,6 @@ function isUnsafe(method: string): boolean {
   return method !== "GET" && method !== "HEAD";
 }
 
-const apiTimeoutMs = 12000;
-/** CSRF + refresh must outlive a slow VPS/Mongo round-trip; 12s was aborting mid-session renew. */
-const authTimeoutMs = 30000;
-const REQUEST_TIMEOUT_MESSAGE = "The request took too long. Please try again.";
-
 type ApiSendOpts = {
   skipAuthRetry?: boolean;
   skipCsrfRetry?: boolean;
@@ -551,6 +648,9 @@ function logApiFailure(
     return;
   }
   if (path.includes("/auth/me") && status === 401) {
+    return;
+  }
+  if (!sessionDebugEnabled()) {
     return;
   }
   console.error("[api.error]", {
@@ -626,7 +726,15 @@ export async function apiSend<T>(
         hadHint: hasSessionHint(),
       });
       const refreshed = await refreshSession();
-      if (refreshed.status === 200 && refreshed.data.id) {
+      const retryOk = refreshed.status === 200 && Boolean(refreshed.data.id);
+      sessionLog("api.unauthorized_retry_outcome", {
+        path,
+        method,
+        ok: retryOk,
+        status: refreshed.status,
+        error: refreshed.data.error,
+      });
+      if (retryOk) {
         return apiSend<T>(path, init, { ...opts, skipAuthRetry: true });
       }
     }
@@ -635,12 +743,11 @@ export async function apiSend<T>(
       response.status === 403 &&
       isUnsafe(method) &&
       !opts.skipCsrfRetry &&
-      (data.error === "csrf_invalid" || data.error === "forbidden")
+      data.error === "csrf_invalid"
     ) {
-      // Prefer csrf_invalid (CSRF/origin). Legacy handlers still emit forbidden for
-      // the same case; entitlement denials also use forbidden — one CSRF remint is
-      // harmless there and must never clear cookies or flip chrome to guest.
-      sessionLog("api.forbidden_retry_csrf", { path, method, error: data.error });
+      // Remint CSRF only for explicit csrf_invalid — not generic forbidden
+      // (entitlement denials must not trigger a CSRF retry loop).
+      sessionLog("api.csrf_invalid_retry", { path, method, error: data.error });
       resetCsrfMemory();
       return apiSend<T>(path, init, { ...opts, skipCsrfRetry: true, forceCsrfRefresh: true });
     }
@@ -654,12 +761,14 @@ export async function apiSend<T>(
       error: err instanceof Error ? err.name : "unknown",
       message: err instanceof Error ? err.message : String(err),
     });
-    console.error("[api.network_error]", {
-      method,
-      path,
-      error: err instanceof Error ? err.name : "unknown",
-      message: err instanceof Error ? err.message : String(err),
-    });
+    if (sessionDebugEnabled()) {
+      console.error("[api.network_error]", {
+        method,
+        path,
+        error: err instanceof Error ? err.name : "unknown",
+        message: err instanceof Error ? err.message : String(err),
+      });
+    }
     if (isAbortError(err)) {
       return timeoutResult<T>();
     }
@@ -745,12 +854,15 @@ export async function getCsrf(force = false): Promise<string> {
 
 export async function refreshSession(): Promise<{ status: number; data: MeResponse; requestId: string }> {
   if (!refreshInFlight) {
+    beginSessionTrace();
     sessionLog("session.refresh.start");
     refreshInFlight = withRefreshLock(async () => {
       const result = await postJSON<MeResponse>("/auth/refresh", {}, { timeoutMs: authTimeoutMs });
       sessionLog("session.refresh.done", { status: result.status, userId: result.data.id });
       if (result.status === 200 && result.data.id) {
         markSessionHint();
+        rememberMeCache(result, meCacheEpoch);
+        broadcastSessionRefreshed();
       } else if (result.status === 401) {
         clearSessionHint();
         clearMeCache();
@@ -758,7 +870,7 @@ export async function refreshSession(): Promise<{ status: number; data: MeRespon
       return result;
     }).finally(() => {
       refreshInFlight = null;
-    });
+    }) as Promise<{ status: number; data: MeResponse; requestId: string }>;
   }
   return refreshInFlight;
 }
@@ -768,6 +880,10 @@ export async function getMe(opts?: { force?: boolean }): Promise<{ status: numbe
   if (!force && isMeCacheFresh()) {
     const cached = cachedMeResult();
     if (cached) {
+      sessionLog("session.me.cache.hit", {
+        requestId: cached.requestId,
+        ageMs: meCache ? Date.now() - meCache.fetchedAt : 0,
+      });
       revalidateMeInBackground();
       return cached;
     }
@@ -1252,11 +1368,7 @@ export async function uploadFileWithProgress<T = APIErrorBody>(
       xhr.send(body);
     });
 
-    if (
-      result.status === 403 &&
-      !forceCsrf &&
-      (result.data.error === "csrf_invalid" || result.data.error === "forbidden")
-    ) {
+    if (result.status === 403 && !forceCsrf && result.data.error === "csrf_invalid") {
       resetCsrfMemory();
       return attempt(true);
     }

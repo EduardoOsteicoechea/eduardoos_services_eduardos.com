@@ -101,16 +101,75 @@ describe("session forms", () => {
     vi.unstubAllGlobals();
   });
 
-  it("opens the modal for non-401 session load failures", async () => {
+  it("retries once on transient requireGuest status and skips the hard modal", async () => {
+    vi.mocked(getMe)
+      .mockResolvedValueOnce({
+        status: 0,
+        requestId: "",
+        data: { error: "internal_error", message: "The request took too long. Please try again." },
+      })
+      .mockResolvedValueOnce({
+        status: 401,
+        requestId: "rid-guest",
+        data: { error: "unauthorized", message: "Sign in to continue.", request_id: "rid-guest" },
+      });
+    const root = document.querySelector("[data-session]") as HTMLElement;
+    const ok = await requireGuest(root, sessionCopy());
+    expect(ok).toBe(true);
+    expect(getMe).toHaveBeenCalledTimes(2);
+    expect(vi.mocked(getMe).mock.calls[1]?.[0]).toEqual({ force: true });
+    expect(document.getElementById("error-modal")?.hidden).toBe(true);
+    expect(root.querySelector("[data-banner]")?.textContent).toBe("Sign in or create an account.");
+  });
+
+  it("opens the modal for non-transient session load failures after retry is not applicable", async () => {
     vi.mocked(getMe).mockResolvedValue({
-      status: 500,
-      requestId: "rid-500",
-      data: { error: "internal_error", message: "Something went wrong.", request_id: "rid-500" },
+      status: 403,
+      requestId: "rid-403",
+      data: { error: "forbidden", message: "Forbidden.", request_id: "rid-403" },
     });
     const root = document.querySelector("[data-session]") as HTMLElement;
     await requireGuest(root, sessionCopy());
     expect(document.getElementById("error-modal")?.hidden).toBe(false);
-    expect(document.querySelector("[data-error-message]")?.textContent).toBe("Something went wrong.");
+    expect(document.querySelector("[data-error-message]")?.textContent).toBe("Forbidden.");
+  });
+
+  it("retries once on transient requireAuth status without a hard modal", async () => {
+    vi.mocked(getMe)
+      .mockResolvedValueOnce({
+        status: 503,
+        requestId: "rid-503",
+        data: { error: "internal_error", message: "Something went wrong.", request_id: "rid-503" },
+      })
+      .mockResolvedValueOnce({
+        status: 200,
+        requestId: "rid-ok",
+        data: { id: "u1", email: "member@eduardoos.com", username: "member", role: "user" },
+      });
+    const root = document.querySelector("[data-session]") as HTMLElement;
+    const me = await requireAuth(root, sessionCopy());
+    expect(me?.id).toBe("u1");
+    expect(getMe).toHaveBeenCalledTimes(2);
+    expect(document.getElementById("error-modal")?.hidden).toBe(true);
+  });
+
+  it("shows a banner when login antibot is not armed", async () => {
+    document.body.innerHTML = `
+      <section data-session>
+        <p data-banner></p>
+        <form data-login>
+          <input name="identifier" value="member@eduardoos.com" required />
+          <input name="password" value="correct-horse-battery" required minlength="8" />
+          <button type="submit" data-session-login data-antibot-action>Sign in</button>
+        </form>
+      </section>
+    `;
+    startProfileActions();
+    (document.querySelector("[data-session-login]") as HTMLButtonElement).click();
+    await vi.waitFor(() => {
+      expect(document.querySelector("[data-banner]")?.textContent).toContain("security check");
+    });
+    expect(postJSON).not.toHaveBeenCalled();
   });
 
   it("maps auth form failures to the safe contract and opens the modal", () => {

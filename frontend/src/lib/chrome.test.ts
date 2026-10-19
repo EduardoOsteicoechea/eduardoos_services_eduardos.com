@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { getMe } from "./api";
+import { getMe, refreshSession } from "./api";
 import { applySessionAvatar, refreshAuthChrome, startChrome } from "./chrome";
 import { checkServiceAccess } from "./serviceAccess";
 import { go } from "./router";
@@ -11,7 +11,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 
 vi.mock("./api", async () => {
   const actual = await vi.importActual<typeof import("./api")>("./api");
-  return { ...actual, getMe: vi.fn() };
+  return { ...actual, getMe: vi.fn(), refreshSession: vi.fn() };
 });
 
 vi.mock("./serviceAccess", () => ({
@@ -59,8 +59,10 @@ describe("main-menu session chrome", () => {
 
   afterEach(() => {
     applySessionAvatar(null);
+    vi.useRealTimers();
     vi.clearAllMocks();
     document.body.innerHTML = "";
+    document.documentElement.removeAttribute("data-session-vis-bound");
     window.history.pushState({}, "", "/");
     window.__chromeStarted = false;
   });
@@ -205,6 +207,62 @@ describe("main-menu session chrome", () => {
     await refreshAuthChrome();
     expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
     expect((document.querySelector("[data-guest-only]") as HTMLElement).hidden).toBe(true);
+  });
+
+  it("skips refresh rotation when forced getMe still returns 200", async () => {
+    vi.useFakeTimers();
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-me",
+      data: { id: "member-1", role: "user" },
+    });
+    vi.mocked(refreshSession).mockResolvedValue({
+      status: 200,
+      requestId: "rid-refresh",
+      data: { id: "member-1", role: "user" },
+    });
+    await refreshAuthChrome();
+    const meCallsBeforeTick = vi.mocked(getMe).mock.calls.length;
+    await vi.advanceTimersByTimeAsync(8 * 60 * 1000);
+    await vi.waitFor(() => {
+      expect(vi.mocked(getMe).mock.calls.length).toBeGreaterThan(meCallsBeforeTick);
+    });
+    expect(vi.mocked(getMe).mock.calls.some((call) => call[0]?.force === true)).toBe(true);
+    expect(refreshSession).not.toHaveBeenCalled();
+    vi.useRealTimers();
+  });
+
+  it("keeps the session timer after a transient refresh failure", async () => {
+    vi.useFakeTimers();
+    vi.mocked(getMe)
+      .mockResolvedValueOnce({
+        status: 200,
+        requestId: "rid-me",
+        data: { id: "member-1", role: "user" },
+      })
+      .mockResolvedValue({
+        status: 401,
+        requestId: "rid-me-probe",
+        data: { error: "unauthorized" },
+      });
+    vi.mocked(refreshSession).mockResolvedValue({
+      status: 0,
+      requestId: "",
+      data: { error: "internal_error", message: "The request took too long. Please try again." },
+    });
+    await refreshAuthChrome();
+    await vi.advanceTimersByTimeAsync(8 * 60 * 1000);
+    await vi.waitFor(() => {
+      expect(refreshSession).toHaveBeenCalled();
+    });
+    // Timer must still fire again — transient must not clear the interval.
+    vi.mocked(refreshSession).mockClear();
+    await vi.advanceTimersByTimeAsync(8 * 60 * 1000);
+    await vi.waitFor(() => {
+      expect(refreshSession).toHaveBeenCalled();
+    });
+    expect((document.querySelector("[data-authed-only]") as HTMLElement).hidden).toBe(false);
+    vi.useRealTimers();
   });
 
   it("does not render a shopping cart control", () => {
