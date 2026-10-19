@@ -472,20 +472,85 @@ export function startEmusicPage(root: HTMLElement, opts: EmusicPageOpts): void {
   });
 
   const importInput = el<HTMLInputElement>(root, "[data-emusic-lyrics-import]");
-  importInput.addEventListener("change", async () => {
-    const file = importInput.files?.[0];
-    importInput.value = "";
-    if (!file || !admin || !selected) return;
+  const importStatus = el<HTMLElement>(root, "[data-emusic-import-status]");
+  const dropzone = el<HTMLElement>(root, "[data-emusic-dropzone]");
+  const browseBtn = el<HTMLButtonElement>(root, "[data-emusic-lyrics-browse]");
+
+  const setImportStatus = (text: string, ok = true) => {
+    importStatus.hidden = false;
+    importStatus.textContent = text;
+    importStatus.className = ok ? "status emusic__import-status" : "status emusic__import-status hint";
+  };
+
+  const loadEmusicFile = async (file: File) => {
+    if (!admin) return;
+    if (!selected) {
+      fail({ message: "Select a track before loading lyrics." }, "Select a track before loading lyrics.");
+      return;
+    }
+    const name = file.name.toLowerCase();
+    if (!name.endsWith(".emusic") && !name.endsWith(".json")) {
+      setImportStatus("Use a .emusic (or .json) file.", false);
+      fail({ message: "Expected a .emusic file." }, "Expected a .emusic file.");
+      return;
+    }
     try {
       const text = await file.text();
       const parsed = JSON.parse(text) as EmusicDocument;
+      if (!parsed || parsed.type !== "emusic") {
+        setImportStatus("Invalid contract: missing type \"emusic\".", false);
+        fail({ message: "Invalid .emusic document (type must be emusic)." }, "Invalid .emusic document.");
+        return;
+      }
       eDoc = normalizeEmusicDocument(parsed);
       lyricsDirty = true;
+      wordRef = flattenEmusicWords(eDoc)[0] ? { unit: 0, line: 0, word: 0 } : null;
+      const words = flattenEmusicWords(eDoc).length;
       renderLyrics();
+      fillWordFields();
+      setImportStatus(`Loaded ${file.name} · ${words} timed word${words === 1 ? "" : "s"}. Save to persist.`);
       setStatus(`Imported ${file.name}`);
     } catch {
+      setImportStatus("Could not parse JSON .emusic file.", false);
       fail({ message: "Invalid .emusic file." }, "Invalid .emusic file.");
     }
+  };
+
+  browseBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    importInput.click();
+  });
+  dropzone.addEventListener("click", (event) => {
+    if (event.target === browseBtn || browseBtn.contains(event.target as Node)) return;
+    importInput.click();
+  });
+  dropzone.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      importInput.click();
+    }
+  });
+  dropzone.addEventListener("dragenter", (event) => {
+    event.preventDefault();
+    dropzone.classList.add("emusic__dropzone--active");
+  });
+  dropzone.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    dropzone.classList.add("emusic__dropzone--active");
+  });
+  dropzone.addEventListener("dragleave", () => {
+    dropzone.classList.remove("emusic__dropzone--active");
+  });
+  dropzone.addEventListener("drop", (event) => {
+    event.preventDefault();
+    dropzone.classList.remove("emusic__dropzone--active");
+    const file = event.dataTransfer?.files?.[0];
+    if (file) void loadEmusicFile(file);
+  });
+  importInput.addEventListener("change", () => {
+    const file = importInput.files?.[0];
+    importInput.value = "";
+    if (file) void loadEmusicFile(file);
   });
 
   const applyWordEdit = () => {
