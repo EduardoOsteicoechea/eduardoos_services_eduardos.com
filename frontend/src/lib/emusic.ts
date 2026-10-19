@@ -29,6 +29,9 @@ function track(sectionId: string, id: string, title: string, fileName: string): 
 }
 
 const SALMO1 = "salmo1";
+const SALMO2 = "salmo2";
+const DREAMER = "dreamer";
+const LEARNER = "learner";
 
 export const EMUSIC_SECTIONS: EmusicSection[] = [
   {
@@ -52,6 +55,50 @@ export const EMUSIC_SECTIONS: EmusicSection[] = [
         "Salmo 1 - Justificado - Balada - D.mp3",
       ),
       track(SALMO1, "prosperado", "Prosperado", "Salmo 1 - Prosperado.mp3"),
+    ],
+  },
+  {
+    id: SALMO2,
+    title: "Salmo 2",
+    tracks: [
+      track(SALMO2, "amonestacion", "Amonestación", "Salmo 2 - Amonestación.mp3"),
+      track(SALMO2, "amonestado", "Amonestado", "Salmo 2 - Amonestado - G.mp3"),
+      track(SALMO2, "bienaventurado", "Bienaventurado", "Salmo 2 - Bienaventurado.mp3"),
+      track(SALMO2, "conflicto", "Conflicto", "Salmo 2 - Conflicto - G.mp3"),
+      track(SALMO2, "posesion", "Posesión", "Salmo 2 - Posesión.mp3"),
+      track(
+        SALMO2,
+        "recibimos-el-reino",
+        "Recibimos el Reino",
+        "Salmo 2 - Recibimos el Reino.mp3",
+      ),
+      track(SALMO2, "refugio", "Refugio", "Salmo 2 - Refugio..mp3"),
+      track(SALMO2, "viene", "Viene", "Salmo 2 - Viene.mp3"),
+    ],
+  },
+  {
+    id: DREAMER,
+    title: "Dreamer",
+    tracks: [
+      track(
+        DREAMER,
+        "dreamer-me-ha-hecho-bien",
+        "Me ha hecho bien",
+        "Me ha hecho bien E 2.m4a.mp3",
+      ),
+      track(DREAMER, "sigueme-remix", "Sígueme (Remix)", "sígueme  (Remix).mp3"),
+    ],
+  },
+  {
+    id: LEARNER,
+    title: "Learner",
+    tracks: [
+      track(
+        LEARNER,
+        "learner-me-ha-hecho-bien",
+        "Me ha hecho bien",
+        "Me ha hecho bien E 2.m4a.mp3",
+      ),
     ],
   },
 ];
