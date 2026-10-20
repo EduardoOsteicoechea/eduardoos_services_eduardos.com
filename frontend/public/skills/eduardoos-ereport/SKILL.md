@@ -75,23 +75,38 @@ Never enable logging silently. Never imply REJECT blocks eReport API sync.
 
 ### Mode W (web embed)
 
+Happy path: same binding as `.ereport/.env` (`ORG_ID` / `REPORT_ID` + website_registration + `connectorHosts`). Host shows **bug icon only** (no “eReport” label, no Configure gear).
+
+**Preferred (A):** host backend keeps `EDUARDOOS_API_KEY`, mints a short-lived token, injects it into the page:
+
+```bash
+# server-side
+curl -sS -X POST "$BASE/api/v1/ereport/embed-token" \
+  -H "Authorization: Bearer $EDUARDOOS_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{\"orgId\":\"$ORG\",\"reportId\":\"$REPORT\",\"origin\":\"http://localhost:8080\"}"
+```
+
 ```html
 <link rel="stylesheet" href="https://eduardoos.com/ereport/embed-theme.css" />
 <script src="https://eduardoos.com/ereport/embed.js"></script>
 <script>
   EduardoOSEreport.mount({
+    token: "eos_embed_…", // from embed-token
     orgId: "WEBSITE_REGISTRATION_ORG_ID",
     reportId: "WEBSITE_REGISTRATION_REPORT_ID",
-    menuSelector: "#main-menu nav",
-    label: "eReport",
+    menuSelector: "#app-main-nav",
+    ui: { mode: "bug-icon-only" },
     baseUrl: "https://eduardoos.com"
   });
 </script>
 ```
 
-Opens `/ereport/web-connector` in an iframe (session + subscription; no API key). Prefer the website_registration ids. Granular `POST`/`PATCH` section/group/item routes (see live docs).
+**Local/dev (C):** `apiKey` in mount is allowed only for private local hosts — never ship a live key in public JS. The cookie-less iframe exchanges it for an embed token same-origin.
 
-**Theme:** override `--eos-ereport-*` from `embed-theme.css` and style `.eos-ereport-embed-menu-btn` like the host nav. Default chrome is intentional fallback only — each site should make it look native.
+Click → `/ereport/embed-issue` → `POST /api/v1/ereport/embed/quick-issue` with `hostOrigin`; rejected if origin ∉ `connectorHosts`. Section/subsection come from hub defaults (no Configure wizard). Opt-in gear: `ui: { showConfigure: true }`.
+
+**Theme:** override `--eos-ereport-*`; style `.eos-ereport-embed-bug-btn` like the host nav icons.
 
 ### Mode B (API — docs first)
 

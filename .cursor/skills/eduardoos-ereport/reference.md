@@ -55,11 +55,12 @@ Live catalog keys: `payloadSchema.ereport.websiteRegistration`, `payloadSchema.e
 
 Same paths under cookie `/api/ereport/...` for the site UI.
 
-### Web embed
+### Web embed (Mode W)
 
 - Loader: `https://eduardoos.com/ereport/embed.js`
 - Theme: `https://eduardoos.com/ereport/embed-theme.css`
-- Mount: `EduardoOSEreport.mount({ orgId, reportId, menuSelector })`
+- Mount: `EduardoOSEreport.mount({ token|apiKey, orgId, reportId, menuSelector, ui:{mode:'bug-icon-only'} })`
+- Mint: `POST /api/v1/ereport/embed-token` · Write: `POST /api/v1/ereport/embed/quick-issue` (hostOrigin vs connectorHosts)
 
 ## Local execution log (optional — user consent first)
 

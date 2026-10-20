@@ -1,0 +1,122 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Report an issue"
+  page="ereport-embed-issue"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+  description="eReport host embed — quick issue form (token or API key; no eduardoos.com login)."
+>
+  <h1 class="page-title-sr">Report an issue</h1>
+  <section class="ereport-ei" data-ereport-embed-issue>
+    <header class="ereport-ei__head">
+      <p class="ereport-ei__eyebrow">eReport</p>
+      <p class="ereport-ei__title">Report an issue</p>
+      <p class="ereport-ei__report" data-ei-report hidden></p>
+      <button type="button" class="ereport-ei__close" data-ei-close aria-label="Close">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      </button>
+    </header>
+    <p class="status ereport-ei__status" data-ei-status></p>
+    <form class="ereport-ei__form" data-ei-form hidden>
+      <label>
+        Issue
+        <textarea
+          data-ei-text
+          rows="5"
+          maxlength="8000"
+          placeholder="Short title. Then describe what went wrong…"
+          required
+        ></textarea>
+      </label>
+      <p class="hint">Text until the first period is the title; the rest is the description.</p>
+      <button type="submit" class="btn btn--primary" data-ei-submit>Send</button>
+    </form>
+  </section>
+</Layout>
+
+<style>
+  .ereport-ei {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    padding: var(--space-padding);
+    max-width: 36rem;
+  }
+  .ereport-ei__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--rail-gap);
+    position: relative;
+    padding-right: calc(var(--button-size) + var(--rail-gap));
+  }
+  .ereport-ei__eyebrow {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+  }
+  .ereport-ei__title {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+  }
+  .ereport-ei__report {
+    margin: 0;
+    flex: 1 1 100%;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+  .ereport-ei__close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-size);
+    height: var(--button-size);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+  .ereport-ei__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+  .ereport-ei__form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: var(--font-size-sm);
+  }
+  .ereport-ei__form textarea {
+    min-height: var(--textarea-min-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-md);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-family: inherit;
+  }
+  .ereport-ei .hint {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+  }
+</style>
+
+<script>
+  import { startEreportEmbedIssue } from "../../lib/ereport-embed-issue";
+
+  const root = document.querySelector("[data-ereport-embed-issue]");
+  if (root instanceof HTMLElement) startEreportEmbedIssue(root);
+</script>

@@ -1,34 +1,46 @@
 /**
- * eReport web connector loader for host websites.
+ * eReport web connector loader for host websites (Mode W).
  *
- * Auth: eduardoos.com cookie session + eReport subscription (no API key paste).
+ * Happy path — no eduardoos.com login, no Configure wizard:
  *
  *   <link rel="stylesheet" href="https://eduardoos.com/ereport/embed-theme.css" />
  *   <script src="https://eduardoos.com/ereport/embed.js"></script>
  *   <script>
  *     EduardoOSEreport.mount({
- *       orgId: "…",           // optional if Configure has been saved
- *       reportId: "…",        // optional if Configure has been saved
- *       menuSelector: "#main-menu nav",
- *       label: "eReport",
+ *       // Preferred (A): short-lived token minted by the host backend via
+ *       // POST /api/v1/ereport/embed-token with the site's eos_live_ key.
+ *       token: "eos_embed_…",
+ *       // Or local/dev (C): pass apiKey only in memory; never commit to public JS.
+ *       // apiKey: "eos_live_…",
+ *       orgId: "…",
+ *       reportId: "…",
+ *       menuSelector: "#app-main-nav",
+ *       ui: { mode: "bug-icon-only" },
  *       baseUrl: "https://eduardoos.com"
  *     });
  *   </script>
  *
- * Hosts without the full eReport hub use Configure to pick report / section / subsection.
- * Override --eos-ereport-* so the menu control matches the host chrome.
+ * Click → cookie-less /ereport/embed-issue iframe. Writes require the page
+ * origin to match connectorHosts on the website_registration report (hub).
+ * Configure (/ereport/connector-config) is opt-in via ui.showConfigure: true.
  */
 (function (global) {
   "use strict";
 
-  var INIT_TYPE = "ereport-embed-init";
-  var READY_TYPE = "ereport-embed-ready";
+  var INIT_TYPE = "ereport-embed-issue-init";
+  var READY_TYPE = "ereport-embed-issue-ready";
   var CLOSE_TYPE = "ereport-embed-close";
   var CONFIG_DONE_TYPE = "ereport-embed-config-done";
+  var LEGACY_INIT_TYPE = "ereport-embed-init";
   var OVERLAY_ID = "eduardoos-ereport-embed-overlay";
   var THEME_ID = "eduardoos-ereport-embed-theme";
   var BINDING_KEY = "ereport.embed.binding";
   var activeMessageHandler = null;
+
+  var BUG_SVG =
+    '<svg class="eos-ereport-embed-bug-svg" viewBox="0 0 24 24" width="1.5rem" height="1.5rem" aria-hidden="true" focusable="false">' +
+    '<path fill="currentColor" d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5s-.96.06-1.42.17L8.41 3 7 4.41l1.63 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z"/>' +
+    "</svg>";
 
   function scriptBaseUrl() {
     var scripts = document.getElementsByTagName("script");
@@ -69,7 +81,11 @@
   }
 
   function saveBinding(binding) {
-    localStorage.setItem(BINDING_KEY, JSON.stringify(binding));
+    try {
+      localStorage.setItem(BINDING_KEY, JSON.stringify(binding));
+    } catch (e) {
+      /* ignore */
+    }
   }
 
   function onEscape(ev) {
@@ -104,7 +120,7 @@
     overlay.id = OVERLAY_ID;
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
-    overlay.setAttribute("aria-label", opts.label || "eReport");
+    overlay.setAttribute("aria-label", opts.label || "Report an issue");
 
     var frameWrap = document.createElement("div");
     frameWrap.className = "eos-ereport-embed-frame";
@@ -118,7 +134,7 @@
 
     var iframe = document.createElement("iframe");
     iframe.src = opts.src;
-    iframe.title = opts.label || "eReport connector";
+    iframe.title = opts.label || "eReport";
     iframe.setAttribute("allow", "clipboard-write");
 
     var sent = false;
@@ -172,25 +188,55 @@
       reportId: String((opts && opts.reportId) || (stored && stored.reportId) || "").trim(),
       sectionId: String((opts && opts.sectionId) || (stored && stored.sectionId) || "").trim(),
       groupId: String((opts && opts.groupId) || (stored && stored.groupId) || "").trim(),
+      token: String((opts && (opts.token || opts.connectorToken)) || "").trim(),
+      apiKey: String((opts && opts.apiKey) || "").trim(),
     };
   }
 
-  function openModal(opts) {
+  function hasAuth(ids) {
+    return Boolean(ids.token || ids.apiKey);
+  }
+
+  function openQuickIssue(opts) {
     var baseUrl = ((opts && opts.baseUrl) || scriptBaseUrl() || "https://eduardoos.com").replace(/\/$/, "");
     var ids = resolveIds(opts || {});
     if (!ids.orgId || !ids.reportId) {
-      openConfigure(opts || {});
+      showHostError("eReport mount needs orgId and reportId (from .ereport/.env / hub website registration).");
       return;
     }
-    var params = new URLSearchParams();
-    params.set("org", ids.orgId);
-    params.set("report", ids.reportId);
+    if (!hasAuth(ids)) {
+      showHostError(
+        "eReport mount needs token (preferred) or apiKey. Mint via POST /api/v1/ereport/embed-token from your host backend; do not rely on Configure.",
+      );
+      return;
+    }
+    var hostOrigin = "";
+    try {
+      hostOrigin = location.origin || "";
+    } catch (e) {
+      hostOrigin = "";
+    }
     openIframeModal({
       baseUrl: baseUrl,
-      label: (opts && opts.label) || "eReport",
-      src: baseUrl + "/ereport/web-connector?" + params.toString(),
-      initMessage: { type: INIT_TYPE, orgId: ids.orgId, reportId: ids.reportId },
+      label: "Report an issue",
+      src: baseUrl + "/ereport/embed-issue",
+      initMessage: {
+        type: INIT_TYPE,
+        orgId: ids.orgId,
+        reportId: ids.reportId,
+        hostOrigin: hostOrigin,
+        token: ids.token || undefined,
+        apiKey: ids.token ? undefined : ids.apiKey || undefined,
+      },
     });
+  }
+
+  function showHostError(message) {
+    try {
+      window.alert(message);
+    } catch (e) {
+      /* ignore */
+    }
   }
 
   function openConfigure(opts) {
@@ -216,6 +262,40 @@
     });
   }
 
+  /** Legacy session iframe (cookie on eduardoos.com). Kept for explicit opt-in. */
+  function openLegacySessionModal(opts) {
+    var baseUrl = ((opts && opts.baseUrl) || scriptBaseUrl() || "https://eduardoos.com").replace(/\/$/, "");
+    var ids = resolveIds(opts || {});
+    if (!ids.orgId || !ids.reportId) {
+      openConfigure(opts || {});
+      return;
+    }
+    var params = new URLSearchParams();
+    params.set("org", ids.orgId);
+    params.set("report", ids.reportId);
+    openIframeModal({
+      baseUrl: baseUrl,
+      label: (opts && opts.label) || "eReport",
+      src: baseUrl + "/ereport/web-connector?" + params.toString(),
+      initMessage: { type: LEGACY_INIT_TYPE, orgId: ids.orgId, reportId: ids.reportId },
+    });
+  }
+
+  function uiMode(opts) {
+    var ui = (opts && opts.ui) || {};
+    if (ui.mode === "labeled" || ui.mode === "label") return "labeled";
+    return "bug-icon-only";
+  }
+
+  function showConfigureControl(opts) {
+    var ui = (opts && opts.ui) || {};
+    if (ui.showConfigure === true) return true;
+    if (ui.showConfigure === false) return false;
+    // Default: hide Configure when mount already has org+report (+ auth).
+    var ids = resolveIds(opts || {});
+    return !(ids.orgId && ids.reportId && hasAuth(ids));
+  }
+
   function mount(options) {
     var opts = options || {};
     var baseUrl = (opts.baseUrl || scriptBaseUrl() || "https://eduardoos.com").replace(/\/$/, "");
@@ -231,71 +311,92 @@
       });
     }
 
-    var label = opts.label || "eReport";
+    var mode = uiMode(opts);
+    var withGear = showConfigureControl(opts);
+    var aria = opts.ariaLabel || opts.label || "Report an issue";
+
     var open = function (ev) {
       if (ev && ev.preventDefault) ev.preventDefault();
-      openModal(opts);
+      if (opts.legacySessionModal) {
+        openLegacySessionModal(opts);
+        return;
+      }
+      openQuickIssue(opts);
     };
     var configure = function (ev) {
       if (ev && ev.preventDefault) ev.preventDefault();
       openConfigure(opts);
     };
 
-    function appendControls(parent) {
+    function appendBugButton(parent) {
       var wrap = document.createElement("span");
       wrap.className = "eos-ereport-embed-controls";
 
       var btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "eos-ereport-embed-menu-btn";
-      btn.textContent = label;
-      btn.setAttribute("aria-label", label);
-      btn.setAttribute("title", label);
+      btn.className =
+        mode === "labeled" ? "eos-ereport-embed-menu-btn" : "eos-ereport-embed-bug-btn";
+      btn.setAttribute("aria-label", aria);
+      btn.setAttribute("title", aria);
+      if (mode === "labeled") {
+        btn.textContent = opts.label || "eReport";
+      } else {
+        btn.innerHTML = BUG_SVG;
+      }
       btn.addEventListener("click", open);
-
-      var gear = document.createElement("button");
-      gear.type = "button";
-      gear.className = "eos-ereport-embed-config-btn";
-      gear.textContent = "⚙";
-      gear.setAttribute("aria-label", "Configure eReport target");
-      gear.setAttribute("title", "Configure report, section, subsection");
-      gear.addEventListener("click", configure);
-
       wrap.appendChild(btn);
-      wrap.appendChild(gear);
+
+      if (withGear) {
+        var gear = document.createElement("button");
+        gear.type = "button";
+        gear.className = "eos-ereport-embed-config-btn";
+        gear.textContent = "⚙";
+        gear.setAttribute("aria-label", "Configure eReport target");
+        gear.setAttribute("title", "Configure report, section, subsection (hub owners)");
+        gear.addEventListener("click", configure);
+        wrap.appendChild(gear);
+      }
+
       parent.appendChild(wrap);
-      return { open: open, configure: configure, close: closeOverlay, el: wrap, openBtn: btn, configBtn: gear };
+      return { open: open, configure: configure, close: closeOverlay, el: wrap, openBtn: btn };
     }
 
     if (opts.menuSelector) {
       var menu = document.querySelector(opts.menuSelector);
-      if (menu) return appendControls(menu);
+      if (menu) return appendBugButton(menu);
     }
 
     var fabWrap = document.createElement("div");
     fabWrap.className = "eos-ereport-embed-fab-wrap";
     var fab = document.createElement("button");
     fab.type = "button";
-    fab.className = "eos-ereport-embed-fab";
-    fab.textContent = label;
-    fab.setAttribute("aria-label", label);
+    fab.className = mode === "labeled" ? "eos-ereport-embed-fab" : "eos-ereport-embed-fab eos-ereport-embed-fab--bug";
+    fab.setAttribute("aria-label", aria);
+    fab.setAttribute("title", aria);
+    if (mode === "labeled") {
+      fab.textContent = opts.label || "eReport";
+    } else {
+      fab.innerHTML = BUG_SVG;
+    }
     fab.addEventListener("click", open);
-    var fabGear = document.createElement("button");
-    fabGear.type = "button";
-    fabGear.className = "eos-ereport-embed-fab-config";
-    fabGear.textContent = "⚙";
-    fabGear.setAttribute("aria-label", "Configure eReport target");
-    fabGear.setAttribute("title", "Configure report, section, subsection");
-    fabGear.addEventListener("click", configure);
     fabWrap.appendChild(fab);
-    fabWrap.appendChild(fabGear);
+    if (withGear) {
+      var fabGear = document.createElement("button");
+      fabGear.type = "button";
+      fabGear.className = "eos-ereport-embed-fab-config";
+      fabGear.textContent = "⚙";
+      fabGear.setAttribute("aria-label", "Configure eReport target");
+      fabGear.setAttribute("title", "Configure report, section, subsection (hub owners)");
+      fabGear.addEventListener("click", configure);
+      fabWrap.appendChild(fabGear);
+    }
     document.body.appendChild(fabWrap);
     return { open: open, configure: configure, close: closeOverlay, el: fabWrap };
   }
 
   global.EduardoOSEreport = {
     mount: mount,
-    open: openModal,
+    open: openQuickIssue,
     configure: openConfigure,
     close: closeOverlay,
   };

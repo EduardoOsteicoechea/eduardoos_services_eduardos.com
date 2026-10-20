@@ -45,6 +45,8 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 			{"method": http.MethodPatch, "path": "/api/v1/ereport/orgs/{orgId}/reports/{reportId}/sections/{sectionId}/groups/{groupId}/items/{itemId}", "auth": "api_key", "summary": "eReport — update issue fields (web connector).", "body": `{"nombre":"…","incidencia":"…","status":"aprobado|reprobado|no_aplica|","solucion":"…","checklist":[…]}`},
 			{"method": http.MethodPost, "path": "/api/v1/ereport/orgs/{orgId}/reports/{reportId}/images", "auth": "api_key", "summary": "eReport — upload one issue image (multipart field file). Returns {id,url,mime,name}.", "body": "multipart/form-data; file=<png|jpeg|webp>", "requirements": "api + ereport (or admin)."},
 			{"method": http.MethodGet, "path": "/api/v1/ereport/orgs/{orgId}/reports/{reportId}/images/{imageId}", "auth": "api_key", "summary": "eReport — download image bytes (image/jpeg|png|webp). Cache-Control: private, no-store.", "requirements": "api + ereport (or admin). Owner-scoped."},
+			{"method": http.MethodPost, "path": "/api/v1/ereport/embed-token", "auth": "api_key", "summary": "Mode W — mint short-lived eos_embed_ token scoped to website_registration org/report + origin (must match connectorHosts).", "body": `{"orgId":"…","reportId":"…","origin":"http://localhost:8080"}`},
+			{"method": http.MethodPost, "path": "/api/v1/ereport/embed/quick-issue", "auth": "api_key|embed_token", "summary": "Mode W — create one issue on the website registration report. hostOrigin must match connectorHosts. Uses connectorSectionId/groupId (or first section/group).", "body": `{"orgId":"…","reportId":"…","hostOrigin":"http://localhost:8080","text":"Title. Description…"}`},
 			{"method": http.MethodGet, "path": "/api/v1/ereport/library", "auth": "api_key", "summary": "eReport — alias for orgs."},
 			{"method": http.MethodGet, "path": "/api/v1/homescool/access", "auth": "api_key", "summary": "Homescool — check API access.", "requirements": "api + homescool (or admin)."},
 			{"method": http.MethodGet, "path": "/api/v1/homescool/materials", "auth": "api_key", "summary": "Homescool — list owned study materials (optional ?cycle=1|2|3)."},
@@ -92,16 +94,15 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 				"webConnector": map[string]any{
 					"embedScript": "https://eduardoos.com/ereport/embed.js",
 					"embedTheme":  "https://eduardoos.com/ereport/embed-theme.css",
+					"quickIssuePath":    "/ereport/embed-issue",
 					"advancedModalPath": "/ereport/web-connector",
 					"configModalPath":   "/ereport/connector-config",
 					"features": []map[string]any{
 						{
 							"id":          "quick_issue_modal",
-							"summary":     "Default site Connector opens a compact modal: list issues in the configured subsection (add-only, no delete), + text input, optimistic local payload update then session POST …/items (120s timeout).",
+							"summary":     "eduardoos.com shell Connector/bug_report: compact modal locked to website_registration (session cookie). Host Mode W uses /ereport/embed-issue instead.",
 							"issueParse":  "Text until the first '.' is nombre; remainder is incidencia. No period → whole string is both.",
-							"config":      "Gear opens settings; persists sectionId+groupId via PATCH …/site-connector (assign:false) and caches localStorage ereport.connector.defaults. Server meta/access defaults win on open. Advanced editor opens /ereport/web-connector locked.",
 							"expressDates": "Create item sets fechaIncidencia (today UTC YYYY-MM-DD if empty) and bumps payload.reportDate + meta.reportDate to that day.",
-							"saveAlert":   "window.alert on create/save failure (and advanced editor node saves). Success stays non-blocking in the quick modal.",
 						},
 						{
 							"id":      "header_report_button",
@@ -109,18 +110,18 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 						},
 						{
 							"id":      "assign_report_to_site",
-							"summary": "Hub Manage reports: Assign to site picks default section/subsection (and optional connectorHosts), sets purpose=website_registration on that report, and does not demote other website_registration reports.",
+							"summary": "Hub Manage reports: Assign to site picks default section/subsection (and connectorHosts host[:port]), sets purpose=website_registration. Hosts are required for Mode W origin gate.",
 						},
 						{
 							"id":      "embed_host",
-							"summary": "External sites: EduardoOSEreport.mount({ orgId?, reportId?, menuSelector }). Gear Configure opens /ereport/connector-config (session on eduardoos.com) to pick report/section/subsection; stores localStorage ereport.embed.binding.",
+							"summary": "Mode W: EduardoOSEreport.mount({ token|apiKey, orgId, reportId, menuSelector, ui:{mode:'bug-icon-only'} }). Bug icon only; opens cookie-less /ereport/embed-issue. Prefer host-backend mint POST /api/v1/ereport/embed-token; apiKey in mount is local/dev only. Writes via POST /api/v1/ereport/embed/quick-issue gated by hostOrigin vs connectorHosts. Configure gear is opt-in (ui.showConfigure), not the happy path.",
 						},
 						{
 							"id":      "host_configure_defaults",
-							"summary": "Embed Configure button for hosts without the eReport hub UI; assigns site connector defaults on the signed-in owner's report.",
+							"summary": "Optional: ui.showConfigure:true opens /ereport/connector-config (cookie session) for hub owners who need to assign defaults without the CLI. Not required when .ereport/.env + hub hosts are already set.",
 						},
 					},
-					"notes": "Auth is cookie session + eReport subscription (no API key in the browser). Session node writes: POST/PATCH /api/ereport/orgs/.../sections|groups|items (use 120s client timeouts). Override --eos-ereport-* for host menu styling.",
+					"notes": "Mode W happy path: API key stays on host backend (.ereport/.env / server); mint short-lived eos_embed_ token; mount token+orgId+reportId; bug icon → quick-issue. Origin must match connectorHosts. eduardoos.com shell still uses cookie session for Connector. Override --eos-ereport-* for host styling.",
 				},
 				"modes": map[string]any{
 					"append":  "Default. Additive merge only. Conservative for agents.",

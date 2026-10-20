@@ -81,6 +81,45 @@
   gap: var(--eos-ereport-gap);
 }
 
+/* Default Mode W control: Material-style bug icon only (no “eReport” label). */
+.eos-ereport-embed-bug-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0.25rem;
+  width: var(--eos-ereport-control-h);
+  height: var(--eos-ereport-control-h);
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.eos-ereport-embed-bug-btn:hover,
+.eos-ereport-embed-bug-btn:focus-visible {
+  color: var(--eos-ereport-accent);
+  outline: none;
+}
+
+.eos-ereport-embed-bug-btn:focus-visible {
+  box-shadow: 0 0 0 0.125rem var(--eos-ereport-accent);
+}
+
+.eos-ereport-embed-bug-svg {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.eos-ereport-embed-fab--bug {
+  width: var(--eos-ereport-control-h);
+  height: var(--eos-ereport-control-h);
+  padding: 0.25rem;
+  border-radius: 50%;
+}
+
 .eos-ereport-embed-config-btn {
   display: inline-flex;
   align-items: center;

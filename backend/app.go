@@ -321,6 +321,8 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("PATCH /api/v1/ereport/orgs/{orgId}/reports/{reportId}/sections/{sectionId}/groups/{groupId}/items/{itemId}", a.withAPIKey(productEreport, a.ereportV1PatchItemHandler))
 	mux.HandleFunc("POST /api/v1/ereport/orgs/{orgId}/reports/{reportId}/images", a.withAPIKey(productEreport, a.ereportV1UploadImageHandler))
 	mux.HandleFunc("GET /api/v1/ereport/orgs/{orgId}/reports/{reportId}/images/{imageId}", a.withAPIKey(productEreport, a.ereportV1GetImageHandler))
+	mux.HandleFunc("POST /api/v1/ereport/embed-token", a.withAPIKey(productEreport, a.ereportV1EmbedTokenHandler))
+	mux.HandleFunc("POST /api/v1/ereport/embed/quick-issue", a.withEreportEmbedAuth(a.ereportV1EmbedQuickIssueHandler))
 	mux.HandleFunc("GET /api/v1/homescool/access", a.withAPIKey(productHomescool, a.homescoolV1AccessHandler))
 	mux.HandleFunc("GET /api/v1/homescool/materials", a.withAPIKey(productHomescool, a.homescoolV1ListMaterialsHandler))
 	mux.HandleFunc("GET /api/v1/homescool/materials/{materialId}", a.withAPIKey(productHomescool, a.homescoolV1GetMaterialHandler))
