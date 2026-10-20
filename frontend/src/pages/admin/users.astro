@@ -71,9 +71,11 @@ import Layout from "../../layouts/Layout.astro";
       return date.toLocaleString();
     };
 
-    const metaItem = (label: string, value: string) => {
+    const metaItem = (label: string, value: string, kind = "") => {
       const item = document.createElement("div");
-      item.className = "admin-user-card__meta-item";
+      item.className = kind
+        ? `admin-user-card__meta-item admin-user-card__meta-item--${kind}`
+        : "admin-user-card__meta-item";
       const dt = document.createElement("dt");
       dt.textContent = label;
       const dd = document.createElement("dd");
@@ -100,33 +102,24 @@ import Layout from "../../layouts/Layout.astro";
         const card = document.createElement("li");
         card.className = "admin-user-card";
 
-        const head = document.createElement("header");
-        head.className = "admin-user-card__head";
-        const email = document.createElement("p");
-        email.className = "admin-user-card__email";
-        email.textContent = user.email;
-        const username = document.createElement("p");
-        username.className = "admin-user-card__username";
-        username.textContent = user.username;
-        head.append(email, username);
-
+        const info = document.createElement("div");
+        info.className = "admin-user-card__info";
         const meta = document.createElement("dl");
         meta.className = "admin-user-card__meta";
         meta.append(
+          metaItem("Email", user.email, "email"),
+          metaItem("Username", user.username, "username"),
           metaItem("Role", user.role),
           metaItem("Status", user.status),
           metaItem("Verified", user.email_verified ? "yes" : "no"),
           metaItem("Created", formatDate(user.created_at)),
         );
+        info.appendChild(meta);
 
         const access = document.createElement("div");
         access.className = "admin-users-services";
         const form = document.createElement("form");
         form.dataset.userServices = user.id;
-
-        const legend = document.createElement("p");
-        legend.className = "admin-users-services__legend";
-        legend.textContent = "Service access";
 
         const chips = document.createElement("div");
         chips.className = "admin-users-services__chips";
@@ -145,13 +138,9 @@ import Layout from "../../layouts/Layout.astro";
           chips.append(label);
         }
 
-        const save = document.createElement("button");
-        save.type = "submit";
-        save.textContent = "Save access";
-
-        form.append(legend, chips, save);
+        form.append(chips);
         access.appendChild(form);
-        card.append(head, meta, access);
+        card.append(info, access);
         body.appendChild(card);
       }
       if (count instanceof HTMLElement) {
@@ -209,27 +198,55 @@ import Layout from "../../layouts/Layout.astro";
       const form = event.target;
       if (!(form instanceof HTMLFormElement) || !form.dataset.userServices) return;
       event.preventDefault();
-      const services = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="service"]:checked')).map((input) => input.value);
-      const saveButton = form.querySelector("button[type=submit]");
-      if (saveButton instanceof HTMLButtonElement) {
-        saveButton.disabled = true;
+    });
+
+    const savingByUser = new Map<string, boolean>();
+    const pendingByUser = new Map<string, string[]>();
+
+    const saveServices = async (form: HTMLFormElement, services: string[]) => {
+      const userId = form.dataset.userServices || "";
+      if (!userId) return;
+      if (savingByUser.get(userId)) {
+        pendingByUser.set(userId, services);
+        return;
       }
-      void (async () => {
-        const result = await apiRequest<{ services?: string[] }>(`/admin/users/${encodeURIComponent(form.dataset.userServices || "")}/services`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ services }),
-        });
-        if (saveButton instanceof HTMLButtonElement) {
-          saveButton.disabled = false;
-        }
-        if (result.status >= 400) {
-          fail(result.data.message || "Could not update service access.", result.requestId, result.data.debug);
-          return;
-        }
+      savingByUser.set(userId, true);
+      form.setAttribute("aria-busy", "true");
+      const inputs = form.querySelectorAll<HTMLInputElement>('input[name="service"]');
+      inputs.forEach((input) => {
+        input.disabled = true;
+      });
+      const result = await apiRequest<{ services?: string[] }>(`/admin/users/${encodeURIComponent(userId)}/services`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ services }),
+      });
+      inputs.forEach((input) => {
+        input.disabled = false;
+      });
+      form.removeAttribute("aria-busy");
+      savingByUser.set(userId, false);
+      if (result.status >= 400) {
+        fail(result.data.message || "Could not update service access.", result.requestId, result.data.debug);
         await loadUsers();
-        setBanner("Service access updated.", "ok");
-      })();
+        return;
+      }
+      const pending = pendingByUser.get(userId);
+      if (pending) {
+        pendingByUser.delete(userId);
+        await saveServices(form, pending);
+        return;
+      }
+      setBanner("Service access updated.", "ok");
+    };
+
+    body?.addEventListener("change", (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLInputElement) || target.name !== "service") return;
+      const form = target.form;
+      if (!(form instanceof HTMLFormElement) || !form.dataset.userServices) return;
+      const services = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="service"]:checked')).map((input) => input.value);
+      void saveServices(form, services);
     });
   }
 </script>

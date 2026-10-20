@@ -679,17 +679,6 @@ main > .diag{
   box-shadow: var(--shadow-md);
 }
 
-.admin-user-card__email{
-  font-family: var(--font-family-display, var(--font-family));
-  font-size: var(--font-size-md);
-  letter-spacing: -0.01em;
-}
-
-.admin-user-card__username{
-  font-family: var(--eo-mono);
-  letter-spacing: 0.04em;
-}
-
 .admin-user-card__meta-item dt{
   font-family: var(--eo-mono);
   font-weight: 700;
@@ -697,11 +686,15 @@ main > .diag{
   text-transform: uppercase;
 }
 
-.admin-users-services__legend{
+.admin-user-card__meta-item--email dd{
+  font-family: var(--font-family-display, var(--font-family));
+  font-size: var(--font-size-md);
+  letter-spacing: -0.01em;
+}
+
+.admin-user-card__meta-item--username dd{
   font-family: var(--eo-mono);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .admin-users-services__chip{
@@ -717,37 +710,6 @@ main > .diag{
   color: var(--color-text);
   background: var(--accent-soft, var(--color-surface));
   border-color: var(--color-accent);
-}
-
-.admin-users-services button{
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  border-radius: var(--radius-md);
-}
-
-@media (min-width: 64rem) {
-  .admin-user-card{
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-    grid-template-areas:
-      "head head"
-      "meta services";
-    column-gap: var(--space-padding);
-    row-gap: var(--rail-gap);
-    align-items: start;
-  }
-
-  .admin-user-card__head{
-    grid-area: head;
-  }
-
-  .admin-user-card__meta{
-    grid-area: meta;
-  }
-
-  .admin-users-services{
-    grid-area: services;
-  }
 }
 
 /* ---------- Session / auth ---------- */
