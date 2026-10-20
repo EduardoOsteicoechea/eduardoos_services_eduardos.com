@@ -31,10 +31,17 @@ import "../../styles/ereport-chrome.css";
       })();
     </script>
     <style is:inline>
+      /*
+        Mode W option A: this document fills the host bare iframe 100%.
+        Card size/chrome live on .eos-ereport-embed-frame--bare (embed-theme.css).
+        Do not re-apply a smaller max-width here or the panel sits top-left in a void.
+      */
       html,
       body {
         margin: 0;
-        min-height: 100%;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
         background: var(--color-bg, #121212);
         color: var(--color-text, #f5f5f5);
       }
@@ -42,17 +49,21 @@ import "../../styles/ereport-chrome.css";
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
-        min-height: 100%;
+        width: 100%;
+        height: 100%;
         padding: 0;
       }
-      .ereport-embed-issue-frame {
-        flex: 1;
-        width: auto;
+      .ereport-embed-issue-frame.ereport-quick-overlay__frame {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: none;
+        height: 100%;
         max-height: none;
         min-height: 0;
         border: 0;
         border-radius: 0;
         box-shadow: none;
+        background: transparent;
         box-sizing: border-box;
       }
     </style>

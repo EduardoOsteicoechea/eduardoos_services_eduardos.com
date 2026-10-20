@@ -40,8 +40,12 @@
   --eos-ereport-pad: 1rem;
   --eos-ereport-control-h: 2.5rem;
   --eos-ereport-overlay: rgba(0, 0, 0, 0.5);
+  /* Default iframe chrome (Configure / legacy). Mode W bare overrides below. */
   --eos-ereport-frame-w: 40rem;
   --eos-ereport-frame-h: 36rem;
+  /* Mode W quick modal card size (host owns; embed-issue fills 100%). */
+  --eos-ereport-bare-frame-w: 28rem;
+  --eos-ereport-bare-frame-h: 36rem;
   --eos-ereport-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.4);
   --eos-ereport-z-overlay: 2147483646;
   --eos-ereport-z-fab: 2147483645;
@@ -223,23 +227,34 @@
   overflow: hidden;
 }
 
-/* Mode W quick modal: iframe paints its own frame; host wrapper stays chrome-free. */
+/*
+ * Mode W bare frame (hideOuterClose): ONE card surface owned by the host.
+ * Size = --eos-ereport-frame-w/h (clamped to viewport). The iframe UI must
+ * stretch to width/height 100% — see /ereport/embed-issue.
+ */
 #eduardoos-ereport-embed-overlay .eos-ereport-embed-frame--bare {
-  width: min(28rem, calc(100% - 2rem));
-  height: min(36rem, calc(100% - 2rem));
-  border: 0;
+  width: min(var(--eos-ereport-bare-frame-w), calc(100% - 2rem));
+  height: min(var(--eos-ereport-bare-frame-h), calc(100% - 2rem));
+  border: 0.0625rem solid var(--eos-ereport-border);
   border-radius: var(--eos-ereport-radius);
-  background: transparent;
-  box-shadow: none;
+  background: var(--eos-ereport-bg);
+  box-shadow: var(--eos-ereport-shadow);
+  overflow: hidden;
 }
 
 #eduardoos-ereport-embed-overlay iframe {
   display: block;
   flex: 1;
+  width: 100%;
+  height: 100%;
   min-width: 0;
   min-height: 0;
   border: 0;
-  background: var(--eos-ereport-bg);
+  background: transparent;
+}
+
+#eduardoos-ereport-embed-overlay .eos-ereport-embed-frame--bare iframe {
+  background: transparent;
 }
 
 #eduardoos-ereport-embed-overlay .eos-ereport-embed-close {
