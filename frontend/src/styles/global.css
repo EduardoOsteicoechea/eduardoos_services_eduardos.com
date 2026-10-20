@@ -2048,7 +2048,7 @@ section.diag .panel:not(form) {
 .admin-users__list {
   display: flex;
   flex-direction: column;
-  gap: var(--rail-gap);
+  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -2079,7 +2079,7 @@ section.diag .panel:not(form) {
     minmax(0, max-content)
     minmax(0, max-content)
     minmax(0, max-content);
-  align-items: start;
+  align-items: center;
   column-gap: 0;
   row-gap: var(--rail-gap);
   margin: 0;
@@ -2088,10 +2088,10 @@ section.diag .panel:not(form) {
 
 .admin-user-card__meta-item {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: nowrap;
-  align-items: stretch;
-  gap: 0.125rem;
+  align-items: baseline;
+  gap: var(--rail-gap);
   min-width: 0;
   overflow: hidden;
   padding-inline: var(--rail-gap);
@@ -2117,6 +2117,7 @@ section.diag .panel:not(form) {
 .admin-user-card__meta-item dd {
   margin: 0;
   min-width: 0;
+  flex: 1 1 auto;
   font-size: var(--font-size-sm);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2151,24 +2152,23 @@ section.diag .panel:not(form) {
 .admin-users-services__chips {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--rail-gap);
+  gap: 1.5rem;
 }
 
 .admin-users-services__chip {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  min-height: var(--control-height);
-  padding: var(--control-padding-block) var(--control-padding-inline);
+  min-height: 0;
+  padding: 0;
   font-size: var(--font-size-xs);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  background: var(--color-surface);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   cursor: pointer;
 }
 
 .admin-users-services__chip:has(input:checked) {
-  border-color: var(--color-accent);
   color: var(--color-text);
 }
 
@@ -2179,6 +2179,30 @@ section.diag .panel:not(form) {
 .admin-users-services__chip:has(input:disabled) {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* Tablet + desktop: search docks in the page-title band beside the H1. */
+@media (min-width: 48rem) {
+  .page-title:has(.admin-users__search) {
+    grid-template-columns: minmax(0, 1fr) minmax(12rem, 20rem);
+    column-gap: var(--rail-gap);
+    padding-right: calc(var(--menu-button-size) + 1rem);
+  }
+
+  .page-title:has(.admin-users__search) h1 {
+    grid-column: 1;
+  }
+
+  .page-title .admin-users__search {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    min-width: 0;
+  }
+
+  .page-title .admin-users__search input {
+    min-width: 0;
+  }
 }
 
 /* Phone + tablet: top activity bar only (tools on the start bar) */

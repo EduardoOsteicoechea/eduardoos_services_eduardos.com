@@ -686,17 +686,10 @@ main > .diag{
 
 .admin-users-services__chip{
   color: var(--color-muted);
-  border-radius: var(--radius-md);
-  transition:
-    border-color var(--dur-fast, var(--dur)) var(--ease-out),
-    color var(--dur-fast, var(--dur)) var(--ease-out),
-    background var(--dur-fast, var(--dur)) var(--ease-out);
 }
 
 .admin-users-services__chip:has(input:checked){
   color: var(--color-text);
-  background: var(--accent-soft, var(--color-surface));
-  border-color: var(--color-accent);
 }
 
 /* ---------- Session / auth ---------- */
