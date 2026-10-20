@@ -2106,7 +2106,7 @@ section.diag .panel:not(form) {
   align-items: stretch;
   gap: var(--rail-gap);
   min-width: 0;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem 1rem;
   border: 0;
   border-bottom: var(--border-width) solid var(--color-border);
   border-radius: 0;
