@@ -18,7 +18,10 @@ import Layout from "../../layouts/Layout.astro";
     <p class="status" data-banner>Checking session…</p>
 
     <div class="admin-users__panel" data-table-wrap hidden>
-      <p class="hint" data-count></p>
+      <label class="admin-users__search">
+        <span class="page-title-sr">Search users</span>
+        <input type="search" data-users-search placeholder="Search users…" autocomplete="off" />
+      </label>
       <ul class="admin-users__list" data-users-body></ul>
     </div>
   </section>
@@ -34,8 +37,8 @@ import Layout from "../../layouts/Layout.astro";
   if (root instanceof HTMLElement) {
     const banner = root.querySelector("[data-banner]");
     const tableWrap = root.querySelector("[data-table-wrap]");
-    const count = root.querySelector("[data-count]");
     const body = root.querySelector("[data-users-body]");
+    const searchInput = root.querySelector("[data-users-search]");
     const refreshBtn = document.querySelector("[data-users-refresh]");
 
     const setBanner = (text: string, kind = "") => {
@@ -44,6 +47,7 @@ import Layout from "../../layouts/Layout.astro";
       }
       banner.textContent = text;
       banner.className = `status ${kind}`.trim();
+      banner.hidden = !text;
     };
 
     const showTable = (visible: boolean) => {
@@ -84,6 +88,17 @@ import Layout from "../../layouts/Layout.astro";
       return item;
     };
 
+    const applySearchFilter = () => {
+      if (!(body instanceof HTMLElement) || !(searchInput instanceof HTMLInputElement)) {
+        return;
+      }
+      const query = searchInput.value.trim().toLowerCase();
+      for (const card of body.querySelectorAll<HTMLElement>(".admin-user-card")) {
+        const haystack = card.dataset.search || "";
+        card.hidden = query.length > 0 && !haystack.includes(query);
+      }
+    };
+
     const renderRows = (users: Array<{
       email: string;
       username: string;
@@ -101,6 +116,19 @@ import Layout from "../../layouts/Layout.astro";
       for (const user of users) {
         const card = document.createElement("li");
         card.className = "admin-user-card";
+        const verified = user.email_verified ? "yes" : "no";
+        const created = formatDate(user.created_at);
+        card.dataset.search = [
+          user.email,
+          user.username,
+          user.role,
+          user.status,
+          verified,
+          created,
+          ...(user.admin_services ?? []),
+        ]
+          .join(" ")
+          .toLowerCase();
 
         const info = document.createElement("div");
         info.className = "admin-user-card__info";
@@ -111,8 +139,8 @@ import Layout from "../../layouts/Layout.astro";
           metaItem("Username", user.username, "username"),
           metaItem("Role", user.role),
           metaItem("Status", user.status),
-          metaItem("Verified", user.email_verified ? "yes" : "no"),
-          metaItem("Created", formatDate(user.created_at)),
+          metaItem("Verified", verified),
+          metaItem("Created", created),
         );
         info.appendChild(meta);
 
@@ -143,9 +171,7 @@ import Layout from "../../layouts/Layout.astro";
         card.append(info, access);
         body.appendChild(card);
       }
-      if (count instanceof HTMLElement) {
-        count.textContent = `${users.length} registered user${users.length === 1 ? "" : "s"}.`;
-      }
+      applySearchFilter();
     };
 
     const loadUsers = async () => {
@@ -163,7 +189,7 @@ import Layout from "../../layouts/Layout.astro";
       const users = result.data.users ?? [];
       renderRows(users);
       showTable(true);
-      setBanner("User list loaded.", "ok");
+      setBanner("");
     };
 
     const applyMe = async () => {
@@ -192,6 +218,10 @@ import Layout from "../../layouts/Layout.astro";
 
     refreshBtn?.addEventListener("click", () => {
       void loadUsers();
+    });
+
+    searchInput?.addEventListener("input", () => {
+      applySearchFilter();
     });
 
     body?.addEventListener("submit", (event) => {
@@ -237,7 +267,7 @@ import Layout from "../../layouts/Layout.astro";
         await saveServices(form, pending);
         return;
       }
-      setBanner("Service access updated.", "ok");
+      setBanner("");
     };
 
     body?.addEventListener("change", (event) => {
