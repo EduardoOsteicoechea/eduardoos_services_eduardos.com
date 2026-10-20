@@ -20,6 +20,8 @@ export type EmusicPlaylist = {
   id: string;
   name: string;
   track_ids: string[];
+  /** Catalog-folder playlist (salmo1/salmo2/dreamer/learner); not editable. */
+  system?: boolean;
   created_at?: string;
   updated_at?: string;
 };

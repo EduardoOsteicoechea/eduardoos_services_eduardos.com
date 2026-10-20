@@ -112,6 +112,29 @@ func TestEmusicPlaylistsAdminCRUD(t *testing.T) {
 	if listed.Code != http.StatusOK || !strings.Contains(listed.Body.String(), "Worship") {
 		t.Fatalf("list playlists: %d %s", listed.Code, listed.Body.String())
 	}
+	listedBody := decodeMap(t, listed)
+	listedRows, _ := listedBody["playlists"].([]any)
+	if len(listedRows) < 5 {
+		t.Fatalf("want section playlists + Worship, got %d: %#v", len(listedRows), listedBody)
+	}
+	first, _ := listedRows[0].(map[string]any)
+	if first["id"] != "section-salmo1" || first["system"] != true || first["name"] != "Salmo 1" {
+		t.Fatalf("first section playlist: %#v", first)
+	}
+	sectionGet := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/emusic/playlists/section-salmo2", "")
+	if sectionGet.Code != http.StatusOK {
+		t.Fatalf("get section playlist: %d %s", sectionGet.Code, sectionGet.Body.String())
+	}
+	sectionBody := decodeMap(t, sectionGet)
+	sectionIDs, _ := sectionBody["track_ids"].([]any)
+	if sectionBody["name"] != "Salmo 2" || len(sectionIDs) != 8 {
+		t.Fatalf("salmo2 section playlist: %#v", sectionBody)
+	}
+	sectionPut := app.doJSON(t, "admin@eduardoos.com", http.MethodPut, "/api/emusic/playlists/section-dreamer",
+		`{"name":"Nope"}`)
+	if sectionPut.Code != http.StatusForbidden {
+		t.Fatalf("system playlist put: %d", sectionPut.Code)
+	}
 
 	updated := app.doJSON(t, "admin@eduardoos.com", http.MethodPut, "/api/emusic/playlists/"+id,
 		`{"name":"Salmo set","track_ids":["viene"]}`)

@@ -71,11 +71,15 @@ func emusicPlaylistJSON(playlist *EmusicPlaylist) map[string]any {
 	if ids == nil {
 		ids = []string{}
 	}
-	return map[string]any{
+	out := map[string]any{
 		"id": playlist.ID, "name": playlist.Name, "track_ids": ids,
 		"created_at": playlist.CreatedAt.UTC().Format(time.RFC3339),
 		"updated_at": playlist.UpdatedAt.UTC().Format(time.RFC3339),
 	}
+	if isEmusicSectionPlaylistID(playlist.ID) {
+		out["system"] = true
+	}
+	return out
 }
 
 func (a *App) emusicLibraryHandler(w http.ResponseWriter, r *http.Request) {
@@ -186,7 +190,11 @@ func (a *App) emusicPlaylistsHandler(w http.ResponseWriter, r *http.Request) {
 			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 			return
 		}
-		rows := make([]map[string]any, 0, len(playlists))
+		sectionPlaylists := emusicSectionPlaylists()
+		rows := make([]map[string]any, 0, len(sectionPlaylists)+len(playlists))
+		for _, playlist := range sectionPlaylists {
+			rows = append(rows, emusicPlaylistJSON(playlist))
+		}
 		for _, playlist := range playlists {
 			rows = append(rows, emusicPlaylistJSON(playlist))
 		}
@@ -233,6 +241,23 @@ func (a *App) emusicPlaylistHandler(w http.ResponseWriter, r *http.Request) {
 	id := strings.TrimSpace(r.PathValue("id"))
 	if id == "" {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	if sectionPlaylist, ok := emusicSectionPlaylistByID(id); ok {
+		switch r.Method {
+		case http.MethodGet:
+			if a.requireEmusicUser(w, r) == nil {
+				return
+			}
+			writeJSON(w, http.StatusOK, emusicPlaylistJSON(sectionPlaylist))
+		case http.MethodPut, http.MethodDelete:
+			if a.requireEmusicAdmin(w, r) == nil || !a.requireUnsafe(w, r) {
+				return
+			}
+			a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		default:
+			a.writeSafeError(w, r, http.StatusMethodNotAllowed, "not_found")
+		}
 		return
 	}
 	playlist, err := a.store.EmusicPlaylistByID(r.Context(), id)

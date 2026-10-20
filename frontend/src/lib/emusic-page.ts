@@ -9,7 +9,7 @@ import {
   type EmusicLibraryTrack,
   type EmusicPlaylist,
 } from "./emusic-api";
-import { allEmusicTracks, type EmusicTrack } from "./emusic";
+import { allEmusicTracks, EMUSIC_SECTIONS, type EmusicTrack } from "./emusic";
 import {
   emptyEmusicDocument,
   flattenEmusicWords,
@@ -41,6 +41,16 @@ function fail(data: { message?: string; request_id?: string; debug?: string }, f
 
 function catalogFallback(): EmusicTrack[] {
   return allEmusicTracks();
+}
+
+/** One playlist per public/emusic folder — used if API is unreachable. */
+function sectionPlaylistsFallback(): EmusicPlaylist[] {
+  return EMUSIC_SECTIONS.map((section) => ({
+    id: `section-${section.id}`,
+    name: section.title,
+    track_ids: section.tracks.map((track) => track.id),
+    system: true,
+  }));
 }
 
 function toPlayable(track: EmusicLibraryTrack, sectionTitle: string, sectionId: string): EmusicTrack {
@@ -96,6 +106,10 @@ export function startEmusicPage(root: HTMLElement, opts: EmusicPageOpts): void {
     return selected ? queue.findIndex((track) => track.id === selected?.id) : -1;
   };
   const activePlaylist = () => playlists.find((item) => item.id === activePlaylistId) || null;
+  const playlistEditable = () => {
+    const playlist = activePlaylist();
+    return !!admin && !!playlist && !playlist.system;
+  };
 
   const setStatus = (text: string) => {
     status.textContent = text;
@@ -213,7 +227,7 @@ export function startEmusicPage(root: HTMLElement, opts: EmusicPageOpts): void {
       lyricDot.title = hasLyrics.get(track.id) ? "Has lyrics" : "No lyrics";
       lyricDot.classList.toggle("emusic__lyric-dot--on", !!hasLyrics.get(track.id));
 
-      if (admin && activePlaylistId) {
+      if (playlistEditable()) {
         const up = document.createElement("button");
         up.type = "button";
         up.className = "icon-btn";
@@ -283,6 +297,25 @@ export function startEmusicPage(root: HTMLElement, opts: EmusicPageOpts): void {
     }
   };
 
+  const syncPlaylistAdminFields = () => {
+    const editable = playlistEditable();
+    const playlist = activePlaylist();
+    playlistName.readOnly = !editable;
+    playlistName.disabled = !editable;
+    addTrackSelect.disabled = !editable;
+    addTrackBtn.disabled = !editable;
+    const saveBtn = el<HTMLButtonElement>(root, "[data-emusic-playlist-save]");
+    const deleteBtn = el<HTMLButtonElement>(root, "[data-emusic-playlist-delete]");
+    saveBtn.disabled = !editable;
+    deleteBtn.disabled = !editable;
+    if (playlist?.system) {
+      playlistName.value = playlist.name;
+      playlistName.title = "Catalog folder playlist (read-only)";
+    } else {
+      playlistName.title = "";
+    }
+  };
+
   const applyPlaylistView = () => {
     if (!activePlaylistId) {
       tracks = [...library];
@@ -301,6 +334,7 @@ export function startEmusicPage(root: HTMLElement, opts: EmusicPageOpts): void {
         playlistName.value = playlist.name;
       }
     }
+    syncPlaylistAdminFields();
     renderAddTrackSelect();
     renderTracks();
     setStatus(`${queueTracks().length} in queue`);
@@ -354,8 +388,14 @@ export function startEmusicPage(root: HTMLElement, opts: EmusicPageOpts): void {
     }
     if (plRes.status === 200 && Array.isArray(plRes.data.playlists)) {
       playlists = plRes.data.playlists;
-    } else if (plRes.status >= 400) {
-      fail(plRes.data, "Could not load playlists.");
+      if (!playlists.some((item) => item.system)) {
+        playlists = [...sectionPlaylistsFallback(), ...playlists];
+      }
+    } else {
+      playlists = sectionPlaylistsFallback();
+      if (plRes.status >= 400) {
+        fail(plRes.data, "Could not load playlists.");
+      }
     }
     renderPlaylistSelect();
     applyPlaylistView();
@@ -398,7 +438,7 @@ export function startEmusicPage(root: HTMLElement, opts: EmusicPageOpts): void {
   });
 
   addTrackBtn.addEventListener("click", () => {
-    if (!admin || !activePlaylistId) return;
+    if (!playlistEditable()) return;
     const id = addTrackSelect.value;
     const track = library.find((t) => t.id === id);
     if (!track) return;
@@ -409,7 +449,7 @@ export function startEmusicPage(root: HTMLElement, opts: EmusicPageOpts): void {
   });
 
   el<HTMLButtonElement>(root, "[data-emusic-playlist-save]").addEventListener("click", async () => {
-    if (!admin || !activePlaylistId) return;
+    if (!playlistEditable() || !activePlaylistId) return;
     const res = await updateEmusicPlaylist(activePlaylistId, {
       name: playlistName.value.trim(),
       track_ids: tracks.map((t) => t.id),
@@ -425,7 +465,7 @@ export function startEmusicPage(root: HTMLElement, opts: EmusicPageOpts): void {
   });
 
   el<HTMLButtonElement>(root, "[data-emusic-playlist-delete]").addEventListener("click", async () => {
-    if (!admin || !activePlaylistId) return;
+    if (!playlistEditable() || !activePlaylistId) return;
     const res = await deleteEmusicPlaylist(activePlaylistId);
     if (res.status !== 200) {
       fail(res.data, "Could not delete playlist.");

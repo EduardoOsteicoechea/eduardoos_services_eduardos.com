@@ -5,12 +5,16 @@ import (
 	"path"
 	"regexp"
 	"strings"
+	"time"
 	"unicode"
 
 	"golang.org/x/text/unicode/norm"
 )
 
 const productEmusic = "emusic"
+
+// Stable IDs for catalog-folder playlists (one per public/emusic/<section>).
+const emusicSectionPlaylistPrefix = "section-"
 
 var emusicSlugRe = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
 
@@ -149,4 +153,48 @@ func knownEmusicCatalogIDs() map[string]struct{} {
 		known[track.ID] = struct{}{}
 	}
 	return known
+}
+
+func emusicSectionPlaylistID(sectionID string) string {
+	return emusicSectionPlaylistPrefix + sectionID
+}
+
+func isEmusicSectionPlaylistID(id string) bool {
+	return strings.HasPrefix(strings.TrimSpace(id), emusicSectionPlaylistPrefix)
+}
+
+// emusicSectionPlaylists returns one read-only playlist per catalog section
+// (mirrors frontend/public/emusic folder divisions).
+func emusicSectionPlaylists() []*EmusicPlaylist {
+	sections := emusicCatalog()
+	out := make([]*EmusicPlaylist, 0, len(sections))
+	epoch := time.Unix(0, 0).UTC()
+	for _, section := range sections {
+		ids := make([]string, 0, len(section.Tracks))
+		for _, track := range section.Tracks {
+			ids = append(ids, track.ID)
+		}
+		out = append(out, &EmusicPlaylist{
+			ID:        emusicSectionPlaylistID(section.ID),
+			OwnerID:   "system",
+			Name:      section.Title,
+			TrackIDs:  ids,
+			CreatedAt: epoch,
+			UpdatedAt: epoch,
+		})
+	}
+	return out
+}
+
+func emusicSectionPlaylistByID(id string) (*EmusicPlaylist, bool) {
+	id = strings.TrimSpace(id)
+	if !isEmusicSectionPlaylistID(id) {
+		return nil, false
+	}
+	for _, playlist := range emusicSectionPlaylists() {
+		if playlist.ID == id {
+			return playlist, true
+		}
+	}
+	return nil, false
 }
