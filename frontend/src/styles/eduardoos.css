@@ -728,7 +728,7 @@ main > .diag{
 /* Profile sections: no fill; lateral hairline only. */
 .session-grid--profile .session-profile-sections > .panel,
 .session-grid--profile .session-profile-sections > form.panel{
-  padding: 0 1.5rem 1.5rem 0;
+  padding: 0 1.5rem 1rem 0;
   background: transparent;
   border: 0;
   border-inline-end: var(--border-width) solid var(--color-border);
