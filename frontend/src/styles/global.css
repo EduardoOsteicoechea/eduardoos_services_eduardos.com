@@ -1584,7 +1584,7 @@ main > .session-grid.session-grid--profile {
   grid-column: 1 / span var(--span-full);
 }
 
-/* Flex row + wrap: phone 1 col, tablet 2, desktop 4 (via flex-basis in breakpoints). */
+/* Flex row + wrap: phone 1 col, tablet 2, desktop 5 (via flex-basis in breakpoints). */
 .session-profile-sections {
   display: flex;
   flex-flow: row wrap;
@@ -1598,6 +1598,8 @@ main > .session-grid.session-grid--profile {
   flex: 1 1 calc(var(--content-basis));
   min-width: 0;
   box-sizing: border-box;
+  align-content: start;
+  justify-content: flex-start;
 }
 
 .session-account-block {
@@ -1610,11 +1612,49 @@ main > .session-grid.session-grid--profile {
   margin-top: 0;
 }
 
-.session-grid [data-profile-form] > [data-profile-save] {
-  margin-top: 1rem;
+/* Profile action buttons: 7.5rem (120px at 16px root), flush end. */
+.session-grid.session-grid--profile .session-profile-sections form > button:not(.password-field__toggle),
+.session-grid.session-grid--profile .session-profile-sections [data-profile-save],
+.session-grid.session-grid--profile .session-profile-sections [data-avatar-upload],
+.session-grid.session-grid--profile .session-profile-sections [data-apikeys-refresh],
+.session-grid.session-grid--profile .session-profile-sections [data-apikey-create],
+.session-grid.session-grid--profile .session-profile-sections .api-keys-item > .btn {
+  width: 7.5rem;
+  max-width: 7.5rem;
+  margin-inline-start: auto;
+  margin-bottom: 0;
+  align-self: end;
+  justify-self: end;
   grid-column: 3;
-  width: 100%;
-  justify-self: stretch;
+}
+
+.session-grid--profile [data-profile-form] > [data-profile-save] {
+  margin-top: var(--rail-gap);
+}
+
+.session-grid--profile [data-password-form] {
+  align-content: start;
+  row-gap: var(--rail-gap);
+}
+
+.session-grid--profile [data-password-form] > h2,
+.session-grid--profile [data-password-form] > .hint {
+  margin: 0;
+}
+
+.session-grid--profile [data-password-form] label {
+  gap: 0.25rem;
+}
+
+.session-grid--profile .api-keys-panel {
+  padding: 0;
+  border: 0;
+  gap: var(--rail-gap);
+}
+
+.session-grid--profile .api-keys-item {
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .session-grid h1 {
@@ -2417,10 +2457,10 @@ section.diag .panel:not(form) {
     grid-column: 1 / span var(--span-full);
   }
 
-  /* Profile: four columns (quarter of the profile row each). */
+  /* Profile: five columns on desktop. */
   .session-profile-sections > .panel,
   .session-profile-sections > form.panel {
-    flex: 1 1 calc((var(--content-basis) - (3 * var(--rail-gap))) / 4);
+    flex: 1 1 calc((var(--content-basis) - (4 * var(--rail-gap))) / 5);
   }
 
   .session-grid form,

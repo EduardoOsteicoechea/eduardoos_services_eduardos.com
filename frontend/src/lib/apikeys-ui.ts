@@ -10,7 +10,7 @@ function formatDate(value: string): string {
 /** Wire the API-keys admin panel rooted at `[data-api-keys]`. */
 export function mountAPIKeysUI(root: HTMLElement): void {
   const banner = root.querySelector("[data-apikeys-banner]");
-  const body = root.querySelector("[data-apikeys-admin]");
+  const bodies = root.querySelectorAll("[data-apikeys-admin]");
   const form = root.querySelector("[data-apikey-form]");
   const labelInput = root.querySelector("[data-apikey-label]");
   const errorBox = root.querySelector("[data-apikey-error]");
@@ -150,9 +150,11 @@ export function mountAPIKeysUI(root: HTMLElement): void {
       setBanner("Administrator session required.", "err");
       return;
     }
-    if (body instanceof HTMLElement) {
-      body.hidden = false;
-    }
+    bodies.forEach((node) => {
+      if (node instanceof HTMLElement) {
+        node.hidden = false;
+      }
+    });
     await loadKeys();
   };
 
