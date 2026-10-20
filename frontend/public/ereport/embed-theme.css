@@ -223,6 +223,16 @@
   overflow: hidden;
 }
 
+/* Mode W quick modal: iframe paints its own frame; host wrapper stays chrome-free. */
+#eduardoos-ereport-embed-overlay .eos-ereport-embed-frame--bare {
+  width: min(28rem, calc(100% - 2rem));
+  height: min(36rem, calc(100% - 2rem));
+  border: 0;
+  border-radius: var(--eos-ereport-radius);
+  background: transparent;
+  box-shadow: none;
+}
+
 #eduardoos-ereport-embed-overlay iframe {
   display: block;
   flex: 1;

@@ -1,10 +1,14 @@
 /**
- * Cookie-less host embed issue form.
- * Auth: short-lived embed token or API key via postMessage from embed.js (never stored).
+ * Cookie-less host embed — same UX as eduardoos.com quick issue modal
+ * (list + add; no Layout chrome, no Configure gear).
  */
 
 import { mustLog } from "./dev-log";
 import { parseIssueText } from "./ereport-issue-parse";
+import {
+  formatIssueClipboardText,
+  isWebsiteIssueOpen,
+} from "./ereport-quick-connector";
 
 const LOG_PREFIX = "[ereport-embed-issue]";
 const INIT_TYPE = "ereport-embed-issue-init";
@@ -16,11 +20,8 @@ type InitPayload = {
   orgId: string;
   reportId: string;
   hostOrigin: string;
-  /** Preferred: short-lived eos_embed_… from host backend. */
   token?: string;
-  /** Dev / simple hosts only — exchanged for embed token in this iframe (same-origin). */
   apiKey?: string;
-  baseUrl?: string;
 };
 
 type AuthState = {
@@ -28,7 +29,24 @@ type AuthState = {
   orgId: string;
   reportId: string;
   hostOrigin: string;
+};
+
+type EmbedItem = {
+  id?: string;
+  nombre?: string;
+  incidencia?: string;
+  status?: string;
+  checklist?: Array<{ id?: string; checked?: boolean }>;
+};
+
+type EmbedState = {
   tema?: string;
+  sectionId?: string;
+  groupId?: string;
+  sectionTitle?: string;
+  groupTitle?: string;
+  items?: EmbedItem[];
+  viewUrl?: string;
 };
 
 function el<T extends HTMLElement>(root: ParentNode, sel: string): T | null {
@@ -45,14 +63,17 @@ function postParent(msg: Record<string, unknown>, targetOrigin: string) {
   }
 }
 
+function readyToSaveStatus(): string {
+  return "Ready to save.";
+}
+
 async function mintEmbedToken(
-  baseUrl: string,
   apiKey: string,
   orgId: string,
   reportId: string,
   origin: string,
-): Promise<{ token: string; tema?: string }> {
-  const res = await fetch(`${baseUrl}/api/v1/ereport/embed-token`, {
+): Promise<string> {
+  const res = await fetch("/api/v1/ereport/embed-token", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -63,17 +84,35 @@ async function mintEmbedToken(
   });
   const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
   if (!res.ok) {
-    const message = String(data.message || data.error || `HTTP ${res.status}`);
-    throw new Error(message);
+    throw new Error(String(data.message || data.error || `HTTP ${res.status}`));
   }
   const token = String(data.token || "");
   if (!token) throw new Error("Embed token missing from response.");
-  return { token, tema: data.tema ? String(data.tema) : undefined };
+  return token;
 }
 
-async function postQuickIssue(baseUrl: string, auth: AuthState, text: string): Promise<void> {
+async function fetchState(auth: AuthState): Promise<EmbedState> {
+  const q = new URLSearchParams({
+    orgId: auth.orgId,
+    reportId: auth.reportId,
+    hostOrigin: auth.hostOrigin,
+  });
+  const res = await fetch(`/api/v1/ereport/embed/state?${q}`, {
+    headers: {
+      Authorization: `Bearer ${auth.bearer}`,
+      Accept: "application/json",
+    },
+  });
+  const data = (await res.json().catch(() => ({}))) as EmbedState & Record<string, unknown>;
+  if (!res.ok) {
+    throw new Error(String(data.message || data.error || `HTTP ${res.status}`));
+  }
+  return data;
+}
+
+async function postQuickIssue(auth: AuthState, text: string): Promise<void> {
   const { nombre, incidencia } = parseIssueText(text);
-  const res = await fetch(`${baseUrl}/api/v1/ereport/embed/quick-issue`, {
+  const res = await fetch("/api/v1/ereport/embed/quick-issue", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${auth.bearer}`,
@@ -96,31 +135,32 @@ async function postQuickIssue(baseUrl: string, auth: AuthState, text: string): P
 }
 
 export function startEreportEmbedIssue(root: HTMLElement) {
+  const titleEl = el<HTMLElement>(root, "[data-ei-title]")!;
+  const contextEl = el<HTMLElement>(root, "[data-ei-context]")!;
+  const listEl = el<HTMLElement>(root, "[data-ei-list]")!;
   const statusEl = el<HTMLElement>(root, "[data-ei-status]")!;
-  const form = el<HTMLFormElement>(root, "[data-ei-form]")!;
-  const textEl = el<HTMLTextAreaElement>(root, "[data-ei-text]")!;
+  const composeEl = el<HTMLElement>(root, "[data-ei-compose]")!;
+  const inputRow = el<HTMLElement>(root, "[data-ei-input-row]")!;
+  const input = el<HTMLTextAreaElement>(root, "[data-ei-input]")!;
+  const addBtn = el<HTMLButtonElement>(root, "[data-ei-add]")!;
   const submitBtn = el<HTMLButtonElement>(root, "[data-ei-submit]")!;
   const closeBtn = el<HTMLButtonElement>(root, "[data-ei-close]");
-  const reportLabel = el<HTMLElement>(root, "[data-ei-report]");
 
   let auth: AuthState | null = null;
   let parentOrigin = "*";
-  const baseUrl = "";
+  let state: EmbedState | null = null;
 
-  function setStatus(msg: string, isError = false) {
+  function setStatus(msg: string) {
     statusEl.textContent = msg;
-    statusEl.hidden = !msg;
-    statusEl.classList.toggle("status--err", isError);
   }
 
-  function setReady(ready: boolean) {
-    form.hidden = !ready;
-    textEl.disabled = !ready;
-    submitBtn.disabled = !ready;
+  function setComposeEnabled(enabled: boolean) {
+    composeEl.hidden = !enabled;
+    addBtn.disabled = !enabled;
+    input.disabled = !enabled;
+    submitBtn.disabled = !enabled;
+    if (!enabled) inputRow.hidden = true;
   }
-
-  setReady(false);
-  setStatus("Waiting for host credentials…");
 
   function close() {
     postParent({ type: CLOSE_TYPE }, parentOrigin);
@@ -131,26 +171,141 @@ export function startEreportEmbedIssue(root: HTMLElement) {
     close();
   });
 
-  form.addEventListener("submit", async (ev) => {
+  function syncContext() {
+    const reportLabel = state?.tema || "Website issues";
+    titleEl.textContent = reportLabel;
+    contextEl.textContent = [
+      reportLabel,
+      state?.sectionTitle || (state?.sectionId ? "Section" : "No section"),
+      state?.groupTitle || (state?.groupId ? "Subsection" : "No subsection"),
+    ].join(" · ");
+  }
+
+  function renderList() {
+    listEl.replaceChildren();
+    const items = (state?.items || []).filter(isWebsiteIssueOpen);
+    if (!state?.sectionId || !state?.groupId) {
+      setStatus("Connector section/subsection missing in the hub.");
+      return;
+    }
+    if (items.length === 0) {
+      const empty = document.createElement("li");
+      empty.className = "ereport-quick-overlay__empty";
+      empty.textContent = "No open issues in this subsection yet.";
+      listEl.append(empty);
+      return;
+    }
+    for (const it of items) {
+      const li = document.createElement("li");
+      li.className = "ereport-quick-overlay__item";
+      const title = document.createElement("span");
+      title.className = "ereport-quick-overlay__item-title";
+      title.textContent = it.nombre || it.incidencia || it.id || "";
+      const st = document.createElement("span");
+      st.className = "ereport-quick-overlay__item-status";
+      st.textContent = it.status || "";
+      const actions = document.createElement("div");
+      actions.className = "ereport-quick-overlay__item-actions";
+
+      const copyBtn = document.createElement("button");
+      copyBtn.type = "button";
+      copyBtn.className = "icon-btn ereport-quick-overlay__item-copy";
+      copyBtn.setAttribute("aria-label", "Copy issue for agent");
+      copyBtn.title = "Copy issue for agent";
+      copyBtn.innerHTML =
+        '<span class="material-symbols-outlined" aria-hidden="true">content_copy</span>';
+      copyBtn.addEventListener("click", async (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        const text = formatIssueClipboardText({
+          reportId: auth?.reportId || "",
+          sectionId: state?.sectionId || "",
+          groupId: state?.groupId || "",
+          itemId: String(it.id || ""),
+          nombre: it.nombre || "",
+          incidencia: it.incidencia || "",
+        });
+        try {
+          await navigator.clipboard.writeText(text);
+          setStatus("Copied.");
+        } catch {
+          setStatus("Could not copy.");
+        }
+      });
+      actions.append(copyBtn);
+
+      if (state?.viewUrl && String(it.id || "").trim()) {
+        const openCardBtn = document.createElement("button");
+        openCardBtn.type = "button";
+        openCardBtn.className = "btn ereport-quick-overlay__item-open-card";
+        openCardBtn.setAttribute("aria-label", "Open issue");
+        openCardBtn.title = "Open issue";
+        openCardBtn.textContent = "Open";
+        openCardBtn.addEventListener("click", (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          const url = state?.viewUrl || "";
+          if (url) window.open(url, "_blank", "noopener,noreferrer");
+        });
+        actions.append(openCardBtn);
+
+        const openBtn = document.createElement("button");
+        openBtn.type = "button";
+        openBtn.className = "icon-btn ereport-quick-overlay__item-open";
+        openBtn.setAttribute("aria-label", "Open in eReport");
+        openBtn.title = "Open in eReport";
+        openBtn.innerHTML =
+          '<span class="material-symbols-outlined" aria-hidden="true">open_in_new</span>';
+        openBtn.addEventListener("click", (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          const url = state?.viewUrl || "";
+          if (url) window.open(url, "_blank", "noopener,noreferrer");
+        });
+        actions.append(openBtn);
+      }
+
+      li.append(title, st, actions);
+      listEl.append(li);
+    }
+  }
+
+  async function reload() {
+    if (!auth) return;
+    setStatus("Loading…");
+    state = await fetchState(auth);
+    syncContext();
+    renderList();
+    setComposeEnabled(Boolean(state.sectionId && state.groupId));
+    setStatus(readyToSaveStatus());
+  }
+
+  addBtn.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    inputRow.hidden = false;
+    input.focus();
+  });
+
+  submitBtn.addEventListener("click", async (ev) => {
     ev.preventDefault();
     if (!auth) return;
-    const text = String(textEl.value || "").trim();
+    const text = String(input.value || "").trim();
     if (!text) {
-      setStatus("Describe the issue (text until the first “.” is the title).", true);
-      textEl.focus();
+      setStatus("Describe the issue (title until the first period).");
+      input.focus();
       return;
     }
     submitBtn.disabled = true;
-    setStatus("Sending…");
+    setStatus("Saving…");
     try {
-      await postQuickIssue(baseUrl, auth, text);
-      textEl.value = "";
-      setStatus("Issue saved.");
+      await postQuickIssue(auth, text);
+      input.value = "";
+      inputRow.hidden = true;
+      await reload();
       if (mustLog) console.log(LOG_PREFIX, "created");
-      setTimeout(close, 600);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Could not save the issue.";
-      setStatus(message, true);
+      setStatus(message);
       if (mustLog) console.log(LOG_PREFIX, "fail", message);
     } finally {
       submitBtn.disabled = false;
@@ -163,37 +318,33 @@ export function startEreportEmbedIssue(root: HTMLElement) {
     const reportId = String(data.reportId || "").trim();
     const hostOrigin = String(data.hostOrigin || "").trim();
     if (!orgId || !reportId || !hostOrigin) {
-      setStatus("Host mount is missing orgId, reportId, or origin.", true);
+      setStatus("Host mount is missing orgId, reportId, or origin.");
+      setComposeEnabled(false);
       return;
     }
     try {
       let bearer = String(data.token || "").trim();
-      let tema: string | undefined;
       if (!bearer) {
         const apiKey = String(data.apiKey || "").trim();
         if (!apiKey) {
-          setStatus("Provide a connector token (or apiKey for local/dev).", true);
+          setStatus("Provide a connector token (or apiKey for local/dev).");
+          setComposeEnabled(false);
           return;
         }
         setStatus("Authorizing…");
-        const minted = await mintEmbedToken(baseUrl, apiKey, orgId, reportId, hostOrigin);
-        bearer = minted.token;
-        tema = minted.tema;
+        bearer = await mintEmbedToken(apiKey, orgId, reportId, hostOrigin);
       }
-      auth = { bearer, orgId, reportId, hostOrigin, tema };
-      if (reportLabel) {
-        reportLabel.textContent = tema || "Website registration";
-        reportLabel.hidden = false;
-      }
-      setReady(true);
-      setStatus("Describe the bug, then send.");
-      textEl.focus();
+      auth = { bearer, orgId, reportId, hostOrigin };
+      await reload();
     } catch (err) {
       const message = err instanceof Error ? err.message : "Authorization failed.";
-      setStatus(message, true);
-      setReady(false);
+      setStatus(message);
+      setComposeEnabled(false);
     }
   }
+
+  setComposeEnabled(false);
+  setStatus("Waiting for host credentials…");
 
   window.addEventListener("message", (ev) => {
     if (!ev.data || typeof ev.data !== "object") return;

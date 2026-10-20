@@ -1,122 +1,100 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+/**
+ * Cookie-less Mode W iframe — same UI chrome as the eduardoos.com quick issue modal.
+ * No Layout shell (no Register/Log in, no site footer).
+ */
+import "../../styles/global.css";
+import "../../styles/ereport-chrome.css";
 ---
 
-<Layout
-  title="Report an issue"
-  page="ereport-embed-issue"
-  robots="noindex,nofollow"
-  showPageTitle={false}
-  description="eReport host embed — quick issue form (token or API key; no eduardoos.com login)."
->
-  <h1 class="page-title-sr">Report an issue</h1>
-  <section class="ereport-ei" data-ereport-embed-issue>
-    <header class="ereport-ei__head">
-      <p class="ereport-ei__eyebrow">eReport</p>
-      <p class="ereport-ei__title">Report an issue</p>
-      <p class="ereport-ei__report" data-ei-report hidden></p>
-      <button type="button" class="ereport-ei__close" data-ei-close aria-label="Close">
-        <span class="material-symbols-outlined" aria-hidden="true">close</span>
-      </button>
-    </header>
-    <p class="status ereport-ei__status" data-ei-status></p>
-    <form class="ereport-ei__form" data-ei-form hidden>
-      <label>
-        Issue
-        <textarea
-          data-ei-text
-          rows="5"
-          maxlength="8000"
-          placeholder="Short title. Then describe what went wrong…"
-          required
-        ></textarea>
-      </label>
-      <p class="hint">Text until the first period is the title; the rest is the description.</p>
-      <button type="submit" class="btn btn--primary" data-ei-submit>Send</button>
-    </form>
-  </section>
-</Layout>
-
-<style>
-  .ereport-ei {
-    display: flex;
-    flex-direction: column;
-    gap: var(--rail-gap);
-    padding: var(--space-padding);
-    max-width: 36rem;
-  }
-  .ereport-ei__head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--rail-gap);
-    position: relative;
-    padding-right: calc(var(--button-size) + var(--rail-gap));
-  }
-  .ereport-ei__eyebrow {
-    margin: 0;
-    font-size: var(--font-size-xs);
-    color: var(--color-muted);
-  }
-  .ereport-ei__title {
-    margin: 0;
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-  }
-  .ereport-ei__report {
-    margin: 0;
-    flex: 1 1 100%;
-    font-size: var(--font-size-sm);
-    color: var(--color-muted);
-  }
-  .ereport-ei__close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--button-size);
-    height: var(--button-size);
-    margin: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: transparent;
-    color: var(--color-text);
-    cursor: pointer;
-  }
-  .ereport-ei__form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--rail-gap);
-  }
-  .ereport-ei__form label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    font-size: var(--font-size-sm);
-  }
-  .ereport-ei__form textarea {
-    min-height: var(--textarea-min-height);
-    padding: var(--control-padding-block) var(--control-padding-inline);
-    font-size: var(--font-size-md);
-    border: var(--border-width) solid var(--color-border);
-    border-radius: var(--border-radius);
-    background: var(--color-surface);
-    color: var(--color-text);
-    font-family: inherit;
-  }
-  .ereport-ei .hint {
-    margin: 0;
-    font-size: var(--font-size-xs);
-    color: var(--color-muted);
-  }
-</style>
-
-<script>
-  import { startEreportEmbedIssue } from "../../lib/ereport-embed-issue";
-
-  const root = document.querySelector("[data-ereport-embed-issue]");
-  if (root instanceof HTMLElement) startEreportEmbedIssue(root);
-</script>
+<!doctype html>
+<html lang="en" data-theme="dark" data-page="ereport-embed-issue">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Website issues · eReport</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <script is:inline>
+      (() => {
+        try {
+          const theme = localStorage.getItem("theme");
+          if (theme === "light" || theme === "dark") {
+            document.documentElement.setAttribute("data-theme", theme);
+          }
+          const font = localStorage.getItem("root-font-size");
+          if (font) document.documentElement.style.fontSize = font;
+        } catch (_) {}
+      })();
+    </script>
+    <style is:inline>
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--color-bg, #121212);
+        color: var(--color-text, #f5f5f5);
+      }
+      body.ereport-embed-issue-body {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        min-height: 100%;
+        padding: 0;
+      }
+      .ereport-embed-issue-frame {
+        flex: 1;
+        width: auto;
+        max-height: none;
+        min-height: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body class="ereport-embed-issue-body">
+    <div
+      class="ereport-quick-overlay__frame ereport-embed-issue-frame"
+      data-ereport-embed-issue
+      role="dialog"
+      aria-modal="true"
+      aria-label="Website issues"
+    >
+      <header class="ereport-quick-overlay__bar">
+        <h1 class="ereport-quick-overlay__title" data-ei-title>Website issues</h1>
+        <div class="ereport-quick-overlay__bar-actions">
+          <button type="button" class="icon-btn" data-ei-close aria-label="Close" title="Close">
+            <span class="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+        </div>
+      </header>
+      <p class="ereport-quick-overlay__context" data-ei-context></p>
+      <ul class="ereport-quick-overlay__list" data-ei-list></ul>
+      <div class="ereport-quick-overlay__compose" data-ei-compose hidden>
+        <button type="button" class="icon-btn" data-ei-add aria-label="Add issue" title="Add issue" disabled>
+          <span class="material-symbols-outlined" aria-hidden="true">add</span>
+        </button>
+        <div class="ereport-quick-overlay__input-row" data-ei-input-row hidden>
+          <textarea
+            data-ei-input
+            rows="3"
+            placeholder="Issue title. Description after the first period…"
+            disabled
+          ></textarea>
+          <button type="button" class="btn btn--primary" data-ei-submit disabled>Save issue</button>
+        </div>
+      </div>
+      <p class="status ereport-quick-overlay__status" data-ei-status></p>
+    </div>
+    <script>
+      import { startEreportEmbedIssue } from "../../lib/ereport-embed-issue";
+      const root = document.querySelector("[data-ereport-embed-issue]");
+      if (root instanceof HTMLElement) startEreportEmbedIssue(root);
+    </script>
+  </body>
+</html>

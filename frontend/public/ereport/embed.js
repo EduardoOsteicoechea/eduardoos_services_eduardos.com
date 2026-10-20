@@ -125,17 +125,24 @@
     var frameWrap = document.createElement("div");
     frameWrap.className = "eos-ereport-embed-frame";
 
-    var closeBtn = document.createElement("button");
-    closeBtn.type = "button";
-    closeBtn.className = "eos-ereport-embed-close";
-    closeBtn.setAttribute("aria-label", "Close");
-    closeBtn.textContent = "×";
-    closeBtn.addEventListener("click", closeOverlay);
+    var hideOuterClose = Boolean(opts.hideOuterClose);
+    var closeBtn = null;
+    if (!hideOuterClose) {
+      closeBtn = document.createElement("button");
+      closeBtn.type = "button";
+      closeBtn.className = "eos-ereport-embed-close";
+      closeBtn.setAttribute("aria-label", "Close");
+      closeBtn.textContent = "×";
+      closeBtn.addEventListener("click", closeOverlay);
+    }
 
     var iframe = document.createElement("iframe");
     iframe.src = opts.src;
     iframe.title = opts.label || "eReport";
     iframe.setAttribute("allow", "clipboard-write");
+    if (hideOuterClose) {
+      frameWrap.className = "eos-ereport-embed-frame eos-ereport-embed-frame--bare";
+    }
 
     var sent = false;
     function sendInit() {
@@ -172,13 +179,14 @@
       if (ev.target === overlay) closeOverlay();
     });
 
-    frameWrap.appendChild(closeBtn);
+    if (closeBtn) frameWrap.appendChild(closeBtn);
     frameWrap.appendChild(iframe);
     overlay.appendChild(frameWrap);
     document.body.appendChild(overlay);
     document.documentElement.classList.add("ereport-connector-open");
     document.addEventListener("keydown", onEscape, true);
-    closeBtn.focus();
+    if (closeBtn) closeBtn.focus();
+    else iframe.focus();
   }
 
   function resolveIds(opts) {
@@ -218,8 +226,9 @@
     }
     openIframeModal({
       baseUrl: baseUrl,
-      label: "Report an issue",
+      label: "Website issues",
       src: baseUrl + "/ereport/embed-issue",
+      hideOuterClose: true,
       initMessage: {
         type: INIT_TYPE,
         orgId: ids.orgId,

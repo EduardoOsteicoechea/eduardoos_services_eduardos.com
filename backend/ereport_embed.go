@@ -329,6 +329,125 @@ func (a *App) ereportV1EmbedTokenHandler(w http.ResponseWriter, r *http.Request)
 	})
 }
 
+// GET /api/v1/ereport/embed/state — list open issues + defaults for the host quick modal.
+func (a *App) ereportV1EmbedStateHandler(w http.ResponseWriter, r *http.Request) {
+	user := apiUserFrom(r)
+	if user == nil {
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	orgID := strings.TrimSpace(r.URL.Query().Get("orgId"))
+	reportID := strings.TrimSpace(r.URL.Query().Get("reportId"))
+	hostOrigin := strings.TrimSpace(r.URL.Query().Get("hostOrigin"))
+	if via := embedViaFrom(r); via == "embed_token" {
+		boundOrg, _ := r.Context().Value(embedOrgContextKey).(string)
+		boundRep, _ := r.Context().Value(embedReportContextKey).(string)
+		if orgID == "" {
+			orgID = boundOrg
+		}
+		if reportID == "" {
+			reportID = boundRep
+		}
+		if orgID != boundOrg || reportID != boundRep {
+			a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+			return
+		}
+	}
+	if orgID == "" || reportID == "" {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	meta, payload, err := a.loadOwnedWebsiteRegistration(user, orgID, reportID)
+	if err != nil {
+		if apiErr := asAPIWriteErr(err); apiErr.Code == "forbidden" {
+			writeJSON(w, http.StatusForbidden, map[string]any{
+				"error":      "forbidden",
+				"message":    "Use a website registration report for the site connector.",
+				"request_id": requestIDFrom(r, w),
+			})
+			return
+		}
+		a.writeEreportNotFound(w, r, orgID, reportID, ereportMissingReason(err))
+		return
+	}
+	if _, ok := a.requireEmbedHostAllowed(w, r, meta, hostOrigin); !ok {
+		return
+	}
+	sectionID, groupID, sgErr := resolveEmbedSectionGroup(meta, payload)
+	if sgErr != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]any{
+			"error":      "bad_targets",
+			"message":    "Connector section or subsection is missing on this report.",
+			"request_id": requestIDFrom(r, w),
+		})
+		return
+	}
+	secTitle, grpTitle := "", ""
+	itemsOut := make([]map[string]any, 0)
+	if sec, _, e := findSection(payload, sectionID); e == nil {
+		secTitle = asString(sec["title"])
+		if grp, _, e2 := findGroup(sec, groupID); e2 == nil {
+			grpTitle = asString(grp["title"])
+			for _, it := range asMapSlice(grp["items"]) {
+				status := strings.TrimSpace(asString(it["status"]))
+				if status == ereportNodeStatusAprobado {
+					continue
+				}
+				if checklistAllChecked(it["checklist"]) {
+					continue
+				}
+				itemsOut = append(itemsOut, map[string]any{
+					"id":         asString(it["id"]),
+					"nombre":     asString(it["nombre"]),
+					"incidencia": asString(it["incidencia"]),
+					"status":     status,
+					"checklist":  it["checklist"],
+				})
+			}
+		}
+	}
+	writeJSON(w, http.StatusOK, map[string]any{
+		"orgId":        orgID,
+		"reportId":     reportID,
+		"tema":         meta.Tema,
+		"sectionId":    sectionID,
+		"groupId":      groupID,
+		"sectionTitle": secTitle,
+		"groupTitle":   grpTitle,
+		"items":        itemsOut,
+		"viewUrl":      a.ereportViewURL(r, displayOwnerSafe(user.Email), orgID, reportID),
+	})
+}
+
+func checklistAllChecked(raw any) bool {
+	list, ok := raw.([]any)
+	if !ok || len(list) == 0 {
+		// also accept []map from BSON-ish shapes via asMapSlice
+		maps := asMapSlice(raw)
+		if len(maps) == 0 {
+			return false
+		}
+		for _, m := range maps {
+			checked, _ := m["checked"].(bool)
+			if !checked {
+				return false
+			}
+		}
+		return true
+	}
+	for _, entry := range list {
+		m, ok := entry.(map[string]any)
+		if !ok {
+			return false
+		}
+		checked, _ := m["checked"].(bool)
+		if !checked {
+			return false
+		}
+	}
+	return true
+}
+
 // POST /api/v1/ereport/embed/quick-issue — create one issue locked to a website registration.
 func (a *App) ereportV1EmbedQuickIssueHandler(w http.ResponseWriter, r *http.Request) {
 	user := apiUserFrom(r)
