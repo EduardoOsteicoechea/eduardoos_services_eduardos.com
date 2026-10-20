@@ -1588,7 +1588,7 @@ main > .session-grid.session-grid--profile {
 .session-profile-sections {
   display: flex;
   flex-flow: row wrap;
-  gap: var(--rail-gap);
+  gap: 1.5rem;
   align-items: stretch;
   min-width: 0;
 }
@@ -2060,10 +2060,9 @@ section.diag .panel:not(form) {
   align-items: stretch;
   gap: var(--rail-gap);
   min-width: 0;
-  padding: var(--space-padding);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--border-radius);
-  background: var(--color-bg);
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 
 .admin-user-card__info {
@@ -2072,11 +2071,17 @@ section.diag .panel:not(form) {
 }
 
 .admin-user-card__meta {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: stretch;
-  gap: 0;
+  display: grid;
+  grid-template-columns:
+    20rem
+    10rem
+    minmax(0, max-content)
+    minmax(0, max-content)
+    minmax(0, max-content)
+    minmax(0, max-content);
+  align-items: start;
+  column-gap: 0;
+  row-gap: var(--rail-gap);
   margin: 0;
   min-width: 0;
 }
@@ -2085,9 +2090,10 @@ section.diag .panel:not(form) {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 0.125rem;
   min-width: 0;
+  overflow: hidden;
   padding-inline: var(--rail-gap);
   border-inline-end: var(--border-width) solid var(--color-border);
 }
@@ -2112,11 +2118,9 @@ section.diag .panel:not(form) {
   margin: 0;
   min-width: 0;
   font-size: var(--font-size-sm);
-  word-break: break-word;
-}
-
-.admin-user-card__meta-item--email {
-  flex: 1 1 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .admin-user-card__meta-item--email dd {
@@ -2317,7 +2321,7 @@ section.diag .panel:not(form) {
   /* Profile: two columns (half of the profile row each). */
   .session-profile-sections > .panel,
   .session-profile-sections > form.panel {
-    flex: 1 1 calc((var(--content-basis) - var(--rail-gap)) / 2);
+    flex: 1 1 calc((var(--content-basis) - 1.5rem) / 2);
   }
 
   .session-grid form,
@@ -2460,7 +2464,7 @@ section.diag .panel:not(form) {
   /* Profile: five columns on desktop. */
   .session-profile-sections > .panel,
   .session-profile-sections > form.panel {
-    flex: 1 1 calc((var(--content-basis) - (4 * var(--rail-gap))) / 5);
+    flex: 1 1 calc((var(--content-basis) - (4 * 1.5rem)) / 5);
   }
 
   .session-grid form,

@@ -666,19 +666,6 @@ main > .diag{
   border-radius: var(--radius-md);
 }
 
-.admin-user-card{
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  transition:
-    border-color var(--dur) var(--ease-out),
-    box-shadow var(--dur) var(--ease-out);
-}
-
-.admin-user-card:hover{
-  border-color: var(--eo-line-strong);
-  box-shadow: var(--shadow-md);
-}
-
 .admin-user-card__meta-item dt{
   font-family: var(--eo-mono);
   font-weight: 700;
@@ -741,14 +728,14 @@ main > .diag{
   border-radius: 0;
 }
 
-/* Profile: each section is its own card (not one shared shell). */
+/* Profile sections: no card chrome; spacing comes from the flex gap. */
 .session-grid--profile .session-profile-sections > .panel,
 .session-grid--profile .session-profile-sections > form.panel{
-  padding: var(--space-padding);
-  background: var(--eo-surface-2);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .session-grid h1{
