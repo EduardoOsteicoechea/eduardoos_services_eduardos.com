@@ -2108,12 +2108,9 @@ section.diag .panel:not(form) {
   min-width: 0;
   padding: 0.5rem;
   border: 0;
+  border-bottom: var(--border-width) solid var(--color-border);
   border-radius: 0;
   background: transparent;
-}
-
-.admin-user-card:nth-child(odd) {
-  background: var(--color-surface);
 }
 
 .admin-user-card__info {
