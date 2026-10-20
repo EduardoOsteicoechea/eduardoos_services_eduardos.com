@@ -1601,7 +1601,7 @@ main > .session-grid.session-grid--profile {
   align-content: start;
   justify-content: flex-start;
   border-inline-end: var(--border-width) solid var(--color-border);
-  border-bottom: var(--border-width) solid var(--color-border);
+  border-bottom: 0;
   padding-inline-end: 1.5rem;
   padding-bottom: 1.5rem;
 }
@@ -1634,6 +1634,36 @@ main > .session-grid.session-grid--profile {
 
 .session-grid--profile [data-profile-form] > [data-profile-save] {
   margin-top: var(--rail-gap);
+}
+
+/* Tablet + desktop: same-row sections pin action buttons to bottom-right. */
+@media (min-width: 48rem) {
+  .session-grid--profile .session-profile-sections > .panel:not(form) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .session-grid--profile .session-profile-sections > .panel > form,
+  .session-grid--profile .session-profile-sections > .panel > .session-account-block {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .session-grid--profile .session-profile-sections .session-account-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .session-grid--profile .session-profile-sections .session-account-block > form {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .session-grid.session-grid--profile .session-profile-sections form > button:not(.password-field__toggle),
+  .session-grid.session-grid--profile .session-profile-sections [data-profile-save],
+  .session-grid.session-grid--profile .session-profile-sections [data-avatar-upload] {
+    margin-top: auto;
+  }
 }
 
 .session-grid--profile [data-password-form] {
@@ -2052,7 +2082,7 @@ section.diag .panel:not(form) {
 .admin-users__list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -2064,7 +2094,7 @@ section.diag .panel:not(form) {
   align-items: stretch;
   gap: var(--rail-gap);
   min-width: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 1rem 0.75rem;
   border: 0;
   border-radius: 0;
   background: transparent;
