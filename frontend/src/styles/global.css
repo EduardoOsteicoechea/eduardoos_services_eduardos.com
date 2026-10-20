@@ -1584,20 +1584,20 @@ main > .session-grid.session-grid--profile {
   grid-column: 1 / span var(--span-full);
 }
 
+/* Flex row + wrap: phone 1 col, tablet 2, desktop 4 (via flex-basis in breakpoints). */
 .session-profile-sections {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   gap: var(--rail-gap);
   align-items: stretch;
   min-width: 0;
 }
 
-/* Phone: one column (full row). Tablet/desktop override flex-basis below. */
 .session-profile-sections > .panel,
 .session-profile-sections > form.panel {
   flex: 1 1 calc(var(--content-basis));
   min-width: 0;
+  box-sizing: border-box;
 }
 
 .session-account-block {
@@ -1981,10 +1981,28 @@ section.diag .panel:not(form) {
   flex-direction: column;
   gap: var(--rail-gap);
   min-width: 0;
-  padding: var(--space-padding);
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.admin-users__search {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  min-width: 0;
+}
+
+.admin-users__search input {
+  width: auto;
+  min-width: 0;
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  background: var(--color-surface);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
-  background: var(--color-surface);
 }
 
 .admin-users__list {
@@ -1998,10 +2016,9 @@ section.diag .panel:not(form) {
 
 .admin-user-card {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--space-padding);
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--rail-gap);
   min-width: 0;
   padding: var(--space-padding);
   border: var(--border-width) solid var(--color-border);
@@ -2010,26 +2027,38 @@ section.diag .panel:not(form) {
 }
 
 .admin-user-card__info {
-  width: fit-content;
-  max-width: 18.75rem;
   min-width: 0;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
 }
 
 .admin-user-card__meta {
   display: flex;
-  flex-direction: column;
-  gap: var(--rail-gap);
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0;
   margin: 0;
+  min-width: 0;
 }
 
 .admin-user-card__meta-item {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: nowrap;
-  align-items: baseline;
-  gap: var(--rail-gap);
+  align-items: flex-start;
+  gap: 0.125rem;
   min-width: 0;
+  padding-inline: var(--rail-gap);
+  border-inline-end: var(--border-width) solid var(--color-border);
+}
+
+.admin-user-card__meta-item:first-child {
+  padding-inline-start: 0;
+}
+
+.admin-user-card__meta-item:last-child {
+  padding-inline-end: 0;
+  border-inline-end: 0;
 }
 
 .admin-user-card__meta-item dt {
@@ -2042,9 +2071,12 @@ section.diag .panel:not(form) {
 .admin-user-card__meta-item dd {
   margin: 0;
   min-width: 0;
-  flex: 1 1 auto;
   font-size: var(--font-size-sm);
   word-break: break-word;
+}
+
+.admin-user-card__meta-item--email {
+  flex: 1 1 12rem;
 }
 
 .admin-user-card__meta-item--email dd {
@@ -2057,8 +2089,8 @@ section.diag .panel:not(form) {
 }
 
 .admin-users-services {
-  flex: 1 1 0;
   min-width: 0;
+  flex: 0 0 auto;
 }
 
 .admin-users-services form {
@@ -2242,10 +2274,10 @@ section.diag .panel:not(form) {
     grid-column: 1 / span var(--span-full);
   }
 
-  /* Profile: two columns (half row each). */
+  /* Profile: two columns (half of the profile row each). */
   .session-profile-sections > .panel,
   .session-profile-sections > form.panel {
-    flex-basis: calc((var(--content-basis) - var(--rail-gap)) / 2);
+    flex: 1 1 calc((var(--content-basis) - var(--rail-gap)) / 2);
   }
 
   .session-grid form,
@@ -2385,10 +2417,10 @@ section.diag .panel:not(form) {
     grid-column: 1 / span var(--span-full);
   }
 
-  /* Profile: four columns (quarter row each). */
+  /* Profile: four columns (quarter of the profile row each). */
   .session-profile-sections > .panel,
   .session-profile-sections > form.panel {
-    flex-basis: calc((var(--content-basis) - (3 * var(--rail-gap))) / 4);
+    flex: 1 1 calc((var(--content-basis) - (3 * var(--rail-gap))) / 4);
   }
 
   .session-grid form,

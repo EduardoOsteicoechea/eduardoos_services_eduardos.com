@@ -661,9 +661,9 @@ main > .diag{
   margin-inline: 0;
 }
 
-.admin-users__panel{
-  background: var(--eo-surface-2);
-  border-radius: var(--radius-lg);
+.admin-users__search input{
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
 }
 
 .admin-user-card{
@@ -726,6 +726,11 @@ main > .diag{
 
 .session-grid.session-grid--profile{
   grid-column: 1 / span var(--span-full);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .session-grid .panel,
@@ -734,6 +739,16 @@ main > .diag{
   background: transparent;
   border: 0;
   border-radius: 0;
+}
+
+/* Profile: each section is its own card (not one shared shell). */
+.session-grid--profile .session-profile-sections > .panel,
+.session-grid--profile .session-profile-sections > form.panel{
+  padding: var(--space-padding);
+  background: var(--eo-surface-2);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .session-grid h1{
