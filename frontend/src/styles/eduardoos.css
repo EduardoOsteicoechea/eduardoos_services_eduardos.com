@@ -724,6 +724,10 @@ main > .diag{
   box-shadow: var(--shadow-md);
 }
 
+.session-grid.session-grid--profile{
+  grid-column: 1 / span var(--span-full);
+}
+
 .session-grid .panel,
 .session-grid form.panel{
   padding: 0;

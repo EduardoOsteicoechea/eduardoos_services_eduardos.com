@@ -3,106 +3,110 @@ import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title="Profile">
-  <section class="session-grid" data-session>
+  <section class="session-grid session-grid--profile" data-session>
     <p class="status" data-banner>Loading session…</p>
-    <div class="panel" data-authed-panel hidden>
-      <p class="hint" data-profile-summary></p>
-      <form data-profile-form>
-        <label>
-          Display name
-          <input name="display_name" maxlength="80" />
-        </label>
-        <label>
-          Username
-          <input name="username" required minlength="3" maxlength="32" pattern="[a-z0-9_]+" />
-        </label>
-        <label>
-          Phone
-          <span class="phone-field">
-            <select name="phone_region" data-phone-region aria-label="Country or region"></select>
-            <input name="phone_national" data-phone-national inputmode="numeric" autocomplete="tel-national" maxlength="14" pattern="[0-9]*" placeholder="5551234567" />
-          </span>
-        </label>
-        <button type="button" data-profile-save>Save</button>
-      </form>
-    </div>
-    <div class="panel session-account-panel" data-authed-panel hidden>
-      <div class="session-account-block">
-        <div class="session-avatar-wrap" data-avatar-wrap hidden>
-          <img class="session-avatar" data-avatar-img hidden alt="Profile photo" />
-          <button
-            class="session-avatar-remove icon-btn"
-            type="button"
-            data-avatar-delete
-            hidden
-            aria-label="Remove avatar"
-            title="Remove avatar"
-          >
-            <span class="material-symbols-outlined" aria-hidden="true">close</span>
-          </button>
-        </div>
-        <p class="hint session-avatar-fallback" data-avatar-fallback hidden>No profile photo</p>
-        <form data-avatar-form>
+    <div class="session-profile-sections">
+      <div class="panel" data-authed-panel hidden>
+        <p class="hint" data-profile-summary></p>
+        <form data-profile-form>
           <label>
-            Avatar (JPEG, PNG, or WebP)
-            <input type="file" name="file" accept="image/jpeg,image/png,image/webp" />
+            Display name
+            <input name="display_name" maxlength="80" />
           </label>
-          <button type="button" data-avatar-upload>Upload</button>
+          <label>
+            Username
+            <input name="username" required minlength="3" maxlength="32" pattern="[a-z0-9_]+" />
+          </label>
+          <label>
+            Phone
+            <span class="phone-field">
+              <select name="phone_region" data-phone-region aria-label="Country or region"></select>
+              <input name="phone_national" data-phone-national inputmode="numeric" autocomplete="tel-national" maxlength="14" pattern="[0-9]*" placeholder="5551234567" />
+            </span>
+          </label>
+          <button type="button" data-profile-save>Save</button>
         </form>
       </div>
-      <div class="session-account-block session-links">
-        <a href="/api-docs" data-route>API docs</a>
-      </div>
-    </div>
-    <div class="panel" data-authed-panel data-admin-only hidden id="api-keys">
-      <div class="session-account-block session-links">
-        <h2>API keys</h2>
-        <button class="btn" type="button" data-apikeys-refresh>Refresh</button>
-      </div>
-      <section class="api-keys" data-api-keys>
-        <p class="status" data-apikeys-banner>Checking session…</p>
-        <div class="api-keys-body" data-apikeys-admin hidden>
-          <form class="api-keys-panel" data-apikey-form novalidate>
-            <div class="api-keys-row">
-              <div class="api-keys-field">
-                <label for="apikey-label">Label</label>
-                <input id="apikey-label" type="text" data-apikey-label maxlength="80" placeholder="catalog-import" required />
-              </div>
-              <button class="btn" type="submit" data-apikey-create>Create key</button>
-            </div>
-            <p class="api-keys-item-sub" data-apikey-error hidden></p>
-          </form>
-          <div class="api-keys-secret" data-apikey-secret hidden>
-            <p class="hint">Copy this key now. It is shown once and cannot be retrieved again.</p>
-            <code data-apikey-secret-value></code>
+      <div class="panel" data-authed-panel hidden>
+        <div class="session-account-block">
+          <div class="session-avatar-wrap" data-avatar-wrap hidden>
+            <img class="session-avatar" data-avatar-img hidden alt="Profile photo" />
+            <button
+              class="session-avatar-remove icon-btn"
+              type="button"
+              data-avatar-delete
+              hidden
+              aria-label="Remove avatar"
+              title="Remove avatar"
+            >
+              <span class="material-symbols-outlined" aria-hidden="true">close</span>
+            </button>
           </div>
-          <ul class="api-keys-list" data-apikey-list></ul>
+          <p class="hint session-avatar-fallback" data-avatar-fallback hidden>No profile photo</p>
+          <form data-avatar-form>
+            <label>
+              Avatar (JPEG, PNG, or WebP)
+              <input type="file" name="file" accept="image/jpeg,image/png,image/webp" />
+            </label>
+            <button type="button" data-avatar-upload>Upload</button>
+          </form>
         </div>
-      </section>
+      </div>
+      <div class="panel" data-authed-panel hidden>
+        <div class="session-account-block session-links">
+          <a href="/api-docs" data-route>API docs</a>
+        </div>
+        <div data-admin-only hidden id="api-keys">
+          <div class="session-account-block session-links">
+            <h2>API keys</h2>
+            <button class="btn" type="button" data-apikeys-refresh>Refresh</button>
+          </div>
+          <section class="api-keys" data-api-keys>
+            <p class="status" data-apikeys-banner>Checking session…</p>
+            <div class="api-keys-body" data-apikeys-admin hidden>
+              <form class="api-keys-panel" data-apikey-form novalidate>
+                <div class="api-keys-row">
+                  <div class="api-keys-field">
+                    <label for="apikey-label">Label</label>
+                    <input id="apikey-label" type="text" data-apikey-label maxlength="80" placeholder="catalog-import" required />
+                  </div>
+                  <button class="btn" type="submit" data-apikey-create>Create key</button>
+                </div>
+                <p class="api-keys-item-sub" data-apikey-error hidden></p>
+              </form>
+              <div class="api-keys-secret" data-apikey-secret hidden>
+                <p class="hint">Copy this key now. It is shown once and cannot be retrieved again.</p>
+                <code data-apikey-secret-value></code>
+              </div>
+              <ul class="api-keys-list" data-apikey-list></ul>
+            </div>
+          </section>
+        </div>
+      </div>
+      <form class="panel" data-authed-panel data-password-form hidden>
+        <h2>Change password</h2>
+        <label>
+          Current password
+          <span class="password-field">
+            <input type="password" name="current_password" autocomplete="current-password" required minlength="8" maxlength="128" data-password-input />
+            <button type="button" class="password-field__toggle" data-password-toggle aria-label="Show password" aria-pressed="false" title="Show password">
+              <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+            </button>
+          </span>
+        </label>
+        <label>
+          New password
+          <span class="password-field">
+            <input name="new_password" type="password" autocomplete="new-password" required minlength="8" maxlength="128" data-password-input />
+            <button type="button" class="password-field__toggle" data-password-toggle aria-label="Show password" aria-pressed="false" title="Show password">
+              <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+            </button>
+          </span>
+        </label>
+        <p class="hint">Passwords are 8–128 characters.</p>
+        <button type="submit">Update password</button>
+      </form>
     </div>
-    <form class="panel" data-authed-panel data-password-form hidden>
-      <h2>Change password</h2>
-      <label>
-        Current password
-        <span class="password-field">
-          <input type="password" name="current_password" autocomplete="current-password" required minlength="8" maxlength="128" data-password-input />
-          <button type="button" class="password-field__toggle" data-password-toggle aria-label="Show password" aria-pressed="false" title="Show password">
-            <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
-          </button>
-        </span>
-      </label>
-      <label>
-        New password
-        <span class="password-field">
-          <input type="password" name="new_password" autocomplete="new-password" required minlength="8" maxlength="128" data-password-input />
-          <button type="button" class="password-field__toggle" data-password-toggle aria-label="Show password" aria-pressed="false" title="Show password">
-            <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
-          </button>
-        </span>
-      </label>
-      <p class="hint">Passwords are 8–128 characters.</p>
-      <button type="submit">Update password</button>
-    </form>
   </section>
 </Layout>
 
