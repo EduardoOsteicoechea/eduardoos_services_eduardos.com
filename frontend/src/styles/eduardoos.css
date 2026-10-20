@@ -725,12 +725,14 @@ main > .diag{
   border-radius: 0;
 }
 
-/* Profile sections: no card chrome; spacing comes from the flex gap. */
+/* Profile sections: no fill; lateral + bottom hairlines only. */
 .session-grid--profile .session-profile-sections > .panel,
 .session-grid--profile .session-profile-sections > form.panel{
-  padding: 0;
+  padding: 0 1.5rem 1.5rem 0;
   background: transparent;
   border: 0;
+  border-inline-end: var(--border-width) solid var(--color-border);
+  border-bottom: var(--border-width) solid var(--color-border);
   border-radius: 0;
   box-shadow: none;
 }
