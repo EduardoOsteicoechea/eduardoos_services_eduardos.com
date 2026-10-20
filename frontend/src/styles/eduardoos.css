@@ -666,10 +666,6 @@ main > .diag{
   border-radius: var(--radius-md);
 }
 
-.admin-user-card{
-  border-radius: var(--radius-md);
-}
-
 .admin-user-card:nth-child(odd){
   background: var(--eo-surface-2, var(--color-surface));
 }
