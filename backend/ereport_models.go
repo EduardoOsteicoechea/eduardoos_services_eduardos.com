@@ -249,6 +249,43 @@ func emptyEreportPayload() map[string]any {
 	}
 }
 
+// defaultWebsiteConnectorIDs returns the first section/group ids from the empty
+// payload template (used when creating a website_registration report).
+func defaultWebsiteConnectorIDs() (sectionID, groupID string) {
+	payload := emptyEreportPayload()
+	sections, _ := payload["sections"].([]any)
+	if len(sections) == 0 {
+		return "", ""
+	}
+	sec, _ := sections[0].(map[string]any)
+	sectionID, _ = sec["id"].(string)
+	groups, _ := sec["groups"].([]any)
+	if len(groups) == 0 {
+		return strings.TrimSpace(sectionID), ""
+	}
+	grp, _ := groups[0].(map[string]any)
+	groupID, _ = grp["id"].(string)
+	return strings.TrimSpace(sectionID), strings.TrimSpace(groupID)
+}
+
+// applyWebsiteConnectorDefaults sets connectorSectionId/connectorGroupId on meta
+// when purpose is website_registration and they are not already set.
+func applyWebsiteConnectorDefaults(meta *ereportMeta) {
+	if meta == nil || normalizeEreportPurpose(meta.Purpose) != ereportPurposeWebsite {
+		return
+	}
+	if strings.TrimSpace(meta.ConnectorSectionID) != "" && strings.TrimSpace(meta.ConnectorGroupID) != "" {
+		return
+	}
+	sectionID, groupID := defaultWebsiteConnectorIDs()
+	if strings.TrimSpace(meta.ConnectorSectionID) == "" {
+		meta.ConnectorSectionID = sectionID
+	}
+	if strings.TrimSpace(meta.ConnectorGroupID) == "" {
+		meta.ConnectorGroupID = groupID
+	}
+}
+
 func emptyEreportItem(id string) map[string]any {
 	return map[string]any{
 		"id":              id,

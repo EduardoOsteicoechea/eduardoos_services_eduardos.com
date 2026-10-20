@@ -183,6 +183,7 @@ func (a *App) ereportCreateOrgHandler(w http.ResponseWriter, r *http.Request) {
 			ID: rid, Tema: firstName, Purpose: purpose, OrgID: id, OwnerUserID: user.ID,
 			CreatedAt: now, UpdatedAt: now,
 		}
+		applyWebsiteConnectorDefaults(&rm)
 		rm = displayMeta(user, rm)
 		payload := emptyEreportPayload()
 		if err := a.ereport.saveReport(user.ID, rm, payload); err != nil {
@@ -374,10 +375,12 @@ func (a *App) ereportCreateReportHandler(w http.ResponseWriter, r *http.Request)
 	}
 	now := nowRFC3339()
 	id := randomID(16)
-	meta := displayMeta(user, ereportMeta{
+	rm := ereportMeta{
 		ID: id, Tema: tema, Purpose: purpose, OrgID: orgMeta.ID, OwnerUserID: user.ID,
 		CreatedAt: now, UpdatedAt: now,
-	})
+	}
+	applyWebsiteConnectorDefaults(&rm)
+	meta := displayMeta(user, rm)
 	payload := emptyEreportPayload()
 	if err := a.ereport.saveReport(user.ID, meta, payload); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

@@ -66,6 +66,10 @@ type ReportPayload = EreportPayload & {
 let escapeHandler: ((ev: KeyboardEvent) => void) | null = null;
 let saveTimer: number | null = null;
 let writeChain: Promise<void> = Promise.resolve();
+/** Active modal registers this so close can flush debounce + in-flight PATCH before teardown. */
+let flushPendingAutosave: (() => Promise<void>) | null = null;
+/** Serialize close so a prior no-op close cannot swallow a later flush. */
+let closeChain: Promise<void> = Promise.resolve();
 
 function enqueueWrite(fn: () => Promise<void>): Promise<void> {
   const run = writeChain.then(fn, fn);
@@ -74,6 +78,16 @@ function enqueueWrite(fn: () => Promise<void>): Promise<void> {
     () => undefined,
   );
   return run;
+}
+
+function teardownIssueCardOverlay() {
+  const existing = document.getElementById(OVERLAY_ID);
+  if (existing?.parentNode) existing.parentNode.removeChild(existing);
+  if (escapeHandler) {
+    document.removeEventListener("keydown", escapeHandler, true);
+    escapeHandler = null;
+  }
+  flushPendingAutosave = null;
 }
 
 function notifyReportMutated(orgId: string, reportId: string) {
@@ -168,16 +182,34 @@ async function patchItem(
   );
 }
 
-export function closeEreportIssueCardModal() {
-  if (saveTimer != null) {
-    window.clearTimeout(saveTimer);
-    saveTimer = null;
-  }
-  const existing = document.getElementById(OVERLAY_ID);
-  if (existing?.parentNode) existing.parentNode.removeChild(existing);
-  if (escapeHandler) {
-    document.removeEventListener("keydown", escapeHandler, true);
-    escapeHandler = null;
+/**
+ * Flush pending autosave (debounced scheduleSave and/or in-flight writeChain),
+ * then tear down the overlay. Does not discard pending edits via clearTimeout alone.
+ */
+export function closeEreportIssueCardModal(): Promise<void> {
+  const run = closeChain.then(
+    () => performCloseEreportIssueCardModal(),
+    () => performCloseEreportIssueCardModal(),
+  );
+  closeChain = run.then(
+    () => undefined,
+    () => undefined,
+  );
+  return run;
+}
+
+async function performCloseEreportIssueCardModal(): Promise<void> {
+  const flush = flushPendingAutosave;
+  flushPendingAutosave = null;
+  try {
+    if (flush) {
+      await flush();
+    } else if (saveTimer != null) {
+      window.clearTimeout(saveTimer);
+      saveTimer = null;
+    }
+  } finally {
+    teardownIssueCardOverlay();
   }
 }
 
@@ -198,7 +230,7 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
   const itemId = (opts.itemId || "").trim();
   if (!orgId || !reportId || !sectionId || !groupId || !itemId) return;
 
-  closeEreportIssueCardModal();
+  await closeEreportIssueCardModal();
 
   let draft: EreportIssueCardItem = cloneItem({
     id: itemId,
@@ -473,6 +505,9 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
       return;
     }
     setStatus("Saving…");
+    if (mustLog) {
+      console.log("[ereport-issue-card] save start", { itemId });
+    }
     await enqueueWrite(async () => {
       try {
         const { status, data, requestId } = await patchItem(
@@ -483,7 +518,17 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
           itemId,
           body,
         );
+        if (mustLog) {
+          console.log("[ereport-issue-card] save end", {
+            itemId,
+            status,
+            requestId: String(
+              (data as { request_id?: string }).request_id || requestId || "",
+            ),
+          });
+        }
         if (status !== 200) {
+          // Prefer showErrorModal only (no duplicate alert on the same failure).
           showErrorModal({
             message: String((data as { message?: string }).message || "Could not save issue."),
             requestId: String((data as { request_id?: string }).request_id || requestId),
@@ -510,14 +555,33 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
         notifyReportMutated(orgId, reportId);
         opts.onChanged?.();
         setStatus("Saved.");
-        if (mustLog) console.log("[ereport-issue-card] saved fields", { itemId, requestId });
       } catch (err) {
+        if (mustLog) {
+          console.log("[ereport-issue-card] save end", {
+            itemId,
+            status: "error",
+            requestId: "",
+          });
+        }
         const msg = err instanceof Error ? err.message : "Could not save issue.";
         showErrorModal({ message: msg });
         setStatus("Could not save issue.");
       }
     });
   }
+
+  flushPendingAutosave = async () => {
+    if (saveTimer != null) {
+      window.clearTimeout(saveTimer);
+      saveTimer = null;
+    }
+    // Always persist current DOM when fields are ready so a pending debounce
+    // is not discarded by teardown (clearTimeout alone used to drop edits).
+    if (fieldsReady) {
+      await persistFields();
+    }
+    await writeChain;
+  };
 
   async function mutatePayloadImages(
     mutator: (item: EreportIssueCardItem) => void,
@@ -702,7 +766,7 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
         notifyReportMutated(orgId, reportId);
         opts.onDeleted?.();
         opts.onChanged?.();
-        closeEreportIssueCardModal();
+        await closeEreportIssueCardModal();
         if (mustLog) console.log("[ereport-issue-card] deleted", { itemId });
       } catch (err) {
         const msg = err instanceof Error ? err.message : "Could not delete issue.";
@@ -716,13 +780,15 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
     if (ev.key !== "Escape") return;
     ev.preventDefault();
     ev.stopPropagation();
-    closeEreportIssueCardModal();
+    void closeEreportIssueCardModal();
   };
   document.addEventListener("keydown", escapeHandler, true);
 
-  el(frame, "[data-eq-issue-close]")?.addEventListener("click", () => closeEreportIssueCardModal());
+  el(frame, "[data-eq-issue-close]")?.addEventListener("click", () => {
+    void closeEreportIssueCardModal();
+  });
   overlay.addEventListener("click", (ev) => {
-    if (ev.target === overlay) closeEreportIssueCardModal();
+    if (ev.target === overlay) void closeEreportIssueCardModal();
   });
 
   for (const node of [nombreInput, incidenciaInput, solucionInput, fechaIncInput, fechaSolInput]) {

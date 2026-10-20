@@ -106,6 +106,17 @@ func TestEreportWebsiteRegistrationPurpose(t *testing.T) {
 	if binding["orgId"] != websiteOrg["id"] || binding["reportId"] != websiteReport["id"] {
 		t.Fatalf("binding mismatch: %#v vs org=%v report=%v", binding, websiteOrg["id"], websiteReport["id"])
 	}
+	wantSection, wantGroup := defaultWebsiteConnectorIDs()
+	if wantSection == "" || wantGroup == "" {
+		t.Fatal("emptyEreportPayload must expose a first section/group for connector defaults")
+	}
+	if binding["sectionId"] != wantSection || binding["groupId"] != wantGroup {
+		t.Fatalf("expected connector defaults sectionId=%q groupId=%q without site-connector assign, got %#v",
+			wantSection, wantGroup, binding)
+	}
+	if websiteReport["connectorSectionId"] != wantSection || websiteReport["connectorGroupId"] != wantGroup {
+		t.Fatalf("create response meta missing connector defaults: %#v", websiteReport)
+	}
 
 	dup := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs",
 		`{"name":"OtherSite","firstReportName":"Also website","firstReportPurpose":"website_registration"}`)

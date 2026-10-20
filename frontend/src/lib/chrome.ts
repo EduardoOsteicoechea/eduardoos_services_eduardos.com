@@ -413,8 +413,10 @@ let ereportConnectorGateGen = 0;
 let ereportConnectorBindingCache: { orgId: string; reportId: string } | null = null;
 
 /**
- * Connector (menu + header) visibility is owned only here — never by syncSubscriptionNav.
- * Stay hidden until ereport-connector entitlement + website_registration binding are confirmed.
+ * Connector (menu + header bug_report) visibility is owned only here — never by syncSubscriptionNav.
+ * Show when: authed + ereport-connector entitlement + websiteRegistration.orgId/reportId.
+ * Do NOT hide solely because sectionId/groupId are empty — Ready/quick heal on open.
+ * Hide on: guest, no entitlement, or hard /ereport/access failure (non-200 / throw).
  * If already visible with a cached binding, keep showing while re-fetching (no flicker).
  */
 async function syncEreportConnectorGate(authed: boolean, isAdmin = false): Promise<void> {
@@ -444,23 +446,32 @@ async function syncEreportConnectorGate(authed: boolean, isAdmin = false): Promi
     }
   }
   let binding: { orgId: string; reportId: string } | null = null;
+  let accessHardFail = false;
   if (entitled) {
     try {
       const { status, data } = await fetchEreportAccess();
-      if (status === 200 && data.websiteRegistration?.orgId && data.websiteRegistration?.reportId) {
-        binding = {
-          orgId: data.websiteRegistration.orgId,
-          reportId: data.websiteRegistration.reportId,
-        };
+      if (status !== 200) {
+        // Hard access failure — hide; empty section/group alone is not a hard fail.
+        accessHardFail = true;
+      } else {
+        const wr = data.websiteRegistration;
+        const orgId = (wr?.orgId || "").trim();
+        const reportId = (wr?.reportId || "").trim();
+        // org/report only — sectionId/groupId optional (quick/ready heal).
+        if (orgId && reportId) {
+          binding = { orgId, reportId };
+        }
       }
     } catch {
+      accessHardFail = true;
       binding = null;
     }
   }
   if (gen !== ereportConnectorGateGen) return;
-  ereportConnectorBindingCache = binding;
+  const show = entitled && Boolean(binding) && !accessHardFail;
+  ereportConnectorBindingCache = show ? binding : null;
   for (const node of nodes) {
-    if (!entitled || !binding) {
+    if (!show || !binding) {
       node.hidden = true;
       node.removeAttribute("data-org-id");
       node.removeAttribute("data-report-id");
@@ -470,7 +481,12 @@ async function syncEreportConnectorGate(authed: boolean, isAdmin = false): Promi
     node.setAttribute("data-org-id", binding.orgId);
     node.setAttribute("data-report-id", binding.reportId);
   }
-  sessionLog("chrome.ereportConnectorGate", { binding: Boolean(binding), entitled, count: nodes.length });
+  sessionLog("chrome.ereportConnectorGate", {
+    binding: Boolean(binding),
+    entitled,
+    accessHardFail,
+    count: nodes.length,
+  });
 }
 
 /** Menu services stay visible; lock (grey + non-navigable) when the user lacks access. */

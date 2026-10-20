@@ -3,7 +3,6 @@ import { mustLog } from "./dev-log";
 import { showErrorModal } from "./error-modal";
 import {
   EREPORT_API_TIMEOUT_MS,
-  fetchEreportAccess,
   fetchOrgReport,
   patchReportSiteConnector,
   type WebsiteRegistrationBinding,
@@ -15,11 +14,13 @@ import {
   openEreportIssueCardModal,
   openEreportWorkspaceIssue,
 } from "./ereport-connector-modal";
+import { probeEreportConnectorReady } from "./ereport-connector-ready";
 import { parseIssueText } from "./ereport-issue-parse";
 
 const OVERLAY_ID = "eduardoos-ereport-quick-overlay";
 const SETTINGS_ID = "eduardoos-ereport-settings-overlay";
 const DEFAULTS_KEY = "ereport.connector.defaults";
+const LOG_PREFIX = "[ereport-quick]";
 
 export type ConnectorDefaults = {
   orgId: string;
@@ -84,6 +85,18 @@ function notifyReportMutated(orgId: string, reportId: string) {
 
 function todayDate(): string {
   return new Date().toISOString().slice(0, 10);
+}
+
+function isSpanishUi(): boolean {
+  try {
+    return typeof document !== "undefined" && document.documentElement.lang.startsWith("es");
+  } catch {
+    return false;
+  }
+}
+
+function readyToSaveStatus(): string {
+  return isSpanishUi() ? "Listo para guardar." : "Ready to save.";
 }
 
 function loadDefaults(): ConnectorDefaults | null {
@@ -357,22 +370,43 @@ export async function openEreportQuickConnector(opts?: {
   closeEreportQuickConnector();
   document.dispatchEvent(new CustomEvent("eos:close-trays"));
 
-  let binding = opts?.binding ?? null;
-  let ownerSafe = "";
-  {
-    const { status, data } = await fetchEreportAccess();
-    if (status === 200) {
-      ownerSafe = (data.ownerSafe || "").trim();
-      if (!binding?.orgId || !binding?.reportId) {
-        if (data.websiteRegistration?.orgId && data.websiteRegistration?.reportId) {
-          binding = data.websiteRegistration;
-        }
-      }
+  const probeOpts =
+    opts?.binding?.orgId && opts?.binding?.reportId
+      ? { orgId: opts.binding.orgId, reportId: opts.binding.reportId }
+      : undefined;
+  const ready = await probeEreportConnectorReady(probeOpts);
+  if (!ready.ok) {
+    if (mustLog) {
+      console.log(LOG_PREFIX, "open blocked", {
+        reason: ready.reason,
+        requestId: ready.requestId,
+      });
     }
-  }
-  if (!binding?.orgId || !binding?.reportId) {
-    window.alert("No website registration report is configured. Create one in eReport first.");
+    showErrorModal({
+      message: ready.message,
+      requestId: ready.requestId,
+      details: ready.reason,
+    });
     return;
+  }
+
+  const binding: WebsiteRegistrationBinding = {
+    orgId: ready.binding.orgId,
+    reportId: ready.binding.reportId,
+    ...(ready.binding.tema ? { tema: ready.binding.tema } : {}),
+    ...(ready.binding.sectionId ? { sectionId: ready.binding.sectionId } : {}),
+    ...(ready.binding.groupId ? { groupId: ready.binding.groupId } : {}),
+  };
+  let ownerSafe = (ready.ownerSafe || "").trim();
+
+  if (mustLog) {
+    console.log(LOG_PREFIX, "ready", {
+      orgId: binding.orgId,
+      reportId: binding.reportId,
+      sectionId: ready.sectionId,
+      groupId: ready.groupId,
+      ownerSafe,
+    });
   }
 
   const overlay = document.createElement("div");
@@ -398,13 +432,13 @@ export async function openEreportQuickConnector(opts?: {
     </header>
     <p class="ereport-quick-overlay__context" data-eq-context></p>
     <ul class="ereport-quick-overlay__list" data-eq-list></ul>
-    <div class="ereport-quick-overlay__compose" data-eq-compose>
-      <button type="button" class="icon-btn" data-eq-add aria-label="Add issue" title="Add issue">
+    <div class="ereport-quick-overlay__compose" data-eq-compose hidden>
+      <button type="button" class="icon-btn" data-eq-add aria-label="Add issue" title="Add issue" disabled>
         <span class="material-symbols-outlined" aria-hidden="true">add</span>
       </button>
       <div class="ereport-quick-overlay__input-row" data-eq-input-row hidden>
-        <textarea data-eq-input rows="3" placeholder="Issue title. Description after the first period…"></textarea>
-        <button type="button" class="btn btn--primary" data-eq-submit>Save issue</button>
+        <textarea data-eq-input rows="3" placeholder="Issue title. Description after the first period…" disabled></textarea>
+        <button type="button" class="btn btn--primary" data-eq-submit disabled>Save issue</button>
       </div>
     </div>
     <p class="status ereport-quick-overlay__status" data-eq-status></p>
@@ -418,20 +452,32 @@ export async function openEreportQuickConnector(opts?: {
   const contextEl = el<HTMLElement>(frame, "[data-eq-context]")!;
   const listEl = el<HTMLElement>(frame, "[data-eq-list]")!;
   const statusEl = el<HTMLElement>(frame, "[data-eq-status]")!;
+  const composeEl = el<HTMLElement>(frame, "[data-eq-compose]")!;
   const inputRow = el<HTMLElement>(frame, "[data-eq-input-row]")!;
   const input = el<HTMLTextAreaElement>(frame, "[data-eq-input]")!;
+  const addBtn = el<HTMLButtonElement>(frame, "[data-eq-add]")!;
+  const submitBtn = el<HTMLButtonElement>(frame, "[data-eq-submit]")!;
 
   let payload: ReportPayload | null = null;
-  const cached = loadDefaults();
+  let targetsConfirmed = false;
   let defaults: ConnectorDefaults = {
     orgId: binding.orgId,
     reportId: binding.reportId,
-    sectionId: binding.sectionId || (cached?.orgId === binding.orgId && cached?.reportId === binding.reportId ? cached.sectionId : "") || "",
-    groupId: binding.groupId || (cached?.orgId === binding.orgId && cached?.reportId === binding.reportId ? cached.groupId : "") || "",
+    sectionId: ready.sectionId || "",
+    groupId: ready.groupId || "",
   };
 
   function setStatus(msg: string) {
     statusEl.textContent = msg;
+  }
+
+  function setComposeEnabled(enabled: boolean) {
+    targetsConfirmed = enabled;
+    composeEl.hidden = !enabled;
+    addBtn.disabled = !enabled;
+    input.disabled = !enabled;
+    submitBtn.disabled = !enabled;
+    if (!enabled) inputRow.hidden = true;
   }
 
   function currentSection(): SectionNode | undefined {
@@ -491,11 +537,11 @@ export async function openEreportQuickConnector(opts?: {
         void copyTextToClipboard(text)
           .then(() => {
             setStatus("Issue copied.");
-            if (mustLog) console.log("[ereport-quick] issue copied", { itemId: it.id });
+            if (mustLog) console.log(LOG_PREFIX, "issue copied", { itemId: it.id });
           })
           .catch(() => {
             setStatus("Could not copy issue.");
-            if (mustLog) console.log("[ereport-quick] issue copy failed", { itemId: it.id });
+            if (mustLog) console.log(LOG_PREFIX, "issue copy failed", { itemId: it.id });
           });
       });
       actions.append(copyBtn);
@@ -563,20 +609,21 @@ export async function openEreportQuickConnector(opts?: {
 
   function openSettings() {
     openSettingsModal({
-      binding: binding!,
+      binding,
       payload,
-      defaults: defaults!,
+      defaults,
       onSaved: (next) => {
         defaults = next;
         syncContext();
         renderList();
-        setStatus("Defaults saved.");
+        setComposeEnabled(Boolean(next.sectionId && next.groupId));
+        setStatus(next.sectionId && next.groupId ? readyToSaveStatus() : "Defaults saved.");
       },
       onAdvanced: () => {
         closeEreportQuickConnector();
         openEreportAdvancedConnectorModal({
-          orgId: binding!.orgId,
-          reportId: binding!.reportId,
+          orgId: binding.orgId,
+          reportId: binding.reportId,
           label: "eReport connector",
         });
       },
@@ -585,7 +632,8 @@ export async function openEreportQuickConnector(opts?: {
 
   async function reloadReport() {
     setStatus("Loading…");
-    const { status, data, requestId } = await fetchOrgReport(binding!.orgId, binding!.reportId);
+    setComposeEnabled(false);
+    const { status, data, requestId } = await fetchOrgReport(binding.orgId, binding.reportId);
     if (status !== 200) {
       showErrorModal({
         message: String((data as { message?: string }).message || "Could not load report."),
@@ -596,10 +644,13 @@ export async function openEreportQuickConnector(opts?: {
     }
     payload = (data.payload as ReportPayload) || { sections: [] };
     const meta = data.meta;
+    if (meta?.ownerSafe) ownerSafe = String(meta.ownerSafe).trim() || ownerSafe;
     if (meta?.connectorSectionId) defaults.sectionId = String(meta.connectorSectionId);
     if (meta?.connectorGroupId) defaults.groupId = String(meta.connectorGroupId);
-    if (binding?.sectionId && !defaults.sectionId) defaults.sectionId = binding.sectionId;
-    if (binding?.groupId && !defaults.groupId) defaults.groupId = binding.groupId;
+    if (binding.sectionId && !defaults.sectionId) defaults.sectionId = binding.sectionId;
+    if (binding.groupId && !defaults.groupId) defaults.groupId = binding.groupId;
+    if (ready.sectionId && !defaults.sectionId) defaults.sectionId = ready.sectionId;
+    if (ready.groupId && !defaults.groupId) defaults.groupId = ready.groupId;
 
     const sections = payload.sections || [];
     if (defaults?.sectionId && !sections.some((s) => s.id === defaults!.sectionId)) {
@@ -623,8 +674,10 @@ export async function openEreportQuickConnector(opts?: {
     }
     syncContext();
     renderList();
-    setStatus(defaults?.sectionId && defaults?.groupId ? "Ready." : "Open settings to pick section and subsection.");
-    if (!defaults?.sectionId || !defaults?.groupId) {
+    const targetsOk = Boolean(defaults.sectionId && defaults.groupId && currentGroup());
+    setComposeEnabled(targetsOk);
+    setStatus(targetsOk ? readyToSaveStatus() : "Open settings to pick section and subsection.");
+    if (!targetsOk) {
       openSettings();
     }
   }
@@ -636,8 +689,8 @@ export async function openEreportQuickConnector(opts?: {
 
   el(frame, "[data-eq-config]")?.addEventListener("click", () => openSettings());
 
-  el(frame, "[data-eq-add]")?.addEventListener("click", () => {
-    if (!defaults?.sectionId || !defaults?.groupId) {
+  addBtn.addEventListener("click", () => {
+    if (!targetsConfirmed || !defaults.sectionId || !defaults.groupId) {
       window.alert("Configure section and subsection first.");
       openSettings();
       return;
@@ -647,7 +700,7 @@ export async function openEreportQuickConnector(opts?: {
   });
 
   function submitIssue() {
-    if (!defaults?.sectionId || !defaults?.groupId) {
+    if (!targetsConfirmed || !defaults.sectionId || !defaults.groupId) {
       window.alert("Configure section and subsection first.");
       return;
     }
@@ -701,15 +754,40 @@ export async function openEreportQuickConnector(opts?: {
             details: String(data.error || `HTTP ${status}`),
           });
           setStatus("Could not save issue.");
-          window.alert("Could not save issue.");
+          if (mustLog) {
+            console.log(LOG_PREFIX, "save failed", { status, requestId, nombre });
+          }
           return;
         }
-        payload = (data.payload as ReportPayload) || payload;
-        syncContext();
-        renderList();
-        setStatus("Issue saved.");
+        if (data.payload) {
+          payload = data.payload as ReportPayload;
+        }
+        const createdId = String(
+          (data as { item?: { id?: string }; id?: string }).item?.id ||
+            (data as { id?: string }).id ||
+            "",
+        ).trim();
+        const gAfter = currentGroup();
+        if (gAfter?.items) {
+          gAfter.items = gAfter.items.filter((it) => it.id !== tempId);
+        }
+        const present = createdId
+          ? Boolean(gAfter?.items?.some((it) => it.id === createdId))
+          : Boolean(
+              gAfter?.items?.some(
+                (it) => it.nombre === nombre && (it.incidencia || "") === (incidencia || ""),
+              ),
+            );
+        if ((status === 201 || status === 200) && !present) {
+          await reloadReport();
+          setStatus("Issue saved.");
+        } else {
+          syncContext();
+          renderList();
+          setStatus("Issue saved.");
+        }
         notifyReportMutated(orgId, reportId);
-        if (mustLog) console.log("[ereport-quick] issue saved", { nombre, status, requestId });
+        if (mustLog) console.log(LOG_PREFIX, "save", { nombre, status, requestId, createdId });
       } catch (err) {
         const g = currentGroup();
         if (g?.items) g.items = g.items.filter((it) => it.id !== tempId);
@@ -717,12 +795,16 @@ export async function openEreportQuickConnector(opts?: {
         const msg = err instanceof Error ? err.message : "Could not save issue.";
         showErrorModal({ message: msg });
         setStatus("Could not save issue.");
-        window.alert("Could not save issue.");
+        if (mustLog) {
+          console.log(LOG_PREFIX, "save failed", {
+            message: err instanceof Error ? err.message : "unknown",
+          });
+        }
       }
     });
   }
 
-  el(frame, "[data-eq-submit]")?.addEventListener("click", () => {
+  submitBtn.addEventListener("click", () => {
     submitIssue();
   });
   input.addEventListener("keydown", (ev) => {
@@ -732,6 +814,6 @@ export async function openEreportQuickConnector(opts?: {
     }
   });
 
+  setStatus(isSpanishUi() ? "Cargando…" : "Loading…");
   await reloadReport();
-  if (mustLog) console.log("[ereport-quick] open", { orgId: binding.orgId, reportId: binding.reportId });
 }

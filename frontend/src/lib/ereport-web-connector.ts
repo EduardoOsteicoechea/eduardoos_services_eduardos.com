@@ -1,4 +1,8 @@
-import { apiRequest, getCsrf } from "./api";
+import { apiRequest, getCsrf, getHealth } from "./api";
+import {
+  probeEreportConnectorReady,
+  type ConnectorReadyFail,
+} from "./ereport-connector-ready";
 import { mustLog } from "./dev-log";
 import { showErrorModal } from "./error-modal";
 import {
@@ -158,6 +162,84 @@ export function startEreportWebConnector(root: HTMLElement) {
   function notifySave(msg: string, alertUser = true) {
     setStatus(msg);
     if (alertUser) window.alert(msg);
+  }
+
+  /** Hide editor chrome; surface sign-in / subscription / ready failure copy. */
+  function showProbeFail(fail: ConnectorReadyFail) {
+    cascade?.setAttribute("hidden", "");
+    pathCard?.setAttribute("hidden", "");
+    if (reportLabel) reportLabel.hidden = true;
+    payload = null;
+
+    authPanel?.removeAttribute("hidden");
+    if (authMsg) {
+      if (fail.reason === "unauthorized") {
+        authMsg.innerHTML = `${fail.message} <a href="/session" data-route>Sign in</a>`;
+      } else if (fail.reason === "no_entitlement" || fail.reason === "no_write") {
+        authMsg.innerHTML = `${fail.message} <a href="/payments/subscription" data-route>Subscriptions</a>`;
+      } else {
+        authMsg.textContent = fail.message;
+      }
+    }
+    setStatus(fail.message);
+
+    if (
+      fail.reason === "api_down" ||
+      fail.reason === "report_unavailable" ||
+      fail.reason === "csrf_unavailable" ||
+      fail.reason === "bad_targets" ||
+      fail.reason === "no_binding"
+    ) {
+      showErrorModal({
+        message: fail.message,
+        requestId: fail.requestId || "",
+        details: fail.reason,
+      });
+    }
+
+    if (mustLog) {
+      console.log("[ereport-web-connector] probe fail", {
+        reason: fail.reason,
+        requestId: fail.requestId,
+      });
+    }
+  }
+
+  function apiDownFail(): ConnectorReadyFail {
+    const es =
+      typeof document !== "undefined" && document.documentElement.lang.startsWith("es");
+    return {
+      ok: false,
+      reason: "api_down",
+      message: es ? "La API no responde." : "The API is not reachable.",
+    };
+  }
+
+  function reportUnavailableFail(requestId?: string): ConnectorReadyFail {
+    const es =
+      typeof document !== "undefined" && document.documentElement.lang.startsWith("es");
+    const fail: ConnectorReadyFail = {
+      ok: false,
+      reason: "report_unavailable",
+      message: es ? "No se pudo cargar el informe." : "Could not load the report.",
+    };
+    if (requestId) fail.requestId = requestId;
+    return fail;
+  }
+
+  function applyReportFromData(
+    data: { payload?: ReportPayload; meta?: { tema?: string } },
+    keep: { sectionId?: string; groupId?: string; itemId?: string } = {},
+  ) {
+    payload = data.payload || { sections: [] };
+    const tema = data.meta?.tema || selectedReport();
+    if (reportLabel) {
+      reportLabel.textContent = tema;
+      reportLabel.hidden = false;
+    }
+    cascade?.removeAttribute("hidden");
+    applyPayload(payload, keep);
+    setStatus("Select a section, or create one.");
   }
 
   function selectedOrg(): string {
@@ -325,19 +407,26 @@ export function startEreportWebConnector(root: HTMLElement) {
     const { status, data, requestId } = await fetchOrgReport(orgId, reportId);
     if (gen !== loadGen) return;
     if (status !== 200) {
-      raiseApiError(status, requestId, data as unknown as Record<string, unknown>);
-      setStatus("Could not load report.");
+      // Keep hub picker visible; only block the item editor (cascade).
+      cascade?.setAttribute("hidden", "");
+      if (reportLabel) reportLabel.hidden = true;
+      payload = null;
+      const fail = reportUnavailableFail(requestId);
+      setStatus(fail.message);
+      showErrorModal({
+        message: fail.message,
+        requestId: fail.requestId || "",
+        details: fail.reason,
+      });
       return;
     }
-    payload = (data.payload as ReportPayload) || { sections: [] };
-    const tema = data.meta?.tema || reportId;
-    if (reportLabel) {
-      reportLabel.textContent = tema;
-      reportLabel.hidden = false;
-    }
-    cascade?.removeAttribute("hidden");
-    applyPayload(payload, keep);
-    setStatus("Select a section, or create one.");
+    applyReportFromData(
+      {
+        payload: (data.payload as ReportPayload) || { sections: [] },
+        meta: data.meta,
+      },
+      keep,
+    );
   }
 
   function commitPayload(next: ReportPayload | null | undefined, keep: { sectionId?: string; groupId?: string; itemId?: string }) {
@@ -654,16 +743,53 @@ export function startEreportWebConnector(root: HTMLElement) {
         pathCard?.setAttribute("hidden", "");
         cascade?.setAttribute("hidden", "");
         if (reportLabel) reportLabel.hidden = true;
-        setStatus("Checking subscription…");
 
+        // Locked website-registration path (org+report from query/postMessage):
+        // fail-fast readiness before enabling the item editor.
+        if (config.locked) {
+          pathCard?.setAttribute("hidden", "");
+          setStatus("Checking connector…");
+          const ready = await probeEreportConnectorReady({
+            orgId: config.orgId,
+            reportId: config.reportId,
+          });
+          if (!ready.ok) {
+            showProbeFail(ready);
+            return;
+          }
+          const reportData = ready.report as {
+            payload?: ReportPayload;
+            meta?: { tema?: string };
+          };
+          applyReportFromData(reportData, {
+            sectionId: ready.sectionId,
+            groupId: ready.groupId,
+          });
+          return;
+        }
+
+        // Hub picker: health + session/access; report probe after selection via loadReportPayload.
+        setStatus("Checking API…");
+        try {
+          await getHealth();
+        } catch {
+          showProbeFail(apiDownFail());
+          return;
+        }
+
+        setStatus("Checking subscription…");
         const access = await fetchEreportAccess();
         if (access.status === 401) {
-          authPanel?.removeAttribute("hidden");
-          if (authMsg) {
-            authMsg.innerHTML =
-              'Sign in on eduardoos.com to use the connector. <a href="/session" data-route>Sign in</a>';
-          }
-          setStatus("Sign in required.");
+          showProbeFail({
+            ok: false,
+            reason: "unauthorized",
+            message: access.data?.message
+              ? String(access.data.message)
+              : document.documentElement.lang.startsWith("es")
+                ? "Inicia sesión para usar el conector eReport."
+                : "Sign in to use the eReport connector.",
+            requestId: access.requestId,
+          });
           return;
         }
         if (access.status !== 200) {
@@ -672,20 +798,17 @@ export function startEreportWebConnector(root: HTMLElement) {
           return;
         }
         if (!access.data.canCreate) {
-          authPanel?.removeAttribute("hidden");
-          if (authMsg) {
-            authMsg.innerHTML =
-              'An active eReport subscription is required. <a href="/payments/subscription" data-route>Subscriptions</a>';
-          }
-          setStatus("Subscription required.");
+          showProbeFail({
+            ok: false,
+            reason: "no_write",
+            message: document.documentElement.lang.startsWith("es")
+              ? "No tienes permiso para escribir en eReport."
+              : "You do not have permission to write to eReport.",
+            requestId: access.requestId,
+          });
           return;
         }
 
-        if (config.locked) {
-          pathCard?.setAttribute("hidden", "");
-          await loadReportPayload();
-          return;
-        }
         await loadOrgsForPicker();
       } catch (err) {
         if (mustLog) console.log("[ereport-web-connector] bootstrap failed", err);

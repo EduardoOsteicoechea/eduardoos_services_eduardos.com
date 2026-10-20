@@ -164,7 +164,11 @@ export function openEreportAdvancedConnectorModal(opts: EreportConnectorOpenOpts
   if (mustLog) console.log("[ereport-connector-modal] open advanced", { orgId: Boolean(orgId), reportId: Boolean(reportId) });
 }
 
-/** Default: quick issue reporter (website registration). */
+/**
+ * Default: quick issue reporter (website registration).
+ * Do not probe here — `openEreportQuickConnector` owns readiness (probe + heal).
+ * Pass org/report binding through when chrome already resolved it.
+ */
 export async function openEreportConnectorModal(opts: EreportConnectorOpenOpts = {}) {
   const { openEreportQuickConnector } = await import("./ereport-quick-connector");
   const orgId = (opts.orgId || "").trim();
@@ -242,6 +246,7 @@ export function exposeEreportConnectorGlobal() {
       document.body.appendChild(fab);
       return { open, close: closeEreportConnectorModal, el: fab };
     },
+    // Bypasses chrome gate visibility; quick open probes readiness before compose.
     open: (opts) => {
       void openEreportConnectorModal(opts);
     },
