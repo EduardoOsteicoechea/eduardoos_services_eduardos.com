@@ -39,6 +39,12 @@ export type EreportIssueCardItem = {
   imagesSolucion?: EreportIssueImageRef[];
 };
 
+/** Mode W / connector: Bearer (eos_live_… or eos_embed_…) instead of session cookies. */
+export type EreportIssueCardApiAuth = {
+  bearer: string;
+  hostOrigin: string;
+};
+
 export type EreportIssueCardOpenOpts = {
   orgId: string;
   reportId: string;
@@ -47,9 +53,35 @@ export type EreportIssueCardOpenOpts = {
   itemId: string;
   /** Optional seed; modal reloads the report item when missing fields. */
   item?: Partial<EreportIssueCardItem>;
+  /** When set, uses /api/v1/ereport/* with Bearer + X-Ereport-Host-Origin (cookie-less). */
+  apiAuth?: EreportIssueCardApiAuth;
   onChanged?: () => void;
   onDeleted?: () => void;
 };
+
+type V1Result<T> = { status: number; data: T & { message?: string; error?: string; request_id?: string }; requestId: string };
+
+async function v1Json<T>(
+  path: string,
+  auth: EreportIssueCardApiAuth,
+  init: RequestInit = {},
+): Promise<V1Result<T>> {
+  const headers = new Headers(init.headers || {});
+  headers.set("Authorization", `Bearer ${auth.bearer}`);
+  headers.set("Accept", "application/json");
+  headers.set("X-Ereport-Host-Origin", auth.hostOrigin);
+  if (init.body && !headers.has("Content-Type") && !(init.body instanceof FormData)) {
+    headers.set("Content-Type", "application/json");
+  }
+  const res = await fetch(path, { ...init, headers });
+  const requestId = res.headers.get("X-Request-ID") || "";
+  const data = (await res.json().catch(() => ({}))) as T & {
+    message?: string;
+    error?: string;
+    request_id?: string;
+  };
+  return { status: res.status, data, requestId: String(data.request_id || requestId) };
+}
 
 type SectionNode = {
   id: string;
@@ -169,7 +201,15 @@ async function patchItem(
   groupId: string,
   itemId: string,
   body: Record<string, unknown>,
+  apiAuth?: EreportIssueCardApiAuth,
 ) {
+  if (apiAuth) {
+    return v1Json<Record<string, unknown>>(
+      `/api/v1/ereport/orgs/${encodeURIComponent(orgId)}/reports/${encodeURIComponent(reportId)}/sections/${encodeURIComponent(sectionId)}/groups/${encodeURIComponent(groupId)}/items/${encodeURIComponent(itemId)}`,
+      apiAuth,
+      { method: "PATCH", body: JSON.stringify(body) },
+    );
+  }
   await getCsrf();
   return apiRequest<Record<string, unknown>>(
     `/ereport/orgs/${encodeURIComponent(orgId)}/reports/${encodeURIComponent(reportId)}/sections/${encodeURIComponent(sectionId)}/groups/${encodeURIComponent(groupId)}/items/${encodeURIComponent(itemId)}`,
@@ -179,6 +219,51 @@ async function patchItem(
       body: JSON.stringify(body),
     },
     { timeoutMs: EREPORT_API_TIMEOUT_MS },
+  );
+}
+
+async function loadReportForCard(
+  orgId: string,
+  reportId: string,
+  apiAuth?: EreportIssueCardApiAuth,
+) {
+  if (apiAuth) {
+    return v1Json<{ payload?: ReportPayload }>(
+      `/api/v1/ereport/orgs/${encodeURIComponent(orgId)}/reports/${encodeURIComponent(reportId)}`,
+      apiAuth,
+      { method: "GET" },
+    );
+  }
+  return fetchOrgReport(orgId, reportId);
+}
+
+async function deleteItemV1(
+  orgId: string,
+  reportId: string,
+  sectionId: string,
+  groupId: string,
+  itemId: string,
+  apiAuth: EreportIssueCardApiAuth,
+) {
+  return v1Json<Record<string, unknown>>(
+    `/api/v1/ereport/orgs/${encodeURIComponent(orgId)}/reports/${encodeURIComponent(reportId)}/sections/${encodeURIComponent(sectionId)}/groups/${encodeURIComponent(groupId)}/items/${encodeURIComponent(itemId)}`,
+    apiAuth,
+    { method: "DELETE" },
+  );
+}
+
+async function uploadImageV1(
+  orgId: string,
+  reportId: string,
+  file: File,
+  apiAuth: EreportIssueCardApiAuth,
+) {
+  const body = new FormData();
+  body.append("file", file);
+  return v1Json<{ id?: string; mime?: string; name?: string; url?: string }>(
+    `/api/v1/ereport/orgs/${encodeURIComponent(orgId)}/reports/${encodeURIComponent(reportId)}/images`,
+    apiAuth,
+    { method: "POST", body },
   );
 }
 
@@ -228,7 +313,9 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
   const sectionId = (opts.sectionId || "").trim();
   const groupId = (opts.groupId || "").trim();
   const itemId = (opts.itemId || "").trim();
+  const apiAuth = opts.apiAuth;
   if (!orgId || !reportId || !sectionId || !groupId || !itemId) return;
+  if (apiAuth && (!(apiAuth.bearer || "").trim() || !(apiAuth.hostOrigin || "").trim())) return;
 
   await closeEreportIssueCardModal();
 
@@ -375,7 +462,26 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
       wrap.className = "ereport-issue-card-overlay__thumb";
       const img = document.createElement("img");
       img.alt = im.name || "image";
-      img.src = imageSrc(im);
+      const src = imageSrc(im);
+      img.src = src;
+      // Bearer image URLs need an authenticated fetch; plain <img> cannot send Authorization.
+      if (apiAuth && src && !im.dataUrl && !src.startsWith("blob:")) {
+        void (async () => {
+          try {
+            const res = await fetch(src, {
+              headers: {
+                Authorization: `Bearer ${apiAuth.bearer}`,
+                "X-Ereport-Host-Origin": apiAuth.hostOrigin,
+              },
+            });
+            if (!res.ok) return;
+            const blob = await res.blob();
+            img.src = URL.createObjectURL(blob);
+          } catch {
+            /* keep url fallback */
+          }
+        })();
+      }
       const del = document.createElement("button");
       del.type = "button";
       del.className = "icon-btn ereport-issue-card-overlay__thumb-del";
@@ -517,6 +623,7 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
           groupId,
           itemId,
           body,
+          apiAuth,
         );
         if (mustLog) {
           console.log("[ereport-issue-card] save end", {
@@ -587,6 +694,41 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
     mutator: (item: EreportIssueCardItem) => void,
   ): Promise<boolean> {
     setStatus("Updating images…");
+    if (apiAuth) {
+      const next = cloneItem(draft);
+      if (!Array.isArray(next.imagesIncidencia)) next.imagesIncidencia = [];
+      if (!Array.isArray(next.imagesSolucion)) next.imagesSolucion = [];
+      mutator(next);
+      const { status, data, requestId } = await patchItem(
+        orgId,
+        reportId,
+        sectionId,
+        groupId,
+        itemId,
+        {
+          imagesIncidencia: next.imagesIncidencia,
+          imagesSolucion: next.imagesSolucion,
+        },
+        apiAuth,
+      );
+      if (status !== 200) {
+        showErrorModal({
+          message: String(data.message || "Could not save images."),
+          requestId: String(data.request_id || requestId),
+          details: String(data.error || `HTTP ${status}`),
+        });
+        setStatus("Could not save images.");
+        return false;
+      }
+      draft.imagesIncidencia = [...(next.imagesIncidencia || [])];
+      draft.imagesSolucion = [...(next.imagesSolucion || [])];
+      renderThumbs(thumbsInc, draft.imagesIncidencia, "incidencia");
+      renderThumbs(thumbsSol, draft.imagesSolucion, "solucion");
+      notifyReportMutated(orgId, reportId);
+      opts.onChanged?.();
+      setStatus("Saved.");
+      return true;
+    }
     const { status, data, requestId } = await fetchOrgReport(orgId, reportId);
     if (status !== 200) {
       showErrorModal({
@@ -679,11 +821,24 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
       const uploaded: EreportIssueImageRef[] = [];
       for (const file of list) {
         try {
-          await getCsrf(true);
-          const { status, data, requestId } = await uploadReportImage(
-            ownerImageUploadPath(orgId, reportId),
-            file,
-          );
+          let status: number;
+          let data: { id?: string; mime?: string; name?: string; url?: string; message?: string; error?: string; request_id?: string };
+          let requestId: string;
+          if (apiAuth) {
+            const up = await uploadImageV1(orgId, reportId, file, apiAuth);
+            status = up.status;
+            data = up.data;
+            requestId = up.requestId;
+          } else {
+            await getCsrf(true);
+            const up = await uploadReportImage(
+              ownerImageUploadPath(orgId, reportId),
+              file,
+            );
+            status = up.status;
+            data = up.data;
+            requestId = up.requestId;
+          }
           if (status < 200 || status >= 300 || !data.id) {
             showErrorModal({
               message: String(data.message || "Could not upload image."),
@@ -735,33 +890,53 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
     setStatus("Deleting…");
     await enqueueWrite(async () => {
       try {
-        const { status, data, requestId } = await fetchOrgReport(orgId, reportId);
-        if (status !== 200) {
-          showErrorModal({
-            message: String((data as { message?: string }).message || "Could not load report."),
-            requestId: String((data as { request_id?: string }).request_id || requestId),
-          });
-          setStatus("Could not delete issue.");
-          return;
-        }
-        const payload = ((data.payload as ReportPayload) || { sections: [] }) as ReportPayload;
-        const sec = (payload.sections || []).find((s) => s.id === sectionId);
-        const grp = (sec?.groups || []).find((g) => g.id === groupId);
-        if (!grp?.items) {
-          showErrorModal({ message: "Issue not found in report." });
-          setStatus("Could not delete issue.");
-          return;
-        }
-        grp.items = grp.items.filter((it) => it.id !== itemId);
-        const save = await saveOrgReport(orgId, reportId, { payload });
-        if (save.status !== 200) {
-          showErrorModal({
-            message: String(save.data.message || "Could not delete issue."),
-            requestId: String(save.data.request_id || save.requestId),
-            details: String(save.data.error || `HTTP ${save.status}`),
-          });
-          setStatus("Could not delete issue.");
-          return;
+        if (apiAuth) {
+          const { status, data, requestId } = await deleteItemV1(
+            orgId,
+            reportId,
+            sectionId,
+            groupId,
+            itemId,
+            apiAuth,
+          );
+          if (status !== 200) {
+            showErrorModal({
+              message: String(data.message || "Could not delete issue."),
+              requestId: String(data.request_id || requestId),
+              details: String(data.error || `HTTP ${status}`),
+            });
+            setStatus("Could not delete issue.");
+            return;
+          }
+        } else {
+          const { status, data, requestId } = await fetchOrgReport(orgId, reportId);
+          if (status !== 200) {
+            showErrorModal({
+              message: String((data as { message?: string }).message || "Could not load report."),
+              requestId: String((data as { request_id?: string }).request_id || requestId),
+            });
+            setStatus("Could not delete issue.");
+            return;
+          }
+          const payload = ((data.payload as ReportPayload) || { sections: [] }) as ReportPayload;
+          const sec = (payload.sections || []).find((s) => s.id === sectionId);
+          const grp = (sec?.groups || []).find((g) => g.id === groupId);
+          if (!grp?.items) {
+            showErrorModal({ message: "Issue not found in report." });
+            setStatus("Could not delete issue.");
+            return;
+          }
+          grp.items = grp.items.filter((it) => it.id !== itemId);
+          const save = await saveOrgReport(orgId, reportId, { payload });
+          if (save.status !== 200) {
+            showErrorModal({
+              message: String(save.data.message || "Could not delete issue."),
+              requestId: String(save.data.request_id || save.requestId),
+              details: String(save.data.error || `HTTP ${save.status}`),
+            });
+            setStatus("Could not delete issue.");
+            return;
+          }
         }
         notifyReportMutated(orgId, reportId);
         opts.onDeleted?.();
@@ -856,7 +1031,7 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
   setStatus("Loading…");
 
   try {
-    const { status, data, requestId } = await fetchOrgReport(orgId, reportId);
+    const { status, data, requestId } = await loadReportForCard(orgId, reportId, apiAuth);
     if (status !== 200) {
       showErrorModal({
         message: String((data as { message?: string }).message || "Could not load issue."),
@@ -883,6 +1058,7 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
         orgId: Boolean(orgId),
         reportId: Boolean(reportId),
         itemId,
+        apiAuth: Boolean(apiAuth),
       });
     }
   } catch (err) {

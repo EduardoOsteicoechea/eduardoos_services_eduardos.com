@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
 	"strings"
 	"sync"
@@ -266,6 +267,12 @@ func mutatePatchItem(sectionID, groupID, itemID string) ereportNodeMutator {
 		if v, ok := body["checklist"]; ok {
 			item["checklist"] = v
 		}
+		if v, ok := body["imagesIncidencia"]; ok {
+			item["imagesIncidencia"] = v
+		}
+		if v, ok := body["imagesSolucion"]; ok {
+			item["imagesSolucion"] = v
+		}
 		items := asMapSlice(grp["items"])
 		items[itemIdx] = item
 		grp["items"] = mapSliceToAny(items)
@@ -276,6 +283,38 @@ func mutatePatchItem(sectionID, groupID, itemID string) ereportNodeMutator {
 		secs[secIdx] = sec
 		payload["sections"] = mapSliceToAny(secs)
 		return item, nil
+	}
+}
+
+func mutateDeleteItem(sectionID, groupID, itemID string) ereportNodeMutator {
+	return func(payload map[string]any, _ map[string]any) (any, error) {
+		sec, secIdx, err := findSection(payload, sectionID)
+		if err != nil {
+			return nil, err
+		}
+		grp, grpIdx, err := findGroup(sec, groupID)
+		if err != nil {
+			return nil, err
+		}
+		if _, _, err := findItem(grp, itemID); err != nil {
+			return nil, err
+		}
+		items := asMapSlice(grp["items"])
+		kept := make([]map[string]any, 0, len(items))
+		for _, it := range items {
+			if asString(it["id"]) == itemID {
+				continue
+			}
+			kept = append(kept, it)
+		}
+		grp["items"] = mapSliceToAny(kept)
+		groups := asMapSlice(sec["groups"])
+		groups[grpIdx] = grp
+		sec["groups"] = mapSliceToAny(groups)
+		secs := asMapSlice(payload["sections"])
+		secs[secIdx] = sec
+		payload["sections"] = mapSliceToAny(secs)
+		return map[string]any{"id": itemID, "deleted": true}, nil
 	}
 }
 
@@ -301,6 +340,12 @@ func (a *App) ereportV1PostItemHandler(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) ereportV1PatchItemHandler(w http.ResponseWriter, r *http.Request) {
 	a.ereportV1MutateReport(w, r, mutatePatchItem(r.PathValue("sectionId"), r.PathValue("groupId"), r.PathValue("itemId")))
+}
+
+func (a *App) ereportV1DeleteItemHandler(w http.ResponseWriter, r *http.Request) {
+	// Mutate path always JSON-decodes the body; DELETE has none.
+	r.Body = http.MaxBytesReader(w, io.NopCloser(strings.NewReader("{}")), 64)
+	a.ereportV1MutateReport(w, r, mutateDeleteItem(r.PathValue("sectionId"), r.PathValue("groupId"), r.PathValue("itemId")))
 }
 
 type ereportNodeMutator func(payload map[string]any, body map[string]any) (node any, err error)

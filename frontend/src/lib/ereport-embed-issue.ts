@@ -5,6 +5,7 @@
 
 import { mustLog } from "./dev-log";
 import { parseIssueText } from "./ereport-issue-parse";
+import { openEreportIssueCardModal } from "./ereport-issue-card-modal";
 import {
   formatIssueClipboardText,
   isWebsiteIssueOpen,
@@ -35,8 +36,13 @@ type EmbedItem = {
   id?: string;
   nombre?: string;
   incidencia?: string;
+  solucion?: string;
   status?: string;
-  checklist?: Array<{ id?: string; checked?: boolean }>;
+  fechaIncidencia?: string;
+  fechaSolucion?: string;
+  checklist?: Array<{ id?: string; label?: string; checked?: boolean }>;
+  imagesIncidencia?: Array<{ id?: string; url?: string; mime?: string; name?: string }>;
+  imagesSolucion?: Array<{ id?: string; url?: string; mime?: string; name?: string }>;
 };
 
 type EmbedState = {
@@ -234,7 +240,8 @@ export function startEreportEmbedIssue(root: HTMLElement) {
       });
       actions.append(copyBtn);
 
-      if (state?.viewUrl && String(it.id || "").trim()) {
+      const itemId = String(it.id || "").trim();
+      if (itemId && auth && state?.sectionId && state?.groupId) {
         const openCardBtn = document.createElement("button");
         openCardBtn.type = "button";
         openCardBtn.className = "btn ereport-quick-overlay__item-open-card";
@@ -244,25 +251,27 @@ export function startEreportEmbedIssue(root: HTMLElement) {
         openCardBtn.addEventListener("click", (ev) => {
           ev.preventDefault();
           ev.stopPropagation();
-          const url = state?.viewUrl || "";
-          if (url) window.open(url, "_blank", "noopener,noreferrer");
+          if (!auth || !state?.sectionId || !state?.groupId) return;
+          void openEreportIssueCardModal({
+            orgId: auth.orgId,
+            reportId: auth.reportId,
+            sectionId: state.sectionId,
+            groupId: state.groupId,
+            itemId,
+            item: it,
+            apiAuth: {
+              bearer: auth.bearer,
+              hostOrigin: auth.hostOrigin,
+            },
+            onChanged: () => {
+              void reload();
+            },
+            onDeleted: () => {
+              void reload();
+            },
+          });
         });
         actions.append(openCardBtn);
-
-        const openBtn = document.createElement("button");
-        openBtn.type = "button";
-        openBtn.className = "icon-btn ereport-quick-overlay__item-open";
-        openBtn.setAttribute("aria-label", "Open in eReport");
-        openBtn.title = "Open in eReport";
-        openBtn.innerHTML =
-          '<span class="material-symbols-outlined" aria-hidden="true">open_in_new</span>';
-        openBtn.addEventListener("click", (ev) => {
-          ev.preventDefault();
-          ev.stopPropagation();
-          const url = state?.viewUrl || "";
-          if (url) window.open(url, "_blank", "noopener,noreferrer");
-        });
-        actions.append(openBtn);
       }
 
       li.append(title, st, actions);

@@ -66,6 +66,19 @@ import "../../styles/ereport-chrome.css";
         background: transparent;
         box-sizing: border-box;
       }
+      /* Issue card opens in-iframe (Mode W Open) — fill the bare host frame. */
+      .ereport-issue-card-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: var(--z-modal, 40);
+      }
+      .ereport-issue-card-overlay__frame {
+        width: 100%;
+        max-width: none;
+        height: 100%;
+        max-height: none;
+        border-radius: 0;
+      }
     </style>
   </head>
   <body class="ereport-embed-issue-body">

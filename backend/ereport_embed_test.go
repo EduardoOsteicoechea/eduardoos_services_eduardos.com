@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 )
 
@@ -93,6 +95,39 @@ func TestEreportEmbedQuickIssueOriginGate(t *testing.T) {
 	tokForbidden := v1JSON(t, app, token, http.MethodPost, "/api/v1/ereport/embed/quick-issue", tokBad)
 	if tokForbidden.Code != http.StatusForbidden {
 		t.Fatalf("token wrong origin should 403, got %d %s", tokForbidden.Code, tokForbidden.Body.String())
+	}
+
+	// Mode W issue card: GET report + PATCH item with embed token + host origin.
+	tokNode, _ := decodeMap(t, tokOK)["node"].(map[string]any)
+	itemID := asString(tokNode["id"])
+	if itemID == "" {
+		t.Fatal("expected item id from token quick-issue")
+	}
+	getPath := "/api/v1/ereport/orgs/" + orgID + "/reports/" + reportID
+	getReq := httptest.NewRequest(http.MethodGet, getPath+"?hostOrigin=http://localhost:8080", nil)
+	getReq.Header.Set("Authorization", "Bearer "+token)
+	getRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(getRec, getReq)
+	if getRec.Code != http.StatusOK {
+		t.Fatalf("embed GET report: %d %s", getRec.Code, getRec.Body.String())
+	}
+	badGet := httptest.NewRequest(http.MethodGet, getPath+"?hostOrigin=http://localhost:3000", nil)
+	badGet.Header.Set("Authorization", "Bearer "+token)
+	badGetRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(badGetRec, badGet)
+	if badGetRec.Code != http.StatusForbidden {
+		t.Fatalf("embed GET wrong host should 403, got %d %s", badGetRec.Code, badGetRec.Body.String())
+	}
+	patchBody, _ := json.Marshal(map[string]any{"solucion": "Fixed in Mode W card."})
+	patchPath := getPath + "/sections/" + secID + "/groups/" + grpID + "/items/" + itemID
+	patchReq := httptest.NewRequest(http.MethodPatch, patchPath, bytes.NewReader(patchBody))
+	patchReq.Header.Set("Authorization", "Bearer "+token)
+	patchReq.Header.Set("Content-Type", "application/json")
+	patchReq.Header.Set("X-Ereport-Host-Origin", "http://localhost:8080")
+	patchRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(patchRec, patchReq)
+	if patchRec.Code != http.StatusOK {
+		t.Fatalf("embed PATCH item: %d %s", patchRec.Code, patchRec.Body.String())
 	}
 }
 

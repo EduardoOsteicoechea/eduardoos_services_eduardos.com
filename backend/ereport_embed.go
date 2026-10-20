@@ -181,6 +181,65 @@ func embedViaFrom(r *http.Request) string {
 	return v
 }
 
+func embedHostOriginFromRequest(r *http.Request) string {
+	if h := strings.TrimSpace(r.Header.Get("X-Ereport-Host-Origin")); h != "" {
+		return h
+	}
+	return strings.TrimSpace(r.URL.Query().Get("hostOrigin"))
+}
+
+// enforceEmbedTokenReportAccess restricts embed_token callers to the bound
+// website_registration report and an allowed connector host. API-key callers
+// (via withEreportEmbedAuth) skip this — they keep full owner-scoped v1 access.
+func (a *App) enforceEmbedTokenReportAccess(w http.ResponseWriter, r *http.Request, orgID, reportID string) bool {
+	if embedViaFrom(r) != "embed_token" {
+		return true
+	}
+	user := apiUserFrom(r)
+	if user == nil {
+		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
+		return false
+	}
+	boundOrg, _ := r.Context().Value(embedOrgContextKey).(string)
+	boundRep, _ := r.Context().Value(embedReportContextKey).(string)
+	if orgID != boundOrg || reportID != boundRep {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return false
+	}
+	meta, _, err := a.loadOwnedWebsiteRegistration(user, orgID, reportID)
+	if err != nil {
+		if apiErr := asAPIWriteErr(err); apiErr.Code == "forbidden" {
+			writeJSON(w, http.StatusForbidden, map[string]any{
+				"error":      "forbidden",
+				"message":    "Use a website registration report for the site connector.",
+				"request_id": requestIDFrom(r, w),
+			})
+			return false
+		}
+		a.writeEreportNotFound(w, r, orgID, reportID, ereportMissingReason(err))
+		return false
+	}
+	if _, ok := a.requireEmbedHostAllowed(w, r, meta, embedHostOriginFromRequest(r)); !ok {
+		return false
+	}
+	return true
+}
+
+// withEreportV1OrEmbed accepts eos_live_… or eos_embed_…. Embed tokens must
+// target the bound website_registration org/report and pass host origin.
+func (a *App) withEreportV1OrEmbed(next http.HandlerFunc) http.HandlerFunc {
+	return a.withEreportEmbedAuth(func(w http.ResponseWriter, r *http.Request) {
+		orgID := strings.TrimSpace(r.PathValue("orgId"))
+		reportID := strings.TrimSpace(r.PathValue("reportId"))
+		if orgID != "" && reportID != "" {
+			if !a.enforceEmbedTokenReportAccess(w, r, orgID, reportID) {
+				return
+			}
+		}
+		next(w, r)
+	})
+}
+
 func (a *App) loadOwnedWebsiteRegistration(user *User, orgID, reportID string) (ereportMeta, map[string]any, error) {
 	meta, payload, err := a.ereport.loadReport(user.ID, orgID, reportID)
 	if err != nil {
@@ -397,11 +456,16 @@ func (a *App) ereportV1EmbedStateHandler(w http.ResponseWriter, r *http.Request)
 					continue
 				}
 				itemsOut = append(itemsOut, map[string]any{
-					"id":         asString(it["id"]),
-					"nombre":     asString(it["nombre"]),
-					"incidencia": asString(it["incidencia"]),
-					"status":     status,
-					"checklist":  it["checklist"],
+					"id":               asString(it["id"]),
+					"nombre":           asString(it["nombre"]),
+					"incidencia":       asString(it["incidencia"]),
+					"solucion":         asString(it["solucion"]),
+					"status":           status,
+					"fechaIncidencia":  asString(it["fechaIncidencia"]),
+					"fechaSolucion":    asString(it["fechaSolucion"]),
+					"checklist":        it["checklist"],
+					"imagesIncidencia": it["imagesIncidencia"],
+					"imagesSolucion":   it["imagesSolucion"],
 				})
 			}
 		}
