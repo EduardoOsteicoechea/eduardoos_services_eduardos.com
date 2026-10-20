@@ -1584,7 +1584,7 @@ main > .session-grid.session-grid--profile {
   grid-column: 1 / span var(--span-full);
 }
 
-/* Flex row + wrap: phone 1 col, tablet 2, desktop 5 (via flex-basis in breakpoints). */
+/* Flex row + wrap: phone 1 col, tablet 2, desktop 3 (profile) / 2 (eApi keys). */
 .session-profile-sections {
   display: flex;
   flex-flow: row wrap;
@@ -1600,6 +1600,10 @@ main > .session-grid.session-grid--profile {
   box-sizing: border-box;
   align-content: start;
   justify-content: flex-start;
+  border-inline-end: var(--border-width) solid var(--color-border);
+  border-bottom: var(--border-width) solid var(--color-border);
+  padding-inline-end: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .session-account-block {
@@ -2060,9 +2064,14 @@ section.diag .panel:not(form) {
   align-items: stretch;
   gap: var(--rail-gap);
   min-width: 0;
-  padding: 0;
+  padding: 0.5rem;
   border: 0;
+  border-radius: var(--border-radius);
   background: transparent;
+}
+
+.admin-user-card:nth-child(odd) {
+  background: var(--color-surface);
 }
 
 .admin-user-card__info {
@@ -2485,10 +2494,15 @@ section.diag .panel:not(form) {
     grid-column: 1 / span var(--span-full);
   }
 
-  /* Profile: five columns on desktop. */
+  /* Profile: three columns on desktop. */
   .session-profile-sections > .panel,
   .session-profile-sections > form.panel {
-    flex: 1 1 calc((var(--content-basis) - (4 * 1.5rem)) / 5);
+    flex: 1 1 calc((var(--content-basis) - (2 * 1.5rem)) / 3);
+  }
+
+  /* eApi keys: two columns on desktop. */
+  .session-grid--eapi .session-profile-sections > .panel {
+    flex: 1 1 calc((var(--content-basis) - 1.5rem) / 2);
   }
 
   .session-grid form,
