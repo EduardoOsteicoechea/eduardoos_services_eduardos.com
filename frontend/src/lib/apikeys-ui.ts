@@ -1,4 +1,3 @@
-import { getMe } from "./api";
 import { showErrorModal } from "./error-modal";
 import { createAPIKey, listAPIKeys, revokeAPIKey, type APIKeyRow } from "./apikeys";
 
@@ -7,7 +6,15 @@ function formatDate(value: string): string {
   return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
 }
 
-/** Wire the API-keys admin panel rooted at `[data-api-keys]`. */
+function keyCreatedAt(key: APIKeyRow): string {
+  return key.created_at || key.createdAt || "";
+}
+
+function keyLastUsedAt(key: APIKeyRow): string {
+  return key.last_used_at || key.lastUsedAt || "";
+}
+
+/** Wire the API-keys panel (list + create) under `root`. */
 export function mountAPIKeysUI(root: HTMLElement): void {
   const banner = root.querySelector("[data-apikeys-banner]");
   const bodies = root.querySelectorAll("[data-apikeys-admin]");
@@ -68,8 +75,10 @@ export function mountAPIKeysUI(root: HTMLElement): void {
       label.textContent = key.label || "(no label)";
       const sub = document.createElement("span");
       sub.className = "api-keys-item-sub";
-      const created = key.created_at ? `created ${formatDate(key.created_at)}` : "";
-      const used = key.last_used_at ? ` · last used ${formatDate(key.last_used_at)}` : "";
+      const createdRaw = keyCreatedAt(key);
+      const usedRaw = keyLastUsedAt(key);
+      const created = createdRaw ? `created ${formatDate(createdRaw)}` : "";
+      const used = usedRaw ? ` · last used ${formatDate(usedRaw)}` : "";
       sub.textContent = `${key.prefix} · ${created}${used}`;
       meta.append(label, sub);
 
@@ -88,7 +97,7 @@ export function mountAPIKeysUI(root: HTMLElement): void {
     setBanner("Loading keys…");
     const res = await listAPIKeys();
     if (res.status === 401 || res.status === 403) {
-      setBanner("Administrator session required.", "err");
+      setBanner("API subscription required.", "err");
       return;
     }
     if (res.status >= 400) {
@@ -144,20 +153,12 @@ export function mountAPIKeysUI(root: HTMLElement): void {
     await loadKeys();
   });
 
-  const applyMe = async () => {
-    const { status, data } = await getMe();
-    if (status !== 200 || data.role !== "admin") {
-      setBanner("Administrator session required.", "err");
-      return;
+  bodies.forEach((node) => {
+    if (node instanceof HTMLElement) {
+      node.hidden = false;
     }
-    bodies.forEach((node) => {
-      if (node instanceof HTMLElement) {
-        node.hidden = false;
-      }
-    });
-    await loadKeys();
-  };
+  });
 
   refreshBtn?.addEventListener("click", () => void loadKeys());
-  void applyMe();
+  void loadKeys();
 }

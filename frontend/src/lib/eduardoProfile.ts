@@ -117,11 +117,11 @@ export const homeServiceOffers: HomeServiceOffer[] = [
   },
   {
     id: "api",
-    label: "API",
-    shortName: "API",
+    label: "eApi",
+    shortName: "eApi",
     description: "API keys for external apps and Cursor connectors.",
     focus: "Automate EPAM, eReport, Homescool, and related product routes.",
-    href: "/api-docs",
+    href: "/eapi",
     icon: "key",
   },
 ];

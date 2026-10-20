@@ -1,0 +1,109 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Manage keys"
+  description="Create, list, and revoke Eduardoos API keys."
+  page="eapi-keys"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eapi" data-route title="eApi hub" aria-label="eApi hub">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
+      </span>
+      eApi
+    </a>
+    <a class="dhs-action" href="/api-docs" data-route title="API docs" aria-label="API docs">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
+      </span>
+      Docs
+    </a>
+  </Fragment>
+
+  <section class="session-grid session-grid--profile session-grid--eapi" data-eapi-keys>
+    <p class="status" data-banner>Loading…</p>
+
+    <div data-gate hidden class="product-gate">
+      <p class="hint">API subscription required.</p>
+      <p class="hint">
+        <a href="/payments/subscription" data-route>Subscribe</a>
+        ·
+        <a href="/session" data-route>Sign in</a>
+      </p>
+    </div>
+
+    <div class="session-profile-sections" data-authed hidden>
+      <div class="panel" id="api-keys">
+        <div class="session-account-block">
+          <h2>API keys</h2>
+          <button class="btn" type="button" data-apikeys-refresh>Refresh</button>
+          <p class="status" data-apikeys-banner>Checking session…</p>
+          <div class="api-keys-body" data-apikeys-admin>
+            <ul class="api-keys-list" data-apikey-list></ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Create API key</h2>
+        <div class="api-keys-body" data-apikeys-admin>
+          <form class="api-keys-panel" data-apikey-form novalidate>
+            <div class="api-keys-field">
+              <label for="apikey-label">Label</label>
+              <input id="apikey-label" type="text" data-apikey-label maxlength="80" placeholder="catalog-import" required />
+            </div>
+            <button class="btn" type="submit" data-apikey-create>Create key</button>
+          </form>
+          <p class="api-keys-item-sub" data-apikey-error hidden></p>
+          <div class="api-keys-secret" data-apikey-secret hidden>
+            <p class="hint">Copy this key now. It is shown once and cannot be retrieved again.</p>
+            <code data-apikey-secret-value></code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { mountAPIKeysUI } from "../../lib/apikeys-ui";
+  import { refreshAuthSession } from "../../lib/auth";
+  import { onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
+
+  onAstroPageLoad("eapi-keys", async () => {
+    const root = document.querySelector("[data-eapi-keys]");
+    if (!(root instanceof HTMLElement)) {
+      return;
+    }
+    const banner = root.querySelector("[data-banner]");
+    const gate = root.querySelector("[data-gate]");
+    const authed = root.querySelector("[data-authed]");
+
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Loading…";
+    }
+
+    await refreshAuthSession();
+    const gateResult = await requireService("api");
+    if (!gateResult.sessionOk || !gateResult.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.hidden = false;
+        banner.textContent = gateResult.sessionOk ? "Subscription required." : "Sign in required.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+      return;
+    }
+
+    if (banner instanceof HTMLElement) {
+      banner.hidden = true;
+      banner.textContent = "";
+    }
+    setHidden(gate, true);
+    setHidden(authed, false);
+    mountAPIKeysUI(root);
+  });
+</script>

@@ -82,6 +82,7 @@ const privateByDefault =
   path.startsWith("/documents/pamphlet") ||
   path.startsWith("/evoice") ||
   path.startsWith("/emusic") ||
+  path.startsWith("/eapi") ||
   path.startsWith("/eoproject") ||
   path.startsWith("/publisher") ||
   path.startsWith("/payments");
@@ -92,6 +93,7 @@ const showSiteFooter =
   !path.startsWith("/admin") &&
   !path.startsWith("/documents/pamphlet") &&
   !path.startsWith("/emusic") &&
+  !path.startsWith("/eapi") &&
   htmlPage !== "pamphlet";
 const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
 const canonical = new URL(Astro.url.pathname, Astro.site).toString().replace(/\/$/, "") || "https://eduardoos.com";
@@ -483,6 +485,10 @@ const jsonLdString =
             <a href="/emusic" data-route data-service="emusic" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/emusic" || path.startsWith("/emusic/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">library_music</span>
               eMusic
+            </a>
+            <a href="/eapi" data-route data-service="api" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/eapi" || path.startsWith("/eapi/") || path === "/api-docs" ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">key</span>
+              eApi
             </a>
             <a href="/eoproject" data-route data-service="eoproject" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/eoproject" || path.startsWith("/eoproject/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">foundation</span>

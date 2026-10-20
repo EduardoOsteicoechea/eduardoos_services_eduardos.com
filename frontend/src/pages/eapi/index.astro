@@ -1,0 +1,103 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const cards = [
+  {
+    href: "/eapi/keys",
+    title: "Manage keys",
+    desc: "Create, list, and revoke API keys for external clients.",
+    icon: "key",
+  },
+  {
+    href: "/api-docs",
+    title: "Docs",
+    desc: "Live catalog for API-key clients (GET /api/v1/docs).",
+    icon: "menu_book",
+  },
+];
+---
+
+<Layout
+  title="eApi"
+  description="Eduardoos API dashboard: manage keys and open the live API catalog."
+  page="eapi-hub"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <a
+      class="dhs-action"
+      href="/payments/subscription"
+      data-route
+      title="Subscribe"
+      aria-label="Subscribe"
+    >
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">payments</span>
+      </span>
+      Subscribe
+    </a>
+  </Fragment>
+
+  <section class="product-dash page-span-all" data-eapi-hub>
+    <p class="status" data-banner>Loading…</p>
+
+    <div data-gate hidden class="product-gate">
+      <p class="hint">API subscription required.</p>
+      <p class="hint">
+        <a href="/payments/subscription" data-route>Subscribe</a>
+        ·
+        <a href="/session" data-route>Sign in</a>
+      </p>
+    </div>
+
+    <div class="product-dash__grid" data-authed hidden>
+      {
+        cards.map((card) => (
+          <a class="product-dash__card" href={card.href} data-route>
+            <span class="product-dash__card-head">
+              <span class="material-symbols-outlined" aria-hidden="true">{card.icon}</span>
+              <span class="product-dash__card-title">{card.title}</span>
+            </span>
+            <span class="product-dash__card-desc">{card.desc}</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { refreshAuthSession } from "../../lib/auth";
+  import { onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
+
+  onAstroPageLoad("eapi-hub", async () => {
+    const root = document.querySelector("[data-eapi-hub]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const authed = root?.querySelector("[data-authed]");
+
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Loading…";
+    }
+
+    await refreshAuthSession();
+    const gateResult = await requireService("api");
+    if (!gateResult.sessionOk || !gateResult.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.hidden = false;
+        banner.textContent = gateResult.sessionOk ? "Subscription required." : "Sign in required.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+      return;
+    }
+
+    if (banner instanceof HTMLElement) {
+      banner.hidden = true;
+      banner.textContent = "";
+    }
+    setHidden(gate, true);
+    setHidden(authed, false);
+  });
+</script>

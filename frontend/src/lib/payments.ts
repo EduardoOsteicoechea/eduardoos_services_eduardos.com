@@ -96,7 +96,7 @@ export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
   },
   {
     id: "api",
-    label: "API",
+    label: "eApi",
     description: "Create API keys and call product APIs from external apps.",
     monthlyUsd: 3,
     icon: "key",

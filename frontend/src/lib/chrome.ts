@@ -576,6 +576,7 @@ function plainUserBlockedPath(pathname: string): boolean {
     path.startsWith("/evoice") ||
     path.startsWith("/eoproject") ||
     path.startsWith("/ereport") ||
+    path.startsWith("/eapi") ||
     path === "/api-docs"
   ) {
     return false;

@@ -6,6 +6,8 @@ export type APIKeyRow = {
   prefix: string;
   created_at?: string;
   last_used_at?: string;
+  createdAt?: string;
+  lastUsedAt?: string;
 };
 
 export type APIKeysResponse = APIErrorBody & { keys?: APIKeyRow[] };
@@ -19,13 +21,13 @@ export type APIKeyCreateResponse = APIErrorBody & {
 };
 
 export function listAPIKeys() {
-  return apiRequest<APIKeysResponse>("/admin/apikeys");
+  return apiRequest<APIKeysResponse>("/apikeys");
 }
 
 export function createAPIKey(label: string) {
-  return postJSON<APIKeyCreateResponse>("/admin/apikeys", { label });
+  return postJSON<APIKeyCreateResponse>("/apikeys", { label });
 }
 
 export function revokeAPIKey(id: string) {
-  return deleteJSON<APIErrorBody>(`/admin/apikeys/${encodeURIComponent(id)}`);
+  return deleteJSON<APIErrorBody>(`/apikeys/${encodeURIComponent(id)}`);
 }
