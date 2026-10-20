@@ -1,0 +1,165 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="eMusic · Playlist"
+  description="Crea y edita playlists eMusic sobre el catálogo estático."
+  page="emusic-playlists"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/emusic" data-route title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
+      </span>
+      Dashboard
+    </a>
+    <button
+      class="dhs-action"
+      type="button"
+      data-emusic-refresh
+      title="Refresh library"
+      aria-label="Refresh library"
+    >
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
+  </Fragment>
+
+  <section class="emusic product-dash" data-emusic-page>
+    <p class="status" data-banner>Loading…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Admin access required to manage playlists.</p>
+      <p class="hint"><a href="/emusic" data-route>Back to eMusic</a></p>
+    </div>
+
+    <div data-authed hidden class="emusic__app" data-emusic-app>
+      <aside class="emusic__rail product-dash__card">
+        <div class="emusic__rail-head">
+          <label class="emusic__field">
+            <span class="emusic__label">Playlist</span>
+            <select data-emusic-playlist aria-label="Active playlist">
+              <option value="">Library</option>
+            </select>
+          </label>
+          <div class="emusic__rail-tools">
+            <button type="button" class="icon-btn" data-emusic-all title="Queue all" aria-label="Queue all">
+              <span class="material-symbols-outlined" aria-hidden="true">playlist_add_check</span>
+            </button>
+            <button type="button" class="icon-btn" data-emusic-none title="Clear queue" aria-label="Clear queue">
+              <span class="material-symbols-outlined" aria-hidden="true">playlist_remove</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="emusic__admin-playlists" data-emusic-playlist-admin>
+          <form class="emusic__admin-row" data-emusic-playlist-new>
+            <input
+              name="name"
+              type="text"
+              maxlength="80"
+              required
+              placeholder="New playlist name"
+              autocomplete="off"
+            />
+            <button type="submit">Create</button>
+          </form>
+          <label class="emusic__field">
+            <span class="emusic__label">Name</span>
+            <input data-emusic-playlist-name type="text" maxlength="80" autocomplete="off" />
+          </label>
+          <div class="emusic__admin-row">
+            <select data-emusic-add-track aria-label="Add track from library">
+              <option value="">Add track…</option>
+            </select>
+            <button type="button" data-emusic-add-track-btn>Add</button>
+          </div>
+          <div class="emusic__admin-row">
+            <button type="button" data-emusic-playlist-save>Save playlist</button>
+            <button type="button" class="emusic__danger" data-emusic-playlist-delete>Delete</button>
+          </div>
+        </div>
+
+        <ol class="emusic__queue" data-emusic-tracks></ol>
+      </aside>
+
+      <div class="emusic__stage">
+        <div class="emusic__player product-dash__card">
+          <p class="emusic__now-meta" data-emusic-section></p>
+          <h2 class="emusic__now-title" data-emusic-title>Select a track</h2>
+          <audio class="emusic__audio" data-emusic-audio controls preload="metadata"></audio>
+          <div class="emusic__transport">
+            <button class="icon-btn" type="button" data-emusic-prev title="Previous" aria-label="Previous">
+              <span class="material-symbols-outlined" aria-hidden="true">skip_previous</span>
+            </button>
+            <button class="icon-btn" type="button" data-emusic-toggle title="Play" aria-label="Play">
+              <span class="material-symbols-outlined" aria-hidden="true">play_arrow</span>
+            </button>
+            <button class="icon-btn" type="button" data-emusic-next title="Next" aria-label="Next">
+              <span class="material-symbols-outlined" aria-hidden="true">skip_next</span>
+            </button>
+            <button
+              class="icon-btn"
+              type="button"
+              data-emusic-loop
+              title="Repeat queue"
+              aria-label="Repeat queue"
+              aria-pressed="true"
+            >
+              <span class="material-symbols-outlined" aria-hidden="true">repeat</span>
+            </button>
+          </div>
+          <p class="status emusic__status" data-emusic-status></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { mustLog } from "../../lib/dev-log";
+  import { isPlatformAdmin, refreshAuthSession } from "../../lib/auth";
+  import { startEmusicPage } from "../../lib/emusic-page";
+  import { onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
+
+  onAstroPageLoad("emusic-playlists", async () => {
+    const root = document.querySelector("[data-emusic-page]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const authed = root?.querySelector("[data-authed]");
+    const appRoot = root?.querySelector("[data-emusic-app]");
+
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Loading…";
+    }
+
+    await refreshAuthSession();
+    const gateResult = await requireService("emusic");
+    const admin = isPlatformAdmin();
+    if (!gateResult.sessionOk || !gateResult.access.allowed || !admin) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = !gateResult.sessionOk
+          ? "Sign in required."
+          : !gateResult.access.allowed
+            ? "Subscription required."
+            : "Admin only.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+      return;
+    }
+
+    setHidden(gate, true);
+    setHidden(authed, false);
+    if (banner instanceof HTMLElement) banner.hidden = true;
+
+    if (appRoot instanceof HTMLElement) {
+      startEmusicPage(appRoot, { admin: true, mode: "playlists" });
+      if (mustLog) console.log("[emusic] playlists started");
+    }
+  });
+</script>

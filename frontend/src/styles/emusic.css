@@ -24,8 +24,12 @@
   align-items: stretch;
 }
 
+.emusic__app--stack {
+  max-width: calc(var(--content-basis, 64rem) * var(--span-two-thirds) / var(--page-col-count));
+}
+
 @media (min-width: 64rem) {
-  .emusic__app {
+  .emusic__app:not(.emusic__app--stack) {
     flex-direction: row;
     align-items: flex-start;
   }

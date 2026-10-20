@@ -1,0 +1,138 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="eMusic · Letras"
+  description="Edita y sincroniza letras eMusic v4 sobre la pista seleccionada."
+  page="emusic-lyrics"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/emusic" data-route title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
+      </span>
+      Dashboard
+    </a>
+    <button
+      class="dhs-action"
+      type="button"
+      data-emusic-refresh
+      title="Refresh library"
+      aria-label="Refresh library"
+    >
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
+  </Fragment>
+
+  <section class="emusic product-dash" data-emusic-page>
+    <p class="status" data-banner>Loading…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Admin access required for lyrics tools.</p>
+      <p class="hint"><a href="/emusic" data-route>Back to eMusic</a></p>
+    </div>
+
+    <div data-authed hidden class="emusic__app emusic__app--stack" data-emusic-app>
+      <div class="emusic__player product-dash__card">
+        <label class="emusic__field">
+          <span class="emusic__label">Track</span>
+          <select data-emusic-track-pick aria-label="Select track">
+            <option value="">Select a track…</option>
+          </select>
+        </label>
+        <p class="emusic__now-meta" data-emusic-section></p>
+        <h2 class="emusic__now-title" data-emusic-title>Select a track</h2>
+        <audio class="emusic__audio" data-emusic-audio controls preload="metadata"></audio>
+        <div class="emusic__transport">
+          <button class="icon-btn" type="button" data-emusic-toggle title="Play" aria-label="Play">
+            <span class="material-symbols-outlined" aria-hidden="true">play_arrow</span>
+          </button>
+        </div>
+        <p class="status emusic__status" data-emusic-status></p>
+      </div>
+
+      <div class="emusic__lyrics-panel product-dash__card">
+        <div class="emusic__lyrics-head">
+          <h2 class="product-dash__section-title">Letras</h2>
+        </div>
+        <div class="emusic__lyrics" data-emusic-lyrics aria-live="polite"></div>
+
+        <div class="emusic__admin-lyrics" data-emusic-lyrics-tools>
+          <label class="emusic__field">
+            <span class="emusic__label">Paste lyrics</span>
+            <textarea
+              data-emusic-lyrics-paste
+              rows="6"
+              placeholder="One line per verse line. Use CORO / ESTROFA markers."
+            ></textarea>
+          </label>
+          <div class="emusic__admin-row">
+            <button type="button" data-emusic-lyrics-apply>Apply text</button>
+            <button type="button" data-emusic-lyrics-mark title="Mark current word at playhead (M)">
+              Mark now
+            </button>
+            <button type="button" data-emusic-lyrics-save>Save lyrics</button>
+          </div>
+          <div class="emusic__word-edit" data-emusic-word-edit hidden>
+            <label class="emusic__field">Word <input data-emusic-word-text type="text" /></label>
+            <label class="emusic__field"
+              >Start <input data-emusic-word-start type="number" step="0.01" min="0" /></label
+            >
+            <label class="emusic__field"
+              >End <input data-emusic-word-end type="number" step="0.01" min="0" /></label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { mustLog } from "../../lib/dev-log";
+  import { isPlatformAdmin, refreshAuthSession } from "../../lib/auth";
+  import { startEmusicPage } from "../../lib/emusic-page";
+  import { onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
+
+  onAstroPageLoad("emusic-lyrics", async () => {
+    const root = document.querySelector("[data-emusic-page]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const authed = root?.querySelector("[data-authed]");
+    const appRoot = root?.querySelector("[data-emusic-app]");
+
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Loading…";
+    }
+
+    await refreshAuthSession();
+    const gateResult = await requireService("emusic");
+    const admin = isPlatformAdmin();
+    if (!gateResult.sessionOk || !gateResult.access.allowed || !admin) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = !gateResult.sessionOk
+          ? "Sign in required."
+          : !gateResult.access.allowed
+            ? "Subscription required."
+            : "Admin only.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+      return;
+    }
+
+    setHidden(gate, true);
+    setHidden(authed, false);
+    if (banner instanceof HTMLElement) banner.hidden = true;
+
+    if (appRoot instanceof HTMLElement) {
+      startEmusicPage(appRoot, { admin: true, mode: "lyrics" });
+      if (mustLog) console.log("[emusic] lyrics started");
+    }
+  });
+</script>

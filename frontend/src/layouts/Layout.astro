@@ -85,12 +85,13 @@ const privateByDefault =
   path.startsWith("/eoproject") ||
   path.startsWith("/publisher") ||
   path.startsWith("/payments");
-/** Fixed contact footer on home + product dashboards (not workspaces / session / admin / editor). */
+/** Fixed contact footer on home + product dashboards (not workspaces / session / admin / editor / eMusic). */
 const showSiteFooter =
   !isWorkspace &&
   !path.startsWith("/session") &&
   !path.startsWith("/admin") &&
   !path.startsWith("/documents/pamphlet") &&
+  !path.startsWith("/emusic") &&
   htmlPage !== "pamphlet";
 const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
 const canonical = new URL(Astro.url.pathname, Astro.site).toString().replace(/\/$/, "") || "https://eduardoos.com";

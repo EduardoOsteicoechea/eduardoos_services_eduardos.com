@@ -1,0 +1,132 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="eMusic · Subir"
+  description="Importa un archivo .emusic v4 y asócialo a una pista del catálogo."
+  page="emusic-upload"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/emusic" data-route title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">dashboard</span>
+      </span>
+      Dashboard
+    </a>
+    <button
+      class="dhs-action"
+      type="button"
+      data-emusic-refresh
+      title="Refresh library"
+      aria-label="Refresh library"
+    >
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
+      </span>
+      Refresh
+    </button>
+  </Fragment>
+
+  <section class="emusic product-dash" data-emusic-page>
+    <p class="status" data-banner>Loading…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Admin access required to upload .emusic files.</p>
+      <p class="hint"><a href="/emusic" data-route>Back to eMusic</a></p>
+    </div>
+
+    <div data-authed hidden class="emusic__app emusic__app--stack" data-emusic-app>
+      <div class="emusic__player product-dash__card">
+        <label class="emusic__field">
+          <span class="emusic__label">Track</span>
+          <select data-emusic-track-pick aria-label="Select track">
+            <option value="">Select a track…</option>
+          </select>
+        </label>
+        <p class="emusic__now-meta" data-emusic-section></p>
+        <h2 class="emusic__now-title" data-emusic-title>Select a track</h2>
+        <audio class="emusic__audio" data-emusic-audio controls preload="metadata"></audio>
+        <p class="status emusic__status" data-emusic-status></p>
+      </div>
+
+      <div class="emusic__lyrics-panel product-dash__card">
+        <section class="emusic__import" data-emusic-import aria-labelledby="emusic-import-title">
+          <h2 class="product-dash__section-title" id="emusic-import-title">Subir .emusic</h2>
+          <p class="hint">
+            Timed lyrics contract v4: <code>type: &quot;emusic&quot;</code>,
+            <code>unidades[].t</code> (estrofa|coro|precoro|puente), lines <code>l</code>, words
+            <code>p</code> with <code>t</code> / <code>i</code> / <code>f</code> (seconds).
+          </p>
+          <div
+            class="emusic__dropzone"
+            data-emusic-dropzone
+            tabindex="0"
+            role="button"
+            aria-label="Drop a .emusic file or activate to browse"
+          >
+            <span class="material-symbols-outlined emusic__dropzone-icon" aria-hidden="true">upload_file</span>
+            <p class="emusic__dropzone-lead">Drop a <code>.emusic</code> file here</p>
+            <p class="hint">or choose one from disk</p>
+            <button type="button" data-emusic-lyrics-browse>Browse .emusic</button>
+            <input type="file" accept=".emusic,application/json,text/json" data-emusic-lyrics-import hidden />
+          </div>
+          <p class="status emusic__import-status" data-emusic-import-status hidden></p>
+          <div class="emusic__admin-row">
+            <button type="button" data-emusic-lyrics-save>Save to track</button>
+          </div>
+        </section>
+
+        <div class="emusic__lyrics-head">
+          <h2 class="product-dash__section-title">Preview</h2>
+        </div>
+        <div class="emusic__lyrics" data-emusic-lyrics aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { mustLog } from "../../lib/dev-log";
+  import { isPlatformAdmin, refreshAuthSession } from "../../lib/auth";
+  import { startEmusicPage } from "../../lib/emusic-page";
+  import { onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
+
+  onAstroPageLoad("emusic-upload", async () => {
+    const root = document.querySelector("[data-emusic-page]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const authed = root?.querySelector("[data-authed]");
+    const appRoot = root?.querySelector("[data-emusic-app]");
+
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Loading…";
+    }
+
+    await refreshAuthSession();
+    const gateResult = await requireService("emusic");
+    const admin = isPlatformAdmin();
+    if (!gateResult.sessionOk || !gateResult.access.allowed || !admin) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = !gateResult.sessionOk
+          ? "Sign in required."
+          : !gateResult.access.allowed
+            ? "Subscription required."
+            : "Admin only.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+      return;
+    }
+
+    setHidden(gate, true);
+    setHidden(authed, false);
+    if (banner instanceof HTMLElement) banner.hidden = true;
+
+    if (appRoot instanceof HTMLElement) {
+      startEmusicPage(appRoot, { admin: true, mode: "upload" });
+      if (mustLog) console.log("[emusic] upload started");
+    }
+  });
+</script>

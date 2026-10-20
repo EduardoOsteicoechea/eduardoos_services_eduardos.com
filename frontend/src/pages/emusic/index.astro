@@ -1,26 +1,45 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+
+const cards = [
+  {
+    href: "/emusic/listen",
+    title: "Escucha",
+    desc: "Cola, reproducción y letras sincronizadas.",
+    icon: "headphones",
+    adminOnly: false,
+  },
+  {
+    href: "/emusic/lyrics",
+    title: "Letras",
+    desc: "Pegar texto, marcar tiempos y guardar .emusic.",
+    icon: "lyrics",
+    adminOnly: true,
+  },
+  {
+    href: "/emusic/upload",
+    title: "Subir",
+    desc: "Cargar un archivo .emusic v4 a una pista.",
+    icon: "upload_file",
+    adminOnly: true,
+  },
+  {
+    href: "/emusic/playlists",
+    title: "Playlist",
+    desc: "Crear y editar playlists de la biblioteca.",
+    icon: "queue_music",
+    adminOnly: true,
+  },
+];
 ---
 
 <Layout
   title="eMusic"
-  description="Curated music library with synchronized lyrics and playlists."
-  page="emusic"
+  description="Dashboard eMusic: escucha, letras sincronizadas, importación y playlists."
+  page="emusic-hub"
   robots="noindex,nofollow"
 >
   <Fragment slot="dhs">
-    <button
-      class="dhs-action"
-      type="button"
-      data-emusic-refresh
-      title="Refresh library"
-      aria-label="Refresh library"
-    >
-      <span class="icon-btn" aria-hidden="true">
-        <span class="material-symbols-outlined" aria-hidden="true">refresh</span>
-      </span>
-      Refresh
-    </button>
     <a
       class="dhs-action"
       href="/payments/subscription"
@@ -35,7 +54,7 @@ import Layout from "../../layouts/Layout.astro";
     </a>
   </Fragment>
 
-  <section class="emusic product-dash" data-emusic-hub>
+  <section class="emusic product-dash page-span-all" data-emusic-hub>
     <p class="status" data-banner>Loading…</p>
 
     <div data-gate hidden class="product-gate">
@@ -47,135 +66,39 @@ import Layout from "../../layouts/Layout.astro";
       </p>
     </div>
 
-    <div data-authed hidden class="emusic__app" data-emusic-app>
-      <aside class="emusic__rail product-dash__card">
-        <div class="emusic__rail-head">
-          <label class="emusic__field">
-            <span class="emusic__label">Playlist</span>
-            <select data-emusic-playlist aria-label="Active playlist">
-              <option value="">Library</option>
-            </select>
-          </label>
-          <div class="emusic__rail-tools">
-            <button type="button" class="icon-btn" data-emusic-all title="Queue all" aria-label="Queue all">
-              <span class="material-symbols-outlined" aria-hidden="true">playlist_add_check</span>
-            </button>
-            <button type="button" class="icon-btn" data-emusic-none title="Clear queue" aria-label="Clear queue">
-              <span class="material-symbols-outlined" aria-hidden="true">playlist_remove</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="emusic__admin-playlists" data-emusic-playlist-admin hidden>
-          <form class="emusic__admin-row" data-emusic-playlist-new>
-            <input name="name" type="text" maxlength="80" required placeholder="New playlist name" autocomplete="off" />
-            <button type="submit">Create</button>
-          </form>
-          <label class="emusic__field">
-            <span class="emusic__label">Name</span>
-            <input data-emusic-playlist-name type="text" maxlength="80" autocomplete="off" />
-          </label>
-          <div class="emusic__admin-row">
-            <select data-emusic-add-track aria-label="Add track from library">
-              <option value="">Add track…</option>
-            </select>
-            <button type="button" data-emusic-add-track-btn>Add</button>
-          </div>
-          <div class="emusic__admin-row">
-            <button type="button" data-emusic-playlist-save>Save playlist</button>
-            <button type="button" class="emusic__danger" data-emusic-playlist-delete>Delete</button>
-          </div>
-        </div>
-
-        <ol class="emusic__queue" data-emusic-tracks></ol>
-      </aside>
-
-      <div class="emusic__stage">
-        <div class="emusic__player product-dash__card">
-          <p class="emusic__now-meta" data-emusic-section></p>
-          <h2 class="emusic__now-title" data-emusic-title>Select a track</h2>
-          <audio class="emusic__audio" data-emusic-audio controls preload="metadata"></audio>
-          <div class="emusic__transport">
-            <button class="icon-btn" type="button" data-emusic-prev title="Previous" aria-label="Previous">
-              <span class="material-symbols-outlined" aria-hidden="true">skip_previous</span>
-            </button>
-            <button class="icon-btn" type="button" data-emusic-toggle title="Play" aria-label="Play">
-              <span class="material-symbols-outlined" aria-hidden="true">play_arrow</span>
-            </button>
-            <button class="icon-btn" type="button" data-emusic-next title="Next" aria-label="Next">
-              <span class="material-symbols-outlined" aria-hidden="true">skip_next</span>
-            </button>
-            <button class="icon-btn" type="button" data-emusic-loop title="Repeat queue" aria-label="Repeat queue" aria-pressed="true">
-              <span class="material-symbols-outlined" aria-hidden="true">repeat</span>
-            </button>
-          </div>
-          <p class="status emusic__status" data-emusic-status></p>
-        </div>
-
-        <div class="emusic__lyrics-panel product-dash__card">
-          <div class="emusic__lyrics-head">
-            <h2 class="product-dash__section-title">Lyrics</h2>
-          </div>
-          <div class="emusic__lyrics" data-emusic-lyrics aria-live="polite"></div>
-
-          <div class="emusic__admin-lyrics" data-emusic-lyrics-tools hidden>
-            <label class="emusic__field">
-              <span class="emusic__label">Paste lyrics</span>
-              <textarea data-emusic-lyrics-paste rows="4" placeholder="One line per verse line. Use CORO / ESTROFA markers."></textarea>
-            </label>
-            <div class="emusic__admin-row">
-              <button type="button" data-emusic-lyrics-apply>Apply text</button>
-              <button type="button" data-emusic-lyrics-mark title="Mark current word at playhead (M)">Mark now</button>
-              <button type="button" data-emusic-lyrics-save>Save lyrics</button>
-            </div>
-
-            <section class="emusic__import" data-emusic-import aria-labelledby="emusic-import-title">
-              <h3 class="emusic__import-title" id="emusic-import-title">Load .emusic</h3>
-              <p class="hint">
-                Timed lyrics contract v4: <code>type: &quot;emusic&quot;</code>,
-                <code>unidades[].t</code> (estrofa|coro|precoro|puente),
-                lines <code>l</code>, words <code>p</code> with <code>t</code> / <code>i</code> / <code>f</code> (seconds).
-              </p>
-              <div
-                class="emusic__dropzone"
-                data-emusic-dropzone
-                tabindex="0"
-                role="button"
-                aria-label="Drop a .emusic file or activate to browse"
-              >
-                <span class="material-symbols-outlined emusic__dropzone-icon" aria-hidden="true">upload_file</span>
-                <p class="emusic__dropzone-lead">Drop a <code>.emusic</code> file here</p>
-                <p class="hint">or choose one from disk</p>
-                <button type="button" data-emusic-lyrics-browse>Browse .emusic</button>
-                <input type="file" accept=".emusic,application/json,text/json" data-emusic-lyrics-import hidden />
-              </div>
-              <p class="status emusic__import-status" data-emusic-import-status hidden></p>
-            </section>
-
-            <div class="emusic__word-edit" data-emusic-word-edit hidden>
-              <label class="emusic__field">Word <input data-emusic-word-text type="text" /></label>
-              <label class="emusic__field">Start <input data-emusic-word-start type="number" step="0.01" min="0" /></label>
-              <label class="emusic__field">End <input data-emusic-word-end type="number" step="0.01" min="0" /></label>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="product-dash__grid" data-authed hidden>
+      {
+        cards.map((card) => (
+          <a
+            class="product-dash__card"
+            href={card.href}
+            data-route
+            data-emusic-card={card.adminOnly ? "admin" : "all"}
+            hidden={card.adminOnly}
+          >
+            <span class="product-dash__card-head">
+              <span class="material-symbols-outlined" aria-hidden="true">{card.icon}</span>
+              <span class="product-dash__card-title">{card.title}</span>
+            </span>
+            <span class="product-dash__card-desc">{card.desc}</span>
+          </a>
+        ))
+      }
     </div>
   </section>
 </Layout>
 
 <script>
   import { mustLog } from "../../lib/dev-log";
+  import { isPlatformAdmin, refreshAuthSession } from "../../lib/auth";
   import { onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
-  import { startEmusicPage } from "../../lib/emusic-page";
-  import { refreshAuthSession, isPlatformAdmin } from "../../lib/auth";
 
-  onAstroPageLoad("emusic", async () => {
+  onAstroPageLoad("emusic-hub", async () => {
     const root = document.querySelector("[data-emusic-hub]");
-    const banner = root?.querySelector("[data-banner]") ?? null;
-    const gate = root?.querySelector("[data-gate]") ?? null;
-    const authed = root?.querySelector("[data-authed]") ?? null;
-    const appRoot = root?.querySelector("[data-emusic-app]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const authed = root?.querySelector("[data-authed]");
+    const adminCards = root?.querySelectorAll("[data-emusic-card='admin']");
 
     if (banner instanceof HTMLElement) {
       banner.hidden = false;
@@ -194,13 +117,21 @@ import Layout from "../../layouts/Layout.astro";
       return;
     }
 
+    const admin = isPlatformAdmin();
+    adminCards?.forEach((card) => {
+      if (card instanceof HTMLElement) card.hidden = !admin;
+    });
+
     setHidden(gate, true);
     setHidden(authed, false);
     if (banner instanceof HTMLElement) banner.hidden = true;
-
-    if (appRoot instanceof HTMLElement) {
-      startEmusicPage(appRoot, { admin: isPlatformAdmin() });
-      if (mustLog) console.log("[emusic] app started", { admin: isPlatformAdmin() });
-    }
+    if (mustLog) console.log("[emusic] hub", { admin });
   });
 </script>
+
+<style>
+  a.product-dash__card {
+    text-decoration: none;
+    color: inherit;
+  }
+</style>
