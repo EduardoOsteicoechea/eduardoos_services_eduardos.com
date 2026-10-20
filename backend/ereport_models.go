@@ -344,7 +344,8 @@ func websiteRegistrationFromMeta(meta ereportMeta) websiteRegistrationBinding {
 	}
 }
 
-// normalizeConnectorHost lowercases, strips port, and optionally strips a leading www.
+// normalizeConnectorHost lowercases, keeps host:port when present, strips scheme/path,
+// strips leading www, and drops default ports :80 / :443.
 func normalizeConnectorHost(raw string) string {
 	h := strings.ToLower(strings.TrimSpace(raw))
 	if h == "" {
@@ -356,14 +357,52 @@ func normalizeConnectorHost(raw string) string {
 	if i := strings.IndexAny(h, "/?#"); i >= 0 {
 		h = h[:i]
 	}
-	if host, _, err := net.SplitHostPort(h); err == nil {
-		h = host
-	} else if strings.HasPrefix(h, "[") {
-		// IPv6 without port — leave as-is after bracket trim if present
+	if host, port, err := net.SplitHostPort(h); err == nil {
+		host = strings.TrimPrefix(host, "www.")
+		if port == "80" || port == "443" {
+			return host
+		}
+		return host + ":" + port
+	}
+	if strings.HasPrefix(h, "[") {
 		h = strings.Trim(h, "[]")
 	}
 	h = strings.TrimPrefix(h, "www.")
 	return h
+}
+
+func connectorHostNameOnly(normalized string) string {
+	if host, _, err := net.SplitHostPort(normalized); err == nil {
+		return host
+	}
+	return normalized
+}
+
+// connectorHostMatches reports whether a stored tag matches the request host.
+// Exact host:port wins; a tag without a port matches any port on that hostname.
+func connectorHostMatches(tag, requestHost string) (exact bool) {
+	tagN := normalizeConnectorHost(tag)
+	reqN := normalizeConnectorHost(requestHost)
+	if tagN == "" || reqN == "" {
+		return false
+	}
+	if tagN == reqN {
+		return true
+	}
+	return false
+}
+
+func connectorHostMatchesLoose(tag, requestHost string) bool {
+	tagN := normalizeConnectorHost(tag)
+	reqN := normalizeConnectorHost(requestHost)
+	if tagN == "" || reqN == "" {
+		return false
+	}
+	// Tag has no port → matches any port on that hostname.
+	if connectorHostNameOnly(tagN) == tagN && connectorHostNameOnly(reqN) == tagN {
+		return true
+	}
+	return false
 }
 
 func normalizeConnectorHosts(hosts []string) []string {
@@ -433,7 +472,8 @@ func (a *App) listWebsiteRegistrations(ownerUserID string) []websiteRegistration
 }
 
 // resolveActiveWebsiteRegistration picks the binding whose connectorHosts match
-// the request Origin/Referer host; otherwise the first list item; otherwise empty.
+// the request Origin/Referer host (exact host:port preferred, then hostname-only
+// tags); otherwise the first list item; otherwise empty.
 func resolveActiveWebsiteRegistration(r *http.Request, list []websiteRegistrationBinding) websiteRegistrationBinding {
 	if len(list) == 0 {
 		return websiteRegistrationBinding{}
@@ -442,7 +482,14 @@ func resolveActiveWebsiteRegistration(r *http.Request, list []websiteRegistratio
 	if host != "" {
 		for _, b := range list {
 			for _, ch := range b.ConnectorHosts {
-				if normalizeConnectorHost(ch) == host {
+				if connectorHostMatches(ch, host) {
+					return b
+				}
+			}
+		}
+		for _, b := range list {
+			for _, ch := range b.ConnectorHosts {
+				if connectorHostMatchesLoose(ch, host) {
 					return b
 				}
 			}

@@ -108,18 +108,51 @@ function fail(reason: ConnectorReadyFail["reason"], requestId?: string): Connect
   return result;
 }
 
-function activeStorageKey(): string {
-  const host =
-    typeof location !== "undefined" && location.hostname ? location.hostname : "localhost";
-  return `${ACTIVE_KEY_PREFIX}${host}`;
+function currentPageHost(): string {
+  if (typeof location === "undefined") return "localhost";
+  // Prefer host (hostname:port) so localhost:8080 ≠ localhost:3000.
+  return location.host || location.hostname || "localhost";
 }
 
-/** Normalize host for connectorHosts matching (lowercase, strip port). */
+function activeStorageKey(): string {
+  return `${ACTIVE_KEY_PREFIX}${normalizeConnectorHost(currentPageHost())}`;
+}
+
+/**
+ * Normalize host for connectorHosts matching.
+ * Keeps host:port (except default :80/:443). Strips scheme, path, and leading www.
+ */
 export function normalizeConnectorHost(host: string): string {
-  return String(host || "")
-    .trim()
-    .toLowerCase()
-    .replace(/:\d+$/, "");
+  let h = String(host || "").trim().toLowerCase();
+  if (!h) return "";
+  const scheme = h.indexOf("://");
+  if (scheme >= 0) h = h.slice(scheme + 3);
+  const cut = h.search(/[/?#]/);
+  if (cut >= 0) h = h.slice(0, cut);
+  h = h.replace(/^www\./, "");
+  if (h.endsWith(":80") || h.endsWith(":443")) {
+    h = h.replace(/:(80|443)$/, "");
+  }
+  return h;
+}
+
+function connectorHostNameOnly(normalized: string): string {
+  const m = normalized.match(/^(.*):(\d+)$/);
+  return m ? m[1] : normalized;
+}
+
+function connectorHostMatchesExact(tag: string, requestHost: string): boolean {
+  const tagN = normalizeConnectorHost(tag);
+  const reqN = normalizeConnectorHost(requestHost);
+  return Boolean(tagN && reqN && tagN === reqN);
+}
+
+/** Tag without port matches any port on that hostname. */
+function connectorHostMatchesLoose(tag: string, requestHost: string): boolean {
+  const tagN = normalizeConnectorHost(tag);
+  const reqN = normalizeConnectorHost(requestHost);
+  if (!tagN || !reqN) return false;
+  return connectorHostNameOnly(tagN) === tagN && connectorHostNameOnly(reqN) === tagN;
 }
 
 /**
@@ -203,15 +236,17 @@ export function resolveActiveWebsiteRegistration(
     if (hit) return hit;
   }
 
-  const hostRaw =
-    hostname ??
-    (typeof location !== "undefined" && location.hostname ? location.hostname : "");
+  const hostRaw = hostname ?? currentPageHost();
   const host = normalizeConnectorHost(hostRaw);
   if (host) {
-    const byHost = list.find((item) =>
-      (item.connectorHosts || []).some((h) => normalizeConnectorHost(h) === host),
+    const exact = list.find((item) =>
+      (item.connectorHosts || []).some((h) => connectorHostMatchesExact(h, host)),
     );
-    if (byHost) return byHost;
+    if (exact) return exact;
+    const loose = list.find((item) =>
+      (item.connectorHosts || []).some((h) => connectorHostMatchesLoose(h, host)),
+    );
+    if (loose) return loose;
   }
 
   return list[0] || null;

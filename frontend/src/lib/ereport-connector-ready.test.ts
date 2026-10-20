@@ -117,16 +117,18 @@ describe("listWebsiteRegistrations / resolveActiveWebsiteRegistration", () => {
     expect(list).toEqual([]);
   });
 
-  it("normalizes connector host (lowercase, strip port)", () => {
-    expect(normalizeConnectorHost("Example.COM:8443")).toBe("example.com");
+  it("normalizes connector host (keeps non-default port)", () => {
+    expect(normalizeConnectorHost("Example.COM:8443")).toBe("example.com:8443");
+    expect(normalizeConnectorHost("http://localhost:8080/path")).toBe("localhost:8080");
+    expect(normalizeConnectorHost("https://www.Example.COM:443")).toBe("example.com");
     expect(normalizeConnectorHost("  LocalHost  ")).toBe("localhost");
   });
 
-  it("set/getConnectorActiveOverride round-trip via hostname key", () => {
+  it("set/getConnectorActiveOverride round-trip via host:port key", () => {
     expect(getConnectorActiveOverride()).toBeNull();
     setConnectorActiveOverride("org-2", "rep-2");
     expect(getConnectorActiveOverride()).toEqual({ orgId: "org-2", reportId: "rep-2" });
-    const key = `ereport.connector.active.${location.hostname}`;
+    const key = `ereport.connector.active.${normalizeConnectorHost(location.host || location.hostname)}`;
     expect(JSON.parse(localStorage.getItem(key) || "{}")).toEqual({
       orgId: "org-2",
       reportId: "rep-2",
@@ -176,6 +178,17 @@ describe("listWebsiteRegistrations / resolveActiveWebsiteRegistration", () => {
     ];
     const active = resolveActiveWebsiteRegistration(list, null, "example.com");
     expect(active?.orgId).toBe("org-2");
+  });
+
+  it("resolveActive prefers exact host:port over hostname-only", () => {
+    const list = [
+      { orgId: "org-loose", reportId: "rep-loose", tema: "Loose", connectorHosts: ["localhost"] },
+      { orgId: "org-8080", reportId: "rep-8080", tema: "Port8080", connectorHosts: ["localhost:8080"] },
+      { orgId: "org-3000", reportId: "rep-3000", tema: "Port3000", connectorHosts: ["localhost:3000"] },
+    ];
+    expect(resolveActiveWebsiteRegistration(list, null, "localhost:8080")?.orgId).toBe("org-8080");
+    expect(resolveActiveWebsiteRegistration(list, null, "localhost:3000")?.orgId).toBe("org-3000");
+    expect(resolveActiveWebsiteRegistration(list, null, "localhost:9999")?.orgId).toBe("org-loose");
   });
 
   it("resolveActive falls back to list[0]", () => {
@@ -292,7 +305,7 @@ describe("probeEreportConnectorReady", () => {
             orgId: "org-h",
             reportId: "rep-h",
             tema: "Host",
-            connectorHosts: [location.hostname],
+            connectorHosts: [location.host || location.hostname],
           },
         ],
       }),

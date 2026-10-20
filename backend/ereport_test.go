@@ -195,6 +195,47 @@ func TestEreportWebsiteRegistrationPurpose(t *testing.T) {
 	if !ok || len(regs2) < 2 {
 		t.Fatalf("expected websiteRegistrations length >= 2, got %#v", accessProdBody["websiteRegistrations"])
 	}
+
+	// Port-specific localhost hosts: :8080 vs :3000 must resolve to different reports.
+	thirdBody := decodeMap(t, third)
+	portOrgID := orgID
+	portReportID := thirdBody["meta"].(map[string]any)["id"].(string)
+	gotPort := app.doJSON(t, "member@eduardoos.com", http.MethodGet,
+		"/api/ereport/orgs/"+portOrgID+"/reports/"+portReportID, "")
+	portPayload := decodeMap(t, gotPort)["payload"].(map[string]any)
+	portSec := portPayload["sections"].([]any)[0].(map[string]any)
+	portSecID := portSec["id"].(string)
+	portGrpID := portSec["groups"].([]any)[0].(map[string]any)["id"].(string)
+	patch8080 := app.doJSON(t, "member@eduardoos.com", http.MethodPatch,
+		"/api/ereport/orgs/"+localOrgID+"/reports/"+localReportID+"/site-connector",
+		`{"assign":true,"sectionId":"`+localSecID+`","groupId":"`+localGrpID+`","connectorHosts":["localhost:8080"]}`)
+	if patch8080.Code != http.StatusOK {
+		t.Fatalf("patch :8080 hosts: %d %s", patch8080.Code, patch8080.Body.String())
+	}
+	patch3000 := app.doJSON(t, "member@eduardoos.com", http.MethodPatch,
+		"/api/ereport/orgs/"+portOrgID+"/reports/"+portReportID+"/site-connector",
+		`{"assign":true,"sectionId":"`+portSecID+`","groupId":"`+portGrpID+`","connectorHosts":["localhost:3000"]}`)
+	if patch3000.Code != http.StatusOK {
+		t.Fatalf("patch :3000 hosts: %d %s", patch3000.Code, patch3000.Body.String())
+	}
+	meta8080 := decodeMap(t, patch8080)["meta"].(map[string]any)
+	hosts8080, _ := meta8080["connectorHosts"].([]any)
+	if len(hosts8080) != 1 || hosts8080[0] != "localhost:8080" {
+		t.Fatalf("expected connectorHosts to keep port, got %#v", meta8080["connectorHosts"])
+	}
+
+	access8080 := app.doJSONWithOrigin(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/access", "",
+		"http://localhost:8080")
+	b8080 := decodeMap(t, access8080)["websiteRegistration"].(map[string]any)
+	if b8080["reportId"] != localReportID {
+		t.Fatalf("Origin localhost:8080 should match local report, got %#v", b8080)
+	}
+	access3000 := app.doJSONWithOrigin(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/access", "",
+		"http://localhost:3000")
+	b3000 := decodeMap(t, access3000)["websiteRegistration"].(map[string]any)
+	if b3000["reportId"] != portReportID {
+		t.Fatalf("Origin localhost:3000 should match third report, got %#v", b3000)
+	}
 }
 
 func TestEreportAssignSiteConnector(t *testing.T) {

@@ -16,7 +16,7 @@ import {
   openEreportWorkspaceIssue,
 } from "./ereport-connector-modal";
 import * as ereportReady from "./ereport-connector-ready";
-import { probeEreportConnectorReady } from "./ereport-connector-ready";
+import { normalizeConnectorHost, probeEreportConnectorReady } from "./ereport-connector-ready";
 import { parseIssueText } from "./ereport-issue-parse";
 
 const OVERLAY_ID = "eduardoos-ereport-quick-overlay";
@@ -34,7 +34,8 @@ type ReadyOverrideApi = {
 
 function activeStorageKey(): string {
   try {
-    return `${ACTIVE_KEY_PREFIX}${location.hostname}`;
+    const host = normalizeConnectorHost(location.host || location.hostname || "localhost");
+    return `${ACTIVE_KEY_PREFIX}${host || "localhost"}`;
   } catch {
     return `${ACTIVE_KEY_PREFIX}default`;
   }

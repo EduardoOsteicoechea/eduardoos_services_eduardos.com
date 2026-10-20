@@ -334,12 +334,12 @@ import Layout from "../../layouts/Layout.astro";
               <select name="groupId" data-assign-group required></select>
             </label>
             <label>
-              Connector hosts (comma-separated)
+              Connector hosts (comma-separated; include port for localhost)
               <input
                 name="connectorHosts"
                 type="text"
                 data-assign-hosts
-                placeholder="eduardoos.com, www.eduardoos.com"
+                placeholder="eduardoos.com, localhost:8080, localhost:3000"
                 autocomplete="off"
               />
             </label>

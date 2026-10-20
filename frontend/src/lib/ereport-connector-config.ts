@@ -6,6 +6,7 @@ import {
   patchReportSiteConnector,
   type WebsiteRegistrationBinding,
 } from "./ereport";
+import { normalizeConnectorHost } from "./ereport-connector-ready";
 
 const DONE_TYPE = "ereport-embed-config-done";
 const CLOSE_TYPE = "ereport-embed-close";
@@ -44,7 +45,8 @@ function postToParent(msg: Record<string, unknown>) {
 
 function activeStorageKey(): string {
   try {
-    return `${ACTIVE_KEY_PREFIX}${location.hostname}`;
+    const host = normalizeConnectorHost(location.host || location.hostname || "localhost");
+    return `${ACTIVE_KEY_PREFIX}${host || "localhost"}`;
   } catch {
     return `${ACTIVE_KEY_PREFIX}default`;
   }
@@ -100,11 +102,11 @@ function ensureHostsInput(root: HTMLElement, before: HTMLElement): HTMLInputElem
   let input = el<HTMLInputElement>(root, "[data-cc-hosts]");
   if (input) return input;
   const label = document.createElement("label");
-  label.textContent = "Connector hosts (comma-separated)";
+  label.textContent = "Connector hosts (comma-separated; include port for localhost)";
   input = document.createElement("input");
   input.type = "text";
   input.setAttribute("data-cc-hosts", "");
-  input.placeholder = "eduardoos.com, www.eduardoos.com";
+  input.placeholder = "eduardoos.com, localhost:8080, localhost:3000";
   input.autocomplete = "off";
   label.append(input);
   before.before(label);
