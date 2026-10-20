@@ -32,7 +32,14 @@ vi.mock("./dev-log", () => ({
   mustLog: false,
 }));
 
-import { probeEreportConnectorReady } from "./ereport-connector-ready";
+import {
+  getConnectorActiveOverride,
+  listWebsiteRegistrations,
+  normalizeConnectorHost,
+  probeEreportConnectorReady,
+  resolveActiveWebsiteRegistration,
+  setConnectorActiveOverride,
+} from "./ereport-connector-ready";
 
 function okMe() {
   return { status: 200, requestId: "me-1", data: { id: "user-1", email: "a@b.com" } };
@@ -72,6 +79,114 @@ const samplePayload = {
     },
   ],
 };
+
+describe("listWebsiteRegistrations / resolveActiveWebsiteRegistration", () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it("prefers websiteRegistrations array when present", () => {
+    const list = listWebsiteRegistrations({
+      websiteRegistration: { orgId: "org-a", reportId: "rep-a" },
+      websiteRegistrations: [
+        { orgId: "org-1", reportId: "rep-1", tema: "One" },
+        { orgId: "org-2", reportId: "rep-2", tema: "Two" },
+      ],
+    });
+    expect(list).toHaveLength(2);
+    expect(list[0].orgId).toBe("org-1");
+    expect(list[1].reportId).toBe("rep-2");
+  });
+
+  it("falls back to singular websiteRegistration when registrations is not an array", () => {
+    const list = listWebsiteRegistrations({
+      websiteRegistration: { orgId: "org-s", reportId: "rep-s", tema: "Solo" },
+    });
+    expect(list).toEqual([{ orgId: "org-s", reportId: "rep-s", tema: "Solo" }]);
+  });
+
+  it("returns empty when websiteRegistrations is an empty array", () => {
+    const list = listWebsiteRegistrations({
+      websiteRegistration: { orgId: "org-s", reportId: "rep-s" },
+      websiteRegistrations: [],
+    });
+    expect(list).toEqual([]);
+  });
+
+  it("normalizes connector host (lowercase, strip port)", () => {
+    expect(normalizeConnectorHost("Example.COM:8443")).toBe("example.com");
+    expect(normalizeConnectorHost("  LocalHost  ")).toBe("localhost");
+  });
+
+  it("set/getConnectorActiveOverride round-trip via hostname key", () => {
+    expect(getConnectorActiveOverride()).toBeNull();
+    setConnectorActiveOverride("org-2", "rep-2");
+    expect(getConnectorActiveOverride()).toEqual({ orgId: "org-2", reportId: "rep-2" });
+    const key = `ereport.connector.active.${location.hostname}`;
+    expect(JSON.parse(localStorage.getItem(key) || "{}")).toEqual({
+      orgId: "org-2",
+      reportId: "rep-2",
+    });
+  });
+
+  it("resolveActive prefers localStorage override when it matches list", () => {
+    setConnectorActiveOverride("org-2", "rep-2");
+    const list = [
+      { orgId: "org-1", reportId: "rep-1", tema: "One" },
+      { orgId: "org-2", reportId: "rep-2", tema: "Two" },
+    ];
+    const active = resolveActiveWebsiteRegistration(list, list[0]);
+    expect(active?.orgId).toBe("org-2");
+    expect(active?.tema).toBe("Two");
+  });
+
+  it("resolveActive ignores override that is not in the list", () => {
+    setConnectorActiveOverride("org-x", "rep-x");
+    const list = [
+      { orgId: "org-1", reportId: "rep-1", tema: "One" },
+      { orgId: "org-2", reportId: "rep-2", tema: "Two", connectorHosts: ["other.com"] },
+    ];
+    const preferred = { orgId: "org-2", reportId: "rep-2" };
+    const active = resolveActiveWebsiteRegistration(list, preferred, "localhost");
+    expect(active?.orgId).toBe("org-2");
+  });
+
+  it("resolveActive uses preferred singular when present in list", () => {
+    const list = [
+      { orgId: "org-1", reportId: "rep-1", tema: "One" },
+      { orgId: "org-2", reportId: "rep-2", tema: "Two" },
+    ];
+    const active = resolveActiveWebsiteRegistration(list, list[1], "unused.host");
+    expect(active?.orgId).toBe("org-2");
+  });
+
+  it("resolveActive matches hostname against connectorHosts", () => {
+    const list = [
+      { orgId: "org-1", reportId: "rep-1", tema: "One", connectorHosts: ["other.com"] },
+      {
+        orgId: "org-2",
+        reportId: "rep-2",
+        tema: "Two",
+        connectorHosts: ["Example.COM:443", "www.example.com"],
+      },
+    ];
+    const active = resolveActiveWebsiteRegistration(list, null, "example.com");
+    expect(active?.orgId).toBe("org-2");
+  });
+
+  it("resolveActive falls back to list[0]", () => {
+    const list = [
+      { orgId: "org-1", reportId: "rep-1", tema: "One" },
+      { orgId: "org-2", reportId: "rep-2", tema: "Two" },
+    ];
+    const active = resolveActiveWebsiteRegistration(list, null, "no-match.example");
+    expect(active?.orgId).toBe("org-1");
+  });
+});
 
 describe("probeEreportConnectorReady", () => {
   beforeEach(() => {
@@ -126,6 +241,77 @@ describe("probeEreportConnectorReady", () => {
       expect(result.requestId).toBe("acc-1");
     }
     expect(fetchOrgReport).not.toHaveBeenCalled();
+  });
+
+  it("returns no_binding when websiteRegistrations is empty and singular absent", async () => {
+    fetchEreportAccess.mockResolvedValueOnce(
+      okAccess({ websiteRegistration: null, websiteRegistrations: [] }),
+    );
+    const result = await probeEreportConnectorReady();
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.reason).toBe("no_binding");
+  });
+
+  it("uses active from websiteRegistrations list (override)", async () => {
+    setConnectorActiveOverride("org-2", "rep-2");
+    fetchEreportAccess.mockResolvedValueOnce(
+      okAccess({
+        websiteRegistration: { orgId: "org-1", reportId: "rep-1", tema: "One" },
+        websiteRegistrations: [
+          { orgId: "org-1", reportId: "rep-1", tema: "One" },
+          { orgId: "org-2", reportId: "rep-2", tema: "Two" },
+        ],
+      }),
+    );
+    fetchOrgReport.mockResolvedValueOnce(
+      okReport(samplePayload, {
+        id: "rep-2",
+        orgId: "org-2",
+        connectorSectionId: "sec-1",
+        connectorGroupId: "grp-1",
+      }),
+    );
+    const result = await probeEreportConnectorReady();
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.binding.orgId).toBe("org-2");
+      expect(result.binding.reportId).toBe("rep-2");
+      expect(result.binding.tema).toBe("Two");
+    }
+    expect(fetchOrgReport).toHaveBeenCalledWith("org-2", "rep-2");
+  });
+
+  it("uses host match from websiteRegistrations when no override", async () => {
+    // preferred singular null so host path is tested (singular-in-list would win first).
+    fetchEreportAccess.mockResolvedValueOnce(
+      okAccess({
+        websiteRegistration: null,
+        websiteRegistrations: [
+          { orgId: "org-1", reportId: "rep-1", tema: "One", connectorHosts: ["other.com"] },
+          {
+            orgId: "org-h",
+            reportId: "rep-h",
+            tema: "Host",
+            connectorHosts: [location.hostname],
+          },
+        ],
+      }),
+    );
+    fetchOrgReport.mockResolvedValueOnce(
+      okReport(samplePayload, {
+        id: "rep-h",
+        orgId: "org-h",
+        connectorSectionId: "sec-1",
+        connectorGroupId: "grp-1",
+      }),
+    );
+    const result = await probeEreportConnectorReady();
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.binding.orgId).toBe("org-h");
+      expect(result.binding.reportId).toBe("rep-h");
+    }
+    expect(fetchOrgReport).toHaveBeenCalledWith("org-h", "rep-h");
   });
 
   it("returns bad_targets when resolved section/group are missing from payload", async () => {

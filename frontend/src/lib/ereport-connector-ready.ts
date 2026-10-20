@@ -15,6 +15,7 @@ import { checkServiceAccess } from "./serviceAccess";
 
 const LOG_PREFIX = "[ereport-ready]";
 const DEFAULTS_KEY = "ereport.connector.defaults";
+const ACTIVE_KEY_PREFIX = "ereport.connector.active.";
 
 export type ConnectorReadyOk = {
   ok: true;
@@ -49,6 +50,11 @@ type StoredDefaults = {
   reportId?: string;
   sectionId?: string;
   groupId?: string;
+};
+
+type AccessRegistrationData = {
+  websiteRegistration?: WebsiteRegistrationBinding | null;
+  websiteRegistrations?: WebsiteRegistrationBinding[] | null;
 };
 
 function isSpanish(): boolean {
@@ -100,6 +106,124 @@ function fail(reason: ConnectorReadyFail["reason"], requestId?: string): Connect
     console.log(LOG_PREFIX, "fail", { reason, requestId });
   }
   return result;
+}
+
+function activeStorageKey(): string {
+  const host =
+    typeof location !== "undefined" && location.hostname ? location.hostname : "localhost";
+  return `${ACTIVE_KEY_PREFIX}${host}`;
+}
+
+/** Normalize host for connectorHosts matching (lowercase, strip port). */
+export function normalizeConnectorHost(host: string): string {
+  return String(host || "")
+    .trim()
+    .toLowerCase()
+    .replace(/:\d+$/, "");
+}
+
+/**
+ * Build registration list from access payload.
+ * Prefer `websiteRegistrations` when it is an array; otherwise singular fallback.
+ */
+export function listWebsiteRegistrations(data: AccessRegistrationData | null | undefined): WebsiteRegistrationBinding[] {
+  if (!data) return [];
+  if (Array.isArray(data.websiteRegistrations)) {
+    return data.websiteRegistrations.filter(
+      (item): item is WebsiteRegistrationBinding =>
+        Boolean(item && String(item.orgId || "").trim() && String(item.reportId || "").trim()),
+    );
+  }
+  const singular = data.websiteRegistration;
+  if (singular && String(singular.orgId || "").trim() && String(singular.reportId || "").trim()) {
+    return [singular];
+  }
+  return [];
+}
+
+/** Read localStorage active override for this hostname (`ereport.connector.active.${hostname}`). */
+export function getConnectorActiveOverride(): { orgId: string; reportId: string } | null {
+  try {
+    if (typeof localStorage === "undefined") return null;
+    const raw = localStorage.getItem(activeStorageKey());
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { orgId?: string; reportId?: string };
+    const orgId = String(parsed?.orgId || "").trim();
+    const reportId = String(parsed?.reportId || "").trim();
+    if (!orgId || !reportId) return null;
+    return { orgId, reportId };
+  } catch {
+    return null;
+  }
+}
+
+/** Persist active override so Quick / Ready / chrome share the same localStorage key. */
+export function setConnectorActiveOverride(orgId: string, reportId: string): void {
+  try {
+    if (typeof localStorage === "undefined") return;
+    const o = String(orgId || "").trim();
+    const r = String(reportId || "").trim();
+    if (!o || !r) return;
+    localStorage.setItem(activeStorageKey(), JSON.stringify({ orgId: o, reportId: r }));
+  } catch {
+    /* ignore quota / private mode */
+  }
+}
+
+function idsMatch(
+  a: { orgId?: string; reportId?: string } | null | undefined,
+  b: { orgId?: string; reportId?: string } | null | undefined,
+): boolean {
+  if (!a || !b) return false;
+  return (
+    String(a.orgId || "").trim() === String(b.orgId || "").trim() &&
+    String(a.reportId || "").trim() === String(b.reportId || "").trim()
+  );
+}
+
+/**
+ * Resolve which website registration is active for this host.
+ * Order: localStorage override → singular preferred → connectorHosts match → list[0].
+ */
+export function resolveActiveWebsiteRegistration(
+  list: WebsiteRegistrationBinding[],
+  preferredSingular?: WebsiteRegistrationBinding | null,
+  hostname?: string,
+): WebsiteRegistrationBinding | null {
+  if (!list.length) return null;
+
+  const override = getConnectorActiveOverride();
+  if (override) {
+    const hit = list.find((item) => idsMatch(item, override));
+    if (hit) return hit;
+  }
+
+  if (preferredSingular && String(preferredSingular.orgId || "").trim() && String(preferredSingular.reportId || "").trim()) {
+    const hit = list.find((item) => idsMatch(item, preferredSingular));
+    if (hit) return hit;
+  }
+
+  const hostRaw =
+    hostname ??
+    (typeof location !== "undefined" && location.hostname ? location.hostname : "");
+  const host = normalizeConnectorHost(hostRaw);
+  if (host) {
+    const byHost = list.find((item) =>
+      (item.connectorHosts || []).some((h) => normalizeConnectorHost(h) === host),
+    );
+    if (byHost) return byHost;
+  }
+
+  return list[0] || null;
+}
+
+/** True when access payload has at least one usable website registration (list or singular). */
+export function hasWebsiteRegistrationBinding(data: AccessRegistrationData | null | undefined): boolean {
+  if (!data) return false;
+  const list = listWebsiteRegistrations(data);
+  if (list.length > 0) return true;
+  const wr = data.websiteRegistration;
+  return Boolean(wr && String(wr.orgId || "").trim() && String(wr.reportId || "").trim());
 }
 
 function loadLocalDefaults(orgId: string, reportId: string): { sectionId: string; groupId: string } | null {
@@ -214,19 +338,25 @@ export async function probeEreportConnectorReady(opts?: {
     return fail("no_write", access.requestId);
   }
 
-  const wr = access.data.websiteRegistration;
-  const orgId = (opts?.orgId || wr?.orgId || "").trim();
-  const reportId = (opts?.reportId || wr?.reportId || "").trim();
+  const list = listWebsiteRegistrations(access.data);
+  const active = resolveActiveWebsiteRegistration(list, access.data.websiteRegistration);
+  const optsOrg = (opts?.orgId || "").trim();
+  const optsReport = (opts?.reportId || "").trim();
+  const orgId = optsOrg || (active?.orgId || "").trim();
+  const reportId = optsReport || (active?.reportId || "").trim();
   if (!orgId || !reportId) {
     return fail("no_binding", access.requestId);
   }
 
+  const fromList = list.find((item) => idsMatch(item, { orgId, reportId }));
+  const wr = fromList || active || access.data.websiteRegistration || undefined;
   const binding: WebsiteRegistrationBinding = {
     orgId,
     reportId,
     tema: wr?.tema,
     sectionId: wr?.sectionId,
     groupId: wr?.groupId,
+    connectorHosts: wr?.connectorHosts,
   };
 
   // 5. Report

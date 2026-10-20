@@ -3,6 +3,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 const probeEreportConnectorReady = vi.fn();
 const showErrorModal = vi.fn();
 const fetchOrgReport = vi.fn();
+const fetchEreportAccess = vi.fn();
+const patchReportSiteConnector = vi.fn();
 const getCsrf = vi.fn();
 const apiRequest = vi.fn();
 
@@ -22,7 +24,8 @@ vi.mock("./api", () => ({
 vi.mock("./ereport", () => ({
   EREPORT_API_TIMEOUT_MS: 15_000,
   fetchOrgReport: (...args: unknown[]) => fetchOrgReport(...args),
-  patchReportSiteConnector: vi.fn(),
+  fetchEreportAccess: (...args: unknown[]) => fetchEreportAccess(...args),
+  patchReportSiteConnector: (...args: unknown[]) => patchReportSiteConnector(...args),
 }));
 
 vi.mock("./ereport-connector-modal", () => ({
@@ -39,7 +42,9 @@ vi.mock("./dev-log", () => ({
 
 import {
   closeEreportQuickConnector,
+  getConnectorActiveOverride,
   openEreportQuickConnector,
+  setConnectorActiveOverride,
 } from "./ereport-quick-connector";
 
 const samplePayload = {
@@ -52,6 +57,52 @@ const samplePayload = {
   ],
 };
 
+function mockReadyOk(overrides?: {
+  orgId?: string;
+  reportId?: string;
+  tema?: string;
+  sectionId?: string;
+  groupId?: string;
+}) {
+  const orgId = overrides?.orgId || "org-1";
+  const reportId = overrides?.reportId || "rep-1";
+  const sectionId = overrides?.sectionId || "sec-1";
+  const groupId = overrides?.groupId || "grp-1";
+  probeEreportConnectorReady.mockResolvedValue({
+    ok: true,
+    binding: {
+      orgId,
+      reportId,
+      tema: overrides?.tema || "Site",
+      sectionId,
+      groupId,
+    },
+    report: {},
+    sectionId,
+    groupId,
+    ownerSafe: "owner_safe",
+  });
+}
+
+function mockReportLoad(metaExtra?: Record<string, unknown>) {
+  fetchOrgReport.mockResolvedValue({
+    status: 200,
+    requestId: "rep-load",
+    data: {
+      meta: {
+        id: "rep-1",
+        tema: "Site",
+        connectorSectionId: "sec-1",
+        connectorGroupId: "grp-1",
+        ownerSafe: "owner_safe",
+        connectorHosts: ["eduardoos.com"],
+        ...metaExtra,
+      },
+      payload: samplePayload,
+    },
+  });
+}
+
 describe("openEreportQuickConnector readiness gate", () => {
   beforeEach(() => {
     document.body.replaceChildren();
@@ -61,12 +112,20 @@ describe("openEreportQuickConnector readiness gate", () => {
     probeEreportConnectorReady.mockReset();
     showErrorModal.mockReset();
     fetchOrgReport.mockReset();
+    fetchEreportAccess.mockReset();
+    patchReportSiteConnector.mockReset().mockResolvedValue({
+      status: 200,
+      requestId: "patch-ok",
+      data: {},
+    });
     getCsrf.mockReset().mockResolvedValue("csrf");
     apiRequest.mockReset();
+    vi.spyOn(window, "alert").mockImplementation(() => undefined);
   });
 
   afterEach(() => {
     closeEreportQuickConnector();
+    vi.restoreAllMocks();
   });
 
   it("blocks open and shows error modal when probe fails (no overlay/compose)", async () => {
@@ -107,28 +166,27 @@ describe("openEreportQuickConnector readiness gate", () => {
     });
   });
 
-  it("mounts UI after probe ok and enables compose once reload confirms targets", async () => {
+  it("uses active override for probe when no binding is passed", async () => {
+    setConnectorActiveOverride("org-ov", "rep-ov");
     probeEreportConnectorReady.mockResolvedValue({
-      ok: true,
-      binding: { orgId: "org-1", reportId: "rep-1", tema: "Site", sectionId: "sec-1", groupId: "grp-1" },
-      report: {},
-      sectionId: "sec-1",
-      groupId: "grp-1",
-      ownerSafe: "owner_safe",
+      ok: false,
+      reason: "unauthorized",
+      message: "Sign in to use the eReport connector.",
+      requestId: "req-auth",
     });
-    fetchOrgReport.mockResolvedValue({
-      status: 200,
-      requestId: "rep-load",
-      data: {
-        meta: {
-          id: "rep-1",
-          connectorSectionId: "sec-1",
-          connectorGroupId: "grp-1",
-          ownerSafe: "owner_safe",
-        },
-        payload: samplePayload,
-      },
+
+    await openEreportQuickConnector();
+
+    expect(getConnectorActiveOverride()).toEqual({ orgId: "org-ov", reportId: "rep-ov" });
+    expect(probeEreportConnectorReady).toHaveBeenCalledWith({
+      orgId: "org-ov",
+      reportId: "rep-ov",
     });
+  });
+
+  it("mounts UI after probe ok and enables compose once reload confirms targets", async () => {
+    mockReadyOk();
+    mockReportLoad();
 
     await openEreportQuickConnector();
 
@@ -142,5 +200,108 @@ describe("openEreportQuickConnector readiness gate", () => {
     const status = overlay?.querySelector("[data-eq-status]");
     expect(status?.textContent).toBe("Ready to save.");
     expect(showErrorModal).not.toHaveBeenCalled();
+  });
+
+  it("settings modal lists websites and saves connectorHosts with section/group", async () => {
+    mockReadyOk();
+    mockReportLoad();
+    fetchEreportAccess.mockResolvedValue({
+      status: 200,
+      requestId: "access-ok",
+      data: {
+        canCreate: true,
+        websiteRegistration: {
+          orgId: "org-1",
+          reportId: "rep-1",
+          tema: "Site A",
+          connectorHosts: ["eduardoos.com"],
+        },
+        websiteRegistrations: [
+          {
+            orgId: "org-1",
+            reportId: "rep-1",
+            tema: "Site A",
+            connectorHosts: ["eduardoos.com"],
+          },
+          {
+            orgId: "org-2",
+            reportId: "rep-2",
+            tema: "Site B",
+            connectorHosts: ["other.example"],
+          },
+        ],
+      },
+    });
+
+    await openEreportQuickConnector();
+
+    const gear = document.querySelector("[data-eq-config]") as HTMLButtonElement;
+    gear.click();
+    await vi.waitFor(() => {
+      expect(document.getElementById("eduardoos-ereport-settings-overlay")).toBeTruthy();
+    });
+
+    const websiteSelect = document.querySelector("[data-eq-website]") as HTMLSelectElement;
+    const hostsInput = document.querySelector("[data-eq-hosts]") as HTMLInputElement;
+    const sectionSelect = document.querySelector("[data-eq-section]") as HTMLSelectElement;
+    const groupSelect = document.querySelector("[data-eq-group]") as HTMLSelectElement;
+    expect(websiteSelect).toBeTruthy();
+    expect([...websiteSelect.options].map((o) => o.value)).toEqual(
+      expect.arrayContaining(["org-1:rep-1", "org-2:rep-2"]),
+    );
+    expect(hostsInput.value).toContain("eduardoos.com");
+    expect(sectionSelect.value).toBe("sec-1");
+    expect(groupSelect.value).toBe("grp-1");
+
+    hostsInput.value = "eduardoos.com, www.eduardoos.com";
+    const saveBtn = document.querySelector("[data-eq-save-config]") as HTMLButtonElement;
+    saveBtn.click();
+
+    await vi.waitFor(() => {
+      expect(patchReportSiteConnector).toHaveBeenCalledWith("org-1", "rep-1", {
+        sectionId: "sec-1",
+        groupId: "grp-1",
+        assign: false,
+        connectorHosts: ["eduardoos.com", "www.eduardoos.com"],
+      });
+    });
+  });
+
+  it("switching website sets override and re-opens with new binding", async () => {
+    mockReadyOk();
+    mockReportLoad();
+    fetchEreportAccess.mockResolvedValue({
+      status: 200,
+      requestId: "access-ok",
+      data: {
+        canCreate: true,
+        websiteRegistrations: [
+          { orgId: "org-1", reportId: "rep-1", tema: "Site A" },
+          { orgId: "org-2", reportId: "rep-2", tema: "Site B" },
+        ],
+      },
+    });
+
+    await openEreportQuickConnector();
+
+    document.querySelector<HTMLButtonElement>("[data-eq-config]")?.click();
+    await vi.waitFor(() => {
+      expect(document.querySelector("[data-eq-website]")).toBeTruthy();
+    });
+
+    mockReadyOk({ orgId: "org-2", reportId: "rep-2", tema: "Site B" });
+    mockReportLoad({ id: "rep-2", tema: "Site B", connectorHosts: ["other.example"] });
+
+    const websiteSelect = document.querySelector("[data-eq-website]") as HTMLSelectElement;
+    websiteSelect.value = "org-2:rep-2";
+    websiteSelect.dispatchEvent(new Event("change", { bubbles: true }));
+
+    await vi.waitFor(() => {
+      expect(getConnectorActiveOverride()).toEqual({ orgId: "org-2", reportId: "rep-2" });
+      expect(probeEreportConnectorReady).toHaveBeenCalledWith({
+        orgId: "org-2",
+        reportId: "rep-2",
+      });
+    });
   });
 });

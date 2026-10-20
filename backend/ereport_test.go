@@ -39,6 +39,16 @@ func (a *App) doJSON(t *testing.T, email, method, path, body string) *httptest.R
 	return rec
 }
 
+func (a *App) doJSONWithOrigin(t *testing.T, email, method, path, body, origin string) *httptest.ResponseRecorder {
+	t.Helper()
+	req, rec := a.authedReq(t, email, method, path, body)
+	if origin != "" {
+		req.Header.Set("Origin", origin)
+	}
+	a.Handler().ServeHTTP(rec, req)
+	return rec
+}
+
 func decodeMap(t *testing.T, rec *httptest.ResponseRecorder) map[string]any {
 	t.Helper()
 	var out map[string]any
@@ -84,6 +94,9 @@ func TestEreportWebsiteRegistrationPurpose(t *testing.T) {
 	if accessBody["websiteRegistration"] != nil {
 		t.Fatalf("expected no website registration yet, got %#v", accessBody["websiteRegistration"])
 	}
+	if regs, _ := accessBody["websiteRegistrations"].([]any); len(regs) != 0 {
+		t.Fatalf("expected empty websiteRegistrations, got %#v", accessBody["websiteRegistrations"])
+	}
 
 	website := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs",
 		`{"name":"eduardoos","firstReportName":"Website issues","firstReportPurpose":"website_registration"}`)
@@ -96,6 +109,8 @@ func TestEreportWebsiteRegistrationPurpose(t *testing.T) {
 	if purpose := websiteReport["purpose"].(string); purpose != ereportPurposeWebsite {
 		t.Fatalf("expected website purpose, got %q", purpose)
 	}
+	prodOrgID := websiteOrg["id"].(string)
+	prodReportID := websiteReport["id"].(string)
 
 	access2 := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/access", "")
 	access2Body := decodeMap(t, access2)
@@ -103,8 +118,8 @@ func TestEreportWebsiteRegistrationPurpose(t *testing.T) {
 	if !ok {
 		t.Fatalf("expected websiteRegistration binding, got %#v", access2Body["websiteRegistration"])
 	}
-	if binding["orgId"] != websiteOrg["id"] || binding["reportId"] != websiteReport["id"] {
-		t.Fatalf("binding mismatch: %#v vs org=%v report=%v", binding, websiteOrg["id"], websiteReport["id"])
+	if binding["orgId"] != prodOrgID || binding["reportId"] != prodReportID {
+		t.Fatalf("binding mismatch: %#v vs org=%v report=%v", binding, prodOrgID, prodReportID)
 	}
 	wantSection, wantGroup := defaultWebsiteConnectorIDs()
 	if wantSection == "" || wantGroup == "" {
@@ -118,17 +133,67 @@ func TestEreportWebsiteRegistrationPurpose(t *testing.T) {
 		t.Fatalf("create response meta missing connector defaults: %#v", websiteReport)
 	}
 
+	// Multiple website_registration reports may coexist (no 409).
 	dup := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs",
 		`{"name":"OtherSite","firstReportName":"Also website","firstReportPurpose":"website_registration"}`)
-	if dup.Code != http.StatusConflict {
-		t.Fatalf("expected 409 duplicate website registration, got %d %s", dup.Code, dup.Body.String())
+	if dup.Code != http.StatusCreated {
+		t.Fatalf("expected second website org create, got %d %s", dup.Code, dup.Body.String())
 	}
+	dupBody := decodeMap(t, dup)
+	localOrgID := dupBody["org"].(map[string]any)["id"].(string)
+	localReportID := dupBody["report"].(map[string]any)["id"].(string)
 
 	orgID := otherBody["org"].(map[string]any)["id"].(string)
-	dupReport := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/reports",
+	third := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs/"+orgID+"/reports",
 		`{"tema":"Another website","purpose":"website_registration"}`)
-	if dupReport.Code != http.StatusConflict {
-		t.Fatalf("expected 409 on second website report, got %d %s", dupReport.Code, dupReport.Body.String())
+	if third.Code != http.StatusCreated {
+		t.Fatalf("expected third website report create, got %d %s", third.Code, third.Body.String())
+	}
+
+	accessMulti := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/access", "")
+	accessMultiBody := decodeMap(t, accessMulti)
+	regs, ok := accessMultiBody["websiteRegistrations"].([]any)
+	if !ok || len(regs) != 3 {
+		t.Fatalf("expected websiteRegistrations length 3, got %#v", accessMultiBody["websiteRegistrations"])
+	}
+
+	// Persist connectorHosts: prod → eduardoos.com, local → localhost.
+	patchProd := app.doJSON(t, "member@eduardoos.com", http.MethodPatch,
+		"/api/ereport/orgs/"+prodOrgID+"/reports/"+prodReportID+"/site-connector",
+		`{"assign":true,"sectionId":"`+wantSection+`","groupId":"`+wantGroup+`","connectorHosts":["eduardoos.com","www.eduardoos.com"]}`)
+	if patchProd.Code != http.StatusOK {
+		t.Fatalf("patch prod hosts: %d %s", patchProd.Code, patchProd.Body.String())
+	}
+	gotLocal := app.doJSON(t, "member@eduardoos.com", http.MethodGet,
+		"/api/ereport/orgs/"+localOrgID+"/reports/"+localReportID, "")
+	localPayload := decodeMap(t, gotLocal)["payload"].(map[string]any)
+	localSec := localPayload["sections"].([]any)[0].(map[string]any)
+	localSecID := localSec["id"].(string)
+	localGrpID := localSec["groups"].([]any)[0].(map[string]any)["id"].(string)
+	patchLocal := app.doJSON(t, "member@eduardoos.com", http.MethodPatch,
+		"/api/ereport/orgs/"+localOrgID+"/reports/"+localReportID+"/site-connector",
+		`{"assign":true,"sectionId":"`+localSecID+`","groupId":"`+localGrpID+`","connectorHosts":["localhost","127.0.0.1"]}`)
+	if patchLocal.Code != http.StatusOK {
+		t.Fatalf("patch local hosts: %d %s", patchLocal.Code, patchLocal.Body.String())
+	}
+
+	accessLocal := app.doJSONWithOrigin(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/access", "",
+		"http://localhost:4321")
+	localBinding := decodeMap(t, accessLocal)["websiteRegistration"].(map[string]any)
+	if localBinding["reportId"] != localReportID {
+		t.Fatalf("Origin localhost should match local report, got %#v", localBinding)
+	}
+
+	accessProd := app.doJSONWithOrigin(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/access", "",
+		"https://eduardoos.com")
+	accessProdBody := decodeMap(t, accessProd)
+	prodBinding := accessProdBody["websiteRegistration"].(map[string]any)
+	if prodBinding["reportId"] != prodReportID {
+		t.Fatalf("Origin eduardoos.com should match prod report, got %#v", prodBinding)
+	}
+	regs2, ok := accessProdBody["websiteRegistrations"].([]any)
+	if !ok || len(regs2) < 2 {
+		t.Fatalf("expected websiteRegistrations length >= 2, got %#v", accessProdBody["websiteRegistrations"])
 	}
 }
 
@@ -204,14 +269,20 @@ func TestEreportAssignSiteConnector(t *testing.T) {
 
 	prev := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/orgs/"+orgID+"/reports/"+reportID, "")
 	prevMeta := decodeMap(t, prev)["meta"].(map[string]any)
-	if prevMeta["purpose"] != ereportPurposeOther {
-		t.Fatalf("previous report should be demoted to other, got %#v", prevMeta["purpose"])
+	if prevMeta["purpose"] != ereportPurposeWebsite {
+		t.Fatalf("previous website report must stay website_registration (no demote), got %#v", prevMeta["purpose"])
 	}
 
 	access2 := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/ereport/access", "")
-	binding2 := decodeMap(t, access2)["websiteRegistration"].(map[string]any)
-	if binding2["reportId"] != otherID {
-		t.Fatalf("expected binding moved to %s, got %#v", otherID, binding2)
+	access2Body := decodeMap(t, access2)
+	regs, ok := access2Body["websiteRegistrations"].([]any)
+	if !ok || len(regs) != 2 {
+		t.Fatalf("expected 2 websiteRegistrations after second assign, got %#v", access2Body["websiteRegistrations"])
+	}
+	// Without connectorHosts match, active singular falls back to first listed.
+	binding2, ok := access2Body["websiteRegistration"].(map[string]any)
+	if !ok || binding2["reportId"] == "" {
+		t.Fatalf("expected active websiteRegistration, got %#v", access2Body["websiteRegistration"])
 	}
 
 	// Creating an item should set fechaIncidencia and reportDate.

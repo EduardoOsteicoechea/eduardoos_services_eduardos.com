@@ -1,6 +1,9 @@
 package main
 
 import (
+	"net"
+	"net/http"
+	"net/url"
 	"strings"
 	"time"
 )
@@ -45,29 +48,31 @@ type ereportLibrary struct {
 }
 
 type ereportMeta struct {
-	ID                 string `json:"id"`
-	Tema               string `json:"tema"`
-	ReportNumber       string `json:"reportNumber,omitempty"`
-	ReportDate         string `json:"reportDate,omitempty"`
-	Purpose            string `json:"purpose,omitempty"` // website_registration | other
-	ConnectorSectionID string `json:"connectorSectionId,omitempty"`
-	ConnectorGroupID   string `json:"connectorGroupId,omitempty"`
-	OrgID              string `json:"orgId"`
-	OwnerUserID        string `json:"ownerUserId"`
-	OwnerEmail         string `json:"ownerEmail,omitempty"`
-	OwnerSafe          string `json:"ownerSafe,omitempty"`
-	OwnerUsername      string `json:"ownerUsername,omitempty"`
-	CreatedAt          string `json:"createdAt"`
-	UpdatedAt          string `json:"updatedAt"`
+	ID                 string   `json:"id"`
+	Tema               string   `json:"tema"`
+	ReportNumber       string   `json:"reportNumber,omitempty"`
+	ReportDate         string   `json:"reportDate,omitempty"`
+	Purpose            string   `json:"purpose,omitempty"` // website_registration | other
+	ConnectorSectionID string   `json:"connectorSectionId,omitempty"`
+	ConnectorGroupID   string   `json:"connectorGroupId,omitempty"`
+	ConnectorHosts     []string `json:"connectorHosts,omitempty"`
+	OrgID              string   `json:"orgId"`
+	OwnerUserID        string   `json:"ownerUserId"`
+	OwnerEmail         string   `json:"ownerEmail,omitempty"`
+	OwnerSafe          string   `json:"ownerSafe,omitempty"`
+	OwnerUsername      string   `json:"ownerUsername,omitempty"`
+	CreatedAt          string   `json:"createdAt"`
+	UpdatedAt          string   `json:"updatedAt"`
 }
 
 // websiteRegistrationBinding is returned by GET /api/ereport/access.
 type websiteRegistrationBinding struct {
-	OrgID     string `json:"orgId"`
-	ReportID  string `json:"reportId"`
-	Tema      string `json:"tema"`
-	SectionID string `json:"sectionId,omitempty"`
-	GroupID   string `json:"groupId,omitempty"`
+	OrgID          string   `json:"orgId"`
+	ReportID       string   `json:"reportId"`
+	Tema           string   `json:"tema"`
+	SectionID      string   `json:"sectionId,omitempty"`
+	GroupID        string   `json:"groupId,omitempty"`
+	ConnectorHosts []string `json:"connectorHosts,omitempty"`
 }
 
 type ereportOrgCard struct {
@@ -322,10 +327,89 @@ func normalizeEreportPurpose(raw string) string {
 	}
 }
 
-func (a *App) findWebsiteRegistration(ownerUserID string) (websiteRegistrationBinding, bool) {
+func websiteRegistrationFromMeta(meta ereportMeta) websiteRegistrationBinding {
+	hosts := meta.ConnectorHosts
+	if hosts == nil {
+		hosts = []string{}
+	} else {
+		hosts = append([]string(nil), hosts...)
+	}
+	return websiteRegistrationBinding{
+		OrgID:          meta.OrgID,
+		ReportID:       meta.ID,
+		Tema:           meta.Tema,
+		SectionID:      strings.TrimSpace(meta.ConnectorSectionID),
+		GroupID:        strings.TrimSpace(meta.ConnectorGroupID),
+		ConnectorHosts: hosts,
+	}
+}
+
+// normalizeConnectorHost lowercases, strips port, and optionally strips a leading www.
+func normalizeConnectorHost(raw string) string {
+	h := strings.ToLower(strings.TrimSpace(raw))
+	if h == "" {
+		return ""
+	}
+	if i := strings.Index(h, "://"); i >= 0 {
+		h = h[i+3:]
+	}
+	if i := strings.IndexAny(h, "/?#"); i >= 0 {
+		h = h[:i]
+	}
+	if host, _, err := net.SplitHostPort(h); err == nil {
+		h = host
+	} else if strings.HasPrefix(h, "[") {
+		// IPv6 without port — leave as-is after bracket trim if present
+		h = strings.Trim(h, "[]")
+	}
+	h = strings.TrimPrefix(h, "www.")
+	return h
+}
+
+func normalizeConnectorHosts(hosts []string) []string {
+	if hosts == nil {
+		return nil
+	}
+	out := make([]string, 0, len(hosts))
+	seen := make(map[string]struct{}, len(hosts))
+	for _, raw := range hosts {
+		n := normalizeConnectorHost(raw)
+		if n == "" {
+			continue
+		}
+		if _, ok := seen[n]; ok {
+			continue
+		}
+		seen[n] = struct{}{}
+		out = append(out, n)
+	}
+	return out
+}
+
+func requestConnectorHost(r *http.Request) string {
+	if r == nil {
+		return ""
+	}
+	raw := strings.TrimSpace(r.Header.Get("Origin"))
+	if raw == "" {
+		raw = strings.TrimSpace(r.Header.Get("Referer"))
+	}
+	if raw == "" {
+		return ""
+	}
+	parsed, err := url.Parse(raw)
+	if err == nil && parsed.Host != "" {
+		return normalizeConnectorHost(parsed.Host)
+	}
+	return normalizeConnectorHost(raw)
+}
+
+// listWebsiteRegistrations returns every report with purpose website_registration.
+func (a *App) listWebsiteRegistrations(ownerUserID string) []websiteRegistrationBinding {
+	out := make([]websiteRegistrationBinding, 0)
 	idx, err := a.ereport.loadOrgsIndex(ownerUserID)
 	if err != nil {
-		return websiteRegistrationBinding{}, false
+		return out
 	}
 	for _, org := range idx.Orgs {
 		lib, libErr := a.ereport.loadOrgLibrary(ownerUserID, org.ID)
@@ -337,57 +421,34 @@ func (a *App) findWebsiteRegistration(ownerUserID string) (websiteRegistrationBi
 			if loadErr != nil {
 				continue
 			}
-			if normalizeEreportPurpose(meta.Purpose) == ereportPurposeWebsite {
-				return websiteRegistrationBinding{
-					OrgID:     org.ID,
-					ReportID:  meta.ID,
-					Tema:      meta.Tema,
-					SectionID: strings.TrimSpace(meta.ConnectorSectionID),
-					GroupID:   strings.TrimSpace(meta.ConnectorGroupID),
-				}, true
-			}
-		}
-	}
-	return websiteRegistrationBinding{}, false
-}
-
-// clearOtherWebsiteRegistrations demotes every website_registration report except keep.
-func (a *App) clearOtherWebsiteRegistrations(ownerUserID, keepOrgID, keepReportID string) {
-	idx, err := a.ereport.loadOrgsIndex(ownerUserID)
-	if err != nil {
-		return
-	}
-	now := nowRFC3339()
-	for _, org := range idx.Orgs {
-		lib, libErr := a.ereport.loadOrgLibrary(ownerUserID, org.ID)
-		if libErr != nil {
-			continue
-		}
-		libChanged := false
-		for i, card := range lib.Reports {
-			if org.ID == keepOrgID && card.ID == keepReportID {
-				continue
-			}
-			meta, payload, loadErr := a.ereport.loadReport(ownerUserID, org.ID, card.ID)
-			if loadErr != nil {
-				continue
-			}
 			if normalizeEreportPurpose(meta.Purpose) != ereportPurposeWebsite {
 				continue
 			}
-			meta.Purpose = ereportPurposeOther
-			meta.UpdatedAt = now
-			if saveErr := a.ereport.saveReport(ownerUserID, meta, payload); saveErr != nil {
-				continue
-			}
-			lib.Reports[i].Purpose = ereportPurposeOther
-			lib.Reports[i].UpdatedAt = now
-			libChanged = true
-		}
-		if libChanged {
-			_ = a.ereport.saveOrgLibrary(ownerUserID, org.ID, lib)
+			binding := websiteRegistrationFromMeta(meta)
+			binding.OrgID = org.ID
+			out = append(out, binding)
 		}
 	}
+	return out
+}
+
+// resolveActiveWebsiteRegistration picks the binding whose connectorHosts match
+// the request Origin/Referer host; otherwise the first list item; otherwise empty.
+func resolveActiveWebsiteRegistration(r *http.Request, list []websiteRegistrationBinding) websiteRegistrationBinding {
+	if len(list) == 0 {
+		return websiteRegistrationBinding{}
+	}
+	host := requestConnectorHost(r)
+	if host != "" {
+		for _, b := range list {
+			for _, ch := range b.ConnectorHosts {
+				if normalizeConnectorHost(ch) == host {
+					return b
+				}
+			}
+		}
+	}
+	return list[0]
 }
 
 func ereportTodayDate() string {

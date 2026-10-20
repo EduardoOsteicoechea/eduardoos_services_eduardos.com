@@ -13,6 +13,11 @@ import {
 import { startAgentChat } from "./chat";
 import { sessionLog, sessionLogStorage } from "./dev-log";
 import { exposeEreportConnectorGlobal, wireEreportConnectorMenu } from "./ereport-connector-modal";
+import {
+  hasWebsiteRegistrationBinding,
+  listWebsiteRegistrations,
+  resolveActiveWebsiteRegistration,
+} from "./ereport-connector-ready";
 import { fetchEreportAccess } from "./ereport";
 import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
@@ -414,7 +419,8 @@ let ereportConnectorBindingCache: { orgId: string; reportId: string } | null = n
 
 /**
  * Connector (menu + header bug_report) visibility is owned only here — never by syncSubscriptionNav.
- * Show when: authed + ereport-connector entitlement + websiteRegistration.orgId/reportId.
+ * Show when: authed + ereport-connector entitlement + (websiteRegistrations.length > 0 OR singular org+report).
+ * data-org-id / data-report-id use the same active resolution as Ready (override → singular → host → list[0]).
  * Do NOT hide solely because sectionId/groupId are empty — Ready/quick heal on open.
  * Hide on: guest, no entitlement, or hard /ereport/access failure (non-200 / throw).
  * If already visible with a cached binding, keep showing while re-fetching (no flicker).
@@ -446,6 +452,7 @@ async function syncEreportConnectorGate(authed: boolean, isAdmin = false): Promi
     }
   }
   let binding: { orgId: string; reportId: string } | null = null;
+  let hasRegistration = false;
   let accessHardFail = false;
   if (entitled) {
     try {
@@ -454,35 +461,49 @@ async function syncEreportConnectorGate(authed: boolean, isAdmin = false): Promi
         // Hard access failure — hide; empty section/group alone is not a hard fail.
         accessHardFail = true;
       } else {
-        const wr = data.websiteRegistration;
-        const orgId = (wr?.orgId || "").trim();
-        const reportId = (wr?.reportId || "").trim();
+        hasRegistration = hasWebsiteRegistrationBinding(data);
+        const list = listWebsiteRegistrations(data);
+        const active = resolveActiveWebsiteRegistration(list, data.websiteRegistration);
         // org/report only — sectionId/groupId optional (quick/ready heal).
-        if (orgId && reportId) {
-          binding = { orgId, reportId };
+        if (active?.orgId && active?.reportId) {
+          binding = { orgId: String(active.orgId).trim(), reportId: String(active.reportId).trim() };
+        } else {
+          const wr = data.websiteRegistration;
+          const orgId = (wr?.orgId || "").trim();
+          const reportId = (wr?.reportId || "").trim();
+          if (orgId && reportId) {
+            binding = { orgId, reportId };
+          }
         }
       }
     } catch {
       accessHardFail = true;
       binding = null;
+      hasRegistration = false;
     }
   }
   if (gen !== ereportConnectorGateGen) return;
-  const show = entitled && Boolean(binding) && !accessHardFail;
-  ereportConnectorBindingCache = show ? binding : null;
+  const show = entitled && hasRegistration && !accessHardFail;
+  ereportConnectorBindingCache = show && binding ? binding : null;
   for (const node of nodes) {
-    if (!show || !binding) {
+    if (!show) {
       node.hidden = true;
       node.removeAttribute("data-org-id");
       node.removeAttribute("data-report-id");
       continue;
     }
     node.hidden = false;
-    node.setAttribute("data-org-id", binding.orgId);
-    node.setAttribute("data-report-id", binding.reportId);
+    if (binding) {
+      node.setAttribute("data-org-id", binding.orgId);
+      node.setAttribute("data-report-id", binding.reportId);
+    } else {
+      node.removeAttribute("data-org-id");
+      node.removeAttribute("data-report-id");
+    }
   }
   sessionLog("chrome.ereportConnectorGate", {
     binding: Boolean(binding),
+    hasRegistration,
     entitled,
     accessHardFail,
     count: nodes.length,

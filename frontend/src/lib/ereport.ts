@@ -31,6 +31,7 @@ export type WebsiteRegistrationBinding = {
   tema?: string;
   sectionId?: string;
   groupId?: string;
+  connectorHosts?: string[];
 };
 
 export type ReportCard = {
@@ -56,6 +57,7 @@ export type EreportMeta = {
   purpose?: EreportPurpose | string;
   connectorSectionId?: string;
   connectorGroupId?: string;
+  connectorHosts?: string[];
   orgId: string;
   ownerUserId?: string;
   ownerEmail?: string;
@@ -105,6 +107,7 @@ export function fetchEreportAccess() {
     ownerEmail?: string;
     ownerUserId?: string;
     websiteRegistration?: WebsiteRegistrationBinding | null;
+    websiteRegistrations?: WebsiteRegistrationBinding[] | null;
   }>("/ereport/access");
 }
 
@@ -167,7 +170,7 @@ export function deleteOrgReport(orgId: string, reportId: string) {
 export function patchReportSiteConnector(
   orgId: string,
   reportId: string,
-  body: { sectionId: string; groupId: string; assign?: boolean },
+  body: { sectionId: string; groupId: string; assign?: boolean; connectorHosts?: string[] },
 ) {
   return apiRequest<{ meta?: EreportMeta; websiteRegistration?: WebsiteRegistrationBinding }>(
     `/ereport/orgs/${orgId}/reports/${reportId}/site-connector`,

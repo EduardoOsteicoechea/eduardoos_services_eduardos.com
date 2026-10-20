@@ -3,6 +3,7 @@ import { mustLog } from "./dev-log";
 import { showErrorModal } from "./error-modal";
 import {
   EREPORT_API_TIMEOUT_MS,
+  fetchEreportAccess,
   fetchOrgReport,
   patchReportSiteConnector,
   type WebsiteRegistrationBinding,
@@ -14,13 +15,93 @@ import {
   openEreportIssueCardModal,
   openEreportWorkspaceIssue,
 } from "./ereport-connector-modal";
+import * as ereportReady from "./ereport-connector-ready";
 import { probeEreportConnectorReady } from "./ereport-connector-ready";
 import { parseIssueText } from "./ereport-issue-parse";
 
 const OVERLAY_ID = "eduardoos-ereport-quick-overlay";
 const SETTINGS_ID = "eduardoos-ereport-settings-overlay";
 const DEFAULTS_KEY = "ereport.connector.defaults";
+const ACTIVE_KEY_PREFIX = "ereport.connector.active.";
 const LOG_PREFIX = "[ereport-quick]";
+
+type ActiveOverride = { orgId: string; reportId: string };
+
+type ReadyOverrideApi = {
+  setConnectorActiveOverride?: (orgId: string, reportId: string) => void;
+  getConnectorActiveOverride?: () => ActiveOverride | null;
+};
+
+function activeStorageKey(): string {
+  try {
+    return `${ACTIVE_KEY_PREFIX}${location.hostname}`;
+  } catch {
+    return `${ACTIVE_KEY_PREFIX}default`;
+  }
+}
+
+function readyOverrideFn<K extends keyof ReadyOverrideApi>(name: K): ReadyOverrideApi[K] | undefined {
+  // hasOwnProperty avoids Vitest's mock trap for missing named exports.
+  if (!Object.prototype.hasOwnProperty.call(ereportReady, name)) return undefined;
+  const fn = (ereportReady as ReadyOverrideApi)[name];
+  return typeof fn === "function" ? fn : undefined;
+}
+
+/** Prefer ready-module helpers when exported; else localStorage per hostname. */
+export function setConnectorActiveOverride(orgId: string, reportId: string): void {
+  const readySet = readyOverrideFn("setConnectorActiveOverride");
+  if (readySet) {
+    readySet(orgId, reportId);
+    return;
+  }
+  try {
+    localStorage.setItem(activeStorageKey(), JSON.stringify({ orgId, reportId }));
+  } catch {
+    /* ignore quota / private mode */
+  }
+}
+
+export function getConnectorActiveOverride(): ActiveOverride | null {
+  const readyGet = readyOverrideFn("getConnectorActiveOverride");
+  if (readyGet) {
+    return readyGet();
+  }
+  try {
+    const raw = localStorage.getItem(activeStorageKey());
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as ActiveOverride;
+    const orgId = String(parsed?.orgId || "").trim();
+    const reportId = String(parsed?.reportId || "").trim();
+    if (!orgId || !reportId) return null;
+    return { orgId, reportId };
+  } catch {
+    return null;
+  }
+}
+
+function parseConnectorHosts(raw: string): string[] {
+  return raw
+    .split(/[,;\n]+/)
+    .map((h) => h.trim())
+    .filter(Boolean);
+}
+
+function formatConnectorHosts(hosts: string[] | undefined | null): string {
+  return (hosts || []).map((h) => String(h || "").trim()).filter(Boolean).join(", ");
+}
+
+function websiteOptionValue(b: WebsiteRegistrationBinding): string {
+  return `${b.orgId}:${b.reportId}`;
+}
+
+function parseWebsiteOptionValue(value: string): ActiveOverride | null {
+  const idx = value.indexOf(":");
+  if (idx <= 0) return null;
+  const orgId = value.slice(0, idx).trim();
+  const reportId = value.slice(idx + 1).trim();
+  if (!orgId || !reportId) return null;
+  return { orgId, reportId };
+}
 
 export type ConnectorDefaults = {
   orgId: string;
@@ -230,7 +311,10 @@ function openSettingsModal(opts: {
   binding: WebsiteRegistrationBinding;
   payload: ReportPayload | null;
   defaults: ConnectorDefaults;
-  onSaved: (next: ConnectorDefaults) => void;
+  registrations: WebsiteRegistrationBinding[];
+  connectorHosts: string[];
+  onSaved: (next: ConnectorDefaults, hosts: string[]) => void;
+  onWebsiteChange: (next: WebsiteRegistrationBinding) => void;
   onAdvanced: () => void;
 }) {
   closeEreportSettingsModal();
@@ -253,10 +337,12 @@ function openSettingsModal(opts: {
     </header>
     <div class="ereport-settings-overlay__body">
       <label>
-        Report
-        <select data-eq-report disabled>
-          <option value="${opts.binding.orgId}:${opts.binding.reportId}">${opts.binding.tema || "Website registration"}</option>
-        </select>
+        Website
+        <select data-eq-website></select>
+      </label>
+      <label>
+        Hosts
+        <input type="text" data-eq-hosts placeholder="example.com, www.example.com" autocomplete="off" />
       </label>
       <label>
         Main section
@@ -276,9 +362,35 @@ function openSettingsModal(opts: {
   overlay.append(frame);
   document.body.append(overlay);
 
+  const websiteSelect = el<HTMLSelectElement>(frame, "[data-eq-website]")!;
+  const hostsInput = el<HTMLInputElement>(frame, "[data-eq-hosts]")!;
   const sectionSelect = el<HTMLSelectElement>(frame, "[data-eq-section]")!;
   const groupSelect = el<HTMLSelectElement>(frame, "[data-eq-group]")!;
   const saveBtn = el<HTMLButtonElement>(frame, "[data-eq-save-config]")!;
+
+  const registrations = [...opts.registrations];
+  const currentKey = websiteOptionValue(opts.binding);
+  if (!registrations.some((r) => websiteOptionValue(r) === currentKey)) {
+    registrations.unshift({
+      orgId: opts.binding.orgId,
+      reportId: opts.binding.reportId,
+      ...(opts.binding.tema ? { tema: opts.binding.tema } : {}),
+      ...(opts.binding.sectionId ? { sectionId: opts.binding.sectionId } : {}),
+      ...(opts.binding.groupId ? { groupId: opts.binding.groupId } : {}),
+      ...(opts.binding.connectorHosts ? { connectorHosts: opts.binding.connectorHosts } : {}),
+    });
+  }
+
+  fillSelect(
+    websiteSelect,
+    registrations.map((r) => ({
+      value: websiteOptionValue(r),
+      label: (r.tema || "").trim() || r.reportId,
+    })),
+    registrations.length ? "Select website…" : "No websites…",
+  );
+  websiteSelect.value = currentKey;
+  hostsInput.value = formatConnectorHosts(opts.connectorHosts);
 
   function populateConfigSelects() {
     const sections = opts.payload?.sections || [];
@@ -304,6 +416,18 @@ function openSettingsModal(opts: {
     if (ev.target === overlay) closeEreportSettingsModal();
   });
 
+  websiteSelect.addEventListener("change", () => {
+    const parsed = parseWebsiteOptionValue(websiteSelect.value);
+    if (!parsed) return;
+    if (parsed.orgId === opts.binding.orgId && parsed.reportId === opts.binding.reportId) return;
+    const next =
+      registrations.find(
+        (r) => r.orgId === parsed.orgId && r.reportId === parsed.reportId,
+      ) || ({ orgId: parsed.orgId, reportId: parsed.reportId } as WebsiteRegistrationBinding);
+    setConnectorActiveOverride(parsed.orgId, parsed.reportId);
+    opts.onWebsiteChange(next);
+  });
+
   sectionSelect.addEventListener("change", () => {
     const sec = (opts.payload?.sections || []).find((s) => s.id === sectionSelect.value);
     fillSelect(
@@ -319,6 +443,7 @@ function openSettingsModal(opts: {
       window.alert("Select a main section and subsection.");
       return;
     }
+    const hosts = parseConnectorHosts(hostsInput.value);
     const next: ConnectorDefaults = {
       orgId: opts.binding.orgId,
       reportId: opts.binding.reportId,
@@ -326,7 +451,7 @@ function openSettingsModal(opts: {
       groupId: groupSelect.value,
     };
     saveDefaultsLocal(next);
-    opts.onSaved(next);
+    opts.onSaved(next, hosts);
     saveBtn.disabled = true;
     void enqueueWrite(async () => {
       try {
@@ -334,6 +459,7 @@ function openSettingsModal(opts: {
           sectionId: next.sectionId,
           groupId: next.groupId,
           assign: false,
+          connectorHosts: hosts,
         });
         saveBtn.disabled = false;
         if (status !== 200) {
@@ -361,7 +487,7 @@ function openSettingsModal(opts: {
     opts.onAdvanced();
   });
 
-  sectionSelect.focus();
+  websiteSelect.focus();
 }
 
 export async function openEreportQuickConnector(opts?: {
@@ -370,10 +496,13 @@ export async function openEreportQuickConnector(opts?: {
   closeEreportQuickConnector();
   document.dispatchEvent(new CustomEvent("eos:close-trays"));
 
+  const activeOverride = getConnectorActiveOverride();
   const probeOpts =
     opts?.binding?.orgId && opts?.binding?.reportId
       ? { orgId: opts.binding.orgId, reportId: opts.binding.reportId }
-      : undefined;
+      : activeOverride?.orgId && activeOverride?.reportId
+        ? { orgId: activeOverride.orgId, reportId: activeOverride.reportId }
+        : undefined;
   const ready = await probeEreportConnectorReady(probeOpts);
   if (!ready.ok) {
     if (mustLog) {
@@ -390,14 +519,27 @@ export async function openEreportQuickConnector(opts?: {
     return;
   }
 
-  const binding: WebsiteRegistrationBinding = {
+  let binding: WebsiteRegistrationBinding = {
     orgId: ready.binding.orgId,
     reportId: ready.binding.reportId,
-    ...(ready.binding.tema ? { tema: ready.binding.tema } : {}),
-    ...(ready.binding.sectionId ? { sectionId: ready.binding.sectionId } : {}),
-    ...(ready.binding.groupId ? { groupId: ready.binding.groupId } : {}),
+    ...(opts?.binding?.tema || ready.binding.tema
+      ? { tema: opts?.binding?.tema || ready.binding.tema }
+      : {}),
+    ...(ready.binding.sectionId || opts?.binding?.sectionId
+      ? { sectionId: ready.binding.sectionId || opts?.binding?.sectionId }
+      : {}),
+    ...(ready.binding.groupId || opts?.binding?.groupId
+      ? { groupId: ready.binding.groupId || opts?.binding?.groupId }
+      : {}),
+    ...(opts?.binding?.connectorHosts
+      ? { connectorHosts: opts.binding.connectorHosts }
+      : {}),
   };
   let ownerSafe = (ready.ownerSafe || "").trim();
+  let websiteRegistrations: WebsiteRegistrationBinding[] = [];
+  let connectorHosts: string[] = Array.isArray(opts?.binding?.connectorHosts)
+    ? [...opts.binding.connectorHosts]
+    : [];
 
   if (mustLog) {
     console.log(LOG_PREFIX, "ready", {
@@ -406,6 +548,7 @@ export async function openEreportQuickConnector(opts?: {
       sectionId: ready.sectionId,
       groupId: ready.groupId,
       ownerSafe,
+      probeOpts,
     });
   }
 
@@ -607,27 +750,68 @@ export async function openEreportQuickConnector(opts?: {
     ].join(" · ");
   }
 
+  async function loadWebsiteRegistrations(): Promise<WebsiteRegistrationBinding[]> {
+    if (websiteRegistrations.length > 0) return websiteRegistrations;
+    try {
+      const access = await fetchEreportAccess();
+      if (access.status !== 200) return websiteRegistrations;
+      const list = Array.isArray(access.data.websiteRegistrations)
+        ? access.data.websiteRegistrations.filter((r) => r?.orgId && r?.reportId)
+        : [];
+      const primary = access.data.websiteRegistration;
+      const merged: WebsiteRegistrationBinding[] = [...list];
+      if (primary?.orgId && primary?.reportId) {
+        const key = websiteOptionValue(primary);
+        if (!merged.some((r) => websiteOptionValue(r) === key)) merged.unshift(primary);
+      }
+      websiteRegistrations = merged;
+      const match = merged.find(
+        (r) => r.orgId === binding.orgId && r.reportId === binding.reportId,
+      );
+      if (match) {
+        if (match.tema) binding = { ...binding, tema: match.tema };
+        if (Array.isArray(match.connectorHosts) && connectorHosts.length === 0) {
+          connectorHosts = [...match.connectorHosts];
+          binding = { ...binding, connectorHosts };
+        }
+      }
+    } catch {
+      /* keep prior list */
+    }
+    return websiteRegistrations;
+  }
+
   function openSettings() {
-    openSettingsModal({
-      binding,
-      payload,
-      defaults,
-      onSaved: (next) => {
-        defaults = next;
-        syncContext();
-        renderList();
-        setComposeEnabled(Boolean(next.sectionId && next.groupId));
-        setStatus(next.sectionId && next.groupId ? readyToSaveStatus() : "Defaults saved.");
-      },
-      onAdvanced: () => {
-        closeEreportQuickConnector();
-        openEreportAdvancedConnectorModal({
-          orgId: binding.orgId,
-          reportId: binding.reportId,
-          label: "eReport connector",
-        });
-      },
-    });
+    void (async () => {
+      const registrations = await loadWebsiteRegistrations();
+      openSettingsModal({
+        binding,
+        payload,
+        defaults,
+        registrations,
+        connectorHosts,
+        onSaved: (next, hosts) => {
+          defaults = next;
+          connectorHosts = hosts;
+          binding = { ...binding, connectorHosts: hosts };
+          syncContext();
+          renderList();
+          setComposeEnabled(Boolean(next.sectionId && next.groupId));
+          setStatus(next.sectionId && next.groupId ? readyToSaveStatus() : "Defaults saved.");
+        },
+        onWebsiteChange: (next) => {
+          void openEreportQuickConnector({ binding: next });
+        },
+        onAdvanced: () => {
+          closeEreportQuickConnector();
+          openEreportAdvancedConnectorModal({
+            orgId: binding.orgId,
+            reportId: binding.reportId,
+            label: "eReport connector",
+          });
+        },
+      });
+    })();
   }
 
   async function reloadReport() {
@@ -645,8 +829,13 @@ export async function openEreportQuickConnector(opts?: {
     payload = (data.payload as ReportPayload) || { sections: [] };
     const meta = data.meta;
     if (meta?.ownerSafe) ownerSafe = String(meta.ownerSafe).trim() || ownerSafe;
+    if (meta?.tema) binding = { ...binding, tema: String(meta.tema) };
     if (meta?.connectorSectionId) defaults.sectionId = String(meta.connectorSectionId);
     if (meta?.connectorGroupId) defaults.groupId = String(meta.connectorGroupId);
+    if (Array.isArray(meta?.connectorHosts)) {
+      connectorHosts = meta.connectorHosts.map((h) => String(h || "").trim()).filter(Boolean);
+      binding = { ...binding, connectorHosts };
+    }
     if (binding.sectionId && !defaults.sectionId) defaults.sectionId = binding.sectionId;
     if (binding.groupId && !defaults.groupId) defaults.groupId = binding.groupId;
     if (ready.sectionId && !defaults.sectionId) defaults.sectionId = ready.sectionId;

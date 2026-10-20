@@ -313,18 +313,18 @@ import Layout from "../../layouts/Layout.astro";
       <div data-view="manage-reports">
         <button class="btn" type="button" data-hub-back>Back to dashboard</button>
         <h2 class="product-dash__section-title">Manage reports</h2>
-        <p class="hint">Open, assign to site connector, snapshot history, or delete permanently.</p>
+        <p class="hint">Open, add as website registration, edit connector defaults, snapshot history, or delete permanently. Multiple website registration reports are allowed.</p>
         <ul class="ereport-list" data-manage-reports-list></ul>
         <dialog class="ereport-assign-dialog" data-assign-dialog>
           <form method="dialog" class="ereport-assign-dialog__form" data-assign-form>
             <header class="ereport-assign-dialog__bar">
-              <h2 class="ereport-assign-dialog__title">Assign report to site</h2>
+              <h2 class="ereport-assign-dialog__title" data-assign-title>Add as website registration</h2>
               <button type="submit" class="icon-btn" value="cancel" aria-label="Close" title="Close">
                 <span class="material-symbols-outlined" aria-hidden="true">close</span>
               </button>
             </header>
             <p class="hint" data-assign-report-name></p>
-            <p class="hint">Sets this report as the website registration binding and default section/subsection for the Connector.</p>
+            <p class="hint" data-assign-hint>Adds this report as a website registration (does not demote others) and sets Connector section/subsection defaults.</p>
             <label>
               Main section
               <select name="sectionId" data-assign-section required></select>
@@ -333,9 +333,19 @@ import Layout from "../../layouts/Layout.astro";
               Subsection
               <select name="groupId" data-assign-group required></select>
             </label>
+            <label>
+              Connector hosts (comma-separated)
+              <input
+                name="connectorHosts"
+                type="text"
+                data-assign-hosts
+                placeholder="eduardoos.com, www.eduardoos.com"
+                autocomplete="off"
+              />
+            </label>
             <p class="status" data-assign-status hidden></p>
             <div class="ereport-hub__row">
-              <button class="btn btn--primary" type="button" data-assign-save>Assign to site</button>
+              <button class="btn btn--primary" type="button" data-assign-save>Add as website registration</button>
               <button class="btn" type="submit" value="cancel">Cancel</button>
             </div>
           </form>
@@ -386,6 +396,7 @@ import Layout from "../../layouts/Layout.astro";
     type OrgCard,
     type RecentReportCard,
     type ReportCard,
+    type WebsiteRegistrationBinding,
   } from "../../lib/ereport";
   import { showErrorModal } from "../../lib/error-modal";
   import { requireService, setHidden } from "../../lib/productGate";
@@ -401,11 +412,32 @@ import Layout from "../../layouts/Layout.astro";
     let recent: RecentReportCard[] = [];
     let allReports: RecentReportCard[] = [];
     let sharedReports: EreportSharedCard[] = [];
+    let websiteRegistrations: WebsiteRegistrationBinding[] = [];
     let historyOrgId = "";
     let historyReportId = "";
     let activeOrgId = "";
     let reports: ReportCard[] = [];
     let importOrgId = "";
+
+    const parseConnectorHosts = (raw: string): string[] =>
+      raw
+        .split(/[,;\n]+/)
+        .map((h) => h.trim())
+        .filter(Boolean);
+
+    const formatConnectorHosts = (hosts: string[] | undefined | null): string =>
+      (hosts || []).map((h) => String(h || "").trim()).filter(Boolean).join(", ");
+
+    const hostsForReport = (orgId: string, reportId: string): string[] => {
+      const binding = websiteRegistrations.find((b) => b.orgId === orgId && b.reportId === reportId);
+      return binding?.connectorHosts || [];
+    };
+
+    const websiteRegistrationHint = (orgId: string, reportId: string, purpose?: string): string => {
+      if (purpose !== "website_registration") return "";
+      const hosts = formatConnectorHosts(hostsForReport(orgId, reportId));
+      return hosts ? `Website registration · ${hosts}` : "Website registration";
+    };
 
     const fail = (status: number, data: { message?: string; request_id?: string; error?: string; debug?: string }, success: string) =>
       reportFailure(copy, status, data, success);
@@ -759,20 +791,25 @@ import Layout from "../../layouts/Layout.astro";
         a.href = workspaceHref(report.orgId, report.id, ownerSafe);
         a.dataset.route = "";
         a.textContent = report.tema || report.id;
+        const isWebsite = report.purpose === "website_registration";
+        const badgeText = websiteRegistrationHint(report.orgId, report.id, report.purpose);
         const meta = document.createElement("span");
         meta.className = "hint";
-        meta.textContent = `${report.orgName || report.orgId} · ${formatReportDate(report.updatedAt)}`;
+        meta.textContent = badgeText
+          ? `${report.orgName || report.orgId} · ${formatReportDate(report.updatedAt)} · ${badgeText}`
+          : `${report.orgName || report.orgId} · ${formatReportDate(report.updatedAt)}`;
         const assign = document.createElement("button");
         assign.type = "button";
         assign.className = "btn";
-        assign.textContent = report.purpose === "website_registration" ? "Site defaults" : "Assign to site";
+        assign.textContent = isWebsite ? "Website registration defaults" : "Add as website registration";
         assign.dataset.assignOrg = report.orgId;
         assign.dataset.assignReport = report.id;
         assign.dataset.reportName = report.tema || report.id;
-        if (report.purpose === "website_registration") {
-          assign.title = "Update default section and subsection for the site Connector";
+        assign.dataset.reportPurpose = report.purpose || "other";
+        if (isWebsite) {
+          assign.title = "Update hosts and default section/subsection for this website registration";
         } else {
-          assign.title = "Make this the website registration report and set Connector defaults";
+          assign.title = "Add as website registration (keeps existing ones) and set Connector defaults";
         }
         const hist = document.createElement("button");
         hist.type = "button";
@@ -802,6 +839,10 @@ import Layout from "../../layouts/Layout.astro";
         loading.textContent = "Loading reports…";
         list.append(loading);
       }
+      const access = await fetchEreportAccess();
+      if (access.status === 200) {
+        websiteRegistrations = access.data.websiteRegistrations || [];
+      }
       await loadAllReports();
       paintManageReports();
       paintCounts();
@@ -810,7 +851,23 @@ import Layout from "../../layouts/Layout.astro";
     type AssignSection = { id: string; title?: string; groups?: Array<{ id: string; title?: string }> };
     let assignOrgId = "";
     let assignReportId = "";
+    let assignIsWebsite = false;
     let assignPayloadSections: AssignSection[] = [];
+
+    const syncAssignDialogLabels = (isWebsite: boolean) => {
+      assignIsWebsite = isWebsite;
+      const title = isWebsite ? "Website registration defaults" : "Add as website registration";
+      const titleEl = root.querySelector("[data-assign-title]");
+      if (titleEl instanceof HTMLElement) titleEl.textContent = title;
+      const saveBtn = root.querySelector("[data-assign-save]");
+      if (saveBtn instanceof HTMLButtonElement) saveBtn.textContent = title;
+      const hintEl = root.querySelector("[data-assign-hint]");
+      if (hintEl instanceof HTMLElement) {
+        hintEl.textContent = isWebsite
+          ? "Update connector hosts and default section/subsection for this website registration."
+          : "Adds this report as a website registration (does not demote others) and sets Connector section/subsection defaults.";
+      }
+    };
 
     const fillAssignGroupSelect = (sectionId: string, preferredGroupId = "") => {
       const groupSelect = root.querySelector("[data-assign-group]");
@@ -836,13 +893,22 @@ import Layout from "../../layouts/Layout.astro";
         : groups[0]?.id || "";
     };
 
-    const openAssignDialog = async (orgId: string, reportId: string, reportName: string) => {
+    const openAssignDialog = async (orgId: string, reportId: string, reportName: string, purpose = "") => {
       const dialog = root.querySelector("[data-assign-dialog]");
       if (!(dialog instanceof HTMLDialogElement)) return;
       assignOrgId = orgId;
       assignReportId = reportId;
+      const knownPurpose =
+        purpose ||
+        allReports.find((r) => r.orgId === orgId && r.id === reportId)?.purpose ||
+        "";
+      syncAssignDialogLabels(knownPurpose === "website_registration");
       const nameEl = root.querySelector("[data-assign-report-name]");
       if (nameEl instanceof HTMLElement) nameEl.textContent = reportName;
+      const hostsInput = root.querySelector("[data-assign-hosts]");
+      if (hostsInput instanceof HTMLInputElement) {
+        hostsInput.value = formatConnectorHosts(hostsForReport(orgId, reportId));
+      }
       const statusEl = root.querySelector("[data-assign-status]");
       if (statusEl instanceof HTMLElement) {
         statusEl.hidden = false;
@@ -864,6 +930,13 @@ import Layout from "../../layouts/Layout.astro";
       const sections = ((res.data.payload as { sections?: AssignSection[] } | undefined)?.sections || []) as AssignSection[];
       assignPayloadSections = sections;
       const meta = res.data.meta;
+      const isWebsite = meta?.purpose === "website_registration" || assignIsWebsite;
+      syncAssignDialogLabels(isWebsite);
+      if (hostsInput instanceof HTMLInputElement) {
+        const fromMeta = formatConnectorHosts(meta?.connectorHosts);
+        const fromAccess = formatConnectorHosts(hostsForReport(orgId, reportId));
+        hostsInput.value = fromMeta || fromAccess;
+      }
       if (!(sectionSelect instanceof HTMLSelectElement)) return;
       sectionSelect.replaceChildren();
       if (sections.length === 0) {
@@ -906,6 +979,14 @@ import Layout from "../../layouts/Layout.astro";
         a.href = workspaceHref(activeOrgId, report.id, ownerSafe);
         a.dataset.route = "";
         a.textContent = report.tema || report.id;
+        li.append(a);
+        const badgeText = websiteRegistrationHint(activeOrgId, report.id, report.purpose);
+        if (badgeText) {
+          const badge = document.createElement("span");
+          badge.className = "hint ereport-hub__purpose-badge";
+          badge.textContent = badgeText;
+          li.append(badge);
+        }
         const invite = document.createElement("button");
         invite.type = "button";
         invite.className = "btn";
@@ -919,7 +1000,7 @@ import Layout from "../../layouts/Layout.astro";
         del.dataset.deleteReport = report.id;
         del.dataset.deleteReportOrg = activeOrgId;
         del.dataset.reportName = report.tema || report.id;
-        li.append(a, invite, del);
+        li.append(invite, del);
         list.append(li);
       }
     };
@@ -959,6 +1040,7 @@ import Layout from "../../layouts/Layout.astro";
       const access = await fetchEreportAccess();
       canCreate = Boolean(access.status === 200 && access.data.canCreate);
       ownerSafe = access.data.ownerSafe || "";
+      websiteRegistrations = access.status === 200 ? access.data.websiteRegistrations || [] : [];
       const hint = root.querySelector("[data-create-hint]");
       if (hint instanceof HTMLElement) hint.hidden = canCreate;
       root.querySelectorAll("[data-needs-create]").forEach((node) => {
@@ -1198,6 +1280,7 @@ import Layout from "../../layouts/Layout.astro";
           assignBtn.dataset.assignOrg,
           assignBtn.dataset.assignReport,
           assignBtn.dataset.reportName || assignBtn.dataset.assignReport,
+          assignBtn.dataset.reportPurpose || "",
         );
         return;
       }
@@ -1445,9 +1528,12 @@ import Layout from "../../layouts/Layout.astro";
         if (!assignOrgId || !assignReportId) return;
         const sectionSelect = root.querySelector("[data-assign-section]");
         const groupSelect = root.querySelector("[data-assign-group]");
+        const hostsInput = root.querySelector("[data-assign-hosts]");
         const statusEl = root.querySelector("[data-assign-status]");
         const sectionId = sectionSelect instanceof HTMLSelectElement ? sectionSelect.value : "";
         const groupId = groupSelect instanceof HTMLSelectElement ? groupSelect.value : "";
+        const connectorHosts =
+          hostsInput instanceof HTMLInputElement ? parseConnectorHosts(hostsInput.value) : [];
         if (!sectionId || !groupId) {
           if (statusEl instanceof HTMLElement) {
             statusEl.hidden = false;
@@ -1465,14 +1551,15 @@ import Layout from "../../layouts/Layout.astro";
           sectionId,
           groupId,
           assign: true,
+          connectorHosts,
         });
         if (saveBtn instanceof HTMLButtonElement) saveBtn.disabled = false;
         if (res.status !== 200) {
           if (statusEl instanceof HTMLElement) {
-            statusEl.textContent = res.data.message || "Could not assign report.";
+            statusEl.textContent = res.data.message || "Could not save website registration.";
           }
           showErrorModal({
-            message: String(res.data.message || "Could not assign report."),
+            message: String(res.data.message || "Could not save website registration."),
             requestId: String(res.data.request_id || res.requestId || ""),
             details: String(res.data.error || `HTTP ${res.status}`),
           });
@@ -1480,8 +1567,15 @@ import Layout from "../../layouts/Layout.astro";
         }
         const dialog = root.querySelector("[data-assign-dialog]");
         if (dialog instanceof HTMLDialogElement) dialog.close();
-        setBanner(root, "Report assigned to site Connector.", "ok");
+        setBanner(
+          root,
+          assignIsWebsite
+            ? "Website registration defaults saved."
+            : "Report added as website registration.",
+          "ok",
+        );
         await refreshManageReports();
+        if (activeOrgId) await openOrg(activeOrgId);
         document.dispatchEvent(new CustomEvent("eos:ereport-connector-refresh"));
         document.dispatchEvent(
           new CustomEvent("eos:ereport-report-mutated", {
