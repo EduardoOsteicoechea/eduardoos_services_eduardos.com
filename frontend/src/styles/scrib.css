@@ -802,7 +802,8 @@ html.dark .scrib-page {
 .scrib-tool-rail__btn.icon-btn {
   flex: 0 0 auto;
   width: calc(var(--scrib-tool-rail-width) - var(--rail-gap));
-  height: calc(var(--scrib-tool-rail-width) - var(--rail-gap));
+  /* Keep width; half the previous square height so more tools fit. */
+  height: calc((var(--scrib-tool-rail-width) - var(--rail-gap)) * 0.5);
   min-width: 0;
   min-height: 0;
   padding: 0;
@@ -811,6 +812,14 @@ html.dark .scrib-page {
   background: transparent;
   color: var(--color-text);
   cursor: pointer;
+}
+
+.scrib-tool-rail__btn--layer .scrib-tool-rail__layer-label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
 }
 
 .scrib-tool-rail__btn.icon-btn:hover,
@@ -832,7 +841,14 @@ html.dark .scrib-page {
 }
 
 .scrib-tool-rail__btn .material-symbols-outlined {
-  font-size: var(--icon-size);
+  font-size: calc(var(--icon-size) * 0.85);
+  line-height: 1;
+}
+
+.scrib-header-layer-label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
   line-height: 1;
 }
 

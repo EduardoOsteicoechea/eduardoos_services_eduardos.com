@@ -9,6 +9,10 @@ import type { ScribToolMode } from "./ScribHeaderMenu";
 
 export type ScribDockSide = "left" | "right";
 
+/** Quick layer picks — Text 1 / Text 2 / Text 3. */
+export const SCRIB_QUICK_LAYER_IDS = ["original", "translation1", "translation2"] as const;
+export type ScribQuickLayerId = (typeof SCRIB_QUICK_LAYER_IDS)[number];
+
 type ScribToolbarProps = {
   mode: ScribToolMode;
   strokeWidthMm: number;
@@ -21,12 +25,13 @@ type ScribToolbarProps = {
   annotateSubtool: ScribAnnotateSubtool;
   annotateColor: string;
   dockSide: ScribDockSide;
-  onDashboard: () => void;
+  activeLayerId: string;
   onSelectZoom: () => void;
   onSelectDraw: () => void;
   onStrokePlus: () => void;
   onStrokeMinus: () => void;
   onSelectErase: () => void;
+  onSelectLayer: (layerId: ScribQuickLayerId) => void;
   onSelectAnnotate: () => void;
   onAnnotateSubtool: (tool: ScribAnnotateSubtool) => void;
   onAnnotateColor: (color: string) => void;
@@ -54,6 +59,27 @@ function toolClass(active?: boolean): string {
     : "scrib-tool-rail__btn icon-btn";
 }
 
+const QUICK_LAYER_META: Record<
+  ScribQuickLayerId,
+  { label: string; title: string; aria: string }
+> = {
+  original: {
+    label: "L1",
+    title: "Capa L1 — Text 1",
+    aria: "Activar capa L1 Text 1",
+  },
+  translation1: {
+    label: "L2",
+    title: "Capa L2 — Text 2",
+    aria: "Activar capa L2 Text 2",
+  },
+  translation2: {
+    label: "L3",
+    title: "Capa L3 — Text 3",
+    aria: "Activar capa L3 Text 3",
+  },
+};
+
 export default function ScribToolbar(props: ScribToolbarProps) {
   const dockRight = props.dockSide === "right";
   const dockIcon = dockRight ? "keyboard_arrow_left" : "keyboard_arrow_right";
@@ -71,15 +97,6 @@ export default function ScribToolbar(props: ScribToolbarProps) {
       aria-label="Scrib tools"
       role="toolbar"
     >
-      <button
-        type="button"
-        className={toolClass()}
-        title="Dashboard"
-        aria-label="Ir al dashboard"
-        onClick={props.onDashboard}
-      >
-        <ToolIcon name="dashboard" />
-      </button>
       <button
         type="button"
         className={toolClass(props.mode === "zoom")}
@@ -102,31 +119,6 @@ export default function ScribToolbar(props: ScribToolbarProps) {
       </button>
       <button
         type="button"
-        className={toolClass()}
-        title="Aumentar grosor"
-        aria-label="Aumentar grosor de trazo"
-        onClick={props.onStrokePlus}
-      >
-        <ToolIcon name="add" />
-      </button>
-      <span
-        className="scrib-tool-rail__stroke"
-        title={`Grosor ${props.strokeWidthMm.toFixed(2)} mm`}
-        aria-live="polite"
-      >
-        {props.strokeWidthMm.toFixed(2)}
-      </span>
-      <button
-        type="button"
-        className={toolClass()}
-        title="Reducir grosor"
-        aria-label="Reducir grosor de trazo"
-        onClick={props.onStrokeMinus}
-      >
-        <ToolIcon name="remove" />
-      </button>
-      <button
-        type="button"
         className={toolClass(props.mode === "erase")}
         title="Borrador"
         aria-label="Modo borrador"
@@ -135,6 +127,29 @@ export default function ScribToolbar(props: ScribToolbarProps) {
       >
         <ToolIcon name="ink_eraser" />
       </button>
+      {SCRIB_QUICK_LAYER_IDS.map((id) => {
+        const meta = QUICK_LAYER_META[id];
+        const active = props.activeLayerId === id;
+        return (
+          <button
+            key={id}
+            type="button"
+            className={
+              active
+                ? "scrib-tool-rail__btn scrib-tool-rail__btn--layer icon-btn is-active"
+                : "scrib-tool-rail__btn scrib-tool-rail__btn--layer icon-btn"
+            }
+            title={meta.title}
+            aria-label={meta.aria}
+            aria-pressed={active}
+            onClick={() => props.onSelectLayer(id)}
+          >
+            <span className="scrib-tool-rail__layer-label" aria-hidden="true">
+              {meta.label}
+            </span>
+          </button>
+        );
+      })}
       <button
         type="button"
         className={toolClass()}
@@ -283,6 +298,31 @@ export default function ScribToolbar(props: ScribToolbarProps) {
         onClick={props.onToggleDock}
       >
         <ToolIcon name={dockIcon} />
+      </button>
+      <button
+        type="button"
+        className={toolClass()}
+        title="Aumentar grosor"
+        aria-label="Aumentar grosor de trazo"
+        onClick={props.onStrokePlus}
+      >
+        <ToolIcon name="add" />
+      </button>
+      <span
+        className="scrib-tool-rail__stroke"
+        title={`Grosor ${props.strokeWidthMm.toFixed(2)} mm`}
+        aria-live="polite"
+      >
+        {props.strokeWidthMm.toFixed(2)}
+      </span>
+      <button
+        type="button"
+        className={toolClass()}
+        title="Reducir grosor"
+        aria-label="Reducir grosor de trazo"
+        onClick={props.onStrokeMinus}
+      >
+        <ToolIcon name="remove" />
       </button>
       {props.saving ? (
         <span className="scrib-tool-rail__saving" aria-live="polite" title="Guardando…">

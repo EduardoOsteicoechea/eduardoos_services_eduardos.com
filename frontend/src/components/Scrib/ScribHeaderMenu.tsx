@@ -10,7 +10,11 @@ import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "../HeaderDynamicMenu/HeaderDynamicMenu.css";
 import type { ScribBackgroundPattern } from "../../lib/scrib";
 import type { ScribAnnotateSubtool } from "../../lib/scribAnnotations";
-import type { ScribDockSide } from "./ScribToolbar";
+import {
+  SCRIB_QUICK_LAYER_IDS,
+  type ScribDockSide,
+  type ScribQuickLayerId,
+} from "./ScribToolbar";
 
 export type ScribToolMode = "draw" | "zoom" | "erase" | "annotate";
 
@@ -21,12 +25,14 @@ type ScribHeaderMenuProps = {
   saving: boolean;
   isFullscreen: boolean;
   backgroundPattern: ScribBackgroundPattern;
+  activeLayerId: string;
   onDashboard: () => void;
   onSelectZoom: () => void;
   onSelectDraw: () => void;
   onStrokePlus: () => void;
   onStrokeMinus: () => void;
   onSelectErase: () => void;
+  onSelectLayer: (layerId: ScribQuickLayerId) => void;
   onSelectAnnotate: () => void;
   onEnterFullscreen: () => void;
   onOpenLayers: () => void;
@@ -43,6 +49,12 @@ type ScribHeaderMenuProps = {
   onToggleDock?: () => void;
   onUndo: () => void;
   onPrint: () => void;
+};
+
+const QUICK_LAYER_LABELS: Record<ScribQuickLayerId, string> = {
+  original: "L1",
+  translation1: "L2",
+  translation2: "L3",
 };
 
 function actionClass(active?: boolean): string {
@@ -114,29 +126,6 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
           </button>
           <button
             type="button"
-            className={actionClass()}
-            title="Aumentar grosor"
-            aria-label="Aumentar grosor de trazo"
-            onClick={props.onStrokePlus}
-          >
-            <ActionIcon name="add" />
-            <span className="header-dynamic-menu__label">Más grueso</span>
-          </button>
-          <span className="scrib-stroke-widget" title="Grosor (mm)" aria-live="polite">
-            Grosor {props.strokeWidthMm.toFixed(2)} mm
-          </span>
-          <button
-            type="button"
-            className={actionClass()}
-            title="Reducir grosor"
-            aria-label="Reducir grosor de trazo"
-            onClick={props.onStrokeMinus}
-          >
-            <ActionIcon name="remove" />
-            <span className="header-dynamic-menu__label">Más fino</span>
-          </button>
-          <button
-            type="button"
             className={actionClass(props.mode === "erase")}
             title="Borrador"
             aria-label="Modo borrador"
@@ -146,6 +135,26 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
             <ActionIcon name="ink_eraser" />
             <span className="header-dynamic-menu__label">Borrar</span>
           </button>
+          {SCRIB_QUICK_LAYER_IDS.map((id) => {
+            const label = QUICK_LAYER_LABELS[id];
+            const active = props.activeLayerId === id;
+            return (
+              <button
+                key={id}
+                type="button"
+                className={actionClass(active)}
+                title={`Capa ${label}`}
+                aria-label={`Activar capa ${label}`}
+                aria-pressed={active}
+                onClick={() => props.onSelectLayer(id)}
+              >
+                <span className="icon-btn" aria-hidden="true">
+                  <span className="scrib-header-layer-label">{label}</span>
+                </span>
+                <span className="header-dynamic-menu__label">Capa {label}</span>
+              </button>
+            );
+          })}
           <button
             type="button"
             className={actionClass()}
@@ -324,6 +333,29 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
           >
             <ActionIcon name="print" />
             <span className="header-dynamic-menu__label">PDF</span>
+          </button>
+          <button
+            type="button"
+            className={actionClass()}
+            title="Aumentar grosor"
+            aria-label="Aumentar grosor de trazo"
+            onClick={props.onStrokePlus}
+          >
+            <ActionIcon name="add" />
+            <span className="header-dynamic-menu__label">Más grueso</span>
+          </button>
+          <span className="scrib-stroke-widget" title="Grosor (mm)" aria-live="polite">
+            Grosor {props.strokeWidthMm.toFixed(2)} mm
+          </span>
+          <button
+            type="button"
+            className={actionClass()}
+            title="Reducir grosor"
+            aria-label="Reducir grosor de trazo"
+            onClick={props.onStrokeMinus}
+          >
+            <ActionIcon name="remove" />
+            <span className="header-dynamic-menu__label">Más fino</span>
           </button>
           {props.saving ? (
             <span className="scrib-save-hint" aria-live="polite">

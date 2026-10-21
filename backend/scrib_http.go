@@ -346,7 +346,7 @@ func (a *App) scribPutSheetHandler(w http.ResponseWriter, r *http.Request) {
 		sheet.ActiveLayerID = scribDefaultActiveLayerID
 	}
 	if sheet.StrokeWidthMm <= 0 {
-		sheet.StrokeWidthMm = 0.35
+		sheet.StrokeWidthMm = 0.15
 	}
 	sheet.BackgroundPattern = scribNormalizeBackgroundPattern(sheet.BackgroundPattern)
 	if len(sheet.Layers) == 0 {

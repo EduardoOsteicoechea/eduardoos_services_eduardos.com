@@ -848,6 +848,23 @@ export default function ScribEditor() {
     setLayersOpen(true);
   }, []);
 
+  const selectQuickLayer = useCallback(
+    (layerId: string) => {
+      const current = sheetSnapshotRef.current;
+      if (!current) return;
+      const next = ensureLayers({
+        ...current,
+        activeLayerId: layerId,
+        layers: current.layers.map((l) =>
+          l.id === layerId && l.opacity <= 0 ? { ...l, opacity: 1 } : l,
+        ),
+      });
+      commitSheet(next);
+      persist(next);
+    },
+    [commitSheet, persist],
+  );
+
   const toggleInstitutes = useCallback(() => {
     setLayersOpen(false);
     setBibleOpen(false);
@@ -929,7 +946,7 @@ export default function ScribEditor() {
       ) : null}
       <ScribHeaderMenu
         mode={mode}
-        strokeWidthMm={sheet?.strokeWidthMm ?? 0.35}
+        strokeWidthMm={sheet?.strokeWidthMm ?? 0.15}
         canUndo={undoStack.length > 0}
         saving={saving}
         isFullscreen={isFullscreen}
@@ -938,12 +955,14 @@ export default function ScribEditor() {
             ? normalizeScribBackgroundPattern(sheet.backgroundPattern)
             : SCRIB_BACKGROUND_PATTERN_DEFAULT
         }
+        activeLayerId={sheet?.activeLayerId ?? "original"}
         onDashboard={openDashboard}
         onSelectZoom={() => selectToolMode("zoom")}
         onSelectDraw={() => selectToolMode("draw")}
         onStrokePlus={() => bumpStroke(1)}
         onStrokeMinus={() => bumpStroke(-1)}
         onSelectErase={() => selectToolMode("erase")}
+        onSelectLayer={selectQuickLayer}
         onSelectAnnotate={() => selectToolMode("annotate")}
         onEnterFullscreen={() => void enterFullscreen()}
         onOpenLayers={openLayers}
@@ -975,12 +994,13 @@ export default function ScribEditor() {
           annotateSubtool={annotateSubtool}
           annotateColor={annotateColor}
           dockSide={dockSide}
-          onDashboard={openDashboard}
+          activeLayerId={sheet.activeLayerId}
           onSelectZoom={() => selectToolMode("zoom")}
           onSelectDraw={() => selectToolMode("draw")}
           onStrokePlus={() => bumpStroke(1)}
           onStrokeMinus={() => bumpStroke(-1)}
           onSelectErase={() => selectToolMode("erase")}
+          onSelectLayer={selectQuickLayer}
           onSelectAnnotate={() => selectToolMode("annotate")}
           onAnnotateSubtool={setAnnotateSubtool}
           onAnnotateColor={onAnnotateColorChange}
@@ -1262,7 +1282,7 @@ export default function ScribEditor() {
         name={editorAnn?.annotation.name ?? ""}
         color={editorAnn?.region.color ?? annotateColor}
         mode={mode}
-        strokeWidthMm={sheet?.strokeWidthMm ?? 0.35}
+        strokeWidthMm={sheet?.strokeWidthMm ?? 0.15}
         headingPaths={editorAnn?.annotation.heading.paths ?? []}
         bodyPaths={editorAnn?.annotation.body.paths ?? []}
         activeField={annotationInkField}

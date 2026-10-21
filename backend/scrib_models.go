@@ -197,7 +197,7 @@ func scribNewEmptySheet(bookID, sheetID, name, now string) scribSheet {
 		BookID:            bookID,
 		Name:              name,
 		ActiveLayerID:     scribDefaultActiveLayerID,
-		StrokeWidthMm:     0.35,
+		StrokeWidthMm:     0.15,
 		BackgroundPattern: scribBackgroundPatternDefault,
 		Layers:            scribEmptyLayers(),
 		NoteBlocks:        []scribNoteBlock{},
