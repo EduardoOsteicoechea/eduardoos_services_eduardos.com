@@ -1830,12 +1830,12 @@ section.diag .panel:not(form) {
 
 .session-grid form > button,
 .diag form > button {
-  grid-column: 1;
+  grid-column: 1 / -1;
   width: 100%;
   max-width: 100%;
   height: var(--control-height);
   min-height: var(--control-height);
-  align-self: start;
+  align-self: stretch;
   margin-top: 0;
   margin-bottom: var(--space-margin);
 }
@@ -2489,12 +2489,8 @@ section.diag .panel:not(form) {
 
   .session-grid form > button,
   .diag form > button {
-    grid-column: 1;
-    width: calc(
-      (var(--span-button) / var(--span-form)) *
-        (var(--content-basis) - ((var(--span-form) - 1) * var(--page-gutter))) +
-        ((var(--span-button) - 1) * var(--page-gutter))
-    );
+    grid-column: 1 / -1;
+    width: 100%;
     max-width: 100%;
   }
 
