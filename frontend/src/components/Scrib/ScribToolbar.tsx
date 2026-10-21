@@ -94,6 +94,7 @@ export default function ScribToolbar(props: ScribToolbarProps) {
           ? "scrib-tool-rail scrib-tool-rail--right"
           : "scrib-tool-rail scrib-tool-rail--left"
       }
+      data-scrib-rail="half-btns-l123"
       aria-label="Scrib tools"
       role="toolbar"
     >

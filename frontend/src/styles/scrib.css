@@ -799,11 +799,14 @@ html.dark .scrib-page {
   border-inline-end: 0;
 }
 
-.scrib-tool-rail__btn.icon-btn {
+/* Higher specificity than global .icon-btn (button-size square). */
+aside.scrib-tool-rail > .scrib-tool-rail__btn.icon-btn {
   flex: 0 0 auto;
+  box-sizing: border-box;
   width: calc(var(--scrib-tool-rail-width) - var(--rail-gap));
   /* Keep width; half the previous square height so more tools fit. */
   height: calc((var(--scrib-tool-rail-width) - var(--rail-gap)) * 0.5);
+  max-height: calc((var(--scrib-tool-rail-width) - var(--rail-gap)) * 0.5);
   min-width: 0;
   min-height: 0;
   padding: 0;
@@ -812,35 +815,41 @@ html.dark .scrib-page {
   background: transparent;
   color: var(--color-text);
   cursor: pointer;
+  overflow: hidden;
+  aspect-ratio: auto;
+}
+
+aside.scrib-tool-rail > .scrib-tool-rail__btn--layer.icon-btn {
+  border: var(--border-width) solid var(--color-border);
 }
 
 .scrib-tool-rail__btn--layer .scrib-tool-rail__layer-label {
   font-family: var(--font-family);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
   line-height: 1;
   letter-spacing: 0.02em;
 }
 
-.scrib-tool-rail__btn.icon-btn:hover,
-.scrib-tool-rail__btn.icon-btn:focus-visible {
+aside.scrib-tool-rail > .scrib-tool-rail__btn.icon-btn:hover,
+aside.scrib-tool-rail > .scrib-tool-rail__btn.icon-btn:focus-visible {
   color: var(--color-accent);
   outline: var(--border-width) solid var(--color-accent);
   outline-offset: -0.0625rem;
 }
 
-.scrib-tool-rail__btn.icon-btn.is-active,
-.scrib-tool-rail__btn.icon-btn[aria-pressed="true"] {
+aside.scrib-tool-rail > .scrib-tool-rail__btn.icon-btn.is-active,
+aside.scrib-tool-rail > .scrib-tool-rail__btn.icon-btn[aria-pressed="true"] {
   background: var(--color-text);
   color: var(--color-bg);
 }
 
-.scrib-tool-rail__btn.icon-btn:disabled {
+aside.scrib-tool-rail > .scrib-tool-rail__btn.icon-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-.scrib-tool-rail__btn .material-symbols-outlined {
+aside.scrib-tool-rail > .scrib-tool-rail__btn .material-symbols-outlined {
   font-size: calc(var(--icon-size) * 0.85);
   line-height: 1;
 }
