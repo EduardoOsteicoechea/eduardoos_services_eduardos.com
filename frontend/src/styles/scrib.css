@@ -596,6 +596,14 @@ html:fullscreen .scrib-viewport {
   overflow: visible;
 }
 
+.scrib-page__bg--image {
+  display: block;
+  object-fit: fill;
+  object-position: center;
+  /* White plate of the JPG matches --scrib-paper; lines stay gray. */
+  background: transparent;
+}
+
 html[data-theme="dark"] .scrib-page,
 html.dark .scrib-page {
   --scrib-paper: #1a1a1a;
@@ -603,6 +611,12 @@ html.dark .scrib-page {
   --scrib-rule-strong: #3d3d3d;
   --scrib-ink: #e8e8e8;
   background: var(--scrib-paper);
+}
+
+/* Light JPG guides → invert so lines read on dark paper (same idea as rule tokens). */
+html[data-theme="dark"] .scrib-page__bg--image,
+html.dark .scrib-page__bg--image {
+  filter: invert(1);
 }
 
 .scrib-layer {

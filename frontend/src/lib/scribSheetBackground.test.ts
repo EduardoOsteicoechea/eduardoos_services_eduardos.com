@@ -7,8 +7,10 @@ import {
   SCRIB_PAGE_HEIGHT_MM,
   SCRIB_PAGE_WIDTH_MM,
   isScribDrawableLayer,
+  isScribImageBackgroundPattern,
   normalizeScribBackgroundPattern,
   resolveScribSheetFromLocation,
+  scribBackgroundImageUrl,
   scribSheetHref,
   toggleScribBackgroundPattern,
 } from "./scrib";
@@ -99,11 +101,18 @@ describe("scribSheetBackground", () => {
     expect(edge + (espacio - 2 * edge) + edge).toBe(espacio);
   });
 
-  it("defaults pattern to ruled-4-3 and toggles to ruled-4-3-3", () => {
+  it("defaults pattern to ruled-4-3 and cycles through 6-col image", () => {
     expect(normalizeScribBackgroundPattern(undefined)).toBe("ruled-4-3");
     expect(normalizeScribBackgroundPattern("ruled-4-3-3")).toBe("ruled-4-3-3");
+    expect(normalizeScribBackgroundPattern("columns-6-6")).toBe("columns-6-6");
     expect(toggleScribBackgroundPattern("ruled-4-3")).toBe("ruled-4-3-3");
-    expect(toggleScribBackgroundPattern("ruled-4-3-3")).toBe("ruled-4-3");
+    expect(toggleScribBackgroundPattern("ruled-4-3-3")).toBe("columns-6-6");
+    expect(toggleScribBackgroundPattern("columns-6-6")).toBe("ruled-4-3");
+    expect(isScribImageBackgroundPattern("columns-6-6")).toBe(true);
+    expect(isScribImageBackgroundPattern("ruled-4-3")).toBe(false);
+    expect(scribBackgroundImageUrl("columns-6-6")).toBe(
+      "/scrib/backgrounds/columnas_6col_6mm.jpg",
+    );
   });
 
   it("ruled-4-3-3 places two 3 mm gaps after the first 4 mm row", () => {

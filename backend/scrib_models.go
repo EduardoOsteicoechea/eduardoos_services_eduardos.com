@@ -11,12 +11,17 @@ const scribDefaultActiveLayerID = "chapter"
 
 const scribBackgroundPatternDefault = "ruled-4-3"
 const scribBackgroundPatternDoubleGap = "ruled-4-3-3"
+const scribBackgroundPatternColumns6 = "columns-6-6"
 
 func scribNormalizeBackgroundPattern(value string) string {
-	if value == scribBackgroundPatternDoubleGap {
+	switch value {
+	case scribBackgroundPatternDoubleGap:
 		return scribBackgroundPatternDoubleGap
+	case scribBackgroundPatternColumns6:
+		return scribBackgroundPatternColumns6
+	default:
+		return scribBackgroundPatternDefault
 	}
-	return scribBackgroundPatternDefault
 }
 
 func scribIsDrawableLayerID(id string) bool {

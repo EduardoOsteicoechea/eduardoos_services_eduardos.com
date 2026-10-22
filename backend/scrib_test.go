@@ -411,6 +411,9 @@ func TestScribNormalizeBackgroundPattern(t *testing.T) {
 	if got := scribNormalizeBackgroundPattern(scribBackgroundPatternDoubleGap); got != scribBackgroundPatternDoubleGap {
 		t.Fatalf("double-gap want %s got %s", scribBackgroundPatternDoubleGap, got)
 	}
+	if got := scribNormalizeBackgroundPattern(scribBackgroundPatternColumns6); got != scribBackgroundPatternColumns6 {
+		t.Fatalf("columns-6-6 want %s got %s", scribBackgroundPatternColumns6, got)
+	}
 	sheet := scribNewEmptySheet("b", "s", "Hoja", "2020-01-01T00:00:00Z")
 	if sheet.BackgroundPattern != scribBackgroundPatternDefault {
 		t.Fatalf("new sheet pattern=%s", sheet.BackgroundPattern)

@@ -7,11 +7,13 @@
 import { mustLog } from "./dev-log";
 import {
   isScribDrawableLayer,
+  isScribImageBackgroundPattern,
   normalizeScribBackgroundPattern,
   postScribPrintPdf,
   SCRIB_BACKGROUND_LAYER_ID,
   SCRIB_PAGE_HEIGHT_MM,
   SCRIB_PAGE_WIDTH_MM,
+  scribBackgroundImageUrl,
   type ScribBackgroundPattern,
   type ScribSheet,
   type StrokePath,
@@ -36,17 +38,41 @@ function pathPoints(d: string): { x: number; y: number }[] {
   return pts;
 }
 
-function drawRuledBackground(
+function loadImage(src: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error("background image load failed"));
+    img.src = src;
+  });
+}
+
+async function drawSheetBackground(
   ctx: CanvasRenderingContext2D,
   pxPerMm: number,
   opacity: number,
   pattern: ScribBackgroundPattern,
-): void {
+  canvasW: number,
+  canvasH: number,
+): Promise<void> {
   if (opacity <= 0) return;
+  const alpha = Math.min(1, Math.max(0, opacity));
+
+  if (isScribImageBackgroundPattern(pattern)) {
+    const url = scribBackgroundImageUrl(pattern);
+    if (!url) return;
+    const img = await loadImage(url);
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(img, 0, 0, canvasW, canvasH);
+    ctx.restore();
+    return;
+  }
+
   const g = buildScribSheetBackgroundGeometry({ pattern });
   const sw = Math.max(1, g.strokeWidthMm * pxPerMm);
   ctx.save();
-  ctx.globalAlpha = Math.min(1, Math.max(0, opacity));
+  ctx.globalAlpha = alpha;
   ctx.lineCap = "butt";
   ctx.lineJoin = "miter";
   ctx.lineWidth = sw;
@@ -128,11 +154,13 @@ export async function captureScribSheetLightGrayscale(
   ctx.fillRect(0, 0, widthPx, heightPx);
 
   const bgLayer = sheet.layers.find((l) => l.id === SCRIB_BACKGROUND_LAYER_ID);
-  drawRuledBackground(
+  await drawSheetBackground(
     ctx,
     PRINT_PX_PER_MM,
     bgLayer?.opacity ?? 1,
     normalizeScribBackgroundPattern(sheet.backgroundPattern),
+    widthPx,
+    heightPx,
   );
 
   for (const layer of sheet.layers) {

@@ -1,13 +1,15 @@
 /**
- * Crisp vector ruled background for Scrib.
+ * Crisp vector ruled background for Scrib, or US Letter image guides.
  * Display size follows zoom via width/height; viewBox stays in mm so lines stay sharp.
  */
 
 import { useMemo } from "react";
 import {
+  isScribImageBackgroundPattern,
   normalizeScribBackgroundPattern,
   SCRIB_PAGE_HEIGHT_MM,
   SCRIB_PAGE_WIDTH_MM,
+  scribBackgroundImageUrl,
   type ScribBackgroundPattern,
 } from "../../lib/scrib";
 import {
@@ -18,9 +20,9 @@ import {
 type Props = {
   /** Display zoom factor (1 = physical US Letter CSS mm size). */
   scale: number;
-  /** Opacity from the background layer (ruled lines only). */
+  /** Opacity from the background layer (ruled lines / image guides). */
   opacity?: number;
-  /** Ruled cycle: `ruled-4-3` or `ruled-4-3-3`. */
+  /** Background cycle: vector ruled or image `columns-6-6`. */
   pattern?: ScribBackgroundPattern;
 };
 
@@ -36,12 +38,37 @@ export default function ScribSheetBackground({
   pattern,
 }: Props) {
   const resolvedPattern = normalizeScribBackgroundPattern(pattern);
+  const imageUrl = scribBackgroundImageUrl(resolvedPattern);
+  const useImage = isScribImageBackgroundPattern(resolvedPattern) && Boolean(imageUrl);
   const geometry = useMemo(
-    () => buildScribSheetBackgroundGeometry({ pattern: resolvedPattern }),
-    [resolvedPattern],
+    () =>
+      useImage
+        ? null
+        : buildScribSheetBackgroundGeometry({ pattern: resolvedPattern }),
+    [resolvedPattern, useImage],
   );
   const w = `${SCRIB_PAGE_WIDTH_MM * scale}mm`;
   const h = `${SCRIB_PAGE_HEIGHT_MM * scale}mm`;
+  const clampedOpacity = Math.min(1, Math.max(0, opacity));
+
+  if (useImage && imageUrl) {
+    return (
+      <img
+        className="scrib-page__bg scrib-page__bg--image"
+        src={imageUrl}
+        alt=""
+        draggable={false}
+        style={{
+          width: w,
+          height: h,
+          opacity: clampedOpacity,
+        }}
+        aria-hidden
+      />
+    );
+  }
+
+  if (!geometry) return null;
 
   return (
     <svg
@@ -50,7 +77,7 @@ export default function ScribSheetBackground({
       width={w}
       height={h}
       shapeRendering="geometricPrecision"
-      style={{ opacity: Math.min(1, Math.max(0, opacity)) }}
+      style={{ opacity: clampedOpacity }}
       aria-hidden
     >
       {geometry.rects.map((r, i) => (

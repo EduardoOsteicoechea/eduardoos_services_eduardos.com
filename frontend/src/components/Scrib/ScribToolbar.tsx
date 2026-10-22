@@ -3,7 +3,11 @@
  * Theme tokens; docks flush to the viewport edge beside the book panel.
  */
 
-import type { ScribBackgroundPattern } from "../../lib/scrib";
+import {
+  SCRIB_BACKGROUND_PATTERN_DEFAULT,
+  scribBackgroundPatternToggleHint,
+  type ScribBackgroundPattern,
+} from "../../lib/scrib";
 import type { ScribAnnotateSubtool } from "../../lib/scribAnnotations";
 import type { ScribToolMode } from "./ScribHeaderMenu";
 
@@ -239,18 +243,16 @@ export default function ScribToolbar(props: ScribToolbarProps) {
       </button>
       <button
         type="button"
-        className={toolClass(props.backgroundPattern === "ruled-4-3-3")}
-        title={
-          props.backgroundPattern === "ruled-4-3-3"
-            ? "Fondo 4+3+3 — cambiar a 4+3"
-            : "Fondo 4+3 — cambiar a 4+3+3"
-        }
+        className={toolClass(
+          props.backgroundPattern !== SCRIB_BACKGROUND_PATTERN_DEFAULT,
+        )}
+        title={scribBackgroundPatternToggleHint(props.backgroundPattern).title}
         aria-label={
-          props.backgroundPattern === "ruled-4-3-3"
-            ? "Cambiar fondo a renglón 4+3"
-            : "Cambiar fondo a renglón 4+3+3"
+          scribBackgroundPatternToggleHint(props.backgroundPattern).ariaLabel
         }
-        aria-pressed={props.backgroundPattern === "ruled-4-3-3"}
+        aria-pressed={
+          props.backgroundPattern !== SCRIB_BACKGROUND_PATTERN_DEFAULT
+        }
         onClick={props.onToggleBackgroundPattern}
       >
         <ToolIcon name="format_line_spacing" />

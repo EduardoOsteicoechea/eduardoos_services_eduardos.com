@@ -8,7 +8,11 @@ import { createPortal } from "react-dom";
 import { APP_ROUTES } from "../../config/routes";
 import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "../HeaderDynamicMenu/HeaderDynamicMenu.css";
-import type { ScribBackgroundPattern } from "../../lib/scrib";
+import {
+  SCRIB_BACKGROUND_PATTERN_DEFAULT,
+  scribBackgroundPatternToggleHint,
+  type ScribBackgroundPattern,
+} from "../../lib/scrib";
 import type { ScribAnnotateSubtool } from "../../lib/scribAnnotations";
 import {
   SCRIB_QUICK_LAYER_IDS,
@@ -250,18 +254,16 @@ export default function ScribHeaderMenu(props: ScribHeaderMenuProps) {
           </button>
           <button
             type="button"
-            className={actionClass(props.backgroundPattern === "ruled-4-3-3")}
-            title={
-              props.backgroundPattern === "ruled-4-3-3"
-                ? "Fondo 4+3+3 — cambiar a 4+3"
-                : "Fondo 4+3 — cambiar a 4+3+3"
-            }
+            className={actionClass(
+              props.backgroundPattern !== SCRIB_BACKGROUND_PATTERN_DEFAULT,
+            )}
+            title={scribBackgroundPatternToggleHint(props.backgroundPattern).title}
             aria-label={
-              props.backgroundPattern === "ruled-4-3-3"
-                ? "Cambiar fondo a renglón 4+3"
-                : "Cambiar fondo a renglón 4+3+3"
+              scribBackgroundPatternToggleHint(props.backgroundPattern).ariaLabel
             }
-            aria-pressed={props.backgroundPattern === "ruled-4-3-3"}
+            aria-pressed={
+              props.backgroundPattern !== SCRIB_BACKGROUND_PATTERN_DEFAULT
+            }
             onClick={props.onToggleBackgroundPattern}
           >
             <ActionIcon name="format_line_spacing" />

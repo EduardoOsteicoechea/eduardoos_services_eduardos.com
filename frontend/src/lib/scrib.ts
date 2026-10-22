@@ -8,22 +8,76 @@ import { mustLog } from "./dev-log";
 export const SCRIB_PAGE_WIDTH_MM = 215.9;
 export const SCRIB_PAGE_HEIGHT_MM = 279.4;
 
-/** Ruled background cycle persisted on each sheet. */
-export type ScribBackgroundPattern = "ruled-4-3" | "ruled-4-3-3";
+/** Background cycle persisted on each sheet (vector ruled + image guides). */
+export type ScribBackgroundPattern = "ruled-4-3" | "ruled-4-3-3" | "columns-6-6";
 
 export const SCRIB_BACKGROUND_PATTERN_DEFAULT: ScribBackgroundPattern = "ruled-4-3";
+
+/** US Letter JPG guides (300 DPI) under `frontend/public/scrib/backgrounds/`. */
+export const SCRIB_BACKGROUND_IMAGE_URLS: Partial<
+  Record<ScribBackgroundPattern, string>
+> = {
+  "columns-6-6": "/scrib/backgrounds/columnas_6col_6mm.jpg",
+};
+
+export function isScribImageBackgroundPattern(
+  pattern: ScribBackgroundPattern,
+): boolean {
+  return Boolean(SCRIB_BACKGROUND_IMAGE_URLS[pattern]);
+}
+
+export function scribBackgroundImageUrl(
+  pattern: ScribBackgroundPattern,
+): string | undefined {
+  return SCRIB_BACKGROUND_IMAGE_URLS[pattern];
+}
+
+const SCRIB_BACKGROUND_PATTERN_CYCLE: ScribBackgroundPattern[] = [
+  "ruled-4-3",
+  "ruled-4-3-3",
+  "columns-6-6",
+];
 
 export function normalizeScribBackgroundPattern(
   value: string | undefined | null,
 ): ScribBackgroundPattern {
   if (value === "ruled-4-3-3") return "ruled-4-3-3";
+  if (value === "columns-6-6") return "columns-6-6";
   return SCRIB_BACKGROUND_PATTERN_DEFAULT;
 }
 
 export function toggleScribBackgroundPattern(
   current: ScribBackgroundPattern,
 ): ScribBackgroundPattern {
-  return current === "ruled-4-3" ? "ruled-4-3-3" : "ruled-4-3";
+  const i = SCRIB_BACKGROUND_PATTERN_CYCLE.indexOf(current);
+  const next = SCRIB_BACKGROUND_PATTERN_CYCLE[(i + 1) % SCRIB_BACKGROUND_PATTERN_CYCLE.length];
+  return next ?? SCRIB_BACKGROUND_PATTERN_DEFAULT;
+}
+
+/** Short label for the active background (toolbar / DHS). */
+export function scribBackgroundPatternLabel(
+  pattern: ScribBackgroundPattern,
+): string {
+  switch (pattern) {
+    case "ruled-4-3-3":
+      return "Fondo 4+3+3";
+    case "columns-6-6":
+      return "Fondo 6 col / 6 mm";
+    default:
+      return "Fondo 4+3";
+  }
+}
+
+/** Title / aria for the cycle control (names the next pattern). */
+export function scribBackgroundPatternToggleHint(
+  pattern: ScribBackgroundPattern,
+): { title: string; ariaLabel: string } {
+  const next = toggleScribBackgroundPattern(pattern);
+  const nextLabel = scribBackgroundPatternLabel(next);
+  return {
+    title: `${scribBackgroundPatternLabel(pattern)} — cambiar a ${nextLabel.replace(/^Fondo /, "")}`,
+    ariaLabel: `Cambiar fondo a ${nextLabel.replace(/^Fondo /, "")}`,
+  };
 }
 
 /** Ruled SVG sheet — first layer; opacity only (not drawable). */
@@ -135,7 +189,7 @@ export type ScribSheet = {
   name: string;
   activeLayerId: string;
   strokeWidthMm: number;
-  /** Ruled background cycle: `ruled-4-3` (default) or `ruled-4-3-3`. */
+  /** Background cycle: `ruled-4-3` (default), `ruled-4-3-3`, or `columns-6-6`. */
   backgroundPattern?: ScribBackgroundPattern;
   layers: ScribLayer[];
   /** Annotation tree (optional; legacy sheets omit). */
