@@ -776,16 +776,6 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
   outline: none;
 }
 
-/* —— Header bug_report (left of menu) —— */
-.app-header .header-ereport-connector.icon-btn {
-  width: var(--rail-button-size);
-  height: var(--rail-button-size);
-}
-
-.app-header .header-ereport-connector[hidden] {
-  display: none;
-}
-
 /* —— Quick website-issue connector —— */
 .ereport-quick-overlay {
   position: fixed;

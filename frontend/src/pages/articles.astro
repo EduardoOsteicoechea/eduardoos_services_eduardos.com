@@ -190,6 +190,7 @@ import Layout from "../layouts/Layout.astro";
       const name = (node.name ?? "").trim();
       if (!name) continue;
       catalogNames.set(name.toLowerCase(), name);
+      ensureSeries(name);
     }
 
     for (const rec of records) {
@@ -206,8 +207,6 @@ import Layout from "../layouts/Layout.astro";
     let count = 0;
     for (const sKey of seriesKeys) {
       const bucket = seriesMap.get(sKey)!;
-      // Hide catalog-only series with zero public articles.
-      if (!bucket.items.length) continue;
       bucket.items.sort(compareArticlesInSeries);
       count += bucket.items.length;
       series.push({ name: bucket.displayName, count: bucket.items.length, items: bucket.items });

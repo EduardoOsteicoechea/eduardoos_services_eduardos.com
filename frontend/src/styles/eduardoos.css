@@ -329,10 +329,7 @@ html[data-page="home"] .home-services__shot figcaption {
 
 @media (max-width: 47.999rem) {
   html[data-page="home"] main {
-    /* Phone contact row can wrap to two bars. */
-    padding-bottom: calc(
-      (var(--site-footer-height) * 2) + var(--space-padding) + var(--space-padding)
-    );
+    padding-bottom: calc(var(--site-footer-height) + var(--space-padding) + var(--space-padding));
   }
 
   html[data-page="home"] main::before {

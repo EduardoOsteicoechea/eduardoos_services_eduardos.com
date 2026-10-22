@@ -1290,18 +1290,45 @@ main {
 
 @media (max-width: 47.999rem) {
   .site-chrome-footer {
-    height: auto;
+    height: var(--site-footer-height);
     min-height: var(--site-footer-height);
-    padding-block: var(--rail-gap);
+    padding-block: 0;
+    justify-content: center;
   }
 
   .site-chrome-footer__contacts {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+    gap: var(--space-padding);
   }
 
-  /* Wrapping contact row can grow taller than one bar. */
-  html[data-site-footer] {
-    --site-footer-clearance: calc((var(--site-footer-height) * 2) + var(--space-padding));
+  .site-chrome-footer__label {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .site-chrome-footer__btn {
+    width: var(--button-size);
+    height: var(--button-size);
+    min-height: 0;
+    padding: 0;
+    gap: 0;
+    font-size: 0;
+    font-weight: inherit;
+    border-radius: 50%;
+    background: transparent;
+  }
+
+  .site-chrome-footer__btn .material-symbols-outlined {
+    font-size: var(--icon-size);
   }
 }
 
@@ -2305,20 +2332,16 @@ section.diag .panel:not(form) {
     order: 0;
   }
 
-  .header-ereport-connector:not([hidden]) {
+  .header-session:not([hidden]) {
     order: 1;
   }
 
-  .header-session:not([hidden]) {
+  .header-cart:not([hidden]) {
     order: 2;
   }
 
-  .header-cart:not([hidden]) {
-    order: 3;
-  }
-
   .header-menu {
-    order: 4;
+    order: 3;
   }
 
   .sidebar-left,
@@ -2588,20 +2611,16 @@ section.diag .panel:not(form) {
     order: 0;
   }
 
-  .header-ereport-connector:not([hidden]) {
+  .header-session:not([hidden]) {
     order: 1;
   }
 
-  .header-session:not([hidden]) {
+  .header-cart:not([hidden]) {
     order: 2;
   }
 
-  .header-cart:not([hidden]) {
-    order: 3;
-  }
-
   .header-menu {
-    order: 4;
+    order: 3;
   }
 
   .app-header .icon-btn:not(.header-session):not(.header-menu) {

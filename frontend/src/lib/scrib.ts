@@ -62,7 +62,7 @@ export function scribBackgroundPatternLabel(
     case "ruled-4-3-3":
       return "Fondo 4+3+3";
     case "columns-6-6":
-      return "Fondo 6 col / 6 mm";
+      return "Fondo 1 línea";
     default:
       return "Fondo 4+3";
   }
@@ -73,11 +73,28 @@ export function scribBackgroundPatternToggleHint(
   pattern: ScribBackgroundPattern,
 ): { title: string; ariaLabel: string } {
   const next = toggleScribBackgroundPattern(pattern);
-  const nextLabel = scribBackgroundPatternLabel(next);
+  const nextShort = scribBackgroundPatternCycleShortName(next);
   return {
-    title: `${scribBackgroundPatternLabel(pattern)} — cambiar a ${nextLabel.replace(/^Fondo /, "")}`,
-    ariaLabel: `Cambiar fondo a ${nextLabel.replace(/^Fondo /, "")}`,
+    title: `${scribBackgroundPatternLabel(pattern)} — cambiar a ${nextShort}`,
+    ariaLabel:
+      next === "columns-6-6"
+        ? "Cambiar fondo a modo single line (1 línea)"
+        : `Cambiar fondo a ${nextShort}`,
   };
+}
+
+/** Short name in cycle hints (toolbar title / aria). */
+function scribBackgroundPatternCycleShortName(
+  pattern: ScribBackgroundPattern,
+): string {
+  switch (pattern) {
+    case "ruled-4-3-3":
+      return "4+3+3";
+    case "columns-6-6":
+      return "1 línea (single line)";
+    default:
+      return "4+3";
+  }
 }
 
 /** Ruled SVG sheet — first layer; opacity only (not drawable). */
@@ -189,7 +206,7 @@ export type ScribSheet = {
   name: string;
   activeLayerId: string;
   strokeWidthMm: number;
-  /** Background cycle: `ruled-4-3` (default), `ruled-4-3-3`, or `columns-6-6`. */
+  /** Background cycle: `ruled-4-3`, `ruled-4-3-3`, or `columns-6-6` (US Letter 1-line / 6×6 mm guide image). */
   backgroundPattern?: ScribBackgroundPattern;
   layers: ScribLayer[];
   /** Annotation tree (optional; legacy sheets omit). */

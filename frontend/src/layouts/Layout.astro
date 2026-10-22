@@ -387,17 +387,6 @@ const jsonLdString =
           </div>
         ) : null}
         <div class="header-cluster header-cluster--menu" data-header-chrome>
-          <button
-            type="button"
-            class="icon-btn header-ereport-connector"
-            data-ereport-connector-open
-            data-service="ereport-connector"
-            hidden
-            aria-label="Report website issue"
-            title="Report website issue"
-          >
-            <span class="material-symbols-outlined" aria-hidden="true">bug_report</span>
-          </button>
           <button class="header-menu icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
             <svg class="header-menu-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <line x1="5" y1="9" x2="19" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
@@ -498,6 +487,18 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
               eReport
             </a>
+            <button
+              type="button"
+              class="sidebar-nav-action"
+              data-ereport-connector-open
+              data-service="ereport-connector"
+              hidden
+              aria-label="Website issues"
+              title="Website issues"
+            >
+              <span class="material-symbols-outlined" aria-hidden="true">bug_report</span>
+              Website issues
+            </button>
           </div>
         </nav>
       </aside>
@@ -530,25 +531,55 @@ const jsonLdString =
       {showSiteFooter ? (
         <footer class="site-chrome-footer">
           <nav class="site-chrome-footer__contacts" aria-label="Contact">
-            <button class="site-chrome-footer__btn" type="button" data-footer-email-open aria-haspopup="dialog">
+            <button
+              class="site-chrome-footer__btn icon-btn"
+              type="button"
+              data-footer-email-open
+              aria-haspopup="dialog"
+              aria-label="Email"
+            >
               <span class="material-symbols-outlined" aria-hidden="true">alternate_email</span>
-              Email
+              <span class="site-chrome-footer__label">Email</span>
             </button>
-            <a class="site-chrome-footer__btn" href={PROFILE_WHATSAPP} rel="noopener noreferrer" target="_blank">
+            <a
+              class="site-chrome-footer__btn icon-btn"
+              href={PROFILE_WHATSAPP}
+              rel="noopener noreferrer"
+              target="_blank"
+              aria-label="WhatsApp"
+            >
               <span class="material-symbols-outlined" aria-hidden="true">chat</span>
-              WhatsApp
+              <span class="site-chrome-footer__label">WhatsApp</span>
             </a>
-            <a class="site-chrome-footer__btn" href={PROFILE_LINKEDIN} rel="noopener noreferrer" target="_blank">
+            <a
+              class="site-chrome-footer__btn icon-btn"
+              href={PROFILE_LINKEDIN}
+              rel="noopener noreferrer"
+              target="_blank"
+              aria-label="LinkedIn"
+            >
               <span class="material-symbols-outlined" aria-hidden="true">work</span>
-              LinkedIn
+              <span class="site-chrome-footer__label">LinkedIn</span>
             </a>
-            <a class="site-chrome-footer__btn" href={PROFILE_GITHUB} rel="noopener noreferrer" target="_blank">
+            <a
+              class="site-chrome-footer__btn icon-btn"
+              href={PROFILE_GITHUB}
+              rel="noopener noreferrer"
+              target="_blank"
+              aria-label="GitHub"
+            >
               <span class="material-symbols-outlined" aria-hidden="true">code</span>
-              GitHub
+              <span class="site-chrome-footer__label">GitHub</span>
             </a>
-            <a class="site-chrome-footer__btn" href={PROFILE_YOUTUBE} rel="noopener noreferrer" target="_blank">
+            <a
+              class="site-chrome-footer__btn icon-btn"
+              href={PROFILE_YOUTUBE}
+              rel="noopener noreferrer"
+              target="_blank"
+              aria-label="YouTube"
+            >
               <span class="material-symbols-outlined" aria-hidden="true">play_circle</span>
-              YouTube
+              <span class="site-chrome-footer__label">YouTube</span>
             </a>
           </nav>
         </footer>

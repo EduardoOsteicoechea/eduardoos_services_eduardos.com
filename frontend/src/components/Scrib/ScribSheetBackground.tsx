@@ -22,7 +22,7 @@ type Props = {
   scale: number;
   /** Opacity from the background layer (ruled lines / image guides). */
   opacity?: number;
-  /** Background cycle: vector ruled or image `columns-6-6`. */
+  /** Background cycle: vector ruled or single-line image (`columns-6-6`). */
   pattern?: ScribBackgroundPattern;
 };
 

@@ -418,7 +418,7 @@ let ereportConnectorGateGen = 0;
 let ereportConnectorBindingCache: { orgId: string; reportId: string } | null = null;
 
 /**
- * Connector (menu + header bug_report) visibility is owned only here — never by syncSubscriptionNav.
+ * Connector (main menu Website issues) visibility is owned only here — never by syncSubscriptionNav.
  * Show when: authed + ereport-connector entitlement + (websiteRegistrations.length > 0 OR singular org+report).
  * data-org-id / data-report-id use the same active resolution as Ready (override → singular → host → list[0]).
  * Do NOT hide solely because sectionId/groupId are empty — Ready/quick heal on open.

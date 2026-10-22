@@ -11,6 +11,8 @@ import {
   normalizeScribBackgroundPattern,
   resolveScribSheetFromLocation,
   scribBackgroundImageUrl,
+  scribBackgroundPatternLabel,
+  scribBackgroundPatternToggleHint,
   scribSheetHref,
   toggleScribBackgroundPattern,
 } from "./scrib";
@@ -101,7 +103,7 @@ describe("scribSheetBackground", () => {
     expect(edge + (espacio - 2 * edge) + edge).toBe(espacio);
   });
 
-  it("defaults pattern to ruled-4-3 and cycles through 6-col image", () => {
+  it("defaults pattern to ruled-4-3 and cycles through single-line image guide", () => {
     expect(normalizeScribBackgroundPattern(undefined)).toBe("ruled-4-3");
     expect(normalizeScribBackgroundPattern("ruled-4-3-3")).toBe("ruled-4-3-3");
     expect(normalizeScribBackgroundPattern("columns-6-6")).toBe("columns-6-6");
@@ -112,6 +114,13 @@ describe("scribSheetBackground", () => {
     expect(isScribImageBackgroundPattern("ruled-4-3")).toBe(false);
     expect(scribBackgroundImageUrl("columns-6-6")).toBe(
       "/scrib/backgrounds/columnas_6col_6mm.jpg",
+    );
+    expect(scribBackgroundPatternLabel("columns-6-6")).toBe("Fondo 1 línea");
+    expect(scribBackgroundPatternToggleHint("ruled-4-3-3").ariaLabel).toBe(
+      "Cambiar fondo a modo single line (1 línea)",
+    );
+    expect(scribBackgroundPatternToggleHint("columns-6-6").title).toContain(
+      "Fondo 1 línea",
     );
   });
 
