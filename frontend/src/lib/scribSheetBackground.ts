@@ -12,12 +12,18 @@ import {
 
 export type { ScribBackgroundPattern };
 
+/** Single-line pattern: every writing row is this tall (mm); no inter-row gap bands. */
+export const SCRIB_SINGLE_LINE_MM = 6;
+
 /** Band heights (mm) for one cycle of the given pattern. */
 export function scribBackgroundPatternBands(
   pattern: ScribBackgroundPattern,
   altoDeLineaMm: number,
   espacioEntreLineasMm: number,
 ): number[] {
+  if (pattern === "columns-6-6") {
+    return [SCRIB_SINGLE_LINE_MM];
+  }
   if (pattern === "ruled-4-3-3") {
     return [altoDeLineaMm, espacioEntreLineasMm, espacioEntreLineasMm];
   }
@@ -102,18 +108,26 @@ export function buildScribSheetBackgroundGeometry(
   const strokeWidthMm = options.grosorDeBordeMm ?? SCRIB_SHEET_BG_DEFAULTS.grosorDeBordeMm;
   const colorSuave = options.colorSuave ?? SCRIB_SHEET_BG_DEFAULTS.colorSuave;
   const colorOscuro = options.colorOscuro ?? SCRIB_SHEET_BG_DEFAULTS.colorOscuro;
-  const altoDeLineaMm = options.altoDeLineaMm ?? SCRIB_SHEET_BG_DEFAULTS.altoDeLineaMm;
+  const pattern = normalizeScribBackgroundPattern(options.pattern);
+  const isSingleLine = pattern === "columns-6-6";
+  const altoDeLineaMm = isSingleLine
+    ? SCRIB_SINGLE_LINE_MM
+    : (options.altoDeLineaMm ?? SCRIB_SHEET_BG_DEFAULTS.altoDeLineaMm);
   const espacioEntreLineasMm =
     options.espacioEntreLineasMm ?? SCRIB_SHEET_BG_DEFAULTS.espacioEntreLineasMm;
+  /** Scale soft guides with row height so 6 mm rows match the 4 mm sheet style. */
+  const defaultWritingEdgeMm = isSingleLine
+    ? (SCRIB_SINGLE_LINE_MM / SCRIB_SHEET_BG_DEFAULTS.altoDeLineaMm) *
+      SCRIB_SHEET_BG_DEFAULTS.bandaExtremaMm
+    : SCRIB_SHEET_BG_DEFAULTS.bandaExtremaMm;
   const bandaExtremaMm = Math.min(
-    options.bandaExtremaMm ?? SCRIB_SHEET_BG_DEFAULTS.bandaExtremaMm,
+    options.bandaExtremaMm ?? defaultWritingEdgeMm,
     altoDeLineaMm / 2,
   );
   const bandaExtremaEspacioMm = Math.min(
     options.bandaExtremaEspacioMm ?? SCRIB_SHEET_BG_DEFAULTS.bandaExtremaEspacioMm,
     espacioEntreLineasMm / 2,
   );
-  const pattern = normalizeScribBackgroundPattern(options.pattern);
   const cycleBands = scribBackgroundPatternBands(
     pattern,
     altoDeLineaMm,

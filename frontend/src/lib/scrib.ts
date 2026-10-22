@@ -8,29 +8,10 @@ import { mustLog } from "./dev-log";
 export const SCRIB_PAGE_WIDTH_MM = 215.9;
 export const SCRIB_PAGE_HEIGHT_MM = 279.4;
 
-/** Background cycle persisted on each sheet (vector ruled + image guides). */
+/** Background cycle persisted on each sheet (all vector ruled, same style). */
 export type ScribBackgroundPattern = "ruled-4-3" | "ruled-4-3-3" | "columns-6-6";
 
 export const SCRIB_BACKGROUND_PATTERN_DEFAULT: ScribBackgroundPattern = "ruled-4-3";
-
-/** US Letter JPG guides (300 DPI) under `frontend/public/scrib/backgrounds/`. */
-export const SCRIB_BACKGROUND_IMAGE_URLS: Partial<
-  Record<ScribBackgroundPattern, string>
-> = {
-  "columns-6-6": "/scrib/backgrounds/columnas_6col_6mm.jpg",
-};
-
-export function isScribImageBackgroundPattern(
-  pattern: ScribBackgroundPattern,
-): boolean {
-  return Boolean(SCRIB_BACKGROUND_IMAGE_URLS[pattern]);
-}
-
-export function scribBackgroundImageUrl(
-  pattern: ScribBackgroundPattern,
-): string | undefined {
-  return SCRIB_BACKGROUND_IMAGE_URLS[pattern];
-}
 
 const SCRIB_BACKGROUND_PATTERN_CYCLE: ScribBackgroundPattern[] = [
   "ruled-4-3",
@@ -62,7 +43,7 @@ export function scribBackgroundPatternLabel(
     case "ruled-4-3-3":
       return "Fondo 4+3+3";
     case "columns-6-6":
-      return "Fondo 1 línea";
+      return "Fondo 6 mm";
     default:
       return "Fondo 4+3";
   }
@@ -76,10 +57,7 @@ export function scribBackgroundPatternToggleHint(
   const nextShort = scribBackgroundPatternCycleShortName(next);
   return {
     title: `${scribBackgroundPatternLabel(pattern)} — cambiar a ${nextShort}`,
-    ariaLabel:
-      next === "columns-6-6"
-        ? "Cambiar fondo a modo single line (1 línea)"
-        : `Cambiar fondo a ${nextShort}`,
+    ariaLabel: `Cambiar fondo a ${nextShort}`,
   };
 }
 
@@ -91,7 +69,7 @@ function scribBackgroundPatternCycleShortName(
     case "ruled-4-3-3":
       return "4+3+3";
     case "columns-6-6":
-      return "1 línea (single line)";
+      return "6 mm (1 línea)";
     default:
       return "4+3";
   }
@@ -206,7 +184,7 @@ export type ScribSheet = {
   name: string;
   activeLayerId: string;
   strokeWidthMm: number;
-  /** Background cycle: `ruled-4-3`, `ruled-4-3-3`, or `columns-6-6` (US Letter 1-line / 6×6 mm guide image). */
+  /** Background cycle: `ruled-4-3`, `ruled-4-3-3`, or `columns-6-6` (vector 6 mm single line). */
   backgroundPattern?: ScribBackgroundPattern;
   layers: ScribLayer[];
   /** Annotation tree (optional; legacy sheets omit). */

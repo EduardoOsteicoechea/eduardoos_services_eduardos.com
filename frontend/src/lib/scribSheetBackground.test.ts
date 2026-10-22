@@ -7,10 +7,8 @@ import {
   SCRIB_PAGE_HEIGHT_MM,
   SCRIB_PAGE_WIDTH_MM,
   isScribDrawableLayer,
-  isScribImageBackgroundPattern,
   normalizeScribBackgroundPattern,
   resolveScribSheetFromLocation,
-  scribBackgroundImageUrl,
   scribBackgroundPatternLabel,
   scribBackgroundPatternToggleHint,
   scribSheetHref,
@@ -20,6 +18,7 @@ import {
   buildScribSheetBackgroundGeometry,
   buildScribSheetBackgroundSvgMarkup,
   SCRIB_SHEET_BG_DEFAULTS,
+  SCRIB_SINGLE_LINE_MM,
 } from "./scribSheetBackground";
 
 describe("scribSheetBackground", () => {
@@ -103,25 +102,40 @@ describe("scribSheetBackground", () => {
     expect(edge + (espacio - 2 * edge) + edge).toBe(espacio);
   });
 
-  it("defaults pattern to ruled-4-3 and cycles through single-line image guide", () => {
+  it("defaults pattern to ruled-4-3 and cycles through vector 6 mm single line", () => {
     expect(normalizeScribBackgroundPattern(undefined)).toBe("ruled-4-3");
     expect(normalizeScribBackgroundPattern("ruled-4-3-3")).toBe("ruled-4-3-3");
     expect(normalizeScribBackgroundPattern("columns-6-6")).toBe("columns-6-6");
     expect(toggleScribBackgroundPattern("ruled-4-3")).toBe("ruled-4-3-3");
     expect(toggleScribBackgroundPattern("ruled-4-3-3")).toBe("columns-6-6");
     expect(toggleScribBackgroundPattern("columns-6-6")).toBe("ruled-4-3");
-    expect(isScribImageBackgroundPattern("columns-6-6")).toBe(true);
-    expect(isScribImageBackgroundPattern("ruled-4-3")).toBe(false);
-    expect(scribBackgroundImageUrl("columns-6-6")).toBe(
-      "/scrib/backgrounds/columnas_6col_6mm.jpg",
-    );
-    expect(scribBackgroundPatternLabel("columns-6-6")).toBe("Fondo 1 línea");
+    expect(scribBackgroundPatternLabel("columns-6-6")).toBe("Fondo 6 mm");
     expect(scribBackgroundPatternToggleHint("ruled-4-3-3").ariaLabel).toBe(
-      "Cambiar fondo a modo single line (1 línea)",
+      "Cambiar fondo a 6 mm (1 línea)",
     );
     expect(scribBackgroundPatternToggleHint("columns-6-6").title).toContain(
-      "Fondo 1 línea",
+      "Fondo 6 mm",
     );
+  });
+
+  it("columns-6-6 uses 6 mm single-line bands in the same column style", () => {
+    const g = buildScribSheetBackgroundGeometry({ pattern: "columns-6-6" });
+    const ml = SCRIB_SHEET_BG_DEFAULTS.margenLateralMm;
+    const mv = SCRIB_SHEET_BG_DEFAULTS.margenVerticalMm;
+    const darkYs = g.lines
+      .filter(
+        (l) =>
+          l.stroke === SCRIB_SHEET_BG_DEFAULTS.colorOscuro &&
+          l.y1 === l.y2 &&
+          Math.abs(l.x1 - ml) < 0.001,
+      )
+      .map((l) => l.y1)
+      .sort((a, b) => a - b);
+    expect(g.rects).toHaveLength(SCRIB_SHEET_BG_DEFAULTS.columnas);
+    expect(darkYs).toContain(mv);
+    expect(darkYs).toContain(mv + SCRIB_SINGLE_LINE_MM);
+    expect(darkYs).toContain(mv + 2 * SCRIB_SINGLE_LINE_MM);
+    expect(darkYs).not.toContain(mv + SCRIB_SHEET_BG_DEFAULTS.altoDeLineaMm);
   });
 
   it("ruled-4-3-3 places two 3 mm gaps after the first 4 mm row", () => {
