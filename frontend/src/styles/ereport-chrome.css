@@ -1143,6 +1143,13 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
   min-width: 0;
 }
 
+.ereport-issue-card-overlay__meta-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  min-width: 0;
+}
+
 .ereport-issue-card-overlay__meta {
   display: flex;
   flex-wrap: wrap;
@@ -1150,12 +1157,20 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
   gap: var(--rail-gap);
 }
 
+.ereport-issue-card-overlay__severity-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--rail-gap);
+  min-width: 0;
+}
+
 .ereport-issue-card-overlay__field--inline {
   flex: 1 1 10rem;
 }
 
 .ereport-issue-card-overlay__field--severity {
-  flex: 1 1 8rem;
+  flex: 1 1 auto;
   min-width: 0;
 }
 

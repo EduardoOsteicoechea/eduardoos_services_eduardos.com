@@ -727,29 +727,45 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; flex-wrap: wrap;
 }
 .col-head .lbl { flex: 0 0 auto; }
-.meta-bar {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
+.meta-stack {
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
-  align-items: stretch;
-  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
+  align-self: stretch;
+  width: auto;
+  min-width: 0;
+  box-sizing: border-box;
   margin-top: auto;
   flex: 0 0 auto;
 }
+.meta-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: stretch;
+  align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
+  flex: 0 0 auto;
+}
 .meta-bar-time,
-.meta-bar-imgs,
+.meta-bar-imgs {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
 .meta-bar-severity {
   min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: stretch;
+  align-self: stretch;
+  width: auto;
 }
 .severity-row {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
   min-width: 0;
-  height: 100%;
 }
 .severity-row-head {
   display: flex;
@@ -1055,7 +1071,6 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   .qa-pair { grid-template-columns: 1fr; }
   .qa-half + .qa-half { border-left: none; border-top: none; }
   .meta-bar { grid-template-columns: 1fr; }
-  .meta-bar-severity { order: 1; }
   .meta-grid, .stats { grid-template-columns: 1fr; }
   .layout { grid-template-columns: minmax(0, 1fr); }
   .sidebar {
@@ -2538,18 +2553,20 @@ function renderItem(sec, grp, item) {
               <div class="col col-incidencia">
                 ${renderInplace("textarea", "inplace-incidencia", item.incidencia || "", "Descripción de la incidencia")}
                 <div class="thumbs">${renderThumbs(item.imagesIncidencia, "thumb-q", "incidencia")}</div>
-                <div class="meta-bar">
-                  <div class="meta-bar-time">
-                    <input type="datetime-local" class="moment-input fecha-incidencia" title="Momento de la incidencia" value="${escapeAttr(toDateTimeLocalValue(item.fechaIncidencia))}" />
+                <div class="meta-stack">
+                  <div class="meta-bar">
+                    <div class="meta-bar-time">
+                      <input type="datetime-local" class="moment-input fecha-incidencia" title="Momento de la incidencia" value="${escapeAttr(toDateTimeLocalValue(item.fechaIncidencia))}" />
+                    </div>
+                    <div class="meta-bar-imgs">
+                      <input type="file" accept="image/*" multiple class="img-input img-incidencia" tabindex="-1" aria-hidden="true" title="Imágenes incidencia" />
+                      <button type="button" class="img-pick" data-act="pick-img" data-which="incidencia" title="Añadir imagen a la incidencia" aria-label="Añadir imagen a la incidencia">
+                        <span class="material-icons" aria-hidden="true">image</span>
+                        Añadir imagen
+                      </button>
+                    </div>
                   </div>
                   ${renderSeverityControl("incidencia", item.severidadIncidencia)}
-                  <div class="meta-bar-imgs">
-                    <input type="file" accept="image/*" multiple class="img-input img-incidencia" tabindex="-1" aria-hidden="true" title="Imágenes incidencia" />
-                    <button type="button" class="img-pick" data-act="pick-img" data-which="incidencia" title="Añadir imagen a la incidencia" aria-label="Añadir imagen a la incidencia">
-                      <span class="material-icons" aria-hidden="true">image</span>
-                      Añadir imagen
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>
@@ -2557,18 +2574,20 @@ function renderItem(sec, grp, item) {
               <div class="col col-sol">
                 ${renderInplace("textarea", "inplace-solucion", item.solucion || "", "Qué se hizo / cómo se resolvió")}
                 <div class="thumbs">${renderThumbs(item.imagesSolucion, "thumb-s", "solucion")}</div>
-                <div class="meta-bar">
-                  <div class="meta-bar-time">
-                    <input type="datetime-local" class="moment-input fecha-solucion" title="Momento de la solución" value="${escapeAttr(toDateTimeLocalValue(item.fechaSolucion))}" />
+                <div class="meta-stack">
+                  <div class="meta-bar">
+                    <div class="meta-bar-time">
+                      <input type="datetime-local" class="moment-input fecha-solucion" title="Momento de la solución" value="${escapeAttr(toDateTimeLocalValue(item.fechaSolucion))}" />
+                    </div>
+                    <div class="meta-bar-imgs">
+                      <input type="file" accept="image/*" multiple class="img-input img-sol" tabindex="-1" aria-hidden="true" title="Imágenes solución" />
+                      <button type="button" class="img-pick" data-act="pick-img" data-which="solucion" title="Añadir imagen a la solución" aria-label="Añadir imagen a la solución">
+                        <span class="material-icons" aria-hidden="true">image</span>
+                        Añadir imagen
+                      </button>
+                    </div>
                   </div>
                   ${renderSeverityControl("solucion", item.severidadSolucion)}
-                  <div class="meta-bar-imgs">
-                    <input type="file" accept="image/*" multiple class="img-input img-sol" tabindex="-1" aria-hidden="true" title="Imágenes solución" />
-                    <button type="button" class="img-pick" data-act="pick-img" data-which="solucion" title="Añadir imagen a la solución" aria-label="Añadir imagen a la solución">
-                      <span class="material-icons" aria-hidden="true">image</span>
-                      Añadir imagen
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>

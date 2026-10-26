@@ -382,21 +382,25 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
             <textarea data-eq-issue-incidencia rows="5" placeholder="Issue description"></textarea>
           </label>
           <div class="ereport-issue-card-overlay__thumbs" data-eq-thumbs-incidencia></div>
-          <div class="ereport-issue-card-overlay__meta">
-            <label class="ereport-issue-card-overlay__field ereport-issue-card-overlay__field--inline">
-              Date
-              <input type="datetime-local" data-eq-issue-fecha-inc />
-            </label>
-            <label class="ereport-issue-card-overlay__field ereport-issue-card-overlay__field--severity">
-              Severity <span data-eq-sev-inc-value aria-hidden="true">—</span>
-              <input type="range" min="1" max="5" step="1" value="3" data-eq-issue-sev-inc data-severity-set="0" />
-            </label>
-            <button type="button" class="btn" data-eq-issue-sev-inc-clear title="Clear severity" hidden>Clear</button>
-            <input type="file" accept="image/*" multiple hidden data-eq-issue-file-inc />
-            <button type="button" class="btn" data-eq-issue-img-inc title="Load image">
-              <span class="material-symbols-outlined" aria-hidden="true">image</span>
-              Load image
-            </button>
+          <div class="ereport-issue-card-overlay__meta-stack">
+            <div class="ereport-issue-card-overlay__meta">
+              <label class="ereport-issue-card-overlay__field ereport-issue-card-overlay__field--inline">
+                Date
+                <input type="datetime-local" data-eq-issue-fecha-inc />
+              </label>
+              <input type="file" accept="image/*" multiple hidden data-eq-issue-file-inc />
+              <button type="button" class="btn" data-eq-issue-img-inc title="Load image">
+                <span class="material-symbols-outlined" aria-hidden="true">image</span>
+                Load image
+              </button>
+            </div>
+            <div class="ereport-issue-card-overlay__severity-row">
+              <label class="ereport-issue-card-overlay__field ereport-issue-card-overlay__field--severity">
+                Severity <span data-eq-sev-inc-value aria-hidden="true">—</span>
+                <input type="range" min="1" max="5" step="1" value="3" data-eq-issue-sev-inc data-severity-set="0" />
+              </label>
+              <button type="button" class="btn" data-eq-issue-sev-inc-clear title="Clear severity" hidden>Clear</button>
+            </div>
           </div>
         </div>
         <div class="ereport-issue-card-overlay__col">
@@ -405,21 +409,25 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
             <textarea data-eq-issue-solucion rows="5" placeholder="What was done / how it was fixed"></textarea>
           </label>
           <div class="ereport-issue-card-overlay__thumbs" data-eq-thumbs-solucion></div>
-          <div class="ereport-issue-card-overlay__meta">
-            <label class="ereport-issue-card-overlay__field ereport-issue-card-overlay__field--inline">
-              Date
-              <input type="datetime-local" data-eq-issue-fecha-sol />
-            </label>
-            <label class="ereport-issue-card-overlay__field ereport-issue-card-overlay__field--severity">
-              Severity <span data-eq-sev-sol-value aria-hidden="true">—</span>
-              <input type="range" min="1" max="5" step="1" value="3" data-eq-issue-sev-sol data-severity-set="0" />
-            </label>
-            <button type="button" class="btn" data-eq-issue-sev-sol-clear title="Clear severity" hidden>Clear</button>
-            <input type="file" accept="image/*" multiple hidden data-eq-issue-file-sol />
-            <button type="button" class="btn" data-eq-issue-img-sol title="Load image">
-              <span class="material-symbols-outlined" aria-hidden="true">image</span>
-              Load image
-            </button>
+          <div class="ereport-issue-card-overlay__meta-stack">
+            <div class="ereport-issue-card-overlay__meta">
+              <label class="ereport-issue-card-overlay__field ereport-issue-card-overlay__field--inline">
+                Date
+                <input type="datetime-local" data-eq-issue-fecha-sol />
+              </label>
+              <input type="file" accept="image/*" multiple hidden data-eq-issue-file-sol />
+              <button type="button" class="btn" data-eq-issue-img-sol title="Load image">
+                <span class="material-symbols-outlined" aria-hidden="true">image</span>
+                Load image
+              </button>
+            </div>
+            <div class="ereport-issue-card-overlay__severity-row">
+              <label class="ereport-issue-card-overlay__field ereport-issue-card-overlay__field--severity">
+                Severity <span data-eq-sev-sol-value aria-hidden="true">—</span>
+                <input type="range" min="1" max="5" step="1" value="3" data-eq-issue-sev-sol data-severity-set="0" />
+              </label>
+              <button type="button" class="btn" data-eq-issue-sev-sol-clear title="Clear severity" hidden>Clear</button>
+            </div>
           </div>
         </div>
       </div>

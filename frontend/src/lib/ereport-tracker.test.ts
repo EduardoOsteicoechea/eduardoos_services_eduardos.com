@@ -157,4 +157,10 @@ describe("vendored tracker assets", () => {
     expect(tracker).not.toMatch(/severidadIncidencia:\s*3/);
     expect(tracker).toContain('data-severity-set="${set ? "1" : "0"}"');
   });
+
+  it("places severity on its own row under date and add-image", () => {
+    expect(tracker).toContain("meta-stack");
+    expect(tracker).toMatch(/<div class="meta-bar">[\s\S]*?meta-bar-time[\s\S]*?meta-bar-imgs[\s\S]*?<\/div>\s*\$\{renderSeverityControl/);
+    expect(tracker).toContain("grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);");
+  });
 });
