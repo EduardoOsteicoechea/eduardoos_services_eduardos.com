@@ -1154,6 +1154,22 @@ html[data-page="ereport"] .ereport-hub__recent-stat--done {
   flex: 1 1 10rem;
 }
 
+.ereport-issue-card-overlay__field--severity {
+  flex: 1 1 8rem;
+  min-width: 0;
+}
+
+.ereport-issue-card-overlay__field--severity input[type="range"] {
+  width: auto;
+  min-width: 0;
+  height: var(--control-height);
+  accent-color: var(--color-accent);
+}
+
+.ereport-issue-card-overlay__field--severity input[type="range"].is-unset {
+  opacity: 0.45;
+}
+
 .ereport-issue-card-overlay__thumbs {
   display: flex;
   flex-wrap: wrap;

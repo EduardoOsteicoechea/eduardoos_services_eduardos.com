@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"io"
+	"math"
 	"net/http"
 	"strings"
 	"sync"
@@ -195,6 +196,12 @@ func mutateCreateItem(sectionID, groupID string) ereportNodeMutator {
 		if v, ok := body["fechaSolucion"]; ok {
 			item["fechaSolucion"] = asString(v)
 		}
+		if err := applyEreportSeverityField(item, body, "severidadIncidencia"); err != nil {
+			return nil, err
+		}
+		if err := applyEreportSeverityField(item, body, "severidadSolucion"); err != nil {
+			return nil, err
+		}
 		item["status"] = ereportNodeStatusReprobado
 		if v, ok := body["status"]; ok {
 			st := asString(v)
@@ -256,6 +263,12 @@ func mutatePatchItem(sectionID, groupID, itemID string) ereportNodeMutator {
 		}
 		if v, ok := body["fechaSolucion"]; ok {
 			item["fechaSolucion"] = asString(v)
+		}
+		if err := applyEreportSeverityField(item, body, "severidadIncidencia"); err != nil {
+			return nil, err
+		}
+		if err := applyEreportSeverityField(item, body, "severidadSolucion"); err != nil {
+			return nil, err
 		}
 		if v, ok := body["status"]; ok {
 			st := asString(v)
@@ -550,6 +563,63 @@ func validEreportItemStatus(st string) bool {
 		return true
 	default:
 		return false
+	}
+}
+
+// applyEreportSeverityField sets optional item severity (1–5).
+// Missing body key = no-op. null or 0 clears the field (omit from JSON).
+// Other values → invalid_request. Never writes a default on legacy items.
+func applyEreportSeverityField(item, body map[string]any, key string) error {
+	v, ok := body[key]
+	if !ok {
+		return nil
+	}
+	if v == nil {
+		delete(item, key)
+		return nil
+	}
+	n, ok := coerceEreportSeverityInt(v)
+	if !ok {
+		return apiWriteErr("invalid_request", key+" must be 1–5, or null/0 to clear")
+	}
+	if n == 0 {
+		delete(item, key)
+		return nil
+	}
+	if n < 1 || n > 5 {
+		return apiWriteErr("invalid_request", key+" must be 1–5, or null/0 to clear")
+	}
+	item[key] = n
+	return nil
+}
+
+func coerceEreportSeverityInt(v any) (int, bool) {
+	switch t := v.(type) {
+	case int:
+		return t, true
+	case int32:
+		return int(t), true
+	case int64:
+		return int(t), true
+	case float64:
+		if math.Trunc(t) != t {
+			return 0, false
+		}
+		return int(t), true
+	case float32:
+		f := float64(t)
+		if math.Trunc(f) != f {
+			return 0, false
+		}
+		return int(t), true
+	case json.Number:
+		i, err := t.Int64()
+		if err != nil {
+			return 0, false
+		}
+		return int(i), true
+	default:
+		return 0, false
 	}
 }
 

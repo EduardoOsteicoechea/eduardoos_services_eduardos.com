@@ -51,7 +51,7 @@ Live catalog keys: `payloadSchema.ereport.websiteRegistration`, `payloadSchema.e
 - `POST …/sections/{sectionId}/groups`
 - `PATCH …/groups/{groupId}`
 - `POST …/groups/{groupId}/items`
-- `PATCH …/items/{itemId}`
+- `PATCH …/items/{itemId}` — optional `severidadIncidencia` / `severidadSolucion` (int 1–5; `null`/`0` clears; omit = leave unchanged)
 
 Same paths under cookie `/api/ereport/...` for the site UI.
 

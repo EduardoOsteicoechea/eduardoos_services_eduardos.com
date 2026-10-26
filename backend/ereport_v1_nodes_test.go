@@ -179,6 +179,146 @@ func TestEreportV1NodeMutations(t *testing.T) {
 	}
 }
 
+func TestEreportItemSeverityOptional(t *testing.T) {
+	app := newTestApp(false)
+	_ = app.grantEntitlement("member-1", productEreport)
+	_ = app.grantEntitlement("member-1", productAPI)
+	created := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/ereport/orgs", `{"name":"SevOrg","firstReportName":"SevRep"}`)
+	body := decodeMap(t, created)
+	orgID := body["org"].(map[string]any)["id"].(string)
+	reportID := body["report"].(map[string]any)["id"].(string)
+
+	keyRec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/apikeys", `{"label":"sev"}`)
+	if keyRec.Code != http.StatusCreated {
+		t.Fatalf("apikey: %d %s", keyRec.Code, keyRec.Body.String())
+	}
+	secret := decodeMap(t, keyRec)["key"].(string)
+
+	secRec := v1JSON(t, app, secret, http.MethodPost,
+		"/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections",
+		[]byte(`{"title":"S","kind":"funcionalidades"}`))
+	if secRec.Code != http.StatusCreated {
+		t.Fatalf("section: %d %s", secRec.Code, secRec.Body.String())
+	}
+	sectionID := decodeMap(t, secRec)["node"].(map[string]any)["id"].(string)
+	grpRec := v1JSON(t, app, secret, http.MethodPost,
+		"/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections/"+sectionID+"/groups",
+		[]byte(`{"title":"G"}`))
+	if grpRec.Code != http.StatusCreated {
+		t.Fatalf("group: %d %s", grpRec.Code, grpRec.Body.String())
+	}
+	groupID := decodeMap(t, grpRec)["node"].(map[string]any)["id"].(string)
+
+	// Create without severity keys — legacy-compatible.
+	itemRec := v1JSON(t, app, secret, http.MethodPost,
+		"/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections/"+sectionID+"/groups/"+groupID+"/items",
+		[]byte(`{"nombre":"No sev","incidencia":"plain","status":"reprobado"}`))
+	if itemRec.Code != http.StatusCreated {
+		t.Fatalf("post item: %d %s", itemRec.Code, itemRec.Body.String())
+	}
+	itemNode := decodeMap(t, itemRec)["node"].(map[string]any)
+	itemID := itemNode["id"].(string)
+	if _, ok := itemNode["severidadIncidencia"]; ok {
+		t.Fatalf("create must omit severidadIncidencia: %#v", itemNode)
+	}
+	if _, ok := itemNode["severidadSolucion"]; ok {
+		t.Fatalf("create must omit severidadSolucion: %#v", itemNode)
+	}
+
+	// Set both severities.
+	setBody, _ := json.Marshal(map[string]any{
+		"severidadIncidencia": 4,
+		"severidadSolucion":   2,
+	})
+	setRec := v1JSON(t, app, secret, http.MethodPatch,
+		"/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections/"+sectionID+"/groups/"+groupID+"/items/"+itemID, setBody)
+	if setRec.Code != http.StatusOK {
+		t.Fatalf("set severity: %d %s", setRec.Code, setRec.Body.String())
+	}
+	setNode := decodeMap(t, setRec)["node"].(map[string]any)
+	if int(setNode["severidadIncidencia"].(float64)) != 4 || int(setNode["severidadSolucion"].(float64)) != 2 {
+		t.Fatalf("set node: %#v", setNode)
+	}
+
+	// Invalid value rejected; prior values kept.
+	badRec := v1JSON(t, app, secret, http.MethodPatch,
+		"/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections/"+sectionID+"/groups/"+groupID+"/items/"+itemID,
+		[]byte(`{"severidadIncidencia":9}`))
+	if badRec.Code != http.StatusBadRequest {
+		t.Fatalf("invalid severity want 400, got %d %s", badRec.Code, badRec.Body.String())
+	}
+
+	getRec := v1JSON(t, app, secret, http.MethodGet,
+		"/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID, nil)
+	if getRec.Code != http.StatusOK {
+		t.Fatalf("get: %d %s", getRec.Code, getRec.Body.String())
+	}
+	payload := decodeMap(t, getRec)["payload"].(map[string]any)
+	var found map[string]any
+	for _, rawSec := range payload["sections"].([]any) {
+		sec := rawSec.(map[string]any)
+		if asString(sec["id"]) != sectionID {
+			continue
+		}
+		for _, rawGrp := range sec["groups"].([]any) {
+			grp := rawGrp.(map[string]any)
+			if asString(grp["id"]) != groupID {
+				continue
+			}
+			for _, rawIt := range grp["items"].([]any) {
+				it := rawIt.(map[string]any)
+				if asString(it["id"]) == itemID {
+					found = it
+				}
+			}
+		}
+	}
+	if found == nil {
+		t.Fatal("item missing after invalid patch")
+	}
+	if int(found["severidadIncidencia"].(float64)) != 4 {
+		t.Fatalf("invalid patch must not clear severity: %#v", found)
+	}
+
+	// Clear with null / 0.
+	clearBody, _ := json.Marshal(map[string]any{
+		"severidadIncidencia": nil,
+		"severidadSolucion":   0,
+	})
+	clearRec := v1JSON(t, app, secret, http.MethodPatch,
+		"/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections/"+sectionID+"/groups/"+groupID+"/items/"+itemID, clearBody)
+	if clearRec.Code != http.StatusOK {
+		t.Fatalf("clear severity: %d %s", clearRec.Code, clearRec.Body.String())
+	}
+	cleared := decodeMap(t, clearRec)["node"].(map[string]any)
+	if _, ok := cleared["severidadIncidencia"]; ok {
+		t.Fatalf("cleared severidadIncidencia still present: %#v", cleared)
+	}
+	if _, ok := cleared["severidadSolucion"]; ok {
+		t.Fatalf("cleared severidadSolucion still present: %#v", cleared)
+	}
+
+	// Create with severity in body.
+	withSev, _ := json.Marshal(map[string]any{
+		"nombre":              "With sev",
+		"incidencia":          "rated",
+		"status":              "reprobado",
+		"severidadIncidencia": 5,
+	})
+	withRec := v1JSON(t, app, secret, http.MethodPost,
+		"/api/v1/ereport/orgs/"+orgID+"/reports/"+reportID+"/sections/"+sectionID+"/groups/"+groupID+"/items", withSev)
+	if withRec.Code != http.StatusCreated {
+		t.Fatalf("create with severity: %d %s", withRec.Code, withRec.Body.String())
+	}
+	withNode := decodeMap(t, withRec)["node"].(map[string]any)
+	if int(withNode["severidadIncidencia"].(float64)) != 5 {
+		t.Fatalf("create severity: %#v", withNode)
+	}
+	if _, ok := withNode["severidadSolucion"]; ok {
+		t.Fatalf("unset solucion severity must stay omitted: %#v", withNode)
+	}
+}
+
 func v1JSON(t *testing.T, app *App, secret, method, path string, body []byte) *httptest.ResponseRecorder {
 	t.Helper()
 	var req *http.Request

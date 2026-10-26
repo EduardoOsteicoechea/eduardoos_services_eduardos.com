@@ -34,10 +34,20 @@ export type EreportIssueCardItem = {
   status?: string;
   fechaIncidencia?: string;
   fechaSolucion?: string;
+  /** Optional 1–5; omit when unset. */
+  severidadIncidencia?: number;
+  /** Optional 1–5; omit when unset. */
+  severidadSolucion?: number;
   checklist?: EreportIssueChecklistRow[];
   imagesIncidencia?: EreportIssueImageRef[];
   imagesSolucion?: EreportIssueImageRef[];
 };
+
+function parseIssueSeverity(v: unknown): number | undefined {
+  const n = typeof v === "number" ? v : Number(v);
+  if (!Number.isFinite(n) || !Number.isInteger(n) || n < 1 || n > 5) return undefined;
+  return n;
+}
 
 /** Mode W / connector: Bearer (eos_live_… or eos_embed_…) instead of session cookies. */
 export type EreportIssueCardApiAuth = {
@@ -180,7 +190,7 @@ export function ensureIssueChecklist(
 }
 
 function cloneItem(it: EreportIssueCardItem): EreportIssueCardItem {
-  return {
+  const out: EreportIssueCardItem = {
     id: it.id,
     nombre: it.nombre || "",
     incidencia: it.incidencia || "",
@@ -192,6 +202,11 @@ function cloneItem(it: EreportIssueCardItem): EreportIssueCardItem {
     imagesIncidencia: Array.isArray(it.imagesIncidencia) ? [...it.imagesIncidencia] : [],
     imagesSolucion: Array.isArray(it.imagesSolucion) ? [...it.imagesSolucion] : [],
   };
+  const sevInc = parseIssueSeverity(it.severidadIncidencia);
+  const sevSol = parseIssueSeverity(it.severidadSolucion);
+  if (sevInc !== undefined) out.severidadIncidencia = sevInc;
+  if (sevSol !== undefined) out.severidadSolucion = sevSol;
+  return out;
 }
 
 async function patchItem(
@@ -327,6 +342,8 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
     status: opts.item?.status,
     fechaIncidencia: opts.item?.fechaIncidencia,
     fechaSolucion: opts.item?.fechaSolucion,
+    severidadIncidencia: opts.item?.severidadIncidencia,
+    severidadSolucion: opts.item?.severidadSolucion,
     checklist: opts.item?.checklist,
     imagesIncidencia: opts.item?.imagesIncidencia,
     imagesSolucion: opts.item?.imagesSolucion,
@@ -370,6 +387,11 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
               Date
               <input type="datetime-local" data-eq-issue-fecha-inc />
             </label>
+            <label class="ereport-issue-card-overlay__field ereport-issue-card-overlay__field--severity">
+              Severity <span data-eq-sev-inc-value aria-hidden="true">—</span>
+              <input type="range" min="1" max="5" step="1" value="3" data-eq-issue-sev-inc data-severity-set="0" />
+            </label>
+            <button type="button" class="btn" data-eq-issue-sev-inc-clear title="Clear severity" hidden>Clear</button>
             <input type="file" accept="image/*" multiple hidden data-eq-issue-file-inc />
             <button type="button" class="btn" data-eq-issue-img-inc title="Load image">
               <span class="material-symbols-outlined" aria-hidden="true">image</span>
@@ -388,6 +410,11 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
               Date
               <input type="datetime-local" data-eq-issue-fecha-sol />
             </label>
+            <label class="ereport-issue-card-overlay__field ereport-issue-card-overlay__field--severity">
+              Severity <span data-eq-sev-sol-value aria-hidden="true">—</span>
+              <input type="range" min="1" max="5" step="1" value="3" data-eq-issue-sev-sol data-severity-set="0" />
+            </label>
+            <button type="button" class="btn" data-eq-issue-sev-sol-clear title="Clear severity" hidden>Clear</button>
             <input type="file" accept="image/*" multiple hidden data-eq-issue-file-sol />
             <button type="button" class="btn" data-eq-issue-img-sol title="Load image">
               <span class="material-symbols-outlined" aria-hidden="true">image</span>
@@ -422,6 +449,12 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
   const solucionInput = el<HTMLTextAreaElement>(frame, "[data-eq-issue-solucion]")!;
   const fechaIncInput = el<HTMLInputElement>(frame, "[data-eq-issue-fecha-inc]")!;
   const fechaSolInput = el<HTMLInputElement>(frame, "[data-eq-issue-fecha-sol]")!;
+  const sevIncInput = el<HTMLInputElement>(frame, "[data-eq-issue-sev-inc]")!;
+  const sevSolInput = el<HTMLInputElement>(frame, "[data-eq-issue-sev-sol]")!;
+  const sevIncValue = el<HTMLElement>(frame, "[data-eq-sev-inc-value]")!;
+  const sevSolValue = el<HTMLElement>(frame, "[data-eq-sev-sol-value]")!;
+  const sevIncClear = el<HTMLButtonElement>(frame, "[data-eq-issue-sev-inc-clear]")!;
+  const sevSolClear = el<HTMLButtonElement>(frame, "[data-eq-issue-sev-sol-clear]")!;
   const thumbsInc = el<HTMLElement>(frame, "[data-eq-thumbs-incidencia]")!;
   const thumbsSol = el<HTMLElement>(frame, "[data-eq-thumbs-solucion]")!;
   const checklistHost = el<HTMLElement>(frame, "[data-eq-issue-checklist]")!;
@@ -433,12 +466,51 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
     statusEl.textContent = msg;
   }
 
+  function syncSeverityUi(
+    range: HTMLInputElement,
+    valueEl: HTMLElement,
+    clearBtn: HTMLButtonElement,
+  ) {
+    const set = range.dataset.severitySet === "1";
+    range.classList.toggle("is-unset", !set);
+    valueEl.textContent = set ? String(range.value) : "—";
+    clearBtn.hidden = !set;
+  }
+
+  function readSeverityFromRange(range: HTMLInputElement): number | undefined {
+    if (range.dataset.severitySet !== "1") return undefined;
+    return parseIssueSeverity(range.value);
+  }
+
+  function writeSeverityToRange(
+    range: HTMLInputElement,
+    valueEl: HTMLElement,
+    clearBtn: HTMLButtonElement,
+    value: number | undefined,
+  ) {
+    const n = parseIssueSeverity(value);
+    if (n === undefined) {
+      range.dataset.severitySet = "0";
+      range.value = "3";
+    } else {
+      range.dataset.severitySet = "1";
+      range.value = String(n);
+    }
+    syncSeverityUi(range, valueEl, clearBtn);
+  }
+
   function readDraftFromDom() {
     draft.nombre = nombreInput.value;
     draft.incidencia = incidenciaInput.value;
     draft.solucion = solucionInput.value;
     draft.fechaIncidencia = fromDateTimeLocalValue(fechaIncInput.value);
     draft.fechaSolucion = fromDateTimeLocalValue(fechaSolInput.value);
+    const sevInc = readSeverityFromRange(sevIncInput);
+    const sevSol = readSeverityFromRange(sevSolInput);
+    if (sevInc === undefined) delete draft.severidadIncidencia;
+    else draft.severidadIncidencia = sevInc;
+    if (sevSol === undefined) delete draft.severidadSolucion;
+    else draft.severidadSolucion = sevSol;
     const rows: EreportIssueChecklistRow[] = [];
     checklistHost.querySelectorAll("[data-check-id]").forEach((row) => {
       if (!(row instanceof HTMLElement)) return;
@@ -576,6 +648,8 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
     solucionInput.value = draft.solucion || "";
     fechaIncInput.value = toDateTimeLocalValue(draft.fechaIncidencia);
     fechaSolInput.value = toDateTimeLocalValue(draft.fechaSolucion);
+    writeSeverityToRange(sevIncInput, sevIncValue, sevIncClear, draft.severidadIncidencia);
+    writeSeverityToRange(sevSolInput, sevSolValue, sevSolClear, draft.severidadSolucion);
     renderThumbs(thumbsInc, draft.imagesIncidencia, "incidencia");
     renderThumbs(thumbsSol, draft.imagesSolucion, "solucion");
     renderChecklist();
@@ -585,7 +659,7 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
   function patchBodyFromDraft(): Record<string, unknown> {
     readDraftFromDom();
     draft.checklist = ensureIssueChecklist(draft.checklist);
-    return {
+    const body: Record<string, unknown> = {
       nombre: (draft.nombre || "").trim(),
       incidencia: draft.incidencia || "",
       solucion: draft.solucion || "",
@@ -593,6 +667,12 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
       fechaSolucion: draft.fechaSolucion || "",
       checklist: draft.checklist,
     };
+    /* Always send severity keys: number 1–5 or null to clear so PATCH does not leave stale values. */
+    body.severidadIncidencia =
+      draft.severidadIncidencia === undefined ? null : draft.severidadIncidencia;
+    body.severidadSolucion =
+      draft.severidadSolucion === undefined ? null : draft.severidadSolucion;
+    return body;
   }
 
   function scheduleSave() {
@@ -970,6 +1050,26 @@ export async function openEreportIssueCardModal(opts: EreportIssueCardOpenOpts) 
     node.addEventListener("input", () => scheduleSave());
     node.addEventListener("change", () => scheduleSave());
   }
+
+  function onSeverityInput(range: HTMLInputElement, valueEl: HTMLElement, clearBtn: HTMLButtonElement) {
+    range.dataset.severitySet = "1";
+    syncSeverityUi(range, valueEl, clearBtn);
+    scheduleSave();
+  }
+  sevIncInput.addEventListener("input", () => onSeverityInput(sevIncInput, sevIncValue, sevIncClear));
+  sevIncInput.addEventListener("change", () => onSeverityInput(sevIncInput, sevIncValue, sevIncClear));
+  sevSolInput.addEventListener("input", () => onSeverityInput(sevSolInput, sevSolValue, sevSolClear));
+  sevSolInput.addEventListener("change", () => onSeverityInput(sevSolInput, sevSolValue, sevSolClear));
+  sevIncClear.addEventListener("click", () => {
+    if (!fieldsReady) return;
+    writeSeverityToRange(sevIncInput, sevIncValue, sevIncClear, undefined);
+    scheduleSave();
+  });
+  sevSolClear.addEventListener("click", () => {
+    if (!fieldsReady) return;
+    writeSeverityToRange(sevSolInput, sevSolValue, sevSolClear, undefined);
+    scheduleSave();
+  });
 
   el(frame, "[data-eq-issue-img-inc]")?.addEventListener("click", () => {
     if (!fieldsReady || fileInc.disabled) return;

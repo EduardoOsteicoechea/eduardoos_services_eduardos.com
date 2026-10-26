@@ -207,4 +207,64 @@ describe("ereport issue card modal", () => {
     expect(alertSpy).not.toHaveBeenCalled();
     alertSpy.mockRestore();
   });
+
+  it("patches severity 1–5 and clears with null without inventing defaults", async () => {
+    vi.useFakeTimers({
+      toFake: ["setTimeout", "clearTimeout", "setInterval", "clearInterval"],
+    });
+    vi.mocked(fetchOrgReport).mockResolvedValue({
+      status: 200,
+      requestId: "rid-load",
+      data: {
+        payload: {
+          sections: [
+            {
+              id: "sec-1",
+              groups: [
+                {
+                  id: "grp-1",
+                  items: [{ ...sampleItem, severidadIncidencia: 4 }],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    } as Awaited<ReturnType<typeof fetchOrgReport>>);
+
+    await openEreportIssueCardModal({
+      orgId: "org-1",
+      reportId: "rep-1",
+      sectionId: "sec-1",
+      groupId: "grp-1",
+      itemId: "item-1",
+    });
+
+    const sevInc = document.querySelector(
+      "[data-eq-issue-sev-inc]",
+    ) as HTMLInputElement | null;
+    const sevSol = document.querySelector(
+      "[data-eq-issue-sev-sol]",
+    ) as HTMLInputElement | null;
+    expect(sevInc).toBeTruthy();
+    expect(sevSol).toBeTruthy();
+    expect(sevInc!.dataset.severitySet).toBe("1");
+    expect(sevInc!.value).toBe("4");
+    expect(sevSol!.dataset.severitySet).toBe("0");
+
+    sevSol!.dataset.severitySet = "1";
+    sevSol!.value = "2";
+    sevSol!.dispatchEvent(new Event("input", { bubbles: true }));
+
+    await closeEreportIssueCardModal();
+
+    expect(apiRequest).toHaveBeenCalled();
+    const [, init] = vi.mocked(apiRequest).mock.calls[0]!;
+    const body = JSON.parse(String((init as { body?: string }).body || "{}")) as {
+      severidadIncidencia?: number | null;
+      severidadSolucion?: number | null;
+    };
+    expect(body.severidadIncidencia).toBe(4);
+    expect(body.severidadSolucion).toBe(2);
+  });
 });

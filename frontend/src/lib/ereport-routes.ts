@@ -1,5 +1,5 @@
 /** Bump when `public/ereport-tracker.html` changes so browsers drop the cached canvas. */
-export const TRACKER_SRC = "/ereport-tracker.html?v=097";
+export const TRACKER_SRC = "/ereport-tracker.html?v=098";
 
 /** Always force a fresh iframe document (same ?v= alone will not reload). */
 export function trackerIframeSrc(): string {

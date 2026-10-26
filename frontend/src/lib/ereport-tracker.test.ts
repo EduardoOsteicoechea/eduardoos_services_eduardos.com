@@ -143,4 +143,18 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain("@media (max-width: 90rem)");
     expect(tracker).toContain(".qa-pair { grid-template-columns: 1fr; }");
   });
+
+  it("keeps optional severity sliders additive (no legacy backfill)", () => {
+    expect(tracker).toContain("function parseSeverity(");
+    expect(tracker).toContain("function renderSeverityControl(");
+    expect(tracker).toContain("function applySeverityFromDom(");
+    expect(tracker).toContain("severidadIncidencia");
+    expect(tracker).toContain("severidadSolucion");
+    expect(tracker).toContain('data-act="clear-severity"');
+    expect(tracker).toContain("bindSeverityControl");
+    expect(tracker).toContain("delete item[key]");
+    expect(tracker).not.toMatch(/severidadIncidencia:\s*0/);
+    expect(tracker).not.toMatch(/severidadIncidencia:\s*3/);
+    expect(tracker).toContain('data-severity-set="${set ? "1" : "0"}"');
+  });
 });

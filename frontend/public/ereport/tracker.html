@@ -729,7 +729,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 .col-head .lbl { flex: 0 0 auto; }
 .meta-bar {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
   gap: 0.5rem;
   align-items: stretch;
   align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
@@ -737,12 +737,64 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   flex: 0 0 auto;
 }
 .meta-bar-time,
-.meta-bar-imgs {
+.meta-bar-imgs,
+.meta-bar-severity {
   min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: stretch;
 }
+.severity-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  height: 100%;
+}
+.severity-row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.severity-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04rem;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+.severity-value {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 700;
+}
+.severity-clear {
+  flex: 0 0 auto;
+  height: 1.25rem;
+  min-height: 1.25rem;
+  padding: 0 0.35rem;
+  font-size: 0.65rem;
+  border: 0.0625rem solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+}
+.severity-clear:hover { color: var(--ink); border-color: var(--ink); }
+.severity-range {
+  width: auto;
+  min-width: 0;
+  align-self: stretch;
+  height: 2rem;
+  min-height: 2rem;
+  margin: 0;
+  accent-color: var(--warning);
+}
+.severity-range.is-unset { opacity: 0.45; }
 .col > .thumbs {
   align-self: stretch; width: auto; min-width: 0; box-sizing: border-box;
   margin-top: 0;
@@ -1003,6 +1055,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
   .qa-pair { grid-template-columns: 1fr; }
   .qa-half + .qa-half { border-left: none; border-top: none; }
   .meta-bar { grid-template-columns: 1fr; }
+  .meta-bar-severity { order: 1; }
   .meta-grid, .stats { grid-template-columns: 1fr; }
   .layout { grid-template-columns: minmax(0, 1fr); }
   .sidebar {
@@ -1338,6 +1391,73 @@ function normalizeChecklist(list) {
   }));
 }
 
+function parseSeverity(v) {
+  const n = Number(v);
+  if (!Number.isFinite(n) || !Number.isInteger(n) || n < 1 || n > 5) return undefined;
+  return n;
+}
+function applySeverityFromDom(item, card, which) {
+  const key = which === "solucion" ? "severidadSolucion" : "severidadIncidencia";
+  const el = card.querySelector(which === "solucion" ? ".severity-solucion" : ".severity-incidencia");
+  if (!el || el.dataset.severitySet !== "1") {
+    delete item[key];
+    return;
+  }
+  const n = parseSeverity(el.value);
+  if (n === undefined) {
+    delete item[key];
+    return;
+  }
+  item[key] = n;
+}
+function renderSeverityControl(which, value) {
+  const set = parseSeverity(value) !== undefined;
+  const n = set ? parseSeverity(value) : 3;
+  const cls = which === "solucion" ? "severity-solucion" : "severity-incidencia";
+  const label = which === "solucion" ? "Severidad solución" : "Severidad incidencia";
+  const shown = set ? String(n) : "—";
+  return `<div class="meta-bar-severity">
+    <div class="severity-row">
+      <div class="severity-row-head">
+        <span class="severity-label">${label} <span class="severity-value" data-severity-value>${shown}</span></span>
+        <button type="button" class="severity-clear" data-act="clear-severity" data-which="${which}" title="Quitar severidad" aria-label="Quitar severidad"${set ? "" : " hidden"}>Limpiar</button>
+      </div>
+      <input type="range" class="severity-range ${cls}${set ? "" : " is-unset"}" min="1" max="5" step="1" value="${n}" data-severity-set="${set ? "1" : "0"}" title="${label}" aria-label="${label}" />
+    </div>
+  </div>`;
+}
+function bindSeverityControl(range) {
+  if (!range) return;
+  const row = range.closest(".severity-row");
+  const valueEl = row && row.querySelector("[data-severity-value]");
+  const clearBtn = row && row.querySelector('[data-act="clear-severity"]');
+  const sync = () => {
+    const set = range.dataset.severitySet === "1";
+    range.classList.toggle("is-unset", !set);
+    if (valueEl) valueEl.textContent = set ? String(range.value) : "—";
+    if (clearBtn) clearBtn.hidden = !set;
+  };
+  range.oninput = () => {
+    range.dataset.severitySet = "1";
+    sync();
+    updateStatus();
+  };
+  range.onchange = () => {
+    range.dataset.severitySet = "1";
+    sync();
+    updateStatus();
+  };
+  if (clearBtn) {
+    clearBtn.onclick = (ev) => {
+      ev.preventDefault();
+      range.dataset.severitySet = "0";
+      range.value = "3";
+      sync();
+      updateStatus();
+    };
+  }
+  sync();
+}
 function normalizeItem(it, opts) {
   const sol = it.imagesSolucion != null ? it.imagesSolucion : (it.images || []);
   const criteriaStatus = {};
@@ -1373,6 +1493,10 @@ function normalizeItem(it, opts) {
     imagesSolucion: sol,
     images: sol
   };
+  const sevInc = parseSeverity(it.severidadIncidencia);
+  const sevSol = parseSeverity(it.severidadSolucion);
+  if (sevInc !== undefined) item.severidadIncidencia = sevInc;
+  if (sevSol !== undefined) item.severidadSolucion = sevSol;
   item.status = effectiveStatus(item);
   return item;
 }
@@ -1740,6 +1864,8 @@ function collectFromDom() {
     item.fechaIncidencia = fromDateTimeLocalValue(card.querySelector(".fecha-incidencia")?.value);
     item.solucion = readInplace(card.querySelector(".inplace-solucion"));
     item.fechaSolucion = fromDateTimeLocalValue(card.querySelector(".fecha-solucion")?.value);
+    applySeverityFromDom(item, card, "incidencia");
+    applySeverityFromDom(item, card, "solucion");
     if (!item.criteriaStatus || typeof item.criteriaStatus !== "object") item.criteriaStatus = {};
     if (!Array.isArray(item.checklist)) item.checklist = [];
     card.querySelectorAll(".checklist-row").forEach((row) => {
@@ -2416,6 +2542,7 @@ function renderItem(sec, grp, item) {
                   <div class="meta-bar-time">
                     <input type="datetime-local" class="moment-input fecha-incidencia" title="Momento de la incidencia" value="${escapeAttr(toDateTimeLocalValue(item.fechaIncidencia))}" />
                   </div>
+                  ${renderSeverityControl("incidencia", item.severidadIncidencia)}
                   <div class="meta-bar-imgs">
                     <input type="file" accept="image/*" multiple class="img-input img-incidencia" tabindex="-1" aria-hidden="true" title="Imágenes incidencia" />
                     <button type="button" class="img-pick" data-act="pick-img" data-which="incidencia" title="Añadir imagen a la incidencia" aria-label="Añadir imagen a la incidencia">
@@ -2434,6 +2561,7 @@ function renderItem(sec, grp, item) {
                   <div class="meta-bar-time">
                     <input type="datetime-local" class="moment-input fecha-solucion" title="Momento de la solución" value="${escapeAttr(toDateTimeLocalValue(item.fechaSolucion))}" />
                   </div>
+                  ${renderSeverityControl("solucion", item.severidadSolucion)}
                   <div class="meta-bar-imgs">
                     <input type="file" accept="image/*" multiple class="img-input img-sol" tabindex="-1" aria-hidden="true" title="Imágenes solución" />
                     <button type="button" class="img-pick" data-act="pick-img" data-which="solucion" title="Añadir imagen a la solución" aria-label="Añadir imagen a la solución">
@@ -2891,6 +3019,8 @@ function render() {
     const fechaSol = card.querySelector(".fecha-solucion");
     if (fechaInc) fechaInc.onchange = () => updateStatus();
     if (fechaSol) fechaSol.onchange = () => updateStatus();
+    bindSeverityControl(card.querySelector(".severity-incidencia"));
+    bindSeverityControl(card.querySelector(".severity-solucion"));
     const nomEl = card.querySelector(".inplace-nombre");
     const incEl = card.querySelector(".inplace-incidencia");
     const solEl = card.querySelector(".inplace-solucion");
