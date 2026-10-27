@@ -2146,6 +2146,61 @@ function removeItem(sid, gid, iid) {
   render();
 }
 
+/** Swap neighbors in-place. delta -1 = up, +1 = down. Returns false if out of range. */
+function swapAdjacent(list, index, delta) {
+  if (!Array.isArray(list) || !list.length) return false;
+  const d = delta < 0 ? -1 : 1;
+  const j = index + d;
+  if (index < 0 || index >= list.length || j < 0 || j >= list.length) return false;
+  const tmp = list[index];
+  list[index] = list[j];
+  list[j] = tmp;
+  return true;
+}
+
+function moveSection(sid, delta) {
+  collectFromDom();
+  const list = state.sections || [];
+  const idx = list.findIndex((s) => s.id === sid);
+  if (!swapAdjacent(list, idx, delta)) return;
+  render();
+  updateStatus();
+}
+
+function moveGroup(sid, gid, delta) {
+  collectFromDom();
+  const sec = (state.sections || []).find((s) => s.id === sid);
+  if (!sec) return;
+  if (!Array.isArray(sec.groups)) sec.groups = [];
+  const idx = sec.groups.findIndex((g) => g.id === gid);
+  if (!swapAdjacent(sec.groups, idx, delta)) return;
+  render();
+  updateStatus();
+}
+
+function moveItem(sid, gid, iid, delta) {
+  collectFromDom();
+  const found = locateItem(sid, gid, iid);
+  if (!found) return;
+  const list = found.list;
+  const idx = list.findIndex((it) => it.id === iid);
+  if (!swapAdjacent(list, idx, delta)) return;
+  if (gid === SECTION_ITEMS) {
+    found.sec.items = list;
+  } else {
+    found.grp.items = list;
+  }
+  render();
+  updateStatus();
+}
+
+function renderMoveButtons(act, canUp, canDown, upTitle, downTitle) {
+  return `
+    <button type="button" class="ghost" data-act="${act}" data-dir="up" title="${escapeAttr(upTitle)}" aria-label="${escapeAttr(upTitle)}"${canUp ? "" : " disabled"}>${mi("keyboard_arrow_up")}</button>
+    <button type="button" class="ghost" data-act="${act}" data-dir="down" title="${escapeAttr(downTitle)}" aria-label="${escapeAttr(downTitle)}"${canDown ? "" : " disabled"}>${mi("keyboard_arrow_down")}</button>
+  `;
+}
+
 function clearGroup(sid, gid) {
   if (!allowDelete()) return;
   if (!confirm("¿Vaciar todas las incidencias de este grupo?")) return;
@@ -2526,18 +2581,21 @@ function renderChecklist(item) {
   `;
 }
 
-function renderItem(sec, grp, item) {
+function renderItem(sec, grp, item, itemIdx, itemCount) {
   const eff = effectiveStatus(item);
   const tone = statusToneClass(eff);
   const collapsed = isCollapsed("items", item.id);
   const tab = itemTabById.get(item.id) === "checklist" ? "checklist" : "issue";
   const badgeClass = statusToneClass(eff).trim() || "is-none";
+  const idx = typeof itemIdx === "number" ? itemIdx : 0;
+  const count = typeof itemCount === "number" ? itemCount : 1;
   return `
   <div class="item-card${tone}${collapsed ? " is-collapsed" : ""}" id="item-${escapeAttr(item.id)}" data-section="${escapeAttr(sec.id)}" data-group="${escapeAttr(grp.id)}" data-item="${escapeAttr(item.id)}" data-tab="${tab}">
     <div class="item-top">
       <button type="button" class="collapse-toggle" data-collapse="items" data-id="${escapeAttr(item.id)}" title="Colapsar/expandir incidencia" aria-expanded="${collapsed ? "false" : "true"}">${collapseChevron(collapsed)}</button>
       <span class="item-status-badge ${badgeClass}" title="${escapeAttr(statusBadgeTitle(eff))}" aria-label="${escapeAttr(statusBadgeTitle(eff))}">${mi(statusBadgeIcon(eff))}</span>
       ${renderInplace("input", "inplace-nombre", item.nombre || "", "Nombre corto de la incidencia")}
+      ${renderMoveButtons("move-item", idx > 0, idx < count - 1, "Subir incidencia", "Bajar incidencia")}
       ${allowDelete() ? `<button type="button" class="danger" data-act="remove" title="Eliminar incidencia">${mi("delete")}</button>` : ""}
     </div>
     <div class="item-body">
@@ -2905,8 +2963,10 @@ function render() {
   const scrollerBefore = mainScrollEl();
   const keepScrollTop = scrollerBefore ? scrollerBefore.scrollTop : 0;
   const root = document.getElementById("app");
-  root.innerHTML = state.sections.map(sec => {
+  root.innerHTML = state.sections.map((sec, secIdx, secArr) => {
     const secCollapsed = isCollapsed("sections", sec.id);
+    const openItems = sec.items || [];
+    const groups = sec.groups || [];
     return `
     <section class="section-block${secCollapsed ? " is-collapsed" : ""}" id="sec-${escapeAttr(sec.id)}" data-section="${escapeAttr(sec.id)}">
       <div class="section-title">
@@ -2917,6 +2977,7 @@ function render() {
         </div>
         <div class="section-actions">
           <span class="hint">${sec.kind === "funcionalidades" ? "Por funcionalidad" : "Por subartículo"}</span>
+          ${renderMoveButtons("move-section", secIdx > 0, secIdx < secArr.length - 1, "Subir sección", "Bajar sección")}
           <button type="button" class="ghost" data-act="toggle-kind" title="Cambiar tipo (funcionalidad / subartículo)" aria-label="Cambiar tipo de sección">
             ${mi("swap_horiz")}
           </button>
@@ -2936,10 +2997,11 @@ function render() {
       </div>
       <div class="section-body">
       <div class="section-open">
-        ${(sec.items || []).map(it => renderItem(sec, { id: SECTION_ITEMS, title: "Open issues", items: sec.items }, it)).join("")}
+        ${openItems.map((it, idx) => renderItem(sec, { id: SECTION_ITEMS, title: "Open issues", items: openItems }, it, idx, openItems.length)).join("")}
       </div>
-      ${sec.groups.map(grp => {
+      ${groups.map((grp, grpIdx) => {
         const grpCollapsed = isCollapsed("groups", grp.id);
+        const grpItems = grp.items || [];
         return `
         <div class="group-block subcontainer${grpCollapsed ? " is-collapsed" : ""}" id="grp-${escapeAttr(grp.id)}" data-group="${escapeAttr(grp.id)}">
           <div class="group-head">
@@ -2949,13 +3011,14 @@ function render() {
               ${renderInplace("input", "inplace-title", grp.title || "", "Nombre del subartículo / feature")}
             </div>
             <div class="group-actions">
+              ${renderMoveButtons("move-group", grpIdx > 0, grpIdx < groups.length - 1, "Subir subsección", "Bajar subsección")}
               <button type="button" class="ghost" data-act="add-item" title="Agregar fila" aria-label="Agregar incidencia">${mi("add")}</button>
               ${allowDelete() ? `<button type="button" class="danger" data-act="clear-group" title="Vaciar grupo" aria-label="Vaciar subsección">${mi("delete")}</button>
               <button type="button" class="danger" data-act="del-group" title="Eliminar subsección" aria-label="Eliminar subsección">${mi("delete_forever")}</button>` : ""}
             </div>
           </div>
           <div class="group-body">
-          ${(grp.items || []).map(it => renderItem(sec, grp, it)).join("")}
+          ${grpItems.map((it, idx) => renderItem(sec, grp, it, idx, grpItems.length)).join("")}
           </div>
         </div>
       `;
@@ -3121,6 +3184,31 @@ function render() {
   });
   root.querySelectorAll('[data-act="add-section"]').forEach(btn => {
     btn.onclick = () => addSection();
+  });
+  root.querySelectorAll('[data-act="move-section"]').forEach(btn => {
+    btn.onclick = () => {
+      if (btn.disabled) return;
+      const delta = btn.dataset.dir === "up" ? -1 : 1;
+      moveSection(btn.closest(".section-block").dataset.section, delta);
+    };
+  });
+  root.querySelectorAll('[data-act="move-group"]').forEach(btn => {
+    btn.onclick = () => {
+      if (btn.disabled) return;
+      const delta = btn.dataset.dir === "up" ? -1 : 1;
+      const block = btn.closest(".group-block");
+      const sec = btn.closest(".section-block");
+      moveGroup(sec.dataset.section, block.dataset.group, delta);
+    };
+  });
+  root.querySelectorAll('[data-act="move-item"]').forEach(btn => {
+    btn.onclick = () => {
+      if (btn.disabled) return;
+      const delta = btn.dataset.dir === "up" ? -1 : 1;
+      const card = btn.closest(".item-card");
+      if (!card) return;
+      moveItem(card.dataset.section, card.dataset.group, card.dataset.item, delta);
+    };
   });
   root.querySelectorAll(".section-block").forEach(block => {
     const titleEl = block.querySelector(".inplace-section-title");

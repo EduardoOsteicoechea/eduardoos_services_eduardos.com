@@ -163,4 +163,20 @@ describe("vendored tracker assets", () => {
     expect(tracker).toMatch(/<div class="meta-bar">[\s\S]*?meta-bar-time[\s\S]*?meta-bar-imgs[\s\S]*?<\/div>\s*\$\{renderSeverityControl/);
     expect(tracker).toContain("grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);");
   });
+
+  it("reorders sections, groups and issues with adjacent up/down controls", () => {
+    expect(tracker).toContain("function swapAdjacent(");
+    expect(tracker).toContain("function moveSection(");
+    expect(tracker).toContain("function moveGroup(");
+    expect(tracker).toContain("function moveItem(");
+    expect(tracker).toContain("function renderMoveButtons(");
+    expect(tracker).toContain('data-act="move-section"');
+    expect(tracker).toContain('data-act="move-group"');
+    expect(tracker).toContain('data-act="move-item"');
+    expect(tracker).toContain("keyboard_arrow_up");
+    expect(tracker).toContain("keyboard_arrow_down");
+    expect(tracker).toContain('root.querySelectorAll(\'[data-act="move-section"]\')');
+    expect(tracker).toContain('root.querySelectorAll(\'[data-act="move-group"]\')');
+    expect(tracker).toContain('root.querySelectorAll(\'[data-act="move-item"]\')');
+  });
 });
