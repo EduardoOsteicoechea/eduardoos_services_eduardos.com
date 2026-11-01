@@ -100,65 +100,109 @@
 }
 
 .pamphlet-app .create-modal.footer-modal {
-  width: min(480px, calc(100vw - 24px));
+  width: min(30rem, calc(100vw - 1.5rem));
+  max-height: calc(100% - 2rem);
+  overflow: hidden;
+}
+
+.pamphlet-app .create-modal.footer-modal .create-modal-form {
+  max-height: calc(100% - 0rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 0;
+  gap: var(--space-padding, 1rem);
+  padding: var(--space-padding, 1rem);
+}
+
+.footer-modal-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap, 0.5rem);
+  padding: var(--space-padding, 1rem);
+  border: var(--border-width, 0.0625rem) solid var(--color-border, #888);
+  border-radius: var(--border-radius, 0.25rem);
+  background: var(--color-surface, #111);
+}
+
+.footer-modal-section-title {
+  margin: 0;
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: 650;
+}
+
+.footer-apply-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap, 0.5rem);
+}
+
+.footer-apply-actions button {
+  height: var(--control-height, 2.5rem);
+  padding: var(--control-padding-block, 0.5rem) var(--control-padding-inline, 0.75rem);
+  font-size: var(--font-size-sm, 0.875rem);
+  cursor: pointer;
 }
 
 .footer-profile-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  max-height: min(28vh, 200px);
+  gap: var(--rail-gap, 0.5rem);
+  max-height: 12rem;
   overflow: auto;
-  margin: 0 0 0.75rem;
+  margin: 0;
 }
 
 .footer-profile-list__empty {
   margin: 0;
   opacity: 0.75;
-  font-size: 0.85rem;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-muted, #888);
 }
 
 .footer-profile-card {
-  border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
-  padding: 0.65rem 0.75rem;
+  border: var(--border-width, 0.0625rem) solid var(--color-border, #888);
+  border-radius: var(--border-radius, 0.25rem);
+  padding: var(--space-padding, 1rem);
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: var(--rail-gap, 0.5rem);
+  background: var(--color-bg, #000);
 }
 
 .footer-profile-card.is-current {
-  border-color: currentColor;
-  background: color-mix(in srgb, currentColor 8%, transparent);
+  border-color: var(--color-accent, currentColor);
+  outline: var(--border-width, 0.0625rem) solid var(--color-accent, currentColor);
 }
 
 .footer-profile-card__name {
   margin: 0;
-  font-family: Montserrat, sans-serif;
-  font-size: 0.88rem;
+  font-size: var(--font-size-sm, 0.875rem);
   font-weight: 650;
 }
 
 .footer-profile-card__meta {
   margin: 0;
-  font-size: 0.78rem;
-  opacity: 0.8;
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-muted, #888);
 }
 
 .footer-profile-card__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--rail-gap, 0.5rem);
 }
 
 .footer-profile-card__actions button {
-  padding: 6px 10px;
+  height: var(--control-height, 2.5rem);
+  padding: var(--control-padding-block, 0.5rem) var(--control-padding-inline, 0.75rem);
+  font-size: var(--font-size-sm, 0.875rem);
   cursor: pointer;
 }
 
 .footer-profile-form {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: var(--rail-gap, 0.5rem);
 }
 
 .open-cloud-list {

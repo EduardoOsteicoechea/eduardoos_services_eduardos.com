@@ -70,6 +70,14 @@ import Layout from "../../layouts/Layout.astro";
         </a>
       </div>
     </section>
+
+    <section class="pamphlet-vanilla-dash__all" data-dashboard-all aria-labelledby="pamphlet-all-title">
+      <h2 class="pamphlet-vanilla-dash__section-title" id="pamphlet-all-title">All EPAMs</h2>
+      <div class="pamphlet-vanilla-dash__all-list" data-dashboard-all-list role="list"></div>
+      <p class="pamphlet-vanilla-dash__hint" data-dashboard-all-empty hidden>
+        No EPAMs yet. Create one to get started.
+      </p>
+    </section>
   </section>
 
   <section id="pamphlet-manage" class="pamphlet-manage" aria-label="Manage EPAMs" hidden>
@@ -248,12 +256,38 @@ import Layout from "../../layouts/Layout.astro";
   }
 
   .pamphlet-vanilla-dash__recents,
-  .pamphlet-vanilla-dash__options {
+  .pamphlet-vanilla-dash__options,
+  .pamphlet-vanilla-dash__all {
     display: flex;
     flex-direction: column;
     gap: var(--space-padding);
     width: auto;
     min-width: 0;
+  }
+
+  .pamphlet-vanilla-dash__all-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    margin: 0;
+    padding: 0;
+  }
+
+  .pamphlet-vanilla-dash__all-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .pamphlet-vanilla-dash__all-item:hover {
+    border-color: var(--color-accent);
   }
 
   .pamphlet-vanilla-dash__recents-grid {
@@ -622,46 +656,78 @@ import Layout from "../../layouts/Layout.astro";
     return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
   }
 
+  function epamOpenLink(epam: {
+    epamId: string;
+    title?: string;
+    fileName?: string;
+    series?: string;
+    updatedAt?: string;
+  }): HTMLAnchorElement {
+    const card = document.createElement("a");
+    // Use /open#id — a real static page. /e/{id} needs Nginx rewrite; without it the VPS serves home HTML.
+    card.href = `${PAMPHLET_BASE}/open#${encodeURIComponent(epam.epamId)}`;
+    card.dataset.pamphletOpen = epam.epamId;
+    card.setAttribute("data-astro-reload", "");
+    card.title = epam.title || epam.fileName || epam.epamId;
+    card.setAttribute("role", "listitem");
+
+    const title = document.createElement("span");
+    title.className = "pamphlet-vanilla-dash__card-title";
+    title.textContent = epam.title || epam.fileName || "Untitled pamphlet";
+
+    const meta = document.createElement("span");
+    meta.className = "pamphlet-vanilla-dash__card-desc";
+    const when = formatEpamDate(epam.updatedAt);
+    const bits = [when ? `Updated ${when}` : "", epam.series || "", epam.fileName || ""].filter(Boolean);
+    meta.textContent = bits.join(" · ") || "Cloud pamphlet";
+
+    card.append(title, meta);
+    return card;
+  }
+
   async function loadDashboardRecents(): Promise<void> {
     const dash = document.getElementById("pamphlet-dash");
     if (!dash || dash.hidden) return;
     const grid = dash.querySelector("[data-dashboard-recent-cards]");
     const empty = dash.querySelector("[data-dashboard-recents-empty]");
+    const allList = dash.querySelector("[data-dashboard-all-list]");
+    const allEmpty = dash.querySelector("[data-dashboard-all-empty]");
     if (!(grid instanceof HTMLElement)) return;
 
     try {
       const { epams } = await fetchEpams();
-      const items = [...epams]
-        .sort((a, b) => Date.parse(b.updatedAt || "") - Date.parse(a.updatedAt || ""))
-        .slice(0, 5);
+      const sorted = [...epams].sort(
+        (a, b) => Date.parse(b.updatedAt || "") - Date.parse(a.updatedAt || ""),
+      );
+      const recent = sorted.slice(0, 5);
+
       grid.replaceChildren();
-      if (empty instanceof HTMLElement) empty.hidden = items.length > 0;
-      for (const epam of items) {
-        const card = document.createElement("a");
+      if (empty instanceof HTMLElement) empty.hidden = recent.length > 0;
+      for (const epam of recent) {
+        const card = epamOpenLink(epam);
         card.className = "pamphlet-vanilla-dash__card pamphlet-vanilla-dash__recent-card";
-        // Use /open#id — a real static page. /e/{id} needs Nginx rewrite; without it the VPS serves home HTML.
-        card.href = `${PAMPHLET_BASE}/open#${encodeURIComponent(epam.epamId)}`;
-        card.dataset.pamphletOpen = epam.epamId;
-        card.setAttribute("data-astro-reload", "");
-        card.title = epam.title || epam.fileName || epam.epamId;
-
-        const title = document.createElement("span");
-        title.className = "pamphlet-vanilla-dash__card-title";
-        title.textContent = epam.title || epam.fileName || "Untitled pamphlet";
-
-        const meta = document.createElement("span");
-        meta.className = "pamphlet-vanilla-dash__card-desc";
-        const when = formatEpamDate(epam.updatedAt);
-        meta.textContent = when ? `Updated ${when}` : (epam.series || "Cloud pamphlet");
-
-        card.append(title, meta);
         grid.append(card);
+      }
+
+      if (allList instanceof HTMLElement) {
+        allList.replaceChildren();
+        if (allEmpty instanceof HTMLElement) allEmpty.hidden = sorted.length > 0;
+        for (const epam of sorted) {
+          const row = epamOpenLink(epam);
+          row.className = "pamphlet-vanilla-dash__all-item";
+          allList.append(row);
+        }
       }
     } catch {
       grid.replaceChildren();
       if (empty instanceof HTMLElement) {
         empty.hidden = false;
         empty.textContent = "Could not load recent pamphlets.";
+      }
+      if (allList instanceof HTMLElement) allList.replaceChildren();
+      if (allEmpty instanceof HTMLElement) {
+        allEmpty.hidden = false;
+        allEmpty.textContent = "Could not load pamphlets.";
       }
     }
   }

@@ -411,61 +411,84 @@ export function renderShell(_menuIconSrc?: string): string {
 
 <dialog id="footer-modal" class="create-modal footer-modal">
   <div class="create-modal-form">
-    <h2>Pie de página estático</h2>
-    <p class="create-modal-hint" id="footer-modal-hint">Crea pies reutilizables (la info). Con un panfleto abierto puedes copiarlos o vincularlos.</p>
-    <div id="footer-profile-list" class="footer-profile-list" role="list"></div>
-    <form id="footer-profile-form" class="footer-profile-form">
-      <input type="hidden" id="footer-form-id" value="" />
+    <h2>Pie</h2>
+    <p class="create-modal-hint" id="footer-modal-hint">
+      Elige un pie guardado para reutilizarlo en este EPAM, o crea uno nuevo abajo.
+    </p>
+
+    <section class="footer-modal-section" aria-labelledby="footer-saved-title">
+      <h3 id="footer-saved-title" class="footer-modal-section-title">Pies guardados</h3>
       <label>
-        Nombre
-        <input id="footer-form-name" name="name" type="text" required autocomplete="off" />
+        Reutilizar
+        <select id="footer-apply-select">
+          <option value="">Elegir un pie…</option>
+        </select>
       </label>
-      <label>
-        Acción
-        <input id="footer-form-action" name="action" type="text" autocomplete="off" />
-      </label>
-      <label>
-        Mensaje
-        <input id="footer-form-message" name="message" type="text" autocomplete="off" />
-      </label>
-      <label>
-        Etiqueta 1
-        <input id="footer-form-label1" name="label1" type="text" autocomplete="off" placeholder="WhatsApp:" />
-      </label>
-      <label>
-        Contenido 1
-        <input id="footer-form-value1" name="value1" type="text" autocomplete="off" />
-      </label>
-      <label>
-        Etiqueta 2
-        <input id="footer-form-label2" name="label2" type="text" autocomplete="off" placeholder="Teléfono:" />
-      </label>
-      <label>
-        Contenido 2
-        <input id="footer-form-value2" name="value2" type="text" autocomplete="off" />
-      </label>
-      <label>
-        Etiqueta 3
-        <input id="footer-form-label3" name="label3" type="text" autocomplete="off" placeholder="Dirección:" />
-      </label>
-      <label>
-        Contenido 3
-        <input id="footer-form-value3" name="value3" type="text" autocomplete="off" />
-      </label>
-      <label>
-        Etiqueta 4
-        <input id="footer-form-label4" name="label4" type="text" autocomplete="off" placeholder="Actividades:" />
-      </label>
-      <label>
-        Contenido 4
-        <input id="footer-form-value4" name="value4" type="text" autocomplete="off" />
-      </label>
-      <div class="create-modal-actions">
-        <button type="button" id="footer-form-reset">Nuevo</button>
-        <button type="button" id="footer-form-from-sheet">Usar pie actual</button>
-        <button type="submit" id="footer-form-save">Guardar pie</button>
+      <div class="footer-apply-actions">
+        <button type="button" id="footer-apply-snapshot" disabled>Usar en este EPAM</button>
+        <button type="button" id="footer-apply-link" disabled title="Si editas el maestro, este panfleto se actualiza al abrirlo">
+          Vincular
+        </button>
       </div>
-    </form>
+      <div id="footer-profile-list" class="footer-profile-list" role="list"></div>
+    </section>
+
+    <section class="footer-modal-section" aria-labelledby="footer-edit-title">
+      <h3 id="footer-edit-title" class="footer-modal-section-title">Crear o editar</h3>
+      <form id="footer-profile-form" class="footer-profile-form">
+        <input type="hidden" id="footer-form-id" value="" />
+        <label>
+          Nombre
+          <input id="footer-form-name" name="name" type="text" required autocomplete="off" />
+        </label>
+        <label>
+          Acción
+          <input id="footer-form-action" name="action" type="text" autocomplete="off" />
+        </label>
+        <label>
+          Mensaje
+          <input id="footer-form-message" name="message" type="text" autocomplete="off" />
+        </label>
+        <label>
+          Etiqueta 1
+          <input id="footer-form-label1" name="label1" type="text" autocomplete="off" placeholder="WhatsApp:" />
+        </label>
+        <label>
+          Contenido 1
+          <input id="footer-form-value1" name="value1" type="text" autocomplete="off" />
+        </label>
+        <label>
+          Etiqueta 2
+          <input id="footer-form-label2" name="label2" type="text" autocomplete="off" placeholder="Teléfono:" />
+        </label>
+        <label>
+          Contenido 2
+          <input id="footer-form-value2" name="value2" type="text" autocomplete="off" />
+        </label>
+        <label>
+          Etiqueta 3
+          <input id="footer-form-label3" name="label3" type="text" autocomplete="off" placeholder="Dirección:" />
+        </label>
+        <label>
+          Contenido 3
+          <input id="footer-form-value3" name="value3" type="text" autocomplete="off" />
+        </label>
+        <label>
+          Etiqueta 4
+          <input id="footer-form-label4" name="label4" type="text" autocomplete="off" placeholder="Actividades:" />
+        </label>
+        <label>
+          Contenido 4
+          <input id="footer-form-value4" name="value4" type="text" autocomplete="off" />
+        </label>
+        <div class="create-modal-actions">
+          <button type="button" id="footer-form-reset">Nuevo</button>
+          <button type="button" id="footer-form-from-sheet">Cargar del EPAM</button>
+          <button type="submit" id="footer-form-save">Guardar pie</button>
+        </div>
+      </form>
+    </section>
+
     <div class="create-modal-actions">
       <button type="button" id="footer-modal-cancel">Cerrar</button>
     </div>

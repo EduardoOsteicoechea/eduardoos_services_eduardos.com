@@ -270,6 +270,9 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const footerModal = requireElement<HTMLDialogElement>("#footer-modal");
     const footerModalHint = requireElement<HTMLElement>("#footer-modal-hint");
     const footerProfileList = requireElement<HTMLElement>("#footer-profile-list");
+    const footerApplySelect = requireElement<HTMLSelectElement>("#footer-apply-select");
+    const footerApplySnapshotBtn = requireElement<HTMLButtonElement>("#footer-apply-snapshot");
+    const footerApplyLinkBtn = requireElement<HTMLButtonElement>("#footer-apply-link");
     const footerProfileForm = requireElement<HTMLFormElement>("#footer-profile-form");
     const footerFormId = requireElement<HTMLInputElement>("#footer-form-id");
     const footerFormName = requireElement<HTMLInputElement>("#footer-form-name");
@@ -291,6 +294,7 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const footerFormReset = requireElement<HTMLButtonElement>("#footer-form-reset");
     const footerFormFromSheet = requireElement<HTMLButtonElement>("#footer-form-from-sheet");
     const footerModalCancelBtn = requireElement<HTMLButtonElement>("#footer-modal-cancel");
+    let footerProfilesCache: FooterProfile[] = [];
     const itemTypeModal = requireElement<HTMLDialogElement>("#item-type-modal");
     const notesModal = requireElement<HTMLDialogElement>("#notes-modal");
     const notesModalTitle = requireElement<HTMLElement>("#notes-modal-title");
@@ -3573,25 +3577,58 @@ async function applyFooterProfile(profile: FooterProfile, bind: "snapshot" | "li
     await refreshFooterProfiles();
 }
 
+function syncFooterApplyControls(): void {
+    const hasSelection = Boolean(footerApplySelect.value.trim());
+    const canApply = Boolean(currentDoc) && hasSelection;
+    footerApplySnapshotBtn.disabled = !canApply;
+    footerApplyLinkBtn.disabled = !canApply;
+}
+
+function selectedFooterProfile(): FooterProfile | null {
+    const id = footerApplySelect.value.trim();
+    if (!id) return null;
+    return footerProfilesCache.find((p) => p.footerId === id) ?? null;
+}
+
 async function refreshFooterProfiles(): Promise<void> {
     footerProfileList.replaceChildren();
+    footerProfilesCache = [];
+    const previousId = footerApplySelect.value.trim();
+    footerApplySelect.replaceChildren();
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Elegir un pie…";
+    footerApplySelect.appendChild(placeholder);
+    syncFooterApplyControls();
+
     if (!getAuthToken() || !isAuthenticated()) {
-        footerModalHint.textContent = "Inicia sesión para guardar pies reutilizables.";
+        footerModalHint.textContent = "Inicia sesión para guardar y reutilizar pies.";
+        const empty = document.createElement("p");
+        empty.className = "footer-profile-list__empty";
+        empty.textContent = "Inicia sesión para ver pies guardados.";
+        footerProfileList.appendChild(empty);
         return;
     }
     footerModalHint.textContent = currentDoc
-        ? "Copia deja un snapshot. Vincular actualiza este panfleto cuando edites el maestro."
-        : "Crea pies reutilizables (la info). Abre un panfleto para copiarlos o vincularlos.";
+        ? "Elige un pie guardado y pulsa Usar en este EPAM. Vincular mantiene el maestro al día."
+        : "Guarda pies reutilizables aquí. Abre un EPAM para aplicarlos.";
     try {
         const { footers } = await fetchFooterProfiles();
+        footerProfilesCache = footers;
         if (footers.length === 0) {
             const empty = document.createElement("p");
             empty.className = "footer-profile-list__empty";
-            empty.textContent = "Aún no hay pies guardados.";
+            empty.textContent = "Aún no hay pies guardados. Crea uno en la sección de abajo.";
             footerProfileList.appendChild(empty);
+            syncFooterApplyControls();
             return;
         }
         for (const profile of footers) {
+            const opt = document.createElement("option");
+            opt.value = profile.footerId;
+            opt.textContent = profile.name;
+            footerApplySelect.appendChild(opt);
+
             const card = document.createElement("article");
             card.className = "footer-profile-card";
             card.setAttribute("role", "listitem");
@@ -3607,7 +3644,7 @@ async function refreshFooterProfiles(): Promise<void> {
                 currentDoc?.footer_profile_id === profile.footerId
                     ? currentDoc.footer_bind === "linked"
                         ? "vinculado"
-                        : "copiado en este panfleto"
+                        : "en uso en este EPAM"
                     : "";
             meta.textContent = [profile.footer.action, profile.footer.value1, bindLabel]
                 .filter(Boolean)
@@ -3615,10 +3652,28 @@ async function refreshFooterProfiles(): Promise<void> {
             const actions = document.createElement("div");
             actions.className = "footer-profile-card__actions";
 
+            const useBtn = document.createElement("button");
+            useBtn.type = "button";
+            useBtn.textContent = "Usar";
+            useBtn.disabled = !currentDoc;
+            useBtn.title = currentDoc
+                ? "Aplicar este pie al EPAM abierto"
+                : "Abre un EPAM para aplicar el pie";
+            useBtn.addEventListener("click", () => {
+                footerApplySelect.value = profile.footerId;
+                syncFooterApplyControls();
+                void applyFooterProfile(profile, "snapshot");
+            });
+
             const editBtn = document.createElement("button");
             editBtn.type = "button";
             editBtn.textContent = "Editar";
-            editBtn.addEventListener("click", () => fillFooterForm(profile));
+            editBtn.addEventListener("click", () => {
+                fillFooterForm(profile);
+                footerApplySelect.value = profile.footerId;
+                syncFooterApplyControls();
+                footerFormName.focus();
+            });
 
             const delBtn = document.createElement("button");
             delBtn.type = "button";
@@ -3637,27 +3692,28 @@ async function refreshFooterProfiles(): Promise<void> {
                 })();
             });
 
-            actions.append(editBtn, delBtn);
+            actions.append(useBtn, editBtn, delBtn);
             if (currentDoc) {
-                const snapBtn = document.createElement("button");
-                snapBtn.type = "button";
-                snapBtn.textContent = "Copiar";
-                snapBtn.title = "Snapshot: el maestro ya no cambia este panfleto";
-                snapBtn.addEventListener("click", () => {
-                    void applyFooterProfile(profile, "snapshot");
-                });
                 const linkBtn = document.createElement("button");
                 linkBtn.type = "button";
                 linkBtn.textContent = "Vincular";
                 linkBtn.title = "Si editas el maestro, este panfleto se actualiza al abrirlo";
                 linkBtn.addEventListener("click", () => {
+                    footerApplySelect.value = profile.footerId;
+                    syncFooterApplyControls();
                     void applyFooterProfile(profile, "linked");
                 });
-                actions.append(snapBtn, linkBtn);
+                actions.append(linkBtn);
             }
             card.append(heading, meta, actions);
             footerProfileList.appendChild(card);
         }
+        if (previousId && footers.some((p) => p.footerId === previousId)) {
+            footerApplySelect.value = previousId;
+        } else if (currentDoc?.footer_profile_id) {
+            footerApplySelect.value = currentDoc.footer_profile_id;
+        }
+        syncFooterApplyControls();
     } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
         footerModalHint.textContent = `No se pudieron cargar los pies: ${message}`;
@@ -3672,8 +3728,10 @@ async function openFooterModal(): Promise<void> {
     clearError();
     fillFooterForm(null);
     footerModal.showModal();
-    footerFormName.focus();
+    const form = footerModal.querySelector(".create-modal-form");
+    if (form instanceof HTMLElement) form.scrollTop = 0;
     await refreshFooterProfiles();
+    footerApplySelect.focus();
 }
 
 on(chromeBtn, "click", () => {
@@ -3734,9 +3792,27 @@ on(footerFormReset, "click", () => {
     footerFormName.focus();
 });
 
+on(footerApplySelect, "change", () => {
+    syncFooterApplyControls();
+    const profile = selectedFooterProfile();
+    if (profile) fillFooterForm(profile);
+});
+
+on(footerApplySnapshotBtn, "click", () => {
+    const profile = selectedFooterProfile();
+    if (!profile) return;
+    void applyFooterProfile(profile, "snapshot");
+});
+
+on(footerApplyLinkBtn, "click", () => {
+    const profile = selectedFooterProfile();
+    if (!profile) return;
+    void applyFooterProfile(profile, "linked");
+});
+
 on(footerFormFromSheet, "click", () => {
     if (!currentDoc) {
-        setError("Abre un panfleto para copiar su pie al formulario.");
+        setError("Abre un panfleto para cargar su pie al formulario.");
         return;
     }
     fillFooterForm({
@@ -3768,6 +3844,11 @@ on(footerProfileForm, "submit", (event: Event) => {
             fillFooterForm(saved);
             setStatus(`Pie guardado: ${saved.name}`, "success");
             await refreshFooterProfiles();
+            footerApplySelect.value = saved.footerId;
+            syncFooterApplyControls();
+            if (currentDoc) {
+                await applyFooterProfile(saved, "snapshot");
+            }
         } catch (err) {
             const message = err instanceof Error ? err.message : String(err);
             setError(`Footer save failed: ${message}`);
