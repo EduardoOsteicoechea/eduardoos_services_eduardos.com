@@ -1831,14 +1831,14 @@ async function refreshChromeCatalogOptions(doc: PamphletStructure): Promise<void
     }
 }
 
-async function populateChromeFooterProfiles(selectedId?: string): Promise<void> {
-    const preferred = (selectedId ?? currentDoc?.footer_profile_id ?? "").trim();
+async function populateChromeFooterProfiles(_selectedId?: string): Promise<void> {
     chromeFooterProfile.replaceChildren();
     const placeholder = document.createElement("option");
     placeholder.value = "";
     placeholder.textContent = "Elegir pie guardado…";
     chromeFooterProfile.appendChild(placeholder);
     chromeFooterProfilesCache = [];
+    chromeFooterProfile.value = "";
     if (!getAuthToken() || !isAuthenticated()) {
         chromeFooterProfile.disabled = true;
         return;
@@ -1853,12 +1853,31 @@ async function populateChromeFooterProfiles(selectedId?: string): Promise<void> 
             opt.textContent = profile.name;
             chromeFooterProfile.appendChild(opt);
         }
-        if (preferred && footers.some((p) => p.footerId === preferred)) {
-            chromeFooterProfile.value = preferred;
-        }
+        // Leave "" selected so choosing a profile always fires `change` and loads fields.
     } catch {
         chromeFooterProfilesCache = [];
     }
+}
+
+function cancelChromeLiveSave(): void {
+    if (chromeLiveTimer !== null) {
+        window.clearTimeout(chromeLiveTimer);
+        chromeLiveTimer = null;
+    }
+}
+
+function fillChromeFooterFields(footer: Parameters<typeof footerFromForm>[0]): void {
+    const f = footerFromForm(footer);
+    chromeFooterAction.value = f.action;
+    chromeFooterMessage.value = f.message;
+    chromeFooterLabel1.value = f.label1;
+    chromeFooterValue1.value = f.value1;
+    chromeFooterLabel2.value = f.label2;
+    chromeFooterValue2.value = f.value2;
+    chromeFooterLabel3.value = f.label3;
+    chromeFooterValue3.value = f.value3;
+    chromeFooterLabel4.value = f.label4;
+    chromeFooterValue4.value = f.value4;
 }
 
 function fillChromeModalForm(doc: PamphletStructure): void {
@@ -1887,7 +1906,6 @@ function fillChromeModalForm(doc: PamphletStructure): void {
     chromeFooterValue3.value = coalesceChromeField(footer.value3, doc.footer.value3);
     chromeFooterLabel4.value = coalesceChromeField(footer.label4, doc.footer.label4);
     chromeFooterValue4.value = coalesceChromeField(footer.value4, doc.footer.value4);
-    if (doc.footer_profile_id) chromeFooterProfile.value = doc.footer_profile_id;
 }
 
 function readChromeModalForm(doc: PamphletStructure): PamphletStructure {
@@ -3592,9 +3610,19 @@ async function applyFooterProfile(profile: FooterProfile, bind: "snapshot" | "li
         setError("Abre un panfleto para aplicar este pie.");
         return;
     }
+    // Cancel pending live-save so empty modal fields cannot overwrite this apply.
+    cancelChromeLiveSave();
+    const footer = footerFromForm(profile.footer);
+    if (chromeModal.open) {
+        fillChromeFooterFields(footer);
+        if (!chromeModalUndoPushed) {
+            pushUndoSnapshot();
+            chromeModalUndoPushed = true;
+        }
+    }
     const next: PamphletStructure = {
         ...clonePamphlet(currentDoc),
-        footer: { ...profile.footer },
+        footer: { ...footer },
         footer_profile_id: profile.footerId,
         footer_bind: bind,
     };
@@ -3608,6 +3636,9 @@ async function applyFooterProfile(profile: FooterProfile, bind: "snapshot" | "li
             : `Pie copiado: ${profile.name}`,
         "success",
     );
+    if (chromeModal.open) {
+        chromeFooterProfile.value = profile.footerId;
+    }
     await refreshFooterProfiles();
 }
 
@@ -3789,12 +3820,11 @@ on(chromeFooterProfile, "change", () => {
     const id = chromeFooterProfile.value.trim();
     if (!id) return;
     const profile = chromeFooterProfilesCache.find((p) => p.footerId === id);
-    if (!profile) return;
-    void (async () => {
-        await applyFooterProfile(profile, "snapshot");
-        if (currentDoc) fillChromeModalForm(currentDoc);
-        chromeFooterProfile.value = profile.footerId;
-    })();
+    if (!profile) {
+        setError("No se pudo cargar ese pie. Cierra Cabecera y pie y vuelve a abrirlo.");
+        return;
+    }
+    void applyFooterProfile(profile, "snapshot");
 });
 
 on(chromeHeaderSeries, "change", () => {
