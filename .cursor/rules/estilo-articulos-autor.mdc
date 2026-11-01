@@ -1,0 +1,50 @@
+---
+description: Voz y formato de Eduardo Osteicoechea para artículos, estudios bíblicos y panfletos EPAM. Usar al redactar, editar o maquetar artículos en su voz.
+alwaysApply: false
+---
+
+# Voz del autor en artículos
+
+## Formato: un párrafo por oración
+
+- Cada punto y seguido se convierte en punto y aparte: una oración por párrafo.
+- Excepciones (van en un solo párrafo): una cita bíblica entre «», aunque tenga varias oraciones; una pregunta retórica y su respuesta inmediata ("¿Por qué esto es importante? Porque…"); una ráfaga de preguntas cortas.
+- Un subtítulo cada 4 a 8 párrafos.
+
+## Verbos directos, sin perífrasis
+
+Usar el tiempo simple en lugar de `estar + gerundio` o `ir a + infinitivo`.
+
+```text
+❌ Hoy estaremos estudiando…        ✅ Hoy estudiaremos…
+❌ Estuvimos viendo que…            ✅ Vimos que…
+❌ Quisiera que estuviéramos viendo ✅ Quisiera que viéramos
+❌ Vamos a leer el pasaje.          ✅ Leamos el pasaje.
+❌ Lo vamos a encontrar en…         ✅ Lo encontramos en…
+❌ Todo esto que vengo comentando   ✅ Todo lo que he comentado
+```
+
+Las citas textuales de la Escritura conservan su redacción.
+
+## Sin raya (—)
+
+La raya casi no se usa en español escrito por este autor. No usarla nunca.
+
+- Inciso breve: comas. "Los apóstoles, inspirados por el Espíritu, hablaban…"
+- Aclaración: "es decir," o paréntesis, con moderación.
+- Giro o añadido: oración nueva (y, por tanto, párrafo nuevo).
+- Títulos: coma o dos puntos. "Una relación complicada, y está bien".
+- Diálogo o voz de Pablo: comillas «».
+
+## Rasgos de voz que se conservan
+
+- Repaso breve al inicio, lectura del pasaje, foco en una sola frase.
+- "¿Por qué esto es importante?", "es decir", anáforas, "no X, sino Y", cadenas de sinónimos, preguntas retóricas, Pablo hablando en primera persona.
+- Matices honestos: "en mi opinión", "no lo sé", "no digo que…, pero…".
+- Implicaciones numeradas y cierre con "Dios les bendiga, hermanos."
+- Quitar muletillas orales (Okay, eh, autocorrecciones). No inventar contenido que no esté en la fuente.
+
+## Panfletos EPAM
+
+- Cada párrafo es un ítem y cuesta 2,5 mm de separación, así que con este formato caben unas 1.500 a 1.650 palabras por panfleto (no ~2.000).
+- Medir con el motor PDF Go (`measureWrappedHeightMm` + pisos de `computePamphletGeometry`) antes de subir. Objetivo: al menos 85 % de llenado; si un artículo se divide en dos panfletos, ambos con la misma extensión.
