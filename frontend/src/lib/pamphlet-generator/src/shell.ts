@@ -343,7 +343,7 @@ export function renderShell(_menuIconSrc?: string): string {
         </select>
       </label>
     </fieldset>
-    <fieldset>
+    <fieldset id="chrome-footer-fieldset" hidden>
       <legend>Pie</legend>
       <label>
         Pie guardado

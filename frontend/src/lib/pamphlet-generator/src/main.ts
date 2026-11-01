@@ -249,6 +249,7 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const chromeBtn = requireElement<HTMLButtonElement>("#btn-chrome");
     const chromeModal = requireElement<HTMLDialogElement>("#chrome-modal");
     const chromeForm = requireElement<HTMLFormElement>("#chrome-form");
+    const chromeFooterFieldset = requireElement<HTMLFieldSetElement>("#chrome-footer-fieldset");
     const chromeModalCancelBtn = requireElement<HTMLButtonElement>("#chrome-modal-cancel");
     const chromeHeaderTitle = requireElement<HTMLInputElement>("#chrome-header-title");
     const chromeHeaderSubtitle = requireElement<HTMLInputElement>("#chrome-header-subtitle");
@@ -1967,6 +1968,11 @@ function closeChromeModal(): void {
     if (chromeModal.open) chromeModal.close();
 }
 
+function isFooterChromeFocus(focusName: string | null): boolean {
+    return Boolean(focusName && (FOOTER_FIELD_KEYS as readonly string[]).includes(focusName));
+}
+
+/** Cabecera/pie modal. Pie only after footer hit or DHS (focusName null = menu Cabecera). */
 function openChromeModal(focusName: string | null = null): void {
     clearError();
     if (!currentDoc || !hasEditableSession()) {
@@ -1974,8 +1980,12 @@ function openChromeModal(focusName: string | null = null): void {
         return;
     }
     chromeModalUndoPushed = false;
+    const showFooter = focusName == null || isFooterChromeFocus(focusName);
+    chromeFooterFieldset.hidden = !showFooter;
     fillChromeModalForm(currentDoc);
-    void populateChromeFooterProfiles(currentDoc.footer_profile_id);
+    if (showFooter) {
+        void populateChromeFooterProfiles(currentDoc.footer_profile_id);
+    }
     if (!chromeModal.open) chromeModal.showModal();
     // `date` is derived from last update — never focus a removed date input.
     const focusId =
@@ -2005,19 +2015,11 @@ function openChromeModal(focusName: string | null = null): void {
     });
 }
 
-function activateEditAt(data: PamphletStructure, loc: LastEditedElement): void {
+function activateEditAt(_data: PamphletStructure, loc: LastEditedElement): void {
+    // Body only — never auto-open cabecera/pie; that needs a PDF hit or DHS.
     if (loc.column >= 1 && loc.column <= 8) {
         editDock.open(loc);
-        return;
     }
-    // Header/footer: always the manage-style chrome modal (desktop + mobile).
-    const field =
-        loc.column === HEADER_COLUMN
-            ? HEADER_FIELD_KEYS[Math.min(Math.max(loc.index, 0), HEADER_FIELD_KEYS.length - 1)]
-            : loc.column === FOOTER_COLUMN
-              ? FOOTER_FIELD_KEYS[Math.min(Math.max(loc.index, 0), FOOTER_FIELD_KEYS.length - 1)]
-              : null;
-    openChromeModal(field ?? null);
 }
 
 function renderDocument(data: PamphletStructure, openEdit: boolean): void {
