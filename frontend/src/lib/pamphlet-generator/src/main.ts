@@ -256,6 +256,7 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const chromeHeaderSeries = requireElement<HTMLSelectElement>("#chrome-header-series");
     const chromeHeaderChapter = requireElement<HTMLSelectElement>("#chrome-header-chapter");
     let catalogSeriesCache: EpamSeriesProfile[] = [];
+    const chromeFooterProfile = requireElement<HTMLSelectElement>("#chrome-footer-profile");
     const chromeFooterAction = requireElement<HTMLInputElement>("#chrome-footer-action");
     const chromeFooterMessage = requireElement<HTMLInputElement>("#chrome-footer-message");
     const chromeFooterLabel1 = requireElement<HTMLInputElement>("#chrome-footer-label1");
@@ -267,6 +268,7 @@ export function mountPamphletGenerator(host: HTMLElement): PamphletMountHandle {
     const chromeFooterLabel4 = requireElement<HTMLInputElement>("#chrome-footer-label4");
     const chromeFooterValue4 = requireElement<HTMLInputElement>("#chrome-footer-value4");
     const footerBtn = requireElement<HTMLButtonElement>("#btn-footer");
+    let chromeFooterProfilesCache: FooterProfile[] = [];
     const footerModal = requireElement<HTMLDialogElement>("#footer-modal");
     const footerModalHint = requireElement<HTMLElement>("#footer-modal-hint");
     const footerProfileList = requireElement<HTMLElement>("#footer-profile-list");
@@ -1829,6 +1831,36 @@ async function refreshChromeCatalogOptions(doc: PamphletStructure): Promise<void
     }
 }
 
+async function populateChromeFooterProfiles(selectedId?: string): Promise<void> {
+    const preferred = (selectedId ?? currentDoc?.footer_profile_id ?? "").trim();
+    chromeFooterProfile.replaceChildren();
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Elegir pie guardado…";
+    chromeFooterProfile.appendChild(placeholder);
+    chromeFooterProfilesCache = [];
+    if (!getAuthToken() || !isAuthenticated()) {
+        chromeFooterProfile.disabled = true;
+        return;
+    }
+    chromeFooterProfile.disabled = false;
+    try {
+        const { footers } = await fetchFooterProfiles();
+        chromeFooterProfilesCache = footers;
+        for (const profile of footers) {
+            const opt = document.createElement("option");
+            opt.value = profile.footerId;
+            opt.textContent = profile.name;
+            chromeFooterProfile.appendChild(opt);
+        }
+        if (preferred && footers.some((p) => p.footerId === preferred)) {
+            chromeFooterProfile.value = preferred;
+        }
+    } catch {
+        chromeFooterProfilesCache = [];
+    }
+}
+
 function fillChromeModalForm(doc: PamphletStructure): void {
     const hasHeader = Boolean(main.querySelector(":scope > .pamphlet-page-header"));
     const hasFooter = Boolean(main.querySelector(":scope > .pamphlet-page-footer"));
@@ -1855,6 +1887,7 @@ function fillChromeModalForm(doc: PamphletStructure): void {
     chromeFooterValue3.value = coalesceChromeField(footer.value3, doc.footer.value3);
     chromeFooterLabel4.value = coalesceChromeField(footer.label4, doc.footer.label4);
     chromeFooterValue4.value = coalesceChromeField(footer.value4, doc.footer.value4);
+    if (doc.footer_profile_id) chromeFooterProfile.value = doc.footer_profile_id;
 }
 
 function readChromeModalForm(doc: PamphletStructure): PamphletStructure {
@@ -1924,6 +1957,7 @@ function openChromeModal(focusName: string | null = null): void {
     }
     chromeModalUndoPushed = false;
     fillChromeModalForm(currentDoc);
+    void populateChromeFooterProfiles(currentDoc.footer_profile_id);
     if (!chromeModal.open) chromeModal.showModal();
     // `date` is derived from last update — never focus a removed date input.
     const focusId =
@@ -1946,10 +1980,10 @@ function openChromeModal(focusName: string | null = null): void {
     requestAnimationFrame(() => {
         const el =
             (focusId
-                ? appRoot.querySelector<HTMLInputElement>(`#${focusId}`)
+                ? appRoot.querySelector<HTMLInputElement | HTMLSelectElement>(`#${focusId}`)
                 : null) ?? chromeHeaderTitle;
         el.focus();
-        el.select();
+        if (el instanceof HTMLInputElement) el.select();
     });
 }
 
@@ -3746,8 +3780,21 @@ on(chromeForm, "input", () => {
     scheduleChromeLiveSave();
 });
 
-on(chromeForm, "change", () => {
+on(chromeForm, "change", (event: Event) => {
+    if (event.target === chromeFooterProfile) return;
     scheduleChromeLiveSave();
+});
+
+on(chromeFooterProfile, "change", () => {
+    const id = chromeFooterProfile.value.trim();
+    if (!id) return;
+    const profile = chromeFooterProfilesCache.find((p) => p.footerId === id);
+    if (!profile) return;
+    void (async () => {
+        await applyFooterProfile(profile, "snapshot");
+        if (currentDoc) fillChromeModalForm(currentDoc);
+        chromeFooterProfile.value = profile.footerId;
+    })();
 });
 
 on(chromeHeaderSeries, "change", () => {

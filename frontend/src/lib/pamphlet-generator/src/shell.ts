@@ -346,6 +346,12 @@ export function renderShell(_menuIconSrc?: string): string {
     <fieldset>
       <legend>Pie</legend>
       <label>
+        Pie guardado
+        <select id="chrome-footer-profile" name="footer_profile">
+          <option value="">Elegir pie guardado…</option>
+        </select>
+      </label>
+      <label>
         Acción
         <input id="chrome-footer-action" name="action" type="text" autocomplete="off" />
       </label>
