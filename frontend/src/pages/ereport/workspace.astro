@@ -80,6 +80,16 @@ import Layout from "../../layouts/Layout.astro";
       <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-open-cloud-title">
         <h2 id="ereport-open-cloud-title">Reportes en la nube</h2>
         <p class="hint">Elige un reporte; los cambios siguientes se guardan solo en la nube.</p>
+        <label class="ereport-search">
+          Buscar reporte
+          <input
+            type="search"
+            data-open-cloud-search
+            placeholder="Escribe para filtrar…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </label>
         <ul class="ereport-list" data-open-cloud-list></ul>
         <p class="ereport-hub__error" data-open-cloud-error hidden></p>
         <div class="ereport-modal-actions">
@@ -195,6 +205,7 @@ import Layout from "../../layouts/Layout.astro";
     updateEreportOrgs,
     type EreportHistoryCard,
     type EreportPayload,
+    type RecentReportCard,
   } from "../../lib/ereport";
   import {
     clearLocalEreportFile,
@@ -442,33 +453,40 @@ import Layout from "../../layouts/Layout.astro";
       }
     };
 
-    const paintCloudList = async () => {
+    let cloudReports: RecentReportCard[] = [];
+    let cloudSearchQuery = "";
+
+    const compareReportsAlpha = (a: RecentReportCard, b: RecentReportCard) => {
+      const aKey = `${a.tema || a.id || ""} · ${a.orgName || a.orgId || ""}`;
+      const bKey = `${b.tema || b.id || ""} · ${b.orgName || b.orgId || ""}`;
+      return aKey.localeCompare(bKey, undefined, { sensitivity: "base" });
+    };
+
+    const renderCloudList = () => {
       const list = root.querySelector("[data-open-cloud-list]") || document.querySelector("[data-open-cloud-list]");
-      const err = root.querySelector("[data-open-cloud-error]") || document.querySelector("[data-open-cloud-error]");
       if (!(list instanceof HTMLElement)) return;
       list.replaceChildren();
-      if (err instanceof HTMLElement) {
-        err.hidden = true;
-        err.textContent = "";
-      }
-      const listed = await fetchEreportOrgs();
-      if (disposed) return;
-      if (listed.status !== 200) {
-        if (err instanceof HTMLElement) {
-          err.hidden = false;
-          err.textContent = listed.data.message || "Could not list reports.";
-        }
-        return;
-      }
-      ownerSafe = listed.data.ownerSafe || ownerSafe;
-      const recent = listed.data.recentReports || [];
-      if (!recent.length) {
+      const q = cloudSearchQuery.trim().toLocaleLowerCase();
+      const filtered = [...cloudReports]
+        .filter((item) => {
+          if (!q) return true;
+          const hay = `${item.tema || ""} ${item.orgName || ""} ${item.orgId || ""} ${item.id || ""}`.toLocaleLowerCase();
+          return hay.includes(q);
+        })
+        .sort(compareReportsAlpha);
+      if (!cloudReports.length) {
         const empty = document.createElement("li");
-        empty.textContent = "No hay reportes recientes en la nube.";
+        empty.textContent = "No hay reportes en la nube.";
         list.append(empty);
         return;
       }
-      for (const item of recent) {
+      if (!filtered.length) {
+        const empty = document.createElement("li");
+        empty.textContent = "Ningún reporte coincide con la búsqueda.";
+        list.append(empty);
+        return;
+      }
+      for (const item of filtered) {
         const li = document.createElement("li");
         const btn = document.createElement("button");
         btn.type = "button";
@@ -478,6 +496,52 @@ import Layout from "../../layouts/Layout.astro";
         btn.dataset.openCloudReport = item.id;
         li.append(btn);
         list.append(li);
+      }
+    };
+
+    const paintCloudList = async () => {
+      const list = root.querySelector("[data-open-cloud-list]") || document.querySelector("[data-open-cloud-list]");
+      const err = root.querySelector("[data-open-cloud-error]") || document.querySelector("[data-open-cloud-error]");
+      const search = root.querySelector("[data-open-cloud-search]") || document.querySelector("[data-open-cloud-search]");
+      if (!(list instanceof HTMLElement)) return;
+      list.replaceChildren();
+      if (err instanceof HTMLElement) {
+        err.hidden = true;
+        err.textContent = "";
+      }
+      if (search instanceof HTMLInputElement) {
+        cloudSearchQuery = search.value;
+      }
+      const listed = await fetchEreportOrgs();
+      if (disposed) return;
+      if (listed.status !== 200) {
+        cloudReports = [];
+        if (err instanceof HTMLElement) {
+          err.hidden = false;
+          err.textContent = listed.data.message || "Could not list reports.";
+        }
+        renderCloudList();
+        return;
+      }
+      ownerSafe = listed.data.ownerSafe || ownerSafe;
+      const orgs = (listed.data.orgs || []).filter((org) => !org.hidden);
+      const batches = await Promise.all(
+        orgs.map(async (org) => {
+          const detail = await fetchEreportOrg(org.id);
+          if (detail.status !== 200) return [] as RecentReportCard[];
+          return (detail.data.reports || []).map((report) => ({
+            ...report,
+            orgId: org.id,
+            orgName: org.name,
+          }));
+        }),
+      );
+      if (disposed) return;
+      cloudReports = batches.flat().sort(compareReportsAlpha);
+      renderCloudList();
+      if (search instanceof HTMLInputElement) {
+        search.focus();
+        search.select();
       }
     };
 
@@ -846,6 +910,19 @@ import Layout from "../../layouts/Layout.astro";
     root.querySelector("[data-ids-form]")?.addEventListener("submit", (event) => {
       event.preventDefault();
     });
+
+    const onCloudSearch = (event: Event) => {
+      const input = event.currentTarget;
+      if (!(input instanceof HTMLInputElement)) return;
+      cloudSearchQuery = input.value;
+      renderCloudList();
+    };
+    const cloudSearchInput =
+      root.querySelector("[data-open-cloud-search]") || document.querySelector("[data-open-cloud-search]");
+    if (cloudSearchInput instanceof HTMLInputElement) {
+      cloudSearchInput.addEventListener("input", onCloudSearch);
+      disposers.push(() => cloudSearchInput.removeEventListener("input", onCloudSearch));
+    }
 
     root.querySelector("[data-local-fallback]")?.addEventListener("change", (event) => {
       const input = event.currentTarget;

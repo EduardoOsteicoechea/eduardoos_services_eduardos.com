@@ -182,6 +182,10 @@ import Layout from "../../layouts/Layout.astro";
                 <button class="btn" type="button" data-import-btn="panel" data-needs-create>Import .ereport</button>
               </div>
             </form>
+            <label class="ereport-search">
+              Search reports
+              <input type="search" data-report-search placeholder="Type to filter…" autocomplete="off" spellcheck="false" />
+            </label>
             <ul class="ereport-list" data-report-list></ul>
           </div>
 
@@ -287,6 +291,10 @@ import Layout from "../../layouts/Layout.astro";
       <div data-view="recent">
         <button class="btn" type="button" data-hub-back>Back to dashboard</button>
         <h2 class="product-dash__section-title">Recent reports</h2>
+        <label class="ereport-search">
+          Search reports
+          <input type="search" data-recent-search placeholder="Type to filter…" autocomplete="off" spellcheck="false" />
+        </label>
         <ul class="ereport-list" data-recent-list></ul>
       </div>
 
@@ -314,6 +322,10 @@ import Layout from "../../layouts/Layout.astro";
         <button class="btn" type="button" data-hub-back>Back to dashboard</button>
         <h2 class="product-dash__section-title">Manage reports</h2>
         <p class="hint">Open, add as website registration, edit connector defaults, snapshot history, or delete permanently. Multiple website registration reports are allowed.</p>
+        <label class="ereport-search">
+          Search reports
+          <input type="search" data-manage-reports-search placeholder="Type to filter…" autocomplete="off" spellcheck="false" />
+        </label>
         <ul class="ereport-list" data-manage-reports-list></ul>
         <dialog class="ereport-assign-dialog" data-assign-dialog>
           <form method="dialog" class="ereport-assign-dialog__form" data-assign-form>
@@ -418,6 +430,25 @@ import Layout from "../../layouts/Layout.astro";
     let activeOrgId = "";
     let reports: ReportCard[] = [];
     let importOrgId = "";
+    let reportSearchQuery = "";
+    let recentSearchQuery = "";
+    let manageReportsSearchQuery = "";
+
+    const compareByTema = (a: { tema?: string; id?: string; reportId?: string }, b: { tema?: string; id?: string; reportId?: string }) => {
+      const aKey = String(a.tema || a.id || a.reportId || "");
+      const bKey = String(b.tema || b.id || b.reportId || "");
+      return aKey.localeCompare(bKey, undefined, { sensitivity: "base" });
+    };
+
+    const matchesReportQuery = (
+      query: string,
+      report: { tema?: string; id?: string; reportId?: string; orgName?: string; orgId?: string },
+    ) => {
+      const q = query.trim().toLocaleLowerCase();
+      if (!q) return true;
+      const hay = `${report.tema || ""} ${report.orgName || ""} ${report.orgId || ""} ${report.id || report.reportId || ""}`.toLocaleLowerCase();
+      return hay.includes(q);
+    };
 
     const parseConnectorHosts = (raw: string): string[] =>
       raw
@@ -577,7 +608,7 @@ import Layout from "../../layouts/Layout.astro";
       const empty = root.querySelector("[data-dashboard-recents-empty]");
       if (!(grid instanceof HTMLElement)) return;
       grid.replaceChildren();
-      const items = recent.slice(0, 5);
+      const items = [...recent].sort(compareByTema).slice(0, 5);
       if (empty instanceof HTMLElement) empty.hidden = items.length > 0;
       for (const report of items) {
         const card = document.createElement("a");
@@ -617,7 +648,7 @@ import Layout from "../../layouts/Layout.astro";
       if (!(grid instanceof HTMLElement)) return;
       grid.replaceChildren();
       if (empty instanceof HTMLElement) empty.hidden = sharedReports.length > 0;
-      for (const report of sharedReports) {
+      for (const report of [...sharedReports].sort(compareByTema)) {
         const card = document.createElement("a");
         card.className = "product-dash__card ereport-hub__recent-card";
         card.href = workspaceHref(report.orgId, report.reportId, report.ownerSafe || "", { shared: true });
@@ -704,7 +735,15 @@ import Layout from "../../layouts/Layout.astro";
         list.append(empty);
         return;
       }
-      for (const report of recent) {
+      const filtered = [...recent].filter((report) => matchesReportQuery(recentSearchQuery, report)).sort(compareByTema);
+      if (!filtered.length) {
+        const empty = document.createElement("li");
+        empty.className = "hint";
+        empty.textContent = "No reports match this search.";
+        list.append(empty);
+        return;
+      }
+      for (const report of filtered) {
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.href = workspaceHref(report.orgId, report.id, ownerSafe);
@@ -771,7 +810,7 @@ import Layout from "../../layouts/Layout.astro";
           }));
         }),
       );
-      allReports = batches.flat().sort((a, b) => (b.updatedAt || "").localeCompare(a.updatedAt || ""));
+      allReports = batches.flat().sort(compareByTema);
     };
 
     const paintManageReports = () => {
@@ -785,7 +824,15 @@ import Layout from "../../layouts/Layout.astro";
         list.append(empty);
         return;
       }
-      for (const report of allReports) {
+      const filtered = allReports.filter((report) => matchesReportQuery(manageReportsSearchQuery, report));
+      if (!filtered.length) {
+        const empty = document.createElement("li");
+        empty.className = "hint";
+        empty.textContent = "No reports match this search.";
+        list.append(empty);
+        return;
+      }
+      for (const report of filtered) {
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.href = workspaceHref(report.orgId, report.id, ownerSafe);
@@ -973,7 +1020,15 @@ import Layout from "../../layouts/Layout.astro";
         list.append(empty);
         return;
       }
-      for (const report of reports) {
+      const filtered = [...reports].filter((report) => matchesReportQuery(reportSearchQuery, report)).sort(compareByTema);
+      if (!filtered.length) {
+        const empty = document.createElement("li");
+        empty.className = "hint";
+        empty.textContent = "No reports match this search.";
+        list.append(empty);
+        return;
+      }
+      for (const report of filtered) {
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.href = workspaceHref(activeOrgId, report.id, ownerSafe);
@@ -1103,6 +1158,25 @@ import Layout from "../../layouts/Layout.astro";
         window.location.href = workspaceHref(orgId, res.data.meta.id, res.data.meta.ownerSafe || ownerSafe);
       }
     };
+
+    root.querySelector("[data-report-search]")?.addEventListener("input", (event) => {
+      const input = event.currentTarget;
+      if (!(input instanceof HTMLInputElement)) return;
+      reportSearchQuery = input.value;
+      paintReports();
+    });
+    root.querySelector("[data-recent-search]")?.addEventListener("input", (event) => {
+      const input = event.currentTarget;
+      if (!(input instanceof HTMLInputElement)) return;
+      recentSearchQuery = input.value;
+      paintRecent();
+    });
+    root.querySelector("[data-manage-reports-search]")?.addEventListener("input", (event) => {
+      const input = event.currentTarget;
+      if (!(input instanceof HTMLInputElement)) return;
+      manageReportsSearchQuery = input.value;
+      paintManageReports();
+    });
 
     void (async () => {
       try {
