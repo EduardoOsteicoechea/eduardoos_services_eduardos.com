@@ -94,6 +94,15 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain("height: 0.3125rem");
   });
 
+  it("searches and alphabetically sorts issues and subsections inside a report", () => {
+    expect(tracker).toContain('id="issue-search"');
+    expect(tracker).toContain("function sortReportContents(");
+    expect(tracker).toContain("function itemMatchesSearch(");
+    expect(tracker).toContain("function groupMatchesSearch(");
+    expect(tracker).toContain("sensitivity: \"base\", numeric: true");
+    expect(tracker).toContain("is-search-hidden");
+  });
+
   it("uses checklist tabs and product-history concept buttons", () => {
     expect(tracker).toContain('data-act="product-history"');
     expect(tracker).toContain("function openProductHistory(");

@@ -232,6 +232,39 @@ body.sidebar-collapsed .sidebar {
   padding: 0;
   margin-bottom: 1rem;
 }
+.issue-search-bar {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0 0 0.9rem;
+  padding: 0.55rem 0 0.65rem;
+  background: var(--bg);
+  border-bottom: 0.0625rem solid color-mix(in srgb, var(--ink) 18%, transparent);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.issue-search-bar input {
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  border: 0.0625rem solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.65rem;
+  background: var(--card);
+}
+.issue-search-bar__meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+  min-height: 1.1rem;
+}
+.section-block.is-search-hidden,
+.group-block.is-search-hidden,
+.item-card.is-search-hidden {
+  display: none !important;
+}
 .panel > h2 { margin: 0 0 0.6rem; font-size: 1.05rem; color: var(--ink); }
 .howto ol { margin: 0.5rem 0 0; padding-left: 1.2rem; color: var(--muted); font-size: 0.92rem; }
 .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
@@ -1167,7 +1200,7 @@ body:not(.theme-dark) .item-card.is-no_aplica {
     --inverse-ink: #ffffff;
     color-scheme: light !important;
   }
-  .topbar, .sidebar, .howto, .group-actions, .section-actions button, .app-actions, .item-top button, .nav-tip, .toast, .thumb-del, .collapse-toggle { display: none !important; }
+  .topbar, .sidebar, .howto, .issue-search-bar, .group-actions, .section-actions button, .app-actions, .item-top button, .nav-tip, .toast, .thumb-del, .collapse-toggle { display: none !important; }
   .section-body, .group-body, .item-body { display: block !important; }
   .layout { display: block; }
   .main-col { max-width: none; padding: 0; }
@@ -1201,6 +1234,12 @@ body:not(.theme-dark) .item-card.is-no_aplica {
         </div>
       </div>
     </section>
+
+    <label class="issue-search-bar" for="issue-search">
+      Buscar incidencias
+      <input type="search" id="issue-search" placeholder="Escribe para aislar issues o subsecciones…" autocomplete="off" spellcheck="false" />
+      <span class="issue-search-bar__meta" id="issue-search-meta" aria-live="polite"></span>
+    </label>
 
     <main id="app"></main>
   </div>
@@ -1549,7 +1588,78 @@ function normalizeState(data) {
       grp.items = (grp.items || []).map(normalizeItem);
     });
   });
+  sortReportContents(data);
   return data;
+}
+
+let issueSearchQuery = "";
+
+function cmpAlpha(a, b) {
+  return String(a || "").localeCompare(String(b || ""), undefined, { sensitivity: "base", numeric: true });
+}
+
+function itemSortKey(item) {
+  return itemNavName(item);
+}
+
+function sortReportContents(data) {
+  const root = data || state;
+  (root.sections || []).forEach((sec) => {
+    if (Array.isArray(sec.items)) {
+      sec.items.sort((a, b) => cmpAlpha(itemSortKey(a), itemSortKey(b)));
+    }
+    if (Array.isArray(sec.groups)) {
+      sec.groups.sort((a, b) => cmpAlpha(a.title, b.title));
+      sec.groups.forEach((grp) => {
+        if (Array.isArray(grp.items)) {
+          grp.items.sort((a, b) => cmpAlpha(itemSortKey(a), itemSortKey(b)));
+        }
+      });
+    }
+  });
+}
+
+function issueSearchNeedle() {
+  return String(issueSearchQuery || "").trim().toLocaleLowerCase();
+}
+
+function textMatchesSearch(text, needle) {
+  if (!needle) return true;
+  return String(text || "").toLocaleLowerCase().includes(needle);
+}
+
+function itemMatchesSearch(item, needle) {
+  if (!needle) return true;
+  return (
+    textMatchesSearch(item.nombre, needle) ||
+    textMatchesSearch(item.incidencia, needle) ||
+    textMatchesSearch(item.solucion, needle) ||
+    textMatchesSearch(itemNavName(item), needle)
+  );
+}
+
+function groupMatchesSearch(grp, needle) {
+  if (!needle) return true;
+  if (textMatchesSearch(grp.title, needle)) return true;
+  return (grp.items || []).some((it) => itemMatchesSearch(it, needle));
+}
+
+function sectionMatchesSearch(sec, needle) {
+  if (!needle) return true;
+  if (textMatchesSearch(sec.title, needle)) return true;
+  if ((sec.items || []).some((it) => itemMatchesSearch(it, needle))) return true;
+  return (sec.groups || []).some((grp) => groupMatchesSearch(grp, needle));
+}
+
+function updateIssueSearchMeta(visibleCount, totalCount) {
+  const meta = document.getElementById("issue-search-meta");
+  if (!meta) return;
+  const needle = issueSearchNeedle();
+  if (!needle) {
+    meta.textContent = totalCount ? `${totalCount} incidencia(s) · A–Z` : "";
+    return;
+  }
+  meta.textContent = `${visibleCount} de ${totalCount} incidencia(s)`;
 }
 
 const SECTION_ITEMS = "__section__";
@@ -2703,12 +2813,19 @@ function hideNavTip() {
 function renderNavRail() {
   const rail = document.getElementById("nav-rail");
   if (!rail) return;
-  rail.innerHTML = state.sections.map(sec => `
+  const needle = issueSearchNeedle();
+  sortReportContents();
+  rail.innerHTML = state.sections
+    .filter((sec) => sectionMatchesSearch(sec, needle))
+    .map((sec) => {
+      const openItems = (sec.items || []).filter((item) => itemMatchesSearch(item, needle));
+      const groups = (sec.groups || []).filter((grp) => groupMatchesSearch(grp, needle));
+      return `
     <div class="nav-sec" data-section="${escapeAttr(sec.id)}" title="${escapeAttr(sec.title)}">
       <div class="nav-sec-label">${escapeHtml(shortNavLabel(sec))} · ${escapeHtml(sec.title)}</div>
       <div class="nav-dots">
       ${[
-        ...(sec.items || []).map(item => `
+        ...openItems.map((item) => `
           <button type="button" class="nav-dot ${navDotClass(effectiveStatus(item))}"
             data-target="item-${item.id}"
             data-group="${SECTION_ITEMS}"
@@ -2716,8 +2833,10 @@ function renderNavRail() {
             data-name="${escapeAttr(itemNavName(item))}"
             aria-label="${escapeAttr("Open issues · " + itemNavName(item))}"></button>
         `),
-        ...(sec.groups || []).flatMap(grp =>
-          (grp.items || []).map(item => `
+        ...groups.flatMap((grp) =>
+          (grp.items || [])
+            .filter((item) => !needle || textMatchesSearch(grp.title, needle) || itemMatchesSearch(item, needle))
+            .map((item) => `
           <button type="button" class="nav-dot ${navDotClass(effectiveStatus(item))}"
             data-target="item-${item.id}"
             data-group="${escapeAttr(grp.id)}"
@@ -2725,12 +2844,14 @@ function renderNavRail() {
             data-name="${escapeAttr(itemNavName(item))}"
             aria-label="${escapeAttr(grp.title + " · " + itemNavName(item))}"></button>
         `)
-        )
+        ),
       ].join("")}
       </div>
     </div>
-  `).join("");
-  rail.querySelectorAll(".nav-dot").forEach(btn => {
+  `;
+    })
+    .join("");
+  rail.querySelectorAll(".nav-dot").forEach((btn) => {
     btn.onclick = () => {
       const target = btn.dataset.target;
       const el = document.getElementById(target);
@@ -2963,12 +3084,26 @@ function render() {
   const scrollerBefore = mainScrollEl();
   const keepScrollTop = scrollerBefore ? scrollerBefore.scrollTop : 0;
   const root = document.getElementById("app");
+  sortReportContents();
+  const needle = issueSearchNeedle();
+  const searching = !!needle;
+  let totalIssues = 0;
+  let visibleIssues = 0;
+  (state.sections || []).forEach((sec) => {
+    totalIssues += (sec.items || []).length;
+    (sec.groups || []).forEach((grp) => {
+      totalIssues += (grp.items || []).length;
+    });
+  });
   root.innerHTML = state.sections.map((sec, secIdx, secArr) => {
-    const secCollapsed = isCollapsed("sections", sec.id);
-    const openItems = sec.items || [];
-    const groups = sec.groups || [];
+    const secVisible = sectionMatchesSearch(sec, needle);
+    const forceExpand = searching && secVisible;
+    const secCollapsed = forceExpand ? false : isCollapsed("sections", sec.id);
+    const openItems = (sec.items || []).filter((it) => itemMatchesSearch(it, needle));
+    const groups = (sec.groups || []).filter((grp) => groupMatchesSearch(grp, needle));
+    visibleIssues += openItems.length;
     return `
-    <section class="section-block${secCollapsed ? " is-collapsed" : ""}" id="sec-${escapeAttr(sec.id)}" data-section="${escapeAttr(sec.id)}">
+    <section class="section-block${secCollapsed ? " is-collapsed" : ""}${secVisible ? "" : " is-search-hidden"}" id="sec-${escapeAttr(sec.id)}" data-section="${escapeAttr(sec.id)}">
       <div class="section-title">
         <div class="section-title-main">
           <button type="button" class="collapse-toggle" data-collapse="sections" data-id="${escapeAttr(sec.id)}" title="Colapsar/expandir sección" aria-expanded="${secCollapsed ? "false" : "true"}">${collapseChevron(secCollapsed)}</button>
@@ -3000,8 +3135,11 @@ function render() {
         ${openItems.map((it, idx) => renderItem(sec, { id: SECTION_ITEMS, title: "Open issues", items: openItems }, it, idx, openItems.length)).join("")}
       </div>
       ${groups.map((grp, grpIdx) => {
-        const grpCollapsed = isCollapsed("groups", grp.id);
-        const grpItems = grp.items || [];
+        const grpForceExpand = searching;
+        const grpCollapsed = grpForceExpand ? false : isCollapsed("groups", grp.id);
+        const grpTitleMatch = !needle || textMatchesSearch(grp.title, needle);
+        const grpItems = (grp.items || []).filter((it) => grpTitleMatch || itemMatchesSearch(it, needle));
+        visibleIssues += grpItems.length;
         return `
         <div class="group-block subcontainer${grpCollapsed ? " is-collapsed" : ""}" id="grp-${escapeAttr(grp.id)}" data-group="${escapeAttr(grp.id)}">
           <div class="group-head">
@@ -3109,8 +3247,10 @@ function render() {
     if (nomEl) {
       nomEl._value = itemValue(sid, gid, iid, "nombre");
       bindInplace(nomEl, "Nombre corto de la incidencia", () => {
+        collectFromDom();
+        sortReportContents();
         updateStatus();
-        renderNavRail();
+        render();
       });
     }
     if (incEl) { incEl._value = itemValue(sid, gid, iid, "incidencia"); bindInplace(incEl, "Descripción de la incidencia", () => updateStatus()); }
@@ -3141,8 +3281,10 @@ function render() {
     titleEl._value = (grp && grp.title) || "";
     bindInplace(titleEl, "Nombre del subartículo / feature", (v) => {
       if (grp) grp.title = v;
+      collectFromDom();
+      sortReportContents();
       updateStatus();
-      renderNavRail();
+      render();
     });
   });
 
@@ -3222,6 +3364,7 @@ function render() {
     });
   });
   renderNavRail();
+  updateIssueSearchMeta(visibleIssues, totalIssues);
   updateStatus();
   syncStickyOffsets();
   const scroller = mainScrollEl();
@@ -3909,6 +4052,29 @@ document.getElementById("howto-close").onclick = () => closeModal("howto-modal")
 document.getElementById("howto-modal").addEventListener("click", (e) => {
   if (e.target.id === "howto-modal") closeModal("howto-modal");
 });
+
+(() => {
+  const search = document.getElementById("issue-search");
+  if (!(search instanceof HTMLInputElement)) return;
+  let searchTimer = 0;
+  const applySearch = () => {
+    issueSearchQuery = search.value || "";
+    collectFromDom();
+    render();
+  };
+  search.addEventListener("input", () => {
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(applySearch, 120);
+  });
+  search.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && search.value) {
+      e.preventDefault();
+      search.value = "";
+      applySearch();
+    }
+  });
+})();
+
 document.getElementById("history-close").onclick = () => closeProductHistory();
 document.getElementById("history-cancel").onclick = () => closeProductHistory();
 document.getElementById("history-save").onclick = () => saveProductHistory();
