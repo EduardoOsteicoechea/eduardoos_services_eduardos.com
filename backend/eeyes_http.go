@@ -431,6 +431,7 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 		Title            string   `json:"title"`
 		Instructions     string   `json:"instructions"`
 		DeviceID         string   `json:"deviceId"`
+		Kind             string   `json:"kind"`
 		NotifyAt         string   `json:"notifyAt"`
 		Reminders        []string `json:"reminders"`
 		DueAt            string   `json:"dueAt"`
@@ -445,7 +446,11 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 	}
 	title := strings.TrimSpace(body.Title)
 	deviceID := strings.TrimSpace(body.DeviceID)
-	if title == "" || deviceID == "" {
+	kind := strings.TrimSpace(body.Kind)
+	if kind == "task" {
+		kind = ""
+	}
+	if title == "" || deviceID == "" || (kind != "" && kind != eeyesTaskKindNotice) {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -492,6 +497,14 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 		photoInterval = 0
 	}
 	now := time.Now().UTC()
+	if kind == eeyesTaskKindNotice {
+		if notifyAt == nil {
+			notifyAt = &now
+		}
+		maxPhotos, audioSec, photoInterval = 0, 0, 0
+		reminders = nil
+		dueAt = nil
+	}
 	task := &eeyesTask{
 		ID:               randomID(12),
 		OwnerID:          user.ID,
@@ -499,6 +512,7 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 		Title:            title,
 		Instructions:     strings.TrimSpace(body.Instructions),
 		Status:           eeyesTaskPending,
+		Kind:             kind,
 		NotifyAt:         notifyAt,
 		Reminders:        reminders,
 		DueAt:            dueAt,
@@ -603,7 +617,7 @@ func (a *App) eeyesListCompletions(w http.ResponseWriter, r *http.Request) {
 	}
 	out := make([]completion, 0)
 	for _, t := range tasks {
-		if t.Status != eeyesTaskCompleted {
+		if t.Status != eeyesTaskCompleted || t.Kind == eeyesTaskKindNotice {
 			continue
 		}
 		media, err := a.eeyes.MediaByTask(r.Context(), t.ID)
@@ -681,7 +695,9 @@ func (a *App) eeyesDeviceSync(w http.ResponseWriter, r *http.Request) {
 		if t.Status == eeyesTaskCompleted {
 			continue
 		}
-		active = append(active, t)
+		if t.Kind != eeyesTaskKindNotice {
+			active = append(active, t)
+		}
 		if t.NotifyAt != nil && !t.NotifyAt.After(horizon) {
 			key := "notify:" + t.ID
 			if !containsString(t.NotifiedKeys, key) {
@@ -953,8 +969,13 @@ func (a *App) eeyesDeviceAckNotifications(w http.ResponseWriter, r *http.Request
 		if containsString(task.NotifiedKeys, key) {
 			continue
 		}
+		now := time.Now().UTC()
 		task.NotifiedKeys = append(task.NotifiedKeys, key)
-		task.UpdatedAt = time.Now().UTC()
+		task.UpdatedAt = now
+		if task.Kind == eeyesTaskKindNotice && key == "notify:"+task.ID && task.Status == eeyesTaskPending {
+			task.Status = eeyesTaskCompleted
+			task.CompletedAt = &now
+		}
 		_ = a.eeyes.UpdateTask(r.Context(), task)
 	}
 	writeJSON(w, http.StatusOK, map[string]any{"ok": true})

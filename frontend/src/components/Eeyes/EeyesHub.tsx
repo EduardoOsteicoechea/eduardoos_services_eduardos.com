@@ -20,11 +20,13 @@ import {
   eeyesDownloadUrl,
   eeyesMediaUrl,
   getEeyesPairing,
+  isEeyesNotice,
   listEeyesCompletions,
   listEeyesDevices,
   listEeyesReleases,
   listEeyesTasks,
   revokeEeyesDevice,
+  sendEeyesNotice,
   type CreateEeyesTaskInput,
   type EeyesCompletion,
   type EeyesDevice,
@@ -37,6 +39,7 @@ const CARDS: DashboardCardItem[] = [
   { id: "pair", title: "Vincular", description: "Mostrar 3 códigos para la app.", icon: "qr_code_2" },
   { id: "devices", title: "Dispositivos", description: "Ver, renombrar o revocar.", icon: "smartphone" },
   { id: "tasks", title: "Tareas", description: "Planificar capturas humanas.", icon: "task_alt" },
+  { id: "notify", title: "Notificación", description: "Enviar un aviso a un dispositivo.", icon: "notifications" },
   { id: "completions", title: "Completaciones", description: "Fotos y audio recibidos.", icon: "photo_library" },
   { id: "downloads", title: "Descargas", description: "APK Android y EXE Desktop.", icon: "download" },
 ];
@@ -63,6 +66,7 @@ function EeyesHubInner() {
       {view === "pair" ? <PairView /> : null}
       {view === "devices" ? <DevicesView /> : null}
       {view === "tasks" ? <TasksView /> : null}
+      {view === "notify" ? <NotifyView /> : null}
       {view === "completions" ? <CompletionsView /> : null}
       {view === "downloads" ? <DownloadsView /> : null}
     </ProductHubShell>
@@ -195,7 +199,7 @@ function TasksView() {
   const load = useCallback(async () => {
     const [d, t] = await Promise.all([listEeyesDevices(), listEeyesTasks()]);
     setDevices(d.filter((x) => !x.revokedAt));
-    setTasks(t);
+    setTasks(t.filter((x) => !isEeyesNotice(x)));
     if (!form.deviceId && d[0]) setForm((f) => ({ ...f, deviceId: d[0].id }));
   }, [form.deviceId]);
 
@@ -294,6 +298,140 @@ function TasksView() {
             <span className="lede">{t.status}</span>
             <span className="lede">{t.instructions}</span>
             {t.status !== "completed" && t.status !== "cancelled" ? (
+              <button type="button" onClick={() => void cancelEeyesTask(t.id).then(load)}>
+                Cancelar
+              </button>
+            ) : null}
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+type NoticeWhen = "now" | "15" | "60" | "custom";
+
+function noticeStatusLabel(t: EeyesTask): string {
+  if (t.status === "completed") {
+    return `Entregada ${t.completedAt ? new Date(t.completedAt).toLocaleString() : ""}`;
+  }
+  if (t.status === "cancelled") return "Cancelada";
+  const at = t.notifyAt ? new Date(t.notifyAt) : null;
+  if (at && at.getTime() > Date.now()) return `Programada ${at.toLocaleString()}`;
+  return "Pendiente de entrega";
+}
+
+function NotifyView() {
+  const [devices, setDevices] = useState<EeyesDevice[]>([]);
+  const [notices, setNotices] = useState<EeyesTask[]>([]);
+  const [deviceId, setDeviceId] = useState("");
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
+  const [when, setWhen] = useState<NoticeWhen>("now");
+  const [customAt, setCustomAt] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [sentLine, setSentLine] = useState("");
+
+  const load = useCallback(async () => {
+    const [d, t] = await Promise.all([listEeyesDevices(), listEeyesTasks()]);
+    const live = d.filter((x) => !x.revokedAt);
+    setDevices(live);
+    setNotices(
+      t
+        .filter(isEeyesNotice)
+        .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)),
+    );
+    setDeviceId((cur) => cur || live[0]?.id || "");
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  function resolveNotifyAt(): string | undefined {
+    if (when === "now") return undefined;
+    if (when === "custom") return customAt ? new Date(customAt).toISOString() : undefined;
+    return new Date(Date.now() + Number(when) * 60_000).toISOString();
+  }
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
+    if (when === "custom" && !customAt) return;
+    setBusy(true);
+    setSentLine("");
+    try {
+      const notice = await sendEeyesNotice({ deviceId, title, message, notifyAt: resolveNotifyAt() });
+      setTitle("");
+      setMessage("");
+      setSentLine(noticeStatusLabel(notice));
+      await load();
+    } catch {
+      /* unwrap already opened the error modal */
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <section className="product-dash__section">
+      <h2>Enviar notificación</h2>
+      <p className="lede">
+        El dispositivo la recibe al sincronizar: al abrir la app o en segundo plano cada 15 minutos.
+        Programada, se dispara a su hora aunque la app esté cerrada.
+      </p>
+      <form className="eeyes-form" onSubmit={(e) => void onSubmit(e)}>
+        <label>
+          Dispositivo
+          <select required value={deviceId} onChange={(e) => setDeviceId(e.target.value)}>
+            <option value="">Selecciona…</option>
+            {devices.map((d) => (
+              <option key={d.id} value={d.id}>
+                {d.label} ({d.platform})
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Título
+          <input required maxLength={120} value={title} onChange={(e) => setTitle(e.target.value)} />
+        </label>
+        <label>
+          Mensaje
+          <textarea maxLength={500} value={message} onChange={(e) => setMessage(e.target.value)} />
+        </label>
+        <label>
+          Cuándo
+          <select value={when} onChange={(e) => setWhen(e.target.value as NoticeWhen)}>
+            <option value="now">Ahora</option>
+            <option value="15">En 15 minutos</option>
+            <option value="60">En 1 hora</option>
+            <option value="custom">Fecha y hora…</option>
+          </select>
+        </label>
+        {when === "custom" ? (
+          <label>
+            Fecha y hora
+            <input
+              type="datetime-local"
+              required
+              value={customAt}
+              onChange={(e) => setCustomAt(e.target.value)}
+            />
+          </label>
+        ) : null}
+        <button type="submit" disabled={busy || !deviceId}>
+          {busy ? "Enviando…" : "Enviar notificación"}
+        </button>
+        {sentLine ? <p className="lede" aria-live="polite">{sentLine}</p> : null}
+      </form>
+      {devices.length === 0 ? <p className="lede">Vincula un dispositivo antes de enviar avisos.</p> : null}
+      <div className="eeyes-row">
+        {notices.map((t) => (
+          <article key={t.id} className="eeyes-task-card">
+            <strong>{t.title}</strong>
+            {t.instructions ? <span className="lede">{t.instructions}</span> : null}
+            <span className="lede">{noticeStatusLabel(t)}</span>
+            {t.status === "pending" ? (
               <button type="button" onClick={() => void cancelEeyesTask(t.id).then(load)}>
                 Cancelar
               </button>

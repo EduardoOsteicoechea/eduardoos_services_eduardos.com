@@ -20,7 +20,7 @@ object NotificationScheduler {
             val taskId = n.optString("taskId")
             val at = runCatching { Instant.parse(n.optString("at")).toEpochMilli() }.getOrNull() ?: continue
             if (at < System.currentTimeMillis()) {
-                NotificationAlarmReceiver.show(ctx, key, title, body, taskId)
+                NotificationAlarmReceiver.deliver(ctx, key, title, body, taskId)
                 continue
             }
             val intent = Intent(ctx, NotificationAlarmReceiver::class.java)

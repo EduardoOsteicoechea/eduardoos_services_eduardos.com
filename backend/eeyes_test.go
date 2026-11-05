@@ -380,6 +380,60 @@ func TestEeyesSyncSendsUpcomingNotifications(t *testing.T) {
 	}
 }
 
+func TestEeyesNoticeLifecycle(t *testing.T) {
+	app := newEeyesTestApp(t)
+	if err := app.grantEntitlement("member-1", productEeyes); err != nil {
+		t.Fatal(err)
+	}
+	_, c1, c2, c3 := eeyesCreatePairingCodes(t, app)
+	token, deviceID := eeyesPairDevice(t, app, c1, c2, c3)
+
+	bad := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eeyes/tasks",
+		`{"title":"x","deviceId":"`+deviceID+`","kind":"other"}`)
+	if bad.Code != http.StatusBadRequest {
+		t.Fatalf("unknown kind must 400, got %d", bad.Code)
+	}
+
+	rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eeyes/tasks",
+		`{"title":"Aviso","instructions":"Hola","deviceId":"`+deviceID+`","kind":"notice","maxPhotos":9}`)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("create notice %d %s", rec.Code, rec.Body.String())
+	}
+	var created struct {
+		Task eeyesTask `json:"task"`
+	}
+	_ = json.Unmarshal(rec.Body.Bytes(), &created)
+	if created.Task.Kind != eeyesTaskKindNotice || created.Task.NotifyAt == nil || created.Task.MaxPhotos != 0 {
+		t.Fatalf("notice defaults wrong: %+v", created.Task)
+	}
+
+	sync := eeyesDeviceJSON(t, app, token, http.MethodGet, "/api/eeyes/device/sync", "")
+	var body struct {
+		Tasks         []map[string]any `json:"tasks"`
+		Notifications []struct {
+			Key string `json:"key"`
+		} `json:"notifications"`
+	}
+	_ = json.Unmarshal(sync.Body.Bytes(), &body)
+	if len(body.Tasks) != 0 || len(body.Notifications) != 1 {
+		t.Fatalf("notice must notify without listing a task: %s", sync.Body.String())
+	}
+
+	ack := eeyesDeviceJSON(t, app, token, http.MethodPost, "/api/eeyes/device/notifications/ack",
+		`{"keys":["`+body.Notifications[0].Key+`"]}`)
+	if ack.Code != http.StatusOK {
+		t.Fatalf("ack %d", ack.Code)
+	}
+	got, _ := app.eeyes.TaskByID(context.Background(), created.Task.ID)
+	if got == nil || got.Status != eeyesTaskCompleted || got.CompletedAt == nil {
+		t.Fatalf("acked notice must be delivered: %+v", got)
+	}
+	comps := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/completions", "")
+	if strings.Contains(comps.Body.String(), created.Task.ID) {
+		t.Fatal("notices must not appear in completions")
+	}
+}
+
 func TestEeyesDownloadFromVersionSubdir(t *testing.T) {
 	app := newEeyesTestApp(t)
 	root := t.TempDir()

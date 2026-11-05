@@ -17,15 +17,21 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
         val title = intent.getStringExtra("title").orEmpty()
         val body = intent.getStringExtra("body").orEmpty()
         val taskId = intent.getStringExtra("taskId").orEmpty()
-        show(context, key, title, body, taskId)
-        thread {
-            val api = ApiClient(BuildConfig.EEYES_BASE_URL, TokenStore(context))
-            val payload = JSONObject().put("keys", JSONArray().put(key)).toString()
-            api.request("POST", "/api/eeyes/device/notifications/ack", payload)
-        }
+        deliver(context, key, title, body, taskId)
     }
 
     companion object {
+        /** Shows the notification and acks it so later syncs stop listing the key. */
+        fun deliver(ctx: Context, key: String, title: String, body: String, taskId: String) {
+            show(ctx, key, title, body, taskId)
+            val appCtx = ctx.applicationContext
+            thread {
+                val api = ApiClient(BuildConfig.EEYES_BASE_URL, TokenStore(appCtx))
+                val payload = JSONObject().put("keys", JSONArray().put(key)).toString()
+                api.request("POST", "/api/eeyes/device/notifications/ack", payload)
+            }
+        }
+
         fun show(ctx: Context, key: String, title: String, body: String, taskId: String) {
             val channelId = "eeyes_tasks"
             val nm = ctx.getSystemService(NotificationManager::class.java)

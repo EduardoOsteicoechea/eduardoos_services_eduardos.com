@@ -35,6 +35,8 @@ export type EeyesTask = {
   title: string;
   instructions: string;
   status: string;
+  /** `notice` = notification only (no capture); absent = capture task. */
+  kind?: string;
   notifyAt?: string | null;
   reminders?: string[];
   dueAt?: string | null;
@@ -143,6 +145,29 @@ export type CreateEeyesTaskInput = {
 export async function createEeyesTask(input: CreateEeyesTaskInput): Promise<EeyesTask> {
   const { status, data, requestId } = await postJSON<{ task: EeyesTask }>("/eeyes/tasks", input);
   return unwrap(status, data, requestId, "/eeyes/tasks").task;
+}
+
+export type SendEeyesNoticeInput = {
+  deviceId: string;
+  title: string;
+  message: string;
+  /** RFC3339; omitted = deliver on the device's next sync. */
+  notifyAt?: string;
+};
+
+export async function sendEeyesNotice(input: SendEeyesNoticeInput): Promise<EeyesTask> {
+  const { status, data, requestId } = await postJSON<{ task: EeyesTask }>("/eeyes/tasks", {
+    kind: "notice",
+    deviceId: input.deviceId,
+    title: input.title,
+    instructions: input.message,
+    notifyAt: input.notifyAt,
+  });
+  return unwrap(status, data, requestId, "/eeyes/tasks").task;
+}
+
+export function isEeyesNotice(task: EeyesTask): boolean {
+  return task.kind === "notice";
 }
 
 export async function cancelEeyesTask(id: string): Promise<void> {

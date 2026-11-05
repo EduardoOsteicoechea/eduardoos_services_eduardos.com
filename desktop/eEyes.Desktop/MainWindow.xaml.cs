@@ -64,7 +64,8 @@ public partial class MainWindow : Window
                 if (res.Code is >= 200 and < 300)
                 {
                     var root = JsonNode.Parse(res.Body);
-                    NotificationService.ScheduleFromSync(root?["notifications"] as JsonArray);
+                    var acks = NotificationService.ScheduleFromSync(root?["notifications"] as JsonArray);
+                    await NotificationService.AckAsync(_api, acks);
                     await _capture.FlushQueueAsync();
                 }
             }
@@ -207,7 +208,8 @@ public partial class MainWindow : Window
                 {
                     foreach (var t in arr) tasks.Add(t?.DeepClone());
                 }
-                NotificationService.ScheduleFromSync(root?["notifications"] as JsonArray);
+                var acks = NotificationService.ScheduleFromSync(root?["notifications"] as JsonArray);
+                await NotificationService.AckAsync(_api, acks);
                 if (root?["update"] is JsonObject update &&
                     (update["versionCode"]?.GetValue<int>() ?? 0) > Config.VersionCode)
                 {

@@ -32,6 +32,10 @@ const (
 
 const eeyesNotificationHorizon = 24 * time.Hour
 
+// eeyesTaskKindNotice marks a notification-only task: no capture, hidden from the
+// shell task list, completed when the device acks its notification.
+const eeyesTaskKindNotice = "notice"
+
 type eeyesPairing struct {
 	ID           string     `json:"id" bson:"_id"`
 	OwnerID      string     `json:"ownerId" bson:"owner_id"`
@@ -70,6 +74,7 @@ type eeyesTask struct {
 	Title             string     `json:"title" bson:"title"`
 	Instructions      string     `json:"instructions" bson:"instructions"`
 	Status            string     `json:"status" bson:"status"`
+	Kind              string     `json:"kind,omitempty" bson:"kind,omitempty"`
 	NotifyAt          *time.Time `json:"notifyAt,omitempty" bson:"notify_at,omitempty"`
 	Reminders         []time.Time `json:"reminders,omitempty" bson:"reminders,omitempty"`
 	DueAt             *time.Time `json:"dueAt,omitempty" bson:"due_at,omitempty"`
