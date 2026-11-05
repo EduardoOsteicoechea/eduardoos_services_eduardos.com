@@ -8,7 +8,6 @@
     tasks: [],
     activeTaskId: null,
     capturing: false,
-    codes: [],
     update: null,
   };
 
@@ -129,7 +128,7 @@
   }
 
   function show(name) {
-    ["pair", "tasks", "active", "update"].forEach(function (v) {
+    ["pair", "tasks", "active", "update", "debug"].forEach(function (v) {
       var el = document.getElementById("view-" + v);
       if (el) el.hidden = v !== name;
     });
@@ -185,12 +184,44 @@
     list.appendChild(li);
   }
 
+  var PAIR_ERRORS = {
+    unknown_type: "Esta versión de la app no admite la nueva vinculación. Descarga la última en eduardoos.com/eeyes → Descargas.",
+    biometric_failed: "No se verificó tu identidad. Intenta de nuevo.",
+    biometric_unavailable: "Configura huella, rostro o bloqueo de pantalla (Windows Hello en PC) para vincular.",
+    rate_limited: "Demasiados intentos. Genera códigos nuevos en eduardoos.com/eeyes y empieza de nuevo.",
+    pairing_invalid: "Código incorrecto o caducado. Revisa el código que muestra eduardoos.com/eeyes.",
+  };
+
   function wirePair() {
     var step = 1;
+    var busy = false;
     var input = document.getElementById("pair-input");
     var stepEl = document.getElementById("pair-step");
     var err = document.getElementById("pair-error");
-    document.getElementById("pair-next").addEventListener("click", function () {
+    var info = document.getElementById("pair-info");
+    var next = document.getElementById("pair-next");
+
+    function setStep(n, message) {
+      step = n;
+      stepEl.textContent = String(n);
+      info.textContent = message || "";
+      input.value = "";
+    }
+
+    function fail(e, resetToStart) {
+      var code = (e && e.message) || "pairing_invalid";
+      err.textContent = PAIR_ERRORS[code] || "No se pudo vincular (" + code + ").";
+      err.hidden = false;
+      if (resetToStart) setStep(1, "");
+    }
+
+    document.getElementById("pair-reset").addEventListener("click", function () {
+      err.hidden = true;
+      setStep(1, "");
+    });
+
+    next.addEventListener("click", function () {
+      if (busy) return;
       err.hidden = true;
       var code = (input.value || "").replace(/\D/g, "");
       if (code.length !== 4) {
@@ -198,32 +229,96 @@
         err.hidden = false;
         return;
       }
-      state.codes[step - 1] = code;
-      input.value = "";
-      if (step < 3) {
-        step += 1;
-        stepEl.textContent = String(step);
-        return;
-      }
-      post("pair", {
-        code1: state.codes[0],
-        code2: state.codes[1],
-        code3: state.codes[2],
-        platform: state.platform || qs("platform"),
-        shellVersion: state.shellVersion || qs("shellVersion"),
-      })
+      busy = true;
+      next.disabled = true;
+      post("pairStep", { step: step, code: code })
         .then(function () {
-          return post("getState", {});
+          if (step < 3) {
+            setStep(step + 1, "Código aceptado. Escribe el código " + (step + 1) + " que ahora aparece en eduardoos.com/eeyes.");
+            return null;
+          }
+          return post("getState", {}).then(applyState);
         })
+        .catch(function (e) {
+          var code = e && e.message;
+          fail(e, step === 1 || code === "rate_limited" || code === "unknown_type");
+        })
+        .then(function () {
+          busy = false;
+          next.disabled = false;
+        });
+    });
+  }
+
+  var lastView = "pair";
+
+  function renderDiagnostics(native) {
+    var lines = [
+      "UI: " + (state.platform || "?") + " · shell " + (state.shellVersion || "?"),
+      "Vinculado: " + (state.paired ? "sí" : "no"),
+      "Tareas visibles: " + (state.tasks || []).length,
+    ];
+    if (native) {
+      Object.keys(native).forEach(function (k) {
+        var v = native[k];
+        lines.push(k + ": " + (typeof v === "object" ? JSON.stringify(v) : String(v)));
+      });
+    }
+    document.getElementById("debug-output").textContent = lines.join("\n");
+  }
+
+  function refreshDiagnostics() {
+    var msg = document.getElementById("debug-msg");
+    msg.textContent = "";
+    return post("getDiagnostics", {})
+      .then(renderDiagnostics)
+      .catch(function (e) {
+        renderDiagnostics(null);
+        msg.textContent = e && e.message === "unknown_type"
+          ? "Esta versión de la app no tiene diagnóstico nativo: actualízala."
+          : "Error leyendo diagnóstico: " + ((e && e.message) || "?");
+      });
+  }
+
+  function wireDebug() {
+    var msg = document.getElementById("debug-msg");
+    document.getElementById("btn-debug").addEventListener("click", function () {
+      var current = ["pair", "tasks", "active", "update"].filter(function (v) {
+        return !document.getElementById("view-" + v).hidden;
+      })[0];
+      if (current) lastView = current;
+      show("debug");
+      refreshDiagnostics();
+    });
+    document.getElementById("btn-debug-back").addEventListener("click", function () {
+      show(lastView);
+    });
+    document.getElementById("btn-debug-sync").addEventListener("click", function () {
+      msg.textContent = "Sincronizando…";
+      post("getState", {})
         .then(function (payload) {
-          applyState(payload);
+          state.paired = !!payload.paired;
+          state.tasks = payload.tasks || [];
+          return refreshDiagnostics();
         })
-        .catch(function () {
-          err.textContent = "Códigos inválidos. Intenta de nuevo.";
-          err.hidden = false;
-          step = 1;
-          state.codes = [];
-          stepEl.textContent = "1";
+        .then(function () {
+          msg.textContent = "Sincronizado.";
+        })
+        .catch(function (e) {
+          msg.textContent = "Fallo al sincronizar: " + ((e && e.message) || "?");
+        });
+    });
+    document.getElementById("btn-debug-test").addEventListener("click", function () {
+      post("testNotification", {})
+        .then(function (res) {
+          msg.textContent = res && res.shown === false
+            ? "El sistema bloquea las notificaciones de eEyes: actívalas en Ajustes."
+            : "Notificación local enviada. Si no la ves, revisa los ajustes de notificaciones.";
+        })
+        .catch(function (e) {
+          msg.textContent = e && e.message === "unknown_type"
+            ? "Esta versión de la app no tiene prueba de notificación: actualízala."
+            : "Fallo: " + ((e && e.message) || "?");
         });
     });
   }
@@ -276,6 +371,7 @@
   state.shellVersion = qs("shellVersion");
   wirePair();
   wireActive();
+  wireDebug();
   post("getState", {})
     .then(applyState)
     .catch(function () {

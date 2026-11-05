@@ -19,6 +19,7 @@ import {
   createEeyesTask,
   eeyesDownloadUrl,
   eeyesMediaUrl,
+  eeyesNoticeStage,
   getEeyesPairing,
   isEeyesNotice,
   listEeyesCompletions,
@@ -42,6 +43,12 @@ const CARDS: DashboardCardItem[] = [
   { id: "notify", title: "Notificación", description: "Enviar un aviso a un dispositivo.", icon: "notifications" },
   { id: "completions", title: "Completaciones", description: "Fotos y audio recibidos.", icon: "photo_library" },
   { id: "downloads", title: "Descargas", description: "APK Android y EXE Desktop.", icon: "download" },
+  {
+    id: "diagnostics",
+    title: "Diagnóstico",
+    description: "Sincronización y recorrido de cada notificación.",
+    icon: "troubleshoot",
+  },
 ];
 
 const MENU: HeaderMenuItem[] = [
@@ -69,6 +76,7 @@ function EeyesHubInner() {
       {view === "notify" ? <NotifyView /> : null}
       {view === "completions" ? <CompletionsView /> : null}
       {view === "downloads" ? <DownloadsView /> : null}
+      {view === "diagnostics" ? <DiagnosticsView /> : null}
     </ProductHubShell>
   );
 }
@@ -115,31 +123,46 @@ function PairView() {
   return (
     <section className="product-dash__section">
       <h2>Vincular dispositivo</h2>
-      <p className="lede">Genera 3 códigos consecutivos y escríbelos en la app Android o Desktop.</p>
+      <p className="lede">
+        La app pide verificar tu identidad (huella, rostro o Windows Hello) y luego tres códigos. Aquí
+        aparece uno cada vez: el siguiente solo se muestra cuando la app acepta el anterior.
+      </p>
       <button type="button" onClick={() => void start()} disabled={busy}>
         {busy ? "Generando…" : "Generar códigos"}
       </button>
-      {pairing ? (
-        <>
-          <div className="eeyes-codes" aria-live="polite">
-            <div className="eeyes-code" title="Código 1">
-              {pairing.code1}
-            </div>
-            <div className="eeyes-code" title="Código 2">
-              {pairing.code2}
-            </div>
-            <div className="eeyes-code" title="Código 3">
-              {pairing.code3}
-            </div>
-          </div>
-          <p className="lede">
-            Estado: {pairing.status}
-            {pairing.status === "paired" && pairing.deviceLabel ? ` · ${pairing.deviceLabel}` : ""}
-            {pairing.status !== "paired" ? ` · expira en ${secondsLeft}s` : ""}
-          </p>
-        </>
-      ) : null}
+      {pairing ? <PairingCode pairing={pairing} secondsLeft={secondsLeft} /> : null}
     </section>
+  );
+}
+
+function PairingCode({ pairing, secondsLeft }: { pairing: EeyesPairing; secondsLeft: number }) {
+  if (pairing.status === "paired") {
+    return (
+      <p className="lede" aria-live="polite">
+        Vinculado{pairing.deviceLabel ? ` · ${pairing.deviceLabel}` : ""}.
+      </p>
+    );
+  }
+  if (pairing.status !== "open" || secondsLeft <= 0) {
+    return <p className="lede">Los códigos caducaron. Genera unos nuevos.</p>;
+  }
+  const step = Math.min(Math.max(pairing.step ?? 0, 0), 2);
+  const code = [pairing.code1, pairing.code2, pairing.code3][step];
+  return (
+    <>
+      <p className="lede">Código {step + 1} de 3</p>
+      <div className="eeyes-codes" aria-live="polite">
+        <div className="eeyes-code" title={`Código ${step + 1}`}>
+          {code}
+        </div>
+      </div>
+      <p className="lede">
+        {step === 0
+          ? "Verifica tu identidad en la app y escribe este código."
+          : "Código anterior aceptado. Escribe este en la app."}{" "}
+        Expira en {secondsLeft}s.
+      </p>
+    </>
   );
 }
 
@@ -311,14 +334,23 @@ function TasksView() {
 
 type NoticeWhen = "now" | "15" | "60" | "custom";
 
+function fmtTime(iso?: string | null): string {
+  return iso ? new Date(iso).toLocaleString() : "";
+}
+
 function noticeStatusLabel(t: EeyesTask): string {
-  if (t.status === "completed") {
-    return `Entregada ${t.completedAt ? new Date(t.completedAt).toLocaleString() : ""}`;
+  switch (eeyesNoticeStage(t)) {
+    case "shown":
+      return `Mostrada en el dispositivo ${fmtTime(t.notifyAckedAt)}`;
+    case "cancelled":
+      return "Cancelada";
+    case "dispatched":
+      return `Enviada al dispositivo ${fmtTime(t.notifyDispatchedAt)} · esperando que la muestre`;
+    case "scheduled":
+      return `Programada ${fmtTime(t.notifyAt)} · el dispositivo aún no la ha recogido`;
+    default:
+      return "Esperando a que el dispositivo sincronice";
   }
-  if (t.status === "cancelled") return "Cancelada";
-  const at = t.notifyAt ? new Date(t.notifyAt) : null;
-  if (at && at.getTime() > Date.now()) return `Programada ${at.toLocaleString()}`;
-  return "Pendiente de entrega";
 }
 
 function NotifyView() {
@@ -439,6 +471,97 @@ function NotifyView() {
           </article>
         ))}
       </div>
+    </section>
+  );
+}
+
+const SYNC_STALE_MS = 20 * 60_000;
+
+function minutesAgo(iso?: string | null): string {
+  if (!iso) return "nunca";
+  const mins = Math.round((Date.now() - Date.parse(iso)) / 60_000);
+  if (mins < 1) return "hace menos de 1 min";
+  if (mins < 120) return `hace ${mins} min`;
+  return new Date(iso).toLocaleString();
+}
+
+function deviceHealth(d: EeyesDevice): string {
+  if (d.revokedAt) return "Revocado: ya no recibe nada.";
+  if (Date.parse(d.expiresAt) <= Date.now()) return "Caducado: vuelve a vincularlo.";
+  if (!d.lastSyncAt) return "Nunca ha sincronizado con esta versión: abre la app en el dispositivo.";
+  if (Date.now() - Date.parse(d.lastSyncAt) > SYNC_STALE_MS) {
+    return "No sincroniza desde hace más de 20 min: abre la app; si pide códigos, este registro quedó huérfano.";
+  }
+  return "Sincronizando con normalidad.";
+}
+
+function DiagnosticsView() {
+  const [devices, setDevices] = useState<EeyesDevice[]>([]);
+  const [tasks, setTasks] = useState<EeyesTask[]>([]);
+  const [loadedAt, setLoadedAt] = useState("");
+
+  const load = useCallback(async () => {
+    const [d, t] = await Promise.all([listEeyesDevices(), listEeyesTasks()]);
+    setDevices(d);
+    setTasks(
+      t
+        .filter((x) => x.notifyAt)
+        .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+        .slice(0, 20),
+    );
+    setLoadedAt(new Date().toLocaleTimeString());
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const labelOf = (id: string) => devices.find((d) => d.id === id)?.label || id;
+
+  return (
+    <section className="product-dash__section">
+      <h2>Diagnóstico</h2>
+      <p className="lede">
+        Recorrido de una notificación: se crea aquí → el dispositivo la recoge al sincronizar (al abrir la
+        app o cada ~15 min) → la muestra y lo confirma. Si se queda en un paso, este panel dice cuál.
+      </p>
+      <button type="button" onClick={() => void load()}>
+        Actualizar
+      </button>
+      {loadedAt ? <p className="lede">Actualizado {loadedAt}</p> : null}
+      <h3>Dispositivos</h3>
+      <div className="eeyes-row">
+        {devices.map((d) => (
+          <article key={d.id} className="eeyes-device-card">
+            <strong>{d.label}</strong>
+            <span className="lede">
+              {d.platform} · v{d.shellVersion || "?"} · id {d.id}
+            </span>
+            <span className="lede">Último contacto: {minutesAgo(d.lastSeenAt)}</span>
+            <span className="lede">
+              Última sincronización: {minutesAgo(d.lastSyncAt)}
+              {d.lastSyncAt ? ` · ${d.lastSyncNotifications ?? 0} notificaciones entregadas` : ""}
+            </span>
+            <span className="lede">Expira: {new Date(d.expiresAt).toLocaleString()}</span>
+            <span className="lede">{deviceHealth(d)}</span>
+          </article>
+        ))}
+      </div>
+      {devices.length === 0 ? <p className="lede">No hay dispositivos vinculados.</p> : null}
+      <h3>Notificaciones recientes</h3>
+      <div className="eeyes-row">
+        {tasks.map((t) => (
+          <article key={t.id} className="eeyes-task-card">
+            <strong>{t.title}</strong>
+            <span className="lede">
+              {isEeyesNotice(t) ? "Aviso" : "Tarea"} · {labelOf(t.deviceId)}
+            </span>
+            <span className="lede">Creada {fmtTime(t.createdAt)} · para {fmtTime(t.notifyAt)}</span>
+            <span className="lede">{noticeStatusLabel(t)}</span>
+          </article>
+        ))}
+      </div>
+      {tasks.length === 0 ? <p className="lede">Aún no hay notificaciones.</p> : null}
     </section>
   );
 }

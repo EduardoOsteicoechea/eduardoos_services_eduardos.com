@@ -164,6 +164,7 @@ func (a *App) eeyesGetPairing(w http.ResponseWriter, r *http.Request) {
 		"id":          p.ID,
 		"status":      status,
 		"expiresAt":   p.ExpiresAt,
+		"step":        p.Step,
 		"deviceId":    p.DeviceID,
 		"deviceLabel": p.DeviceLabel,
 	})
@@ -174,13 +175,18 @@ func (a *App) eeyesDevicePair(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
+	// Codes are verified one per request so the hub can reveal code N+1 only
+	// after code N was accepted. Step 1 issues a pairing session the device
+	// must echo on steps 2 and 3; step 3 issues the device token.
 	var body struct {
+		Step         int    `json:"step"`
 		Code1        string `json:"code1"`
-		Code2        string `json:"code2"`
-		Code3        string `json:"code3"`
+		Code         string `json:"code"`
+		Session      string `json:"session"`
 		Platform     string `json:"platform"`
 		Model        string `json:"model"`
 		ShellVersion string `json:"shellVersion"`
+		InstallID    string `json:"installId"`
 	}
 	defer r.Body.Close()
 	if err := json.NewDecoder(io.LimitReader(r.Body, 1<<20)).Decode(&body); err != nil {
@@ -188,14 +194,17 @@ func (a *App) eeyesDevicePair(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	code1 := strings.TrimSpace(body.Code1)
-	code2 := strings.TrimSpace(body.Code2)
-	code3 := strings.TrimSpace(body.Code3)
-	if len(code1) != 4 || len(code2) != 4 || len(code3) != 4 {
+	if len(code1) != 4 || body.Step < 1 || body.Step > 3 {
 		a.writeSafeError(w, r, http.StatusUnauthorized, "pairing_invalid")
 		return
 	}
 	platform := strings.ToLower(strings.TrimSpace(body.Platform))
 	if platform != "android" && platform != "desktop" {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	installID := strings.TrimSpace(body.InstallID)
+	if len(installID) > 128 {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
@@ -214,12 +223,47 @@ func (a *App) eeyesDevicePair(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusTooManyRequests, "rate_limited")
 		return
 	}
-	ok2 := hmacEqual(a.hashOpaque("eeyes-pair-2", code2), p.Code2Hash)
-	ok3 := hmacEqual(a.hashOpaque("eeyes-pair-3", code3), p.Code3Hash)
-	if !ok2 || !ok3 {
+	failStep := func() {
 		p.Attempts++
 		_ = a.eeyes.UpdatePairing(r.Context(), p)
 		a.writeSafeError(w, r, http.StatusUnauthorized, "pairing_invalid")
+	}
+	if body.Step == 1 {
+		session := randomID(24)
+		p.Step = 1
+		p.SessionHash = a.hashOpaque("eeyes-pair-session", session)
+		if err := a.eeyes.UpdatePairing(r.Context(), p); err != nil {
+			a.logUnexpected(r, "eeyes", err.Error())
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+		a.mustLogf(r, "eeyes.device.pair_step", "pairing_id", p.ID, "step", 1)
+		writeJSON(w, http.StatusOK, map[string]any{"step": 1, "next": 2, "session": session})
+		return
+	}
+	session := strings.TrimSpace(body.Session)
+	if session == "" || p.SessionHash == "" || p.Step != body.Step-1 ||
+		!hmacEqual(a.hashOpaque("eeyes-pair-session", session), p.SessionHash) {
+		failStep()
+		return
+	}
+	codeHash := p.Code2Hash
+	if body.Step == 3 {
+		codeHash = p.Code3Hash
+	}
+	if !hmacEqual(a.hashOpaque(fmt.Sprintf("eeyes-pair-%d", body.Step), strings.TrimSpace(body.Code)), codeHash) {
+		failStep()
+		return
+	}
+	if body.Step == 2 {
+		p.Step = 2
+		if err := a.eeyes.UpdatePairing(r.Context(), p); err != nil {
+			a.logUnexpected(r, "eeyes", err.Error())
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+		a.mustLogf(r, "eeyes.device.pair_step", "pairing_id", p.ID, "step", 2)
+		writeJSON(w, http.StatusOK, map[string]any{"step": 2, "next": 3})
 		return
 	}
 	owner, err := a.store.UserByID(r.Context(), p.OwnerID)
@@ -241,26 +285,65 @@ func (a *App) eeyesDevicePair(w http.ResponseWriter, r *http.Request) {
 	if len(label) > 64 {
 		label = label[:64]
 	}
-	device := &eeyesDevice{
-		ID:           randomID(12),
-		OwnerID:      owner.ID,
-		Label:        label,
-		Platform:     platform,
-		Model:        model,
-		ShellVersion: strings.TrimSpace(body.ShellVersion),
-		TokenHash:    a.hashOpaque("eeyes-device", tokenSecret),
-		TokenPrefix:  tokenSecret[:min(12, len(tokenSecret))],
-		CreatedAt:    now,
-		ExpiresAt:    now.Add(eeyesDeviceTTL),
-		LastSeenAt:   now,
-		PairingID:    p.ID,
+	installHash := ""
+	if installID != "" {
+		installHash = a.hashOpaque("eeyes-install", platform+":"+installID)
 	}
-	if err := a.eeyes.InsertDevice(r.Context(), device); err != nil {
-		a.logUnexpected(r, "eeyes", err.Error())
-		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
-		return
+	// Re-pairing the same install (e.g. after an app reinstall wiped the local
+	// token) rotates the token on the existing record so its tasks survive.
+	var device *eeyesDevice
+	if installHash != "" {
+		existing, err := a.eeyes.DevicesByOwner(r.Context(), owner.ID)
+		if err != nil {
+			a.logUnexpected(r, "eeyes", err.Error())
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+		for _, d := range existing {
+			if d.Platform == platform && d.RevokedAt == nil && hmacEqual(d.InstallHash, installHash) {
+				device = d
+				break
+			}
+		}
+	}
+	if device != nil {
+		device.Model = model
+		device.ShellVersion = strings.TrimSpace(body.ShellVersion)
+		device.TokenHash = a.hashOpaque("eeyes-device", tokenSecret)
+		device.TokenPrefix = tokenSecret[:min(12, len(tokenSecret))]
+		device.ExpiresAt = now.Add(eeyesDeviceTTL)
+		device.LastSeenAt = now
+		device.PairingID = p.ID
+		if err := a.eeyes.UpdateDevice(r.Context(), device); err != nil {
+			a.logUnexpected(r, "eeyes", err.Error())
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+	} else {
+		device = &eeyesDevice{
+			ID:           randomID(12),
+			OwnerID:      owner.ID,
+			Label:        label,
+			Platform:     platform,
+			Model:        model,
+			ShellVersion: strings.TrimSpace(body.ShellVersion),
+			TokenHash:    a.hashOpaque("eeyes-device", tokenSecret),
+			TokenPrefix:  tokenSecret[:min(12, len(tokenSecret))],
+			CreatedAt:    now,
+			ExpiresAt:    now.Add(eeyesDeviceTTL),
+			LastSeenAt:   now,
+			PairingID:    p.ID,
+			InstallHash:  installHash,
+		}
+		if err := a.eeyes.InsertDevice(r.Context(), device); err != nil {
+			a.logUnexpected(r, "eeyes", err.Error())
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
 	}
 	consumed := now
+	p.Step = 3
+	p.SessionHash = ""
 	p.Status = eeyesPairingPaired
 	p.ConsumedAt = &consumed
 	p.DeviceID = device.ID
@@ -687,7 +770,8 @@ func (a *App) eeyesDeviceSync(w http.ResponseWriter, r *http.Request) {
 	notifications := make([]map[string]any, 0)
 	// Shells schedule local alarms, so upcoming notifications must reach them
 	// before they are due; sync runs every 15 minutes and re-arms the horizon.
-	horizon := time.Now().UTC().Add(eeyesNotificationHorizon)
+	now := time.Now().UTC()
+	horizon := now.Add(eeyesNotificationHorizon)
 	for _, t := range tasks {
 		if t.Status == eeyesTaskCancelled {
 			continue
@@ -709,6 +793,11 @@ func (a *App) eeyesDeviceSync(w http.ResponseWriter, r *http.Request) {
 					"at":      t.NotifyAt,
 					"kind":    "notify",
 				})
+				if t.NotifyDispatchedAt == nil {
+					dispatched := now
+					t.NotifyDispatchedAt = &dispatched
+					_ = a.eeyes.UpdateTask(r.Context(), t)
+				}
 			}
 		}
 		for i, rem := range t.Reminders {
@@ -729,6 +818,10 @@ func (a *App) eeyesDeviceSync(w http.ResponseWriter, r *http.Request) {
 			})
 		}
 	}
+	device.LastSyncAt = &now
+	device.LastSyncNotes = len(notifications)
+	_ = a.eeyes.UpdateDevice(r.Context(), device)
+	a.mustLogf(r, "eeyes.device.sync", "device_id", device.ID, "tasks", len(active), "notifications", len(notifications))
 	update := a.eeyesReadLatest(device.Platform)
 	writeJSON(w, http.StatusOK, map[string]any{
 		"deviceId":      device.ID,
@@ -972,10 +1065,14 @@ func (a *App) eeyesDeviceAckNotifications(w http.ResponseWriter, r *http.Request
 		now := time.Now().UTC()
 		task.NotifiedKeys = append(task.NotifiedKeys, key)
 		task.UpdatedAt = now
-		if task.Kind == eeyesTaskKindNotice && key == "notify:"+task.ID && task.Status == eeyesTaskPending {
-			task.Status = eeyesTaskCompleted
-			task.CompletedAt = &now
+		if key == "notify:"+task.ID {
+			task.NotifyAckedAt = &now
+			if task.Kind == eeyesTaskKindNotice && task.Status == eeyesTaskPending {
+				task.Status = eeyesTaskCompleted
+				task.CompletedAt = &now
+			}
 		}
+		a.mustLogf(r, "eeyes.device.ack", "device_id", device.ID, "task_id", task.ID)
 		_ = a.eeyes.UpdateTask(r.Context(), task)
 	}
 	writeJSON(w, http.StatusOK, map[string]any{"ok": true})

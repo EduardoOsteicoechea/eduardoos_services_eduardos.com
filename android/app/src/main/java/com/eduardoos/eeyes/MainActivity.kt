@@ -2,15 +2,20 @@ package com.eduardoos.eeyes
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
@@ -19,6 +24,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
@@ -28,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var api: ApiClient
     private lateinit var queue: MediaQueue
     private val baseUrl = BuildConfig.EEYES_BASE_URL
+    @Volatile private var pairCode1: String? = null
+    @Volatile private var pairSession: String? = null
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,24 +95,114 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    /** Shows the system biometric / screen-lock prompt; returns null on success or an error code. */
+    private fun authenticateUser(): String? {
+        val authenticators = BiometricManager.Authenticators.BIOMETRIC_WEAK or
+            BiometricManager.Authenticators.DEVICE_CREDENTIAL
+        if (BiometricManager.from(this).canAuthenticate(authenticators) != BiometricManager.BIOMETRIC_SUCCESS) {
+            return "biometric_unavailable"
+        }
+        val latch = CountDownLatch(1)
+        var result: String? = "biometric_failed"
+        runOnUiThread {
+            val prompt = BiometricPrompt(
+                this,
+                ContextCompat.getMainExecutor(this),
+                object : BiometricPrompt.AuthenticationCallback() {
+                    override fun onAuthenticationSucceeded(r: BiometricPrompt.AuthenticationResult) {
+                        result = null
+                        latch.countDown()
+                    }
+
+                    override fun onAuthenticationError(code: Int, msg: CharSequence) {
+                        latch.countDown()
+                    }
+                },
+            )
+            prompt.authenticate(
+                BiometricPrompt.PromptInfo.Builder()
+                    .setTitle("Vincular eEyes")
+                    .setSubtitle("Confirma que eres tú para vincular este teléfono")
+                    .setAllowedAuthenticators(authenticators)
+                    .build(),
+            )
+        }
+        latch.await(2, TimeUnit.MINUTES)
+        return result
+    }
+
+    @SuppressLint("HardwareIds")
+    private fun installId(): String =
+        Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID).orEmpty()
+
+    private fun handlePairStep(id: String?, payload: JSONObject, reply: (String) -> Unit) {
+        val step = payload.optInt("step")
+        val code = payload.optString("code").trim()
+        if (step == 1) {
+            pairCode1 = null
+            pairSession = null
+            val authError = authenticateUser()
+            if (authError != null) {
+                reply(BridgeRouter.reply(id, "state", error = authError))
+                return
+            }
+            pairCode1 = code
+        }
+        val code1 = pairCode1
+        if (code1.isNullOrBlank() || step !in 1..3) {
+            reply(BridgeRouter.reply(id, "state", error = "pairing_invalid"))
+            return
+        }
+        val res = api.pairStep(step, code1, code, pairSession, BuildConfig.VERSION_NAME, installId())
+        if (res.code !in 200..299) {
+            if (step == 1) pairCode1 = null
+            reply(BridgeRouter.reply(id, "state", error = res.errorCode ?: "pairing_invalid"))
+            return
+        }
+        if (step == 1) pairSession = runCatching { JSONObject(res.body).optString("session") }.getOrNull()
+        if (step == 3) {
+            pairCode1 = null
+            pairSession = null
+            reply(BridgeRouter.reply(id, "state", buildState()))
+            return
+        }
+        reply(BridgeRouter.reply(id, "state", JSONObject().put("step", step)))
+    }
+
+    private fun diagnostics(): JSONObject {
+        val out = DiagStore(this).toJson()
+        out.put("version", BuildConfig.VERSION_NAME)
+        out.put("versionCode", BuildConfig.VERSION_CODE)
+        out.put("paired", !tokenStore.getToken().isNullOrBlank())
+        out.put("notificationsEnabled", NotificationManagerCompat.from(this).areNotificationsEnabled())
+        val alarms = getSystemService(AlarmManager::class.java)
+        out.put("exactAlarms", if (Build.VERSION.SDK_INT >= 31) alarms.canScheduleExactAlarms() else true)
+        out.put("server", baseUrl)
+        return out
+    }
+
     private fun handleBridge(raw: String, reply: (String) -> Unit) {
         thread {
+            var id: String? = null
             try {
                 val msg = BridgeRouter.parse(raw)
-                val id = msg.optString("id")
+                id = msg.optString("id")
                 val type = msg.optString("type")
                 val payload = msg.optJSONObject("payload") ?: JSONObject()
                 when (type) {
                     "getState" -> reply(BridgeRouter.reply(id, "state", buildState()))
-                    "pair" -> {
-                        val res = api.pair(
-                            payload.optString("code1"),
-                            payload.optString("code2"),
-                            payload.optString("code3"),
-                            BuildConfig.VERSION_NAME,
+                    "pairStep" -> handlePairStep(id, payload, reply)
+                    "getDiagnostics" -> reply(BridgeRouter.reply(id, "state", diagnostics()))
+                    "testNotification" -> {
+                        val shown = NotificationAlarmReceiver.show(
+                            this,
+                            "test:${System.currentTimeMillis()}",
+                            "eEyes · prueba",
+                            "Si ves esto, las notificaciones funcionan.",
+                            "",
                         )
-                        if (res.code in 200..299) reply(BridgeRouter.reply(id, "state", buildState()))
-                        else reply(BridgeRouter.reply(id, "state", error = res.errorCode ?: "pairing_invalid"))
+                        DiagStore(this).recordNotification("test", shown)
+                        reply(BridgeRouter.reply(id, "state", JSONObject().put("shown", shown)))
                     }
                     "startTask" -> {
                         val taskId = payload.optString("taskId")
@@ -160,7 +258,7 @@ class MainActivity : AppCompatActivity() {
                     else -> reply(BridgeRouter.reply(id, "state", error = "unknown_type"))
                 }
             } catch (e: Exception) {
-                reply(BridgeRouter.reply(null, "state", error = "bridge_error"))
+                reply(BridgeRouter.reply(id, "state", error = "bridge_error"))
             }
         }
     }
@@ -184,11 +282,14 @@ class MainActivity : AppCompatActivity() {
         if (paired) {
             val res = api.request("GET", "/api/eeyes/device/sync")
             handleAuthErrors(res)
+            if (res.code !in 200..299) DiagStore(this).recordSync("app", res.code, res.errorCode, null)
             if (res.code in 200..299) {
                 val root = JSONObject(res.body)
                 val arr = root.optJSONArray("tasks") ?: JSONArray()
                 for (i in 0 until arr.length()) tasks.put(arr.getJSONObject(i))
-                NotificationScheduler.scheduleFromSync(this, root.optJSONArray("notifications"))
+                val notifications = root.optJSONArray("notifications")
+                DiagStore(this).recordSync("app", res.code, null, notifications)
+                NotificationScheduler.scheduleFromSync(this, notifications)
                 val update = root.optJSONObject("update")
                 if (update != null && update.optInt("versionCode") > BuildConfig.VERSION_CODE) {
                     runOnUiThread {

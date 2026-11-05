@@ -41,16 +41,19 @@ internal sealed class ApiClient
         return new Response((int)resp.StatusCode, body, err);
     }
 
-    public async Task<Response> PairAsync(string code1, string code2, string code3)
+    /// <summary>One pairing step; step 3 stores the issued device token.</summary>
+    public async Task<Response> PairStepAsync(int step, string code1, string code, string? session, string installId)
     {
         var payload = new JsonObject
         {
+            ["step"] = step,
             ["code1"] = code1,
-            ["code2"] = code2,
-            ["code3"] = code3,
+            ["code"] = code,
+            ["session"] = session ?? "",
             ["platform"] = "desktop",
             ["model"] = Environment.MachineName,
             ["shellVersion"] = Config.ShellVersion,
+            ["installId"] = installId,
         }.ToJsonString();
         using var req = new HttpRequestMessage(HttpMethod.Post, Config.BaseUrl + "/api/eeyes/device/pair")
         {

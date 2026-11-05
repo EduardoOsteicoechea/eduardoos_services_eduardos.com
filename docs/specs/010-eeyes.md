@@ -22,13 +22,17 @@ Out of scope: continuous background surveillance without a human-started task; c
 - Admin bypasses. Cookie hub routes require session + entitlement. Device token routes require live entitlement on the device owner.
 - Revoking entitlement makes the next device request return `401` `device_revoked` / `forbidden` after Mongo re-check.
 
-## 2. Pairing (3 consecutive codes)
+## 2. Pairing (biometric + 3 codes, one at a time)
 
 1. Authenticated hub: `POST /api/eeyes/pairings` → `{ id, code1, code2, code3, expiresAt }` (4-digit codes, TTL **10 minutes**, single use).
-2. Hub polls `GET /api/eeyes/pairings/{id}` until `status: paired` (includes device label) or expired.
-3. App: user types code1 → code2 → code3. Shell calls `POST /api/eeyes/device/pair` with `{ code1, code2, code3, platform, model, shellVersion }`.
-4. Server looks up by hash of code1 (`hashOpaque("eeyes-pair-1", code)`), verifies codes 2–3 in constant time, marks pairing consumed, issues device token `eos_dev_` + 24 random chars, stores **HMAC hash only**, `expiresAt = now + 30 days`.
-5. Limits: 5 failed attempts per pairing; IP rate limit on pair.
+2. Hub polls `GET /api/eeyes/pairings/{id}` (`step` 0–3, `status`). The hub shows **only** the code for the next step (`code1` while step 0, `code2` after step 1, `code3` after step 2), never all three at once.
+3. App step 1: shell asks for **user verification first** (Android `BiometricPrompt` with `BIOMETRIC_WEAK | DEVICE_CREDENTIAL`; Desktop Windows Hello `UserConsentVerifier`). Failure → bridge error `biometric_failed` / `biometric_unavailable`, no API call.
+4. Each step is `POST /api/eeyes/device/pair` with `{ step, code1, code, session, platform, model, shellVersion, installId }`:
+   - `step: 1` → validates `code1`, returns `{ step: 1, next: 2, session }` (random session; server stores its hash).
+   - `step: 2|3` → requires matching `session` and the previous step done; verifies `code2`/`code3` in constant time.
+   - `step: 3` → issues device token `eos_dev_` + 24 random chars, stores **HMAC hash only**, `expiresAt = now + 30 days`.
+5. `installId` (Android `ANDROID_ID`, Desktop `MachineGuid`) is stored as an HMAC. Re-pairing the same install of the same owner/platform **reuses the device record** (rotates token, extends 30 days) instead of creating a duplicate. Uninstalling wipes the local secure token, so a reinstall must re-pair.
+6. Limits: 5 failed attempts per pairing; IP rate limit on pair.
 
 ## 3. Device token
 
@@ -91,6 +95,13 @@ Body:
 
 Shell polls ~30s foreground; WorkManager / timer background.
 
+Notifications are listed up to 24 h ahead until acked. Shells ack a key only after it was actually shown (Android: alarm fired and system notifications enabled; Desktop: toast time reached). Server records per task `notifyDispatchedAt` (first sync that listed it) and `notifyAckedAt`; per device `lastSyncAt` and `lastSyncNotifications`.
+
+### Diagnostics
+
+- Hub card **Diagnóstico** (`/eeyes?view=diagnostics`): per device last contact / last sync / notifications listed, plus recent notifications with stage `scheduled → waiting_sync → dispatched → shown`.
+- Shell UI **Diagnóstico** panel (bridge `getDiagnostics`, `testNotification`): last sync time/HTTP/error, notifications received, last notification shown, notification permission and exact-alarm state (Android). No tokens or secrets.
+
 ## 7. Embedded UI
 
 - `GET /api/eeyes/ui` (+ `/api/eeyes/ui/app-css`, `/api/eeyes/ui/app-js`) from `go:embed` under `backend/eeyes_ui/`. Asset URLs stay extensionless because production Nginx serves `*.js`/`*.css` from the static root before the `/api/` proxy.
@@ -102,7 +113,7 @@ Shell polls ~30s foreground; WorkManager / timer background.
 
 Message: `{ "id": "string", "type": "string", "payload": {} }`.
 
-Web → native: `getState`, `pair`, `startTask`, `capturePhoto`, `startAutoCapture`, `stopAutoCapture`, `recordAudio`, `completeTask`, `request` (allowlisted `/api/eeyes/device/*` only), `openExternal`.
+Web → native: `getState`, `pairStep` (`{ step, code }`; native keeps `code1` + `session` in memory and runs the biometric prompt on step 1), `getDiagnostics`, `testNotification`, `startTask`, `capturePhoto`, `startAutoCapture`, `stopAutoCapture`, `recordAudio`, `completeTask`, `request` (allowlisted `/api/eeyes/device/*` only), `openExternal`.
 
 Native → web: `state`, `captureQueued`, `uploadProgress`, `notificationTapped`, `updateAvailable`, `revoked`.
 
@@ -132,7 +143,7 @@ Origin must be exactly `https://eduardoos.com` (local: configured base URL). Nav
 - Deny-by-default; owner + entitlement on every resource.
 - Never log tokens, codes, base64 bodies, or absolute media paths to clients.
 - Audit: pair, revoke, task CRUD, media, complete.
-- Error codes: `pairing_invalid`, `device_revoked`, `device_expired`, plus existing suite codes.
+- Error codes: `pairing_invalid`, `device_revoked`, `device_expired`, plus existing suite codes. Bridge-only: `biometric_failed`, `biometric_unavailable`, `unknown_type` (old shell → UI asks to update).
 
 ## 11. Tests required
 

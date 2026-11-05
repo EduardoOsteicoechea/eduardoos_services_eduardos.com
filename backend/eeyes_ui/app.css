@@ -78,6 +78,25 @@ button {
   color: var(--fg);
 }
 .err { color: var(--err); font-size: 0.875rem; }
+button.secondary {
+  background: transparent;
+  color: var(--fg);
+}
+button:disabled { opacity: 0.5; }
+.debug {
+  margin: 0;
+  padding: var(--gap);
+  border: 0.0625rem solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap);
+}
 .banner {
   padding: var(--gap);
   border: 0.0625rem solid var(--accent);

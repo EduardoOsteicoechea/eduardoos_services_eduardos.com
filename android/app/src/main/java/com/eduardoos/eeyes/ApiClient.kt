@@ -37,14 +37,24 @@ class ApiClient(
         }
     }
 
-    fun pair(code1: String, code2: String, code3: String, shellVersion: String): Response {
+    /** One pairing step; step 3 stores the issued device token. */
+    fun pairStep(
+        step: Int,
+        code1: String,
+        code: String,
+        session: String?,
+        shellVersion: String,
+        installId: String,
+    ): Response {
         val payload = JSONObject()
+            .put("step", step)
             .put("code1", code1)
-            .put("code2", code2)
-            .put("code3", code3)
+            .put("code", code)
+            .put("session", session ?: "")
             .put("platform", "android")
             .put("model", android.os.Build.MODEL)
             .put("shellVersion", shellVersion)
+            .put("installId", installId)
             .toString()
         val builder = Request.Builder()
             .url(baseUrl.trimEnd('/') + "/api/eeyes/device/pair")

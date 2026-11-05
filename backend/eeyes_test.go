@@ -82,17 +82,46 @@ func eeyesCreatePairingCodes(t *testing.T, app *App) (pairingID, code1, code2, c
 	return out.ID, out.Code1, out.Code2, out.Code3
 }
 
-func eeyesPairDevice(t *testing.T, app *App, code1, code2, code3 string) (token, deviceID string) {
+func eeyesPairStep(t *testing.T, app *App, body map[string]any) *httptest.ResponseRecorder {
 	t.Helper()
-	body := map[string]string{
-		"code1": code1, "code2": code2, "code3": code3,
-		"platform": "android", "model": "PixelTest", "shellVersion": "1",
+	if _, ok := body["platform"]; !ok {
+		body["platform"] = "android"
 	}
 	raw, _ := json.Marshal(body)
 	req := httptest.NewRequest(http.MethodPost, "/api/eeyes/device/pair", bytes.NewReader(raw))
 	req.Header.Set("Content-Type", "application/json")
 	rec := httptest.NewRecorder()
 	app.Handler().ServeHTTP(rec, req)
+	return rec
+}
+
+func eeyesPairSession(t *testing.T, rec *httptest.ResponseRecorder) string {
+	t.Helper()
+	var out struct {
+		Session string `json:"session"`
+	}
+	_ = json.Unmarshal(rec.Body.Bytes(), &out)
+	if rec.Code != http.StatusOK || out.Session == "" {
+		t.Fatalf("step1 status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	return out.Session
+}
+
+func eeyesPairDevice(t *testing.T, app *App, code1, code2, code3 string) (token, deviceID string) {
+	t.Helper()
+	return eeyesPairDeviceInstall(t, app, code1, code2, code3, "")
+}
+
+func eeyesPairDeviceInstall(t *testing.T, app *App, code1, code2, code3, installID string) (token, deviceID string) {
+	t.Helper()
+	session := eeyesPairSession(t, eeyesPairStep(t, app, map[string]any{"step": 1, "code1": code1}))
+	if rec := eeyesPairStep(t, app, map[string]any{"step": 2, "code1": code1, "code": code2, "session": session}); rec.Code != http.StatusOK {
+		t.Fatalf("step2 status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	rec := eeyesPairStep(t, app, map[string]any{
+		"step": 3, "code1": code1, "code": code3, "session": session,
+		"model": "PixelTest", "shellVersion": "1", "installId": installID,
+	})
 	if rec.Code != http.StatusCreated {
 		t.Fatalf("pair status=%d body=%s", rec.Code, rec.Body.String())
 	}
@@ -141,13 +170,7 @@ func TestEeyesPairingHappyPathAndReuse(t *testing.T) {
 	}
 
 	// reuse codes must fail
-	raw, _ := json.Marshal(map[string]string{
-		"code1": c1, "code2": c2, "code3": c3, "platform": "android", "model": "x", "shellVersion": "1",
-	})
-	req := httptest.NewRequest(http.MethodPost, "/api/eeyes/device/pair", bytes.NewReader(raw))
-	req.Header.Set("Content-Type", "application/json")
-	rec = httptest.NewRecorder()
-	app.Handler().ServeHTTP(rec, req)
+	rec = eeyesPairStep(t, app, map[string]any{"step": 1, "code1": c1})
 	if rec.Code != http.StatusUnauthorized {
 		t.Fatalf("reuse want 401 got %d body=%s", rec.Code, rec.Body.String())
 	}
@@ -172,39 +195,88 @@ func TestEeyesPairingExpiredAndBruteforce(t *testing.T) {
 	p.ExpiresAt = time.Now().UTC().Add(-time.Minute)
 	_ = app.eeyes.UpdatePairing(context.Background(), p)
 
-	raw, _ := json.Marshal(map[string]string{
-		"code1": c1, "code2": "0000", "code3": "0000", "platform": "android", "model": "x", "shellVersion": "1",
-	})
-	req := httptest.NewRequest(http.MethodPost, "/api/eeyes/device/pair", bytes.NewReader(raw))
-	req.Header.Set("Content-Type", "application/json")
-	rec := httptest.NewRecorder()
-	app.Handler().ServeHTTP(rec, req)
+	rec := eeyesPairStep(t, app, map[string]any{"step": 1, "code1": c1})
 	if rec.Code != http.StatusUnauthorized {
 		t.Fatalf("expired want 401 got %d", rec.Code)
 	}
 
-	_, c1b, c2b, c3b := eeyesCreatePairingCodes(t, app)
+	_, c1b, c2b, _ := eeyesCreatePairingCodes(t, app)
+	session := eeyesPairSession(t, eeyesPairStep(t, app, map[string]any{"step": 1, "code1": c1b}))
 	for i := 0; i < eeyesPairMaxAttempts; i++ {
-		bad, _ := json.Marshal(map[string]string{
-			"code1": c1b, "code2": "1111", "code3": "2222", "platform": "android", "model": "x", "shellVersion": "1",
-		})
-		req = httptest.NewRequest(http.MethodPost, "/api/eeyes/device/pair", bytes.NewReader(bad))
-		req.Header.Set("Content-Type", "application/json")
-		rec = httptest.NewRecorder()
-		app.Handler().ServeHTTP(rec, req)
+		rec = eeyesPairStep(t, app, map[string]any{"step": 2, "code1": c1b, "code": "1111", "session": session})
 		if rec.Code != http.StatusUnauthorized && rec.Code != http.StatusTooManyRequests {
 			t.Fatalf("attempt %d status=%d", i, rec.Code)
 		}
 	}
-	good, _ := json.Marshal(map[string]string{
-		"code1": c1b, "code2": c2b, "code3": c3b, "platform": "android", "model": "x", "shellVersion": "1",
-	})
-	req = httptest.NewRequest(http.MethodPost, "/api/eeyes/device/pair", bytes.NewReader(good))
-	req.Header.Set("Content-Type", "application/json")
-	rec = httptest.NewRecorder()
-	app.Handler().ServeHTTP(rec, req)
+	rec = eeyesPairStep(t, app, map[string]any{"step": 2, "code1": c1b, "code": c2b, "session": session})
 	if rec.Code != http.StatusTooManyRequests && rec.Code != http.StatusUnauthorized {
 		t.Fatalf("after bruteforce status=%d body=%s", rec.Code, rec.Body.String())
+	}
+}
+
+func TestEeyesPairingStepsAreSequential(t *testing.T) {
+	app := newEeyesTestApp(t)
+	if err := app.grantEntitlement("member-1", productEeyes); err != nil {
+		t.Fatal(err)
+	}
+	pairingID, c1, c2, c3 := eeyesCreatePairingCodes(t, app)
+	pairingStep := func() int {
+		t.Helper()
+		rec := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/pairings/"+pairingID, "")
+		var out struct {
+			Step int `json:"step"`
+		}
+		_ = json.Unmarshal(rec.Body.Bytes(), &out)
+		return out.Step
+	}
+	if pairingStep() != 0 {
+		t.Fatal("fresh pairing must be at step 0")
+	}
+	// Skipping step 1 (no session) must fail.
+	if rec := eeyesPairStep(t, app, map[string]any{"step": 3, "code1": c1, "code": c3, "session": "x"}); rec.Code != http.StatusUnauthorized {
+		t.Fatalf("skip to step 3 want 401 got %d", rec.Code)
+	}
+	session := eeyesPairSession(t, eeyesPairStep(t, app, map[string]any{"step": 1, "code1": c1}))
+	if pairingStep() != 1 {
+		t.Fatal("hub must see step 1 after code 1")
+	}
+	// Code 3 before code 2 must fail.
+	if rec := eeyesPairStep(t, app, map[string]any{"step": 3, "code1": c1, "code": c3, "session": session}); rec.Code != http.StatusUnauthorized {
+		t.Fatalf("step 3 before 2 want 401 got %d", rec.Code)
+	}
+	// Another device's session must fail.
+	if rec := eeyesPairStep(t, app, map[string]any{"step": 2, "code1": c1, "code": c2, "session": "forged"}); rec.Code != http.StatusUnauthorized {
+		t.Fatalf("forged session want 401 got %d", rec.Code)
+	}
+	if rec := eeyesPairStep(t, app, map[string]any{"step": 2, "code1": c1, "code": c2, "session": session}); rec.Code != http.StatusOK {
+		t.Fatalf("step 2 %d %s", rec.Code, rec.Body.String())
+	}
+	if pairingStep() != 2 {
+		t.Fatal("hub must see step 2 after code 2")
+	}
+}
+
+func TestEeyesRepairSameInstallReusesDevice(t *testing.T) {
+	app := newEeyesTestApp(t)
+	if err := app.grantEntitlement("member-1", productEeyes); err != nil {
+		t.Fatal(err)
+	}
+	_, a1, a2, a3 := eeyesCreatePairingCodes(t, app)
+	oldToken, deviceID := eeyesPairDeviceInstall(t, app, a1, a2, a3, "install-abc")
+	_, b1, b2, b3 := eeyesCreatePairingCodes(t, app)
+	newToken, deviceID2 := eeyesPairDeviceInstall(t, app, b1, b2, b3, "install-abc")
+	if deviceID2 != deviceID {
+		t.Fatalf("same install must keep device id: %s vs %s", deviceID, deviceID2)
+	}
+	if rec := eeyesDeviceJSON(t, app, oldToken, http.MethodGet, "/api/eeyes/device/sync", ""); rec.Code != http.StatusUnauthorized {
+		t.Fatalf("old token must stop working, got %d", rec.Code)
+	}
+	if rec := eeyesDeviceJSON(t, app, newToken, http.MethodGet, "/api/eeyes/device/sync", ""); rec.Code != http.StatusOK {
+		t.Fatalf("new token sync %d", rec.Code)
+	}
+	_, c1, c2, c3 := eeyesCreatePairingCodes(t, app)
+	if _, other := eeyesPairDeviceInstall(t, app, c1, c2, c3, "install-xyz"); other == deviceID {
+		t.Fatal("different install must create a new device")
 	}
 }
 
@@ -418,6 +490,13 @@ func TestEeyesNoticeLifecycle(t *testing.T) {
 	if len(body.Tasks) != 0 || len(body.Notifications) != 1 {
 		t.Fatalf("notice must notify without listing a task: %s", sync.Body.String())
 	}
+	if got, _ := app.eeyes.TaskByID(context.Background(), created.Task.ID); got == nil || got.NotifyDispatchedAt == nil {
+		t.Fatal("sync must record when the notification was dispatched")
+	}
+	devs := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/devices", "")
+	if !strings.Contains(devs.Body.String(), `"lastSyncAt"`) || !strings.Contains(devs.Body.String(), `"lastSyncNotifications":1`) {
+		t.Fatalf("devices must expose last sync diagnostics: %s", devs.Body.String())
+	}
 
 	ack := eeyesDeviceJSON(t, app, token, http.MethodPost, "/api/eeyes/device/notifications/ack",
 		`{"keys":["`+body.Notifications[0].Key+`"]}`)
@@ -425,7 +504,7 @@ func TestEeyesNoticeLifecycle(t *testing.T) {
 		t.Fatalf("ack %d", ack.Code)
 	}
 	got, _ := app.eeyes.TaskByID(context.Background(), created.Task.ID)
-	if got == nil || got.Status != eeyesTaskCompleted || got.CompletedAt == nil {
+	if got == nil || got.Status != eeyesTaskCompleted || got.CompletedAt == nil || got.NotifyAckedAt == nil {
 		t.Fatalf("acked notice must be delivered: %+v", got)
 	}
 	comps := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/completions", "")

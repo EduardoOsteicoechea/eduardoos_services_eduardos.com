@@ -9,12 +9,26 @@ internal static class NotificationService
     // so a toast is not duplicated while the ack is in flight.
     private static readonly HashSet<string> Handled = new(StringComparer.Ordinal);
     private static readonly HashSet<string> PendingAck = new(StringComparer.Ordinal);
+    private static readonly Dictionary<string, DateTimeOffset> Scheduled = new(StringComparer.Ordinal);
     private static readonly object Gate = new();
 
-    /// <summary>Shows due notifications, schedules upcoming ones, and returns keys to ack.</summary>
+    /// <summary>
+    /// Shows due notifications, schedules upcoming ones, and returns keys to ack.
+    /// Scheduled toasts are acked only once their time has passed.
+    /// </summary>
     public static List<string> ScheduleFromSync(JsonArray? notifications)
     {
         var handledNow = new List<string>();
+        lock (Gate)
+        {
+            foreach (var (key, at) in Scheduled.ToList())
+            {
+                if (at > DateTimeOffset.UtcNow) continue;
+                Scheduled.Remove(key);
+                DiagStore.RecordNotification(key);
+                handledNow.Add(key);
+            }
+        }
         if (notifications is null) return handledNow;
         foreach (var n in notifications)
         {
@@ -33,17 +47,18 @@ internal static class NotificationService
             if (at <= DateTimeOffset.UtcNow)
             {
                 Show(title, body, taskId);
+                DiagStore.RecordNotification(key);
+                handledNow.Add(key);
             }
             else
             {
-                // Unpacked toast schedule
                 new ToastContentBuilder()
                     .AddText(title)
                     .AddText(body)
                     .AddArgument("taskId", taskId)
                     .Schedule(at.LocalDateTime);
+                lock (Gate) Scheduled[key] = at;
             }
-            handledNow.Add(key);
         }
         return handledNow;
     }

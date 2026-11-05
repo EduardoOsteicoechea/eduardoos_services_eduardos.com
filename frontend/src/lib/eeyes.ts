@@ -13,6 +13,8 @@ export type EeyesPairing = {
   code3?: string;
   expiresAt: string;
   status: string;
+  /** Codes accepted so far (0–3); the hub reveals code `step + 1`. */
+  step?: number;
   deviceId?: string;
   deviceLabel?: string;
 };
@@ -27,6 +29,8 @@ export type EeyesDevice = {
   expiresAt: string;
   lastSeenAt: string;
   revokedAt?: string | null;
+  lastSyncAt?: string | null;
+  lastSyncNotifications?: number;
 };
 
 export type EeyesTask = {
@@ -47,7 +51,20 @@ export type EeyesTask = {
   completedAt?: string | null;
   createdAt: string;
   updatedAt: string;
+  notifyDispatchedAt?: string | null;
+  notifyAckedAt?: string | null;
 };
+
+export type EeyesNoticeStage = "cancelled" | "scheduled" | "waiting_sync" | "dispatched" | "shown";
+
+/** Where a task notification is in the hub → device → screen pipeline. */
+export function eeyesNoticeStage(task: EeyesTask, now = Date.now()): EeyesNoticeStage {
+  if (task.notifyAckedAt) return "shown";
+  if (task.status === "cancelled") return "cancelled";
+  if (task.notifyDispatchedAt) return "dispatched";
+  if (task.notifyAt && Date.parse(task.notifyAt) > now) return "scheduled";
+  return "waiting_sync";
+}
 
 export type EeyesMedia = {
   id: string;

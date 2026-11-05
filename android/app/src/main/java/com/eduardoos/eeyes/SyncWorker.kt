@@ -10,15 +10,25 @@ class SyncWorker(appContext: Context, params: WorkerParameters) : CoroutineWorke
         val tokenStore = TokenStore(applicationContext)
         if (tokenStore.getToken().isNullOrBlank()) return Result.success()
         val api = ApiClient(BuildConfig.EEYES_BASE_URL, tokenStore)
-        val res = api.request("GET", "/api/eeyes/device/sync")
+        val diag = DiagStore(applicationContext)
+        val res = runCatching { api.request("GET", "/api/eeyes/device/sync") }.getOrElse {
+            diag.recordSync("worker", 0, it.javaClass.simpleName, null)
+            return Result.retry()
+        }
         if (res.errorCode == "device_revoked" || res.errorCode == "device_expired") {
+            diag.recordSync("worker", res.code, res.errorCode, null)
             tokenStore.clear()
             MediaQueue(applicationContext).clear()
             return Result.success()
         }
-        if (res.code !in 200..299) return Result.retry()
+        if (res.code !in 200..299) {
+            diag.recordSync("worker", res.code, res.errorCode, null)
+            return Result.retry()
+        }
         val root = JSONObject(res.body)
-        NotificationScheduler.scheduleFromSync(applicationContext, root.optJSONArray("notifications"))
+        val notifications = root.optJSONArray("notifications")
+        diag.recordSync("worker", res.code, null, notifications)
+        NotificationScheduler.scheduleFromSync(applicationContext, notifications)
         UploadWorker.enqueue(applicationContext)
         return Result.success()
     }

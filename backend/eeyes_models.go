@@ -44,6 +44,8 @@ type eeyesPairing struct {
 	Code3Hash    string     `json:"-" bson:"code3_hash"`
 	Status       string     `json:"status" bson:"status"`
 	Attempts     int        `json:"-" bson:"attempts"`
+	Step         int        `json:"step" bson:"step"`
+	SessionHash  string     `json:"-" bson:"session_hash,omitempty"`
 	DeviceID     string     `json:"deviceId,omitempty" bson:"device_id,omitempty"`
 	DeviceLabel  string     `json:"deviceLabel,omitempty" bson:"device_label,omitempty"`
 	CreatedAt    time.Time  `json:"createdAt" bson:"created_at"`
@@ -65,6 +67,9 @@ type eeyesDevice struct {
 	LastSeenAt    time.Time  `json:"lastSeenAt" bson:"last_seen_at"`
 	RevokedAt     *time.Time `json:"revokedAt,omitempty" bson:"revoked_at,omitempty"`
 	PairingID     string     `json:"pairingId,omitempty" bson:"pairing_id,omitempty"`
+	InstallHash   string     `json:"-" bson:"install_hash,omitempty"`
+	LastSyncAt    *time.Time `json:"lastSyncAt,omitempty" bson:"last_sync_at,omitempty"`
+	LastSyncNotes int        `json:"lastSyncNotifications" bson:"last_sync_notifications"`
 }
 
 type eeyesTask struct {
@@ -86,6 +91,10 @@ type eeyesTask struct {
 	CreatedAt         time.Time  `json:"createdAt" bson:"created_at"`
 	UpdatedAt         time.Time  `json:"updatedAt" bson:"updated_at"`
 	NotifiedKeys      []string   `json:"-" bson:"notified_keys,omitempty"`
+	// Notification pipeline for hub diagnostics: first sync that carried the
+	// notify key, and when the device acked showing it.
+	NotifyDispatchedAt *time.Time `json:"notifyDispatchedAt,omitempty" bson:"notify_dispatched_at,omitempty"`
+	NotifyAckedAt      *time.Time `json:"notifyAckedAt,omitempty" bson:"notify_acked_at,omitempty"`
 }
 
 type eeyesMedia struct {

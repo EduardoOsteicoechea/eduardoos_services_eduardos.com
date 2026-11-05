@@ -1,6 +1,8 @@
 using System.Text.Json.Nodes;
 using System.Windows;
 using Microsoft.Web.WebView2.Core;
+using Microsoft.Win32;
+using Windows.Security.Credentials.UI;
 
 namespace eEyes.Desktop;
 
@@ -12,6 +14,8 @@ public partial class MainWindow : Window
     private CaptureService _capture = null!;
     private System.Windows.Forms.NotifyIcon? _tray;
     private System.Threading.Timer? _syncTimer;
+    private string? _pairCode1;
+    private string? _pairSession;
 
     public MainWindow()
     {
@@ -60,33 +64,42 @@ public partial class MainWindow : Window
             {
                 if (_tokens.GetToken() is null) return;
                 var res = await _api.RequestAsync("GET", "/api/eeyes/device/sync");
-                HandleAuth(res);
+                Dispatcher.Invoke(() => HandleAuth(res));
+                if (res.Code is < 200 or >= 300) DiagStore.RecordSync("timer", res.Code, res.ErrorCode, null);
                 if (res.Code is >= 200 and < 300)
                 {
                     var root = JsonNode.Parse(res.Body);
-                    var acks = NotificationService.ScheduleFromSync(root?["notifications"] as JsonArray);
+                    var notifications = root?["notifications"] as JsonArray;
+                    DiagStore.RecordSync("timer", res.Code, null, notifications);
+                    var acks = NotificationService.ScheduleFromSync(notifications);
                     await NotificationService.AckAsync(_api, acks);
                     await _capture.FlushQueueAsync();
                 }
             }
-            catch { /* ignore background sync errors */ }
+            catch (Exception ex)
+            {
+                DiagStore.RecordSync("timer", 0, ex.GetType().Name, null);
+            }
         }, null, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(30));
     }
 
     private async void OnWebMessage(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
     {
         string reply;
+        string? id = null;
         try
         {
             var msg = JsonNode.Parse(e.TryGetWebMessageAsString())?.AsObject();
             if (msg is null) return;
-            var id = msg["id"]?.GetValue<string>();
+            id = msg["id"]?.GetValue<string>();
             var type = msg["type"]?.GetValue<string>() ?? "";
             var payload = msg["payload"]?.AsObject() ?? new JsonObject();
             reply = type switch
             {
                 "getState" => BridgeRouter.Reply(id, "state", await BuildStateAsync()),
-                "pair" => await PairAsync(id, payload),
+                "pairStep" => await PairStepAsync(id, payload),
+                "getDiagnostics" => BridgeRouter.Reply(id, "state", Diagnostics()),
+                "testNotification" => TestNotification(id),
                 "startTask" => await StartTaskAsync(id, payload),
                 "capturePhoto" => await CapturePhotoAsync(id, payload),
                 "startAutoCapture" => StartAuto(id, payload),
@@ -100,19 +113,84 @@ public partial class MainWindow : Window
         }
         catch
         {
-            reply = BridgeRouter.Reply(null, "state", error: "bridge_error");
+            reply = BridgeRouter.Reply(id, "state", error: "bridge_error");
         }
         WebView.CoreWebView2.PostWebMessageAsString(reply);
     }
 
-    private async Task<string> PairAsync(string? id, JsonObject payload)
+    /// <summary>Windows Hello (face, fingerprint or PIN); returns null on success or an error code.</summary>
+    private static async Task<string?> AuthenticateUserAsync()
     {
-        var res = await _api.PairAsync(
-            payload["code1"]?.GetValue<string>() ?? "",
-            payload["code2"]?.GetValue<string>() ?? "",
-            payload["code3"]?.GetValue<string>() ?? "");
-        if (res.Code is >= 200 and < 300) return BridgeRouter.Reply(id, "state", await BuildStateAsync());
-        return BridgeRouter.Reply(id, "state", error: res.ErrorCode ?? "pairing_invalid");
+        var availability = await UserConsentVerifier.CheckAvailabilityAsync();
+        if (availability != UserConsentVerifierAvailability.Available) return "biometric_unavailable";
+        var result = await UserConsentVerifier.RequestVerificationAsync("Confirma que eres tú para vincular eEyes");
+        return result == UserConsentVerificationResult.Verified ? null : "biometric_failed";
+    }
+
+    private static string InstallId()
+    {
+        try
+        {
+            using var key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
+                .OpenSubKey(@"SOFTWARE\Microsoft\Cryptography");
+            return key?.GetValue("MachineGuid") as string ?? Environment.MachineName;
+        }
+        catch
+        {
+            return Environment.MachineName;
+        }
+    }
+
+    private async Task<string> PairStepAsync(string? id, JsonObject payload)
+    {
+        var step = payload["step"]?.GetValue<int>() ?? 0;
+        var code = (payload["code"]?.GetValue<string>() ?? "").Trim();
+        if (step == 1)
+        {
+            _pairCode1 = null;
+            _pairSession = null;
+            var authError = await AuthenticateUserAsync();
+            if (authError is not null) return BridgeRouter.Reply(id, "state", error: authError);
+            _pairCode1 = code;
+        }
+        if (string.IsNullOrEmpty(_pairCode1) || step is < 1 or > 3)
+            return BridgeRouter.Reply(id, "state", error: "pairing_invalid");
+
+        var res = await _api.PairStepAsync(step, _pairCode1, code, _pairSession, InstallId());
+        if (res.Code is < 200 or >= 300)
+        {
+            if (step == 1) _pairCode1 = null;
+            return BridgeRouter.Reply(id, "state", error: res.ErrorCode ?? "pairing_invalid");
+        }
+        if (step == 1)
+        {
+            try { _pairSession = JsonNode.Parse(res.Body)?["session"]?.GetValue<string>(); }
+            catch { _pairSession = null; }
+        }
+        if (step == 3)
+        {
+            _pairCode1 = null;
+            _pairSession = null;
+            return BridgeRouter.Reply(id, "state", await BuildStateAsync());
+        }
+        return BridgeRouter.Reply(id, "state", new JsonObject { ["step"] = step });
+    }
+
+    private JsonObject Diagnostics()
+    {
+        var o = DiagStore.ToJson();
+        o["version"] = Config.ShellVersion;
+        o["versionCode"] = Config.VersionCode;
+        o["paired"] = _tokens.GetToken() is not null;
+        o["server"] = Config.BaseUrl;
+        return o;
+    }
+
+    private static string TestNotification(string? id)
+    {
+        NotificationService.Show("eEyes · prueba", "Si ves esto, las notificaciones funcionan.", "");
+        DiagStore.RecordNotification("test");
+        return BridgeRouter.Reply(id, "state", new JsonObject { ["shown"] = true });
     }
 
     private async Task<string> StartTaskAsync(string? id, JsonObject payload)
@@ -201,6 +279,7 @@ public partial class MainWindow : Window
         {
             var res = await _api.RequestAsync("GET", "/api/eeyes/device/sync");
             HandleAuth(res);
+            if (res.Code is < 200 or >= 300) DiagStore.RecordSync("app", res.Code, res.ErrorCode, null);
             if (res.Code is >= 200 and < 300)
             {
                 var root = JsonNode.Parse(res.Body);
@@ -208,7 +287,9 @@ public partial class MainWindow : Window
                 {
                     foreach (var t in arr) tasks.Add(t?.DeepClone());
                 }
-                var acks = NotificationService.ScheduleFromSync(root?["notifications"] as JsonArray);
+                var notifications = root?["notifications"] as JsonArray;
+                DiagStore.RecordSync("app", res.Code, null, notifications);
+                var acks = NotificationService.ScheduleFromSync(notifications);
                 await NotificationService.AckAsync(_api, acks);
                 if (root?["update"] is JsonObject update &&
                     (update["versionCode"]?.GetValue<int>() ?? 0) > Config.VersionCode)

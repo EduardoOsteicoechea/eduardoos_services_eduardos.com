@@ -14,11 +14,16 @@
     </header>
     <section id="view-pair" class="view" hidden>
       <h2>Vincular dispositivo</h2>
-      <p class="lede">Escribe los tres códigos que ves en eduardoos.com/eeyes.</p>
-      <label>Código <span id="pair-step">1</span></label>
+      <p class="lede">
+        En eduardoos.com/eeyes → Vincular, genera los códigos. Aparecen uno a uno: al enviar el primero
+        se te pedirá verificar tu identidad.
+      </p>
+      <label for="pair-input">Código <span id="pair-step">1</span> de 3</label>
       <input id="pair-input" inputmode="numeric" maxlength="4" autocomplete="one-time-code" />
       <button type="button" id="pair-next">Continuar</button>
+      <p id="pair-info" class="muted" aria-live="polite"></p>
       <p id="pair-error" class="err" hidden></p>
+      <button type="button" id="pair-reset" class="secondary">Empezar de nuevo</button>
     </section>
     <section id="view-tasks" class="view" hidden>
       <h2>Tareas</h2>
@@ -42,6 +47,19 @@
       <p class="lede">Hay una nueva versión de eEyes. Actualiza para continuar.</p>
       <button type="button" id="btn-update">Actualizar</button>
     </section>
+    <section id="view-debug" class="view" hidden>
+      <h2>Diagnóstico</h2>
+      <pre id="debug-output" class="debug"></pre>
+      <p id="debug-msg" class="muted" aria-live="polite"></p>
+      <div class="actions">
+        <button type="button" id="btn-debug-sync">Sincronizar ahora</button>
+        <button type="button" id="btn-debug-test">Probar notificación</button>
+        <button type="button" id="btn-debug-back" class="secondary">Volver</button>
+      </div>
+    </section>
+    <footer class="foot">
+      <button type="button" id="btn-debug" class="secondary">Diagnóstico</button>
+    </footer>
   </main>
   <script src="/api/eeyes/ui/app-js"></script>
 </body>
