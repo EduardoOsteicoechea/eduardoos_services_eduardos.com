@@ -35,6 +35,7 @@ func (a *App) registerEeyesRoutes(mux *http.ServeMux) {
 	// Device (Bearer eos_dev_)
 	mux.HandleFunc("POST /api/eeyes/device/pair", a.eeyesDevicePair)
 	mux.HandleFunc("GET /api/eeyes/device/sync", a.withEeyesDevice(a.eeyesDeviceSync))
+	mux.HandleFunc("GET /api/eeyes/device/wait", a.withEeyesDevice(a.eeyesDeviceWait))
 	mux.HandleFunc("POST /api/eeyes/device/tasks/{id}/start", a.withEeyesDevice(a.eeyesDeviceStartTask))
 	mux.HandleFunc("POST /api/eeyes/device/tasks/{id}/media", a.withEeyesDevice(a.eeyesDeviceUploadMedia))
 	mux.HandleFunc("POST /api/eeyes/device/tasks/{id}/complete", a.withEeyesDevice(a.eeyesDeviceCompleteTask))
@@ -483,6 +484,7 @@ func (a *App) eeyesRevokeDevice(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.eeyesWake.bump(d.ID)
 	a.auditEvent(r, "eeyes_device_revoke", "ok", user.ID)
 	a.mustLogf(r, "eeyes.device.revoke", "device_id", d.ID, "owner_id", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{"ok": true})
@@ -610,6 +612,7 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.eeyesWake.bump(task.DeviceID)
 	a.auditEvent(r, "eeyes_task_create", "ok", user.ID)
 	writeJSON(w, http.StatusCreated, map[string]any{"task": task})
 }
@@ -660,6 +663,7 @@ func (a *App) eeyesPatchTask(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.eeyesWake.bump(task.DeviceID)
 	writeJSON(w, http.StatusOK, map[string]any{"task": task})
 }
 
@@ -679,6 +683,7 @@ func (a *App) eeyesDeleteTask(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	a.eeyesWake.bump(task.DeviceID)
 	a.auditEvent(r, "eeyes_task_delete", "ok", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{"ok": true})
 }

@@ -66,6 +66,7 @@ type App struct {
 	eeyes                  eeyesStore
 	eeyesFS                *eeyesFS
 	eeyesPairIPLimit       *limiter
+	eeyesWake              *eeyesWaker
 	failClosedEnt          bool
 	sessionCache           *sessionCache
 }
@@ -148,6 +149,7 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		eeyes:                 newEeyesStoreFromDataStore(store),
 		eeyesFS:               newEeyesFS(cfg.EeyesMediaRoot),
 		eeyesPairIPLimit:      newLimiter(15*time.Minute, 20),
+		eeyesWake:             newEeyesWaker(),
 		mailer:           smtpMailer{cfg: cfg},
 		chat:             map[string]ChatClient{},
 		audit:            newAuditStore(),

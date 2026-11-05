@@ -93,7 +93,10 @@ Body:
 
 `GET /api/eeyes/device/sync` → tasks for this device, pending notifications, `uiVersion`, optional `update` (`versionCode`, `versionName`, `sha256`, `url` path), and revoked flag if applicable.
 
-Shell polls ~30s foreground; WorkManager / timer background.
+Live connection: `GET /api/eeyes/device/wait?v=<version>` (device token). Stale or empty `v` → immediate `{ changed: true, v }`; otherwise the request is held until the hub creates/edits/deletes a task for that device or revokes it (`changed: true`), or ~50 s pass (`changed: false`). Max 3 concurrent waits per device (`rate_limited`). Versions are per API process, so a restart reads as a change. Shells loop wait → `/sync` on change (and at least every 5 min on Android / 30 s on Desktop).
+
+- Android: `LiveSyncService` foreground service (`specialUse`, low-priority ongoing notification "eEyes activo"), started on app open, after pairing, on boot and on app update; partial wake lock only while processing a reply; asks once for the battery-optimization exemption. WorkManager 15 min stays as fallback.
+- Desktop: the same loop on a background task while the app runs.
 
 Notifications are listed up to 24 h ahead until acked. Shells ack a key only after it was actually shown (Android: alarm fired and system notifications enabled; Desktop: toast time reached). Server records per task `notifyDispatchedAt` (first sync that listed it) and `notifyAckedAt`; per device `lastSyncAt` and `lastSyncNotifications`.
 

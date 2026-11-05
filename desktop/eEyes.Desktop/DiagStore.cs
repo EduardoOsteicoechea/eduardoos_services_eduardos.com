@@ -14,6 +14,19 @@ internal static class DiagStore
     private static JsonArray _lastSyncSummary = new();
     private static DateTimeOffset? _lastNotificationAt;
     private static string _lastNotificationKey = "";
+    private static DateTimeOffset? _liveAt;
+    private static string _liveState = "sin iniciar";
+    private static int _liveHttp;
+
+    public static void RecordLive(string state, int code)
+    {
+        lock (Gate)
+        {
+            _liveAt = DateTimeOffset.UtcNow;
+            _liveState = state;
+            _liveHttp = code;
+        }
+    }
 
     public static void RecordSync(string source, int code, string? error, JsonArray? notifications)
     {
@@ -55,6 +68,9 @@ internal static class DiagStore
         {
             return new JsonObject
             {
+                ["liveState"] = _liveState,
+                ["liveAt"] = _liveAt?.ToString("o") ?? "nunca",
+                ["liveHttp"] = _liveHttp,
                 ["lastSyncAt"] = _lastSyncAt?.ToString("o") ?? "nunca",
                 ["lastSyncSource"] = _lastSyncSource,
                 ["lastSyncHttp"] = _lastSyncHttp,

@@ -578,3 +578,68 @@ func TestEeyesUIServesHTML(t *testing.T) {
 		}
 	}
 }
+
+func TestEeyesDeviceWaitWakesOnTaskCreate(t *testing.T) {
+	app := newEeyesTestApp(t)
+	if err := app.grantEntitlement("member-1", productEeyes); err != nil {
+		t.Fatal(err)
+	}
+	_, c1, c2, c3 := eeyesCreatePairingCodes(t, app)
+	token, deviceID := eeyesPairDevice(t, app, c1, c2, c3)
+
+	type waitBody struct {
+		Changed bool   `json:"changed"`
+		V       string `json:"v"`
+	}
+	parse := func(rec *httptest.ResponseRecorder) waitBody {
+		t.Helper()
+		if rec.Code != http.StatusOK {
+			t.Fatalf("wait %d %s", rec.Code, rec.Body.String())
+		}
+		var b waitBody
+		if err := json.Unmarshal(rec.Body.Bytes(), &b); err != nil {
+			t.Fatal(err)
+		}
+		return b
+	}
+
+	first := parse(eeyesDeviceJSON(t, app, token, http.MethodGet, "/api/eeyes/device/wait", ""))
+	if !first.Changed || first.V == "" {
+		t.Fatalf("stale version must answer immediately: %+v", first)
+	}
+
+	app.eeyesWake.timeout = 30 * time.Millisecond
+	idle := parse(eeyesDeviceJSON(t, app, token, http.MethodGet, "/api/eeyes/device/wait?v="+first.V, ""))
+	if idle.Changed || idle.V != first.V {
+		t.Fatalf("idle wait must time out unchanged: %+v", idle)
+	}
+
+	app.eeyesWake.timeout = 5 * time.Second
+	done := make(chan *httptest.ResponseRecorder, 1)
+	go func() {
+		done <- eeyesDeviceJSON(t, app, token, http.MethodGet, "/api/eeyes/device/wait?v="+first.V, "")
+	}()
+	for i := 0; i < 200; i++ {
+		app.eeyesWake.mu.Lock()
+		n := app.eeyesWake.waiting[deviceID]
+		app.eeyesWake.mu.Unlock()
+		if n > 0 {
+			break
+		}
+		time.Sleep(5 * time.Millisecond)
+	}
+	rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eeyes/tasks",
+		`{"title":"Aviso","deviceId":"`+deviceID+`","kind":"notice"}`)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("create notice %d", rec.Code)
+	}
+	select {
+	case got := <-done:
+		woke := parse(got)
+		if !woke.Changed || woke.V == first.V {
+			t.Fatalf("task create must wake the device: %+v", woke)
+		}
+	case <-time.After(3 * time.Second):
+		t.Fatal("wait did not wake on task create")
+	}
+}

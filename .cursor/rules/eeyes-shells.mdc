@@ -24,7 +24,7 @@ Shared:
 - Media compression rules (JPEG q70 max edge 1600; AAC-LC mono 64 kbps M4A)
 - Offline upload queue + exponential backoff
 - Token lifetime handling (`device_revoked` / `device_expired` → clear + re-pair)
-- Sync loop (~30s) and notification scheduling from task `notifyAt` / reminders
+- Live long-poll loop (`/api/eeyes/device/wait` → `/sync` on change) and notification scheduling from task `notifyAt` / reminders; Android runs it in a foreground service
 - Update check against `latest.json` + sha256 verify
 
 Platform-only APIs (camera, secure storage, FGS vs tray) may differ; behavior must match.

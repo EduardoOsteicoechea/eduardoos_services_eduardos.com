@@ -6,7 +6,9 @@ import android.app.AlarmManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.net.Uri
 import android.os.Bundle
+import android.os.PowerManager
 import android.provider.Settings
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -84,6 +86,21 @@ class MainActivity : AppCompatActivity() {
         val version = BuildConfig.VERSION_NAME
         webView.loadUrl("$baseUrl/api/eeyes/ui?platform=android&shellVersion=$version")
         scheduleSync()
+        LiveSyncService.start(this)
+        requestBatteryExemption()
+    }
+
+    /** Without the exemption many OEMs kill the live connection service in the background. */
+    @SuppressLint("BatteryLife")
+    private fun requestBatteryExemption() {
+        if (tokenStore.getToken().isNullOrBlank()) return
+        if (getSystemService(PowerManager::class.java).isIgnoringBatteryOptimizations(packageName)) return
+        if (!DiagStore(this).firstBatteryPrompt()) return
+        runCatching {
+            startActivity(
+                Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:$packageName")),
+            )
+        }
     }
 
     private fun ensurePermissions() {
@@ -174,6 +191,8 @@ class MainActivity : AppCompatActivity() {
         if (step == 3) {
             pairCode1 = null
             pairSession = null
+            LiveSyncService.start(this)
+            runOnUiThread { requestBatteryExemption() }
             reply(BridgeRouter.reply(id, "state", buildState()))
             return
         }
@@ -189,6 +208,10 @@ class MainActivity : AppCompatActivity() {
         val alarms = getSystemService(AlarmManager::class.java)
         out.put("exactAlarms", if (Build.VERSION.SDK_INT >= 31) alarms.canScheduleExactAlarms() else true)
         out.put("server", baseUrl)
+        out.put(
+            "batteryOptimizationIgnored",
+            getSystemService(PowerManager::class.java).isIgnoringBatteryOptimizations(packageName),
+        )
         return out
     }
 
@@ -278,6 +301,7 @@ class MainActivity : AppCompatActivity() {
         if (res.errorCode == "device_revoked" || res.errorCode == "device_expired") {
             tokenStore.clear()
             queue.clear()
+            LiveSyncService.stop(this)
             runOnUiThread {
                 webView.evaluateJavascript(
                     "window.__eeyesOnNative && window.__eeyesOnNative(${JSONObject().put("type", "revoked")})",

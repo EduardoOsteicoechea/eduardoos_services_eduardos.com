@@ -13,7 +13,9 @@ public partial class MainWindow : Window
     private ApiClient _api = null!;
     private CaptureService _capture = null!;
     private System.Windows.Forms.NotifyIcon? _tray;
-    private System.Threading.Timer? _syncTimer;
+    private readonly CancellationTokenSource _live = new();
+    private static readonly TimeSpan MinBackoff = TimeSpan.FromSeconds(5);
+    private static readonly TimeSpan MaxBackoff = TimeSpan.FromSeconds(60);
     private string? _pairCode1;
     private string? _pairSession;
 
@@ -25,7 +27,7 @@ public partial class MainWindow : Window
         Loaded += OnLoaded;
         Closed += (_, _) =>
         {
-            _syncTimer?.Dispose();
+            _live.Cancel();
             _tray?.Dispose();
         };
     }
@@ -58,29 +60,79 @@ public partial class MainWindow : Window
             Icon = System.Drawing.Icon.ExtractAssociatedIcon(Environment.ProcessPath!) ?? System.Drawing.SystemIcons.Application,
         };
 
-        _syncTimer = new System.Threading.Timer(async _ =>
+        _ = Task.Run(() => LiveLoopAsync(_live.Token));
+    }
+
+    /// <summary>
+    /// Long-poll on /device/wait: the server answers as soon as the hub changes this
+    /// device's tasks (or after ~50 s), then a sync runs. Same contract as Android.
+    /// </summary>
+    private async Task LiveLoopAsync(CancellationToken ct)
+    {
+        var version = "";
+        var lastSync = DateTimeOffset.MinValue;
+        var backoff = MinBackoff;
+        while (!ct.IsCancellationRequested)
         {
             try
             {
-                if (_tokens.GetToken() is null) return;
-                var res = await _api.RequestAsync("GET", "/api/eeyes/device/sync");
-                Dispatcher.Invoke(() => HandleAuth(res));
-                if (res.Code is < 200 or >= 300) DiagStore.RecordSync("timer", res.Code, res.ErrorCode, null);
+                if (_tokens.GetToken() is null)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(5), ct);
+                    continue;
+                }
+                var res = await _api.RequestAsync("GET", "/api/eeyes/device/wait?v=" + Uri.EscapeDataString(version));
                 if (res.Code is >= 200 and < 300)
                 {
-                    var root = JsonNode.Parse(res.Body);
-                    var notifications = root?["notifications"] as JsonArray;
-                    DiagStore.RecordSync("timer", res.Code, null, notifications);
-                    var acks = NotificationService.ScheduleFromSync(notifications);
-                    await NotificationService.AckAsync(_api, acks);
-                    await _capture.FlushQueueAsync();
+                    backoff = MinBackoff;
+                    var body = JsonNode.Parse(res.Body);
+                    version = body?["v"]?.GetValue<string>() ?? "";
+                    var changed = body?["changed"]?.GetValue<bool>() ?? false;
+                    if (changed || DateTimeOffset.UtcNow - lastSync > TimeSpan.FromSeconds(30))
+                    {
+                        await SyncOnceAsync("live");
+                        lastSync = DateTimeOffset.UtcNow;
+                    }
+                    DiagStore.RecordLive("conectado", res.Code);
+                    continue;
                 }
+                Dispatcher.Invoke(() => HandleAuth(res));
+                DiagStore.RecordLive("error " + (res.ErrorCode ?? "red"), res.Code);
+            }
+            catch (OperationCanceledException) when (ct.IsCancellationRequested)
+            {
+                break;
             }
             catch (Exception ex)
             {
-                DiagStore.RecordSync("timer", 0, ex.GetType().Name, null);
+                DiagStore.RecordLive("error " + ex.GetType().Name, 0);
             }
-        }, null, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(30));
+            try
+            {
+                await Task.Delay(backoff, ct);
+            }
+            catch (OperationCanceledException)
+            {
+                break;
+            }
+            backoff = TimeSpan.FromTicks(Math.Min(backoff.Ticks * 2, MaxBackoff.Ticks));
+        }
+    }
+
+    private async Task SyncOnceAsync(string source)
+    {
+        var res = await _api.RequestAsync("GET", "/api/eeyes/device/sync");
+        Dispatcher.Invoke(() => HandleAuth(res));
+        if (res.Code is < 200 or >= 300)
+        {
+            DiagStore.RecordSync(source, res.Code, res.ErrorCode, null);
+            return;
+        }
+        var notifications = JsonNode.Parse(res.Body)?["notifications"] as JsonArray;
+        DiagStore.RecordSync(source, res.Code, null, notifications);
+        var acks = NotificationService.ScheduleFromSync(notifications);
+        await NotificationService.AckAsync(_api, acks);
+        await _capture.FlushQueueAsync();
     }
 
     private async void OnWebMessage(object? sender, CoreWebView2WebMessageReceivedEventArgs e)

@@ -34,8 +34,27 @@ class DiagStore(context: Context) {
             .apply()
     }
 
+    fun recordLive(state: String, code: Int) {
+        prefs.edit()
+            .putLong("liveAt", System.currentTimeMillis())
+            .putString("liveState", state)
+            .putInt("liveHttp", code)
+            .apply()
+    }
+
+    /** Returns true only the first time, so the battery prompt is shown once. */
+    fun firstBatteryPrompt(): Boolean {
+        if (prefs.getBoolean("batteryPrompted", false)) return false
+        prefs.edit().putBoolean("batteryPrompted", true).apply()
+        return true
+    }
+
     fun toJson(): JSONObject {
         val out = JSONObject()
+        val liveAt = prefs.getLong("liveAt", 0)
+        out.put("liveState", prefs.getString("liveState", "sin iniciar"))
+        out.put("liveAt", if (liveAt > 0) java.time.Instant.ofEpochMilli(liveAt).toString() else "nunca")
+        out.put("liveHttp", prefs.getInt("liveHttp", 0))
         val lastSync = prefs.getLong("lastSyncAt", 0)
         out.put("lastSyncAt", if (lastSync > 0) java.time.Instant.ofEpochMilli(lastSync).toString() else "nunca")
         out.put("lastSyncSource", prefs.getString("lastSyncSource", ""))
