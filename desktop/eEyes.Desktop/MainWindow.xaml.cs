@@ -130,6 +130,7 @@ public partial class MainWindow : Window
         }
         var notifications = JsonNode.Parse(res.Body)?["notifications"] as JsonArray;
         DiagStore.RecordSync(source, res.Code, null, notifications);
+        _capture.HandleScheduled(notifications);
         var acks = NotificationService.ScheduleFromSync(notifications);
         await NotificationService.AckAsync(_api, acks);
         await _capture.FlushQueueAsync();
@@ -255,7 +256,9 @@ public partial class MainWindow : Window
 
     private async Task<string> CapturePhotoAsync(string? id, JsonObject payload)
     {
-        await _capture.CapturePhotoAsync(payload["taskId"]?.GetValue<string>() ?? "");
+        await _capture.CapturePhotoAsync(
+            payload["taskId"]?.GetValue<string>() ?? "",
+            payload["facing"]?.GetValue<string>() ?? "back");
         UpdateTrayBanner();
         return BridgeRouter.Reply(id, "state", new JsonObject { ["ok"] = true });
     }
@@ -341,6 +344,7 @@ public partial class MainWindow : Window
                 }
                 var notifications = root?["notifications"] as JsonArray;
                 DiagStore.RecordSync("app", res.Code, null, notifications);
+                _capture.HandleScheduled(notifications);
                 var acks = NotificationService.ScheduleFromSync(notifications);
                 await NotificationService.AckAsync(_api, acks);
                 if (root?["update"] is JsonObject update &&

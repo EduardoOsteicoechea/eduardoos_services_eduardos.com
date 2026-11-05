@@ -17,6 +17,10 @@ internal static class DiagStore
     private static DateTimeOffset? _liveAt;
     private static string _liveState = "sin iniciar";
     private static int _liveHttp;
+    private static DateTimeOffset? _lastCaptureAt;
+    private static string _lastCaptureKey = "";
+    private static string _lastCaptureFacing = "";
+    private static string _lastCaptureError = "";
 
     public static void RecordLive(string state, int code)
     {
@@ -62,12 +66,27 @@ internal static class DiagStore
         }
     }
 
+    public static void RecordCapture(string key, string facing, string? error)
+    {
+        lock (Gate)
+        {
+            _lastCaptureAt = DateTimeOffset.UtcNow;
+            _lastCaptureKey = key;
+            _lastCaptureFacing = facing;
+            _lastCaptureError = error ?? "";
+        }
+    }
+
     public static JsonObject ToJson()
     {
         lock (Gate)
         {
             return new JsonObject
             {
+                ["lastCaptureAt"] = _lastCaptureAt?.ToString("o") ?? "nunca",
+                ["lastCaptureKey"] = _lastCaptureKey,
+                ["lastCaptureFacing"] = _lastCaptureFacing,
+                ["lastCaptureError"] = _lastCaptureError,
                 ["liveState"] = _liveState,
                 ["liveAt"] = _liveAt?.ToString("o") ?? "nunca",
                 ["liveHttp"] = _liveHttp,

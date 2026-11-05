@@ -1,7 +1,28 @@
 import { describe, expect, it } from "vitest";
-import { eeyesDownloadUrl, eeyesMediaUrl, eeyesNoticeStage, isEeyesNotice, type EeyesTask } from "./eeyes";
+import {
+  eeyesDownloadUrl,
+  eeyesMediaUrl,
+  eeyesNoticeStage,
+  eeyesPhotoStage,
+  isEeyesNotice,
+  isEeyesPhoto,
+  type EeyesTask,
+} from "./eeyes";
 
 describe("eeyes helpers", () => {
+  it("tracks the scheduled photo pipeline stage", () => {
+    const now = Date.parse("2026-11-05T18:00:00Z");
+    const base = { id: "t", status: "pending", kind: "photo" } as EeyesTask;
+    expect(isEeyesPhoto(base)).toBe(true);
+    expect(isEeyesPhoto({ ...base, kind: "notice" })).toBe(false);
+    expect(eeyesPhotoStage({ ...base, notifyAt: "2026-11-05T19:00:00Z" }, now)).toBe("scheduled");
+    expect(eeyesPhotoStage({ ...base, notifyAt: "2026-11-05T17:00:00Z" }, now)).toBe("waiting_sync");
+    expect(eeyesPhotoStage({ ...base, notifyDispatchedAt: "2026-11-05T17:30:00Z" }, now)).toBe("dispatched");
+    expect(eeyesPhotoStage({ ...base, notifyAckedAt: "2026-11-05T17:31:00Z" }, now)).toBe("taken");
+    expect(eeyesPhotoStage({ ...base, status: "completed", notifyAckedAt: "x" }, now)).toBe("uploaded");
+    expect(eeyesPhotoStage({ ...base, status: "cancelled" }, now)).toBe("cancelled");
+  });
+
   it("tracks the notification pipeline stage", () => {
     const now = Date.parse("2026-11-05T18:00:00Z");
     const base = { id: "t", status: "pending" } as EeyesTask;

@@ -95,8 +95,16 @@ Body:
 
 Live connection: `GET /api/eeyes/device/wait?v=<version>` (device token). Stale or empty `v` → immediate `{ changed: true, v }`; otherwise the request is held until the hub creates/edits/deletes a task for that device or revokes it (`changed: true`), or ~50 s pass (`changed: false`). Max 3 concurrent waits per device (`rate_limited`). Versions are per API process, so a restart reads as a change. Shells loop wait → `/sync` on change (and at least every 5 min on Android / 30 s on Desktop).
 
-- Android: `LiveSyncService` foreground service (`specialUse`, low-priority ongoing notification "eEyes activo"), started on app open, after pairing, on boot and on app update; partial wake lock only while processing a reply; asks once for the battery-optimization exemption. WorkManager 15 min stays as fallback.
+- Android: `LiveSyncService` foreground service (`specialUse`, plus `camera` when started from the visible app; low-priority ongoing notification "eEyes activo"), started on app open, after pairing, on boot and on app update; partial wake lock only while processing a reply; asks once for the battery-optimization exemption. WorkManager 15 min stays as fallback.
 - Desktop: the same loop on a background task while the app runs.
+
+### Scheduled photo (`kind: "photo"`)
+
+Hub card **Programar foto** creates `POST /api/eeyes/tasks` `{ kind: "photo", deviceId, title, cameraFacing: "back"|"front" (default back), notifyAt? (default now) }`. Not listed in sync `tasks`; instead sync lists `{ key: "capture:<taskId>", kind: "capture", facing, at, title }` until acked. At `at` the shell takes one photo with that camera (no human start), uploads it to `/device/tasks/{id}/media` (image only; allowed while `pending`), and the first upload completes the task so it appears in completions and the card. The shell acks the key once the photo is taken and posts a visible "eEyes tomó una foto" notification.
+
+- Android: Camera2 still (AE warm-up on a small YUV stream, pixels rotated by sensor orientation). Background camera works only while `LiveSyncService` runs with the `camera` FGS type (granted when started from the visible app); otherwise it notifies "abre eEyes" and retries when the app is opened.
+- Desktop: `MediaCapture` low-lag photo on the camera whose enclosure panel matches `facing` (else the first camera); retries up to 5 times per key per run.
+- Hub stages: `scheduled → waiting_sync → dispatched → taken → uploaded`.
 
 Notifications are listed up to 24 h ahead until acked. Shells ack a key only after it was actually shown (Android: alarm fired and system notifications enabled; Desktop: toast time reached). Server records per task `notifyDispatchedAt` (first sync that listed it) and `notifyAckedAt`; per device `lastSyncAt` and `lastSyncNotifications`.
 

@@ -41,7 +41,7 @@
         <service
             android:name=".LiveSyncService"
             android:exported="false"
-            android:foregroundServiceType="specialUse">
+            android:foregroundServiceType="specialUse|camera">
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="Live connection to the user's own eduardoos.com account to show scheduled task notifications on time" />

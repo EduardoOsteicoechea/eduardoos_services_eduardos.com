@@ -523,6 +523,7 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 		PhotoIntervalSec int      `json:"photoIntervalSec"`
 		MaxPhotos        int      `json:"maxPhotos"`
 		AudioSeconds     int      `json:"audioSeconds"`
+		CameraFacing     string   `json:"cameraFacing"`
 	}
 	defer r.Body.Close()
 	if err := json.NewDecoder(io.LimitReader(r.Body, 1<<20)).Decode(&body); err != nil {
@@ -535,9 +536,20 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 	if kind == "task" {
 		kind = ""
 	}
-	if title == "" || deviceID == "" || (kind != "" && kind != eeyesTaskKindNotice) {
+	if title == "" || deviceID == "" || (kind != "" && kind != eeyesTaskKindNotice && kind != eeyesTaskKindPhoto) {
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
+	}
+	facing := ""
+	if kind == eeyesTaskKindPhoto {
+		facing = strings.TrimSpace(body.CameraFacing)
+		if facing == "" {
+			facing = eeyesCameraBack
+		}
+		if facing != eeyesCameraBack && facing != eeyesCameraFront {
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			return
+		}
 	}
 	d, err := a.eeyes.DeviceByID(r.Context(), deviceID)
 	if err != nil || d == nil || d.OwnerID != user.ID || !d.isLive(time.Now().UTC()) {
@@ -582,13 +594,16 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 		photoInterval = 0
 	}
 	now := time.Now().UTC()
-	if kind == eeyesTaskKindNotice {
+	if kind == eeyesTaskKindNotice || kind == eeyesTaskKindPhoto {
 		if notifyAt == nil {
 			notifyAt = &now
 		}
 		maxPhotos, audioSec, photoInterval = 0, 0, 0
 		reminders = nil
 		dueAt = nil
+	}
+	if kind == eeyesTaskKindPhoto {
+		maxPhotos = 1
 	}
 	task := &eeyesTask{
 		ID:               randomID(12),
@@ -604,6 +619,7 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 		PhotoIntervalSec: photoInterval,
 		MaxPhotos:        maxPhotos,
 		AudioSeconds:     audioSec,
+		CameraFacing:     facing,
 		CreatedAt:        now,
 		UpdatedAt:        now,
 	}
@@ -784,6 +800,26 @@ func (a *App) eeyesDeviceSync(w http.ResponseWriter, r *http.Request) {
 		if t.Status == eeyesTaskCompleted {
 			continue
 		}
+		if t.Kind == eeyesTaskKindPhoto {
+			key := "capture:" + t.ID
+			if t.NotifyAt != nil && !t.NotifyAt.After(horizon) && !containsString(t.NotifiedKeys, key) {
+				notifications = append(notifications, map[string]any{
+					"key":    key,
+					"taskId": t.ID,
+					"title":  t.Title,
+					"body":   t.Instructions,
+					"at":     t.NotifyAt,
+					"kind":   "capture",
+					"facing": t.CameraFacing,
+				})
+				if t.NotifyDispatchedAt == nil {
+					dispatched := now
+					t.NotifyDispatchedAt = &dispatched
+					_ = a.eeyes.UpdateTask(r.Context(), t)
+				}
+			}
+			continue
+		}
 		if t.Kind != eeyesTaskKindNotice {
 			active = append(active, t)
 		}
@@ -889,10 +925,6 @@ func (a *App) eeyesDeviceUploadMedia(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
-	if task.Status != eeyesTaskInProgress {
-		a.writeSafeError(w, r, http.StatusConflict, "conflict")
-		return
-	}
 	var body struct {
 		ClientMediaID string `json:"clientMediaId"`
 		Kind          string `json:"kind"`
@@ -917,6 +949,20 @@ func (a *App) eeyesDeviceUploadMedia(w http.ResponseWriter, r *http.Request) {
 	}
 	if existing, err := a.eeyes.MediaByClientID(r.Context(), device.ID, clientID); err == nil && existing != nil {
 		writeJSON(w, http.StatusCreated, map[string]any{"media": existing, "url": eeyesDeviceMediaURL(existing.ID)})
+		return
+	}
+	isPhoto := task.Kind == eeyesTaskKindPhoto
+	if isPhoto {
+		if task.Status != eeyesTaskPending && task.Status != eeyesTaskInProgress {
+			a.writeSafeError(w, r, http.StatusConflict, "conflict")
+			return
+		}
+		if kind != eeyesMediaKindImage {
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			return
+		}
+	} else if task.Status != eeyesTaskInProgress {
+		a.writeSafeError(w, r, http.StatusConflict, "conflict")
 		return
 	}
 	raw, err := decodeEeyesBase64(body.DataBase64)
@@ -1002,6 +1048,17 @@ func (a *App) eeyesDeviceUploadMedia(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	if isPhoto {
+		if task.StartedAt == nil {
+			task.StartedAt = capturedAt
+		}
+		task.Status = eeyesTaskCompleted
+		task.CompletedAt = &now
+		task.UpdatedAt = now
+		if err := a.eeyes.UpdateTask(r.Context(), task); err != nil {
+			a.logUnexpected(r, "eeyes", err.Error())
+		}
+	}
 	a.auditEvent(r, "eeyes_media_upload", "ok", device.OwnerID)
 	a.mustLogf(r, "eeyes.media.upload", "media_id", m.ID, "task_id", task.ID, "kind", kind, "size", m.Size)
 	writeJSON(w, http.StatusCreated, map[string]any{"media": m, "url": eeyesDeviceMediaURL(m.ID)})
@@ -1070,7 +1127,7 @@ func (a *App) eeyesDeviceAckNotifications(w http.ResponseWriter, r *http.Request
 		now := time.Now().UTC()
 		task.NotifiedKeys = append(task.NotifiedKeys, key)
 		task.UpdatedAt = now
-		if key == "notify:"+task.ID {
+		if key == "notify:"+task.ID || key == "capture:"+task.ID {
 			task.NotifyAckedAt = &now
 			if task.Kind == eeyesTaskKindNotice && task.Status == eeyesTaskPending {
 				task.Status = eeyesTaskCompleted

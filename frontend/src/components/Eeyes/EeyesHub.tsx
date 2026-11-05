@@ -20,15 +20,19 @@ import {
   eeyesDownloadUrl,
   eeyesMediaUrl,
   eeyesNoticeStage,
+  eeyesPhotoStage,
   getEeyesPairing,
   isEeyesNotice,
+  isEeyesPhoto,
   listEeyesCompletions,
   listEeyesDevices,
   listEeyesReleases,
   listEeyesTasks,
   revokeEeyesDevice,
+  scheduleEeyesPhoto,
   sendEeyesNotice,
   type CreateEeyesTaskInput,
+  type EeyesCameraFacing,
   type EeyesCompletion,
   type EeyesDevice,
   type EeyesPairing,
@@ -41,6 +45,12 @@ const CARDS: DashboardCardItem[] = [
   { id: "devices", title: "Dispositivos", description: "Ver, renombrar o revocar.", icon: "smartphone" },
   { id: "tasks", title: "Tareas", description: "Planificar capturas humanas.", icon: "task_alt" },
   { id: "notify", title: "Notificación", description: "Enviar un aviso a un dispositivo.", icon: "notifications" },
+  {
+    id: "photo",
+    title: "Programar foto",
+    description: "Foto automática con la cámara frontal o trasera.",
+    icon: "photo_camera",
+  },
   { id: "completions", title: "Completaciones", description: "Fotos y audio recibidos.", icon: "photo_library" },
   { id: "downloads", title: "Descargas", description: "APK Android y EXE Desktop.", icon: "download" },
   {
@@ -74,6 +84,7 @@ function EeyesHubInner() {
       {view === "devices" ? <DevicesView /> : null}
       {view === "tasks" ? <TasksView /> : null}
       {view === "notify" ? <NotifyView /> : null}
+      {view === "photo" ? <PhotoView /> : null}
       {view === "completions" ? <CompletionsView /> : null}
       {view === "downloads" ? <DownloadsView /> : null}
       {view === "diagnostics" ? <DiagnosticsView /> : null}
@@ -222,7 +233,7 @@ function TasksView() {
   const load = useCallback(async () => {
     const [d, t] = await Promise.all([listEeyesDevices(), listEeyesTasks()]);
     setDevices(d.filter((x) => !x.revokedAt));
-    setTasks(t.filter((x) => !isEeyesNotice(x)));
+    setTasks(t.filter((x) => !isEeyesNotice(x) && !isEeyesPhoto(x)));
     if (!form.deviceId && d[0]) setForm((f) => ({ ...f, deviceId: d[0].id }));
   }, [form.deviceId]);
 
@@ -334,6 +345,12 @@ function TasksView() {
 
 type NoticeWhen = "now" | "15" | "60" | "custom";
 
+function resolveWhen(when: NoticeWhen, customAt: string): string | undefined {
+  if (when === "now") return undefined;
+  if (when === "custom") return customAt ? new Date(customAt).toISOString() : undefined;
+  return new Date(Date.now() + Number(when) * 60_000).toISOString();
+}
+
 function fmtTime(iso?: string | null): string {
   return iso ? new Date(iso).toLocaleString() : "";
 }
@@ -380,19 +397,13 @@ function NotifyView() {
     void load();
   }, [load]);
 
-  function resolveNotifyAt(): string | undefined {
-    if (when === "now") return undefined;
-    if (when === "custom") return customAt ? new Date(customAt).toISOString() : undefined;
-    return new Date(Date.now() + Number(when) * 60_000).toISOString();
-  }
-
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (when === "custom" && !customAt) return;
     setBusy(true);
     setSentLine("");
     try {
-      const notice = await sendEeyesNotice({ deviceId, title, message, notifyAt: resolveNotifyAt() });
+      const notice = await sendEeyesNotice({ deviceId, title, message, notifyAt: resolveWhen(when, customAt) });
       setTitle("");
       setMessage("");
       setSentLine(noticeStatusLabel(notice));
@@ -463,6 +474,157 @@ function NotifyView() {
             <strong>{t.title}</strong>
             {t.instructions ? <span className="lede">{t.instructions}</span> : null}
             <span className="lede">{noticeStatusLabel(t)}</span>
+            {t.status === "pending" ? (
+              <button type="button" onClick={() => void cancelEeyesTask(t.id).then(load)}>
+                Cancelar
+              </button>
+            ) : null}
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+const CAMERA_LABEL: Record<EeyesCameraFacing, string> = { back: "Trasera", front: "Frontal" };
+
+function photoStatusLabel(t: EeyesTask): string {
+  switch (eeyesPhotoStage(t)) {
+    case "uploaded":
+      return `Foto recibida ${fmtTime(t.completedAt)}`;
+    case "cancelled":
+      return "Cancelada";
+    case "taken":
+      return `Tomada ${fmtTime(t.notifyAckedAt)} · subiendo al servidor`;
+    case "dispatched":
+      return `Enviada al dispositivo ${fmtTime(t.notifyDispatchedAt)} · esperando la cámara`;
+    case "scheduled":
+      return `Programada ${fmtTime(t.notifyAt)}`;
+    default:
+      return "Esperando a que el dispositivo sincronice";
+  }
+}
+
+const PHOTO_POLL_MS = 5_000;
+
+function PhotoView() {
+  const [devices, setDevices] = useState<EeyesDevice[]>([]);
+  const [photos, setPhotos] = useState<EeyesTask[]>([]);
+  const [mediaByTask, setMediaByTask] = useState<Record<string, string[]>>({});
+  const [deviceId, setDeviceId] = useState("");
+  const [title, setTitle] = useState("Foto programada");
+  const [facing, setFacing] = useState<EeyesCameraFacing>("back");
+  const [when, setWhen] = useState<NoticeWhen>("now");
+  const [customAt, setCustomAt] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const load = useCallback(async () => {
+    const [d, t, c] = await Promise.all([listEeyesDevices(), listEeyesTasks(), listEeyesCompletions()]);
+    const live = d.filter((x) => !x.revokedAt);
+    setDevices(live);
+    setPhotos(t.filter(isEeyesPhoto).sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)));
+    const media: Record<string, string[]> = {};
+    for (const { task, media: items } of c) {
+      if (isEeyesPhoto(task)) media[task.id] = items.filter((m) => m.kind === "image").map((m) => m.id);
+    }
+    setMediaByTask(media);
+    setDeviceId((cur) => cur || live[0]?.id || "");
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  const waiting = photos.some((t) => t.status === "pending" || t.status === "in_progress");
+  useEffect(() => {
+    if (!waiting) return;
+    const timer = window.setInterval(() => void load().catch(() => undefined), PHOTO_POLL_MS);
+    return () => window.clearInterval(timer);
+  }, [waiting, load]);
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
+    if (when === "custom" && !customAt) return;
+    setBusy(true);
+    try {
+      await scheduleEeyesPhoto({ deviceId, title, cameraFacing: facing, notifyAt: resolveWhen(when, customAt) });
+      await load();
+    } catch {
+      /* unwrap already opened the error modal */
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <section className="product-dash__section">
+      <h2>Programar foto</h2>
+      <p className="lede">
+        A la hora indicada el dispositivo toma una foto con la cámara elegida, la sube y aparece aquí.
+        El teléfono muestra el indicador de cámara y un aviso cada vez que toma una.
+      </p>
+      <form className="eeyes-form" onSubmit={(e) => void onSubmit(e)}>
+        <label>
+          Dispositivo
+          <select required value={deviceId} onChange={(e) => setDeviceId(e.target.value)}>
+            <option value="">Selecciona…</option>
+            {devices.map((d) => (
+              <option key={d.id} value={d.id}>
+                {d.label} ({d.platform})
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Cámara
+          <select value={facing} onChange={(e) => setFacing(e.target.value as EeyesCameraFacing)}>
+            <option value="back">Trasera</option>
+            <option value="front">Frontal</option>
+          </select>
+        </label>
+        <label>
+          Título
+          <input required maxLength={120} value={title} onChange={(e) => setTitle(e.target.value)} />
+        </label>
+        <label>
+          Cuándo
+          <select value={when} onChange={(e) => setWhen(e.target.value as NoticeWhen)}>
+            <option value="now">Ahora</option>
+            <option value="15">En 15 minutos</option>
+            <option value="60">En 1 hora</option>
+            <option value="custom">Fecha y hora…</option>
+          </select>
+        </label>
+        {when === "custom" ? (
+          <label>
+            Fecha y hora
+            <input
+              type="datetime-local"
+              required
+              value={customAt}
+              onChange={(e) => setCustomAt(e.target.value)}
+            />
+          </label>
+        ) : null}
+        <button type="submit" disabled={busy || !deviceId}>
+          {busy ? "Programando…" : "Programar foto"}
+        </button>
+      </form>
+      {devices.length === 0 ? <p className="lede">Vincula un dispositivo antes de programar fotos.</p> : null}
+      <div className="eeyes-row">
+        {photos.map((t) => (
+          <article key={t.id} className="eeyes-task-card">
+            <strong>{t.title}</strong>
+            <span className="lede">
+              Cámara {CAMERA_LABEL[t.cameraFacing ?? "back"]} · {photoStatusLabel(t)}
+            </span>
+            {mediaByTask[t.id]?.length ? (
+              <div className="eeyes-media-grid">
+                {mediaByTask[t.id].map((id) => (
+                  <img key={id} src={eeyesMediaUrl(id)} alt={t.title} />
+                ))}
+              </div>
+            ) : null}
             {t.status === "pending" ? (
               <button type="button" onClick={() => void cancelEeyesTask(t.id).then(load)}>
                 Cancelar

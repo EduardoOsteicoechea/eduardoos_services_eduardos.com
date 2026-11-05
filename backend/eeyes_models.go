@@ -36,6 +36,15 @@ const eeyesNotificationHorizon = 24 * time.Hour
 // shell task list, completed when the device acks its notification.
 const eeyesTaskKindNotice = "notice"
 
+// eeyesTaskKindPhoto is a scheduled single photo: at NotifyAt the device takes
+// one picture with CameraFacing and the first upload completes the task.
+const eeyesTaskKindPhoto = "photo"
+
+const (
+	eeyesCameraBack  = "back"
+	eeyesCameraFront = "front"
+)
+
 type eeyesPairing struct {
 	ID           string     `json:"id" bson:"_id"`
 	OwnerID      string     `json:"ownerId" bson:"owner_id"`
@@ -86,6 +95,7 @@ type eeyesTask struct {
 	PhotoIntervalSec  int        `json:"photoIntervalSec" bson:"photo_interval_sec"`
 	MaxPhotos         int        `json:"maxPhotos" bson:"max_photos"`
 	AudioSeconds      int        `json:"audioSeconds" bson:"audio_seconds"`
+	CameraFacing      string     `json:"cameraFacing,omitempty" bson:"camera_facing,omitempty"`
 	StartedAt         *time.Time `json:"startedAt,omitempty" bson:"started_at,omitempty"`
 	CompletedAt       *time.Time `json:"completedAt,omitempty" bson:"completed_at,omitempty"`
 	CreatedAt         time.Time  `json:"createdAt" bson:"created_at"`

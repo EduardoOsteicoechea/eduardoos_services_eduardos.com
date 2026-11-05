@@ -39,8 +39,10 @@ export type EeyesTask = {
   title: string;
   instructions: string;
   status: string;
-  /** `notice` = notification only (no capture); absent = capture task. */
+  /** `notice` = notification only; `photo` = scheduled automatic photo; absent = capture task. */
   kind?: string;
+  /** Scheduled photos only. */
+  cameraFacing?: EeyesCameraFacing;
   notifyAt?: string | null;
   reminders?: string[];
   dueAt?: string | null;
@@ -185,6 +187,43 @@ export async function sendEeyesNotice(input: SendEeyesNoticeInput): Promise<Eeye
 
 export function isEeyesNotice(task: EeyesTask): boolean {
   return task.kind === "notice";
+}
+
+export type EeyesCameraFacing = "back" | "front";
+
+export type ScheduleEeyesPhotoInput = {
+  deviceId: string;
+  title: string;
+  cameraFacing: EeyesCameraFacing;
+  /** RFC3339; omitted = take it as soon as the device receives it. */
+  notifyAt?: string;
+};
+
+export async function scheduleEeyesPhoto(input: ScheduleEeyesPhotoInput): Promise<EeyesTask> {
+  const { status, data, requestId } = await postJSON<{ task: EeyesTask }>("/eeyes/tasks", {
+    kind: "photo",
+    deviceId: input.deviceId,
+    title: input.title,
+    cameraFacing: input.cameraFacing,
+    notifyAt: input.notifyAt,
+  });
+  return unwrap(status, data, requestId, "/eeyes/tasks").task;
+}
+
+export function isEeyesPhoto(task: EeyesTask): boolean {
+  return task.kind === "photo";
+}
+
+export type EeyesPhotoStage = "cancelled" | "uploaded" | "taken" | "dispatched" | "scheduled" | "waiting_sync";
+
+/** Where a scheduled photo is in the hub → device → camera → upload pipeline. */
+export function eeyesPhotoStage(task: EeyesTask, now = Date.now()): EeyesPhotoStage {
+  if (task.status === "completed") return "uploaded";
+  if (task.status === "cancelled") return "cancelled";
+  if (task.notifyAckedAt) return "taken";
+  if (task.notifyDispatchedAt) return "dispatched";
+  if (task.notifyAt && Date.parse(task.notifyAt) > now) return "scheduled";
+  return "waiting_sync";
 }
 
 export async function cancelEeyesTask(id: string): Promise<void> {

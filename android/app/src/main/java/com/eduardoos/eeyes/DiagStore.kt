@@ -42,6 +42,37 @@ class DiagStore(context: Context) {
             .apply()
     }
 
+    fun recordLiveCamera(ready: Boolean) {
+        prefs.edit().putBoolean("liveCamera", ready).apply()
+    }
+
+    fun recordCapture(key: String, facing: String, error: String?) {
+        prefs.edit()
+            .putLong("lastCaptureAt", System.currentTimeMillis())
+            .putString("lastCaptureKey", key)
+            .putString("lastCaptureFacing", facing)
+            .putString("lastCaptureError", error ?: "")
+            .apply()
+    }
+
+    /** Keys already photographed, so a lost ack does not take the picture twice. */
+    @Synchronized
+    fun markCaptured(key: String) {
+        val arr = capturedKeys()
+        arr.put(key)
+        while (arr.length() > MAX_CAPTURED_KEYS) arr.remove(0)
+        prefs.edit().putString("capturedKeys", arr.toString()).apply()
+    }
+
+    fun wasCaptured(key: String): Boolean {
+        val arr = capturedKeys()
+        for (i in 0 until arr.length()) if (arr.optString(i) == key) return true
+        return false
+    }
+
+    private fun capturedKeys(): JSONArray =
+        runCatching { JSONArray(prefs.getString("capturedKeys", "[]")) }.getOrElse { JSONArray() }
+
     /** Returns true only the first time, so the battery prompt is shown once. */
     fun firstBatteryPrompt(): Boolean {
         if (prefs.getBoolean("batteryPrompted", false)) return false
@@ -66,6 +97,16 @@ class DiagStore(context: Context) {
         out.put("lastNotificationAt", if (lastNotif > 0) java.time.Instant.ofEpochMilli(lastNotif).toString() else "nunca")
         out.put("lastNotificationKey", prefs.getString("lastNotificationKey", ""))
         out.put("lastNotificationShown", prefs.getBoolean("lastNotificationShown", false))
+        out.put("liveCamera", prefs.getBoolean("liveCamera", false))
+        val lastCapture = prefs.getLong("lastCaptureAt", 0)
+        out.put("lastCaptureAt", if (lastCapture > 0) java.time.Instant.ofEpochMilli(lastCapture).toString() else "nunca")
+        out.put("lastCaptureKey", prefs.getString("lastCaptureKey", ""))
+        out.put("lastCaptureFacing", prefs.getString("lastCaptureFacing", ""))
+        out.put("lastCaptureError", prefs.getString("lastCaptureError", ""))
         return out
+    }
+
+    private companion object {
+        const val MAX_CAPTURED_KEYS = 50
     }
 }

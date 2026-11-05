@@ -11,12 +11,9 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
-import android.util.Base64
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import org.json.JSONObject
 import java.io.File
-import java.time.Instant
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.concurrent.thread
 
@@ -25,6 +22,7 @@ class CaptureForegroundService : Service() {
     private var photosTaken = AtomicInteger(0)
     private var maxPhotos = 10
     private var taskId: String = ""
+    private var facing: String = "back"
     private var autoRunnable: Runnable? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -39,6 +37,7 @@ class CaptureForegroundService : Service() {
         when (action) {
             ACTION_PHOTO -> {
                 taskId = intent?.getStringExtra(EXTRA_TASK_ID).orEmpty()
+                facing = intent?.getStringExtra(EXTRA_FACING) ?: "back"
                 captureOnePhoto()
             }
             ACTION_AUTO -> {
@@ -89,15 +88,12 @@ class CaptureForegroundService : Service() {
     }
 
     private fun captureOnePhoto() {
-        // CameraX full pipeline needs a bound lifecycle; for shell v1 we accept a
-        // placeholder JPEG from cache that MediaCompressor can still process when
-        // a real capture file is written by a future CameraX bind. Here we create
-        // a minimal valid JPEG so the upload path is exercised end-to-end.
+        val id = taskId
+        val cam = facing
         thread {
-            val dir = File(cacheDir, "media").also { it.mkdirs() }
-            val file = File(dir, "photo-${System.currentTimeMillis()}.jpg")
-            file.writeBytes(byteArrayOf(0xff.toByte(), 0xd8.toByte(), 0xff.toByte(), 0xd9.toByte()))
-            enqueueUpload(file, "image", "image/jpeg", 0)
+            val result = PhotoCapturer.capture(this, cam)
+            DiagStore(this).recordCapture("task:$id", cam, result.error)
+            result.jpeg?.let { MediaUploader.enqueue(this, id, "image", "image/jpeg", it, 0) }
             photosTaken.incrementAndGet()
         }
     }
@@ -129,53 +125,10 @@ class CaptureForegroundService : Service() {
                 runCatching { recorder.release() }
             }
             if (file.exists() && file.length() > 0) {
-                enqueueUpload(file, "audio", "audio/mp4", seconds * 1000)
+                MediaUploader.enqueue(this, taskId, "audio", "audio/mp4", file.readBytes(), seconds * 1000)
+                file.delete()
             }
             stopSelf()
-        }
-    }
-
-    private fun enqueueUpload(file: File, kind: String, mime: String, durationMs: Int) {
-        val bytes = if (kind == "image") MediaCompressor.compressJpeg(file) else file.readBytes()
-        val sha = MediaCompressor.sha256Hex(bytes)
-        val out = File(cacheDir, "media/${MediaQueue.newClientId()}.bin")
-        out.writeBytes(bytes)
-        val item = QueueItem(
-            clientMediaId = MediaQueue.newClientId(),
-            taskId = taskId,
-            kind = kind,
-            mime = mime,
-            filePath = out.absolutePath,
-            sha256 = sha,
-            durationMs = durationMs,
-            capturedAt = Instant.now().toString(),
-        )
-        MediaQueue(this).enqueue(item)
-        UploadWorker.enqueue(this)
-        // Also try immediate upload
-        thread { flushOne(item) }
-    }
-
-    private fun flushOne(item: QueueItem) {
-        val tokenStore = TokenStore(this)
-        val api = ApiClient(BuildConfig.EEYES_BASE_URL, tokenStore)
-        val bytes = File(item.filePath).readBytes()
-        val b64 = Base64.encodeToString(bytes, Base64.NO_WRAP)
-        val body = JSONObject()
-            .put("clientMediaId", item.clientMediaId)
-            .put("kind", item.kind)
-            .put("mime", item.mime)
-            .put("capturedAt", item.capturedAt)
-            .put("durationMs", item.durationMs)
-            .put("sha256", item.sha256)
-            .put("dataBase64", b64)
-            .toString()
-        val res = api.request("POST", "/api/eeyes/device/tasks/${item.taskId}/media", body)
-        if (res.code in 200..299) {
-            MediaQueue(this).remove(item.clientMediaId)
-            File(item.filePath).delete()
-        } else {
-            MediaQueue(this).bumpAttempt(item.clientMediaId)
         }
     }
 
@@ -188,10 +141,12 @@ class CaptureForegroundService : Service() {
         const val EXTRA_INTERVAL = "interval"
         const val EXTRA_MAX = "max"
         const val EXTRA_SECONDS = "seconds"
+        const val EXTRA_FACING = "facing"
 
-        fun startPhoto(ctx: Context, taskId: String) {
+        fun startPhoto(ctx: Context, taskId: String, facing: String = "back") {
             val i = Intent(ctx, CaptureForegroundService::class.java).setAction(ACTION_PHOTO)
                 .putExtra(EXTRA_TASK_ID, taskId)
+                .putExtra(EXTRA_FACING, facing)
             ContextCompat.startForegroundService(ctx, i)
         }
 

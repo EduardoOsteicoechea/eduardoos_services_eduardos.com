@@ -9,6 +9,8 @@ import org.json.JSONArray
 import java.time.Instant
 
 object NotificationScheduler {
+    const val KIND_CAPTURE = "capture"
+
     fun scheduleFromSync(ctx: Context, notifications: JSONArray?) {
         if (notifications == null) return
         val am = ctx.getSystemService(AlarmManager::class.java) ?: return
@@ -18,9 +20,15 @@ object NotificationScheduler {
             val title = n.optString("title")
             val body = n.optString("body")
             val taskId = n.optString("taskId")
+            val kind = n.optString("kind")
+            val facing = n.optString("facing")
             val at = runCatching { Instant.parse(n.optString("at")).toEpochMilli() }.getOrNull() ?: continue
             if (at < System.currentTimeMillis()) {
-                NotificationAlarmReceiver.deliver(ctx, key, title, body, taskId)
+                if (kind == KIND_CAPTURE) {
+                    ScheduledPhoto.start(ctx, key, taskId, facing, title)
+                } else {
+                    NotificationAlarmReceiver.deliver(ctx, key, title, body, taskId)
+                }
                 continue
             }
             val intent = Intent(ctx, NotificationAlarmReceiver::class.java)
@@ -28,6 +36,8 @@ object NotificationScheduler {
                 .putExtra("title", title)
                 .putExtra("body", body)
                 .putExtra("taskId", taskId)
+                .putExtra("kind", kind)
+                .putExtra("facing", facing)
             val pi = PendingIntent.getBroadcast(
                 ctx,
                 key.hashCode(),

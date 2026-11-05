@@ -18,6 +18,13 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
         val title = intent.getStringExtra("title").orEmpty()
         val body = intent.getStringExtra("body").orEmpty()
         val taskId = intent.getStringExtra("taskId").orEmpty()
+        if (intent.getStringExtra("kind") == NotificationScheduler.KIND_CAPTURE) {
+            val pending = goAsync()
+            ScheduledPhoto.start(context, key, taskId, intent.getStringExtra("facing").orEmpty(), title) {
+                pending.finish()
+            }
+            return
+        }
         deliver(context, key, title, body, taskId)
     }
 

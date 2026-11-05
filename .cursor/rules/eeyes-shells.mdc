@@ -38,7 +38,8 @@ Token storage, WebView host, bridge, sync, local notifications, photo, audio, co
 - Token never enters WebView JS.
 - Origin allowlist: production `https://eduardoos.com` (local override via build config).
 - Navigation locked to `/api/eeyes/ui*`; other URLs → system browser.
-- Capture only while a human-started task is `in_progress`, with a visible indicator.
+- Capture only while a human-started task is `in_progress`, with a visible indicator — or for a hub-scheduled photo (`capture:<taskId>` sync item), which always posts a "eEyes tomó una foto" notification and shows the OS camera indicator.
+- Scheduled photos: Android captures with Camera2 in-process; background camera access exists only while `LiveSyncService` holds the `camera` FGS type (granted when started from the visible app). If the camera is blocked, prompt "abre eEyes" and retry on the next sync; never upload a placeholder image.
 
 ## UI source of truth
 

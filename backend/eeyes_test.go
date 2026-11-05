@@ -513,6 +513,95 @@ func TestEeyesNoticeLifecycle(t *testing.T) {
 	}
 }
 
+func TestEeyesScheduledPhotoLifecycle(t *testing.T) {
+	app := newEeyesTestApp(t)
+	if err := app.grantEntitlement("member-1", productEeyes); err != nil {
+		t.Fatal(err)
+	}
+	_, c1, c2, c3 := eeyesCreatePairingCodes(t, app)
+	token, deviceID := eeyesPairDevice(t, app, c1, c2, c3)
+
+	bad := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eeyes/tasks",
+		`{"title":"Foto","deviceId":"`+deviceID+`","kind":"photo","cameraFacing":"side"}`)
+	if bad.Code != http.StatusBadRequest {
+		t.Fatalf("unknown camera must 400, got %d", bad.Code)
+	}
+
+	rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eeyes/tasks",
+		`{"title":"Foto","deviceId":"`+deviceID+`","kind":"photo","cameraFacing":"front","audioSeconds":30}`)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("create photo %d %s", rec.Code, rec.Body.String())
+	}
+	var created struct {
+		Task eeyesTask `json:"task"`
+	}
+	_ = json.Unmarshal(rec.Body.Bytes(), &created)
+	taskID := created.Task.ID
+	if created.Task.Kind != eeyesTaskKindPhoto || created.Task.CameraFacing != eeyesCameraFront ||
+		created.Task.NotifyAt == nil || created.Task.MaxPhotos != 1 || created.Task.AudioSeconds != 0 {
+		t.Fatalf("photo defaults wrong: %+v", created.Task)
+	}
+
+	sync := eeyesDeviceJSON(t, app, token, http.MethodGet, "/api/eeyes/device/sync", "")
+	var body struct {
+		Tasks         []map[string]any `json:"tasks"`
+		Notifications []struct {
+			Key    string `json:"key"`
+			Kind   string `json:"kind"`
+			Facing string `json:"facing"`
+		} `json:"notifications"`
+	}
+	_ = json.Unmarshal(sync.Body.Bytes(), &body)
+	if len(body.Tasks) != 0 || len(body.Notifications) != 1 {
+		t.Fatalf("photo must sync as a capture instruction only: %s", sync.Body.String())
+	}
+	n := body.Notifications[0]
+	if n.Key != "capture:"+taskID || n.Kind != "capture" || n.Facing != eeyesCameraFront {
+		t.Fatalf("capture instruction wrong: %+v", n)
+	}
+
+	jpeg := []byte{0xff, 0xd8, 0xff, 0xd9}
+	upload := func(clientID, kind string) *httptest.ResponseRecorder {
+		mb, _ := json.Marshal(map[string]any{
+			"clientMediaId": clientID,
+			"kind":          kind,
+			"mime":          "image/jpeg",
+			"sha256":        sha256Hex(jpeg),
+			"dataBase64":    base64.StdEncoding.EncodeToString(jpeg),
+		})
+		return eeyesDeviceJSON(t, app, token, http.MethodPost, "/api/eeyes/device/tasks/"+taskID+"/media", string(mb))
+	}
+	if up := upload("22222222-2222-2222-2222-222222222222", "audio"); up.Code != http.StatusBadRequest {
+		t.Fatalf("photo task must reject audio, got %d", up.Code)
+	}
+	if up := upload("33333333-3333-3333-3333-333333333333", "image"); up.Code != http.StatusCreated {
+		t.Fatalf("photo upload without start %d %s", up.Code, up.Body.String())
+	}
+	got, _ := app.eeyes.TaskByID(context.Background(), taskID)
+	if got == nil || got.Status != eeyesTaskCompleted || got.CompletedAt == nil {
+		t.Fatalf("first photo must complete the task: %+v", got)
+	}
+	if up := upload("33333333-3333-3333-3333-333333333333", "image"); up.Code != http.StatusCreated {
+		t.Fatalf("retried upload must stay idempotent after completion, got %d", up.Code)
+	}
+	if up := upload("44444444-4444-4444-4444-444444444444", "image"); up.Code != http.StatusConflict {
+		t.Fatalf("second photo after completion must 409, got %d", up.Code)
+	}
+
+	ack := eeyesDeviceJSON(t, app, token, http.MethodPost, "/api/eeyes/device/notifications/ack",
+		`{"keys":["capture:`+taskID+`"]}`)
+	if ack.Code != http.StatusOK {
+		t.Fatalf("ack %d", ack.Code)
+	}
+	if got, _ := app.eeyes.TaskByID(context.Background(), taskID); got == nil || got.NotifyAckedAt == nil {
+		t.Fatal("capture ack must be recorded")
+	}
+	comps := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/completions", "")
+	if !strings.Contains(comps.Body.String(), taskID) || !strings.Contains(comps.Body.String(), `"kind":"image"`) {
+		t.Fatalf("photo must appear in completions with its media: %s", comps.Body.String())
+	}
+}
+
 func TestEeyesDownloadFromVersionSubdir(t *testing.T) {
 	app := newEeyesTestApp(t)
 	root := t.TempDir()

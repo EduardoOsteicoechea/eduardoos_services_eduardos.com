@@ -86,8 +86,14 @@ class MainActivity : AppCompatActivity() {
         val version = BuildConfig.VERSION_NAME
         webView.loadUrl("$baseUrl/api/eeyes/ui?platform=android&shellVersion=$version")
         scheduleSync()
-        LiveSyncService.start(this)
         requestBatteryExemption()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LiveSyncService.start(this, fromUi = true)
+        // Scheduled photos blocked in the background are retried while the app is visible.
+        if (!tokenStore.getToken().isNullOrBlank()) thread { DeviceSync.run(this, "app") }
     }
 
     /** Without the exemption many OEMs kill the live connection service in the background. */
@@ -191,7 +197,7 @@ class MainActivity : AppCompatActivity() {
         if (step == 3) {
             pairCode1 = null
             pairSession = null
-            LiveSyncService.start(this)
+            LiveSyncService.start(this, fromUi = true)
             runOnUiThread { requestBatteryExemption() }
             reply(BridgeRouter.reply(id, "state", buildState()))
             return
@@ -244,7 +250,11 @@ class MainActivity : AppCompatActivity() {
                         reply(BridgeRouter.reply(id, "state", buildState(), if (res.code >= 400) res.errorCode else null))
                     }
                     "capturePhoto" -> {
-                        CaptureForegroundService.startPhoto(this, payload.optString("taskId"))
+                        CaptureForegroundService.startPhoto(
+                            this,
+                            payload.optString("taskId"),
+                            payload.optString("facing").ifBlank { "back" },
+                        )
                         reply(BridgeRouter.reply(id, "state", JSONObject().put("ok", true)))
                     }
                     "startAutoCapture" -> {

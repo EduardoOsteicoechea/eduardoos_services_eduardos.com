@@ -34,6 +34,8 @@ internal static class NotificationService
         {
             var key = n?["key"]?.GetValue<string>() ?? "";
             if (key.Length == 0) continue;
+            // Scheduled photos are run by CaptureService.HandleScheduled, not shown as toasts.
+            if (n?["kind"]?.GetValue<string>() == "capture") continue;
             lock (Gate)
             {
                 if (!Handled.Add(key)) continue;

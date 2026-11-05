@@ -1,5 +1,6 @@
 package com.eduardoos.eeyes
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,6 +8,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
 import android.net.Uri
 import android.os.Build
@@ -25,11 +27,12 @@ import kotlin.concurrent.thread
 class LiveSyncService : Service() {
     @Volatile private var running = false
     private var worker: Thread? = null
+    private var cameraReady = false
 
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startInForeground()
+        startInForeground(intent?.getBooleanExtra(EXTRA_FROM_UI, false) == true)
         if (!running) {
             running = true
             worker = thread(name = "eeyes-live") { loop() }
@@ -44,7 +47,12 @@ class LiveSyncService : Service() {
         super.onDestroy()
     }
 
-    private fun startInForeground() {
+    /**
+     * The camera type is only granted while the app is visible; once held, it keeps
+     * background camera access for scheduled photos. Restarts from boot or the
+     * system get the connection type alone.
+     */
+    private fun startInForeground(fromUi: Boolean) {
         val nm = getSystemService(NotificationManager::class.java)
         nm.createNotificationChannel(
             NotificationChannel(CHANNEL, "eEyes conexión", NotificationManager.IMPORTANCE_MIN),
@@ -63,10 +71,22 @@ class LiveSyncService : Service() {
             .setContentIntent(open)
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .build()
-        if (Build.VERSION.SDK_INT >= 34) {
-            startForeground(NOTIFICATION_ID, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
-        } else {
-            startForeground(NOTIFICATION_ID, n)
+        val withCamera = (fromUi || cameraReady) &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+        cameraReady = withCamera && runCatching { startTyped(n, true) }.isSuccess
+        if (!cameraReady) startTyped(n, false)
+        DiagStore(this).recordLiveCamera(cameraReady)
+    }
+
+    private fun startTyped(n: Notification, withCamera: Boolean) {
+        when {
+            Build.VERSION.SDK_INT >= 34 -> {
+                val camera = if (withCamera) ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA else 0
+                startForeground(NOTIFICATION_ID, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE or camera)
+            }
+            Build.VERSION.SDK_INT >= 30 && withCamera ->
+                startForeground(NOTIFICATION_ID, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA)
+            else -> startForeground(NOTIFICATION_ID, n)
         }
     }
 
@@ -134,11 +154,16 @@ class LiveSyncService : Service() {
         private const val FORCED_SYNC_MS = 5 * 60_000L
         private const val MIN_BACKOFF_MS = 5_000L
         private const val MAX_BACKOFF_MS = 60_000L
+        private const val EXTRA_FROM_UI = "fromUi"
 
-        fun start(ctx: Context) {
+        /** [fromUi] = called while an eEyes activity is visible (grants the camera type). */
+        fun start(ctx: Context, fromUi: Boolean = false) {
             if (TokenStore(ctx).getToken().isNullOrBlank()) return
             runCatching {
-                ContextCompat.startForegroundService(ctx, Intent(ctx, LiveSyncService::class.java))
+                ContextCompat.startForegroundService(
+                    ctx,
+                    Intent(ctx, LiveSyncService::class.java).putExtra(EXTRA_FROM_UI, fromUi),
+                )
             }.onFailure { DiagStore(ctx).recordLive("no se pudo iniciar: " + it.javaClass.simpleName, 0) }
         }
 
