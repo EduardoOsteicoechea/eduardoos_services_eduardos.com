@@ -22,9 +22,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.concurrent.CountDownLatch
@@ -121,12 +118,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun scheduleSync() {
-        val req = PeriodicWorkRequestBuilder<SyncWorker>(15, TimeUnit.MINUTES).build()
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-            "eeyes-sync",
-            ExistingPeriodicWorkPolicy.KEEP,
-            req,
-        )
+        SyncScheduler.scheduleNext(this)
+        SyncScheduler.enqueueWhenOnline(this)
     }
 
     /** Shows the system biometric / screen-lock prompt; returns null on success or an error code. */

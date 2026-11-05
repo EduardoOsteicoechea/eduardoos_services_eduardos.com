@@ -95,8 +95,13 @@ Body:
 
 Live connection: `GET /api/eeyes/device/wait?v=<version>` (device token). Stale or empty `v` → immediate `{ changed: true, v }`; otherwise the request is held until the hub creates/edits/deletes a task for that device or revokes it (`changed: true`), or ~50 s pass (`changed: false`). Max 3 concurrent waits per device (`rate_limited`). Versions are per API process, so a restart reads as a change. Shells loop wait → `/sync` on change (and at least every 5 min on Android / 30 s on Desktop).
 
-- Android: `LiveSyncService` foreground service (`specialUse`, plus `camera` when started from the visible app; low-priority ongoing notification "eEyes activo"), started on app open, after pairing, on boot and on app update; partial wake lock only while processing a reply; asks once for the battery-optimization exemption. WorkManager 15 min stays as fallback.
-- Desktop: the same loop on a background task while the app runs.
+Two extra refreshes run besides that connection:
+
+- Every 15 minutes, including with the app closed.
+- As soon as a network becomes available after a loss.
+
+- Android: `LiveSyncService` foreground service (`specialUse`, plus `camera` when started from the visible app; low-priority ongoing notification "eEyes activo"), started on app open, after pairing, on boot and on app update; partial wake lock only while processing a reply; asks once for the battery-optimization exemption. A `NetworkCallback` syncs on reconnect. `SyncAlarmReceiver` is an exact 15-minute alarm (chained, re-armed on boot and when the app opens) that restarts the service and syncs; WorkManager repeats the same tick when a network exists, and a one-shot runs when connectivity returns if the process was offline.
+- Desktop: the same loop on a background task, plus a 15-minute timer and a network-address listener. Closing the window hides it to the tray (Salir quits); the loops keep running.
 
 ### Scheduled photo (`kind: "photo"`)
 

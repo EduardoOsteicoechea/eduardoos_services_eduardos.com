@@ -10,6 +10,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
+import android.net.ConnectivityManager
+import android.net.Network
 import android.net.Uri
 import android.os.Build
 import android.os.IBinder
@@ -28,11 +30,17 @@ class LiveSyncService : Service() {
     @Volatile private var running = false
     private var worker: Thread? = null
     private var cameraReady = false
+    private var networkCallback: ConnectivityManager.NetworkCallback? = null
+    private var hadNetwork = false
+    private var networkArmed = false
+    private var lastNetworkSync = 0L
 
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startInForeground(intent?.getBooleanExtra(EXTRA_FROM_UI, false) == true)
+        SyncScheduler.ensure(this)
+        watchNetwork()
         if (!running) {
             running = true
             worker = thread(name = "eeyes-live") { loop() }
@@ -43,8 +51,45 @@ class LiveSyncService : Service() {
     override fun onDestroy() {
         running = false
         worker?.interrupt()
+        networkCallback?.let { cb ->
+            runCatching { getSystemService(ConnectivityManager::class.java).unregisterNetworkCallback(cb) }
+        }
+        networkCallback = null
         DiagStore(this).recordLive("detenido", 0)
         super.onDestroy()
+    }
+
+    /** Syncs as soon as a network appears after a loss. The first callback (already online) is ignored. */
+    private fun watchNetwork() {
+        if (networkCallback != null) return
+        runCatching { watchNetworkNow() }
+            .onFailure { DiagStore(this).recordLive("red: " + it.javaClass.simpleName, 0) }
+    }
+
+    private fun watchNetworkNow() {
+        val cm = getSystemService(ConnectivityManager::class.java) ?: return
+        hadNetwork = cm.activeNetwork != null
+        val cb = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                val reconnect = networkArmed && !hadNetwork
+                hadNetwork = true
+                if (!reconnect) return
+                val now = System.currentTimeMillis()
+                if (now - lastNetworkSync < NETWORK_DEBOUNCE_MS) return
+                lastNetworkSync = now
+                DiagStore(applicationContext).recordLive("red disponible", 0)
+                thread { DeviceSync.run(applicationContext, "network") }
+            }
+
+            override fun onLost(network: Network) {
+                hadNetwork = false
+                DiagStore(applicationContext).recordLive("sin red", 0)
+                SyncScheduler.enqueueWhenOnline(applicationContext)
+            }
+        }
+        cm.registerDefaultNetworkCallback(cb)
+        networkCallback = cb
+        networkArmed = true
     }
 
     /**
@@ -154,6 +199,7 @@ class LiveSyncService : Service() {
         private const val FORCED_SYNC_MS = 5 * 60_000L
         private const val MIN_BACKOFF_MS = 5_000L
         private const val MAX_BACKOFF_MS = 60_000L
+        private const val NETWORK_DEBOUNCE_MS = 3_000L
         private const val EXTRA_FROM_UI = "fromUi"
 
         /** [fromUi] = called while an eEyes activity is visible (grants the camera type). */

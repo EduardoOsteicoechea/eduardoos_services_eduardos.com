@@ -7,6 +7,7 @@ import org.json.JSONObject
 object DeviceSync {
     enum class Outcome { OK, RETRY, UNPAIRED }
 
+    @Synchronized
     fun run(ctx: Context, source: String): Outcome {
         val appCtx = ctx.applicationContext
         val tokenStore = TokenStore(appCtx)

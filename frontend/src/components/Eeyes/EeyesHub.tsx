@@ -419,8 +419,8 @@ function NotifyView() {
     <section className="product-dash__section">
       <h2>Enviar notificación</h2>
       <p className="lede">
-        El dispositivo la recibe al sincronizar: al abrir la app o en segundo plano cada 15 minutos.
-        Programada, se dispara a su hora aunque la app esté cerrada.
+        El dispositivo mantiene una conexión abierta, refresca cada 15 minutos con la app cerrada
+        y también al volver internet. Programada, se dispara a su hora aunque la app esté cerrada.
       </p>
       <form className="eeyes-form" onSubmit={(e) => void onSubmit(e)}>
         <label>

@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Net.NetworkInformation;
 using System.Text.Json.Nodes;
 using System.Windows;
 using Microsoft.Web.WebView2.Core;
@@ -14,6 +16,9 @@ public partial class MainWindow : Window
     private CaptureService _capture = null!;
     private System.Windows.Forms.NotifyIcon? _tray;
     private readonly CancellationTokenSource _live = new();
+    private readonly SemaphoreSlim _syncGate = new(1, 1);
+    private bool _allowExit;
+    private long _lastNetworkSyncTicks;
     private static readonly TimeSpan MinBackoff = TimeSpan.FromSeconds(5);
     private static readonly TimeSpan MaxBackoff = TimeSpan.FromSeconds(60);
     private string? _pairCode1;
@@ -25,11 +30,21 @@ public partial class MainWindow : Window
         _api = new ApiClient(_tokens);
         _capture = new CaptureService(_queue, _api);
         Loaded += OnLoaded;
+        Closing += OnClosing;
         Closed += (_, _) =>
         {
             _live.Cancel();
+            NetworkChange.NetworkAddressChanged -= OnNetworkChanged;
             _tray?.Dispose();
         };
+    }
+
+    /// <summary>Closing the window leaves eEyes in the tray so sync keeps running.</summary>
+    private void OnClosing(object? sender, CancelEventArgs e)
+    {
+        if (_allowExit) return;
+        e.Cancel = true;
+        Hide();
     }
 
     private async void OnLoaded(object sender, RoutedEventArgs e)
@@ -53,14 +68,78 @@ public partial class MainWindow : Window
         var url = $"{Config.BaseUrl}/api/eeyes/ui?platform=desktop&shellVersion={Uri.EscapeDataString(Config.ShellVersion)}";
         WebView.Source = new Uri(url);
 
+        var menu = new System.Windows.Forms.ContextMenuStrip();
+        menu.Items.Add("Abrir", null, (_, _) => Dispatcher.Invoke(ShowFromTray));
+        menu.Items.Add("Salir", null, (_, _) => Dispatcher.Invoke(Quit));
         _tray = new System.Windows.Forms.NotifyIcon
         {
             Visible = true,
             Text = "eEyes",
             Icon = System.Drawing.Icon.ExtractAssociatedIcon(Environment.ProcessPath!) ?? System.Drawing.SystemIcons.Application,
+            ContextMenuStrip = menu,
         };
+        _tray.DoubleClick += (_, _) => Dispatcher.Invoke(ShowFromTray);
 
+        NetworkChange.NetworkAddressChanged += OnNetworkChanged;
         _ = Task.Run(() => LiveLoopAsync(_live.Token));
+        _ = Task.Run(() => IntervalLoopAsync(_live.Token));
+    }
+
+    private void ShowFromTray()
+    {
+        Show();
+        WindowState = WindowState.Normal;
+        Activate();
+    }
+
+    private void Quit()
+    {
+        _allowExit = true;
+        Close();
+    }
+
+    /// <summary>Full sync every 15 minutes even if the long-poll is stuck.</summary>
+    private async Task IntervalLoopAsync(CancellationToken ct)
+    {
+        while (!ct.IsCancellationRequested)
+        {
+            try
+            {
+                await Task.Delay(TimeSpan.FromMinutes(15), ct);
+            }
+            catch (OperationCanceledException)
+            {
+                break;
+            }
+            if (_tokens.GetToken() is null) continue;
+            try
+            {
+                await SyncOnceAsync("interval");
+            }
+            catch (Exception ex)
+            {
+                DiagStore.RecordLive("error " + ex.GetType().Name, 0);
+            }
+        }
+    }
+
+    private void OnNetworkChanged(object? sender, EventArgs e)
+    {
+        var now = Environment.TickCount64;
+        if (now - _lastNetworkSyncTicks < 3_000) return;
+        _lastNetworkSyncTicks = now;
+        if (_tokens.GetToken() is null) return;
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await SyncOnceAsync("network");
+            }
+            catch (Exception ex)
+            {
+                DiagStore.RecordLive("error " + ex.GetType().Name, 0);
+            }
+        });
     }
 
     /// <summary>
@@ -120,6 +199,19 @@ public partial class MainWindow : Window
     }
 
     private async Task SyncOnceAsync(string source)
+    {
+        if (!await _syncGate.WaitAsync(0)) return;
+        try
+        {
+            await SyncOnceCoreAsync(source);
+        }
+        finally
+        {
+            _syncGate.Release();
+        }
+    }
+
+    private async Task SyncOnceCoreAsync(string source)
     {
         var res = await _api.RequestAsync("GET", "/api/eeyes/device/sync");
         Dispatcher.Invoke(() => HandleAuth(res));
