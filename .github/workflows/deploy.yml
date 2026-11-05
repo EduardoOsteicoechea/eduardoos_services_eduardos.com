@@ -242,13 +242,13 @@ jobs:
           EEYES_ANDROID_KEY_PASSWORD: ${{ secrets.EEYES_ANDROID_KEY_PASSWORD }}
         run: |
           set -euo pipefail
-          if [ -n "${EEYES_ANDROID_KEYSTORE_FILE:-}" ]; then
-            gradle testReleaseUnitTest assembleRelease --no-daemon
-          else
-            gradle testReleaseUnitTest assembleRelease --no-daemon -x signReleaseBundle || gradle testReleaseUnitTest assembleRelease --no-daemon
-          fi
+          gradle testReleaseUnitTest assembleRelease --no-daemon
           mkdir -p ../artifacts/android
-          APK="$(find app/build/outputs/apk -name '*.apk' | head -n 1)"
+          APK="$(find app/build/outputs/apk/release -name '*.apk' | head -n 1)"
+          if [ -z "$APK" ]; then
+            APK="$(find app/build/outputs/apk -name '*.apk' | head -n 1)"
+          fi
+          test -n "$APK"
           cp "$APK" ../artifacts/android/eeyes-android.apk
           sha256sum ../artifacts/android/eeyes-android.apk | awk '{print $1}' > ../artifacts/android/eeyes-android.apk.sha256
           cat > ../artifacts/android/latest.json <<EOF

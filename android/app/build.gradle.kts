@@ -29,11 +29,13 @@ android {
         jvmTarget = "17"
     }
 
+    val releaseKeystorePath = System.getenv("EEYES_ANDROID_KEYSTORE_FILE")
+    val hasReleaseKeystore = !releaseKeystorePath.isNullOrBlank()
+
     signingConfigs {
-        create("release") {
-            val storeFilePath = System.getenv("EEYES_ANDROID_KEYSTORE_FILE")
-            if (!storeFilePath.isNullOrBlank()) {
-                storeFile = file(storeFilePath)
+        if (hasReleaseKeystore) {
+            create("release") {
+                storeFile = file(releaseKeystorePath!!)
                 storePassword = System.getenv("EEYES_ANDROID_KEYSTORE_PASSWORD")
                 keyAlias = System.getenv("EEYES_ANDROID_KEY_ALIAS")
                 keyPassword = System.getenv("EEYES_ANDROID_KEY_PASSWORD")
@@ -44,7 +46,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            signingConfig = signingConfigs.findByName("release")
+            // Without CI keystore secrets, ship an unsigned release APK for publish/tests.
+            if (hasReleaseKeystore) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 }
