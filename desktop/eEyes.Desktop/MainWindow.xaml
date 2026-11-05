@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         Title="eEyes" Height="720" Width="420"
+        Icon="Assets/eEyes.ico" Background="#121212"
         WindowStartupLocation="CenterScreen">
   <Grid>
     <wv2:WebView2 x:Name="WebView" />

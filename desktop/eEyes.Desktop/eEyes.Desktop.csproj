@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon />
+    <ApplicationIcon>Assets\eEyes.ico</ApplicationIcon>
     <Version>1.0.0</Version>
     <AssemblyName>eEyes</AssemblyName>
     <RootNamespace>eEyes.Desktop</RootNamespace>
@@ -19,6 +19,10 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="eEyes.Desktop.Tests" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Assets\splash.png" />
+    <Resource Include="Assets\eEyes.ico" />
   </ItemGroup>
   <ItemGroup>
     <Using Include="System.IO" />

@@ -55,7 +55,7 @@ public partial class MainWindow : Window
         {
             Visible = true,
             Text = "eEyes",
-            Icon = System.Drawing.SystemIcons.Application,
+            Icon = System.Drawing.Icon.ExtractAssociatedIcon(Environment.ProcessPath!) ?? System.Drawing.SystemIcons.Application,
         };
 
         _syncTimer = new System.Threading.Timer(async _ =>

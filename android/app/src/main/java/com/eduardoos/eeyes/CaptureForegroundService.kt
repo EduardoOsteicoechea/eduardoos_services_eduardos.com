@@ -83,7 +83,7 @@ class CaptureForegroundService : Service() {
         return NotificationCompat.Builder(this, channelId)
             .setContentTitle("eEyes")
             .setContentText(text)
-            .setSmallIcon(android.R.drawable.ic_menu_camera)
+            .setSmallIcon(R.drawable.ic_stat_eeyes)
             .setOngoing(true)
             .build()
     }

@@ -17,6 +17,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -36,16 +37,22 @@ class MainActivity : AppCompatActivity() {
     private val baseUrl = BuildConfig.EEYES_BASE_URL
     @Volatile private var pairCode1: String? = null
     @Volatile private var pairSession: String? = null
+    @Volatile private var uiReady = false
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splash = installSplashScreen()
         super.onCreate(savedInstanceState)
+        // Keep the favicon splash until the embedded UI has painted (capped so a slow network never blocks).
+        splash.setKeepOnScreenCondition { !uiReady }
+        window.decorView.postDelayed({ uiReady = true }, 5000)
         tokenStore = TokenStore(this)
         api = ApiClient(baseUrl, tokenStore)
         queue = MediaQueue(this)
         ensurePermissions()
 
         webView = WebView(this)
+        webView.setBackgroundColor(ContextCompat.getColor(this, R.color.eeyes_bg))
         setContentView(webView)
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = false
@@ -55,6 +62,10 @@ class MainActivity : AppCompatActivity() {
                 if (url.startsWith("$baseUrl/api/eeyes/ui")) return false
                 startActivity(Intent(Intent.ACTION_VIEW, request?.url))
                 return true
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                uiReady = true
             }
         }
 

@@ -49,7 +49,7 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
             val n = NotificationCompat.Builder(ctx, channelId)
                 .setContentTitle(title.ifBlank { "eEyes" })
                 .setContentText(body)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setSmallIcon(R.drawable.ic_stat_eeyes)
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build()
