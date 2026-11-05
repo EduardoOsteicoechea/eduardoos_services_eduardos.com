@@ -94,9 +94,14 @@ describe("vendored tracker assets", () => {
     expect(tracker).toContain("height: 0.3125rem");
   });
 
-  it("searches and alphabetically sorts issues and subsections inside a report", () => {
+  it("searches and sorts issues by alpha, date, or custom order", () => {
     expect(tracker).toContain('id="issue-search"');
+    expect(tracker).toContain('id="issue-sort-mode"');
+    expect(tracker).toContain('id="issue-sort-reverse"');
     expect(tracker).toContain("function sortReportContents(");
+    expect(tracker).toContain("function reverseManualLists(");
+    expect(tracker).toContain("issueSortMode");
+    expect(tracker).toContain('value="custom"');
     expect(tracker).toContain("function itemMatchesSearch(");
     expect(tracker).toContain("function groupMatchesSearch(");
     expect(tracker).toContain("sensitivity: \"base\", numeric: true");

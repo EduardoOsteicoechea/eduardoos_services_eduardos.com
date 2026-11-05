@@ -246,7 +246,35 @@ body.sidebar-collapsed .sidebar {
   font-size: 0.85rem;
   color: var(--muted);
 }
-.issue-search-bar input {
+.issue-search-bar__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+.issue-search-bar__search {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+.issue-search-bar__sort {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+}
+.issue-search-bar__sort-mode {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.issue-search-bar input,
+.issue-search-bar select {
   font: inherit;
   font-size: 1rem;
   color: var(--ink);
@@ -254,6 +282,29 @@ body.sidebar-collapsed .sidebar {
   border-radius: var(--radius);
   padding: 0.5rem 0.65rem;
   background: var(--card);
+}
+.issue-search-bar__sort-mode select {
+  min-width: 8.5rem;
+}
+.issue-search-bar__reverse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0.35rem;
+  border: 0.0625rem solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+}
+.issue-search-bar__reverse[aria-pressed="true"] {
+  border-color: var(--accent, #1976d2);
+  color: var(--accent, #1976d2);
+}
+.issue-search-bar__reverse .material-icons {
+  font-size: 1.25rem;
 }
 .issue-search-bar__meta {
   font-size: 0.8rem;
@@ -1235,11 +1286,28 @@ body:not(.theme-dark) .item-card.is-no_aplica {
       </div>
     </section>
 
-    <label class="issue-search-bar" for="issue-search">
-      Buscar incidencias
-      <input type="search" id="issue-search" placeholder="Escribe para aislar issues o subsecciones…" autocomplete="off" spellcheck="false" />
+    <div class="issue-search-bar">
+      <div class="issue-search-bar__row">
+        <label class="issue-search-bar__search" for="issue-search">
+          Buscar incidencias
+          <input type="search" id="issue-search" placeholder="Escribe para aislar issues o subsecciones…" autocomplete="off" spellcheck="false" />
+        </label>
+        <div class="issue-search-bar__sort" role="group" aria-label="Orden de incidencias">
+          <label class="issue-search-bar__sort-mode" for="issue-sort-mode">
+            Orden
+            <select id="issue-sort-mode">
+              <option value="alpha">A–Z</option>
+              <option value="date">Fecha</option>
+              <option value="custom">Manual</option>
+            </select>
+          </label>
+          <button type="button" id="issue-sort-reverse" class="issue-search-bar__reverse" title="Invertir orden" aria-label="Invertir orden" aria-pressed="false">
+            <span class="material-icons" aria-hidden="true">swap_vert</span>
+          </button>
+        </div>
+      </div>
       <span class="issue-search-bar__meta" id="issue-search-meta" aria-live="polite"></span>
-    </label>
+    </div>
 
     <main id="app"></main>
   </div>
@@ -1577,6 +1645,9 @@ function normalizeState(data) {
       items: Array.isArray(c.items) ? c.items.map(String) : []
     };
   }
+  const mode = String(data.issueSortMode || "").trim();
+  data.issueSortMode = mode === "date" || mode === "custom" ? mode : "alpha";
+  data.issueSortReverse = !!data.issueSortReverse;
   (data.sections || []).forEach(sec => {
     if (!Array.isArray(sec.groups)) sec.groups = [];
     if (sec.productHistory == null) sec.productHistory = "";
@@ -1594,6 +1665,50 @@ function normalizeState(data) {
 
 let issueSearchQuery = "";
 
+function issueSortMode() {
+  const mode = String(state?.issueSortMode || "").trim();
+  return mode === "date" || mode === "custom" ? mode : "alpha";
+}
+
+function issueSortReversed() {
+  return !!state?.issueSortReverse;
+}
+
+function setIssueSortMode(mode) {
+  const next = mode === "date" || mode === "custom" ? mode : "alpha";
+  if (!state) return;
+  state.issueSortMode = next;
+  syncIssueSortControls();
+}
+
+function setIssueSortReverse(on) {
+  if (!state) return;
+  state.issueSortReverse = !!on;
+  syncIssueSortControls();
+}
+
+function syncIssueSortControls() {
+  const modeEl = document.getElementById("issue-sort-mode");
+  const revEl = document.getElementById("issue-sort-reverse");
+  if (modeEl instanceof HTMLSelectElement) modeEl.value = issueSortMode();
+  if (revEl instanceof HTMLButtonElement) {
+    const on = issueSortReversed();
+    revEl.setAttribute("aria-pressed", on ? "true" : "false");
+    const label =
+      issueSortMode() === "date"
+        ? on
+          ? "Invertir: mostrar más viejo primero"
+          : "Invertir: mostrar más reciente primero"
+        : issueSortMode() === "alpha"
+          ? on
+            ? "Invertir: Z–A"
+            : "Invertir: A–Z"
+          : "Invertir orden manual";
+    revEl.title = label;
+    revEl.setAttribute("aria-label", label);
+  }
+}
+
 function cmpAlpha(a, b) {
   return String(a || "").localeCompare(String(b || ""), undefined, { sensitivity: "base", numeric: true });
 }
@@ -1602,21 +1717,80 @@ function itemSortKey(item) {
   return itemNavName(item);
 }
 
+function itemDateKey(item) {
+  return String(item?.fechaIncidencia || "").trim();
+}
+
+function groupDateKey(grp) {
+  let best = "";
+  for (const it of grp.items || []) {
+    const d = itemDateKey(it);
+    if (d && d > best) best = d;
+  }
+  return best;
+}
+
+function cmpDateAsc(a, b) {
+  if (!a && !b) return 0;
+  if (!a) return 1;
+  if (!b) return -1;
+  return a < b ? -1 : a > b ? 1 : 0;
+}
+
 function sortReportContents(data) {
   const root = data || state;
-  (root.sections || []).forEach((sec) => {
-    if (Array.isArray(sec.items)) {
-      sec.items.sort((a, b) => cmpAlpha(itemSortKey(a), itemSortKey(b)));
+  if (!root) return;
+  const rawMode = String(root.issueSortMode || "").trim();
+  const mode = rawMode === "date" || rawMode === "custom" ? rawMode : "alpha";
+  if (mode === "custom") return;
+  const reverse = !!root.issueSortReverse;
+  const cmpItem = (a, b) => {
+    if (mode === "date") {
+      // Default: newest first; reverse → oldest first.
+      const c = cmpDateAsc(itemDateKey(a), itemDateKey(b));
+      return reverse ? c : -c;
     }
+    const c = cmpAlpha(itemSortKey(a), itemSortKey(b));
+    return reverse ? -c : c;
+  };
+  const cmpGroup = (a, b) => {
+    if (mode === "date") {
+      const c = cmpDateAsc(groupDateKey(a), groupDateKey(b));
+      return reverse ? c : -c;
+    }
+    const c = cmpAlpha(a.title, b.title);
+    return reverse ? -c : c;
+  };
+  (root.sections || []).forEach((sec) => {
+    if (Array.isArray(sec.items)) sec.items.sort(cmpItem);
     if (Array.isArray(sec.groups)) {
-      sec.groups.sort((a, b) => cmpAlpha(a.title, b.title));
+      sec.groups.sort(cmpGroup);
       sec.groups.forEach((grp) => {
-        if (Array.isArray(grp.items)) {
-          grp.items.sort((a, b) => cmpAlpha(itemSortKey(a), itemSortKey(b)));
-        }
+        if (Array.isArray(grp.items)) grp.items.sort(cmpItem);
       });
     }
   });
+}
+
+function reverseManualLists(data) {
+  const root = data || state;
+  (root.sections || []).forEach((sec) => {
+    if (Array.isArray(sec.items)) sec.items.reverse();
+    if (Array.isArray(sec.groups)) {
+      sec.groups.reverse();
+      sec.groups.forEach((grp) => {
+        if (Array.isArray(grp.items)) grp.items.reverse();
+      });
+    }
+  });
+}
+
+function issueSortMetaLabel() {
+  const mode = issueSortMode();
+  const rev = issueSortReversed();
+  if (mode === "date") return rev ? "fecha · viejo→reciente" : "fecha · reciente→viejo";
+  if (mode === "custom") return "manual (flechas)";
+  return rev ? "Z–A" : "A–Z";
 }
 
 function issueSearchNeedle() {
@@ -1655,11 +1829,12 @@ function updateIssueSearchMeta(visibleCount, totalCount) {
   const meta = document.getElementById("issue-search-meta");
   if (!meta) return;
   const needle = issueSearchNeedle();
+  const sortLabel = issueSortMetaLabel();
   if (!needle) {
-    meta.textContent = totalCount ? `${totalCount} incidencia(s) · A–Z` : "";
+    meta.textContent = totalCount ? `${totalCount} incidencia(s) · ${sortLabel}` : sortLabel;
     return;
   }
-  meta.textContent = `${visibleCount} de ${totalCount} incidencia(s)`;
+  meta.textContent = `${visibleCount} de ${totalCount} incidencia(s) · ${sortLabel}`;
 }
 
 const SECTION_ITEMS = "__section__";
@@ -2273,6 +2448,8 @@ function moveSection(sid, delta) {
   const list = state.sections || [];
   const idx = list.findIndex((s) => s.id === sid);
   if (!swapAdjacent(list, idx, delta)) return;
+  setIssueSortMode("custom");
+  setIssueSortReverse(false);
   render();
   updateStatus();
 }
@@ -2284,6 +2461,8 @@ function moveGroup(sid, gid, delta) {
   if (!Array.isArray(sec.groups)) sec.groups = [];
   const idx = sec.groups.findIndex((g) => g.id === gid);
   if (!swapAdjacent(sec.groups, idx, delta)) return;
+  setIssueSortMode("custom");
+  setIssueSortReverse(false);
   render();
   updateStatus();
 }
@@ -2300,6 +2479,9 @@ function moveItem(sid, gid, iid, delta) {
   } else {
     found.grp.items = list;
   }
+  // Arrow order is the source of truth once the user reorders manually.
+  setIssueSortMode("custom");
+  setIssueSortReverse(false);
   render();
   updateStatus();
 }
@@ -3084,6 +3266,7 @@ function render() {
   const scrollerBefore = mainScrollEl();
   const keepScrollTop = scrollerBefore ? scrollerBefore.scrollTop : 0;
   const root = document.getElementById("app");
+  syncIssueSortControls();
   sortReportContents();
   const needle = issueSearchNeedle();
   const searching = !!needle;
@@ -4055,24 +4238,51 @@ document.getElementById("howto-modal").addEventListener("click", (e) => {
 
 (() => {
   const search = document.getElementById("issue-search");
-  if (!(search instanceof HTMLInputElement)) return;
-  let searchTimer = 0;
-  const applySearch = () => {
-    issueSearchQuery = search.value || "";
-    collectFromDom();
-    render();
-  };
-  search.addEventListener("input", () => {
-    window.clearTimeout(searchTimer);
-    searchTimer = window.setTimeout(applySearch, 120);
-  });
-  search.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && search.value) {
-      e.preventDefault();
-      search.value = "";
-      applySearch();
-    }
-  });
+  const modeEl = document.getElementById("issue-sort-mode");
+  const revEl = document.getElementById("issue-sort-reverse");
+  if (search instanceof HTMLInputElement) {
+    let searchTimer = 0;
+    const applySearch = () => {
+      issueSearchQuery = search.value || "";
+      collectFromDom();
+      render();
+    };
+    search.addEventListener("input", () => {
+      window.clearTimeout(searchTimer);
+      searchTimer = window.setTimeout(applySearch, 120);
+    });
+    search.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && search.value) {
+        e.preventDefault();
+        search.value = "";
+        applySearch();
+      }
+    });
+  }
+  if (modeEl instanceof HTMLSelectElement) {
+    modeEl.addEventListener("change", () => {
+      collectFromDom();
+      setIssueSortMode(modeEl.value);
+      sortReportContents();
+      render();
+      updateStatus();
+    });
+  }
+  if (revEl instanceof HTMLButtonElement) {
+    revEl.addEventListener("click", () => {
+      collectFromDom();
+      if (issueSortMode() === "custom") {
+        reverseManualLists();
+        setIssueSortReverse(false);
+      } else {
+        setIssueSortReverse(!issueSortReversed());
+      }
+      sortReportContents();
+      render();
+      updateStatus();
+    });
+  }
+  syncIssueSortControls();
 })();
 
 document.getElementById("history-close").onclick = () => closeProductHistory();
