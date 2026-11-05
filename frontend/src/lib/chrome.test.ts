@@ -173,6 +173,35 @@ describe("main-menu session chrome", () => {
     expect(go).not.toHaveBeenCalledWith("/");
   });
 
+  it("does not redirect plain members away from eEyes", async () => {
+    window.history.pushState({}, "", "/eeyes");
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-plain-eeyes",
+      data: { id: "member-4", role: "user" },
+    });
+    vi.mocked(checkServiceAccess).mockResolvedValue({
+      allowed: false,
+      isAdmin: false,
+      hasEntitlement: false,
+      isHomescoolStudent: false,
+    });
+    await refreshAuthChrome();
+    expect(go).not.toHaveBeenCalledWith("/");
+  });
+
+  it("unlocks services when role is Admin with different casing", async () => {
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-admin-case",
+      data: { id: "admin-2", role: "Admin" },
+    });
+    await refreshAuthChrome();
+    const scrib = document.querySelector('[data-service="scrib"]') as HTMLElement;
+    expect(scrib.classList.contains("sidebar-nav--locked")).toBe(false);
+    expect(checkServiceAccess).not.toHaveBeenCalled();
+  });
+
   it("shows service links locked for guests and keeps Institutes hidden", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 401,

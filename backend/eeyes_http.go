@@ -47,14 +47,15 @@ func (a *App) registerEeyesRoutes(mux *http.ServeMux) {
 }
 
 func (a *App) hasEeyesAccess(r *http.Request, user *User) (allowed bool, unavailable bool) {
-	if a.failClosedEnt {
-		return false, true
-	}
 	if user == nil {
 		return false, false
 	}
+	// Admin bypass must win before fail-closed entitlement mode.
 	if user.Role == roleAdmin {
 		return true, false
+	}
+	if a.failClosedEnt {
+		return false, true
 	}
 	return a.hasProductEntitlement(r, user, productEeyes)
 }

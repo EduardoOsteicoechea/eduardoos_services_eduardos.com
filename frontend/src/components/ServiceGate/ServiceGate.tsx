@@ -58,15 +58,11 @@ export default function ServiceGate({
         setState("signin");
         return;
       }
-      // Bootstrap email or JWT role admin — never block gated services.
-      if (isPlatformAdmin()) {
-        setState("ok");
-        return;
-      }
       try {
+        // Prefer live /subscriptions/access so a stale local role never locks admins out.
         const remote = await checkServiceAccess(serviceId);
         if (cancelled) return;
-        if (remote.isAdmin) {
+        if (remote.isAdmin || isPlatformAdmin()) {
           setState("ok");
           return;
         }

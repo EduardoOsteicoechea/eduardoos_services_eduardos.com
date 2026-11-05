@@ -595,7 +595,9 @@ function plainUserBlockedPath(pathname: string): boolean {
     path.startsWith("/eoschool") ||
     path.startsWith("/documents/pamphlet") ||
     path.startsWith("/evoice") ||
+    path.startsWith("/emusic") ||
     path.startsWith("/eoproject") ||
+    path.startsWith("/eeyes") ||
     path.startsWith("/ereport") ||
     path.startsWith("/eapi") ||
     path === "/api-docs"
@@ -638,7 +640,7 @@ export async function refreshAuthChrome(): Promise<void> {
     return;
   }
   const authed = status === 200 && Boolean(data.id);
-  const isAdmin = authed && data.role === "admin";
+  const isAdmin = authed && String(data.role || "").trim().toLowerCase() === "admin";
   const isPlainUser = authed && !isAdmin;
   sessionLog("chrome.refreshAuth.me", {
     status,

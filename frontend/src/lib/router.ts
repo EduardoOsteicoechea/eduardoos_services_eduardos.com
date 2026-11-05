@@ -119,6 +119,17 @@ export function startClientRouting(): void {
       return;
     }
 
+    // Locked subscription links must not soft-navigate (chrome also guards;
+    // handle here because this listener is registered first).
+    if (
+      anchor.matches(
+        "#main-menu [data-service].sidebar-nav--locked, #main-menu [data-service][aria-disabled='true']",
+      )
+    ) {
+      event.preventDefault();
+      return;
+    }
+
     const href = anchor.getAttribute("href");
     if (!href || href.startsWith("http") || href.startsWith("//") || href.startsWith("#")) {
       return;
