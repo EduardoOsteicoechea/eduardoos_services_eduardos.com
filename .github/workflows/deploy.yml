@@ -301,12 +301,15 @@ jobs:
           }
           "@ | Set-Content -Encoding utf8 ../artifacts/desktop/latest.json
       - name: Optional Authenticode sign
-        if: ${{ secrets.EEYES_WIN_CERT_PFX_BASE64 != '' }}
         shell: pwsh
         env:
           EEYES_WIN_CERT_PFX_BASE64: ${{ secrets.EEYES_WIN_CERT_PFX_BASE64 }}
           EEYES_WIN_CERT_PASSWORD: ${{ secrets.EEYES_WIN_CERT_PASSWORD }}
         run: |
+          if ([string]::IsNullOrWhiteSpace($env:EEYES_WIN_CERT_PFX_BASE64)) {
+            Write-Host "No Windows code-signing cert secret; skipping Authenticode."
+            exit 0
+          }
           $pfx = Join-Path $env:RUNNER_TEMP "eeyes.pfx"
           [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:EEYES_WIN_CERT_PFX_BASE64))
           & signtool sign /f $pfx /p $env:EEYES_WIN_CERT_PASSWORD /tr http://timestamp.digicert.com /td sha256 /fd sha256 artifacts/desktop/eeyes-desktop.exe
