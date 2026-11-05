@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>eEyes</title>
+  <link rel="stylesheet" href="/api/eeyes/ui/app.css" />
+</head>
+<body>
+  <main id="app" class="app">
+    <header class="top">
+      <h1>eEyes</h1>
+      <p id="status-line" class="muted"></p>
+    </header>
+    <section id="view-pair" class="view" hidden>
+      <h2>Vincular dispositivo</h2>
+      <p class="lede">Escribe los tres códigos que ves en eduardoos.com/eeyes.</p>
+      <label>Código <span id="pair-step">1</span></label>
+      <input id="pair-input" inputmode="numeric" maxlength="4" autocomplete="one-time-code" />
+      <button type="button" id="pair-next">Continuar</button>
+      <p id="pair-error" class="err" hidden></p>
+    </section>
+    <section id="view-tasks" class="view" hidden>
+      <h2>Tareas</h2>
+      <ul id="task-list" class="list"></ul>
+      <p id="tasks-empty" class="muted" hidden>No hay tareas pendientes.</p>
+    </section>
+    <section id="view-active" class="view" hidden>
+      <h2 id="active-title"></h2>
+      <p id="active-instructions" class="lede"></p>
+      <div class="actions">
+        <button type="button" id="btn-start">Iniciar</button>
+        <button type="button" id="btn-photo" hidden>Foto</button>
+        <button type="button" id="btn-audio" hidden>Audio</button>
+        <button type="button" id="btn-complete" hidden>Completar</button>
+      </div>
+      <p id="capture-banner" class="banner" hidden>Captura activa</p>
+      <ul id="media-queue" class="list"></ul>
+    </section>
+    <section id="view-update" class="view" hidden>
+      <h2>Actualización requerida</h2>
+      <p class="lede">Hay una nueva versión de eEyes. Actualiza para continuar.</p>
+      <button type="button" id="btn-update">Actualizar</button>
+    </section>
+  </main>
+  <script src="/api/eeyes/ui/app.js"></script>
+</body>
+</html>

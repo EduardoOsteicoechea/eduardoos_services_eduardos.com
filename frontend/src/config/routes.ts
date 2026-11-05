@@ -30,6 +30,7 @@ export const APP_ROUTES = {
   scrib: "/scrib",
   pamphlet: "/documents/pamphlet",
   evoice: "/evoice",
+  eeyes: "/eeyes",
   publisher: "/publisher",
 } as const;
 

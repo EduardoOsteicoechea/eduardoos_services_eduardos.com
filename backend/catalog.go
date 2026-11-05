@@ -24,6 +24,7 @@ var serviceCatalog = []serviceInfo{
 	{ID: "evoice", Label: "eVoice", Description: "Text-to-audio projects (docs → MP3).", MonthlyUSD: 1},
 	{ID: "emusic", Label: "eMusic", Description: "Curated music library with section playlists.", MonthlyUSD: 1},
 	{ID: "eoproject", Label: "eoProject", Description: "Construction project stages, photos, and IFC versions.", MonthlyUSD: 1},
+	{ID: productEeyes, Label: "eEyes", Description: "Pair Android/Desktop shells, plan human capture tasks, and review completions.", MonthlyUSD: 1},
 	{ID: "api", Label: "eApi", Description: "Create API keys and call product APIs from external apps.", MonthlyUSD: 3},
 }
 

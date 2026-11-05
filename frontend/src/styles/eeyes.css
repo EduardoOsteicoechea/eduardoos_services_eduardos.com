@@ -1,0 +1,74 @@
+.eeyes-codes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.eeyes-code {
+  min-width: 6rem;
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-2xl);
+  letter-spacing: 0.25rem;
+  text-align: center;
+}
+
+.eeyes-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  max-width: 28rem;
+}
+
+.eeyes-form label {
+  font-size: var(--font-size-sm);
+}
+
+.eeyes-form input,
+.eeyes-form textarea,
+.eeyes-form select {
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-size-md);
+}
+
+.eeyes-form textarea {
+  min-height: var(--textarea-min-height);
+  height: auto;
+}
+
+.eeyes-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+  align-items: center;
+}
+
+.eeyes-media-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.eeyes-media-grid img,
+.eeyes-media-grid audio {
+  max-width: 12rem;
+  border-radius: var(--border-radius);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.eeyes-device-card,
+.eeyes-task-card,
+.eeyes-completion-card {
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}

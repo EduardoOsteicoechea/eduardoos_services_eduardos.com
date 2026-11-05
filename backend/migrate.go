@@ -304,6 +304,23 @@ func safeSchemaMigrations() []schemaMigration {
 				{Collection: colEmusicPlaylists, Keys: bson.D{{Key: "updated_at", Value: -1}}},
 			},
 		},
+		{
+			ID:          "018_eeyes",
+			Description: "Create eEyes pairings, devices, tasks, and media collections",
+			Collections: []string{colEeyesPairings, colEeyesDevices, colEeyesTasks, colEeyesMedia},
+			Indexes: []indexSpec{
+				{Collection: colEeyesPairings, Keys: bson.D{{Key: "code1_hash", Value: 1}}, Unique: true},
+				{Collection: colEeyesPairings, Keys: bson.D{{Key: "owner_id", Value: 1}, {Key: "created_at", Value: -1}}},
+				{Collection: colEeyesPairings, Keys: bson.D{{Key: "expires_at", Value: 1}}, ExpireAfterSeconds: ttlExpireAt()},
+				{Collection: colEeyesDevices, Keys: bson.D{{Key: "token_hash", Value: 1}}, Unique: true},
+				{Collection: colEeyesDevices, Keys: bson.D{{Key: "owner_id", Value: 1}, {Key: "created_at", Value: -1}}},
+				{Collection: colEeyesTasks, Keys: bson.D{{Key: "owner_id", Value: 1}, {Key: "created_at", Value: -1}}},
+				{Collection: colEeyesTasks, Keys: bson.D{{Key: "device_id", Value: 1}, {Key: "created_at", Value: -1}}},
+				{Collection: colEeyesMedia, Keys: bson.D{{Key: "device_id", Value: 1}, {Key: "client_media_id", Value: 1}}, Unique: true},
+				{Collection: colEeyesMedia, Keys: bson.D{{Key: "task_id", Value: 1}, {Key: "created_at", Value: 1}}},
+				{Collection: colEeyesMedia, Keys: bson.D{{Key: "owner_id", Value: 1}, {Key: "created_at", Value: -1}}},
+			},
+		},
 	}
 }
 

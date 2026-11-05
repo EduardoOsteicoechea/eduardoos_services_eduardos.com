@@ -1,0 +1,45 @@
+---
+description: eEyes Android/Desktop shell parity and bridge contract
+globs:
+  - desktop/**
+  - android/**
+  - backend/eeyes_ui/**
+  - backend/eeyes_*.go
+  - docs/specs/010-eeyes.md
+alwaysApply: false
+---
+
+# eEyes shells (Android + Desktop)
+
+Canonical product contract: [`docs/specs/010-eeyes.md`](../../docs/specs/010-eeyes.md).
+
+## Parity rule
+
+Implement the **same behavior** in `android/` (Kotlin) and `desktop/` (WPF .NET 8) in the **same turn**. Do not ship a feature on one platform without the other unless the user explicitly scopes one side.
+
+Shared:
+
+- Bridge message types and payloads
+- Allowlisted device API paths
+- Media compression rules (JPEG q70 max edge 1600; AAC-LC mono 64 kbps M4A)
+- Offline upload queue + exponential backoff
+- Token lifetime handling (`device_revoked` / `device_expired` → clear + re-pair)
+- Sync loop (~30s) and notification scheduling from task `notifyAt` / reminders
+- Update check against `latest.json` + sha256 verify
+
+Platform-only APIs (camera, secure storage, FGS vs tray) may differ; behavior must match.
+
+## Shell responsibilities only
+
+Token storage, WebView host, bridge, sync, local notifications, photo, audio, compress+base64+queue, apply updates. **No** product UI chrome beyond what `/api/eeyes/ui` provides.
+
+## Security
+
+- Token never enters WebView JS.
+- Origin allowlist: production `https://eduardoos.com` (local override via build config).
+- Navigation locked to `/api/eeyes/ui*`; other URLs → system browser.
+- Capture only while a human-started task is `in_progress`, with a visible indicator.
+
+## UI source of truth
+
+HTML/CSS/JS lives in `backend/eeyes_ui/` and is served by the Go API. Edit there to update both apps without a shell release when only UI changes. Shell version bumps are for native capability / update pipeline only.

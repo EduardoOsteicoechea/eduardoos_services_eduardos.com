@@ -26,6 +26,7 @@ const SERVICE_ICONS: Record<string, string> = {
   evoice: "record_voice_over",
   emusic: "library_music",
   eoproject: "architecture",
+  eeyes: "visibility",
   api: "key",
 };
 
@@ -95,6 +96,13 @@ export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
     icon: "architecture",
   },
   {
+    id: "eeyes",
+    label: "eEyes",
+    description: "Pair Android/Desktop shells, plan human capture tasks, and review completions.",
+    monthlyUsd: 1,
+    icon: "visibility",
+  },
+  {
     id: "api",
     label: "eApi",
     description: "Create API keys and call product APIs from external apps.",
@@ -123,6 +131,8 @@ export const SUBSCRIPTION_SERVICE_DETAILS: Record<string, string> = {
     "eMusic is a curated music library with synchronized lyrics and admin playlists. Subscribe to listen to Salmo 1, Salmo 2, Dreamer, Learner, and saved playlists on eduardoos.com.",
   eoproject:
     "eoProject tracks construction project stages, site photos, and IFC model versions. Organize project progress and share selected project views from your account.",
+  eeyes:
+    "eEyes pairs Android and Desktop shells with your account using three consecutive codes. Plan human capture tasks with photo and audio evidence, review completions in the hub, and revoke device access instantly.",
   api:
     "API access lets you create eos_live_… keys and call product endpoints from external apps and Cursor connectors (EPAM, eReport, Homescool, and related routes). Keys stay owner-scoped; admin tools manage key lifecycle.",
 };

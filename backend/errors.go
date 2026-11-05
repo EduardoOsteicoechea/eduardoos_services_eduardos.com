@@ -30,6 +30,9 @@ var safeMessages = map[string]string{
 	"append_existing_item_modified":  "API append cannot modify or remove existing issues.",
 	"append_invalid_new_item_status": "New append items need incidencia text and status reprobado.",
 	"replace_confirm_required":       "mode replace requires confirmOverwrite:true.",
+	"pairing_invalid":                "Those pairing codes are invalid or expired.",
+	"device_revoked":                 "This device was revoked. Pair again from eEyes.",
+	"device_expired":                 "This device session expired. Pair again from eEyes.",
 	"internal_error":                 "Something went wrong.",
 }
 

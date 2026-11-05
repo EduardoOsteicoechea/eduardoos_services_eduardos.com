@@ -26,6 +26,7 @@ export default defineConfig({
         !page.includes("/homeschool") &&
         !page.includes("/documents/pamphlet") &&
         !page.includes("/evoice") &&
+        !page.includes("/eeyes") &&
         !page.includes("/emusic") &&
         !page.includes("/eapi") &&
         !page.includes("/eoproject") &&

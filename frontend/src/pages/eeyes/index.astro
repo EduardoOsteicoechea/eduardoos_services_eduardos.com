@@ -1,0 +1,14 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import EeyesHub from "../../components/Eeyes/EeyesHub.tsx";
+---
+
+<Layout
+  title="eEyes"
+  description="Vincula dispositivos Android y Desktop, planifica tareas de captura y revisa completaciones."
+  page="eeyes"
+  robots="noindex,nofollow"
+>
+  <span slot="dhs" hidden></span>
+  <EeyesHub client:load />
+</Layout>

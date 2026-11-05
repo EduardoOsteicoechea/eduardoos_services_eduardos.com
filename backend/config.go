@@ -37,6 +37,8 @@ type config struct {
 	EreportMediaRoot          string
 	EvoiceMediaRoot           string
 	EoprojectMediaRoot        string
+	EeyesMediaRoot            string
+	EeyesReleasesRoot         string
 	EvoicePython              string
 	EvoiceFakeTTS             bool
 	EvoiceWorkerScript        string
@@ -184,6 +186,17 @@ func loadConfig() config {
 	if eoprojectRoot == "" {
 		eoprojectRoot = media + "/eoproject"
 	}
+	eeyesRoot := strings.TrimSpace(os.Getenv("EEYES_MEDIA_ROOT"))
+	if eeyesRoot == "" {
+		eeyesRoot = media + "/eeyes"
+	}
+	eeyesReleases := strings.TrimSpace(os.Getenv("EEYES_RELEASES_ROOT"))
+	if eeyesReleases == "" {
+		eeyesReleases = filepath.Join(media, "..", "eeyes-releases")
+		if siteInfo, err := os.Stat("/opt/apps/eduardoos/eeyes-releases"); err == nil && siteInfo.IsDir() {
+			eeyesReleases = "/opt/apps/eduardoos/eeyes-releases"
+		}
+	}
 
 	// On the VPS each deploy switches /opt/apps/<app>/current to a fresh release
 	// directory. A relative media root (the .env.example defaults, for example)
@@ -206,6 +219,9 @@ func loadConfig() config {
 		}
 		if eoprojectRoot == "" || !filepath.IsAbs(eoprojectRoot) {
 			eoprojectRoot = filepath.Join(media, "eoproject")
+		}
+		if eeyesRoot == "" || !filepath.IsAbs(eeyesRoot) {
+			eeyesRoot = filepath.Join(media, "eeyes")
 		}
 	}
 
@@ -254,6 +270,8 @@ func loadConfig() config {
 		EreportMediaRoot:          ereportRoot,
 		EvoiceMediaRoot:           evoiceRoot,
 		EoprojectMediaRoot:        eoprojectRoot,
+		EeyesMediaRoot:            eeyesRoot,
+		EeyesReleasesRoot:         eeyesReleases,
 		EvoicePython:              strings.TrimSpace(os.Getenv("EVOICE_PYTHON")),
 		EvoiceFakeTTS:             evoiceFake,
 		EvoiceWorkerScript:        strings.TrimSpace(os.Getenv("EVOICE_WORKER_SCRIPT")),

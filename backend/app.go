@@ -63,6 +63,9 @@ type App struct {
 	progressFS             *homescoolProgressFS
 	eoproject              eoprojectStore
 	eoprojectFS            *eoprojectFS
+	eeyes                  eeyesStore
+	eeyesFS                *eeyesFS
+	eeyesPairIPLimit       *limiter
 	failClosedEnt          bool
 	sessionCache           *sessionCache
 }
@@ -87,6 +90,12 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	if cfg.EoprojectMediaRoot == "" {
 		cfg.EoprojectMediaRoot = cfg.MediaRoot + "/eoproject"
 	}
+	if cfg.EeyesMediaRoot == "" {
+		cfg.EeyesMediaRoot = cfg.MediaRoot + "/eeyes"
+	}
+	if cfg.EeyesReleasesRoot == "" {
+		cfg.EeyesReleasesRoot = cfg.MediaRoot + "/../eeyes-releases"
+	}
 	if cfg.EreportMaxImageBytes <= 0 {
 		cfg.EreportMaxImageBytes = defaultMaxImageBytes
 	}
@@ -109,10 +118,14 @@ func newAppWithStore(cfg config, store DataStore) *App {
 	if strings.TrimSpace(cfg.EoprojectMediaRoot) == "" {
 		cfg.EoprojectMediaRoot = cfg.MediaRoot + "/eoproject"
 	}
+	if strings.TrimSpace(cfg.EeyesMediaRoot) == "" {
+		cfg.EeyesMediaRoot = cfg.MediaRoot + "/eeyes"
+	}
 	_ = os.MkdirAll(cfg.MediaRoot, 0750)
 	_ = os.MkdirAll(cfg.EreportMediaRoot, 0750)
 	_ = os.MkdirAll(cfg.EvoiceMediaRoot, 0750)
 	_ = os.MkdirAll(cfg.EoprojectMediaRoot, 0750)
+	_ = os.MkdirAll(cfg.EeyesMediaRoot, 0750)
 	dummy, _ := hashPassword(randomID(16))
 	app := &App{
 		cfg:              cfg,
@@ -132,6 +145,9 @@ func newAppWithStore(cfg config, store DataStore) *App {
 		progressFS:            newHomescoolProgressFS(cfg.MediaRoot),
 		eoproject:             newEoprojectStoreFromDataStore(store),
 		eoprojectFS:           newEoprojectFS(cfg.EoprojectMediaRoot),
+		eeyes:                 newEeyesStoreFromDataStore(store),
+		eeyesFS:               newEeyesFS(cfg.EeyesMediaRoot),
+		eeyesPairIPLimit:      newLimiter(15*time.Minute, 20),
 		mailer:           smtpMailer{cfg: cfg},
 		chat:             map[string]ChatClient{},
 		audit:            newAuditStore(),
@@ -445,6 +461,7 @@ func (a *App) Handler() http.Handler {
 	a.registerEoprojectRoutes(mux)
 	a.registerEmusicRoutes(mux)
 	a.registerVoiceRoutes(mux)
+	a.registerEeyesRoutes(mux)
 
 	return a.withObservability(mux)
 }
