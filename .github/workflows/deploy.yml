@@ -259,7 +259,7 @@ jobs:
             "size": $(wc -c < ../artifacts/android/eeyes-android.apk),
             "minVersionCode": 1,
             "notes": "",
-            "file": "eeyes-android.apk"
+            "file": "${{ github.run_number }}/eeyes-android.apk"
           }
           EOF
       - uses: actions/upload-artifact@v4
@@ -297,7 +297,7 @@ jobs:
             "size": $size,
             "minVersionCode": 1,
             "notes": "",
-            "file": "eeyes-desktop.exe"
+            "file": "$code/eeyes-desktop.exe"
           }
           "@ | Set-Content -Encoding utf8 ../artifacts/desktop/latest.json
       - name: Optional Authenticode sign

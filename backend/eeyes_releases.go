@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -46,6 +47,32 @@ func (a *App) eeyesReadLatest(platform string) *eeyesReleaseInfo {
 	return &info
 }
 
+// eeyesResolveReleaseFile maps latest.json `file` to a regular file inside the
+// platform dir. CI publishes binaries under `<versionCode>/`, so a bare file
+// name also falls back to that subdirectory.
+func eeyesResolveReleaseFile(platformDir string, info *eeyesReleaseInfo) (string, bool) {
+	base := filepath.Clean(platformDir)
+	rel := filepath.Clean(filepath.FromSlash(strings.TrimSpace(info.File)))
+	if rel == "." || filepath.IsAbs(rel) || filepath.VolumeName(rel) != "" {
+		return "", false
+	}
+	candidates := []string{rel}
+	if !strings.ContainsRune(rel, filepath.Separator) {
+		candidates = append(candidates, filepath.Join(strconv.Itoa(info.VersionCode), rel))
+	}
+	for _, c := range candidates {
+		abs := filepath.Join(base, c)
+		inside, err := filepath.Rel(base, abs)
+		if err != nil || inside == ".." || strings.HasPrefix(inside, ".."+string(filepath.Separator)) {
+			continue
+		}
+		if st, err := os.Stat(abs); err == nil && st.Mode().IsRegular() {
+			return abs, true
+		}
+	}
+	return "", false
+}
+
 func (a *App) eeyesListReleases(w http.ResponseWriter, r *http.Request) {
 	user := a.requireEeyesUser(w, r)
 	if user == nil {
@@ -70,14 +97,13 @@ func (a *App) eeyesDownloadRelease(w http.ResponseWriter, r *http.Request) {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
-	base := filepath.Clean(a.eeyesReleaseDir(platform))
-	fileName := filepath.Base(info.File)
-	abs := filepath.Join(base, fileName)
-	rel, err := filepath.Rel(base, abs)
-	if err != nil || strings.HasPrefix(rel, "..") {
+	abs, ok := eeyesResolveReleaseFile(a.eeyesReleaseDir(platform), info)
+	if !ok {
+		a.mustLogf(r, "eeyes.download.missing", "platform", platform, "version_code", info.VersionCode)
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
+	fileName := filepath.Base(abs)
 	f, err := os.Open(abs)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")

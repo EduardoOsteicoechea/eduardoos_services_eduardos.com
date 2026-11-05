@@ -343,6 +343,44 @@ func TestEeyesMediaUploadIdempotentAndRejects(t *testing.T) {
 	assertNoSecrets(t, comps.Body.String())
 }
 
+func TestEeyesDownloadFromVersionSubdir(t *testing.T) {
+	app := newEeyesTestApp(t)
+	root := t.TempDir()
+	app.cfg.EeyesReleasesRoot = root
+	androidDir := filepath.Join(root, "android")
+	if err := os.MkdirAll(filepath.Join(androidDir, "42"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	apk := []byte("PK\x03\x04fake-apk")
+	if err := os.WriteFile(filepath.Join(androidDir, "42", "eeyes-android.apk"), apk, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	writeLatest := func(file string) {
+		t.Helper()
+		raw := `{"versionCode":42,"versionName":"1.0.42","sha256":"x","size":12,"minVersionCode":1,"file":"` + file + `"}`
+		if err := os.WriteFile(filepath.Join(androidDir, "latest.json"), []byte(raw), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	for _, file := range []string{"eeyes-android.apk", "42/eeyes-android.apk"} {
+		writeLatest(file)
+		rec := app.doJSON(t, "admin@eduardoos.com", http.MethodGet, "/api/eeyes/downloads/android", "")
+		if rec.Code != http.StatusOK || !bytes.Equal(rec.Body.Bytes(), apk) {
+			t.Fatalf("file=%q download %d %q", file, rec.Code, rec.Body.String())
+		}
+		if cd := rec.Header().Get("Content-Disposition"); !strings.Contains(cd, "eeyes-android.apk") {
+			t.Fatalf("content-disposition %q", cd)
+		}
+	}
+
+	writeLatest("../../etc/passwd")
+	rec := app.doJSON(t, "admin@eduardoos.com", http.MethodGet, "/api/eeyes/downloads/android", "")
+	if rec.Code != http.StatusNotFound {
+		t.Fatalf("traversal must 404, got %d", rec.Code)
+	}
+}
+
 func TestEeyesUIServesHTML(t *testing.T) {
 	app := newEeyesTestApp(t)
 	req := httptest.NewRequest(http.MethodGet, "/api/eeyes/ui", nil)
