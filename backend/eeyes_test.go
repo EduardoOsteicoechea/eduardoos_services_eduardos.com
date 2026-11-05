@@ -343,6 +343,43 @@ func TestEeyesMediaUploadIdempotentAndRejects(t *testing.T) {
 	assertNoSecrets(t, comps.Body.String())
 }
 
+func TestEeyesSyncSendsUpcomingNotifications(t *testing.T) {
+	app := newEeyesTestApp(t)
+	if err := app.grantEntitlement("member-1", productEeyes); err != nil {
+		t.Fatal(err)
+	}
+	_, c1, c2, c3 := eeyesCreatePairingCodes(t, app)
+	token, deviceID := eeyesPairDevice(t, app, c1, c2, c3)
+
+	create := func(title string, at time.Time) {
+		t.Helper()
+		raw, _ := json.Marshal(map[string]any{
+			"title": title, "deviceId": deviceID, "maxPhotos": 1,
+			"notifyAt": at.UTC().Format(time.RFC3339),
+		})
+		rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eeyes/tasks", string(raw))
+		if rec.Code != http.StatusCreated {
+			t.Fatalf("create %s %d %s", title, rec.Code, rec.Body.String())
+		}
+	}
+	create("soon", time.Now().Add(15*time.Minute))
+	create("later", time.Now().Add(eeyesNotificationHorizon+time.Hour))
+
+	rec := eeyesDeviceJSON(t, app, token, http.MethodGet, "/api/eeyes/device/sync", "")
+	if rec.Code != http.StatusOK {
+		t.Fatalf("sync %d %s", rec.Code, rec.Body.String())
+	}
+	var body struct {
+		Notifications []struct {
+			Title string `json:"title"`
+		} `json:"notifications"`
+	}
+	_ = json.Unmarshal(rec.Body.Bytes(), &body)
+	if len(body.Notifications) != 1 || body.Notifications[0].Title != "soon" {
+		t.Fatalf("want only the upcoming notification, got %+v", body.Notifications)
+	}
+}
+
 func TestEeyesDownloadFromVersionSubdir(t *testing.T) {
 	app := newEeyesTestApp(t)
 	root := t.TempDir()

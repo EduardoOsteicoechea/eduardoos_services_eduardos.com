@@ -671,7 +671,9 @@ func (a *App) eeyesDeviceSync(w http.ResponseWriter, r *http.Request) {
 	}
 	active := make([]*eeyesTask, 0)
 	notifications := make([]map[string]any, 0)
-	now := time.Now().UTC()
+	// Shells schedule local alarms, so upcoming notifications must reach them
+	// before they are due; sync runs every 15 minutes and re-arms the horizon.
+	horizon := time.Now().UTC().Add(eeyesNotificationHorizon)
 	for _, t := range tasks {
 		if t.Status == eeyesTaskCancelled {
 			continue
@@ -680,7 +682,7 @@ func (a *App) eeyesDeviceSync(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 		active = append(active, t)
-		if t.NotifyAt != nil && !t.NotifyAt.After(now) {
+		if t.NotifyAt != nil && !t.NotifyAt.After(horizon) {
 			key := "notify:" + t.ID
 			if !containsString(t.NotifiedKeys, key) {
 				notifications = append(notifications, map[string]any{
@@ -694,7 +696,7 @@ func (a *App) eeyesDeviceSync(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		for i, rem := range t.Reminders {
-			if rem.After(now) {
+			if rem.After(horizon) {
 				continue
 			}
 			key := fmt.Sprintf("reminder:%s:%d", t.ID, i)

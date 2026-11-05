@@ -30,6 +30,8 @@ const (
 	eeyesMediaKindAudio  = "audio"
 )
 
+const eeyesNotificationHorizon = 24 * time.Hour
+
 type eeyesPairing struct {
 	ID           string     `json:"id" bson:"_id"`
 	OwnerID      string     `json:"ownerId" bson:"owner_id"`
