@@ -392,10 +392,19 @@ func TestEeyesUIServesHTML(t *testing.T) {
 	if csp := rec.Header().Get("Content-Security-Policy"); !strings.Contains(csp, "connect-src 'none'") {
 		t.Fatalf("missing CSP: %s", csp)
 	}
-	req = httptest.NewRequest(http.MethodGet, "/api/eeyes/ui/app.js", nil)
-	rec = httptest.NewRecorder()
-	app.Handler().ServeHTTP(rec, req)
-	if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), "eeyesBridge") {
-		t.Fatalf("ui js %d", rec.Code)
+	if !strings.Contains(rec.Body.String(), `/api/eeyes/ui/app-js`) || !strings.Contains(rec.Body.String(), `/api/eeyes/ui/app-css`) {
+		t.Fatal("index must link extensionless assets")
+	}
+	for path, want := range map[string]string{
+		"/api/eeyes/ui/app-js":  "eeyesBridge",
+		"/api/eeyes/ui/app.js":  "eeyesBridge",
+		"/api/eeyes/ui/app-css": "{",
+	} {
+		req = httptest.NewRequest(http.MethodGet, path, nil)
+		rec = httptest.NewRecorder()
+		app.Handler().ServeHTTP(rec, req)
+		if rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), want) {
+			t.Fatalf("%s -> %d", path, rec.Code)
+		}
 	}
 }

@@ -93,7 +93,7 @@ Shell polls ~30s foreground; WorkManager / timer background.
 
 ## 7. Embedded UI
 
-- `GET /api/eeyes/ui` (+ `/api/eeyes/ui/app.css`, `/api/eeyes/ui/app.js`) from `go:embed` under `backend/eeyes_ui/`.
+- `GET /api/eeyes/ui` (+ `/api/eeyes/ui/app-css`, `/api/eeyes/ui/app-js`) from `go:embed` under `backend/eeyes_ui/`. Asset URLs stay extensionless because production Nginx serves `*.js`/`*.css` from the static root before the `/api/` proxy.
 - CSP: `default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'`.
 - Query: `?platform=&shellVersion=`. Screens: Pair (3 steps), Tasks, Active task, Done, Update required.
 - All data I/O via shell bridge; rem-only CSS; Spanish copy.

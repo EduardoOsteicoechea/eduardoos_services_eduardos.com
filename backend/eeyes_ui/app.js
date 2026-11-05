@@ -87,6 +87,12 @@
   }
 
   window.__eeyesOnNative = onNativeMessage;
+  if (window.eeyesBridge) {
+    // Android WebMessageListener replies arrive on the injected object, not on window.
+    window.eeyesBridge.onmessage = function (ev) {
+      onNativeMessage(ev && ev.data);
+    };
+  }
   if (window.chrome && window.chrome.webview) {
     window.chrome.webview.addEventListener("message", function (ev) {
       onNativeMessage(ev.data);

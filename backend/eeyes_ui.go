@@ -51,7 +51,15 @@ func (a *App) eeyesUIIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) eeyesUIAsset(w http.ResponseWriter, r *http.Request) {
+	// Extensionless aliases: production Nginx serves *.js/*.css from the static
+	// root before the /api/ proxy, so index.html links app-css / app-js.
 	name := filepathBaseSafe(r.PathValue("asset"))
+	switch name {
+	case "app-css":
+		name = "app.css"
+	case "app-js":
+		name = "app.js"
+	}
 	switch name {
 	case "app.css", "app.js":
 	default:
