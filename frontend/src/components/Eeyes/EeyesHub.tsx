@@ -52,7 +52,7 @@ const CARDS: DashboardCardItem[] = [
   {
     id: "photo",
     title: "Programar foto",
-    description: "Foto automática con la cámara frontal o trasera.",
+    description: "Una foto o una ráfaga, en cada dispositivo.",
     icon: "photo_camera",
   },
   { id: "completions", title: "Completaciones", description: "Fotos y audio recibidos.", icon: "photo_library" },
@@ -546,15 +546,22 @@ function NotifyView() {
 const CAMERA_LABEL: Record<EeyesCameraFacing, string> = { back: "Trasera", front: "Frontal" };
 
 function photoStatusLabel(t: EeyesTask): string {
+  const burst = t.maxPhotos > 1;
   switch (eeyesPhotoStage(t)) {
     case "uploaded":
-      return `Foto recibida ${fmtTime(t.completedAt)}`;
+      return burst
+        ? `Ráfaga recibida ${fmtTime(t.completedAt)} · ${t.maxPhotos} fotos`
+        : `Foto recibida ${fmtTime(t.completedAt)}`;
     case "cancelled":
       return "Cancelada";
+    case "capturing":
+      return `Tomando la ráfaga · cada ${t.photoIntervalSec}s · hasta ${t.maxPhotos} fotos`;
     case "taken":
       return `Tomada ${fmtTime(t.notifyAckedAt)} · subiendo al servidor`;
     case "dispatched":
-      return `Enviada al dispositivo ${fmtTime(t.notifyDispatchedAt)} · esperando la cámara`;
+      return burst
+        ? `Enviada al dispositivo ${fmtTime(t.notifyDispatchedAt)} · ráfaga cada ${t.photoIntervalSec}s`
+        : `Enviada al dispositivo ${fmtTime(t.notifyDispatchedAt)} · esperando la cámara`;
     case "scheduled":
       return `Programada ${fmtTime(t.notifyAt)}`;
     default:
@@ -572,6 +579,9 @@ function PhotoView() {
   const [facing, setFacing] = useState<EeyesCameraFacing>("back");
   const [when, setWhen] = useState<NoticeWhen>("now");
   const [customAt, setCustomAt] = useState("");
+  const [mode, setMode] = useState<"one" | "burst">("one");
+  const [intervalSec, setIntervalSec] = useState(10);
+  const [shots, setShots] = useState(6);
   const [busy, setBusy] = useState(false);
 
   const load = useCallback(async () => {
@@ -608,8 +618,18 @@ function PhotoView() {
     setBusy(true);
     try {
       const notifyAt = resolveWhen(when, customAt);
+      const burst = mode === "burst";
+      if (burst && (intervalSec < 1 || shots < 2)) return;
       await forEachDevice(targets, (deviceId, batchId) =>
-        scheduleEeyesPhoto({ deviceId, title, cameraFacing: facing, notifyAt, batchId }),
+        scheduleEeyesPhoto({
+          deviceId,
+          title,
+          cameraFacing: facing,
+          notifyAt,
+          batchId: burst ? crypto.randomUUID() : batchId,
+          photoIntervalSec: burst ? intervalSec : 0,
+          maxPhotos: burst ? shots : 1,
+        }),
       );
       await load();
     } catch {
@@ -623,10 +643,43 @@ function PhotoView() {
     <section className="product-dash__section">
       <h2>Programar foto</h2>
       <p className="lede">
-        A la hora indicada cada dispositivo vinculado toma una foto con la cámara elegida y la sube.
-        El teléfono muestra el indicador de cámara y un aviso cada vez que toma una.
+        A la hora indicada cada dispositivo toma la cámara elegida. Una ráfaga sube una foto cada
+        tantos segundos y queda como un paquete propio de ese dispositivo.
       </p>
       <form className="eeyes-form" onSubmit={(e) => void onSubmit(e)}>
+        <label>
+          Toma
+          <select value={mode} onChange={(e) => setMode(e.target.value as "one" | "burst")}>
+            <option value="one">Una foto</option>
+            <option value="burst">Ráfaga</option>
+          </select>
+        </label>
+        {mode === "burst" ? (
+          <>
+            <label>
+              Cada cuántos segundos
+              <input
+                type="number"
+                min={1}
+                max={300}
+                required
+                value={intervalSec}
+                onChange={(e) => setIntervalSec(Number(e.target.value) || 1)}
+              />
+            </label>
+            <label>
+              Cuántas fotos
+              <input
+                type="number"
+                min={2}
+                max={50}
+                required
+                value={shots}
+                onChange={(e) => setShots(Number(e.target.value) || 2)}
+              />
+            </label>
+          </>
+        ) : null}
         <label>
           Cámara
           <select value={facing} onChange={(e) => setFacing(e.target.value as EeyesCameraFacing)}>
@@ -659,7 +712,7 @@ function PhotoView() {
           </label>
         ) : null}
         <button type="submit" disabled={busy || eeyesCaptureDevices(devices).length === 0}>
-          {busy ? "Programando…" : "Programar en cada dispositivo"}
+          {busy ? "Programando…" : mode === "burst" ? "Programar ráfaga en cada dispositivo" : "Programar en cada dispositivo"}
         </button>
       </form>
       {eeyesCaptureDevices(devices).length === 0 ? <p className="lede">Vincula un dispositivo antes de programar fotos.</p> : null}
@@ -793,7 +846,7 @@ function CompletionsView() {
   const [devices, setDevices] = useState<EeyesDevice[]>([]);
   useEffect(() => {
     void Promise.all([listEeyesCompletions(), listEeyesDevices()]).then(([rows, all]) => {
-      setItems(rows);
+      setItems(rows.filter((row) => row.task.status === "completed"));
       setDevices(all);
     });
   }, []);

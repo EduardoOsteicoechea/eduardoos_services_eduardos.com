@@ -10,8 +10,10 @@ const (
 	eeyesPairMaxAttempts   = 5
 	eeyesMaxImageBytes     = 2 << 20
 	eeyesMaxAudioBytes     = 5 << 20
-	eeyesMaxPhotosDefault  = 10
-	eeyesMaxPhotosCap      = 50
+	eeyesMaxPhotosDefault    = 10
+	eeyesMaxPhotosCap        = 50
+	eeyesMinBurstIntervalSec = 1
+	eeyesMaxBurstIntervalSec = 300
 	eeyesMaxAudioSecCap    = 300
 
 	colEeyesPairings = "eeyes_pairings"
@@ -38,8 +40,10 @@ const eeyesNotificationHorizon = 24 * time.Hour
 // shell task list, completed when the device acks its notification.
 const eeyesTaskKindNotice = "notice"
 
-// eeyesTaskKindPhoto is a scheduled single photo: at NotifyAt the device takes
-// one picture with CameraFacing and the first upload completes the task.
+// eeyesTaskKindPhoto is a scheduled capture. With PhotoIntervalSec 0 the device
+// takes one picture. With an interval and MaxPhotos above 1 it takes a burst,
+// one picture every PhotoIntervalSec, and the task stays open until that many
+// images are stored or the device marks it complete.
 const eeyesTaskKindPhoto = "photo"
 
 const (

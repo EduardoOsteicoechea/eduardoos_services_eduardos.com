@@ -206,9 +206,15 @@ export type ScheduleEeyesPhotoInput = {
   /** RFC3339; omitted = take it as soon as the device receives it. */
   notifyAt?: string;
   batchId?: string;
+  /** Seconds between shots. 0 keeps a single photo. */
+  photoIntervalSec?: number;
+  /** Shots in the burst. 1 keeps a single photo. */
+  maxPhotos?: number;
 };
 
 export async function scheduleEeyesPhoto(input: ScheduleEeyesPhotoInput): Promise<EeyesTask> {
+  const shots = input.maxPhotos && input.maxPhotos > 1 ? input.maxPhotos : 1;
+  const interval = shots > 1 ? input.photoIntervalSec || 0 : 0;
   const { status, data, requestId } = await postJSON<{ task: EeyesTask }>("/eeyes/tasks", {
     kind: "photo",
     deviceId: input.deviceId,
@@ -216,6 +222,10 @@ export async function scheduleEeyesPhoto(input: ScheduleEeyesPhotoInput): Promis
     cameraFacing: input.cameraFacing,
     notifyAt: input.notifyAt,
     batchId: input.batchId,
+    photoIntervalSec: interval,
+    maxPhotos: shots,
+    instructions:
+      shots > 1 ? `Una foto cada ${interval} s, hasta ${shots} tomas.` : undefined,
   });
   return unwrap(status, data, requestId, "/eeyes/tasks").task;
 }
@@ -288,12 +298,20 @@ export function eeyesBatches(tasks: EeyesTask[]): EeyesTask[][] {
   return order;
 }
 
-export type EeyesPhotoStage = "cancelled" | "uploaded" | "taken" | "dispatched" | "scheduled" | "waiting_sync";
+export type EeyesPhotoStage =
+  | "cancelled"
+  | "uploaded"
+  | "capturing"
+  | "taken"
+  | "dispatched"
+  | "scheduled"
+  | "waiting_sync";
 
 /** Where a scheduled photo is in the hub → device → camera → upload pipeline. */
 export function eeyesPhotoStage(task: EeyesTask, now = Date.now()): EeyesPhotoStage {
   if (task.status === "completed") return "uploaded";
   if (task.status === "cancelled") return "cancelled";
+  if (task.status === "in_progress") return "capturing";
   if (task.notifyAckedAt) return "taken";
   if (task.notifyDispatchedAt) return "dispatched";
   if (task.notifyAt && Date.parse(task.notifyAt) > now) return "scheduled";

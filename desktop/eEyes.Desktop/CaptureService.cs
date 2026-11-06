@@ -87,8 +87,9 @@ internal sealed class CaptureService
     }
 
     /// <summary>
-    /// Runs hub-scheduled photos (sync items with kind "capture") at their time. The
-    /// first upload completes the task server-side; the key is acked once taken.
+    /// Runs hub-scheduled photos (sync items with kind "capture") at their time.
+    /// One shot completes on the server. A burst (maxPhotos above 1) takes a
+    /// picture every intervalSec and then closes the device pack.
     /// </summary>
     public void HandleScheduled(JsonArray? notifications)
     {
@@ -105,21 +106,43 @@ internal sealed class CaptureService
             var taskId = n["taskId"]?.GetValue<string>() ?? "";
             var facing = n["facing"]?.GetValue<string>() ?? "back";
             var title = n["title"]?.GetValue<string>() ?? "eEyes";
+            var intervalSec = JsonInt(n["intervalSec"], 0);
+            var maxPhotos = JsonInt(n["maxPhotos"], 1);
             if (!DateTimeOffset.TryParse(n["at"]?.GetValue<string>(), out var at)) at = DateTimeOffset.UtcNow;
-            _ = Task.Run(() => RunScheduledAsync(key, taskId, facing, title, at));
+            _ = Task.Run(() => RunScheduledAsync(key, taskId, facing, title, at, intervalSec, maxPhotos));
         }
     }
 
-    private async Task RunScheduledAsync(string key, string taskId, string facing, string title, DateTimeOffset at)
+    private static int JsonInt(JsonNode? node, int fallback)
+    {
+        if (node is JsonValue value && value.TryGetValue<int>(out var n)) return n;
+        return fallback;
+    }
+
+    private async Task RunScheduledAsync(string key, string taskId, string facing, string title, DateTimeOffset at, int intervalSec, int maxPhotos)
     {
         var wait = at - DateTimeOffset.UtcNow;
         if (wait > TimeSpan.Zero) await Task.Delay(wait);
-        var ok = await CapturePhotoAsync(taskId, facing);
-        DiagStore.RecordCapture(key, facing, ok ? null : "camara_no_disponible");
-        if (ok)
+        var shots = maxPhotos > 1 ? maxPhotos : 1;
+        var gap = shots > 1 ? Math.Max(1, intervalSec) : 0;
+        var taken = 0;
+        for (var i = 0; i < shots; i++)
         {
+            if (i > 0 && gap > 0) await Task.Delay(TimeSpan.FromSeconds(gap));
+            if (await CapturePhotoAsync(taskId, facing)) taken++;
+            else if (taken == 0) break;
+        }
+        DiagStore.RecordCapture(key, facing, taken > 0 ? null : "camara_no_disponible");
+        if (taken > 0)
+        {
+            if (shots > 1)
+            {
+                try { await _api.RequestAsync("POST", $"/api/eeyes/device/tasks/{taskId}/complete", "{}"); }
+                catch { /* the last upload already closed a full burst */ }
+            }
             var camera = facing == "front" ? "frontal" : "trasera";
-            NotificationService.Show("eEyes tomó una foto", $"\"{title}\" · cámara {camera}", taskId);
+            var headline = shots > 1 ? $"eEyes tomó {taken} fotos" : "eEyes tomó una foto";
+            NotificationService.Show(headline, $"\"{title}\" · cámara {camera}", taskId);
             await NotificationService.AckAsync(_api, [key]);
             return;
         }

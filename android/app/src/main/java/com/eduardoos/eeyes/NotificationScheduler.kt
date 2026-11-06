@@ -22,10 +22,12 @@ object NotificationScheduler {
             val taskId = n.optString("taskId")
             val kind = n.optString("kind")
             val facing = n.optString("facing")
+            val intervalSec = n.optInt("intervalSec")
+            val maxPhotos = n.optInt("maxPhotos", 1)
             val at = runCatching { Instant.parse(n.optString("at")).toEpochMilli() }.getOrNull() ?: continue
             if (at < System.currentTimeMillis()) {
                 if (kind == KIND_CAPTURE) {
-                    ScheduledPhoto.start(ctx, key, taskId, facing, title)
+                    ScheduledPhoto.start(ctx, key, taskId, facing, title, intervalSec, maxPhotos)
                 } else {
                     NotificationAlarmReceiver.deliver(ctx, key, title, body, taskId)
                 }
@@ -38,6 +40,8 @@ object NotificationScheduler {
                 .putExtra("taskId", taskId)
                 .putExtra("kind", kind)
                 .putExtra("facing", facing)
+                .putExtra("intervalSec", intervalSec)
+                .putExtra("maxPhotos", maxPhotos)
             val pi = PendingIntent.getBroadcast(
                 ctx,
                 key.hashCode(),

@@ -23,6 +23,7 @@ describe("eeyes helpers", () => {
     expect(eeyesPhotoStage({ ...base, notifyAt: "2026-11-05T19:00:00Z" }, now)).toBe("scheduled");
     expect(eeyesPhotoStage({ ...base, notifyAt: "2026-11-05T17:00:00Z" }, now)).toBe("waiting_sync");
     expect(eeyesPhotoStage({ ...base, notifyDispatchedAt: "2026-11-05T17:30:00Z" }, now)).toBe("dispatched");
+    expect(eeyesPhotoStage({ ...base, status: "in_progress" }, now)).toBe("capturing");
     expect(eeyesPhotoStage({ ...base, notifyAckedAt: "2026-11-05T17:31:00Z" }, now)).toBe("taken");
     expect(eeyesPhotoStage({ ...base, status: "completed", notifyAckedAt: "x" }, now)).toBe("uploaded");
     expect(eeyesPhotoStage({ ...base, status: "cancelled" }, now)).toBe("cancelled");

@@ -12,16 +12,26 @@ import org.json.JSONObject
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * Runs a hub-scheduled photo (`capture:<taskId>` sync instruction): take one
- * picture, queue the upload (the first upload completes the task), ack the key.
- * Android only grants background camera access while LiveSyncService runs with
- * the camera type (started from the visible app); otherwise the user is asked
- * to open eEyes and the next sync retries.
+ * Runs a hub-scheduled photo (`capture:<taskId>` sync instruction). One shot
+ * when maxPhotos is 1. A burst takes a picture every intervalSec until
+ * maxPhotos, then asks the server to close the pack. Android only grants
+ * background camera access while LiveSyncService runs with the camera type
+ * (started from the visible app); otherwise the user is asked to open eEyes
+ * and the next sync retries.
  */
 object ScheduledPhoto {
     private val inFlight: MutableSet<String> = ConcurrentHashMap.newKeySet<String>()
 
-    fun start(ctx: Context, key: String, taskId: String, facing: String, title: String, done: (() -> Unit)? = null) {
+    fun start(
+        ctx: Context,
+        key: String,
+        taskId: String,
+        facing: String,
+        title: String,
+        intervalSec: Int = 0,
+        maxPhotos: Int = 1,
+        done: (() -> Unit)? = null,
+    ) {
         val app = ctx.applicationContext
         if (!inFlight.add(key)) {
             done?.invoke()
@@ -29,7 +39,7 @@ object ScheduledPhoto {
         }
         Thread({
             try {
-                run(app, key, taskId, facing, title)
+                run(app, key, taskId, facing, title, intervalSec, maxPhotos)
             } finally {
                 inFlight.remove(key)
                 done?.invoke()
@@ -37,24 +47,50 @@ object ScheduledPhoto {
         }, "eeyes-scheduled-photo").start()
     }
 
-    private fun run(app: Context, key: String, taskId: String, facing: String, title: String) {
+    private fun run(
+        app: Context,
+        key: String,
+        taskId: String,
+        facing: String,
+        title: String,
+        intervalSec: Int,
+        maxPhotos: Int,
+    ) {
         val diag = DiagStore(app)
         if (diag.wasCaptured(key)) {
             ack(app, key)
             return
         }
-        val result = PhotoCapturer.capture(app, facing)
-        val jpeg = result.jpeg
-        if (jpeg == null) {
-            diag.recordCapture(key, facing, result.error ?: "camara_error")
-            notify(app, key, CHANNEL_ALERTS, "Foto programada pendiente", "Abre eEyes para tomar \"$title\".", alert = true)
-            return
+        val shots = if (maxPhotos > 1) maxPhotos else 1
+        val gapMs = if (shots > 1) intervalSec.coerceAtLeast(1) * 1000L else 0L
+        var taken = 0
+        for (i in 0 until shots) {
+            if (i > 0 && gapMs > 0L) Thread.sleep(gapMs)
+            val result = PhotoCapturer.capture(app, facing)
+            val jpeg = result.jpeg
+            if (jpeg == null) {
+                diag.recordCapture(key, facing, result.error ?: "camara_error")
+                if (taken == 0) {
+                    notify(app, key, CHANNEL_ALERTS, "Foto programada pendiente", "Abre eEyes para tomar \"$title\".", alert = true)
+                    return
+                }
+                break
+            }
+            MediaUploader.enqueue(app, taskId, "image", "image/jpeg", jpeg, 0)
+            taken += 1
+            diag.recordCapture(key, facing, null)
         }
-        MediaUploader.enqueue(app, taskId, "image", "image/jpeg", jpeg, 0)
+        if (taken == 0) return
+        if (shots > 1) {
+            runCatching {
+                ApiClient(BuildConfig.EEYES_BASE_URL, TokenStore(app))
+                    .request("POST", "/api/eeyes/device/tasks/$taskId/complete", "{}")
+            }
+        }
         diag.markCaptured(key)
-        diag.recordCapture(key, facing, null)
         val camera = if (facing == "front") "frontal" else "trasera"
-        notify(app, key, CHANNEL_CAPTURE, "eEyes tomó una foto", "\"$title\" · cámara $camera", alert = false)
+        val headline = if (shots > 1) "eEyes tomó $taken fotos" else "eEyes tomó una foto"
+        notify(app, key, CHANNEL_CAPTURE, headline, "\"$title\" · cámara $camera", alert = false)
         ack(app, key)
     }
 

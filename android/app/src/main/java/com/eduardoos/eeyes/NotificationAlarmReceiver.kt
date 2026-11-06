@@ -20,7 +20,15 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
         val taskId = intent.getStringExtra("taskId").orEmpty()
         if (intent.getStringExtra("kind") == NotificationScheduler.KIND_CAPTURE) {
             val pending = goAsync()
-            ScheduledPhoto.start(context, key, taskId, intent.getStringExtra("facing").orEmpty(), title) {
+            ScheduledPhoto.start(
+                context,
+                key,
+                taskId,
+                intent.getStringExtra("facing").orEmpty(),
+                title,
+                intent.getIntExtra("intervalSec", 0),
+                intent.getIntExtra("maxPhotos", 1),
+            ) {
                 pending.finish()
             }
             return

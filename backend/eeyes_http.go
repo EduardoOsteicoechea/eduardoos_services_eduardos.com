@@ -715,12 +715,22 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 		if notifyAt == nil {
 			notifyAt = &now
 		}
-		maxPhotos, audioSec, photoInterval = 0, 0, 0
+		audioSec = 0
 		reminders = nil
 		dueAt = nil
 	}
+	if kind == eeyesTaskKindNotice {
+		maxPhotos, photoInterval = 0, 0
+	}
 	if kind == eeyesTaskKindPhoto {
-		maxPhotos = 1
+		if photoInterval > eeyesMaxBurstIntervalSec {
+			photoInterval = eeyesMaxBurstIntervalSec
+		}
+		if photoInterval >= eeyesMinBurstIntervalSec && maxPhotos > 1 {
+			// Burst: keep the interval and the shot count.
+		} else {
+			maxPhotos, photoInterval = 1, 0
+		}
 	}
 	task := &eeyesTask{
 		ID:               randomID(12),
@@ -899,7 +909,11 @@ func (a *App) eeyesListCompletions(w http.ResponseWriter, r *http.Request) {
 	}
 	out := make([]completion, 0)
 	for _, t := range tasks {
-		if t.Status != eeyesTaskCompleted || t.Kind == eeyesTaskKindNotice {
+		if t.Kind == eeyesTaskKindNotice {
+			continue
+		}
+		openBurst := t.Kind == eeyesTaskKindPhoto && t.Status == eeyesTaskInProgress
+		if t.Status != eeyesTaskCompleted && !openBurst {
 			continue
 		}
 		media, err := a.eeyes.MediaByTask(r.Context(), t.ID)
@@ -1016,13 +1030,15 @@ func (a *App) eeyesDeviceSync(w http.ResponseWriter, r *http.Request) {
 			key := "capture:" + t.ID
 			if t.NotifyAt != nil && !t.NotifyAt.After(horizon) && !containsString(t.NotifiedKeys, key) {
 				notifications = append(notifications, map[string]any{
-					"key":    key,
-					"taskId": t.ID,
-					"title":  t.Title,
-					"body":   t.Instructions,
-					"at":     t.NotifyAt,
-					"kind":   "capture",
-					"facing": t.CameraFacing,
+					"key":         key,
+					"taskId":      t.ID,
+					"title":       t.Title,
+					"body":        t.Instructions,
+					"at":          t.NotifyAt,
+					"kind":        "capture",
+					"facing":      t.CameraFacing,
+					"intervalSec": t.PhotoIntervalSec,
+					"maxPhotos":   t.MaxPhotos,
 				})
 				if t.NotifyDispatchedAt == nil {
 					dispatched := now
@@ -1264,8 +1280,28 @@ func (a *App) eeyesDeviceUploadMedia(w http.ResponseWriter, r *http.Request) {
 		if task.StartedAt == nil {
 			task.StartedAt = capturedAt
 		}
-		task.Status = eeyesTaskCompleted
-		task.CompletedAt = &now
+		goal := task.MaxPhotos
+		if goal < 1 {
+			goal = 1
+		}
+		stored, err := a.eeyes.MediaByTask(r.Context(), task.ID)
+		if err != nil {
+			a.logUnexpected(r, "eeyes", err.Error())
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+		images := 0
+		for _, item := range stored {
+			if item != nil && item.Kind == eeyesMediaKindImage {
+				images++
+			}
+		}
+		if images >= goal {
+			task.Status = eeyesTaskCompleted
+			task.CompletedAt = &now
+		} else {
+			task.Status = eeyesTaskInProgress
+		}
 		task.UpdatedAt = now
 		if err := a.eeyes.UpdateTask(r.Context(), task); err != nil {
 			a.logUnexpected(r, "eeyes", err.Error())

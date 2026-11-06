@@ -705,6 +705,69 @@ func TestEeyesScheduledPhotoLifecycle(t *testing.T) {
 	}
 }
 
+func TestEeyesPhotoBurstStaysOpenUntilTheLastShot(t *testing.T) {
+	app := newEeyesTestApp(t)
+	if err := app.grantEntitlement("member-1", productEeyes); err != nil {
+		t.Fatal(err)
+	}
+	_, c1, c2, c3 := eeyesCreatePairingCodes(t, app)
+	token, deviceID := eeyesPairDevice(t, app, c1, c2, c3)
+
+	rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eeyes/tasks",
+		`{"title":"Ráfaga","deviceId":"`+deviceID+`","kind":"photo","cameraFacing":"back","photoIntervalSec":10,"maxPhotos":3}`)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("create burst %d %s", rec.Code, rec.Body.String())
+	}
+	var created struct {
+		Task eeyesTask `json:"task"`
+	}
+	_ = json.Unmarshal(rec.Body.Bytes(), &created)
+	if created.Task.PhotoIntervalSec != 10 || created.Task.MaxPhotos != 3 || created.Task.AudioSeconds != 0 {
+		t.Fatalf("burst fields: %+v", created.Task)
+	}
+
+	sync := eeyesDeviceJSON(t, app, token, http.MethodGet, "/api/eeyes/device/sync", "")
+	if !strings.Contains(sync.Body.String(), `"intervalSec":10`) || !strings.Contains(sync.Body.String(), `"maxPhotos":3`) {
+		t.Fatalf("sync must tell the shell the burst: %s", sync.Body.String())
+	}
+
+	jpeg := []byte{0xff, 0xd8, 0xff, 0xd9}
+	upload := func(clientID string) *httptest.ResponseRecorder {
+		mb, _ := json.Marshal(map[string]any{
+			"clientMediaId": clientID,
+			"kind":          "image",
+			"mime":          "image/jpeg",
+			"sha256":        sha256Hex(jpeg),
+			"dataBase64":    base64.StdEncoding.EncodeToString(jpeg),
+		})
+		return eeyesDeviceJSON(t, app, token, http.MethodPost, "/api/eeyes/device/tasks/"+created.Task.ID+"/media", string(mb))
+	}
+	if up := upload("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"); up.Code != http.StatusCreated {
+		t.Fatalf("first burst shot %d", up.Code)
+	}
+	got, _ := app.eeyes.TaskByID(context.Background(), created.Task.ID)
+	if got == nil || got.Status != eeyesTaskInProgress {
+		t.Fatalf("burst must stay open after the first shot: %+v", got)
+	}
+	open := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/completions", "")
+	if !strings.Contains(open.Body.String(), created.Task.ID) {
+		t.Fatal("an open burst must already list its photos")
+	}
+	if up := upload("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa2"); up.Code != http.StatusCreated {
+		t.Fatalf("second burst shot %d", up.Code)
+	}
+	if up := upload("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa3"); up.Code != http.StatusCreated {
+		t.Fatalf("third burst shot %d", up.Code)
+	}
+	got, _ = app.eeyes.TaskByID(context.Background(), created.Task.ID)
+	if got == nil || got.Status != eeyesTaskCompleted {
+		t.Fatalf("last shot must complete the burst: %+v", got)
+	}
+	if up := upload("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa4"); up.Code != http.StatusConflict {
+		t.Fatalf("shot past the burst must 409, got %d", up.Code)
+	}
+}
+
 func TestEeyesDownloadFromVersionSubdir(t *testing.T) {
 	app := newEeyesTestApp(t)
 	root := t.TempDir()
