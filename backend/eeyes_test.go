@@ -753,6 +753,15 @@ func TestEeyesPhotoBurstStaysOpenUntilTheLastShot(t *testing.T) {
 	if !strings.Contains(again.Body.String(), `"imagesStored":1`) {
 		t.Fatalf("sync must report the shots already stored: %s", again.Body.String())
 	}
+	ack := eeyesDeviceJSON(t, app, token, http.MethodPost, "/api/eeyes/device/notifications/ack",
+		`{"keys":["capture:`+created.Task.ID+`"]}`)
+	if ack.Code != http.StatusOK {
+		t.Fatalf("ack %d", ack.Code)
+	}
+	resent := eeyesDeviceJSON(t, app, token, http.MethodGet, "/api/eeyes/device/sync", "")
+	if !strings.Contains(resent.Body.String(), `"imagesStored":1`) || !strings.Contains(resent.Body.String(), created.Task.ID) {
+		t.Fatalf("a short burst must stay on sync after ack: %s", resent.Body.String())
+	}
 	got, _ := app.eeyes.TaskByID(context.Background(), created.Task.ID)
 	if got == nil || got.Status != eeyesTaskInProgress {
 		t.Fatalf("burst must stay open after the first shot: %+v", got)

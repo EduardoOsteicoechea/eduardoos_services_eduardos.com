@@ -3,6 +3,7 @@
  */
 
 import { useCallback, useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import ServiceGate from "../ServiceGate/ServiceGate";
 import {
   DashboardGrid,
@@ -716,15 +717,15 @@ function PhotoView() {
         </button>
       </form>
       {eeyesCaptureDevices(devices).length === 0 ? <p className="lede">Vincula un dispositivo antes de programar fotos.</p> : null}
-      <div className="eeyes-batch-list">
-        {eeyesBatches(photos).map((group) => {
+      <div className="eeyes-pack-row">
+        {eeyesBatches(photos).flatMap((group) => {
           const shown = eeyesUniquePackTasks(group, devices);
-          if (shown.length === 0) return null;
-          return (
-          <DeviceBatch key={group[0].batchId || group[0].id} tasks={shown} devices={devices} analysis={eeyesPackAnalysis(group)} render={(t) => (
-            <>
+          if (shown.length === 0) return [];
+          return shown.map((t) => (
+            <article key={t.id} className="eeyes-task-card">
+              <strong>{deviceLabel(devices, t.deviceId)}</strong>
               <span className="lede">
-                Cámara {CAMERA_LABEL[t.cameraFacing ?? "back"]} · {photoStatusLabel(t)}
+                {t.title} · Cámara {CAMERA_LABEL[t.cameraFacing ?? "back"]} · {photoStatusLabel(t)}
               </span>
               {mediaByTask[t.id]?.length ? (
                 <div className="eeyes-media-grid">
@@ -741,9 +742,19 @@ function PhotoView() {
                   Cancelar
                 </button>
               ) : null}
-            </>
-          )} />
-          );
+            </article>
+          ));
+        })}
+        {eeyesBatches(photos).flatMap((group) => {
+          const shown = eeyesUniquePackTasks(group, devices);
+          const analysis = eeyesPackAnalysis(group);
+          if (shown.length === 0 || !analysis) return [];
+          return [
+            <div key={`${group[0].batchId || group[0].id}-analysis`} className="eeyes-pack-analysis">
+              <strong>Análisis del paquete</strong>
+              <p>{analysis}</p>
+            </div>,
+          ];
         })}
       </div>
     </section>
@@ -856,14 +867,25 @@ function EeyesPhoto({ src, alt }: { src: string; alt: string }) {
       <button type="button" className="eeyes-photo-thumb" onClick={() => setOpen(true)} aria-label="Ver foto en grande">
         <img src={src} alt={alt} />
       </button>
-      {open ? (
-        <div className="eeyes-photo-zoom" role="dialog" aria-modal="true" aria-label="Foto">
-          <button type="button" className="icon-btn eeyes-photo-zoom__close" aria-label="Cerrar" onClick={() => setOpen(false)}>
-            <span className="material-symbols-outlined" aria-hidden="true">close</span>
-          </button>
-          <img src={src} alt={alt} />
-        </div>
-      ) : null}
+      {open
+        ? createPortal(
+            <div className="eeyes-photo-zoom" role="dialog" aria-modal="true" aria-label="Foto" onClick={() => setOpen(false)}>
+              <button
+                type="button"
+                className="icon-btn eeyes-photo-zoom__close"
+                aria-label="Cerrar"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setOpen(false);
+                }}
+              >
+                <span className="material-symbols-outlined" aria-hidden="true">close</span>
+              </button>
+              <img src={src} alt={alt} />
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }

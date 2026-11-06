@@ -62,8 +62,8 @@
 }
 
 .eeyes-photo-thumb {
-  width: 9.375rem;
-  height: 6.5625rem;
+  width: 6.25rem;
+  height: 4.375rem;
   padding: 0;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
@@ -72,9 +72,9 @@
 }
 
 .eeyes-photo-thumb img {
-  width: 9.375rem;
-  height: 6.5625rem;
-  max-width: 9.375rem;
+  width: 6.25rem;
+  height: 4.375rem;
+  max-width: 6.25rem;
   object-fit: cover;
   border: 0;
   border-radius: 0;
@@ -83,19 +83,25 @@
 .eeyes-photo-zoom {
   position: fixed;
   z-index: var(--z-modal);
-  inset: 1rem;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
   background: var(--color-bg);
-  overflow: auto;
 }
 
 .eeyes-photo-zoom img {
-  max-width: 64rem;
-  max-height: 42rem;
-  width: auto;
-  height: auto;
+  flex: 0 0 auto;
+  width: 48rem;
+  height: 32rem;
+  max-width: calc(var(--shell-viewport-width, var(--content-basis)) - 4rem);
+  max-height: calc(var(--content-basis) * 0.75);
+  object-fit: contain;
+  background: var(--color-surface);
   border: 0;
 }
 
@@ -103,6 +109,28 @@
   position: absolute;
   top: var(--rail-gap);
   right: var(--rail-gap);
+}
+
+.eeyes-pack-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+  align-items: stretch;
+}
+
+.eeyes-pack-row > .eeyes-task-card,
+.eeyes-pack-row > .eeyes-pack-analysis {
+  flex: 1 1 calc((var(--content-basis) - (2 * var(--rail-gap))) / 3);
+  max-width: calc((var(--content-basis) - (2 * var(--rail-gap))) / 3);
+}
+
+@media (max-width: 47.999rem) {
+  .eeyes-pack-row > .eeyes-task-card,
+  .eeyes-pack-row > .eeyes-pack-analysis {
+    flex-basis: calc(var(--content-basis) - var(--rail-gap));
+    max-width: calc(var(--content-basis) - var(--rail-gap));
+  }
 }
 
 .eeyes-batch-list {

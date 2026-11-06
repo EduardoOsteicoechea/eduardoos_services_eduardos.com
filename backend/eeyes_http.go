@@ -1028,15 +1028,22 @@ func (a *App) eeyesDeviceSync(w http.ResponseWriter, r *http.Request) {
 		}
 		if t.Kind == eeyesTaskKindPhoto {
 			key := "capture:" + t.ID
-			if t.NotifyAt != nil && !t.NotifyAt.After(horizon) && !containsString(t.NotifiedKeys, key) {
-				imagesStored := 0
-				if media, err := a.eeyes.MediaByTask(r.Context(), t.ID); err == nil {
-					for _, item := range media {
-						if item != nil && item.Kind == eeyesMediaKindImage {
-							imagesStored++
-						}
+			imagesStored := 0
+			if media, err := a.eeyes.MediaByTask(r.Context(), t.ID); err == nil {
+				for _, item := range media {
+					if item != nil && item.Kind == eeyesMediaKindImage {
+						imagesStored++
 					}
 				}
+			}
+			// A burst that stopped early stays on the sync list until every shot
+			// is stored, even after the device acked the first pass.
+			goal := t.MaxPhotos
+			if goal < 1 {
+				goal = 1
+			}
+			shortBurst := goal > 1 && imagesStored < goal
+			if t.NotifyAt != nil && !t.NotifyAt.After(horizon) && (shortBurst || !containsString(t.NotifiedKeys, key)) {
 				notifications = append(notifications, map[string]any{
 					"key":          key,
 					"taskId":       t.ID,

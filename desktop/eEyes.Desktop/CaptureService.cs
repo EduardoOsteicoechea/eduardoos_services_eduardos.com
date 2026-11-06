@@ -64,6 +64,67 @@ internal sealed class CaptureService
         return (devices.FirstOrDefault(d => d.EnclosureLocation?.Panel == want) ?? devices[0]).Id;
     }
 
+    /// <summary>Holds the webcam open and uploads every shot of the burst.</summary>
+    private async Task<int> CaptureBurstAsync(string taskId, string facing, int shots, int gapSec)
+    {
+        _capturing = true;
+        var taken = 0;
+        MediaCapture? capture = null;
+        LowLagPhotoCapture? lowLag = null;
+        try
+        {
+            var deviceId = await PickCameraAsync(facing);
+            if (deviceId is null) return 0;
+            capture = new MediaCapture();
+            await capture.InitializeAsync(new MediaCaptureInitializationSettings
+            {
+                StreamingCaptureMode = StreamingCaptureMode.Video,
+                VideoDeviceId = deviceId,
+            });
+            lowLag = await capture.PrepareLowLagPhotoCaptureAsync(ImageEncodingProperties.CreateJpeg());
+            await Task.Delay(WarmupMs);
+            for (var i = 0; i < shots; i++)
+            {
+                if (i > 0 && gapSec > 0) await Task.Delay(TimeSpan.FromSeconds(gapSec));
+                byte[]? raw = null;
+                for (var attempt = 0; attempt < 3 && (raw is null || raw.Length == 0); attempt++)
+                {
+                    if (attempt > 0) await Task.Delay(TimeSpan.FromSeconds(1));
+                    raw = await ReadFrameAsync(lowLag);
+                }
+                if (raw is null || raw.Length == 0) break;
+                await EnqueueAndUploadAsync(taskId, "image", "image/jpeg", MediaCompressor.CompressJpeg(raw), 0);
+                taken++;
+            }
+            return taken;
+        }
+        catch
+        {
+            return taken;
+        }
+        finally
+        {
+            if (lowLag is not null)
+            {
+                try { await lowLag.FinishAsync(); } catch { /* already finished */ }
+            }
+            capture?.Dispose();
+            if (_autoCts is null) _capturing = false;
+        }
+    }
+
+    private static async Task<byte[]?> ReadFrameAsync(LowLagPhotoCapture lowLag)
+    {
+        var photo = await lowLag.CaptureAsync();
+        using var frame = photo.Frame;
+        var size = (uint)frame.Size;
+        using var reader = new DataReader(frame.GetInputStreamAt(0));
+        await reader.LoadAsync(size);
+        var bytes = new byte[size];
+        reader.ReadBytes(bytes);
+        return bytes;
+    }
+
     private static async Task<byte[]?> TakeJpegAsync(MediaCapture capture)
     {
         var lowLag = await capture.PrepareLowLagPhotoCaptureAsync(ImageEncodingProperties.CreateJpeg());
@@ -133,19 +194,9 @@ internal sealed class CaptureService
         if (wait > TimeSpan.Zero) await Task.Delay(wait);
         var shots = maxPhotos > 1 ? maxPhotos : 1;
         var gap = shots > 1 ? Math.Max(1, intervalSec) : 0;
-        var taken = 0;
-        for (var i = 0; i < shots; i++)
-        {
-            if (i > 0 && gap > 0) await Task.Delay(TimeSpan.FromSeconds(gap));
-            var ok = false;
-            for (var attempt = 0; attempt < 3 && !ok; attempt++)
-            {
-                if (attempt > 0) await Task.Delay(TimeSpan.FromSeconds(1));
-                ok = await CapturePhotoAsync(taskId, facing);
-            }
-            if (ok) taken++;
-            else break;
-        }
+        // One camera session for the whole burst. Opening the webcam again for
+        // each shot fails on Windows, so a burst was stopping after the first photo.
+        var taken = await CaptureBurstAsync(taskId, facing, shots, gap);
         if (taken > 0 && taken < shots)
         {
             // Leave the key unacked so the next sync takes only the missing shots.
