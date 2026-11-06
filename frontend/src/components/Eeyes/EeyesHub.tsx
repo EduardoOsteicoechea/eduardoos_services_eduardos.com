@@ -2,7 +2,7 @@
  * eEyes hub — pair devices, plan tasks, review completions, download shells.
  */
 
-import { useCallback, useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { Fragment, useCallback, useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import ServiceGate from "../ServiceGate/ServiceGate";
 import {
@@ -18,6 +18,7 @@ import {
   cancelEeyesTask,
   createEeyesPairing,
   createEeyesTask,
+  eeyesAnalysisOrder,
   eeyesBatches,
   eeyesPhotoSessions,
   eeyesCaptureDevices,
@@ -746,9 +747,15 @@ function PhotoView() {
                 ))}
                 {analyses.length ? (
                   <div className="eeyes-pack-analysis">
-                    {analyses.map((text) => (
-                      <p key={text}>{text}</p>
-                    ))}
+                    {analyses.map((text) => {
+                      const ordered = eeyesAnalysisOrder(text);
+                      return (
+                        <Fragment key={text}>
+                          {ordered.conclusion ? <p>{ordered.conclusion}</p> : null}
+                          {ordered.explanation ? <p>{ordered.explanation}</p> : null}
+                        </Fragment>
+                      );
+                    })}
                   </div>
                 ) : null}
               </div>

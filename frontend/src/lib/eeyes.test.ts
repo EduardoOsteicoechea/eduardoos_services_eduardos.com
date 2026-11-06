@@ -4,6 +4,7 @@ import {
   eeyesMediaUrl,
   eeyesNoticeStage,
   eeyesPhotoStage,
+  eeyesAnalysisOrder,
   eeyesBatches,
   eeyesPhotoSessions,
   eeyesCaptureDevices,
@@ -121,6 +122,13 @@ describe("eeyes helpers", () => {
     expect(sessions).toHaveLength(2);
     expect(sessions[0].map((t) => t.id)).toEqual(["later"]);
     expect(sessions[1].map((t) => t.id)).toEqual(["d", "t", "p"]);
+  });
+
+  it("leads a pack reading with the conclusion", () => {
+    const ordered = eeyesAnalysisOrder("Postura: erguido.\n\nConclusión: no hay deep work.");
+    expect(ordered.conclusion).toBe("Conclusión: no hay deep work.");
+    expect(ordered.explanation).toBe("Postura: erguido.");
+    expect(eeyesAnalysisOrder("Sin cierre.").explanation).toBe("Sin cierre.");
   });
 
   it("builds media and download urls", () => {

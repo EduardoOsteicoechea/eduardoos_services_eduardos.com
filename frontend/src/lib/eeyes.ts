@@ -272,6 +272,18 @@ export function eeyesUniquePackTasks(tasks: EeyesTask[], devices: EeyesDevice[])
   return [...best.values()];
 }
 
+/** Conclusion first, then the rest of the pack reading. */
+export function eeyesAnalysisOrder(text: string): { conclusion: string; explanation: string } {
+  const trimmed = text.trim();
+  const at = trimmed.search(/(?:^|\n)Conclusión:/);
+  if (at < 0) return { conclusion: "", explanation: trimmed };
+  const cut = trimmed[at] === "\n" ? at + 1 : at;
+  return {
+    conclusion: trimmed.slice(cut).trim(),
+    explanation: trimmed.slice(0, at).trim(),
+  };
+}
+
 export function eeyesPackAnalysis(tasks: EeyesTask[]): string {
   for (const task of tasks) {
     const text = task.packAnalysis?.trim();
