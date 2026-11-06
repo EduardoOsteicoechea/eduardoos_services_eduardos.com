@@ -27,6 +27,7 @@ func (a *App) registerEeyesRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/eeyes/tasks", a.eeyesListTasks)
 	mux.HandleFunc("POST /api/eeyes/tasks", a.eeyesCreateTask)
 	mux.HandleFunc("PATCH /api/eeyes/tasks/{id}", a.eeyesPatchTask)
+	mux.HandleFunc("PATCH /api/eeyes/tasks/{id}/pack-analysis", a.eeyesPatchPackAnalysis)
 	mux.HandleFunc("DELETE /api/eeyes/tasks/{id}", a.eeyesDeleteTask)
 	mux.HandleFunc("GET /api/eeyes/completions", a.eeyesListCompletions)
 	mux.HandleFunc("GET /api/eeyes/media/{id}", a.eeyesGetHubMedia)
@@ -292,20 +293,32 @@ func (a *App) eeyesDevicePair(w http.ResponseWriter, r *http.Request) {
 	if installID != "" {
 		installHash = a.hashOpaque("eeyes-install", platform+":"+installID)
 	}
-	// Re-pairing the same install rotates that one record. A different install
-	// is a new device and must not revoke or replace the others.
+	// The same install, or the same platform and model linked again, rotates
+	// that one record. A different model stays linked on its own.
+	existing, err := a.eeyes.DevicesByOwner(r.Context(), owner.ID)
+	if err != nil {
+		a.logUnexpected(r, "eeyes", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	identity := platform + "\n" + strings.ToLower(model)
 	var device *eeyesDevice
-	if installHash != "" {
-		existing, err := a.eeyes.DevicesByOwner(r.Context(), owner.ID)
-		if err != nil {
-			a.logUnexpected(r, "eeyes", err.Error())
-			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
-			return
+	for _, d := range existing {
+		if d.Platform != platform || !d.isLive(now) {
+			continue
 		}
+		if installHash != "" && hmacEqual(d.InstallHash, installHash) {
+			device = d
+			break
+		}
+	}
+	if device == nil {
 		for _, d := range existing {
-			if d.Platform == platform && d.RevokedAt == nil && hmacEqual(d.InstallHash, installHash) {
+			if d.Platform != platform || !d.isLive(now) || eeyesDeviceIdentity(d) != identity {
+				continue
+			}
+			if device == nil || eeyesDeviceNewer(d, device) {
 				device = d
-				break
 			}
 		}
 	}
@@ -317,6 +330,9 @@ func (a *App) eeyesDevicePair(w http.ResponseWriter, r *http.Request) {
 		device.ExpiresAt = now.Add(eeyesDeviceTTL)
 		device.LastSeenAt = now
 		device.PairingID = p.ID
+		if installHash != "" {
+			device.InstallHash = installHash
+		}
 		if err := a.eeyes.UpdateDevice(r.Context(), device); err != nil {
 			a.logUnexpected(r, "eeyes", err.Error())
 			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
@@ -352,6 +368,9 @@ func (a *App) eeyesDevicePair(w http.ResponseWriter, r *http.Request) {
 	p.DeviceID = device.ID
 	p.DeviceLabel = device.Label
 	if err := a.eeyes.UpdatePairing(r.Context(), p); err != nil {
+		a.logUnexpected(r, "eeyes", err.Error())
+	}
+	if err := a.collapseEeyesDevices(r.Context(), owner.ID); err != nil {
 		a.logUnexpected(r, "eeyes", err.Error())
 	}
 	a.auditEvent(r, "eeyes_device_pair", "ok", owner.ID)
@@ -418,9 +437,94 @@ func eeyesDeviceFrom(r *http.Request) *eeyesDevice {
 	return d
 }
 
+func eeyesDeviceIdentity(d *eeyesDevice) string {
+	if d == nil {
+		return ""
+	}
+	model := strings.ToLower(strings.TrimSpace(d.Model))
+	if model == "" {
+		model = strings.ToLower(strings.TrimSpace(d.Label))
+	}
+	return d.Platform + "\n" + model
+}
+
+func eeyesDeviceNewer(a, b *eeyesDevice) bool {
+	if a.LastSeenAt.After(b.LastSeenAt) {
+		return true
+	}
+	if b.LastSeenAt.After(a.LastSeenAt) {
+		return false
+	}
+	return a.CreatedAt.After(b.CreatedAt)
+}
+
+// collapseEeyesDevices keeps one live record per platform and model. Extra
+// links of the same apparatus are revoked and their open tasks are cancelled.
+func (a *App) collapseEeyesDevices(ctx context.Context, ownerID string) error {
+	a.eeyesCollapseMu.Lock()
+	defer a.eeyesCollapseMu.Unlock()
+	devices, err := a.eeyes.DevicesByOwner(ctx, ownerID)
+	if err != nil {
+		return err
+	}
+	now := time.Now().UTC()
+	best := map[string]*eeyesDevice{}
+	var extras []*eeyesDevice
+	for _, d := range devices {
+		if d == nil || !d.isLive(now) {
+			continue
+		}
+		id := eeyesDeviceIdentity(d)
+		cur := best[id]
+		if cur == nil || eeyesDeviceNewer(d, cur) {
+			if cur != nil {
+				extras = append(extras, cur)
+			}
+			best[id] = d
+			continue
+		}
+		extras = append(extras, d)
+	}
+	if len(extras) == 0 {
+		return nil
+	}
+	revoked := map[string]bool{}
+	for _, d := range extras {
+		d.RevokedAt = &now
+		if err := a.eeyes.UpdateDevice(ctx, d); err != nil {
+			return err
+		}
+		revoked[d.ID] = true
+		a.eeyesWake.bump(d.ID)
+	}
+	tasks, err := a.eeyes.TasksByOwner(ctx, ownerID)
+	if err != nil {
+		return err
+	}
+	for _, t := range tasks {
+		if t == nil || !revoked[t.DeviceID] {
+			continue
+		}
+		if t.Status != eeyesTaskPending && t.Status != eeyesTaskInProgress {
+			continue
+		}
+		t.Status = eeyesTaskCancelled
+		t.UpdatedAt = now
+		if err := a.eeyes.UpdateTask(ctx, t); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func (a *App) eeyesListDevices(w http.ResponseWriter, r *http.Request) {
 	user := a.requireEeyesUser(w, r)
 	if user == nil {
+		return
+	}
+	if err := a.collapseEeyesDevices(r.Context(), user.ID); err != nil {
+		a.logUnexpected(r, "eeyes", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	list, err := a.eeyes.DevicesByOwner(r.Context(), user.ID)
@@ -495,6 +599,11 @@ func (a *App) eeyesRevokeDevice(w http.ResponseWriter, r *http.Request) {
 func (a *App) eeyesListTasks(w http.ResponseWriter, r *http.Request) {
 	user := a.requireEeyesUser(w, r)
 	if user == nil {
+		return
+	}
+	if err := a.collapseEeyesDevices(r.Context(), user.ID); err != nil {
+		a.logUnexpected(r, "eeyes", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
 	list, err := a.eeyes.TasksByOwner(r.Context(), user.ID)
@@ -711,6 +820,66 @@ func (a *App) eeyesDeleteTask(w http.ResponseWriter, r *http.Request) {
 	a.eeyesWake.bump(task.DeviceID)
 	a.auditEvent(r, "eeyes_task_delete", "ok", user.ID)
 	writeJSON(w, http.StatusOK, map[string]any{"ok": true})
+}
+
+func (a *App) eeyesPatchPackAnalysis(w http.ResponseWriter, r *http.Request) {
+	user := a.requireEeyesUnsafe(w, r)
+	if user == nil {
+		return
+	}
+	id := strings.TrimSpace(r.PathValue("id"))
+	task, err := a.eeyes.TaskByID(r.Context(), id)
+	if err != nil || task == nil || task.OwnerID != user.ID {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	var body struct {
+		Analysis string `json:"analysis"`
+	}
+	defer r.Body.Close()
+	if err := json.NewDecoder(io.LimitReader(r.Body, 1<<20)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	analysis := strings.TrimSpace(body.Analysis)
+	if analysis == "" || utf8.RuneCountInString(analysis) > eeyesMaxPackAnalysisRunes {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	tasks, err := a.eeyes.TasksByOwner(r.Context(), user.ID)
+	if err != nil {
+		a.logUnexpected(r, "eeyes", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	key := task.BatchID
+	if key == "" {
+		key = task.ID
+	}
+	now := time.Now().UTC()
+	updated := 0
+	for _, t := range tasks {
+		if t == nil || t.OwnerID != user.ID {
+			continue
+		}
+		tKey := t.BatchID
+		if tKey == "" {
+			tKey = t.ID
+		}
+		if tKey != key {
+			continue
+		}
+		t.PackAnalysis = analysis
+		t.UpdatedAt = now
+		if err := a.eeyes.UpdateTask(r.Context(), t); err != nil {
+			a.logUnexpected(r, "eeyes", err.Error())
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+		updated++
+	}
+	a.auditEvent(r, "eeyes_pack_analysis", "ok", user.ID)
+	writeJSON(w, http.StatusOK, map[string]any{"packAnalysis": analysis, "tasks": updated})
 }
 
 func (a *App) eeyesListCompletions(w http.ResponseWriter, r *http.Request) {

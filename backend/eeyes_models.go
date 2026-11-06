@@ -26,9 +26,10 @@ const (
 	eeyesPairingOpen     = "open"
 	eeyesPairingPaired   = "paired"
 	eeyesPairingExpired  = "expired"
-	eeyesMediaKindImage  = "image"
-	eeyesMediaKindAudio  = "audio"
-	eeyesMaxAnalysisRunes = 2000
+	eeyesMediaKindImage       = "image"
+	eeyesMediaKindAudio       = "audio"
+	eeyesMaxAnalysisRunes     = 2000
+	eeyesMaxPackAnalysisRunes = 4000
 )
 
 const eeyesNotificationHorizon = 24 * time.Hour
@@ -98,6 +99,7 @@ type eeyesTask struct {
 	AudioSeconds      int        `json:"audioSeconds" bson:"audio_seconds"`
 	CameraFacing      string     `json:"cameraFacing,omitempty" bson:"camera_facing,omitempty"`
 	BatchID           string     `json:"batchId,omitempty" bson:"batch_id,omitempty"`
+	PackAnalysis      string     `json:"packAnalysis,omitempty" bson:"pack_analysis,omitempty"`
 	StartedAt         *time.Time `json:"startedAt,omitempty" bson:"started_at,omitempty"`
 	CompletedAt       *time.Time `json:"completedAt,omitempty" bson:"completed_at,omitempty"`
 	CreatedAt         time.Time  `json:"createdAt" bson:"created_at"`

@@ -111,6 +111,8 @@ Hub card **Programar foto** creates `POST /api/eeyes/tasks` `{ kind: "photo", de
 - Desktop: `MediaCapture` low-lag photo on the camera whose enclosure panel matches `facing` (else the first camera); retries up to 5 times per key per run.
 - Hub stages: `scheduled → waiting_sync → dispatched → taken → uploaded`.
 - A notification, a scheduled photo, and a task with audio are created once per live device, sharing `batchId`. The hub shows one container and, inside it, one item per device with that device's name and its own status.
+- The same platform and model linked again is one device. Opening the device or task list revokes the extra records and cancels their pending tasks. A different model stays linked.
+- `PATCH /api/eeyes/tasks/{id}/pack-analysis` `{ "analysis": "..." }` (owner, ≤ 4000 runes) stores one reading for the whole pack and copies it onto every task with that `batchId`. The hub shows it once, above the device cards. Another owner receives 404.
 - `PATCH /api/eeyes/media/{id}` `{ "analysis": "..." }` (owner, ≤ 2000 runes) stores text shown under that image. Another owner receives 404.
 
 Notifications are listed up to 24 h ahead until acked. Shells ack a key only after it was actually shown (Android: alarm fired and system notifications enabled; Desktop: toast time reached). Server records per task `notifyDispatchedAt` (first sync that listed it) and `notifyAckedAt`; per device `lastSyncAt` and `lastSyncNotifications`.

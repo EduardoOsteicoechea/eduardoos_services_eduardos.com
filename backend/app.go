@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -67,6 +68,7 @@ type App struct {
 	eeyesFS                *eeyesFS
 	eeyesPairIPLimit       *limiter
 	eeyesWake              *eeyesWaker
+	eeyesCollapseMu        sync.Mutex
 	failClosedEnt          bool
 	sessionCache           *sessionCache
 }

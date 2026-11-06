@@ -81,6 +81,17 @@
   font-size: var(--font-size-md);
 }
 
+.eeyes-pack-analysis {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  white-space: pre-wrap;
+}
+
 .eeyes-batch__items {
   display: flex;
   flex-wrap: wrap;

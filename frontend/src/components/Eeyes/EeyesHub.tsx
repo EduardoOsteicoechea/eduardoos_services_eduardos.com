@@ -18,7 +18,10 @@ import {
   createEeyesPairing,
   createEeyesTask,
   eeyesBatches,
+  eeyesCaptureDevices,
   eeyesDownloadUrl,
+  eeyesPackAnalysis,
+  eeyesUniquePackTasks,
   eeyesMediaUrl,
   eeyesNoticeStage,
   eeyesPhotoStage,
@@ -191,10 +194,10 @@ function DevicesView() {
     <section className="product-dash__section">
       <h2>Dispositivos</h2>
       <p className="lede">
-        {devices.filter((d) => !d.revokedAt).length} vinculados. Vincular otro no quita los anteriores.
+        {eeyesCaptureDevices(devices).length} vinculados. Un mismo aparato cuenta una vez; el teléfono, la tablet y el escritorio siguen por separado.
       </p>
       <div className="eeyes-row">
-        {devices.map((d) => (
+        {eeyesCaptureDevices(devices).map((d) => (
           <article key={d.id} className="eeyes-device-card">
             <strong>{d.label}</strong>
             <span className="lede">
@@ -248,10 +251,12 @@ async function forEachDevice(
 function DeviceBatch({
   tasks,
   devices,
+  analysis,
   render,
 }: {
   tasks: EeyesTask[];
   devices: EeyesDevice[];
+  analysis?: string;
   render: (task: EeyesTask) => ReactNode;
 }) {
   const head = tasks[0];
@@ -259,6 +264,12 @@ function DeviceBatch({
     <section className="eeyes-batch">
       <h3>{head.title}</h3>
       {head.instructions ? <p className="lede">{head.instructions}</p> : null}
+      {analysis ? (
+        <div className="eeyes-pack-analysis">
+          <strong>Análisis del paquete</strong>
+          <p>{analysis}</p>
+        </div>
+      ) : null}
       <div className="eeyes-batch__items">
         {tasks.map((task) => (
           <article key={task.id} className="eeyes-task-card">
@@ -285,7 +296,7 @@ function TasksView() {
 
   const load = useCallback(async () => {
     const [d, t] = await Promise.all([listEeyesDevices(), listEeyesTasks()]);
-    setDevices(d.filter((x) => !x.revokedAt));
+    setDevices(d);
     setTasks(t.filter((x) => !isEeyesNotice(x) && !isEeyesPhoto(x)));
   }, []);
 
@@ -295,8 +306,8 @@ function TasksView() {
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (devices.length === 0) return;
-    await forEachDevice(devices, (deviceId, batchId) =>
+    if (eeyesCaptureDevices(devices).length === 0) return;
+    await forEachDevice(eeyesCaptureDevices(devices), (deviceId, batchId) =>
       createEeyesTask({ ...form, deviceId, batchId }),
     );
     setForm((f) => ({ ...f, title: "", instructions: "" }));
@@ -364,14 +375,17 @@ function TasksView() {
             onChange={(e) => setForm({ ...form, audioSeconds: Number(e.target.value) || 0 })}
           />
         </label>
-        <button type="submit" disabled={devices.length === 0}>
+        <button type="submit" disabled={eeyesCaptureDevices(devices).length === 0}>
           Crear en cada dispositivo
         </button>
       </form>
-      {devices.length === 0 ? <p className="lede">Vincula un dispositivo antes de crear tareas.</p> : null}
+      {eeyesCaptureDevices(devices).length === 0 ? <p className="lede">Vincula un dispositivo antes de crear tareas.</p> : null}
       <div className="eeyes-batch-list">
-        {eeyesBatches(tasks).map((group) => (
-          <DeviceBatch key={group[0].batchId || group[0].id} tasks={group} devices={devices} render={(t) => (
+        {eeyesBatches(tasks).map((group) => {
+          const shown = eeyesUniquePackTasks(group, devices);
+          if (shown.length === 0) return null;
+          return (
+          <DeviceBatch key={group[0].batchId || group[0].id} tasks={shown} devices={devices} analysis={eeyesPackAnalysis(group)} render={(t) => (
             <>
               <span className="lede">
                 {t.audioSeconds > 0 ? `Audio ${t.audioSeconds} s · ` : ""}
@@ -384,7 +398,8 @@ function TasksView() {
               ) : null}
             </>
           )} />
-        ))}
+          );
+        })}
       </div>
     </section>
   );
@@ -429,8 +444,7 @@ function NotifyView() {
 
   const load = useCallback(async () => {
     const [d, t] = await Promise.all([listEeyesDevices(), listEeyesTasks()]);
-    const live = d.filter((x) => !x.revokedAt);
-    setDevices(live);
+    setDevices(d);
     setNotices(
       t
         .filter(isEeyesNotice)
@@ -445,17 +459,18 @@ function NotifyView() {
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (when === "custom" && !customAt) return;
-    if (devices.length === 0) return;
+    const targets = eeyesCaptureDevices(devices);
+    if (targets.length === 0) return;
     setBusy(true);
     setSentLine("");
     try {
       const notifyAt = resolveWhen(when, customAt);
-      await forEachDevice(devices, (deviceId, batchId) =>
+      await forEachDevice(targets, (deviceId, batchId) =>
         sendEeyesNotice({ deviceId, title, message, notifyAt, batchId }).then(() => undefined),
       );
       setTitle("");
       setMessage("");
-      setSentLine(`Enviada a ${devices.length} dispositivo${devices.length === 1 ? "" : "s"}.`);
+      setSentLine(`Enviada a ${targets.length} dispositivo${targets.length === 1 ? "" : "s"}.`);
       await load();
     } catch {
       /* unwrap already opened the error modal */
@@ -500,15 +515,18 @@ function NotifyView() {
             />
           </label>
         ) : null}
-        <button type="submit" disabled={busy || devices.length === 0}>
+        <button type="submit" disabled={busy || eeyesCaptureDevices(devices).length === 0}>
           {busy ? "Enviando…" : "Enviar a cada dispositivo"}
         </button>
         {sentLine ? <p className="lede" aria-live="polite">{sentLine}</p> : null}
       </form>
-      {devices.length === 0 ? <p className="lede">Vincula un dispositivo antes de enviar avisos.</p> : null}
+      {eeyesCaptureDevices(devices).length === 0 ? <p className="lede">Vincula un dispositivo antes de enviar avisos.</p> : null}
       <div className="eeyes-batch-list">
-        {eeyesBatches(notices).map((group) => (
-          <DeviceBatch key={group[0].batchId || group[0].id} tasks={group} devices={devices} render={(t) => (
+        {eeyesBatches(notices).map((group) => {
+          const shown = eeyesUniquePackTasks(group, devices);
+          if (shown.length === 0) return null;
+          return (
+          <DeviceBatch key={group[0].batchId || group[0].id} tasks={shown} devices={devices} analysis={eeyesPackAnalysis(group)} render={(t) => (
             <>
               <span className="lede">{noticeStatusLabel(t)}</span>
               {t.status === "pending" ? (
@@ -518,7 +536,8 @@ function NotifyView() {
               ) : null}
             </>
           )} />
-        ))}
+          );
+        })}
       </div>
     </section>
   );
@@ -557,8 +576,7 @@ function PhotoView() {
 
   const load = useCallback(async () => {
     const [d, t, c] = await Promise.all([listEeyesDevices(), listEeyesTasks(), listEeyesCompletions()]);
-    const live = d.filter((x) => !x.revokedAt);
-    setDevices(live);
+    setDevices(d);
     setPhotos(t.filter(isEeyesPhoto).sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)));
     const media: Record<string, { id: string; analysis?: string }[]> = {};
     for (const { task, media: items } of c) {
@@ -585,11 +603,12 @@ function PhotoView() {
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (when === "custom" && !customAt) return;
-    if (devices.length === 0) return;
+    const targets = eeyesCaptureDevices(devices);
+    if (targets.length === 0) return;
     setBusy(true);
     try {
       const notifyAt = resolveWhen(when, customAt);
-      await forEachDevice(devices, (deviceId, batchId) =>
+      await forEachDevice(targets, (deviceId, batchId) =>
         scheduleEeyesPhoto({ deviceId, title, cameraFacing: facing, notifyAt, batchId }),
       );
       await load();
@@ -639,14 +658,17 @@ function PhotoView() {
             />
           </label>
         ) : null}
-        <button type="submit" disabled={busy || devices.length === 0}>
+        <button type="submit" disabled={busy || eeyesCaptureDevices(devices).length === 0}>
           {busy ? "Programando…" : "Programar en cada dispositivo"}
         </button>
       </form>
-      {devices.length === 0 ? <p className="lede">Vincula un dispositivo antes de programar fotos.</p> : null}
+      {eeyesCaptureDevices(devices).length === 0 ? <p className="lede">Vincula un dispositivo antes de programar fotos.</p> : null}
       <div className="eeyes-batch-list">
-        {eeyesBatches(photos).map((group) => (
-          <DeviceBatch key={group[0].batchId || group[0].id} tasks={group} devices={devices} render={(t) => (
+        {eeyesBatches(photos).map((group) => {
+          const shown = eeyesUniquePackTasks(group, devices);
+          if (shown.length === 0) return null;
+          return (
+          <DeviceBatch key={group[0].batchId || group[0].id} tasks={shown} devices={devices} analysis={eeyesPackAnalysis(group)} render={(t) => (
             <>
               <span className="lede">
                 Cámara {CAMERA_LABEL[t.cameraFacing ?? "back"]} · {photoStatusLabel(t)}
@@ -668,7 +690,8 @@ function PhotoView() {
               ) : null}
             </>
           )} />
-        ))}
+          );
+        })}
       </div>
     </section>
   );
@@ -782,11 +805,15 @@ function CompletionsView() {
       <h2>Completaciones</h2>
       {items.length === 0 ? <p className="lede">Aún no hay tareas completadas.</p> : null}
       <div className="eeyes-batch-list">
-        {groups.map((group) => (
+        {groups.map((group) => {
+          const shown = eeyesUniquePackTasks(group.map((row) => row.task), devices);
+          if (shown.length === 0) return null;
+          return (
           <DeviceBatch
             key={group[0].task.batchId || group[0].task.id}
-            tasks={group.map((row) => row.task)}
+            tasks={shown}
             devices={devices}
+            analysis={eeyesPackAnalysis(group.map((row) => row.task))}
             render={(task) => {
               const media = group.find((row) => row.task.id === task.id)?.media ?? [];
               return (
@@ -813,7 +840,8 @@ function CompletionsView() {
               );
             }}
           />
-        ))}
+          );
+        })}
       </div>
     </section>
   );

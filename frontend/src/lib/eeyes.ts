@@ -51,6 +51,8 @@ export type EeyesTask = {
   audioSeconds: number;
   /** Same id on every device copy of one send. */
   batchId?: string;
+  /** Reading of the whole pack, shared by every device copy. */
+  packAnalysis?: string;
   startedAt?: string | null;
   completedAt?: string | null;
   createdAt: string;
@@ -220,6 +222,52 @@ export async function scheduleEeyesPhoto(input: ScheduleEeyesPhotoInput): Promis
 
 export function isEeyesPhoto(task: EeyesTask): boolean {
   return task.kind === "photo";
+}
+
+/** One live device per platform and model. The most recent contact wins. */
+export function eeyesCaptureDevices(devices: EeyesDevice[]): EeyesDevice[] {
+  const best = new Map<string, EeyesDevice>();
+  for (const device of devices) {
+    if (device.revokedAt) continue;
+    const model = (device.model || device.label || device.platform || "").trim().toLowerCase();
+    const key = `${device.platform}\n${model}`;
+    const prev = best.get(key);
+    const seen = Date.parse(device.lastSeenAt || "") || 0;
+    const prevSeen = prev ? Date.parse(prev.lastSeenAt || "") || 0 : -1;
+    if (!prev || seen >= prevSeen) best.set(key, device);
+  }
+  return [...best.values()];
+}
+
+function eeyesPackTaskRank(task: EeyesTask): number {
+  if (task.status === "completed") return 3;
+  if (task.status === "in_progress") return 2;
+  if (task.status === "pending") return 1;
+  return 0;
+}
+
+/** One card per apparatus inside a pack. A cancelled duplicate stays out. */
+export function eeyesUniquePackTasks(tasks: EeyesTask[], devices: EeyesDevice[]): EeyesTask[] {
+  const byId = new Map(devices.map((device) => [device.id, device]));
+  const best = new Map<string, EeyesTask>();
+  for (const task of tasks) {
+    if (task.status === "cancelled") continue;
+    const device = byId.get(task.deviceId);
+    const model = (device?.model || device?.label || task.deviceId).trim().toLowerCase();
+    const platform = device?.platform || "";
+    const key = `${platform}\n${model}`;
+    const prev = best.get(key);
+    if (!prev || eeyesPackTaskRank(task) > eeyesPackTaskRank(prev)) best.set(key, task);
+  }
+  return [...best.values()];
+}
+
+export function eeyesPackAnalysis(tasks: EeyesTask[]): string {
+  for (const task of tasks) {
+    const text = task.packAnalysis?.trim();
+    if (text) return text;
+  }
+  return "";
 }
 
 /** Groups one send across devices. Tasks without a batch stay on their own. */

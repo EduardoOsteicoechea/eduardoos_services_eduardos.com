@@ -340,8 +340,24 @@ func TestEeyesRepairSameInstallReusesDevice(t *testing.T) {
 		t.Fatalf("new token sync %d", rec.Code)
 	}
 	_, c1, c2, c3 := eeyesCreatePairingCodes(t, app)
-	if _, other := eeyesPairDeviceInstall(t, app, c1, c2, c3, "install-xyz"); other == deviceID {
-		t.Fatal("different install must create a new device")
+	if _, other := eeyesPairDeviceInstall(t, app, c1, c2, c3, "install-xyz"); other != deviceID {
+		t.Fatal("same model linked again must stay one device")
+	}
+	_, d1, d2, d3 := eeyesCreatePairingCodes(t, app)
+	session := eeyesPairSession(t, eeyesPairStep(t, app, map[string]any{"step": 1, "code1": d1}))
+	if rec := eeyesPairStep(t, app, map[string]any{"step": 2, "code1": d1, "code": d2, "session": session}); rec.Code != http.StatusOK {
+		t.Fatalf("step2 %d", rec.Code)
+	}
+	rec := eeyesPairStep(t, app, map[string]any{
+		"step": 3, "code1": d1, "code": d3, "session": session,
+		"model": "SM-X400", "shellVersion": "1", "installId": "install-tab",
+	})
+	var tablet struct {
+		DeviceID string `json:"deviceId"`
+	}
+	_ = json.Unmarshal(rec.Body.Bytes(), &tablet)
+	if rec.Code != http.StatusCreated || tablet.DeviceID == "" || tablet.DeviceID == deviceID {
+		t.Fatalf("different model must stay linked: %d %s", rec.Code, rec.Body.String())
 	}
 }
 
@@ -817,5 +833,142 @@ func TestEeyesDeviceWaitWakesOnTaskCreate(t *testing.T) {
 		}
 	case <-time.After(3 * time.Second):
 		t.Fatal("wait did not wake on task create")
+	}
+}
+
+func TestEeyesSameModelCollapsesAndPackAnalysis(t *testing.T) {
+	app := newEeyesTestApp(t)
+	if err := app.grantEntitlement("member-1", productEeyes); err != nil {
+		t.Fatal(err)
+	}
+	pair := func(install, model, platform string) (token, deviceID string) {
+		t.Helper()
+		_, c1, c2, c3 := eeyesCreatePairingCodes(t, app)
+		session := eeyesPairSession(t, eeyesPairStep(t, app, map[string]any{"step": 1, "code1": c1, "platform": platform}))
+		if rec := eeyesPairStep(t, app, map[string]any{"step": 2, "code1": c1, "code": c2, "session": session, "platform": platform}); rec.Code != http.StatusOK {
+			t.Fatalf("step2 %d %s", rec.Code, rec.Body.String())
+		}
+		rec := eeyesPairStep(t, app, map[string]any{
+			"step": 3, "code1": c1, "code": c3, "session": session,
+			"platform": platform, "model": model, "shellVersion": "1", "installId": install,
+		})
+		if rec.Code != http.StatusCreated {
+			t.Fatalf("pair %s %d %s", install, rec.Code, rec.Body.String())
+		}
+		var out struct {
+			Token    string `json:"token"`
+			DeviceID string `json:"deviceId"`
+		}
+		if err := json.Unmarshal(rec.Body.Bytes(), &out); err != nil {
+			t.Fatal(err)
+		}
+		return out.Token, out.DeviceID
+	}
+	tokenA, idA := pair("install-a", "RKY-LX3", "android")
+	tokenB, idB := pair("install-b", "RKY-LX3", "android")
+	if idB != idA {
+		t.Fatalf("same model created %s instead of reusing %s", idB, idA)
+	}
+	if eeyesDeviceJSON(t, app, tokenA, http.MethodGet, "/api/eeyes/device/sync", "").Code == http.StatusOK {
+		t.Fatal("first token of a repeated model still accepted")
+	}
+	if eeyesDeviceJSON(t, app, tokenB, http.MethodGet, "/api/eeyes/device/sync", "").Code != http.StatusOK {
+		t.Fatal("latest token of the repeated model rejected")
+	}
+	_, idTab := pair("install-tab", "SM-X400", "android")
+	if idTab == idA {
+		t.Fatal("a different model replaced the phone")
+	}
+
+	devs, err := app.eeyes.DevicesByOwner(context.Background(), "member-1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, d := range devs {
+		if d.ID == idTab {
+			d.Model = "RKY-LX3"
+			d.Label = "RKY-LX3"
+			d.LastSeenAt = time.Now().UTC().Add(-time.Hour)
+			if err := app.eeyes.UpdateDevice(context.Background(), d); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	raw, _ := json.Marshal(map[string]any{
+		"title": "Foto", "deviceId": idTab, "kind": "photo", "cameraFacing": "back", "batchId": "pack-1",
+	})
+	if rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eeyes/tasks", string(raw)); rec.Code != http.StatusCreated {
+		t.Fatalf("task on duplicate %d %s", rec.Code, rec.Body.String())
+	}
+	listed := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/devices", "")
+	if listed.Code != http.StatusOK {
+		t.Fatalf("devices %d", listed.Code)
+	}
+	var body struct {
+		Devices []struct {
+			ID        string     `json:"id"`
+			Model     string     `json:"model"`
+			RevokedAt *time.Time `json:"revokedAt"`
+		} `json:"devices"`
+	}
+	if err := json.Unmarshal(listed.Body.Bytes(), &body); err != nil {
+		t.Fatal(err)
+	}
+	live := 0
+	for _, d := range body.Devices {
+		if d.Model == "RKY-LX3" && d.RevokedAt == nil {
+			live++
+		}
+	}
+	if live != 1 {
+		t.Fatalf("want one live RKY-LX3, got %+v", body.Devices)
+	}
+	tasks := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/tasks", "")
+	if tasks.Code != http.StatusOK || !strings.Contains(tasks.Body.String(), `"cancelled"`) {
+		t.Fatalf("duplicate task not cancelled: %s", tasks.Body.String())
+	}
+
+	_, idPC := pair("install-pc", "EDUARDO", "desktop")
+	for _, id := range []string{idA, idPC} {
+		raw, _ = json.Marshal(map[string]any{
+			"title": "Cámara Trasera", "deviceId": id, "kind": "photo", "cameraFacing": "back", "batchId": "pack-2",
+		})
+		if rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eeyes/tasks", string(raw)); rec.Code != http.StatusCreated {
+			t.Fatalf("pack task %d %s", rec.Code, rec.Body.String())
+		}
+	}
+	again := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/tasks", "")
+	var taskList struct {
+		Tasks []struct {
+			ID      string `json:"id"`
+			BatchID string `json:"batchId"`
+		} `json:"tasks"`
+	}
+	_ = json.Unmarshal(again.Body.Bytes(), &taskList)
+	var packTask string
+	for _, task := range taskList.Tasks {
+		if task.BatchID == "pack-2" {
+			packTask = task.ID
+			break
+		}
+	}
+	if packTask == "" {
+		t.Fatalf("pack missing: %s", again.Body.String())
+	}
+	note := `{"analysis":"Postura: erguido. Expresión: no se ve el rostro."}`
+	patched := app.doJSON(t, "member@eduardoos.com", http.MethodPatch, "/api/eeyes/tasks/"+packTask+"/pack-analysis", note)
+	if patched.Code != http.StatusOK || !strings.Contains(patched.Body.String(), "erguido") {
+		t.Fatalf("pack analysis %d %s", patched.Code, patched.Body.String())
+	}
+	if err := app.grantEntitlement("other-1", productEeyes); err != nil {
+		t.Fatal(err)
+	}
+	other := app.doJSON(t, "other@eduardoos.com", http.MethodPatch, "/api/eeyes/tasks/"+packTask+"/pack-analysis", note)
+	if other.Code != http.StatusNotFound {
+		t.Fatalf("other pack analysis want 404 got %d", other.Code)
+	}
+	final := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/tasks", "")
+	if strings.Count(final.Body.String(), "Postura: erguido") != 2 {
+		t.Fatalf("pack analysis should be on both devices: %s", final.Body.String())
 	}
 }

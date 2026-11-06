@@ -5,8 +5,12 @@ import {
   eeyesNoticeStage,
   eeyesPhotoStage,
   eeyesBatches,
+  eeyesCaptureDevices,
+  eeyesPackAnalysis,
+  eeyesUniquePackTasks,
   isEeyesNotice,
   isEeyesPhoto,
+  type EeyesDevice,
   type EeyesTask,
 } from "./eeyes";
 
@@ -48,6 +52,30 @@ describe("eeyes helpers", () => {
     expect(groups).toHaveLength(2);
     expect(groups[0].map((t) => t.deviceId)).toEqual(["phone", "pc"]);
     expect(groups[1]).toEqual([c]);
+  });
+
+  it("keeps one capture device per model and one card per pack", () => {
+    const phone = {
+      id: "old",
+      platform: "android",
+      model: "RKY-LX3",
+      label: "RKY-LX3",
+      lastSeenAt: "2026-11-06T09:00:00Z",
+    } as EeyesDevice;
+    const again = { ...phone, id: "new", lastSeenAt: "2026-11-06T09:40:00Z" };
+    const tablet = { ...phone, id: "tab", model: "SM-X400", label: "SM-X400" };
+    expect(eeyesCaptureDevices([phone, again, tablet]).map((d) => d.id)).toEqual(["new", "tab"]);
+    const pending = { id: "p", deviceId: "old", status: "pending", batchId: "b" } as EeyesTask;
+    const done = {
+      id: "d",
+      deviceId: "new",
+      status: "completed",
+      batchId: "b",
+      packAnalysis: "Postura: erguido.",
+    } as EeyesTask;
+    const shown = eeyesUniquePackTasks([pending, done], [phone, again, tablet]);
+    expect(shown.map((t) => t.id)).toEqual(["d"]);
+    expect(eeyesPackAnalysis([pending, done])).toBe("Postura: erguido.");
   });
 
   it("builds media and download urls", () => {
