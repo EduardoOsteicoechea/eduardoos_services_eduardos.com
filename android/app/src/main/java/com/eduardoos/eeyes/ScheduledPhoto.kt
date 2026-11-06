@@ -66,21 +66,36 @@ object ScheduledPhoto {
         var taken = 0
         for (i in 0 until shots) {
             if (i > 0 && gapMs > 0L) Thread.sleep(gapMs)
-            val result = PhotoCapturer.capture(app, facing)
-            val jpeg = result.jpeg
-            if (jpeg == null) {
-                diag.recordCapture(key, facing, result.error ?: "camara_error")
+            var jpeg: ByteArray? = null
+            var lastError: String? = null
+            for (attempt in 0 until 3) {
+                if (attempt > 0) Thread.sleep(1_000L)
+                val result = PhotoCapturer.capture(app, facing)
+                jpeg = result.jpeg
+                lastError = result.error
+                if (jpeg != null) break
+            }
+            val bytes = jpeg
+            if (bytes == null) {
+                diag.recordCapture(key, facing, lastError ?: "camara_error")
                 if (taken == 0) {
                     notify(app, key, CHANNEL_ALERTS, "Foto programada pendiente", "Abre eEyes para tomar \"$title\".", alert = true)
                     return
                 }
                 break
             }
-            MediaUploader.enqueue(app, taskId, "image", "image/jpeg", jpeg, 0)
+            if (!MediaUploader.uploadNow(app, taskId, "image", "image/jpeg", bytes, 0)) {
+                diag.recordCapture(key, facing, "subida_fallida")
+                break
+            }
             taken += 1
             diag.recordCapture(key, facing, null)
         }
         if (taken == 0) return
+        if (taken < shots) {
+            // Leave the key unacked. The next sync reports imagesStored and takes only the missing shots.
+            return
+        }
         if (shots > 1) {
             runCatching {
                 ApiClient(BuildConfig.EEYES_BASE_URL, TokenStore(app))

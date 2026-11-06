@@ -99,24 +99,32 @@ internal sealed class CaptureService
             if (n?["kind"]?.GetValue<string>() != "capture") continue;
             var key = n["key"]?.GetValue<string>() ?? "";
             if (key.Length == 0) continue;
-            lock (_scheduledGate)
-            {
-                if (!_scheduled.Add(key)) continue;
-            }
             var taskId = n["taskId"]?.GetValue<string>() ?? "";
             var facing = n["facing"]?.GetValue<string>() ?? "back";
             var title = n["title"]?.GetValue<string>() ?? "eEyes";
             var intervalSec = JsonInt(n["intervalSec"], 0);
             var maxPhotos = JsonInt(n["maxPhotos"], 1);
+            var stored = JsonInt(n["imagesStored"], 0);
+            var goal = maxPhotos > 1 ? maxPhotos : 1;
+            var remaining = Math.Max(0, goal - stored);
+            if (remaining == 0) continue;
+            lock (_scheduledGate)
+            {
+                if (!_scheduled.Add(key)) continue;
+            }
             if (!DateTimeOffset.TryParse(n["at"]?.GetValue<string>(), out var at)) at = DateTimeOffset.UtcNow;
-            _ = Task.Run(() => RunScheduledAsync(key, taskId, facing, title, at, intervalSec, maxPhotos));
+            _ = Task.Run(() => RunScheduledAsync(key, taskId, facing, title, at, intervalSec, remaining));
         }
     }
 
     private static int JsonInt(JsonNode? node, int fallback)
     {
-        if (node is JsonValue value && value.TryGetValue<int>(out var n)) return n;
-        return fallback;
+        if (node is not JsonValue value) return fallback;
+        if (value.TryGetValue<int>(out var n)) return n;
+        if (value.TryGetValue<long>(out var wide) && wide <= int.MaxValue && wide >= int.MinValue) return (int)wide;
+        if (value.TryGetValue<double>(out var real) && real <= int.MaxValue && real >= int.MinValue) return (int)Math.Round(real);
+        var text = value.ToJsonString().Trim();
+        return int.TryParse(text, out var parsed) ? parsed : fallback;
     }
 
     private async Task RunScheduledAsync(string key, string taskId, string facing, string title, DateTimeOffset at, int intervalSec, int maxPhotos)
@@ -129,8 +137,20 @@ internal sealed class CaptureService
         for (var i = 0; i < shots; i++)
         {
             if (i > 0 && gap > 0) await Task.Delay(TimeSpan.FromSeconds(gap));
-            if (await CapturePhotoAsync(taskId, facing)) taken++;
-            else if (taken == 0) break;
+            var ok = false;
+            for (var attempt = 0; attempt < 3 && !ok; attempt++)
+            {
+                if (attempt > 0) await Task.Delay(TimeSpan.FromSeconds(1));
+                ok = await CapturePhotoAsync(taskId, facing);
+            }
+            if (ok) taken++;
+            else break;
+        }
+        if (taken > 0 && taken < shots)
+        {
+            // Leave the key unacked so the next sync takes only the missing shots.
+            lock (_scheduledGate) { _scheduled.Remove(key); }
+            return;
         }
         DiagStore.RecordCapture(key, facing, taken > 0 ? null : "camara_no_disponible");
         if (taken > 0)

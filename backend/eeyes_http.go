@@ -1029,16 +1029,25 @@ func (a *App) eeyesDeviceSync(w http.ResponseWriter, r *http.Request) {
 		if t.Kind == eeyesTaskKindPhoto {
 			key := "capture:" + t.ID
 			if t.NotifyAt != nil && !t.NotifyAt.After(horizon) && !containsString(t.NotifiedKeys, key) {
+				imagesStored := 0
+				if media, err := a.eeyes.MediaByTask(r.Context(), t.ID); err == nil {
+					for _, item := range media {
+						if item != nil && item.Kind == eeyesMediaKindImage {
+							imagesStored++
+						}
+					}
+				}
 				notifications = append(notifications, map[string]any{
-					"key":         key,
-					"taskId":      t.ID,
-					"title":       t.Title,
-					"body":        t.Instructions,
-					"at":          t.NotifyAt,
-					"kind":        "capture",
-					"facing":      t.CameraFacing,
-					"intervalSec": t.PhotoIntervalSec,
-					"maxPhotos":   t.MaxPhotos,
+					"key":          key,
+					"taskId":       t.ID,
+					"title":        t.Title,
+					"body":         t.Instructions,
+					"at":           t.NotifyAt,
+					"kind":         "capture",
+					"facing":       t.CameraFacing,
+					"intervalSec":  t.PhotoIntervalSec,
+					"maxPhotos":    t.MaxPhotos,
+					"imagesStored": imagesStored,
 				})
 				if t.NotifyDispatchedAt == nil {
 					dispatched := now
@@ -1141,6 +1150,20 @@ func (a *App) eeyesDeviceStartTask(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{"task": task})
 }
 
+func (a *App) eeyesStoredImages(r *http.Request, taskID string) (int, error) {
+	stored, err := a.eeyes.MediaByTask(r.Context(), taskID)
+	if err != nil {
+		return 0, err
+	}
+	n := 0
+	for _, item := range stored {
+		if item != nil && item.Kind == eeyesMediaKindImage {
+			n++
+		}
+	}
+	return n, nil
+}
+
 func (a *App) eeyesDeviceUploadMedia(w http.ResponseWriter, r *http.Request) {
 	device := eeyesDeviceFrom(r)
 	if device == nil {
@@ -1181,7 +1204,21 @@ func (a *App) eeyesDeviceUploadMedia(w http.ResponseWriter, r *http.Request) {
 	}
 	isPhoto := task.Kind == eeyesTaskKindPhoto
 	if isPhoto {
-		if task.Status != eeyesTaskPending && task.Status != eeyesTaskInProgress {
+		goal := task.MaxPhotos
+		if goal < 1 {
+			goal = 1
+		}
+		// A burst that closed before every shot landed can still take the
+		// missing frame. A full pack, and a single photo, stay closed.
+		storedNow, err := a.eeyesStoredImages(r, task.ID)
+		if err != nil {
+			a.logUnexpected(r, "eeyes", err.Error())
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+		shortBurst := goal > 1 && storedNow < goal
+		open := task.Status == eeyesTaskPending || task.Status == eeyesTaskInProgress
+		if !open && !(task.Status == eeyesTaskCompleted && shortBurst) {
 			a.writeSafeError(w, r, http.StatusConflict, "conflict")
 			return
 		}
@@ -1327,6 +1364,18 @@ func (a *App) eeyesDeviceCompleteTask(w http.ResponseWriter, r *http.Request) {
 	if task.Status != eeyesTaskInProgress && task.Status != eeyesTaskPending {
 		a.writeSafeError(w, r, http.StatusConflict, "conflict")
 		return
+	}
+	if task.Kind == eeyesTaskKindPhoto && task.MaxPhotos > 1 {
+		storedNow, err := a.eeyesStoredImages(r, task.ID)
+		if err != nil {
+			a.logUnexpected(r, "eeyes", err.Error())
+			a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+			return
+		}
+		if storedNow < task.MaxPhotos {
+			a.writeSafeError(w, r, http.StatusConflict, "conflict")
+			return
+		}
 	}
 	now := time.Now().UTC()
 	task.Status = eeyesTaskCompleted

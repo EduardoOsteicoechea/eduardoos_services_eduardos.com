@@ -30,6 +30,28 @@ object MediaUploader {
         thread { flush(app, item) }
     }
 
+    /** Writes the queue item and uploads it on the caller thread. A burst waits for this before the next shot or complete. */
+    fun uploadNow(ctx: Context, taskId: String, kind: String, mime: String, bytes: ByteArray, durationMs: Int): Boolean {
+        val app = ctx.applicationContext
+        val clientId = MediaQueue.newClientId()
+        val dir = File(app.cacheDir, "media").also { it.mkdirs() }
+        val out = File(dir, "$clientId.bin")
+        out.writeBytes(bytes)
+        val item = QueueItem(
+            clientMediaId = clientId,
+            taskId = taskId,
+            kind = kind,
+            mime = mime,
+            filePath = out.absolutePath,
+            sha256 = MediaCompressor.sha256Hex(bytes),
+            durationMs = durationMs,
+            capturedAt = Instant.now().toString(),
+        )
+        MediaQueue(app).enqueue(item)
+        UploadWorker.enqueue(app)
+        return flush(app, item)
+    }
+
     fun flush(ctx: Context, item: QueueItem): Boolean {
         val file = File(item.filePath)
         if (!file.exists()) {

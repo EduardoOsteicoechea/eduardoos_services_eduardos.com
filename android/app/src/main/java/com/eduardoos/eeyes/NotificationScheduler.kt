@@ -24,10 +24,13 @@ object NotificationScheduler {
             val facing = n.optString("facing")
             val intervalSec = n.optInt("intervalSec")
             val maxPhotos = n.optInt("maxPhotos", 1)
+            val goal = if (maxPhotos > 1) maxPhotos else 1
+            val remaining = (goal - n.optInt("imagesStored", 0)).coerceAtLeast(0)
             val at = runCatching { Instant.parse(n.optString("at")).toEpochMilli() }.getOrNull() ?: continue
             if (at < System.currentTimeMillis()) {
                 if (kind == KIND_CAPTURE) {
-                    ScheduledPhoto.start(ctx, key, taskId, facing, title, intervalSec, maxPhotos)
+                    if (remaining == 0) continue
+                    ScheduledPhoto.start(ctx, key, taskId, facing, title, intervalSec, remaining)
                 } else {
                     NotificationAlarmReceiver.deliver(ctx, key, title, body, taskId)
                 }

@@ -730,7 +730,7 @@ function PhotoView() {
                 <div className="eeyes-media-grid">
                   {mediaByTask[t.id].map((item) => (
                     <figure key={item.id} className="eeyes-media-frame">
-                      <img src={eeyesMediaUrl(item.id)} alt={t.title} />
+                      <EeyesPhoto src={eeyesMediaUrl(item.id)} alt={t.title} />
                       {item.analysis ? <figcaption>{item.analysis}</figcaption> : null}
                     </figure>
                   ))}
@@ -841,6 +841,33 @@ function DiagnosticsView() {
   );
 }
 
+function EeyesPhoto({ src, alt }: { src: string; alt: string }) {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+  return (
+    <>
+      <button type="button" className="eeyes-photo-thumb" onClick={() => setOpen(true)} aria-label="Ver foto en grande">
+        <img src={src} alt={alt} />
+      </button>
+      {open ? (
+        <div className="eeyes-photo-zoom" role="dialog" aria-modal="true" aria-label="Foto">
+          <button type="button" className="icon-btn eeyes-photo-zoom__close" aria-label="Cerrar" onClick={() => setOpen(false)}>
+            <span className="material-symbols-outlined" aria-hidden="true">close</span>
+          </button>
+          <img src={src} alt={alt} />
+        </div>
+      ) : null}
+    </>
+  );
+}
+
 function CompletionsView() {
   const [items, setItems] = useState<EeyesCompletion[]>([]);
   const [devices, setDevices] = useState<EeyesDevice[]>([]);
@@ -878,7 +905,7 @@ function CompletionsView() {
                     {media.map((m) =>
                       m.kind === "image" ? (
                         <figure key={m.id} className="eeyes-media-frame">
-                          <img src={eeyesMediaUrl(m.id)} alt="" />
+                          <EeyesPhoto src={eeyesMediaUrl(m.id)} alt="" />
                           {m.analysis ? <figcaption>{m.analysis}</figcaption> : null}
                         </figure>
                       ) : (

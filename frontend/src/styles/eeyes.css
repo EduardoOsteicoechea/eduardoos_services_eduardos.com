@@ -55,11 +55,54 @@
   gap: var(--rail-gap);
 }
 
-.eeyes-media-grid img,
 .eeyes-media-grid audio {
   max-width: 12rem;
   border-radius: var(--border-radius);
   border: var(--border-width) solid var(--color-border);
+}
+
+.eeyes-photo-thumb {
+  width: 9.375rem;
+  height: 6.5625rem;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: transparent;
+  overflow: hidden;
+}
+
+.eeyes-photo-thumb img {
+  width: 9.375rem;
+  height: 6.5625rem;
+  max-width: 9.375rem;
+  object-fit: cover;
+  border: 0;
+  border-radius: 0;
+}
+
+.eeyes-photo-zoom {
+  position: fixed;
+  z-index: var(--z-modal);
+  inset: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  overflow: auto;
+}
+
+.eeyes-photo-zoom img {
+  max-width: 64rem;
+  max-height: 42rem;
+  width: auto;
+  height: auto;
+  border: 0;
+}
+
+.eeyes-photo-zoom__close {
+  position: absolute;
+  top: var(--rail-gap);
+  right: var(--rail-gap);
 }
 
 .eeyes-batch-list {
