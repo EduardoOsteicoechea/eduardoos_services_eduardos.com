@@ -30,6 +30,7 @@ type eeyesStore interface {
 	DeleteTask(ctx context.Context, id string) error
 
 	InsertMedia(ctx context.Context, m *eeyesMedia) error
+	UpdateMedia(ctx context.Context, m *eeyesMedia) error
 	MediaByID(ctx context.Context, id string) (*eeyesMedia, error)
 	MediaByClientID(ctx context.Context, deviceID, clientMediaID string) (*eeyesMedia, error)
 	MediaByTask(ctx context.Context, taskID string) ([]*eeyesMedia, error)
@@ -278,6 +279,16 @@ func (s *memoryEeyesStore) InsertMedia(_ context.Context, m *eeyesMedia) error {
 	return nil
 }
 
+func (s *memoryEeyesStore) UpdateMedia(_ context.Context, m *eeyesMedia) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if _, ok := s.media[m.ID]; !ok {
+		return errNotFound
+	}
+	s.media[m.ID] = cloneEeyesMedia(m)
+	return nil
+}
+
 func (s *memoryEeyesStore) MediaByID(_ context.Context, id string) (*eeyesMedia, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -508,6 +519,17 @@ func (s *mongoEeyesStore) InsertMedia(ctx context.Context, m *eeyesMedia) error 
 		return errConflict
 	}
 	return err
+}
+
+func (s *mongoEeyesStore) UpdateMedia(ctx context.Context, m *eeyesMedia) error {
+	res, err := s.media().ReplaceOne(ctx, bson.M{"_id": m.ID}, m)
+	if err != nil {
+		return err
+	}
+	if res.MatchedCount == 0 {
+		return errNotFound
+	}
+	return nil
 }
 
 func (s *mongoEeyesStore) MediaByID(ctx context.Context, id string) (*eeyesMedia, error) {

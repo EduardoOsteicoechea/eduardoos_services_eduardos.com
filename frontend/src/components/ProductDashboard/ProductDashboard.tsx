@@ -11,7 +11,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { clearAgentRoutePayload, setAgentRoutePayload } from "../../lib/api";
-import { replaceClientUrl } from "../../lib/router";
+import { pushClientUrl } from "../../lib/router";
 import { useHeaderDynamicHost } from "../HeaderDynamicMenu/HeaderDynamicMenu";
 import "../HeaderDynamicMenu/HeaderDynamicMenu.css";
 import "./ProductDashboard.css";
@@ -39,7 +39,10 @@ export function useProductView(defaultView: string): [string, (next: string) => 
       } else {
         url.searchParams.set("view", next);
       }
-      replaceClientUrl(url.toString());
+      const target = `${url.pathname}${url.search}${url.hash}`;
+      const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      // Push so the browser Back key returns to the hub dashboard instead of leaving the product.
+      if (target !== current) pushClientUrl(url.toString());
       setViewState(next || defaultView);
     },
     [defaultView],

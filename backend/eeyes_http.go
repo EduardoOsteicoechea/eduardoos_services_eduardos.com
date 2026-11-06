@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 type eeyesDeviceContextKey struct{}
@@ -29,6 +30,7 @@ func (a *App) registerEeyesRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("DELETE /api/eeyes/tasks/{id}", a.eeyesDeleteTask)
 	mux.HandleFunc("GET /api/eeyes/completions", a.eeyesListCompletions)
 	mux.HandleFunc("GET /api/eeyes/media/{id}", a.eeyesGetHubMedia)
+	mux.HandleFunc("PATCH /api/eeyes/media/{id}", a.eeyesPatchMedia)
 	mux.HandleFunc("GET /api/eeyes/releases", a.eeyesListReleases)
 	mux.HandleFunc("GET /api/eeyes/downloads/{platform}", a.eeyesDownloadRelease)
 
@@ -290,8 +292,8 @@ func (a *App) eeyesDevicePair(w http.ResponseWriter, r *http.Request) {
 	if installID != "" {
 		installHash = a.hashOpaque("eeyes-install", platform+":"+installID)
 	}
-	// Re-pairing the same install (e.g. after an app reinstall wiped the local
-	// token) rotates the token on the existing record so its tasks survive.
+	// Re-pairing the same install rotates that one record. A different install
+	// is a new device and must not revoke or replace the others.
 	var device *eeyesDevice
 	if installHash != "" {
 		existing, err := a.eeyes.DevicesByOwner(r.Context(), owner.ID)
@@ -524,6 +526,7 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 		MaxPhotos        int      `json:"maxPhotos"`
 		AudioSeconds     int      `json:"audioSeconds"`
 		CameraFacing     string   `json:"cameraFacing"`
+		BatchID          string   `json:"batchId"`
 	}
 	defer r.Body.Close()
 	if err := json.NewDecoder(io.LimitReader(r.Body, 1<<20)).Decode(&body); err != nil {
@@ -550,6 +553,11 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 			return
 		}
+	}
+	batchID := strings.TrimSpace(body.BatchID)
+	if len(batchID) > 80 || strings.ContainsAny(batchID, " \n\r\t") {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
 	}
 	d, err := a.eeyes.DeviceByID(r.Context(), deviceID)
 	if err != nil || d == nil || d.OwnerID != user.ID || !d.isLive(time.Now().UTC()) {
@@ -620,6 +628,7 @@ func (a *App) eeyesCreateTask(w http.ResponseWriter, r *http.Request) {
 		MaxPhotos:        maxPhotos,
 		AudioSeconds:     audioSec,
 		CameraFacing:     facing,
+		BatchID:          batchID,
 		CreatedAt:        now,
 		UpdatedAt:        now,
 	}
@@ -750,6 +759,40 @@ func (a *App) eeyesGetHubMedia(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	a.serveEeyesMediaFile(w, r, m)
+}
+
+func (a *App) eeyesPatchMedia(w http.ResponseWriter, r *http.Request) {
+	user := a.requireEeyesUnsafe(w, r)
+	if user == nil {
+		return
+	}
+	id := strings.TrimSpace(r.PathValue("id"))
+	m, err := a.eeyes.MediaByID(r.Context(), id)
+	if err != nil || m == nil || m.OwnerID != user.ID {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	var body struct {
+		Analysis string `json:"analysis"`
+	}
+	defer r.Body.Close()
+	if err := json.NewDecoder(io.LimitReader(r.Body, 1<<20)).Decode(&body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	analysis := strings.TrimSpace(body.Analysis)
+	if utf8.RuneCountInString(analysis) > eeyesMaxAnalysisRunes {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	m.Analysis = analysis
+	if err := a.eeyes.UpdateMedia(r.Context(), m); err != nil {
+		a.logUnexpected(r, "eeyes", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.auditEvent(r, "eeyes_media_analysis", "ok", user.ID)
+	writeJSON(w, http.StatusOK, map[string]any{"media": m})
 }
 
 func (a *App) serveEeyesMediaFile(w http.ResponseWriter, r *http.Request, m *eeyesMedia) {

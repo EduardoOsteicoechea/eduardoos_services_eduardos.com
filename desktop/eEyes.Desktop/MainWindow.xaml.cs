@@ -18,6 +18,7 @@ public partial class MainWindow : Window
     private readonly CancellationTokenSource _live = new();
     private readonly SemaphoreSlim _syncGate = new(1, 1);
     private bool _allowExit;
+    private bool _uiReady;
     private long _lastNetworkSyncTicks;
     private static readonly TimeSpan MinBackoff = TimeSpan.FromSeconds(5);
     private static readonly TimeSpan MaxBackoff = TimeSpan.FromSeconds(60);
@@ -42,47 +43,80 @@ public partial class MainWindow : Window
     /// <summary>Closing the window leaves eEyes in the tray so sync keeps running.</summary>
     private void OnClosing(object? sender, CancelEventArgs e)
     {
-        if (_allowExit) return;
+        if (_allowExit || !_uiReady) return;
         e.Cancel = true;
         Hide();
     }
 
     private async void OnLoaded(object sender, RoutedEventArgs e)
     {
-        await WebView.EnsureCoreWebView2Async();
-        WebView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
-        WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
-        WebView.CoreWebView2.NavigationStarting += (_, args) =>
+        try
         {
-            if (!args.Uri.StartsWith(Config.BaseUrl + "/api/eeyes/ui", StringComparison.OrdinalIgnoreCase))
+            await WebView.EnsureCoreWebView2Async();
+            WebView.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
+            WebView.CoreWebView2.Settings.AreDevToolsEnabled = false;
+            WebView.CoreWebView2.NavigationStarting += (_, args) =>
             {
-                args.Cancel = true;
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                if (!args.Uri.StartsWith(Config.BaseUrl + "/api/eeyes/ui", StringComparison.OrdinalIgnoreCase))
                 {
-                    FileName = args.Uri,
-                    UseShellExecute = true,
-                });
-            }
-        };
-        WebView.CoreWebView2.WebMessageReceived += OnWebMessage;
-        var url = $"{Config.BaseUrl}/api/eeyes/ui?platform=desktop&shellVersion={Uri.EscapeDataString(Config.ShellVersion)}";
-        WebView.Source = new Uri(url);
+                    args.Cancel = true;
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = args.Uri,
+                        UseShellExecute = true,
+                    });
+                }
+            };
+            WebView.CoreWebView2.NavigationCompleted += (_, _) => Splash.Visibility = Visibility.Collapsed;
+            WebView.CoreWebView2.WebMessageReceived += OnWebMessage;
+            var url = $"{Config.BaseUrl}/api/eeyes/ui?platform=desktop&shellVersion={Uri.EscapeDataString(Config.ShellVersion)}";
+            WebView.Source = new Uri(url);
 
-        var menu = new System.Windows.Forms.ContextMenuStrip();
-        menu.Items.Add("Abrir", null, (_, _) => Dispatcher.Invoke(ShowFromTray));
-        menu.Items.Add("Salir", null, (_, _) => Dispatcher.Invoke(Quit));
-        _tray = new System.Windows.Forms.NotifyIcon
+            var menu = new System.Windows.Forms.ContextMenuStrip();
+            menu.Items.Add("Abrir", null, (_, _) => Dispatcher.Invoke(ShowFromTray));
+            menu.Items.Add("Salir", null, (_, _) => Dispatcher.Invoke(Quit));
+            _tray = new System.Windows.Forms.NotifyIcon
+            {
+                Visible = true,
+                Text = "eEyes",
+                Icon = TrayIcon(),
+                ContextMenuStrip = menu,
+            };
+            _tray.DoubleClick += (_, _) => Dispatcher.Invoke(ShowFromTray);
+
+            NetworkChange.NetworkAddressChanged += OnNetworkChanged;
+            _ = Task.Run(() => LiveLoopAsync(_live.Token));
+            _ = Task.Run(() => IntervalLoopAsync(_live.Token));
+            _uiReady = true;
+        }
+        catch (Exception ex)
         {
-            Visible = true,
-            Text = "eEyes",
-            Icon = System.Drawing.Icon.ExtractAssociatedIcon(Environment.ProcessPath!) ?? System.Drawing.SystemIcons.Application,
-            ContextMenuStrip = menu,
-        };
-        _tray.DoubleClick += (_, _) => Dispatcher.Invoke(ShowFromTray);
+            _uiReady = true;
+            Splash.Visibility = Visibility.Collapsed;
+            try
+            {
+                File.WriteAllText(Path.Combine(Config.AppDataDir, "startup.log"), ex.ToString());
+            }
+            catch
+            {
+                /* the dialog below is the user-facing report */
+            }
+            System.Windows.MessageBox.Show(this, ex.Message, "eEyes");
+        }
+    }
 
-        NetworkChange.NetworkAddressChanged += OnNetworkChanged;
-        _ = Task.Run(() => LiveLoopAsync(_live.Token));
-        _ = Task.Run(() => IntervalLoopAsync(_live.Token));
+    private static System.Drawing.Icon TrayIcon()
+    {
+        try
+        {
+            var info = System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/Assets/eEyes.ico"));
+            if (info?.Stream != null) return new System.Drawing.Icon(info.Stream);
+        }
+        catch
+        {
+            /* single-file hosts sometimes cannot extract the icon */
+        }
+        return System.Drawing.SystemIcons.Application;
     }
 
     private void ShowFromTray()

@@ -31,7 +31,7 @@ Out of scope: continuous background surveillance without a human-started task; c
    - `step: 1` → validates `code1`, returns `{ step: 1, next: 2, session }` (random session; server stores its hash).
    - `step: 2|3` → requires matching `session` and the previous step done; verifies `code2`/`code3` in constant time.
    - `step: 3` → issues device token `eos_dev_` + 24 random chars, stores **HMAC hash only**, `expiresAt = now + 30 days`.
-5. `installId` (Android `ANDROID_ID`, Desktop `MachineGuid`) is stored as an HMAC. Re-pairing the same install of the same owner/platform **reuses the device record** (rotates token, extends 30 days) instead of creating a duplicate. Uninstalling wipes the local secure token, so a reinstall must re-pair.
+5. `installId` (Android `ANDROID_ID`, Desktop `MachineGuid`) is stored as an HMAC. Re-pairing **that same install** rotates its token and extends 30 days. A different install is a new device: pairing it does **not** revoke or replace the others. Several devices stay linked at once, and the hub sends each notification, photo, and audio task to every live device.
 6. Limits: 5 failed attempts per pairing; IP rate limit on pair.
 
 ## 3. Device token
@@ -110,6 +110,8 @@ Hub card **Programar foto** creates `POST /api/eeyes/tasks` `{ kind: "photo", de
 - Android: Camera2 still (AE warm-up on a small YUV stream, pixels rotated by sensor orientation). Background camera works only while `LiveSyncService` runs with the `camera` FGS type (granted when started from the visible app); otherwise it notifies "abre eEyes" and retries when the app is opened.
 - Desktop: `MediaCapture` low-lag photo on the camera whose enclosure panel matches `facing` (else the first camera); retries up to 5 times per key per run.
 - Hub stages: `scheduled → waiting_sync → dispatched → taken → uploaded`.
+- A notification, a scheduled photo, and a task with audio are created once per live device, sharing `batchId`. The hub shows one container and, inside it, one item per device with that device's name and its own status.
+- `PATCH /api/eeyes/media/{id}` `{ "analysis": "..." }` (owner, ≤ 2000 runes) stores text shown under that image. Another owner receives 404.
 
 Notifications are listed up to 24 h ahead until acked. Shells ack a key only after it was actually shown (Android: alarm fired and system notifications enabled; Desktop: toast time reached). Server records per task `notifyDispatchedAt` (first sync that listed it) and `notifyAckedAt`; per device `lastSyncAt` and `lastSyncNotifications`.
 

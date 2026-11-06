@@ -49,6 +49,8 @@ export type EeyesTask = {
   photoIntervalSec: number;
   maxPhotos: number;
   audioSeconds: number;
+  /** Same id on every device copy of one send. */
+  batchId?: string;
   startedAt?: string | null;
   completedAt?: string | null;
   createdAt: string;
@@ -79,6 +81,7 @@ export type EeyesMedia = {
   durationMs?: number;
   capturedAt: string;
   createdAt: string;
+  analysis?: string;
 };
 
 export type EeyesCompletion = {
@@ -159,6 +162,7 @@ export type CreateEeyesTaskInput = {
   photoIntervalSec: number;
   maxPhotos: number;
   audioSeconds: number;
+  batchId?: string;
 };
 
 export async function createEeyesTask(input: CreateEeyesTaskInput): Promise<EeyesTask> {
@@ -172,6 +176,7 @@ export type SendEeyesNoticeInput = {
   message: string;
   /** RFC3339; omitted = deliver on the device's next sync. */
   notifyAt?: string;
+  batchId?: string;
 };
 
 export async function sendEeyesNotice(input: SendEeyesNoticeInput): Promise<EeyesTask> {
@@ -181,6 +186,7 @@ export async function sendEeyesNotice(input: SendEeyesNoticeInput): Promise<Eeye
     title: input.title,
     instructions: input.message,
     notifyAt: input.notifyAt,
+    batchId: input.batchId,
   });
   return unwrap(status, data, requestId, "/eeyes/tasks").task;
 }
@@ -197,6 +203,7 @@ export type ScheduleEeyesPhotoInput = {
   cameraFacing: EeyesCameraFacing;
   /** RFC3339; omitted = take it as soon as the device receives it. */
   notifyAt?: string;
+  batchId?: string;
 };
 
 export async function scheduleEeyesPhoto(input: ScheduleEeyesPhotoInput): Promise<EeyesTask> {
@@ -206,12 +213,31 @@ export async function scheduleEeyesPhoto(input: ScheduleEeyesPhotoInput): Promis
     title: input.title,
     cameraFacing: input.cameraFacing,
     notifyAt: input.notifyAt,
+    batchId: input.batchId,
   });
   return unwrap(status, data, requestId, "/eeyes/tasks").task;
 }
 
 export function isEeyesPhoto(task: EeyesTask): boolean {
   return task.kind === "photo";
+}
+
+/** Groups one send across devices. Tasks without a batch stay on their own. */
+export function eeyesBatches(tasks: EeyesTask[]): EeyesTask[][] {
+  const order: EeyesTask[][] = [];
+  const byId = new Map<string, EeyesTask[]>();
+  for (const task of tasks) {
+    const key = task.batchId || task.id;
+    const group = byId.get(key);
+    if (group) {
+      group.push(task);
+      continue;
+    }
+    const next = [task];
+    byId.set(key, next);
+    order.push(next);
+  }
+  return order;
 }
 
 export type EeyesPhotoStage = "cancelled" | "uploaded" | "taken" | "dispatched" | "scheduled" | "waiting_sync";

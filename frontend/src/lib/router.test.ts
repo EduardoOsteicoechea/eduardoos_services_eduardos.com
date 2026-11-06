@@ -58,6 +58,17 @@ describe("startClientRouting astro:before-preparation", () => {
     expect(assign).not.toHaveBeenCalled();
   });
 
+  it("same-path query change stays in the page so Back can return to the hub", () => {
+    const event = dispatchBeforePreparation({
+      from: "http://localhost/eeyes?view=notify",
+      to: "http://localhost/eeyes",
+      navigationType: "traverse",
+    });
+
+    expect(event.defaultPrevented).toBe(false);
+    expect(reload).not.toHaveBeenCalled();
+  });
+
   it("pamphlet full-doc nav: preventDefault only, no assign or reload", () => {
     const event = dispatchBeforePreparation({
       from: "http://localhost/about",

@@ -103,7 +103,13 @@ export function startClientRouting(): void {
     // Cancel soft prep only — Astro delegates to location.href = to.href after
     // preventDefault. Do not reload() here (double hard-nav / hung veil).
     // Hash-only traversals stay soft.
-    if (ev.navigationType === "traverse" && !samePathAndQuery(ev.from, ev.to)) {
+    // Same path with a different query (eEyes card views) stays in the page so
+    // Back returns to the dashboard. A different path still does a full load.
+    if (
+      ev.navigationType === "traverse" &&
+      !samePathAndQuery(ev.from, ev.to) &&
+      ev.from.pathname !== ev.to.pathname
+    ) {
       event.preventDefault();
     }
   });

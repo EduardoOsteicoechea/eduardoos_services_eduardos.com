@@ -62,6 +62,44 @@
   border: var(--border-width) solid var(--color-border);
 }
 
+.eeyes-batch-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.eeyes-batch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.eeyes-batch h3 {
+  font-size: var(--font-size-md);
+}
+
+.eeyes-batch__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.eeyes-media-frame {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  margin: 0;
+}
+
+.eeyes-media-frame figcaption {
+  max-width: 16rem;
+  font-size: var(--font-size-sm);
+  white-space: pre-wrap;
+}
+
 .eeyes-device-card,
 .eeyes-task-card,
 .eeyes-completion-card {

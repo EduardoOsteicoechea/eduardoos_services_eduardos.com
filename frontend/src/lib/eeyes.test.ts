@@ -4,6 +4,7 @@ import {
   eeyesMediaUrl,
   eeyesNoticeStage,
   eeyesPhotoStage,
+  eeyesBatches,
   isEeyesNotice,
   isEeyesPhoto,
   type EeyesTask,
@@ -37,6 +38,16 @@ describe("eeyes helpers", () => {
     const base = { id: "t", status: "pending" } as EeyesTask;
     expect(isEeyesNotice({ ...base, kind: "notice" })).toBe(true);
     expect(isEeyesNotice(base)).toBe(false);
+  });
+
+  it("groups one send into a container per device", () => {
+    const a = { id: "a", batchId: "send-1", deviceId: "phone" } as EeyesTask;
+    const b = { id: "b", batchId: "send-1", deviceId: "pc" } as EeyesTask;
+    const c = { id: "c", deviceId: "phone" } as EeyesTask;
+    const groups = eeyesBatches([a, b, c]);
+    expect(groups).toHaveLength(2);
+    expect(groups[0].map((t) => t.deviceId)).toEqual(["phone", "pc"]);
+    expect(groups[1]).toEqual([c]);
   });
 
   it("builds media and download urls", () => {

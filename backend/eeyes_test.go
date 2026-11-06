@@ -182,6 +182,71 @@ func TestEeyesPairingHappyPathAndReuse(t *testing.T) {
 	assertNoSecrets(t, sync.Body.String())
 }
 
+func TestEeyesPairingKeepsOtherDevices(t *testing.T) {
+	app := newEeyesTestApp(t)
+	if err := app.grantEntitlement("member-1", productEeyes); err != nil {
+		t.Fatal(err)
+	}
+	pair := func(install, platform string) (token, deviceID string) {
+		t.Helper()
+		_, c1, c2, c3 := eeyesCreatePairingCodes(t, app)
+		session := eeyesPairSession(t, eeyesPairStep(t, app, map[string]any{"step": 1, "code1": c1, "platform": platform}))
+		if rec := eeyesPairStep(t, app, map[string]any{"step": 2, "code1": c1, "code": c2, "session": session, "platform": platform}); rec.Code != http.StatusOK {
+			t.Fatalf("step2 %d %s", rec.Code, rec.Body.String())
+		}
+		rec := eeyesPairStep(t, app, map[string]any{
+			"step": 3, "code1": c1, "code": c3, "session": session,
+			"platform": platform, "model": install, "shellVersion": "1", "installId": install,
+		})
+		if rec.Code != http.StatusCreated {
+			t.Fatalf("pair %s %d %s", install, rec.Code, rec.Body.String())
+		}
+		var out struct {
+			Token    string `json:"token"`
+			DeviceID string `json:"deviceId"`
+		}
+		if err := json.Unmarshal(rec.Body.Bytes(), &out); err != nil {
+			t.Fatal(err)
+		}
+		return out.Token, out.DeviceID
+	}
+	tokenA, idA := pair("phone-a", "android")
+	tokenB, idB := pair("phone-b", "android")
+	tokenC, idC := pair("pc-c", "desktop")
+	if idA == idB || idB == idC || idA == idC {
+		t.Fatalf("pairing collapsed devices %s %s %s", idA, idB, idC)
+	}
+	listed := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/devices", "")
+	body := listed.Body.String()
+	if listed.Code != http.StatusOK || !strings.Contains(body, idA) || !strings.Contains(body, idB) || !strings.Contains(body, idC) {
+		t.Fatalf("devices %s", body)
+	}
+	if strings.Contains(body, `"revokedAt"`) {
+		t.Fatalf("new pair revoked a sibling: %s", body)
+	}
+	for _, token := range []string{tokenA, tokenB, tokenC} {
+		sync := eeyesDeviceJSON(t, app, token, http.MethodGet, "/api/eeyes/device/sync", "")
+		if sync.Code != http.StatusOK {
+			t.Fatalf("sibling sync %d %s", sync.Code, sync.Body.String())
+		}
+	}
+	// Same install rotates only its own token.
+	tokenA2, idA2 := pair("phone-a", "android")
+	if idA2 != idA {
+		t.Fatalf("same install created %s instead of reusing %s", idA2, idA)
+	}
+	if eeyesDeviceJSON(t, app, tokenA, http.MethodGet, "/api/eeyes/device/sync", "").Code == http.StatusOK {
+		t.Fatal("rotated token still accepted")
+	}
+	if eeyesDeviceJSON(t, app, tokenA2, http.MethodGet, "/api/eeyes/device/sync", "").Code != http.StatusOK {
+		t.Fatal("new token for the same install rejected")
+	}
+	if eeyesDeviceJSON(t, app, tokenB, http.MethodGet, "/api/eeyes/device/sync", "").Code != http.StatusOK ||
+		eeyesDeviceJSON(t, app, tokenC, http.MethodGet, "/api/eeyes/device/sync", "").Code != http.StatusOK {
+		t.Fatal("re-pair of one install revoked the others")
+	}
+}
+
 func TestEeyesPairingExpiredAndBruteforce(t *testing.T) {
 	app := newEeyesTestApp(t)
 	if err := app.grantEntitlement("member-1", productEeyes); err != nil {
@@ -339,6 +404,7 @@ func TestEeyesMediaUploadIdempotentAndRejects(t *testing.T) {
 	createBody := map[string]any{
 		"title": "Foto del recibo", "instructions": "Toma evidencia",
 		"deviceId": deviceID, "photoIntervalSec": 0, "maxPhotos": 3, "audioSeconds": 10,
+		"batchId": "batch-1",
 	}
 	raw, _ := json.Marshal(createBody)
 	rec := app.doJSON(t, "member@eduardoos.com", http.MethodPost, "/api/eeyes/tasks", string(raw))
@@ -347,10 +413,14 @@ func TestEeyesMediaUploadIdempotentAndRejects(t *testing.T) {
 	}
 	var created struct {
 		Task struct {
-			ID string `json:"id"`
+			ID      string `json:"id"`
+			BatchID string `json:"batchId"`
 		} `json:"task"`
 	}
 	_ = json.Unmarshal(rec.Body.Bytes(), &created)
+	if created.Task.BatchID != "batch-1" {
+		t.Fatalf("batchId %q", created.Task.BatchID)
+	}
 	taskID := created.Task.ID
 
 	start := eeyesDeviceJSON(t, app, token, http.MethodPost, "/api/eeyes/device/tasks/"+taskID+"/start", `{}`)
@@ -377,6 +447,23 @@ func TestEeyesMediaUploadIdempotentAndRejects(t *testing.T) {
 	up2 := eeyesDeviceJSON(t, app, token, http.MethodPost, "/api/eeyes/device/tasks/"+taskID+"/media", string(mb))
 	if up2.Code != http.StatusCreated {
 		t.Fatalf("upload2 idempotent %d %s", up2.Code, up2.Body.String())
+	}
+	var uploaded struct {
+		Media struct {
+			ID string `json:"id"`
+		} `json:"media"`
+	}
+	_ = json.Unmarshal(up1.Body.Bytes(), &uploaded)
+	patched := app.doJSON(t, "member@eduardoos.com", http.MethodPatch, "/api/eeyes/media/"+uploaded.Media.ID, `{"analysis":"nota de prueba"}`)
+	if patched.Code != http.StatusOK {
+		t.Fatalf("analysis %d %s", patched.Code, patched.Body.String())
+	}
+	if err := app.grantEntitlement("other-1", productEeyes); err != nil {
+		t.Fatal(err)
+	}
+	other := app.doJSON(t, "other@eduardoos.com", http.MethodPatch, "/api/eeyes/media/"+uploaded.Media.ID, `{"analysis":"ajeno"}`)
+	if other.Code != http.StatusNotFound {
+		t.Fatalf("other analysis want 404 got %d", other.Code)
 	}
 
 	bad := map[string]any{
@@ -409,7 +496,7 @@ func TestEeyesMediaUploadIdempotentAndRejects(t *testing.T) {
 		t.Fatalf("complete %d %s", done.Code, done.Body.String())
 	}
 	comps := app.doJSON(t, "member@eduardoos.com", http.MethodGet, "/api/eeyes/completions", "")
-	if comps.Code != http.StatusOK || !strings.Contains(comps.Body.String(), taskID) {
+	if comps.Code != http.StatusOK || !strings.Contains(comps.Body.String(), taskID) || !strings.Contains(comps.Body.String(), "nota de prueba") {
 		t.Fatalf("completions %s", comps.Body.String())
 	}
 	assertNoSecrets(t, comps.Body.String())

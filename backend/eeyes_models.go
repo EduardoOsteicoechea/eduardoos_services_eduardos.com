@@ -28,6 +28,7 @@ const (
 	eeyesPairingExpired  = "expired"
 	eeyesMediaKindImage  = "image"
 	eeyesMediaKindAudio  = "audio"
+	eeyesMaxAnalysisRunes = 2000
 )
 
 const eeyesNotificationHorizon = 24 * time.Hour
@@ -96,6 +97,7 @@ type eeyesTask struct {
 	MaxPhotos         int        `json:"maxPhotos" bson:"max_photos"`
 	AudioSeconds      int        `json:"audioSeconds" bson:"audio_seconds"`
 	CameraFacing      string     `json:"cameraFacing,omitempty" bson:"camera_facing,omitempty"`
+	BatchID           string     `json:"batchId,omitempty" bson:"batch_id,omitempty"`
 	StartedAt         *time.Time `json:"startedAt,omitempty" bson:"started_at,omitempty"`
 	CompletedAt       *time.Time `json:"completedAt,omitempty" bson:"completed_at,omitempty"`
 	CreatedAt         time.Time  `json:"createdAt" bson:"created_at"`
@@ -123,6 +125,7 @@ type eeyesMedia struct {
 	RelPath       string    `json:"-" bson:"rel_path"`
 	CapturedAt    time.Time `json:"capturedAt" bson:"captured_at"`
 	CreatedAt     time.Time `json:"createdAt" bson:"created_at"`
+	Analysis      string    `json:"analysis,omitempty" bson:"analysis,omitempty"`
 }
 
 func (d *eeyesDevice) isLive(now time.Time) bool {
