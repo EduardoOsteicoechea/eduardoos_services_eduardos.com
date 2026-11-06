@@ -708,7 +708,7 @@ function PhotoView() {
             />
           </label>
         ) : null}
-        <button type="submit" disabled={busy || eeyesCaptureDevices(devices).length === 0}>
+        <button className="btn btn--primary" type="submit" disabled={busy || eeyesCaptureDevices(devices).length === 0}>
           {busy ? "Programando…" : mode === "burst" ? "Programar ráfaga en cada dispositivo" : "Programar en cada dispositivo"}
         </button>
       </form>
@@ -720,13 +720,6 @@ function PhotoView() {
           const analyses = sessionAnalyses(shown);
           return (
             <article key={shown.map((t) => t.id).join("-")} className="eeyes-session">
-              {analyses.length ? (
-                <div className="eeyes-pack-analysis">
-                  {analyses.map((text) => (
-                    <p key={text}>{text}</p>
-                  ))}
-                </div>
-              ) : null}
               <div className="eeyes-session__row">
                 {shown.map((t) => (
                   <div key={t.id} className="eeyes-session__device">
@@ -751,6 +744,13 @@ function PhotoView() {
                     ) : null}
                   </div>
                 ))}
+                {analyses.length ? (
+                  <div className="eeyes-pack-analysis">
+                    {analyses.map((text) => (
+                      <p key={text}>{text}</p>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             </article>
           );
