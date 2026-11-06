@@ -307,7 +307,7 @@ export function subscribeSessionBroadcast(
   }
 }
 
-function apiUrl(path: string): string {
+export function apiUrl(path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
   return normalized.startsWith("/api/") ? normalized : `/api${normalized}`;
 }

@@ -520,6 +520,44 @@ import Layout from "../../layouts/Layout.astro";
     cursor: pointer;
     font-size: var(--font-size-sm);
     font-weight: 650;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rail-gap);
+    list-style: none;
+  }
+
+  .pamphlet-manage__series summary::-webkit-details-marker,
+  .pamphlet-manage__chapter summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .pamphlet-manage__tree-label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pamphlet-manage__tree-print {
+    flex-shrink: 0;
+    height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-xs);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .pamphlet-manage__tree-print:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .pamphlet-manage__tree-print:not(:disabled):hover,
+  .pamphlet-manage__tree-print:not(:disabled):focus-visible {
+    outline: var(--border-width) solid var(--color-accent);
+    outline-offset: 0.0625rem;
   }
 
   @media (min-width: 48rem) {

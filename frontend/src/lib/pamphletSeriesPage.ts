@@ -3,6 +3,7 @@
  */
 
 import { openApiErrorModal } from "../components/ServerErrorModal/ServerErrorModal";
+import { apiUrl, currentCsrf, getCsrf } from "./api";
 import { getAuthToken, isAuthenticated, refreshAuthSession } from "./auth";
 import {
   fetchEpamSeriesTree,
@@ -227,6 +228,67 @@ export function mountPamphletSeriesPage(root: HTMLElement): PamphletSeriesHandle
     parent.appendChild(row);
   }
 
+  function sanitizePdfFileBase(name: string, fallback: string): string {
+    const base = name.replace(/[/\\:*?"<>|]+/g, "_").trim() || fallback;
+    return base.length > 80 ? base.slice(0, 80) : base;
+  }
+
+  async function downloadMergedPamphletPDF(fileName: string, epamIds: string[]): Promise<void> {
+    if (epamIds.length === 0) {
+      setStatus("No hay panfletos para imprimir.", "error");
+      return;
+    }
+    await getCsrf();
+    const csrf = currentCsrf();
+    const headers = new Headers();
+    headers.set("Content-Type", "application/json");
+    headers.set("Accept", "application/pdf");
+    if (csrf) {
+      headers.set("X-CSRF-Token", csrf);
+    }
+    const response = await fetch(apiUrl("/documents/pamphlet/merge-pdf"), {
+      method: "POST",
+      headers,
+      credentials: "include",
+      body: JSON.stringify({
+        epamIds,
+        ink_color: "black",
+        fileName: sanitizePdfFileBase(fileName, "serie") + ".pdf",
+      }),
+    });
+    const cd = response.headers.get("Content-Disposition") || "";
+    let download = fileName.endsWith(".pdf") ? fileName : `${fileName}.pdf`;
+    const match = /filename\*=UTF-8''([^;]+)|filename="([^"]+)"/i.exec(cd);
+    const fromHeader = match?.[1] || match?.[2];
+    if (fromHeader) {
+      try {
+        download = decodeURIComponent(fromHeader.replace(/\+/g, " "));
+      } catch {
+        download = fromHeader;
+      }
+    }
+    if (!response.ok) {
+      let message = `HTTP ${response.status}`;
+      try {
+        const err = await response.json();
+        if (err && typeof err.message === "string") message = err.message;
+      } catch {
+        /* ignore */
+      }
+      throw new Error(message);
+    }
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = download;
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
   function renderArticlesTree(): void {
     treeHost.replaceChildren();
     if (!tree || tree.count === 0) {
@@ -241,14 +303,83 @@ export function mountPamphletSeriesPage(root: HTMLElement): PamphletSeriesHandle
       seriesEl.className = "pamphlet-manage__series";
       seriesEl.open = false;
       const seriesSummary = document.createElement("summary");
-      seriesSummary.textContent = seriesNode.name;
+      const seriesTitle = document.createElement("span");
+      seriesTitle.className = "pamphlet-manage__tree-label";
+      seriesTitle.textContent = seriesNode.name;
+      seriesSummary.appendChild(seriesTitle);
+      const allIds: string[] = [];
+      for (const ch of seriesNode.chapters) {
+        for (const it of ch.items) {
+          allIds.push(it.epamId);
+        }
+      }
+      const printSeries = document.createElement("button");
+      printSeries.type = "button";
+      printSeries.className = "pamphlet-manage__tree-print";
+      printSeries.textContent = "Imprimir serie";
+      printSeries.title = "Descargar un PDF con todos los panfletos de esta serie, en orden";
+      printSeries.disabled = allIds.length === 0;
+      printSeries.addEventListener("click", (event) => {
+        event.preventDefault();
+        void (async () => {
+          printSeries.disabled = true;
+          try {
+            setStatus("Generando PDF de la serie…", "info");
+            const base = sanitizePdfFileBase(seriesNode.name, "serie");
+            await downloadMergedPamphletPDF(base, allIds);
+            setStatus("PDF de la serie descargado.", "success");
+          } catch (err) {
+            const message = err instanceof Error ? err.message : String(err);
+            setStatus(message, "error");
+            openApiErrorModal(message, {
+              title: "Imprimir serie",
+              summary: "No se pudo generar el PDF combinado.",
+            });
+          } finally {
+            printSeries.disabled = allIds.length === 0;
+          }
+        })();
+      });
+      seriesSummary.appendChild(printSeries);
       seriesEl.appendChild(seriesSummary);
       for (const chapter of seriesNode.chapters) {
         const chapterEl = document.createElement("details");
         chapterEl.className = "pamphlet-manage__chapter";
         chapterEl.open = false;
         const chapterSummary = document.createElement("summary");
-        chapterSummary.textContent = chapter.name;
+        const chapterTitle = document.createElement("span");
+        chapterTitle.className = "pamphlet-manage__tree-label";
+        chapterTitle.textContent = chapter.name;
+        chapterSummary.appendChild(chapterTitle);
+        const chapterIds = chapter.items.map((it) => it.epamId);
+        const printChapter = document.createElement("button");
+        printChapter.type = "button";
+        printChapter.className = "pamphlet-manage__tree-print";
+        printChapter.textContent = "Imprimir capítulo";
+        printChapter.title = "Descargar un PDF con los panfletos de este capítulo, en orden";
+        printChapter.disabled = chapterIds.length === 0;
+        printChapter.addEventListener("click", (event) => {
+          event.preventDefault();
+          void (async () => {
+            printChapter.disabled = true;
+            try {
+              setStatus("Generando PDF del capítulo…", "info");
+              const fileBase = `${seriesNode.name} — ${chapter.name}`;
+              await downloadMergedPamphletPDF(sanitizePdfFileBase(fileBase, "capitulo"), chapterIds);
+              setStatus("PDF del capítulo descargado.", "success");
+            } catch (err) {
+              const message = err instanceof Error ? err.message : String(err);
+              setStatus(message, "error");
+              openApiErrorModal(message, {
+                title: "Imprimir capítulo",
+                summary: "No se pudo generar el PDF combinado.",
+              });
+            } finally {
+              printChapter.disabled = chapterIds.length === 0;
+            }
+          })();
+        });
+        chapterSummary.appendChild(printChapter);
         chapterEl.appendChild(chapterSummary);
         const items = document.createElement("div");
         items.className = "pamphlet-manage__chapter-items";

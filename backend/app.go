@@ -402,6 +402,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("PATCH /api/epams/{id}/publication", a.setEpamPublicationHandler)
 	mux.HandleFunc("DELETE /api/epams/{id}", a.deleteEpamHandler)
 	mux.HandleFunc("POST /api/documents/pamphlet/pdf", a.pamphletPDFHandler)
+	mux.HandleFunc("POST /api/documents/pamphlet/merge-pdf", a.pamphletMergePDFHandler)
 	mux.HandleFunc("POST /api/documents/pamphlet/preview", a.pamphletPreviewHandler)
 
 	mux.HandleFunc("POST /api/homescool/students", a.registerHomescoolStudentHandler)
