@@ -280,6 +280,34 @@ export function eeyesPackAnalysis(tasks: EeyesTask[]): string {
   return "";
 }
 
+const PHOTO_SESSION_WINDOW_MS = 60_000;
+
+function samePhotoSession(a: EeyesTask, b: EeyesTask): boolean {
+  if (a.batchId && a.batchId === b.batchId) return true;
+  if (a.title !== b.title) return false;
+  if ((a.cameraFacing || "back") !== (b.cameraFacing || "back")) return false;
+  if ((a.photoIntervalSec || 0) !== (b.photoIntervalSec || 0)) return false;
+  if ((a.maxPhotos || 0) !== (b.maxPhotos || 0)) return false;
+  if ((a.notifyAt || "").slice(0, 16) !== (b.notifyAt || "").slice(0, 16)) return false;
+  const delta = Math.abs(Date.parse(a.createdAt) - Date.parse(b.createdAt));
+  return Number.isFinite(delta) && delta <= PHOTO_SESSION_WINDOW_MS;
+}
+
+/**
+ * One scheduling action across devices. A burst gives each device its own
+ * batch id, so those copies join by the shared setup and creation window.
+ */
+export function eeyesPhotoSessions(tasks: EeyesTask[]): EeyesTask[][] {
+  const sorted = [...tasks].sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+  const sessions: EeyesTask[][] = [];
+  for (const task of sorted) {
+    const found = sessions.find((group) => samePhotoSession(group[0], task));
+    if (found) found.push(task);
+    else sessions.push([task]);
+  }
+  return sessions;
+}
+
 /** Groups one send across devices. Tasks without a batch stay on their own. */
 export function eeyesBatches(tasks: EeyesTask[]): EeyesTask[][] {
   const order: EeyesTask[][] = [];

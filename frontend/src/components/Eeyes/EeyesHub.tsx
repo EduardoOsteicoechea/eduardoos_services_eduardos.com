@@ -19,6 +19,7 @@ import {
   createEeyesPairing,
   createEeyesTask,
   eeyesBatches,
+  eeyesPhotoSessions,
   eeyesCaptureDevices,
   eeyesDownloadUrl,
   eeyesPackAnalysis,
@@ -642,12 +643,7 @@ function PhotoView() {
 
   return (
     <section className="product-dash__section">
-      <h2>Programar foto</h2>
-      <p className="lede">
-        A la hora indicada cada dispositivo toma la cámara elegida. Una ráfaga sube una foto cada
-        tantos segundos y queda como un paquete propio de ese dispositivo.
-      </p>
-      <form className="eeyes-form" onSubmit={(e) => void onSubmit(e)}>
+      <form className="eeyes-form eeyes-form--row" onSubmit={(e) => void onSubmit(e)}>
         <label>
           Toma
           <select value={mode} onChange={(e) => setMode(e.target.value as "one" | "burst")}>
@@ -717,48 +713,63 @@ function PhotoView() {
         </button>
       </form>
       {eeyesCaptureDevices(devices).length === 0 ? <p className="lede">Vincula un dispositivo antes de programar fotos.</p> : null}
-      <div className="eeyes-pack-row">
-        {eeyesBatches(photos).flatMap((group) => {
+      <div className="eeyes-session-list">
+        {eeyesPhotoSessions(photos).map((group) => {
           const shown = eeyesUniquePackTasks(group, devices);
-          if (shown.length === 0) return [];
-          return shown.map((t) => (
-            <article key={t.id} className="eeyes-task-card">
-              <strong>{deviceLabel(devices, t.deviceId)}</strong>
-              <span className="lede">
-                {t.title} · Cámara {CAMERA_LABEL[t.cameraFacing ?? "back"]} · {photoStatusLabel(t)}
-              </span>
-              {mediaByTask[t.id]?.length ? (
-                <div className="eeyes-media-grid">
-                  {mediaByTask[t.id].map((item) => (
-                    <figure key={item.id} className="eeyes-media-frame">
-                      <EeyesPhoto src={eeyesMediaUrl(item.id)} alt={t.title} />
-                      {item.analysis ? <figcaption>{item.analysis}</figcaption> : null}
-                    </figure>
+          if (shown.length === 0) return null;
+          const analyses = sessionAnalyses(shown);
+          return (
+            <article key={shown.map((t) => t.id).join("-")} className="eeyes-session">
+              {analyses.length ? (
+                <div className="eeyes-pack-analysis">
+                  {analyses.map((text) => (
+                    <p key={text}>{text}</p>
                   ))}
                 </div>
               ) : null}
-              {t.status === "pending" ? (
-                <button type="button" onClick={() => void cancelEeyesTask(t.id).then(load)}>
-                  Cancelar
-                </button>
-              ) : null}
+              <div className="eeyes-session__row">
+                {shown.map((t) => (
+                  <div key={t.id} className="eeyes-session__device">
+                    <strong>{deviceLabel(devices, t.deviceId)}</strong>
+                    <span className="lede">
+                      {t.title} · Cámara {CAMERA_LABEL[t.cameraFacing ?? "back"]} · {photoStatusLabel(t)}
+                    </span>
+                    {mediaByTask[t.id]?.length ? (
+                      <div className="eeyes-media-grid">
+                        {mediaByTask[t.id].map((item) => (
+                          <figure key={item.id} className="eeyes-media-frame">
+                            <EeyesPhoto src={eeyesMediaUrl(item.id)} alt={t.title} />
+                            {item.analysis ? <figcaption>{item.analysis}</figcaption> : null}
+                          </figure>
+                        ))}
+                      </div>
+                    ) : null}
+                    {t.status === "pending" ? (
+                      <button type="button" onClick={() => void cancelEeyesTask(t.id).then(load)}>
+                        Cancelar
+                      </button>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
             </article>
-          ));
-        })}
-        {eeyesBatches(photos).flatMap((group) => {
-          const shown = eeyesUniquePackTasks(group, devices);
-          const analysis = eeyesPackAnalysis(group);
-          if (shown.length === 0 || !analysis) return [];
-          return [
-            <div key={`${group[0].batchId || group[0].id}-analysis`} className="eeyes-pack-analysis">
-              <strong>Análisis del paquete</strong>
-              <p>{analysis}</p>
-            </div>,
-          ];
+          );
         })}
       </div>
     </section>
   );
+}
+
+function sessionAnalyses(tasks: EeyesTask[]): string[] {
+  const seen = new Set<string>();
+  const texts: string[] = [];
+  for (const task of tasks) {
+    const text = task.packAnalysis?.trim();
+    if (!text || seen.has(text)) continue;
+    seen.add(text);
+    texts.push(text);
+  }
+  return texts;
 }
 
 const SYNC_STALE_MS = 20 * 60_000;

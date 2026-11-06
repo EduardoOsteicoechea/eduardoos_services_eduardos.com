@@ -5,6 +5,7 @@ import {
   eeyesNoticeStage,
   eeyesPhotoStage,
   eeyesBatches,
+  eeyesPhotoSessions,
   eeyesCaptureDevices,
   eeyesPackAnalysis,
   eeyesUniquePackTasks,
@@ -77,6 +78,49 @@ describe("eeyes helpers", () => {
     const shown = eeyesUniquePackTasks([pending, done], [phone, again, tablet]);
     expect(shown.map((t) => t.id)).toEqual(["d"]);
     expect(eeyesPackAnalysis([pending, done])).toBe("Postura: erguido.");
+  });
+
+  it("joins a burst across devices into one session", () => {
+    const phone = {
+      id: "p",
+      deviceId: "phone",
+      title: "Foto programada",
+      cameraFacing: "front",
+      photoIntervalSec: 5,
+      maxPhotos: 5,
+      batchId: "burst-phone",
+      createdAt: "2026-11-06T12:06:33Z",
+      packAnalysis: "Teléfono.",
+    } as EeyesTask;
+    const tablet = {
+      ...phone,
+      id: "t",
+      deviceId: "tablet",
+      batchId: "burst-tablet",
+      createdAt: "2026-11-06T12:06:35Z",
+      packAnalysis: "Tablet.",
+    } as EeyesTask;
+    const desktop = {
+      ...phone,
+      id: "d",
+      deviceId: "desktop",
+      batchId: "burst-desktop",
+      createdAt: "2026-11-06T12:06:36Z",
+      packAnalysis: "",
+    } as EeyesTask;
+    const later = {
+      ...phone,
+      id: "later",
+      deviceId: "phone",
+      batchId: "one",
+      maxPhotos: 1,
+      photoIntervalSec: 0,
+      createdAt: "2026-11-06T12:24:50Z",
+    } as EeyesTask;
+    const sessions = eeyesPhotoSessions([later, desktop, phone, tablet]);
+    expect(sessions).toHaveLength(2);
+    expect(sessions[0].map((t) => t.id)).toEqual(["later"]);
+    expect(sessions[1].map((t) => t.id)).toEqual(["d", "t", "p"]);
   });
 
   it("builds media and download urls", () => {
