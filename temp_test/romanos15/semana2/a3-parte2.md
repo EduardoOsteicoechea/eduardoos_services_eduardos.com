@@ -1,197 +1,185 @@
 # La escala global de la obediencia a la fe (2)
 
-## Romanos 15:14-16
+## Romanos 15:15-16
 
-La frase en la que nos detenemos es esta: «por la gracia que me fue dada por Dios para ser ministro de Cristo Jesús a los gentiles, ministrando a manera de sacerdote el evangelio de Dios, a fin de que la ofrenda que hago de los gentiles sea aceptable, santificada por el Espíritu Santo».
+La frase en la que nos detenemos es esta: «por la gracia que me fue dada por Dios para ser ministro de Cristo Jesús a los gentiles».
 
-En la ocasión anterior vimos que Pablo se entendía deudor de griegos y de bárbaros, y que la obediencia a la fe entre todos los gentiles le imponía una escala global.
+En la ocasión anterior vimos que el espacio del trabajo de Pablo era el mundo completo, y que se consideraba deudor de griegos y de bárbaros.
 
-Vimos también que, cuando el objetivo pasa a ser una población entera, cambian las estrategias, el pensamiento y la visión.
+Vimos también que tenemos el deber de llegar hasta lo último de la tierra, que Dios limita nuestros recursos, y que la manera de relacionar ambas cosas es orar.
 
-El deber de llegar hasta lo último de la tierra permanece junto a los límites que Dios pone, y el camino para relacionarlos empieza por orar.
+## Algunos ejemplos, no una receta
 
-## Por dónde empieza cada uno
+Hoy quisiera mencionar algunas formas en las que podemos participar en esto.
 
-Pondré unos ejemplos de qué significa llegar hasta lo último de la tierra, sin decir que cada uno deba hacerlo así.
+No quiere decir que esta sea la forma en que cada uno debe hacerlo.
 
-Pienso que cada uno debe orar para que el Señor lo convenza de cómo puede hacerlo, y sí creo que cada uno debe hacerlo.
+Pienso que cada uno debe orar y que el Señor lo convenza de la manera en la que puede hacerlo, pero sí creo que cada uno debe hacerlo.
 
-Personalmente, llegar hasta lo último de la tierra comienza por cultivar una buena relación con Dios a través de la Biblia y de la iglesia local.
+## Una buena relación con Dios
 
-Cuando vivimos en fraternidad amorosa con los hermanos, el Espíritu Santo nos revela cosas de las Escrituras.
+Personalmente, considero que llegar hasta lo último de la tierra comienza por cultivar una buena relación con Dios, a través de la Biblia y de la iglesia local.
 
-En esa comunión, la oración y la Escritura nos muestran la grandeza de Dios, y el corazón quiere servirle.
+Cuando vivimos con una fraternidad amorosa con los hermanos, el Espíritu Santo comienza a revelarnos cosas de las Escrituras.
 
-Tal vez no ocurra de inmediato, pero el Espíritu Santo hará su obra.
+En esa comunión con los creyentes de la iglesia local, estudiamos la Escritura en oración y comenzamos a sentir la majestad y la grandeza de Dios.
+
+Nuestro corazón comienza a inclinarse hacia él y a querer servirle, si verdaderamente somos creyentes del evangelio.
+
+Tal vez no ocurra de inmediato, pero eventualmente el Espíritu Santo hará su obra.
 
 ## Salir del ensimismamiento
 
-Ese amor al Señor, a su gloria y a su propósito nos saca del ensimismamiento en nuestros propósitos, problemas y deseos.
+Ese gran amor por el Señor, por su gloria y por su propósito nos puede sacar de nuestro ensimismamiento en nuestros propósitos, problemas y deseos.
 
-Nos ayuda a pensar en los deseos de Dios, a querer complacerle y a soltar nuestras prioridades para priorizar las de él, y eso es necesario para el resto de las tareas.
+Nos puede ayudar a pensar más en los deseos de Dios y a desear complacerle.
 
-Cuando hablo de las prioridades de Dios, nunca digo que los creyentes deban tener vidas irresponsables.
+Nos puede ayudar a soltar nuestras prioridades y a priorizar las prioridades de Dios, y eso es necesario para el resto de las tareas.
 
-El reino y su justicia son la Escritura y la armonía de los deberes familiares, comunitarios, eclesiásticos y de alcance mundial.
+## Una armonía de deberes
 
-No lo pongo por encima del resto: es parte del conjunto, y todo se hace a la vez, con urgencia y con enfoque eterno.
+Por supuesto, cuando hablo de las prioridades de Dios, nunca digo que los creyentes deban tener vidas irresponsables.
 
-Es un marco difícil de asimilar al principio, pero debemos hacerlo.
+El reino de Dios y su justicia, que debemos priorizar, son la Escritura, son la armonía de todos los deberes que tenemos.
 
-## La armonía que se mueve hacia las naciones
+Es decir, el cumplimiento de nuestras responsabilidades familiares, comunitarias y eclesiásticas, junto con este trabajo de llegar hasta lo último de la tierra.
 
-Debemos cumplir esa armonía, y esos deberes simultáneos deben moverse con energía hacia discipular a las naciones.
+No pongo el llegar a lo último de la tierra por encima de lo demás, sino que lo veo todo como parte de un conjunto.
 
-Después de la relación con Dios, me enfocaría en aprender las Escrituras, porque discipular exige conocer a Dios y decir la verdad acerca de él.
+Todo debe hacerse al mismo tiempo, pero con sentido de urgencia y de priorización en el enfoque eterno.
 
-Necesito conocer y explicar todo lo que Cristo mandó, y por eso debo ser estudiante de la Escritura.
+Es un marco de pensamiento que no es sencillo de asimilar al principio, pero debemos hacerlo.
 
-Hay maestros y evangelistas, pero todos somos discipuladores, y por eso todos debemos ser estudiantes.
+Ese conjunto de deberes simultáneos debe moverse con energía hacia la visión de discipular a las naciones, y por eso oramos pidiendo dirección.
 
-## Lo que solo nosotros podemos hacer
+## Estudiantes de la Escritura
 
-Una tercera parte de la responsabilidad es aprovechar las oportunidades individuales de discipular, las que nuestros líderes no tendrán y nosotros sí.
+Luego de cultivar esa relación con Dios, me enfocaría en aprender las Escrituras.
 
-Ser ejemplo, amigo verdadero y persona accesible entre vecinos, comunidad y compañeros de trabajo, y hablar de Cristo cuando se puede.
+Toda participación directa en discipular a las naciones requiere que yo conozca a Dios y pueda comunicar la verdad acerca de él de manera efectiva.
 
-Quien ha caminado años con alguien y tiene su confianza puede compartirle el evangelio y discipularlo.
+Necesito conocer todo lo que Cristo mandó para poder discipular a las naciones en obedecer todo lo que Cristo mandó.
 
-Esas relaciones tan específicas son nuestra responsabilidad y nuestro entorno inmediato.
+Necesito dominar esa doctrina y comprenderla de tal manera que pueda explicarla, y por eso debo ser un estudiante de la Escritura.
 
-Yo lo tomaría en persona, con comunidad, vecinos y familia, y allí compartiría el evangelio.
+No hay distinción en este punto: algunos hermanos son maestros y otros son evangelistas, pero todos somos discipuladores, y por eso todos debemos ser estudiantes.
 
-La iglesia local también pertenece a esta obra.
+## Nuestro entorno inmediato
 
-Es el segmento de las naciones que ya recibe discipulado y que todavía necesita aprender a obedecer todo lo que Cristo mandó.
+Una tercera parte de esta responsabilidad es aprovechar las oportunidades que tenemos como individuos para discipular.
 
-Este trabajo no acaba nunca: es de por vida, y hay que tener tiempo para edificar a los hermanos.
+Hay oportunidades que nuestros líderes no tendrán, pero que nosotros sí tendremos.
 
-## De la región a estrategias más amplias
+Por ejemplo, ser un ejemplo y un verdadero amigo para nuestros vecinos, y alguien accesible para nuestra comunidad y nuestros compañeros de trabajo.
 
-Luego viene la escala regional, más allá de lo cercano.
+Ser alguien dispuesto a hablar de Cristo cuando se puede, alguien que ha caminado con una persona por años y tiene su confianza para compartirle el evangelio.
 
-Preguntamos cómo llega el evangelio a cada sector, o cómo potenciamos, culminamos, continuamos y consolidamos lo que ya llega.
+Esas relaciones sumamente específicas son nuestra responsabilidad individual y nuestro entorno inmediato.
 
-Allí el tiempo se limita, y tal vez solo participemos de vez en cuando.
+Yo tomaría esa responsabilidad de manera muy personal y muy directa, con mi comunidad, mis vecinos y mi familia.
 
-Hacen falta estrategias más amplias que nuestra presencia y nuestra energía.
+## La iglesia local
 
-Usamos redes, eventos grandes y encuentros donde se pueda compartir el evangelio.
+Otra área de responsabilidad es la iglesia local, que también es parte de la obra de discipular a las naciones.
 
-Entrenamos a la gente de una zona, financiamos a quien tiene más tiempo en la región, o hacemos todo eso juntos.
+Es el segmento de las naciones que ya recibe discipulado, pero que necesita terminar de aprender a obedecer todo lo que Cristo ha mandado.
 
-## Atrevimiento y límite
+Este trabajo no acaba nunca, es de por vida, y debemos apartar tiempo para edificar a los hermanos.
 
-Aquí oramos, aplicamos la sabiduría que Dios da, y somos atrevidos y dados a estas cosas.
+## La escala regional
 
-Lo más que puede pasar es que queramos hacer más de lo que Dios permite, y que él nos limite con nuestras circunstancias.
+Luego pasamos a una escala regional, donde ya no se trata solamente de nuestra relación con Dios, ni de nuestro conocimiento, ni de nuestras relaciones inmediatas, ni de nuestra iglesia, sino de nuestra región.
 
-Si seguimos las Escrituras y queremos que las naciones se salven y obedezcan a Cristo, que él sea honrado y que ellas vivan el gozo de seguirle, podemos ser atrevidos y notar qué nos limita.
+Debemos preguntarnos cómo hacemos que el evangelio alcance todos sus sectores, o cómo potenciamos lo que ya llega para que se consolide.
 
-Seguimos orando, pero no nos detenemos: el llamado ya está, y lo consolidamos con hechos.
+Allí nuestro tiempo se limita, y tal vez solo podamos participar ocasionalmente.
 
-En naciones, continentes y el mundo podemos participar con redes, pero ya hace falta una planificación estratégica mayor.
+Necesitamos estrategias más amplias que nuestra presencia y que nuestra energía individual.
 
-## Aportar donde la obra es vasta
+Tal vez redes sociales o eventos grandes y atractivos, para que las personas estén donde podamos compartir el evangelio.
 
-Tal vez participamos con un ministerio que ya tiene experiencia en regiones vastas.
+O entrenamos a las personas de una zona, o reunimos dinero para financiar a quien tenga más tiempo, o hacemos todo eso junto.
 
-Apoyamos económicamente una planificación, o entramos en la planificación misma.
+## Atrevidos, pero atentos
 
-Aportamos insumos, tiempo, recursos, conexiones, habilidades y planes, con mirada estratégica, en la nación y en el continente.
+Aquí oramos y aplicamos la sabiduría que Dios nos da, pero debemos ser atrevidos.
 
-Vemos mapas, zonas populosas y gente que luego pueda movilizarse, y lo mismo vale en el continente y en el mundo.
+Lo más que puede pasar es que queramos hacer más de lo que Dios permite, y que él nos limite con nuestras propias circunstancias.
 
-Aquí entra la parte más difícil de esa planificación, y reconozco que no soy un ejemplo y que empiezo a abrir la mente.
+Si estamos apegados a las Escrituras y queremos que las naciones se salven y obedezcan a Cristo, podemos ser atrevidos y notar qué nos limita el Señor.
 
-En este tema me considero un neófito, un niño espiritual.
+Seguimos orando, pero no nos detenemos, porque el llamado ya lo tenemos y lo consolidamos con hechos.
 
-## Asociaciones y paciencia
+## Naciones, continentes y el mundo
 
-Hablo de esto porque quiero aprender, me anima decirlo, y prefiero pensarlo que no pensarlo.
+Ahora pasamos a las naciones, los continentes y el mundo entero, donde podemos participar con redes sociales, aunque pienso que hace falta una planificación estratégica de mayor escala.
 
-Aquí importa trabajar asociaciones con iglesias y denominaciones.
+Tal vez participamos con un ministerio que ya tenga experiencia en regiones vastas, o lo apoyamos económicamente.
 
-Se complica, porque la gran comisión es enseñar todo lo que Cristo mandó.
+Aportamos tiempo, recursos, conexiones, habilidades y planes, vemos mapas y buscamos lugares con potencial para captar personas que luego se movilicen.
 
-Históricamente, creo, y también ahora, ha sido difícil definir qué mandó Cristo y cómo debe hacerse.
+## Un neófito que quiere aprender
 
-Por eso, sobre todo los protestantes, nos dividimos, discutimos, nos cuesta apoyarnos y dispersamos los recursos.
+Aquí entra tal vez la parte más difícil, y reconozco que para nada soy un ejemplo en esto.
 
-No lo sé, pero pienso que hay que hacerlo.
+En este tema me considero un neófito, un niño espiritual, pero hablo de esto porque quiero aprender, y prefiero reflexionar sobre esto que no pensarlo.
 
-No podremos ayudar a todo el mundo y seleccionaremos con quiénes, pero no está mal empezar por algo.
+Aquí es importante trabajar las asociaciones con iglesias y denominaciones.
 
-## Mejor parcial que nada
+Y aquí todo se complica, porque la gran comisión es enseñar todo lo que Cristo mandó, y ha sido complicado definir qué mandó y cómo se debe hacer.
 
-Así sea débil y parcial, es mejor hacer algo que no hacer nada.
+Por eso, sobre todo los protestantes, nos dividimos, discutimos, nos cuesta apoyarnos y tenemos los recursos dispersos.
 
-Tal vez podamos ubicar dos, tres, cuatro, cinco, diez o veinte organizaciones que piensen de manera semejante a la nuestra, y apoyarlas.
+## Mejor algo que nada
 
-A quienes nos gusta controlar cómo se hacen las cosas, y me incluyo, nos cuesta más colaborar.
+No sé, pero pienso que hay que hacerlo, y no está mal empezar por algo, aunque no podamos ayudar a todo el mundo.
 
-Dios es demasiado paciente conmigo, que entiendo muy poco y aprendo gracias a él todo el tiempo.
+Así sea débil, así sea parcial, es mejor hacer algo que no hacer nada.
 
-Si él es paciente para que yo aprenda, yo debo ser paciente, apoyar a otros y confiar en que les enseñará.
+Tal vez podamos ubicar cinco, diez o veinte organizaciones que piensen de manera semejante a nosotros, y apoyarlas.
 
-Si nunca les enseña, que tenga misericordia, como la quiero para mí, que moriré sin entender mucho.
+A quienes nos gusta tener control, y me incluyo, nos cuesta más colaborar con otros.
 
-Ese pensamiento, más sobrio, nos libera de muchas tensiones a la hora de apoyarnos.
+## La paciencia de Dios con nosotros
 
-## Lo que no se negocia
+Pero últimamente he reflexionado en lo paciente que Dios es conmigo, que entiendo muy poco de sus cosas.
 
-Hay cosas que no negociamos: el evangelio verdadero, la integridad de quienes ministran y la doctrina apostólica.
+Si Dios ha sido tan paciente conmigo, yo debiera ser paciente con otros y apoyarlos, confiando en que Dios les enseñará.
 
-Esas cosas pueden ser bastante generales, y creo que se hallan en muchos lugares que piensan distinto de nosotros.
+Y si nunca les enseña, que Dios tenga misericordia de ellos, como quiero que la tenga de mí, que seguramente moriré sin entender un montón de cosas.
 
-Mientras estén, podemos ser abiertos, mirando la paciencia que Dios tiene con nosotros.
+Ese pensamiento, más sobrio, nos libera de muchas tensiones a la hora de apoyarnos mutuamente.
 
-Tenemos esa paciencia porque el objetivo es más grande y digno de ella.
+Por supuesto, hay cosas que no negociamos: el evangelio verdadero, la integridad de los que ministran y la doctrina apostólica.
 
-Así ordenamos tiempo, recursos y habilidades, con lo poco que hay y, a veces, con mucho.
+Pero esas cosas se encuentran en muchísimos lugares que piensan diferente a nosotros, y allí podemos ser pacientes.
 
-Esa escala global yo la veo también por peldaños, y todos a la vez: mi relación con Dios, mi conocimiento de la Escritura, la iglesia, la comunidad, la región, la nación, el continente y el mundo.
+## Una escala global y escalonada
 
-Un ejemplo en horas, pobre y no útil para todos, puede mostrar que no es imposible.
+Esa escala global yo la veo también escalonada: mi relación con Dios, mi conocimiento de la Escritura, la iglesia, la comunidad, la región, la nación, el continente y el mundo, todo al mismo tiempo.
 
-## Media hora, la iglesia y el trabajo
+## Un ejemplo en horas
 
-Permítanme el ejemplo.
+Un ejemplo en horas, así sea pobre, puede mostrar que no es imposible.
 
-La relación con Dios la cultivo en un devocional de tal vez media hora al día.
+Cultivo mi relación con Dios en un devocional de media hora al día, y oro y leo en momentos cortos.
 
-Oro durante el día y me detengo en momentos cortos para orar y leer, y así crece también el conocimiento bíblico.
+Participo en dos o tres actividades a la semana en la iglesia local.
 
-Participo en dos actividades a la semana en la iglesia local, y tal vez pueden ser tres.
+Soy un trabajador excelente y un buen amigo de mi comunidad, dispuesto a perdonar y a ayudar.
 
-Soy un trabajador excelente durante toda la semana.
+Aparto unas tres horas a la semana para visitar a un amigo que no conoce al Señor y compartirle el evangelio.
 
-Soy un buen amigo de la gente de mi comunidad, dispuesto a perdonar y a ayudar, y así construyo esas relaciones.
+Ofrendo en asociaciones regionales, sean cinco dólares o quinientos mil, lo que cada quien quiera.
 
-## Tres horas, una ofrenda y la oración
-
-Aparto unas tres horas a la semana para hablar con alguien de mis amistades que no conoce al Señor.
-
-Nos visitamos, hacemos amistad, compartimos el evangelio y, si ya estamos en ese punto, discipulamos.
-
-Además me intereso por asociaciones regionales y ofrendo allí.
-
-No tiene que ser mucho: pueden ser cinco dólares, diez dólares o quinientos mil dólares, lo que cada quien quiera dar.
-
-Hacer lo que podamos ya es un buen punto de partida.
-
-También busco una organización global, una que coloque a alguien en otro continente o en otro estado.
-
-Envío allí dinero, o me comprometo a orar todos los días, o a decirle a otros que apoyen eso.
+Y apoyo a una organización global con dinero, con oración diaria o pidiendo a otros que la apoyen.
 
 ## Del tamaño de la obra
 
-Si lo vemos desde ese punto de vista sencillo y pequeño, sí podemos hacerlo.
+Si lo vemos desde ese punto de vista sencillo y pequeño, sí podemos hacerlo, porque es un estilo de vida enmarcado en el tamaño global de la obra.
 
-Es un estilo de vida enmarcado en el tamaño global de la obra, y podemos abordarlo.
+Es un buen inicio para pensar en la obediencia a la fe entre todos los gentiles, como lo hacía Pablo.
 
-Me parece un buen inicio para pensar de manera global en la obediencia a la fe entre todos los gentiles, como lo hacía Pablo.
-
-Hermanos, que Dios nos ayude a cambiar de actitud y a vivir para el propósito por el cual nos tiene en la tierra.
+Hermanos, que Dios nos ayude a vivir enfocados en el propósito para el cual nos tiene en la tierra.
 
 Dios les bendiga, hermanos.

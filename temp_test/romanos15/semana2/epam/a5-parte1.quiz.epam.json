@@ -1,103 +1,65 @@
 {
-  "type": "pamphlet_single_sheet",
-  "header": {
-    "title": "Ministrando el evangelio de Dios (1) Quiz",
-    "subtitle": "Romanos 15:14-16",
-    "author": "Eduardo Osteicoechea",
-    "series": "Romanos 15",
-    "series_chapter": "2",
-    "date": "2026 - 11 - 06"
-  },
-  "footer": {
-    "action": "",
-    "message": "",
-    "label1": "",
-    "value1": "",
-    "label2": "",
-    "value2": "",
-    "label3": "",
-    "value3": "",
-    "label4": "",
-    "value4": ""
-  },
-  "header_layout": {
-    "height": 0,
-    "body_gutter": 0,
-    "pad": 0,
-    "pad_top": 0,
-    "pad_bottom": 0,
-    "pad_x": 0,
-    "radius": 0,
-    "stroke": 0,
-    "inner_inset": 0,
-    "inner_stroke": 0,
-    "inner_radius": 0,
-    "title_size": 0,
-    "title_lh": 0,
-    "title_pad_bottom": 0,
-    "title_meta_gap": 0,
-    "divider_outer_stroke": 0,
-    "divider_gap": 0,
-    "divider_inner_stroke": 0,
-    "subtitle_size": 0,
-    "subtitle_lh": 0,
-    "subtitle_pad_x": 0,
-    "subtitle_pad_top": 0,
-    "subtitle_pad_y": 0,
-    "subtitle_min_h": 0,
-    "meta_size": 0,
-    "meta_lh": 0,
-    "meta_row_gap": 0,
-    "meta_col_gap": 0,
-    "meta_pad_top": 0
-  },
-  "footer_layout": {
-    "height": 0,
-    "width": 0,
-    "body_gutter": 0,
-    "pad": 0,
-    "pad_top": 0,
-    "pad_bottom": 0,
-    "radius": 0,
-    "stroke": 0,
-    "inner_inset": 0,
-    "inner_stroke": 0,
-    "inner_radius": 0,
-    "chrome_gap": 0,
-    "divider_outer_stroke": 0,
-    "divider_gap": 0,
-    "divider_inner_stroke": 0,
-    "action_size": 0,
-    "action_lh": 0,
-    "action_pad_x": 0,
-    "action_pad_y": 0,
-    "action_min_h": 0,
-    "message_size": 0,
-    "message_lh": 0,
-    "message_pad_x": 0,
-    "message_pad_top": 0,
-    "message_pad_bottom": 0,
-    "message_pad_y": 0,
-    "message_min_h": 0,
-    "meta_gap": 0,
-    "meta_col_gap": 0,
-    "meta_row_h": 0,
-    "meta_label1_row_h": 0,
-    "meta_label2_row_h": 0,
-    "meta_label2_pad_top": 0,
-    "meta_value_row_h": 0,
-    "meta_size": 0,
-    "meta_lh": 0,
-    "meta_pad_x": 0,
-    "meta_pad_y": 0,
-    "meta_value_pad_y": 0,
-    "cell_stroke": 0,
-    "action_message_gap": 0
-  },
   "column_1": [
     {
+      "type": "paragraph",
+      "content": "Instrucciones: en la primera parte, marca con un círculo el número de la opción correcta.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "En la segunda parte, escribe tu respuesta en las líneas.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "Al final hay espacio para notas y la clave de respuestas.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
       "type": "heading_1",
-      "content": "Parte 1: Elige una respuesta",
+      "content": "Parte 1: Selección múltiple",
       "style_indexes": [
         [
           0,
@@ -116,7 +78,7 @@
     },
     {
       "type": "quiz",
-      "content": "1) ¿Sobre qué frase de Romanos 15:16 reflexiona este estudio?",
+      "content": "1) ¿Qué frase de Romanos 15:16 se estudia?",
       "style_indexes": [
         [
           0,
@@ -133,15 +95,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "«Capaces de amonestarse los unos a los otros»",
+        "«Llenos de todo conocimiento»",
         "«Les he escrito con atrevimiento»",
-        "«Ministrando a manera de sacerdote el evangelio de Dios»",
-        "«Llenos de bondad, llenos de todo conocimiento»"
+        "«Ministrando… el evangelio de Dios»",
+        "«Capaces de amonestarse»"
       ]
     },
     {
       "type": "quiz",
-      "content": "2) ¿Qué se había visto en un video anterior?",
+      "content": "2) ¿En qué aspecto del ministerio se enfoca el estudio?",
       "style_indexes": [
         [
           0,
@@ -158,15 +120,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "El carácter sacerdotal del ministerio a los gentiles",
-        "El contenido del evangelio que Pablo ministra",
-        "El primer amor de la iglesia de Éfeso",
-        "El uso de toda la Biblia con Timoteo"
+        "En su carácter sacerdotal",
+        "En su contenido",
+        "En sus viajes misioneros",
+        "En su autoridad sobre Roma"
       ]
     },
     {
       "type": "quiz",
-      "content": "3) ¿Qué se ve en este estudio?",
+      "content": "3) ¿Qué ministra Pablo, según el versículo 16?",
       "style_indexes": [
         [
           0,
@@ -183,15 +145,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Las obras de Éfeso aparte del amor",
-        "Un mensaje distinto del evangelio",
-        "El contenido, porque Pablo ministra el evangelio de Dios",
-        "Solo el carácter sacerdotal del ministerio"
+        "La ley de Moisés",
+        "El evangelio de Dios",
+        "Las tradiciones de los ancianos",
+        "Los dones espirituales"
       ]
     },
     {
       "type": "quiz",
-      "content": "4) ¿Cuál es el trabajo de Pablo como ministro de Cristo Jesús?",
+      "content": "4) ¿Qué recibieron los apóstoles de parte de Dios?",
       "style_indexes": [
         [
           0,
@@ -208,17 +170,17 @@
       ],
       "height_mm": 0,
       "options": [
-        "Ministrar el evangelio",
-        "Ofrecer sacrificios de animales",
-        "Gobernar el templo de Jerusalén",
-        "Aplaudir las obras que no tienen amor"
+        "Solo la forma del culto",
+        "Libertad para elegir el mensaje",
+        "Un mensaje distinto para cada ciudad",
+        "Cómo ministrar y qué ministrar"
       ]
     }
   ],
   "column_2": [
     {
       "type": "quiz",
-      "content": "5) ¿Qué recibieron los apóstoles de Dios, según el estudio?",
+      "content": "5) ¿Qué pregunta surge del ejemplo de Pablo?",
       "style_indexes": [
         [
           0,
@@ -235,15 +197,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Solo el rito del templo",
-        "El candelabro de la iglesia de Éfeso",
-        "Indicaciones directas sobre cómo hacer el ministerio y sobre el contenido del mensaje",
-        "Libertad para cambiar el contenido del mensaje"
+        "Si dejaremos de enseñar a niños",
+        "Si solo haremos enseñanzas evangelísticas",
+        "Si debemos volver al templo",
+        "Si los apóstoles se equivocaron"
       ]
     },
     {
       "type": "quiz",
-      "content": "6) ¿Cómo resume Pablo ese contenido?",
+      "content": "6) ¿Por qué seguir el patrón de Pablo?",
       "style_indexes": [
         [
           0,
@@ -260,15 +222,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Como el evangelio",
-        "Como la ley sola",
-        "Como la fatiga de las buenas obras",
-        "Como el conocimiento sin amor"
+        "Porque era el más elocuente",
+        "Porque fundó la iglesia de Roma",
+        "Dios lo designó para enseñarnos",
+        "Porque escribió más cartas"
       ]
     },
     {
       "type": "quiz",
-      "content": "7) ¿De quién son el patrón, el ejemplo y la filosofía ministerial?",
+      "content": "7) ¿Qué debe centrarse en el evangelio?",
       "style_indexes": [
         [
           0,
@@ -285,15 +247,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "De la iglesia que dejó el primer amor",
-        "De quien hace grandes obras sin amor",
-        "De Pablo, a quien Dios designó para enseñarnos el ministerio de Cristo",
-        "De los impostores que van de mal en peor"
+        "Solo las predicaciones del domingo",
+        "Solo las clases de adultos",
+        "Absolutamente todo",
+        "Solo las campañas evangelísticas"
       ]
     },
     {
       "type": "quiz",
-      "content": "8) Si el ministerio se enfoca en el evangelio, ¿qué tema sale de sus objetivos?",
+      "content": "8) ¿A quién escribe Pablo en 2 Timoteo 3?",
       "style_indexes": [
         [
           0,
@@ -310,17 +272,67 @@
       ],
       "height_mm": 0,
       "options": [
-        "Ninguno: ni con niños, adultos, jóvenes o ancianos, ni en la casa ni en el discipulado",
-        "El de los niños",
-        "El de los ancianos",
-        "El de la casa"
+        "A la iglesia de Éfeso",
+        "A los ancianos de Jerusalén",
+        "A Tito, en Creta",
+        "A Timoteo, su líder más cercano"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "9) ¿Qué Escritura conocía Timoteo desde la niñez?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Las cartas de Pablo",
+        "Los cuatro evangelios",
+        "El libro de Apocalipsis",
+        "El Antiguo Testamento"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "10) ¿Qué sabiduría dan las Escrituras (2 Ti 3:15)?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "La que da éxito en los negocios",
+        "La que lleva a la salvación",
+        "La que explica misterios",
+        "La que evita todo sufrimiento"
       ]
     }
   ],
   "column_3": [
     {
       "type": "quiz",
-      "content": "9) ¿Qué responde el autor al preguntar si todo debe centrarse en el evangelio?",
+      "content": "11) ¿Cómo evitaría Timoteo a los impostores?",
       "style_indexes": [
         [
           0,
@@ -337,15 +349,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Solo lo que se hace con adultos",
-        "Solo lo que se hace en público",
-        "Sí: absolutamente todo lo que se hace en la iglesia y en cada grupo",
-        "Solo el sermón evangelístico"
+        "Debatiendo con ellos en público",
+        "Alejándose de la iglesia",
+        "Buscando nuevas revelaciones",
+        "Enfocándose en las Escrituras"
       ]
     },
     {
       "type": "quiz",
-      "content": "10) ¿Qué le dice Pablo a Timoteo, el líder más cercano?",
+      "content": "12) ¿A qué nos ayuda el Antiguo Testamento?",
       "style_indexes": [
         [
           0,
@@ -362,15 +374,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Que use la Biblia completa, es decir, que se mantenga en el evangelio",
-        "Que deje el Antiguo Testamento",
-        "Que enseñe solo sermones evangelísticos",
-        "Que abandone lo aprendido desde la niñez"
+        "A confiar en Cristo",
+        "A salvarnos por la ley",
+        "A conocer solo historia",
+        "A reemplazar el evangelio"
       ]
     },
     {
       "type": "quiz",
-      "content": "11) ¿Qué Escritura conocía Timoteo desde la niñez?",
+      "content": "13) ¿Qué es ministrar la Biblia?",
       "style_indexes": [
         [
           0,
@@ -387,15 +399,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "El Apocalipsis",
-        "Solo los evangelios",
-        "El Antiguo Testamento",
-        "La carta a los Romanos"
+        "Enseñar solo historia",
+        "Sustituir el evangelio",
+        "Ministrar el evangelio",
+        "Tarea solo de apóstoles"
       ]
     },
     {
       "type": "quiz",
-      "content": "12) ¿A qué lleva la sabiduría que dan las Sagradas Escrituras?",
+      "content": "14) ¿Para qué es útil la Escritura (2 Ti 3:16)?",
       "style_indexes": [
         [
           0,
@@ -412,15 +424,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "A la salvación mediante la fe en Cristo Jesús",
-        "A gloriarse de los dones sin amor",
-        "A confiar en la fatiga de Éfeso",
-        "A dejar la Biblia completa"
+        "Adivinar el futuro",
+        "Ganar discusiones",
+        "Enseñar, reprender, corregir e instruir",
+        "Entretener a la congregación"
       ]
     },
     {
       "type": "quiz",
-      "content": "13) ¿Cómo no se cae en el camino de los impostores y engañadores?",
+      "content": "15) ¿Qué tan amplio es el evangelio, según el estudio?",
       "style_indexes": [
         [
           0,
@@ -437,17 +449,92 @@
       ],
       "height_mm": 0,
       "options": [
-        "Dejando el primer amor",
-        "Haciendo obras aunque falte el amor",
-        "Enfocándose en esas Escrituras",
-        "Buscando misterios aparte de la Biblia"
+        "Tan amplio como un sermón",
+        "Tan amplio como la Biblia completa",
+        "Tan amplio como los evangelios",
+        "Tan amplio como Romanos"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "16) ¿Qué pasaje muestra el corazón de la espiritualidad?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "1 Corintios 13",
+        "Romanos 8",
+        "Gálatas 5",
+        "Hebreos 11"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "17) Según 1 Corintios 13, ¿qué obras acepta Dios?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Las más numerosas",
+        "Las más visibles",
+        "Las que hacemos por amor",
+        "Las más costosas"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "18) ¿Qué es el amor en el cristianismo?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Un sentimiento opcional",
+        "Un don para algunos",
+        "La motivación fundamental de todo",
+        "Una virtud secundaria"
       ]
     }
   ],
   "column_4": [
     {
       "type": "quiz",
-      "content": "14) ¿Quién pone en la mente de Pablo que conocer el Antiguo Testamento es aprender a confiar en Cristo?",
+      "content": "19) ¿Qué le reprocha el Señor a la iglesia de Éfeso?",
       "style_indexes": [
         [
           0,
@@ -464,15 +551,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "El Espíritu Santo",
-        "La iglesia de Éfeso",
-        "Los hombres malos e impostores",
-        "El propio esfuerzo de Timoteo"
+        "No soportar a los malos",
+        "No tener perseverancia",
+        "No probar a los falsos apóstoles",
+        "Haber dejado su primer amor"
       ]
     },
     {
       "type": "quiz",
-      "content": "15) Según el estudio, ¿qué es ministrar la Biblia?",
+      "content": "20) ¿Qué haría el Señor si Éfeso no se arrepentía?",
       "style_indexes": [
         [
           0,
@@ -489,15 +576,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Ministrar un mensaje distinto del evangelio",
-        "Ministrar obras que no necesitan amor",
-        "Ministrar el evangelio",
-        "Ministrar solo un sermón evangelístico"
+        "Enviarle un nuevo apóstol",
+        "Quitar su candelabro de su lugar",
+        "Cerrar sus puertas por un año",
+        "Multiplicar sus obras"
       ]
     },
     {
       "type": "quiz",
-      "content": "16) Centrar el ministerio en el evangelio no significa esto:",
+      "content": "21) ¿Qué podía opacar el primer amor?",
       "style_indexes": [
         [
           0,
@@ -514,15 +601,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Que lo único que enseñamos son sermones evangelísticos",
-        "Que toda la revelación de Dios lleva a un punto común",
-        "Que el Antiguo Testamento ayuda a confiar en Cristo",
-        "Que el evangelio se administra para enseñar y corregir"
+        "La falta de doctrina",
+        "La persecución",
+        "Una práctica extensa de buenas obras",
+        "La pobreza de la iglesia"
       ]
     },
     {
       "type": "quiz",
-      "content": "17) ¿Cuál es ese punto común?",
+      "content": "22) ¿Qué ocurre al enmarcar la vida en Cristo?",
       "style_indexes": [
         [
           0,
@@ -539,17 +626,117 @@
       ],
       "height_mm": 0,
       "options": [
-        "El conocimiento de los misterios aunque falte el amor",
-        "La perseverancia de Éfeso como algo suficiente",
-        "La salvación del juicio de Dios por medio de Cristo y la devoción correcta a Dios a través de él",
-        "La fatiga y el discernimiento sin el primer amor"
+        "Dejamos de necesitar la iglesia",
+        "Nuestro amor por Cristo crece",
+        "Las pruebas desaparecen",
+        "Ya no necesitamos orar"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "23) ¿Qué es Cristo para la Iglesia?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Como su esposo",
+        "Como su fundador humano",
+        "Como su primer anciano",
+        "Como su profeta menor"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "24) ¿Qué es lo primero que se enseña a los niños?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Que deben ganarse el amor de Dios",
+        "Que el mundo surgió por azar",
+        "Que solo importa obedecer a los padres",
+        "Que Dios creó todo por Cristo"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "25) ¿Por qué podemos respirar?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Por la fuerza de la naturaleza",
+        "Por nuestro propio esfuerzo",
+        "Por casualidad",
+        "Porque Cristo nos lo permite"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "26) ¿Por qué pueden orar siempre los niños?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Porque Cristo intercede",
+        "Porque son inocentes",
+        "Porque sus padres oran por ellos",
+        "Porque Dios no ve su pecado"
       ]
     }
   ],
   "column_5": [
     {
       "type": "quiz",
-      "content": "18) ¿Para qué se administra el evangelio, según Segunda de Timoteo 3:16?",
+      "content": "27) ¿Qué dijo Cristo sobre el César?",
       "style_indexes": [
         [
           0,
@@ -566,15 +753,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Para enseñar, reprender, corregir, instruir en justicia y preparar al hombre de Dios para toda buena obra",
-        "Solo para el primer sermón a quienes nunca oyeron",
-        "Para dar por válida una obra sin amor",
-        "Para quitar el candelabro de toda iglesia activa"
+        "Den al César lo del César",
+        "No paguen tributo al César",
+        "El César es el señor de todos",
+        "Obedezcan al César primero"
       ]
     },
     {
       "type": "quiz",
-      "content": "19) ¿Qué acepta Dios de lo que hacemos?",
+      "content": "28) ¿Cómo es Moisés figura de Cristo?",
       "style_indexes": [
         [
           0,
@@ -591,15 +778,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "El conocimiento, aunque no haya amor",
-        "Dar los bienes, aunque no haya amor",
-        "Solamente lo que hacemos por amor",
-        "Toda obra que parezca grande"
+        "Escribe una nueva ley",
+        "Nos saca del reino de Satanás",
+        "Construye el templo",
+        "Gobierna en Jerusalén"
       ]
     },
     {
       "type": "quiz",
-      "content": "20) ¿Qué había dejado la iglesia de Éfeso?",
+      "content": "29) ¿En qué se diferencia Cristo de David?",
       "style_indexes": [
         [
           0,
@@ -616,10 +803,10 @@
       ],
       "height_mm": 0,
       "options": [
-        "Su primer amor",
-        "Su fatiga",
-        "Su perseverancia",
-        "Su discernimiento de los falsos apóstoles"
+        "Cristo no es rey",
+        "Cristo gobierna solo a Israel",
+        "Cristo no tiene pueblo",
+        "Es un rey perfecto que no peca"
       ]
     },
     {
@@ -643,7 +830,7 @@
     },
     {
       "type": "paragraph",
-      "content": "21) ¿Por qué el hecho de que Pablo ministre el evangelio cambia la manera de ver y de organizar el ministerio?",
+      "content": "30) Explica qué significa que Pablo ministraba «el evangelio de Dios».",
       "style_indexes": [
         [
           0,
@@ -662,7 +849,7 @@
     },
     {
       "type": "paragraph",
-      "content": "22) Explica por qué apegarse al Antiguo Testamento, entendido como el Espíritu quiere, enseña a confiar en Cristo.",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -681,7 +868,7 @@
     },
     {
       "type": "paragraph",
-      "content": "23) ¿Qué duda se le quitó al autor al ver que estudiar la Biblia como los apóstoles lleva a vivir el evangelio?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -700,7 +887,7 @@
     },
     {
       "type": "paragraph",
-      "content": "24) ¿Por qué dice el estudio que el evangelio es tan extenso como la Biblia completa?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -719,7 +906,235 @@
     },
     {
       "type": "paragraph",
-      "content": "25) Según el pasaje de las lenguas, los dones y las obras, ¿de qué sirven si falta el amor?",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "31) ¿Por qué ministrar el evangelio no es solo predicar a los inconversos?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "32) ¿Cómo enseña el Antiguo Testamento a confiar en Cristo, según 2 Timoteo 3?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -740,7 +1155,7 @@
   "column_6": [
     {
       "type": "paragraph",
-      "content": "26) ¿Cuáles son los dos mandamientos en los que el estudio pone la motivación fundamental del cristianismo?",
+      "content": "33) ¿Qué te enseña 1 Corintios 13 sobre la motivación de tu servicio?",
       "style_indexes": [
         [
           0,
@@ -759,7 +1174,7 @@
     },
     {
       "type": "paragraph",
-      "content": "27) ¿Por qué una iglesia como la de Éfeso, con fatiga, perseverancia y discernimiento, puede perder el candelabro?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -778,7 +1193,7 @@
     },
     {
       "type": "paragraph",
-      "content": "28) ¿Qué anuncia el evangelio acerca de la muerte y la resurrección de Cristo, y qué lugar ocupa él respecto a nosotros los pecadores?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -797,7 +1212,7 @@
     },
     {
       "type": "paragraph",
-      "content": "29) ¿Qué hace Cristo en el día del juicio por los que confían en él, y cómo enciende eso el amor?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -816,7 +1231,7 @@
     },
     {
       "type": "paragraph",
-      "content": "30) ¿Por qué todo lo que se hace en la iglesia tiene que promover el amor por Cristo?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -833,6 +1248,903 @@
       ],
       "height_mm": 0
     },
+    {
+      "type": "paragraph",
+      "content": "34) ¿Qué lección te deja la iglesia de Éfeso y su primer amor?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "35) ¿Cómo aumenta tu amor por Cristo cuando piensas en su obra por ti?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "36) ¿Cómo enseñarías a un niño que Cristo sustenta todas las cosas?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "37) Menciona un área de tu vida adulta que necesitas enmarcar en el evangelio.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    }
+  ],
+  "column_7": [
+    {
+      "type": "paragraph",
+      "content": "38) Explica cómo una figura antigua apunta a Cristo.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "39) Escribe una oración para guardar el primer amor.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    }
+  ],
+  "column_8": [
     {
       "type": "heading_1",
       "content": "Notas",
@@ -854,7 +2166,349 @@
     },
     {
       "type": "paragraph",
-      "content": "Escribe aquí.",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -892,64 +2546,7 @@
     },
     {
       "type": "paragraph",
-      "content": "1) 3 · 2) 1 · 3) 3 · 4) 1 · 5) 3",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "6) 1 · 7) 3 · 8) 1 · 9) 3 · 10) 1",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "11) 3 · 12) 1 · 13) 3 · 14) 1 · 15) 3",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "16) 1 · 17) 3 · 18) 1 · 19) 3 · 20) 1",
+      "content": "Pregunta) opción correcta: 1) 3 · 2) 2 · 3) 2 · 4) 4 · 5) 2 · 6) 3 · 7) 3 · 8) 4 · 9) 4 · 10) 2 · 11) 4 · 12) 1 · 13) 3 · 14) 3 · 15) 2 · 16) 1 · 17) 3 · 18) 3 · 19) 4 · 20) 2 · 21) 3 · 22) 2 · 23) 1 · 24) 4 · 25) 4 · 26) 1 · 27) 1 · 28) 2 · 29) 4",
       "style_indexes": [
         [
           0,
@@ -967,6 +2564,99 @@
       "height_mm": 0
     }
   ],
-  "column_7": null,
-  "column_8": null
+  "footer": {
+    "action": "",
+    "label1": "",
+    "label2": "",
+    "label3": "",
+    "label4": "",
+    "message": "",
+    "value1": "",
+    "value2": "",
+    "value3": "",
+    "value4": ""
+  },
+  "footer_layout": {
+    "action_lh": 0,
+    "action_message_gap": 0,
+    "action_min_h": 0,
+    "action_pad_x": 0,
+    "action_pad_y": 0,
+    "action_size": 0,
+    "body_gutter": 0,
+    "cell_stroke": 0,
+    "chrome_gap": 0,
+    "divider_gap": 0,
+    "divider_inner_stroke": 0,
+    "divider_outer_stroke": 0,
+    "height": 0,
+    "inner_inset": 0,
+    "inner_radius": 0,
+    "inner_stroke": 0,
+    "message_lh": 0,
+    "message_min_h": 0,
+    "message_pad_bottom": 0,
+    "message_pad_top": 0,
+    "message_pad_x": 0,
+    "message_pad_y": 0,
+    "message_size": 0,
+    "meta_col_gap": 0,
+    "meta_gap": 0,
+    "meta_label1_row_h": 0,
+    "meta_label2_pad_top": 0,
+    "meta_label2_row_h": 0,
+    "meta_lh": 0,
+    "meta_pad_x": 0,
+    "meta_pad_y": 0,
+    "meta_row_h": 0,
+    "meta_size": 0,
+    "meta_value_pad_y": 0,
+    "meta_value_row_h": 0,
+    "pad": 0,
+    "pad_bottom": 0,
+    "pad_top": 0,
+    "radius": 0,
+    "stroke": 0,
+    "width": 0
+  },
+  "header": {
+    "author": "Eduardo Osteicoechea",
+    "date": "2026 - 11 - 06",
+    "series": "Romanos 15",
+    "series_chapter": "2",
+    "subtitle": "Romanos 15:14-16",
+    "title": "Ministrando el evangelio de Dios Quiz"
+  },
+  "header_layout": {
+    "body_gutter": 0,
+    "divider_gap": 0,
+    "divider_inner_stroke": 0,
+    "divider_outer_stroke": 0,
+    "height": 0,
+    "inner_inset": 0,
+    "inner_radius": 0,
+    "inner_stroke": 0,
+    "meta_col_gap": 0,
+    "meta_lh": 0,
+    "meta_pad_top": 0,
+    "meta_row_gap": 0,
+    "meta_size": 0,
+    "pad": 0,
+    "pad_bottom": 0,
+    "pad_top": 0,
+    "pad_x": 0,
+    "radius": 0,
+    "stroke": 0,
+    "subtitle_lh": 0,
+    "subtitle_min_h": 0,
+    "subtitle_pad_top": 0,
+    "subtitle_pad_x": 0,
+    "subtitle_pad_y": 0,
+    "subtitle_size": 0,
+    "title_lh": 0,
+    "title_meta_gap": 0,
+    "title_pad_bottom": 0,
+    "title_size": 0
+  },
+  "type": "pamphlet_single_sheet"
 }

@@ -1,103 +1,65 @@
 {
-  "type": "pamphlet_single_sheet",
-  "header": {
-    "title": "Gentiles, fuera del pueblo de Dios Quiz",
-    "subtitle": "Romanos 15:14-16",
-    "author": "Eduardo Osteicoechea",
-    "series": "Romanos 15",
-    "series_chapter": "2",
-    "date": "2026 - 11 - 06"
-  },
-  "footer": {
-    "action": "",
-    "message": "",
-    "label1": "",
-    "value1": "",
-    "label2": "",
-    "value2": "",
-    "label3": "",
-    "value3": "",
-    "label4": "",
-    "value4": ""
-  },
-  "header_layout": {
-    "height": 0,
-    "body_gutter": 0,
-    "pad": 0,
-    "pad_top": 0,
-    "pad_bottom": 0,
-    "pad_x": 0,
-    "radius": 0,
-    "stroke": 0,
-    "inner_inset": 0,
-    "inner_stroke": 0,
-    "inner_radius": 0,
-    "title_size": 0,
-    "title_lh": 0,
-    "title_pad_bottom": 0,
-    "title_meta_gap": 0,
-    "divider_outer_stroke": 0,
-    "divider_gap": 0,
-    "divider_inner_stroke": 0,
-    "subtitle_size": 0,
-    "subtitle_lh": 0,
-    "subtitle_pad_x": 0,
-    "subtitle_pad_top": 0,
-    "subtitle_pad_y": 0,
-    "subtitle_min_h": 0,
-    "meta_size": 0,
-    "meta_lh": 0,
-    "meta_row_gap": 0,
-    "meta_col_gap": 0,
-    "meta_pad_top": 0
-  },
-  "footer_layout": {
-    "height": 0,
-    "width": 0,
-    "body_gutter": 0,
-    "pad": 0,
-    "pad_top": 0,
-    "pad_bottom": 0,
-    "radius": 0,
-    "stroke": 0,
-    "inner_inset": 0,
-    "inner_stroke": 0,
-    "inner_radius": 0,
-    "chrome_gap": 0,
-    "divider_outer_stroke": 0,
-    "divider_gap": 0,
-    "divider_inner_stroke": 0,
-    "action_size": 0,
-    "action_lh": 0,
-    "action_pad_x": 0,
-    "action_pad_y": 0,
-    "action_min_h": 0,
-    "message_size": 0,
-    "message_lh": 0,
-    "message_pad_x": 0,
-    "message_pad_top": 0,
-    "message_pad_bottom": 0,
-    "message_pad_y": 0,
-    "message_min_h": 0,
-    "meta_gap": 0,
-    "meta_col_gap": 0,
-    "meta_row_h": 0,
-    "meta_label1_row_h": 0,
-    "meta_label2_row_h": 0,
-    "meta_label2_pad_top": 0,
-    "meta_value_row_h": 0,
-    "meta_size": 0,
-    "meta_lh": 0,
-    "meta_pad_x": 0,
-    "meta_pad_y": 0,
-    "meta_value_pad_y": 0,
-    "cell_stroke": 0,
-    "action_message_gap": 0
-  },
   "column_1": [
     {
+      "type": "paragraph",
+      "content": "Instrucciones: en la primera parte, marca con un círculo el número de la opción correcta.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "En la segunda parte, escribe tu respuesta en las líneas.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "Al final hay espacio para notas y la clave de respuestas.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
       "type": "heading_1",
-      "content": "Parte 1: Elige una respuesta",
+      "content": "Parte 1: Selección múltiple",
       "style_indexes": [
         [
           0,
@@ -116,7 +78,7 @@
     },
     {
       "type": "quiz",
-      "content": "1) Cuando hoy oímos que alguien es gentil, ¿qué pensamos con facilidad?",
+      "content": "1) ¿Qué palabra de Romanos 15:16 estudiamos?",
       "style_indexes": [
         [
           0,
@@ -133,15 +95,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Que es coheredero con Israel",
-        "Que debe ser alcanzado con el evangelio",
-        "Que es amable, respetuoso o considerado",
-        "Que está fuera del pueblo de Dios"
+        "«Atrevimiento»",
+        "«Ofrenda»",
+        "«Sacerdote»",
+        "«Gentiles»"
       ]
     },
     {
       "type": "quiz",
-      "content": "2) En la Biblia, hasta cierto punto de la historia, ¿qué significa principalmente gentil?",
+      "content": "2) ¿Qué pensamos hoy si alguien es «gentil»?",
       "style_indexes": [
         [
           0,
@@ -158,15 +120,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Alguien que no forma parte del pueblo de Dios",
-        "Alguien amable dentro de la iglesia",
-        "Un descendiente directo de Abraham que ya cree",
-        "Un apóstol enviado a las naciones"
+        "Que es extranjero",
+        "Que es amable y respetuoso",
+        "Que es pagano",
+        "Que es pobre"
       ]
     },
     {
       "type": "quiz",
-      "content": "3) En las palabras de Jesús, ¿qué significaba ser gentil?",
+      "content": "3) En la Biblia, ¿qué significa principalmente «gentil»?",
       "style_indexes": [
         [
           0,
@@ -183,17 +145,42 @@
       ],
       "height_mm": 0,
       "options": [
-        "Haber sido injertado por la fe",
-        "Ministrar el evangelio a manera de sacerdote",
-        "Estar fuera de la esfera de la salvación",
-        "Ser miembro del mismo cuerpo que Israel"
+        "Alguien educado y cortés",
+        "Alguien que vive en Roma",
+        "Alguien que habla griego",
+        "Alguien que no forma parte del pueblo de Dios"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "4) ¿Dónde habla Jesús del gentil, según el estudio?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Juan 4",
+        "Lucas 15",
+        "Mateo 18",
+        "Marcos 7"
       ]
     }
   ],
   "column_2": [
     {
       "type": "quiz",
-      "content": "4) Según Mateo 18, si el hermano peca y escucha la reprensión a solas, ¿qué ocurre?",
+      "content": "5) Según Mateo 18, ¿a quién se considera «como el gentil»?",
       "style_indexes": [
         [
           0,
@@ -210,15 +197,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Has ganado a tu hermano",
-        "Se lo tiene por gentil y publicano",
-        "Hay que decirlo de inmediato a la iglesia",
-        "Queda fuera de los pactos sin más pasos"
+        "Al que no fue circuncidado",
+        "Al que no conoce la ley",
+        "Al que no se arrepiente ante la iglesia",
+        "Al que vive lejos de Jerusalén"
       ]
     },
     {
       "type": "quiz",
-      "content": "5) ¿Para qué se lleva entonces a uno o a dos más?",
+      "content": "6) ¿Con quién se compara al gentil en Mateo 18?",
       "style_indexes": [
         [
           0,
@@ -235,15 +222,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Para declararlo coheredero de la promesa",
-        "Para revelarle el misterio de Efesios 3",
-        "Para que toda palabra sea confirmada por boca de dos o tres testigos",
-        "Para expulsarlo antes de hablar con la iglesia"
+        "Con el fariseo",
+        "Con el recaudador de impuestos",
+        "Con el samaritano",
+        "Con el sacerdote"
       ]
     },
     {
       "type": "quiz",
-      "content": "6) Si también rehúsa escuchar a la iglesia, ¿cómo debe ser tenido?",
+      "content": "7) ¿De qué pactos no tiene parte el gentil?",
       "style_indexes": [
         [
           0,
@@ -260,15 +247,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Como el gentil y el publicano, o el recaudador de impuestos",
-        "Como un hermano ganado",
-        "Como miembro del pueblo de Israel",
-        "Como injertado en el linaje de Abraham"
+        "De los pactos de misericordia de Israel",
+        "De los pactos con Roma",
+        "De los pactos entre iglesias",
+        "De los pactos con Noé solamente"
       ]
     },
     {
       "type": "quiz",
-      "content": "7) En ese pasaje, ¿a quién se puede considerar gentil?",
+      "content": "8) ¿Desde qué libro se modifica el concepto de gentil?",
       "style_indexes": [
         [
           0,
@@ -285,17 +272,42 @@
       ],
       "height_mm": 0,
       "options": [
-        "Al que cree el evangelio sin ser judío",
-        "Al que ministra el evangelio a los gentiles",
-        "Al que no quiere arrepentirse dentro del pueblo de Dios",
-        "Al que escucha la reprensión a solas"
+        "Hechos",
+        "Génesis",
+        "Apocalipsis",
+        "Levítico"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "9) ¿Por qué Israel entendió poco sobre los gentiles?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "La Escritura nunca habló del tema",
+        "Los profetas lo ocultaron",
+        "Dios lo reservó para mostrar su sabiduría a su tiempo",
+        "Israel destruyó los textos"
       ]
     }
   ],
   "column_3": [
     {
       "type": "quiz",
-      "content": "8) Además de estar fuera del pueblo y de la salvación, ¿de qué no tiene parte el gentil?",
+      "content": "10) Según Efesios 3, ¿cómo conoció Pablo el misterio?",
       "style_indexes": [
         [
           0,
@@ -312,92 +324,167 @@
       ],
       "height_mm": 0,
       "options": [
-        "De los pactos de misericordia que Dios entregó a lo largo de la historia de Israel",
-        "De la revelación dada a los apóstoles después de la resurrección",
-        "De la dispensación de la gracia explicada en Efesios 3",
-        "De la ofrenda santificada por el Espíritu Santo"
-      ]
-    },
-    {
-      "type": "quiz",
-      "content": "9) ¿Desde qué libro empieza a modificarse un poco el concepto de gentil?",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0,
-      "options": [
-        "Desde antes de que la Escritura hablara de los gentiles",
-        "Desde Romanos 5 solamente",
-        "Desde el libro de Hechos",
-        "Desde Mateo 18"
-      ]
-    },
-    {
-      "type": "quiz",
-      "content": "10) ¿Qué hizo Dios con ese entendimiento en un gran segmento de su pueblo?",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0,
-      "options": [
-        "Lo mantuvo limitado para mostrar su sabiduría en el tiempo preciso",
-        "Lo dio a conocer igual en todas las generaciones anteriores",
-        "Lo reservó solo para quienes estaban fuera de la salvación",
-        "Lo cambió porque la Escritura no había sido clara"
-      ]
-    },
-    {
-      "type": "quiz",
-      "content": "11) Según Efesios 3, ¿cómo conoció Pablo el misterio?",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0,
-      "options": [
-        "Por el proceso de reprensión de Mateo 18",
-        "Por ser descendiente directo de Abraham",
+        "Por estudio rabínico",
         "Por revelación",
-        "Por la instrucción de la iglesia de Roma"
+        "Por tradición oral",
+        "Por experiencia propia"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "11) ¿Cuál es el misterio de Efesios 3?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Que los gentiles son coherederos",
+        "Que Israel sería destruido",
+        "Que la ley seguiría vigente",
+        "Que Pablo sería apóstol"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "12) ¿A quiénes se reveló ese misterio?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "A los santos apóstoles y profetas",
+        "A todas las generaciones",
+        "Solo a los sacerdotes",
+        "A los reyes de Israel"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "13) ¿Por qué se debate tanto sobre los gentiles en el NT?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Los apóstoles no se entendían",
+        "Era un misterio recién revelado",
+        "Los gentiles rechazaban el evangelio",
+        "La ley lo prohibía"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "14) ¿Cuántos usos de la palabra «gentil» presenta el estudio?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Dos",
+        "Cuatro",
+        "Uno",
+        "Tres"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "15) ¿Qué describe el segundo uso de «gentil»?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "El judío que rechaza a Cristo",
+        "El creyente que peca",
+        "El sacerdote extranjero",
+        "El no descendiente de Abraham que cree"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "16) ¿Qué describe el tercer uso de «gentil»?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Todo el mundo no judío que hay que alcanzar",
+        "Solo los romanos",
+        "Los judíos dispersos",
+        "Los enemigos de la iglesia"
       ]
     }
   ],
   "column_4": [
     {
       "type": "quiz",
-      "content": "12) ¿A quiénes ha sido revelado ahora ese misterio?",
+      "content": "17) ¿Cuál es la primera verdad que debemos ver?",
       "style_indexes": [
         [
           0,
@@ -414,15 +501,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "A sus santos apóstoles y profetas por el Espíritu",
-        "A los hijos de los hombres de otras generaciones, del mismo modo",
-        "Solo a quienes rehúsan escuchar a la iglesia",
-        "A todo Israel antes de la resurrección de Cristo"
+        "La salvación se pierde fácilmente",
+        "La salvación no es únicamente individual",
+        "La salvación depende de obras",
+        "La salvación es solo para Israel"
       ]
     },
     {
       "type": "quiz",
-      "content": "13) ¿Cuál es el contenido de esa revelación?",
+      "content": "18) ¿Cómo presenta la Palabra de Dios la salvación?",
       "style_indexes": [
         [
           0,
@@ -439,15 +526,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Los gentiles deben seguir siendo tenidos por publicanos",
-        "Los gentiles no pueden entrar al pueblo de Dios",
-        "Los gentiles son coherederos, miembros del mismo cuerpo, y participan igualmente de la promesa en Cristo Jesús mediante el evangelio",
-        "Los gentiles permanecen fuera de la salvación y de los pactos"
+        "Como un logro personal",
+        "Como una filosofía",
+        "Como una nacionalidad y un linaje",
+        "Como una emoción privada"
       ]
     },
     {
       "type": "quiz",
-      "content": "14) ¿Cuándo se reveló que los gentiles podían ser coherederos con los israelíes y miembros del mismo cuerpo?",
+      "content": "19) ¿Qué ejemplo ilustra la contradicción de términos?",
       "style_indexes": [
         [
           0,
@@ -464,17 +551,117 @@
       ],
       "height_mm": 0,
       "options": [
-        "A partir de la resurrección del Señor Jesucristo, a los apóstoles y a los profetas",
-        "En las otras generaciones, a los hijos de los hombres",
-        "En Mateo 18, al disciplinar a quien no se arrepiente",
-        "Cuando la palabra gentil pasó a significar amable"
+        "Ser venezolano sin interés por Venezuela",
+        "Ser rico y no dar ofrendas",
+        "Ser maestro y no estudiar",
+        "Ser padre y no trabajar"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "20) Según Efesios 2:12, ¿cómo estaban antes los gentiles?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Cerca de Dios pero sin ley",
+        "Dentro de Israel pero sin templo",
+        "Salvos pero sin iglesia",
+        "Excluidos de la ciudadanía de Israel"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "21) ¿Qué pacto define primero quién es el pueblo de Dios?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "El pacto con Moisés",
+        "El pacto con David",
+        "El pacto con Abraham",
+        "El nuevo pacto"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "22) ¿En qué orden presenta el estudio la cadena de pactos?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Abraham, Moisés, David, nuevo pacto",
+        "Moisés, Abraham, David, nuevo pacto",
+        "David, Moisés, Abraham, nuevo pacto",
+        "Noé, Abraham, Moisés, David"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "23) ¿Qué enseñanza nos desconecta de los pactos?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Que Cristo es nuestra paz",
+        "Que todos somos pecadores",
+        "Que Dios tiene dos pueblos separados",
+        "Que la fe viene por el oír"
       ]
     }
   ],
   "column_5": [
     {
       "type": "quiz",
-      "content": "15) ¿Por qué hay tanta discusión en el Nuevo Testamento acerca de los gentiles?",
+      "content": "24) ¿Cuál es la base más fundamental de la salvación?",
       "style_indexes": [
         [
           0,
@@ -491,15 +678,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Porque gentil significa solamente persona amable",
-        "Porque el misterio sigue velado después de la resurrección",
-        "Porque pueden entrar al pueblo de Dios, y se debate cómo debían manejarse ante la ley de Moisés",
-        "Porque la Escritura nunca fue clara sobre ellos"
+        "La ciudadanía de Israel",
+        "La circuncisión",
+        "La obediencia a la ley",
+        "El decreto de Dios"
       ]
     },
     {
       "type": "quiz",
-      "content": "16) En Mateo 18, ¿qué uso tiene la palabra gentil?",
+      "content": "25) Según Efesios 2:14, ¿qué derribó Cristo?",
       "style_indexes": [
         [
           0,
@@ -516,15 +703,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "El que está fuera de la salvación",
-        "El que cree y entra al pueblo de Israel",
-        "Todo el mundo no judío al que hay que alcanzar",
-        "El que ya es coheredero y miembro del mismo cuerpo"
+        "La pared intermedia de separación",
+        "El templo de Jerusalén",
+        "Los muros de Roma",
+        "El trono de Herodes"
       ]
     },
     {
       "type": "quiz",
-      "content": "17) En Efesios 3, ¿a quiénes nombra?",
+      "content": "26) ¿Qué enseña Romanos en dos capítulos completos?",
       "style_indexes": [
         [
           0,
@@ -541,15 +728,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Solo a los judíos que ya estaban dentro de los pactos",
-        "A los que rechazan la promesa en Cristo",
-        "A los que creen el evangelio y pueden entrar al pueblo de Israel, aunque no son descendientes directos",
-        "A los que, tras la disciplina, se tienen por publicanos"
+        "Que no todo Israel es Israel",
+        "Que Israel fue rechazado para siempre",
+        "Que la iglesia es otro pueblo",
+        "Que los gentiles no tienen pactos"
       ]
     },
     {
       "type": "quiz",
-      "content": "18) El uso de Romanos 5, parecido al de Efesios 3, ¿a quiénes se refiere?",
+      "content": "27) ¿Cómo somos hechos descendientes de Abraham?",
       "style_indexes": [
         [
           0,
@@ -566,42 +753,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "A los no descendientes de Abraham que, al creer, son injertados en el linaje de Abraham",
-        "A los que persisten en el pecado delante de la iglesia",
-        "A una persona amable, respetuosa y considerada",
-        "Solo a los apóstoles y profetas que recibieron la revelación"
-      ]
-    }
-  ],
-  "column_6": [
-    {
-      "type": "quiz",
-      "content": "19) ¿Cuál es el tercer sentido de la palabra?",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0,
-      "options": [
-        "Los que quedan fuera de la salvación después de la disciplina",
-        "Los descendientes directos de Abraham",
-        "Todos los no judíos que deben ser alcanzados con el evangelio",
-        "Solo los no judíos que ya creen y fueron insertados"
+        "Al guardar el sábado",
+        "Al vivir en Israel",
+        "Al estar unidos con Cristo",
+        "Al circuncidarnos"
       ]
     },
     {
       "type": "quiz",
-      "content": "20) Al estudiar un pasaje, ¿qué conviene distinguir?",
+      "content": "28) ¿Qué heredamos sin haberlo creado?",
       "style_indexes": [
         [
           0,
@@ -618,10 +778,35 @@
       ],
       "height_mm": 0,
       "options": [
-        "Cuál de esos tres significados está delante de nosotros",
-        "Que gentil siempre significa persona amable",
-        "Que todo el Nuevo Testamento usa solo el sentido de Mateo 18",
-        "Que los tres significados son el mismo"
+        "Radio, tren e imprenta",
+        "Idioma, música y arte",
+        "Democracia, odontología y anestesia",
+        "Moneda, correo y policía"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "29) ¿Qué tema quedó pendiente?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "El bautismo de los gentiles",
+        "La ley de Moisés",
+        "El regreso de Cristo",
+        "La dimensión global de la misión"
       ]
     },
     {
@@ -645,7 +830,7 @@
     },
     {
       "type": "paragraph",
-      "content": "21) ¿Por qué, en la Biblia, gentil no significa lo que más inmediatamente pensamos hoy?",
+      "content": "30) Explica la diferencia entre el uso moderno y el bíblico de «gentil».",
       "style_indexes": [
         [
           0,
@@ -664,7 +849,7 @@
     },
     {
       "type": "paragraph",
-      "content": "22) Describe los pasos de Mateo 18 hasta tener a alguien por gentil y publicano.",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -683,7 +868,7 @@
     },
     {
       "type": "paragraph",
-      "content": "23) Hasta cierto punto de la historia de la redención, ¿qué tres cosas definen al gentil?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -702,7 +887,7 @@
     },
     {
       "type": "paragraph",
-      "content": "24) ¿Por qué mantuvo Dios reducido ese entendimiento, si la Escritura siempre fue clara?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -721,7 +906,28 @@
     },
     {
       "type": "paragraph",
-      "content": "25) Según Efesios 3, ¿qué estaba velado y cómo se dio a conocer?",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    }
+  ],
+  "column_6": [
+    {
+      "type": "paragraph",
+      "content": "31) ¿Cómo ayuda Mateo 18 a definir qué es un gentil?",
       "style_indexes": [
         [
           0,
@@ -740,7 +946,7 @@
     },
     {
       "type": "paragraph",
-      "content": "26) ¿Qué significa que los gentiles sean coherederos, miembros del mismo cuerpo y participantes iguales de la promesa?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -759,7 +965,482 @@
     },
     {
       "type": "paragraph",
-      "content": "27) ¿Qué relación hay entre ese misterio y el debate del Nuevo Testamento sobre los gentiles y la ley de Moisés?",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "32) Describe los tres usos de la palabra «gentil».",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "33) ¿Por qué Efesios 3 llama «misterio» a la inclusión de los gentiles?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "34) ¿Qué significa que la salvación no sea únicamente individual?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "35) ¿Por qué es contradictorio ser parte de un pueblo y despreciarlo?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -780,7 +1461,7 @@
   "column_7": [
     {
       "type": "paragraph",
-      "content": "28) Explica las dos primeras formas legítimas de usar la palabra gentil.",
+      "content": "36) Explica la cadena de pactos desde Abraham hasta el nuevo pacto.",
       "style_indexes": [
         [
           0,
@@ -799,7 +1480,7 @@
     },
     {
       "type": "paragraph",
-      "content": "29) ¿En qué se distingue el tercer sentido del segundo?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -818,7 +1499,7 @@
     },
     {
       "type": "paragraph",
-      "content": "30) ¿Por qué hay que identificar, en cada pasaje, cuál de los tres usos está en juego?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -835,6 +1516,388 @@
       ],
       "height_mm": 0
     },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "37) ¿Por qué la idea de dos pueblos nos desconecta de la herencia?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "38) ¿Qué le debes a los creyentes que te precedieron en la fe?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "39) Escribe una oración de gratitud por ser linaje de Abraham en Cristo.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    }
+  ],
+  "column_8": [
     {
       "type": "heading_1",
       "content": "Notas",
@@ -856,7 +1919,349 @@
     },
     {
       "type": "paragraph",
-      "content": "Escribe aquí.",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -894,64 +2299,7 @@
     },
     {
       "type": "paragraph",
-      "content": "1) 3 · 2) 1 · 3) 3 · 4) 1 · 5) 3",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "6) 1 · 7) 3 · 8) 1 · 9) 3 · 10) 1",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "11) 3 · 12) 1 · 13) 3 · 14) 1 · 15) 3",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "16) 1 · 17) 3 · 18) 1 · 19) 3 · 20) 1",
+      "content": "Pregunta) opción correcta: 1) 4 · 2) 2 · 3) 4 · 4) 3 · 5) 3 · 6) 2 · 7) 1 · 8) 1 · 9) 3 · 10) 2 · 11) 1 · 12) 1 · 13) 2 · 14) 4 · 15) 4 · 16) 1 · 17) 2 · 18) 3 · 19) 1 · 20) 4 · 21) 3 · 22) 1 · 23) 3 · 24) 4 · 25) 1 · 26) 1 · 27) 3 · 28) 3 · 29) 4",
       "style_indexes": [
         [
           0,
@@ -969,5 +2317,99 @@
       "height_mm": 0
     }
   ],
-  "column_8": null
+  "footer": {
+    "action": "",
+    "label1": "",
+    "label2": "",
+    "label3": "",
+    "label4": "",
+    "message": "",
+    "value1": "",
+    "value2": "",
+    "value3": "",
+    "value4": ""
+  },
+  "footer_layout": {
+    "action_lh": 0,
+    "action_message_gap": 0,
+    "action_min_h": 0,
+    "action_pad_x": 0,
+    "action_pad_y": 0,
+    "action_size": 0,
+    "body_gutter": 0,
+    "cell_stroke": 0,
+    "chrome_gap": 0,
+    "divider_gap": 0,
+    "divider_inner_stroke": 0,
+    "divider_outer_stroke": 0,
+    "height": 0,
+    "inner_inset": 0,
+    "inner_radius": 0,
+    "inner_stroke": 0,
+    "message_lh": 0,
+    "message_min_h": 0,
+    "message_pad_bottom": 0,
+    "message_pad_top": 0,
+    "message_pad_x": 0,
+    "message_pad_y": 0,
+    "message_size": 0,
+    "meta_col_gap": 0,
+    "meta_gap": 0,
+    "meta_label1_row_h": 0,
+    "meta_label2_pad_top": 0,
+    "meta_label2_row_h": 0,
+    "meta_lh": 0,
+    "meta_pad_x": 0,
+    "meta_pad_y": 0,
+    "meta_row_h": 0,
+    "meta_size": 0,
+    "meta_value_pad_y": 0,
+    "meta_value_row_h": 0,
+    "pad": 0,
+    "pad_bottom": 0,
+    "pad_top": 0,
+    "radius": 0,
+    "stroke": 0,
+    "width": 0
+  },
+  "header": {
+    "author": "Eduardo Osteicoechea",
+    "date": "2026 - 11 - 06",
+    "series": "Romanos 15",
+    "series_chapter": "2",
+    "subtitle": "Romanos 15:14-16",
+    "title": "Los gentiles y el linaje de Abraham Quiz"
+  },
+  "header_layout": {
+    "body_gutter": 0,
+    "divider_gap": 0,
+    "divider_inner_stroke": 0,
+    "divider_outer_stroke": 0,
+    "height": 0,
+    "inner_inset": 0,
+    "inner_radius": 0,
+    "inner_stroke": 0,
+    "meta_col_gap": 0,
+    "meta_lh": 0,
+    "meta_pad_top": 0,
+    "meta_row_gap": 0,
+    "meta_size": 0,
+    "pad": 0,
+    "pad_bottom": 0,
+    "pad_top": 0,
+    "pad_x": 0,
+    "radius": 0,
+    "stroke": 0,
+    "subtitle_lh": 0,
+    "subtitle_min_h": 0,
+    "subtitle_pad_top": 0,
+    "subtitle_pad_x": 0,
+    "subtitle_pad_y": 0,
+    "subtitle_size": 0,
+    "title_lh": 0,
+    "title_meta_gap": 0,
+    "title_pad_bottom": 0,
+    "title_size": 0
+  },
+  "type": "pamphlet_single_sheet"
 }

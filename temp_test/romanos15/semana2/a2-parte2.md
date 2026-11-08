@@ -1,151 +1,175 @@
-# Gentiles, herederos del linaje de Abraham
+# Los gentiles y el linaje de Abraham (2)
 
-## Romanos 15:14-16
+## Efesios 2:11-19
 
-Pablo dice que la gracia le fue dada «para ser ministro de Cristo Jesús a los gentiles, ministrando a manera de sacerdote el evangelio de Dios, a fin de que la ofrenda que hago de los gentiles sea aceptable, santificada por el Espíritu Santo».
+En la ocasión anterior reflexionamos sobre la palabra «gentiles» en Romanos 15:16, y vimos tres usos de la palabra: el que está fuera de la salvación, el no descendiente de Abraham que es injertado en su linaje por la fe, y todo el mundo no judío que hay que alcanzar con el evangelio.
 
-Vimos que gentil no significa amable, sino quien está fuera del pueblo de Dios, de la salvación y de los pactos de misericordia dados a Israel.
+También vimos que la salvación no es únicamente individual, sino que la Palabra de Dios la presenta como una nacionalidad, como un linaje, como formar parte de un pueblo.
 
-En Mateo 18, quien persiste en el pecado tras la reprensión a solas, con testigos y ante la iglesia, se tiene por gentil y por publicano.
+Hoy veremos cómo lo presenta el Espíritu Santo en Efesios 2.
 
-Desde Hechos el concepto cambia, y la palabra nombra al de fuera, al injertado por la fe o al no judío por alcanzar.
+## Separados de Cristo
 
-## Una identidad que nos parece poca cosa
+Efesios 2:11-12 dice: «Por tanto, recuerden que en otro tiempo ustedes, los gentiles en la carne, llamados incircuncisión por la tal llamada circuncisión, hecha en la carne por manos humanas, recuerden que en ese tiempo ustedes estaban separados de Cristo, excluidos de la ciudadanía de Israel, extraños a los pactos de la promesa, sin tener esperanza y sin Dios en el mundo».
 
-Cuando nos hablan de gentiles que participan con Israel, me da la impresión de que eso nos importa poco, porque no vemos su valor ni entendemos su relevancia.
-
-Quisiera que pensáramos en dos cosas que deberían impactar cómo vemos la salvación y la vida mientras seguimos a Jesucristo.
-
-La primera es que la salvación no es algo únicamente individual.
-
-Hemos aprendido a estimar mucho lo personal: la relación con Dios, la salvación, la santificación, el perseverar y el llamado.
-
-Pienso que poco hemos trabajado la dimensión corporativa, comunitaria, nacional y de linaje de la salvación del evangelio.
-
-## Salvación como nacionalidad
-
-En Efesios 2 y Efesios 3, entrar en la descendencia de Abraham significa precisamente entrar en la salvación.
-
-La palabra de Dios presenta la salvación como una nacionalidad, como un linaje y como una comunidad.
-
-En el pensamiento de Dios, además de salvarnos como individuos, nos hace parte de una nación, y la salvación se vive como un pueblo.
-
-Es una lástima creernos salvos sin darle importancia a creernos un pueblo, y pensarnos de una nación sin darle importancia a esa nación.
-
-Es como jactarse de ser venezolano y desinteresarse de Venezuela, una contradicción de términos, igual que menospreciar aquello de lo que uno es parte.
-
-Lo digo de mí, y tal vez solo me pase a mí: perdemos lo corporativo, nos ensimismamos y pensamos demasiado en lo individual.
-
-## Efesios 2, fuera de Israel
-
-«Por tanto, recuerden que en otro tiempo ustedes los gentiles en la carne, que son llamados incircuncisión por la tal llamada circuncisión, que se hace en la carne por manos humanas.»
-
-Es decir, se hace de una manera que no trasciende, que no impacta en la salvación de alguien.
-
-«Recuerden que en ese tiempo ustedes estaban separados de Cristo, excluidos de la ciudadanía de Israel, extraños a los pactos de la promesa, sin tener esperanza y sin Dios en el mundo.»
+Noten que esa circuncisión se hace por manos humanas, es decir, de una manera que no trasciende, que no impacta en la salvación de nadie.
 
 Estar fuera del linaje de Abraham era algo parecido a estar fuera de la salvación de Cristo.
 
-## Insertados en el pueblo del rey
+Olvidamos que la salvación no es solamente el Espíritu Santo que recibimos ni el perdón de nuestros pecados.
 
-Olvidamos que la salvación no es solo lo individual, ni solo el Espíritu Santo que recibimos, ni solo el perdón de los pecados.
+Es también el privilegio de ser insertados en el pueblo de Cristo, en el reino sobre el que Cristo gobierna, en la comunidad que es leal al Rey del mundo.
 
-Es también el privilegio de ser insertados en el pueblo de Cristo, en el reino que él gobierna y en la comunidad leal al rey del mundo.
+## La cadena de los pactos
 
-Abraham recibe el pacto que define a ese pueblo, su linaje, y sobre esa base se hacen el pacto de Moisés, el de David y el nuevo pacto.
+Esa comunidad la define, la limita y le da forma el grupo de pactos que tiene Israel a partir de Abraham.
 
-En ese nuevo pacto somos salvos por medio de Cristo, y esa es la significancia de ser hechos parte del linaje de Abraham.
+Abraham recibe un pacto que define quién es el pueblo de Dios: su linaje.
 
-No digo que toda enseñanza dispensacional llegue al mismo lugar, pero la idea de dos pueblos nos desconecta de esos pactos.
+Luego, sobre la base de ese pacto, se hace el pacto de Moisés.
 
-## Extraños a los pactos de la promesa
+Sobre la base del pacto de Moisés se hace el pacto de David.
 
-Antes de creer estábamos fuera de la ciudadanía de Israel y éramos extraños a los pactos de la promesa, y esos pactos hay que recibirlos para poder ser salvos.
+Y sobre la base del pacto de David se hace el nuevo pacto, en el cual somos salvos por medio de Cristo.
 
-Tal vez, al separar Israel de la iglesia, eso nos parece importante para Israel y no tanto para nosotros.
+Esa es la importancia de ser hechos parte del linaje de Abraham.
 
-Estar fuera de los pactos de la promesa y excluido de la ciudadanía de Israel es igual a no ser salvos.
+## Una aclaración sobre los dos pueblos
 
-La salvación es ser insertado en la ciudadanía de Israel y beneficiarnos del pacto de Abraham, del pacto de David y del nuevo pacto.
+Ahora bien, es una lástima el impacto negativo que ha tenido tal vez la doctrina dispensacional, o tal vez la forma incorrecta de enseñarla.
 
-Esos pactos son la base de la salvación que Dios da por medio de Cristo, y no podemos menospreciarlos como si fueran solo para Israel.
+No digo que todas las maneras de enseñar esta doctrina lleguen al mismo lugar.
 
-## Más fundamental, y aun así la base que heredamos
+Pero sí nos ha impactado bastante la enseñanza de que Dios tiene dos pueblos separados: la iglesia e Israel.
 
-Lo digo en términos muy generales, porque la base de la salvación es el decreto de Dios, el plan de los elegidos, y hay elementos más fundamentales.
+Eso nos ha impactado mucho porque nos puede desconectar de toda nuestra herencia como creyentes gentiles en esos pactos.
 
-En esta enseñanza, el pacto de Abraham, el de David y el nuevo pacto son las promesas sobre las cuales Cristo nos da la salvación y nos hace linaje de Abraham.
+Miren cómo lo dice el pasaje: ustedes estaban excluidos de la ciudadanía de Israel y eran extraños a los pactos de la promesa.
 
-«Pero ahora en Cristo Jesús, ustedes que en otro tiempo estaban lejos han sido acercados por la sangre de Cristo, porque Cristo mismo es nuestra paz.»
+Es decir, antes de creer éramos extraños a esos pactos.
 
-Ese lejos se entiende como lejos de la ciudadanía de Israel.
+Eso nos enseña que esos pactos son importantes, que tenemos que recibirlos en nuestra vida para ser salvos.
 
-¿Paz de qué? De hacer de los dos pueblos uno.
+Tal vez por la idea de que una cosa es Israel y otra la iglesia, pensamos que eso es importante para Israel, pero no tanto para nosotros.
 
-## Un solo cuerpo por la cruz
+Pero aquí dice que estar fuera de los pactos de la promesa y excluidos de la ciudadanía de Israel equivale a no ser salvos.
 
-«De ambos pueblos hizo uno, derribando la pared intermedia de separación, poniendo fin a la enemistad en su carne, la ley de los mandamientos expresados en ordenanzas, para crear en él mismo de los dos un nuevo hombre, estableciendo así la paz, y para reconciliar con Dios a los dos en un cuerpo por medio de la cruz, habiendo dado muerte en ella a la enemistad. Y vino y anunció paz a ustedes que estaban lejos y paz a los que están cerca, porque por medio de Cristo los unos y los otros tenemos entrada al Padre en un mismo Espíritu. Así ustedes ya no son extraños ni extranjeros, sino que son conciudadanos de los santos y son de la familia de Dios.»
+## Los pactos que heredamos
 
-¿Cuál era la enemistad? La ley de los mandamientos expresados en ordenanzas.
+La salvación es precisamente ser insertados en la ciudadanía de Israel.
 
-Ya no hay pared, ni dos pueblos, ni diferencia entre el linaje de Abraham y la iglesia.
+La salvación es precisamente beneficiarnos del pacto de Abraham, del pacto de David y del nuevo pacto.
 
-Este pasaje dice que hay un solo pueblo, y ese pueblo es el linaje de Abraham por medio de Cristo.
+No podemos desapegarnos de esa base que son los pactos que Dios dio.
 
-Romanos tiene dos capítulos donde se dice que no todo Israel es Israel, sino los escogidos dentro de Israel, los creyentes salvos por la fe en los pactos de Dios.
+Dios nos da todos esos beneficios por medio de Cristo, y no podemos menospreciarlos pensando que son únicamente para Israel.
 
-El linaje físico no es por sí solo Israel, sino el linaje escogido, que ya incluía gentiles creyentes en el Antiguo Testamento, la verdadera descendencia de Abraham.
+Obviamente hablo en términos generales, porque la base más fundamental de la salvación es el decreto de Dios, el plan de los elegidos y otros elementos más profundos.
 
-## Unidos a Cristo, hechos su linaje
+Pero en el sentido de esta enseñanza, el pacto de Abraham, el pacto de David y el nuevo pacto son las promesas sobre las cuales Cristo viene a darnos la salvación y nos permite ser hechos linaje de Abraham.
 
-Luego de que Cristo resucita, es exaltado y envía su Espíritu, el Espíritu revela el plan de bendecir a las naciones por Cristo, descendiente de Abraham.
+## Un solo pueblo
 
-Cristo muere por los pecados de los que creen, los salva, limpia la culpa y crea una unión espiritual con estos gentiles y estos judíos creyentes.
+Luego el pasaje amplía esta idea en Efesios 2:13-14: «Pero ahora en Cristo Jesús, ustedes, que en otro tiempo estaban lejos, han sido acercados por la sangre de Cristo. Porque Él mismo es nuestra paz, y de ambos pueblos hizo uno, derribando la pared intermedia de separación».
 
-Unidos a él heredamos su realidad de linaje: siendo él el descendiente de Abraham, nosotros somos hechos descendientes de Abraham y, atención, herederos de las promesas hechas a Abraham.
+Y concluye en el versículo 19: «Así pues, ustedes ya no son extraños ni extranjeros, sino que son conciudadanos de los santos y son de la familia de Dios».
 
-Es decir, la salvación significa heredar lo que Dios prometió, y heredarlo por un linaje.
+Ya no existe una pared que separa a los gentiles y a los judíos, ya no existen dos pueblos, ya no existe una diferenciación entre el linaje de Abraham y la iglesia.
 
-Pensar que eso no importa es como menospreciar el trabajo de nuestros padres, de quienes heredamos beneficios materiales y formativos.
+Este pasaje dice de una manera muy clara que hay un solo pueblo, y ese pueblo es el linaje de Abraham por medio de Cristo.
 
-## Yo defino quién soy
+## No todo Israel es Israel
 
-Decimos: «A mí eso no me importa. Me importa lo que yo soy y nada más. No quiero que mis padres definan mi vida. No me importan mis antepasados, ni qué hicieron, ni qué me aportaron. Yo defino quién soy.»
+Por si esto no quedaba suficientemente claro, Romanos tiene dos capítulos completos donde se dice que no todo Israel es Israel.
 
-Esa actitud muestra irrespeto, desconsideración, egoísmo y una absurda independencia, y olvida que, en una medida, somos lo que fueron nuestros antepasados.
+El verdadero Israel son los escogidos dentro de Israel, los creyentes, los que son salvos por la fe en los pactos de Dios.
 
-Desconectarnos del pasado se celebra hoy, aunque tal vez siempre existió, y esa idea la traemos a la salvación.
+Es decir, el linaje físico de Abraham no es Israel, sino solamente el linaje escogido dentro de ese linaje físico.
 
-Decimos: «A mí no me importa eso. A mí lo que me importa es mi relación personal con Cristo.»
+Y ese linaje escogido también incluía gentiles que iban creyendo en el Antiguo Testamento.
 
-Eso menosprecia la piedad y la perseverancia de quienes dieron la vida, o grandes tramos de ella, por el plan de Dios, y luego le quitamos peso para seguir dueños de nuestro destino.
+Ese linaje creyente es la verdadera descendencia de Abraham.
 
-## Dios sí habló de genealogías
+Ahora que Cristo resucitó, fue exaltado y envió su Espíritu, el Espíritu Santo comienza a revelar que ese fue el plan.
 
-En muchos no es orgullo, sino falta de tiempo, pero Dios sí quería que lo pensáramos, porque la Biblia habla mucho de esto.
+El plan era bendecir a las naciones por medio de un descendiente de Abraham, que era Cristo.
 
-Toda la Biblia está llena de genealogías y de estos pactos, y explica la salvación como heredar la promesa hecha a Abraham.
+Él traería la salvación al mundo muriendo por los pecados de los que creen, limpiando su culpa y creando una unión espiritual entre Él y estos gentiles y judíos creyentes.
 
-Dios quiere que pensemos en Abraham, Isaac, Jacob, Moisés, Judá, David, Salomón y en toda la historia del pueblo de Dios.
+Al estar unidos con Cristo, que es judío y descendiente de Abraham, nosotros también somos hechos descendientes de Abraham y, atención, herederos de las promesas hechas a Abraham.
 
-Pensemos en Cristo, nuestro esposo, que nos permite a los gentiles entrar por la fe en el linaje de Abraham, y en Pablo, que nos explica estos privilegios.
+Es decir, la salvación significa heredar cosas que Dios prometió, cosas que se reciben por un linaje.
 
-Es difícil poner un ejemplo, pero tal vez ayudaría que nos quitaran la democracia, la odontología y la anestesia.
+## Menospreciar lo heredado
 
-No las creamos nosotros ni nacen de una identidad individual: otro las hizo, las heredamos, las disfrutamos a diario y aun así no les damos importancia.
+Tal vez para nosotros esto no es importante, y eso muestra uno de los problemas de nuestra manera de pensar actual.
 
-## Que no crezca el egoísmo
+Pensar que no es importante ser hechos descendientes de Abraham es como menospreciar el trabajo que hicieron nuestros padres en la tierra.
 
-Pido a Dios que esto no acreciente en nuestra alma el orgullo y el egoísmo.
+Heredamos de nuestros padres una cantidad de beneficios, tanto materiales como formativos.
 
-Cuando no celebramos lo que otros hicieron para que disfrutemos lo que disfrutamos, supongo que ese desinterés puede corromper el alma y dejar espacio a la carne.
+Y decimos: «A mí eso no me importa. A mí me importa lo que yo soy y nada más. No quiero que lo que hicieron mis padres defina mi vida. No me importa quiénes eran mis antepasados, ni qué hicieron, ni qué me aportaron. Yo defino quién soy».
 
-Son solo pensamientos al aire: espero que no sean verdad, pero si lo son, que la Escritura muestre lo que recibimos en el linaje de Abraham.
+Esa actitud muestra irrespeto, desconsideración, egoísmo y una absurda independencia.
 
-No nos dio tiempo para la nación de la que somos parte ni para la dimensión global de la misión, y lo haremos después, si Dios lo permite.
+Ignora que lo que somos también se define, en una medida, por lo que fueron nuestros antepasados.
 
-Por lo menos vimos que la salvación es herencia de pactos hechos a un linaje al que entramos por la gracia de Cristo, y no solo nuestra experiencia individual.
+La idea de desconectarnos del pasado y creernos lo más significativo de nuestra propia experiencia es bastante contemporánea, y tal vez siempre ha existido, pero hoy se celebra.
 
-Que Dios nos ayude a valorar lo que otros hicieron y lo que Dios hizo por ellos, y a identificarnos con ellos, con sus defectos y con sus virtudes.
+## La herencia de los que nos precedieron
+
+Y esa misma idea la traemos a la salvación, y por eso tal vez vemos como algo irrelevante el hecho de ser hechos descendientes de Abraham.
+
+Decimos: «A mí no me importa eso. A mí lo que me importa es mi relación personal con Cristo».
+
+Eso implica menospreciar toda la piedad, todo el sufrimiento, todo el trabajo y toda la perseverancia de una multitud de creyentes a lo largo de la historia.
+
+Ellos dieron literalmente su vida, o segmentos muy grandes de su vida, para seguir este plan de Dios.
+
+Por esa perseverancia, por ese esfuerzo, por ese sacrificio, esta salvación llega a nosotros.
+
+Y luego nosotros la menospreciamos para mantener el orgullo de ser los determinantes de nuestro destino.
+
+Seguro para muchos no es así, y otros sencillamente no tienen tiempo ni energía para pensar en estas cosas.
+
+Pero Dios sí quería que las pensáramos, porque habló muchísimo de ellas en toda la Biblia.
+
+## Dios quiere que pensemos en el linaje
+
+Toda la Biblia está llena de genealogías y de referencias a esos pactos, y nos explica la salvación en términos de heredar los pactos de la promesa hecha a Abraham.
+
+O sea, Dios sí quiere que pensemos en esos términos.
+
+Dios quiere que pensemos en lo que vivió Abraham, y en lo que vivieron Isaac, Jacob, Moisés, Judá, David, Salomón y toda la historia del pueblo de Dios.
+
+Y en última instancia, que pensemos en Cristo, nuestro esposo, que nos permite a nosotros los gentiles entrar por la fe en el linaje de Abraham.
+
+## Democracia, odontología y anestesia
+
+Es difícil poner ejemplos, pero tal vez nos ayudaría imaginar que nos quitaran la democracia, la odontología y la anestesia.
+
+Ninguna de esas cosas la creamos nosotros: existen porque otros las hicieron, y nosotros las heredamos.
+
+Llegamos al mundo sin idea de ellas, las disfrutamos a diario, y mejoran muchísimo nuestra experiencia en este mundo.
+
+Y aun así tratamos muchas de esas cosas como si no tuvieran importancia.
+
+Pido a Dios que esto no tenga en nuestra alma un impacto que acreciente el orgullo y el egoísmo.
+
+Cuando no somos capaces de celebrar y apreciar lo que otros hicieron para que disfrutemos lo que disfrutamos, supongo que ese desinterés y ese egoísmo pueden corromper nuestra alma y crear espacio para que la carne tome influencia.
+
+Son solo pensamientos, pero espero que esta Escritura nos ayude a ver que nosotros, los gentiles, recibimos privilegios y bendiciones extraordinarias por el linaje de Abraham en el que entramos.
+
+## Conclusión
+
+Nos queda pendiente reflexionar sobre el privilegio de ser hechos parte de esta nación y sobre la dimensión global de la misión, y lo haremos en próximas ocasiones, si Dios lo permite.
+
+Por ahora hemos visto que la salvación es una herencia de pactos hechos a un linaje en el que podemos entrar por la gracia de Cristo.
+
+Es decir, la salvación no es solamente nuestra experiencia individual, sino el privilegio de ser hechos parte de algo.
+
+Que Dios nos ayude a valorar lo que Él quiso hacer a través de otros, y a ver su gracia a través del pasado.
+
+Y que nos sintamos agradecidos de identificarnos con ellos, a pesar de sus defectos y notando también sus virtudes.
 
 Dios les bendiga, hermanos.

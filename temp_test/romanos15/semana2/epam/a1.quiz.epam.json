@@ -1,103 +1,65 @@
 {
-  "type": "pamphlet_single_sheet",
-  "header": {
-    "title": "El llamamiento que enmarca el ministerio Quiz",
-    "subtitle": "Romanos 15:14-16",
-    "author": "Eduardo Osteicoechea",
-    "series": "Romanos 15",
-    "series_chapter": "2",
-    "date": "2026 - 11 - 06"
-  },
-  "footer": {
-    "action": "",
-    "message": "",
-    "label1": "",
-    "value1": "",
-    "label2": "",
-    "value2": "",
-    "label3": "",
-    "value3": "",
-    "label4": "",
-    "value4": ""
-  },
-  "header_layout": {
-    "height": 0,
-    "body_gutter": 0,
-    "pad": 0,
-    "pad_top": 0,
-    "pad_bottom": 0,
-    "pad_x": 0,
-    "radius": 0,
-    "stroke": 0,
-    "inner_inset": 0,
-    "inner_stroke": 0,
-    "inner_radius": 0,
-    "title_size": 0,
-    "title_lh": 0,
-    "title_pad_bottom": 0,
-    "title_meta_gap": 0,
-    "divider_outer_stroke": 0,
-    "divider_gap": 0,
-    "divider_inner_stroke": 0,
-    "subtitle_size": 0,
-    "subtitle_lh": 0,
-    "subtitle_pad_x": 0,
-    "subtitle_pad_top": 0,
-    "subtitle_pad_y": 0,
-    "subtitle_min_h": 0,
-    "meta_size": 0,
-    "meta_lh": 0,
-    "meta_row_gap": 0,
-    "meta_col_gap": 0,
-    "meta_pad_top": 0
-  },
-  "footer_layout": {
-    "height": 0,
-    "width": 0,
-    "body_gutter": 0,
-    "pad": 0,
-    "pad_top": 0,
-    "pad_bottom": 0,
-    "radius": 0,
-    "stroke": 0,
-    "inner_inset": 0,
-    "inner_stroke": 0,
-    "inner_radius": 0,
-    "chrome_gap": 0,
-    "divider_outer_stroke": 0,
-    "divider_gap": 0,
-    "divider_inner_stroke": 0,
-    "action_size": 0,
-    "action_lh": 0,
-    "action_pad_x": 0,
-    "action_pad_y": 0,
-    "action_min_h": 0,
-    "message_size": 0,
-    "message_lh": 0,
-    "message_pad_x": 0,
-    "message_pad_top": 0,
-    "message_pad_bottom": 0,
-    "message_pad_y": 0,
-    "message_min_h": 0,
-    "meta_gap": 0,
-    "meta_col_gap": 0,
-    "meta_row_h": 0,
-    "meta_label1_row_h": 0,
-    "meta_label2_row_h": 0,
-    "meta_label2_pad_top": 0,
-    "meta_value_row_h": 0,
-    "meta_size": 0,
-    "meta_lh": 0,
-    "meta_pad_x": 0,
-    "meta_pad_y": 0,
-    "meta_value_pad_y": 0,
-    "cell_stroke": 0,
-    "action_message_gap": 0
-  },
   "column_1": [
     {
+      "type": "paragraph",
+      "content": "Instrucciones: en la primera parte, marca con un círculo el número de la opción correcta.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "En la segunda parte, escribe tu respuesta en las líneas.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "Al final hay espacio para notas y la clave de respuestas.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
       "type": "heading_1",
-      "content": "Parte 1: Elige una respuesta",
+      "content": "Parte 1: Selección múltiple",
       "style_indexes": [
         [
           0,
@@ -116,7 +78,7 @@
     },
     {
       "type": "quiz",
-      "content": "1) ¿Qué frase del versículo 16 enfoca este artículo?",
+      "content": "1) ¿Qué pasaje se estudia en esta lección?",
       "style_indexes": [
         [
           0,
@@ -133,15 +95,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Ser apóstol solo de la iglesia de Roma",
-        "Ser juez de las controversias entre hermanos",
-        "Ser ministro de Cristo Jesús a los gentiles",
-        "Ser sacerdote del templo de Jerusalén"
+        "Romanos 1:1-7",
+        "Romanos 8:28-30",
+        "Romanos 15:14-16",
+        "Romanos 16:1-5"
       ]
     },
     {
       "type": "quiz",
-      "content": "2) ¿Para qué usa Pablo, en Romanos 15, el llamamiento del que está convencido?",
+      "content": "2) ¿En qué frase se enfoca el estudio?",
       "style_indexes": [
         [
           0,
@@ -158,15 +120,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Para justificar la redacción de la carta",
-        "Para anunciar que ya había llegado a Roma",
-        "Para pedir una ofrenda a los gentiles",
-        "Para quedarse a predicar en Jerusalén"
+        "«Llenos de bondad»",
+        "«El Dios de la esperanza»",
+        "«Santificada por el Espíritu Santo»",
+        "«Ministro de Cristo Jesús a los gentiles»"
       ]
     },
     {
       "type": "quiz",
-      "content": "3) ¿Con qué es intercambiable «ministro de Cristo Jesús a los gentiles»?",
+      "content": "3) ¿De qué estaba convencido Pablo sobre los romanos (v. 14)?",
       "style_indexes": [
         [
           0,
@@ -183,17 +145,42 @@
       ],
       "height_mm": 0,
       "options": [
-        "Con el sacerdocio levítico",
-        "Con el discipulado de la familia solamente",
-        "Con el apostolado a los gentiles",
-        "Con el oficio de recaudador de impuestos"
+        "Que ignoraban el evangelio",
+        "Que eran débiles en la fe",
+        "Que estaban llenos de bondad",
+        "Que necesitaban otro apóstol"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "4) ¿Cómo escribió Pablo sobre algunas cosas (v. 15)?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Con lágrimas",
+        "Con prisa",
+        "Con temor",
+        "Con atrevimiento"
       ]
     }
   ],
   "column_2": [
     {
       "type": "quiz",
-      "content": "4) ¿Por qué les escribió para hacerlos recordar?",
+      "content": "5) ¿Qué usa Pablo para justificar la redacción de la carta?",
       "style_indexes": [
         [
           0,
@@ -210,15 +197,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Porque es apóstol, fue hecho apóstol, tiene esa responsabilidad y Dios actúa por medio de él",
-        "Porque los romanos ignoraban por completo el evangelio",
-        "Porque le bastaba su propia visión para dirigir la carta",
-        "Porque Cristo le había ordenado quedarse en Jerusalén"
+        "Su formación con Gamaliel",
+        "La petición de Roma",
+        "Su experiencia como perseguidor",
+        "Su llamamiento a los gentiles"
       ]
     },
     {
       "type": "quiz",
-      "content": "5) ¿De dónde sale la capacidad con la que Pablo escribió?",
+      "content": "6) ¿Con qué es intercambiable la frase «ministro a los gentiles»?",
       "style_indexes": [
         [
           0,
@@ -235,15 +222,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "De haber planeado muchas veces el viaje a Roma",
-        "De definir él solo su visión y sostenerla",
-        "De la gracia que actúa en él, no de sí mismo",
-        "De la formación que recibió a los pies de Gamaliel"
+        "Con el apostolado a los gentiles",
+        "Con el sacerdocio levítico",
+        "Con el pastorado en Roma",
+        "Con el liderazgo en Jerusalén"
       ]
     },
     {
       "type": "quiz",
-      "content": "6) ¿Para qué usa lo que Dios le da?",
+      "content": "7) ¿De dónde viene la capacidad de Pablo para escribir así?",
       "style_indexes": [
         [
           0,
@@ -260,17 +247,92 @@
       ],
       "height_mm": 0,
       "options": [
-        "Para afirmar la firmeza con que creen y practican el evangelio",
-        "Para cumplir el plan que él mismo soñó",
-        "Para priorizar los lugares ya alcanzados",
-        "Para reemplazar los deberes de la Escritura"
+        "De su propia inteligencia",
+        "De su formación rabínica",
+        "De la aprobación de la iglesia",
+        "De la gracia de Dios que actúa en él"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "8) ¿Qué quería Pablo fortalecer en los romanos?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Su organización administrativa",
+        "Su riqueza material",
+        "Su firmeza en el evangelio",
+        "Su influencia política"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "9) ¿Qué NO le provee el llamamiento a Pablo?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Motivación",
+        "Fama",
+        "Alcance",
+        "Urgencia"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "10) ¿Qué mantiene a Pablo enfocado?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Entenderse como apóstol a los gentiles",
+        "El deseo de ser reconocido",
+        "La presión de otros apóstoles",
+        "El miedo al fracaso"
       ]
     }
   ],
   "column_3": [
     {
       "type": "quiz",
-      "content": "7) ¿Qué enmarca su ministerio y da sentido, en su mente, a todo lo que hace?",
+      "content": "11) ¿Es el llamamiento solo un truco mental de Pablo?",
       "style_indexes": [
         [
           0,
@@ -287,15 +349,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "El sueño que le mostró el destino antes de salir",
-        "El contentamiento de no orar por la voluntad de Dios",
-        "Ese llamamiento",
-        "El perfil que lo hacía ideal para Jerusalén"
+        "Sí, es una técnica",
+        "Sí, es solo disciplina personal",
+        "No, la gracia actúa en su mente",
+        "No, es una costumbre cultural"
       ]
     },
     {
       "type": "quiz",
-      "content": "8) ¿Qué le provee ese llamamiento?",
+      "content": "12) Según el v. 18, ¿de qué se atreve a hablar Pablo?",
       "style_indexes": [
         [
           0,
@@ -312,15 +374,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Motivación, visión, alcance, urgencia y los recursos necesarios para la obra",
-        "La certeza de que ningún plan suyo será impedido",
-        "Un mapa trazado solo por lo que le parece apropiado",
-        "El derecho de existir para sí mismo"
+        "De sus propios logros",
+        "De sus viajes misioneros",
+        "De lo que Cristo hizo por medio de él",
+        "De su formación académica"
       ]
     },
     {
       "type": "quiz",
-      "content": "9) Según el versículo 15, ¿qué produce en él el enfoque, la motivación y la movilización?",
+      "content": "13) ¿De quién es obra la visión y perseverancia de Pablo?",
       "style_indexes": [
         [
           0,
@@ -337,15 +399,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Únicamente el sostener una visión a largo plazo",
-        "La negligencia corregida después con disciplina",
-        "La gracia que obra en él",
-        "Solo un truco para ordenar la mente"
+        "De su esfuerzo solamente",
+        "De la gracia de Dios",
+        "De la iglesia de Antioquía",
+        "De su temperamento natural"
       ]
     },
     {
       "type": "quiz",
-      "content": "10) ¿De qué no se atreverá a hablar Pablo?",
+      "content": "14) ¿Qué somos los creyentes, igual que Pablo?",
       "style_indexes": [
         [
           0,
@@ -362,17 +424,92 @@
       ],
       "height_mm": 0,
       "options": [
-        "Sino de lo que Cristo ha hecho por medio de él para transformar a los gentiles",
-        "Sino de los planes que él definió para su ministerio",
-        "Sino de la instrucción que recibió a los pies de Gamaliel",
-        "Sino de las tareas que Dios le impidió completar"
+        "Dueños de nuestro destino",
+        "Autores de nuestra misión",
+        "Jueces de los demás",
+        "Siervos de Cristo Jesús"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "15) ¿Quién define nuestra visión y nuestra misión?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Nosotros mismos",
+        "Dios",
+        "Nuestra cultura",
+        "Nuestros líderes"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "16) ¿Qué observamos para conocer la voluntad de Dios?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Sueños, deseos y planes",
+        "Opiniones, modas y gustos",
+        "Dinero, fama y poder",
+        "Deberes bíblicos, dones y circunstancias"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "17) ¿Qué define el «mapa de Dios» para cada vida?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Solo los deseos personales",
+        "Solo la tradición familiar",
+        "Solo la opinión del pastor",
+        "Circunstancias y habilidades"
       ]
     }
   ],
   "column_4": [
     {
       "type": "quiz",
-      "content": "11) En lugar de definir nuestro propósito, nuestra visión y nuestra misión, ¿qué observamos?",
+      "content": "18) En Hechos 22, ¿dónde quería quedarse Pablo?",
       "style_indexes": [
         [
           0,
@@ -389,15 +526,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "El plan que soñamos y pensamos sostener el resto de la vida",
-        "Solo las habilidades, sin los deberes generales ni la oración",
-        "Los deberes de la Escritura, los dones del Espíritu Santo y las circunstancias en que Dios nos permite vivir",
-        "El perfil que nos parece perfecto para el lugar que preferimos"
+        "En Jerusalén",
+        "En Antioquía",
+        "En Roma",
+        "En Tarso"
       ]
     },
     {
       "type": "quiz",
-      "content": "12) ¿Qué traza el mapa de cómo ejercemos esos deberes?",
+      "content": "19) ¿A los pies de quién fue instruido Pablo?",
       "style_indexes": [
         [
           0,
@@ -414,15 +551,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Las circunstancias que nos enmarcan y las habilidades de cada uno",
-        "La negligencia que todavía no hemos confesado",
-        "Los lugares alcanzados, antes que los no alcanzados",
-        "El conflicto de intereses que Pablo tuvo camino a Roma"
+        "De Pedro",
+        "De Bernabé",
+        "De Gamaliel",
+        "De Esteban"
       ]
     },
     {
       "type": "quiz",
-      "content": "13) ¿Qué quería Pablo en Hechos 22?",
+      "content": "20) ¿Qué le dijo Cristo a Pablo en Hechos 22?",
       "style_indexes": [
         [
           0,
@@ -439,15 +576,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Ir primero a Roma, porque nada le había sido impedido",
-        "Predicar solo donde el evangelio ya había llegado",
-        "Quedarse en Jerusalén para testificar de Cristo",
-        "Salir de Antioquía sin saber el destino"
+        "Que lo enviaría lejos a los gentiles",
+        "Que se quedara en Jerusalén",
+        "Que volviera a Tarso",
+        "Que fuera a Egipto"
       ]
     },
     {
       "type": "quiz",
-      "content": "14) ¿Por qué le parecía tener el perfil para predicar en Jerusalén?",
+      "content": "21) ¿Qué es importante ante los planes de Dios?",
       "style_indexes": [
         [
           0,
@@ -464,17 +601,117 @@
       ],
       "height_mm": 0,
       "options": [
-        "Había sido instruido a los pies de Gamaliel y había perseguido a la iglesia",
-        "El Espíritu Santo lo había enviado allí por la iglesia de Antioquía",
-        "Un sueño le había mostrado que Jerusalén era su destino",
-        "La gran comisión lo reservaba solo para esa ciudad"
+        "La ambición y la estrategia",
+        "El contentamiento y la oración",
+        "La fama y el éxito",
+        "La prisa y la insistencia"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "22) ¿Cómo reorientó Dios a Pablo en su viaje misionero?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Por medio de una tormenta",
+        "Por medio de una carta",
+        "Por medio de un ángel",
+        "Por medio de un sueño"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "23) ¿Por medio de qué iglesia envió el Espíritu Santo a Pablo?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "La iglesia de Jerusalén",
+        "La iglesia de Roma",
+        "La iglesia de Antioquía",
+        "La iglesia de Corinto"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "24) ¿Qué le había sido impedido a Pablo según Romanos?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Llegar a Roma",
+        "Predicar en Asia",
+        "Escribir cartas",
+        "Volver a Jerusalén"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "25) ¿Qué puede torcer un plan de Dios?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "La voluntad humana",
+        "Ninguna fuerza en el universo",
+        "El poder de los gobiernos",
+        "La falta de recursos"
       ]
     }
   ],
   "column_5": [
     {
       "type": "quiz",
-      "content": "15) ¿Qué le dice Cristo?",
+      "content": "26) ¿Cómo se corrige la negligencia?",
       "style_indexes": [
         [
           0,
@@ -491,15 +728,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Define tú la visión y reoriéntate cuando te parezca",
-        "Ve primero a los lugares ya alcanzados",
-        "Vete lejos, porque te enviaré a los gentiles",
-        "Quédate, porque tu perfil es el que yo elegí para Jerusalén"
+        "Con esfuerzo humano solo",
+        "Ignorando el problema",
+        "Con arrepentimiento y obediencia",
+        "Cambiando de iglesia"
       ]
     },
     {
       "type": "quiz",
-      "content": "16) En el viaje al que el Espíritu Santo lo envió por la iglesia de Antioquía, ¿cómo lo reorienta Dios?",
+      "content": "27) ¿Qué debía priorizar Pablo?",
       "style_indexes": [
         [
           0,
@@ -516,15 +753,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Con un sueño lo lleva hacia otra ubicación, aunque él iba en una dirección",
-        "Le impide para siempre predicar a los gentiles",
-        "Confirma que Jerusalén era el destino que él había elegido",
-        "Lo deja cumplir primero el plan que él soñaba"
+        "Las ciudades más ricas",
+        "Los lugares no alcanzados",
+        "Las iglesias ya establecidas",
+        "Los lugares más cercanos"
       ]
     },
     {
       "type": "quiz",
-      "content": "17) ¿Qué enseñan el sueño, Hechos 22 y el impedimento de llegar a Roma?",
+      "content": "28) ¿Qué dice Romanos 6 que fuimos hechos?",
       "style_indexes": [
         [
           0,
@@ -541,15 +778,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "El contentamiento consiste en insistir en el plan propio",
-        "Ningún impedimento viene de la mano de Dios",
-        "Dios puede tener planes muy diferentes de los nuestros",
-        "Pablo siempre llegó adonde había planeado"
+        "Dueños de la ley",
+        "Jueces del mundo",
+        "Maestros de la fe",
+        "Siervos de la justicia"
       ]
     },
     {
       "type": "quiz",
-      "content": "18) Si, aun después de corregir la negligencia, el propósito que queremos no sale, ¿qué es lo más probable?",
+      "content": "29) ¿Para qué existimos, según el estudio?",
       "style_indexes": [
         [
           0,
@@ -566,62 +803,10 @@
       ],
       "height_mm": 0,
       "options": [
-        "Que no es el plan de Dios, y que él nos reorienta en otra dirección",
-        "Que debemos sostener ese propósito el resto de la vida",
-        "Que alguna fuerza del universo torció el plan de Dios",
-        "Que la gran comisión queda reemplazada por ese fracaso"
-      ]
-    }
-  ],
-  "column_6": [
-    {
-      "type": "quiz",
-      "content": "19) Como ministro de Cristo Jesús a los gentiles, ¿qué debía priorizar Pablo?",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0,
-      "options": [
-        "La familia antes que la gran comisión",
-        "El plan soñado antes que el que agrada a Cristo",
-        "Los lugares no alcanzados antes que los alcanzados",
-        "Jerusalén antes que cualquier pueblo gentil"
-      ]
-    },
-    {
-      "type": "quiz",
-      "content": "20) ¿Qué dice Romanos 6 de los que han creído?",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0,
-      "options": [
-        "Que fuimos hechos siervos de la justicia",
-        "Que existimos para nuestro propio deseo",
-        "Que fuimos comprados para definir nuestra misión",
-        "Que la gracia nos deja fuera del gobierno de Cristo"
+        "Para nosotros mismos",
+        "Para cumplir nuestros sueños",
+        "Para Cristo y su voluntad",
+        "Para agradar a los demás"
       ]
     },
     {
@@ -645,7 +830,7 @@
     },
     {
       "type": "paragraph",
-      "content": "21) ¿Por qué el versículo 15 no es solo un truco para ordenar la mente?",
+      "content": "30) ¿Qué significa que Pablo fuera «ministro a los gentiles»?",
       "style_indexes": [
         [
           0,
@@ -664,7 +849,7 @@
     },
     {
       "type": "paragraph",
-      "content": "22) ¿Qué significa, para nuestra visión y nuestra misión, que seamos siervos de Cristo y súbditos de su reino?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -683,7 +868,7 @@
     },
     {
       "type": "paragraph",
-      "content": "23) ¿Con qué define Dios nuestra visión y nuestra misión?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -702,7 +887,7 @@
     },
     {
       "type": "paragraph",
-      "content": "24) Explica el caso de Hechos 22 y qué enseña sobre el perfil que nos parece ideal.",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -721,7 +906,7 @@
     },
     {
       "type": "paragraph",
-      "content": "25) ¿Cuáles son las tres instancias en las que Dios reorienta o impide los planes de Pablo?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -740,7 +925,7 @@
     },
     {
       "type": "paragraph",
-      "content": "26) Si algo no sale, ¿qué puede estar ocurriendo? Distingue el plan de Dios de nuestra negligencia.",
+      "content": "31) ¿Por qué Pablo usa su llamamiento para justificar la carta?",
       "style_indexes": [
         [
           0,
@@ -759,7 +944,655 @@
     },
     {
       "type": "paragraph",
-      "content": "27) ¿Qué debemos identificar, y con qué medios, para enmarcar la vida en la dirección que Dios quiere?",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    }
+  ],
+  "column_6": [
+    {
+      "type": "paragraph",
+      "content": "32) ¿Qué diferencia hay entre definir tu visión y recibirla de Cristo?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "33) ¿Por qué la visión de Pablo era obra de la gracia?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "34) ¿Qué te enseña Hechos 22 sobre los perfiles «ideales»?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "35) Menciona un deber, un don y una circunstancia de tu vida.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "36) ¿Cómo distingues negligencia de un plan que Dios no quiere?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -780,7 +1613,7 @@
   "column_7": [
     {
       "type": "paragraph",
-      "content": "28) ¿Qué enmarca la gran comisión, y qué otros deberes nombra el artículo como prioridad?",
+      "content": "37) ¿Por qué necesitas contentamiento cuando Dios cambia tus planes?",
       "style_indexes": [
         [
           0,
@@ -799,7 +1632,7 @@
     },
     {
       "type": "paragraph",
-      "content": "29) ¿Qué implica haber sido comprados por precio de sangre y presentados como posesión de Cristo?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -818,7 +1651,7 @@
     },
     {
       "type": "paragraph",
-      "content": "30) ¿Por qué vivir el plan de Dios, y no el plan que soñamos, puede llenar el corazón de gozo?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -835,6 +1668,407 @@
       ],
       "height_mm": 0
     },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "38) ¿Qué significa para ti haber sido comprado por precio?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "39) Escribe una oración pidiendo a Dios que te muestre tu llamamiento.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    }
+  ],
+  "column_8": [
     {
       "type": "heading_1",
       "content": "Notas",
@@ -856,7 +2090,349 @@
     },
     {
       "type": "paragraph",
-      "content": "Escribe aquí.",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -894,64 +2470,7 @@
     },
     {
       "type": "paragraph",
-      "content": "1) 3 · 2) 1 · 3) 3 · 4) 1 · 5) 3",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "6) 1 · 7) 3 · 8) 1 · 9) 3 · 10) 1",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "11) 3 · 12) 1 · 13) 3 · 14) 1 · 15) 3",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "16) 1 · 17) 3 · 18) 1 · 19) 3 · 20) 1",
+      "content": "Pregunta) opción correcta: 1) 3 · 2) 4 · 3) 3 · 4) 4 · 5) 4 · 6) 1 · 7) 4 · 8) 3 · 9) 2 · 10) 1 · 11) 3 · 12) 3 · 13) 2 · 14) 4 · 15) 2 · 16) 4 · 17) 4 · 18) 1 · 19) 3 · 20) 1 · 21) 2 · 22) 4 · 23) 3 · 24) 1 · 25) 2 · 26) 3 · 27) 2 · 28) 4 · 29) 3",
       "style_indexes": [
         [
           0,
@@ -969,5 +2488,99 @@
       "height_mm": 0
     }
   ],
-  "column_8": null
+  "footer": {
+    "action": "",
+    "label1": "",
+    "label2": "",
+    "label3": "",
+    "label4": "",
+    "message": "",
+    "value1": "",
+    "value2": "",
+    "value3": "",
+    "value4": ""
+  },
+  "footer_layout": {
+    "action_lh": 0,
+    "action_message_gap": 0,
+    "action_min_h": 0,
+    "action_pad_x": 0,
+    "action_pad_y": 0,
+    "action_size": 0,
+    "body_gutter": 0,
+    "cell_stroke": 0,
+    "chrome_gap": 0,
+    "divider_gap": 0,
+    "divider_inner_stroke": 0,
+    "divider_outer_stroke": 0,
+    "height": 0,
+    "inner_inset": 0,
+    "inner_radius": 0,
+    "inner_stroke": 0,
+    "message_lh": 0,
+    "message_min_h": 0,
+    "message_pad_bottom": 0,
+    "message_pad_top": 0,
+    "message_pad_x": 0,
+    "message_pad_y": 0,
+    "message_size": 0,
+    "meta_col_gap": 0,
+    "meta_gap": 0,
+    "meta_label1_row_h": 0,
+    "meta_label2_pad_top": 0,
+    "meta_label2_row_h": 0,
+    "meta_lh": 0,
+    "meta_pad_x": 0,
+    "meta_pad_y": 0,
+    "meta_row_h": 0,
+    "meta_size": 0,
+    "meta_value_pad_y": 0,
+    "meta_value_row_h": 0,
+    "pad": 0,
+    "pad_bottom": 0,
+    "pad_top": 0,
+    "radius": 0,
+    "stroke": 0,
+    "width": 0
+  },
+  "header": {
+    "author": "Eduardo Osteicoechea",
+    "date": "2026 - 11 - 06",
+    "series": "Romanos 15",
+    "series_chapter": "2",
+    "subtitle": "Romanos 15:14-16",
+    "title": "Ministro de Cristo Jesús a los gentiles Quiz"
+  },
+  "header_layout": {
+    "body_gutter": 0,
+    "divider_gap": 0,
+    "divider_inner_stroke": 0,
+    "divider_outer_stroke": 0,
+    "height": 0,
+    "inner_inset": 0,
+    "inner_radius": 0,
+    "inner_stroke": 0,
+    "meta_col_gap": 0,
+    "meta_lh": 0,
+    "meta_pad_top": 0,
+    "meta_row_gap": 0,
+    "meta_size": 0,
+    "pad": 0,
+    "pad_bottom": 0,
+    "pad_top": 0,
+    "pad_x": 0,
+    "radius": 0,
+    "stroke": 0,
+    "subtitle_lh": 0,
+    "subtitle_min_h": 0,
+    "subtitle_pad_top": 0,
+    "subtitle_pad_x": 0,
+    "subtitle_pad_y": 0,
+    "subtitle_size": 0,
+    "title_lh": 0,
+    "title_meta_gap": 0,
+    "title_pad_bottom": 0,
+    "title_size": 0
+  },
+  "type": "pamphlet_single_sheet"
 }

@@ -1,103 +1,65 @@
 {
-  "type": "pamphlet_single_sheet",
-  "header": {
-    "title": "La escala global de la obediencia a la fe (2) Quiz",
-    "subtitle": "Romanos 15:14-16",
-    "author": "Eduardo Osteicoechea",
-    "series": "Romanos 15",
-    "series_chapter": "2",
-    "date": "2026 - 11 - 06"
-  },
-  "footer": {
-    "action": "",
-    "message": "",
-    "label1": "",
-    "value1": "",
-    "label2": "",
-    "value2": "",
-    "label3": "",
-    "value3": "",
-    "label4": "",
-    "value4": ""
-  },
-  "header_layout": {
-    "height": 0,
-    "body_gutter": 0,
-    "pad": 0,
-    "pad_top": 0,
-    "pad_bottom": 0,
-    "pad_x": 0,
-    "radius": 0,
-    "stroke": 0,
-    "inner_inset": 0,
-    "inner_stroke": 0,
-    "inner_radius": 0,
-    "title_size": 0,
-    "title_lh": 0,
-    "title_pad_bottom": 0,
-    "title_meta_gap": 0,
-    "divider_outer_stroke": 0,
-    "divider_gap": 0,
-    "divider_inner_stroke": 0,
-    "subtitle_size": 0,
-    "subtitle_lh": 0,
-    "subtitle_pad_x": 0,
-    "subtitle_pad_top": 0,
-    "subtitle_pad_y": 0,
-    "subtitle_min_h": 0,
-    "meta_size": 0,
-    "meta_lh": 0,
-    "meta_row_gap": 0,
-    "meta_col_gap": 0,
-    "meta_pad_top": 0
-  },
-  "footer_layout": {
-    "height": 0,
-    "width": 0,
-    "body_gutter": 0,
-    "pad": 0,
-    "pad_top": 0,
-    "pad_bottom": 0,
-    "radius": 0,
-    "stroke": 0,
-    "inner_inset": 0,
-    "inner_stroke": 0,
-    "inner_radius": 0,
-    "chrome_gap": 0,
-    "divider_outer_stroke": 0,
-    "divider_gap": 0,
-    "divider_inner_stroke": 0,
-    "action_size": 0,
-    "action_lh": 0,
-    "action_pad_x": 0,
-    "action_pad_y": 0,
-    "action_min_h": 0,
-    "message_size": 0,
-    "message_lh": 0,
-    "message_pad_x": 0,
-    "message_pad_top": 0,
-    "message_pad_bottom": 0,
-    "message_pad_y": 0,
-    "message_min_h": 0,
-    "meta_gap": 0,
-    "meta_col_gap": 0,
-    "meta_row_h": 0,
-    "meta_label1_row_h": 0,
-    "meta_label2_row_h": 0,
-    "meta_label2_pad_top": 0,
-    "meta_value_row_h": 0,
-    "meta_size": 0,
-    "meta_lh": 0,
-    "meta_pad_x": 0,
-    "meta_pad_y": 0,
-    "meta_value_pad_y": 0,
-    "cell_stroke": 0,
-    "action_message_gap": 0
-  },
   "column_1": [
     {
+      "type": "paragraph",
+      "content": "Instrucciones: en la primera parte, marca con un círculo el número de la opción correcta.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "En la segunda parte, escribe tu respuesta en las líneas.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "Al final hay espacio para notas y la clave de respuestas.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
       "type": "heading_1",
-      "content": "Parte 1: Elige una respuesta",
+      "content": "Parte 1: Selección múltiple",
       "style_indexes": [
         [
           0,
@@ -133,10 +95,10 @@
       ],
       "height_mm": 0,
       "options": [
+        "Por controlar cómo trabajan las demás iglesias",
         "Por una organización mundial antes que por la oración",
-        "Por dejar la iglesia local",
         "Por cultivar una buena relación con Dios a través de la Biblia y de la iglesia local",
-        "Por controlar cómo trabajan las demás iglesias"
+        "Por dejar la iglesia local"
       ]
     },
     {
@@ -158,8 +120,8 @@
       ],
       "height_mm": 0,
       "options": [
-        "Nos revela cosas de las Escrituras",
         "Nos saca de la iglesia local",
+        "Nos revela cosas de las Escrituras",
         "Nos libra de tener que orar",
         "Sustituye el estudio de la Biblia"
       ]
@@ -183,10 +145,10 @@
       ],
       "height_mm": 0,
       "options": [
+        "De los deberes familiares",
         "Del conocimiento de la Escritura",
         "De la urgencia por las naciones",
-        "Del ensimismamiento en nuestros propósitos, problemas y deseos",
-        "De los deberes familiares"
+        "Del ensimismamiento en nuestros propósitos, problemas y deseos"
       ]
     }
   ],
@@ -210,9 +172,9 @@
       ],
       "height_mm": 0,
       "options": [
-        "Que los creyentes deban tener vidas irresponsables",
         "Que haya deberes familiares",
         "Que el alcance mundial forme parte del conjunto",
+        "Que los creyentes deban tener vidas irresponsables",
         "Que todo se haga a la vez"
       ]
     },
@@ -235,10 +197,10 @@
       ],
       "height_mm": 0,
       "options": [
-        "Un deber que anula la familia y el trabajo",
-        "Una tarea reservada a los apóstoles",
         "La Escritura y la armonía de los deberes familiares, comunitarios, eclesiásticos y de alcance mundial",
-        "Solo la experiencia interior"
+        "Solo la experiencia interior",
+        "Un deber que anula la familia y el trabajo",
+        "Una tarea reservada a los apóstoles"
       ]
     },
     {
@@ -260,14 +222,12 @@
       ],
       "height_mm": 0,
       "options": [
-        "Todos a la vez, con urgencia y con enfoque eterno, moviéndose hacia discipular a las naciones",
         "Uno por uno, dejando el alcance para el final de la vida",
         "Solo cuando sobre tiempo después del trabajo",
-        "Primero el mundo y después, si alcanza, la iglesia local"
+        "Primero el mundo y después, si alcanza, la iglesia local",
+        "Todos a la vez, con urgencia y con enfoque eterno, moviéndose hacia discipular a las naciones"
       ]
-    }
-  ],
-  "column_3": [
+    },
     {
       "type": "quiz",
       "content": "7) Después de la relación con Dios, ¿en qué conviene enfocarse?",
@@ -287,12 +247,14 @@
       ],
       "height_mm": 0,
       "options": [
-        "En hablar de Cristo sin conocer lo que mandó",
-        "En reservar el discipulado a los evangelistas",
         "En aprender las Escrituras",
-        "En dejar de ser estudiante"
+        "En dejar de ser estudiante",
+        "En hablar de Cristo sin conocer lo que mandó",
+        "En reservar el discipulado a los evangelistas"
       ]
-    },
+    }
+  ],
+  "column_3": [
     {
       "type": "quiz",
       "content": "8) ¿Por qué todos debemos ser estudiantes de la Escritura?",
@@ -312,10 +274,10 @@
       ],
       "height_mm": 0,
       "options": [
-        "Porque todos somos discipuladores, aunque haya maestros y evangelistas",
         "Porque solo los maestros discipulan",
         "Porque los evangelistas quedan fuera de la gran comisión",
-        "Porque discipular no exige decir la verdad acerca de Dios"
+        "Porque discipular no exige decir la verdad acerca de Dios",
+        "Porque todos somos discipuladores, aunque haya maestros y evangelistas"
       ]
     },
     {
@@ -337,10 +299,10 @@
       ],
       "height_mm": 0,
       "options": [
+        "Solo de los pastores",
         "De quien nunca ha caminado con esa persona",
         "De una organización de otro continente",
-        "Nuestras, en las relaciones del entorno inmediato",
-        "Solo de los pastores"
+        "Nuestras, en las relaciones del entorno inmediato"
       ]
     },
     {
@@ -362,9 +324,9 @@
       ],
       "height_mm": 0,
       "options": [
-        "Es el segmento de las naciones que ya recibe discipulado y todavía necesita obedecer todo lo que Cristo mandó",
         "Es un trabajo que termina al bautizar",
         "Queda fuera del alcance a las naciones",
+        "Es el segmento de las naciones que ya recibe discipulado y todavía necesita obedecer todo lo que Cristo mandó",
         "Solo sirve para eventos grandes"
       ]
     },
@@ -387,14 +349,12 @@
       ],
       "height_mm": 0,
       "options": [
-        "Dura unas tres horas y se cierra",
-        "Acaba al pasar a la escala nacional",
         "Es de por vida y no acaba nunca",
-        "Termina cuando la región ya oyó el evangelio"
+        "Termina cuando la región ya oyó el evangelio",
+        "Dura unas tres horas y se cierra",
+        "Acaba al pasar a la escala nacional"
       ]
-    }
-  ],
-  "column_4": [
+    },
     {
       "type": "quiz",
       "content": "12) Cuando en la región el tiempo se limita, ¿qué hace falta?",
@@ -414,12 +374,14 @@
       ],
       "height_mm": 0,
       "options": [
-        "Estrategias más amplias que nuestra presencia y nuestra energía",
         "Estar en cada sector todo el tiempo",
         "Dejar de orar y de aplicar la sabiduría",
+        "Estrategias más amplias que nuestra presencia y nuestra energía",
         "Abandonar lo que ya llega"
       ]
-    },
+    }
+  ],
+  "column_4": [
     {
       "type": "quiz",
       "content": "13) Si somos atrevidos en esta obra, ¿qué es lo más que puede pasar?",
@@ -439,10 +401,10 @@
       ],
       "height_mm": 0,
       "options": [
+        "Que el llamado desaparezca",
         "Que ya no haga falta consolidar con hechos",
         "Que la oración sustituya a las Escrituras",
-        "Que queramos hacer más de lo que Dios permite, y que él nos limite con las circunstancias",
-        "Que el llamado desaparezca"
+        "Que queramos hacer más de lo que Dios permite, y que él nos limite con las circunstancias"
       ]
     },
     {
@@ -464,10 +426,10 @@
       ],
       "height_mm": 0,
       "options": [
-        "Una planificación estratégica mayor",
         "Prescindir de toda organización",
         "Quedarse solo en la comunidad",
-        "Controlar cada método de los demás"
+        "Controlar cada método de los demás",
+        "Una planificación estratégica mayor"
       ]
     },
     {
@@ -489,14 +451,12 @@
       ],
       "height_mm": 0,
       "options": [
+        "Un ejemplo acabado que ya no necesita aprender",
         "Alguien que no debería pensar el tema",
-        "Un experto al que no le cuesta colaborar",
         "Un neófito, un niño espiritual",
-        "Un ejemplo acabado que ya no necesita aprender"
+        "Un experto al que no le cuesta colaborar"
       ]
-    }
-  ],
-  "column_5": [
+    },
     {
       "type": "quiz",
       "content": "16) ¿Por qué se complican las asociaciones entre iglesias y denominaciones?",
@@ -516,10 +476,10 @@
       ],
       "height_mm": 0,
       "options": [
-        "Porque la gran comisión es enseñar todo lo que Cristo mandó, y ha sido difícil definir qué mandó y cómo hacerlo",
         "Porque el evangelio prohíbe apoyar a otros",
         "Porque Dios no tiene paciencia con quien aprende",
-        "Porque no existe nada que no se negocie"
+        "Porque no existe nada que no se negocie",
+        "Porque la gran comisión es enseñar todo lo que Cristo mandó, y ha sido difícil definir qué mandó y cómo hacerlo"
       ]
     },
     {
@@ -541,12 +501,14 @@
       ],
       "height_mm": 0,
       "options": [
-        "Hay que esperar hasta poder ayudar a todo el mundo",
-        "Conviene no apoyar a ninguna organización",
         "Es mejor hacer algo que no hacer nada",
-        "No vale la pena empezarlo"
+        "No vale la pena empezarlo",
+        "Hay que esperar hasta poder ayudar a todo el mundo",
+        "Conviene no apoyar a ninguna organización"
       ]
-    },
+    }
+  ],
+  "column_5": [
     {
       "type": "quiz",
       "content": "18) ¿Qué no se negocia al colaborar?",
@@ -591,14 +553,12 @@
       ],
       "height_mm": 0,
       "options": [
-        "Como peldaños que se abandonan al subir",
-        "Como una obra que no se puede abordar",
+        "Como un solo peldaño, el mundial, sin la iglesia",
         "Por peldaños, y todos a la vez",
-        "Como un solo peldaño, el mundial, sin la iglesia"
+        "Como peldaños que se abandonan al subir",
+        "Como una obra que no se puede abordar"
       ]
-    }
-  ],
-  "column_6": [
+    },
     {
       "type": "quiz",
       "content": "20) ¿Qué pretende mostrar el ejemplo de la media hora, la iglesia, el trabajo y las tres horas?",
@@ -664,7 +624,237 @@
     },
     {
       "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    }
+  ],
+  "column_6": [
+    {
+      "type": "paragraph",
       "content": "22) ¿Cómo se armonizan la Escritura y los deberes familiares, comunitarios, eclesiásticos y de alcance mundial?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -702,7 +892,159 @@
     },
     {
       "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
       "content": "24) ¿Qué responsabilidad tenemos en las relaciones de vecinos, comunidad, trabajo y familia?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -740,6 +1082,82 @@
     },
     {
       "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
       "content": "26) ¿Cómo se participa en la escala regional cuando el tiempo solo alcanza de vez en cuando?",
       "style_indexes": [
         [
@@ -759,7 +1177,180 @@
     },
     {
       "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    }
+  ],
+  "column_7": [
+    {
+      "type": "paragraph",
       "content": "27) ¿Qué enseña el artículo sobre ser atrevido y, a la vez, notar lo que Dios limita?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -797,7 +1388,159 @@
     },
     {
       "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
       "content": "29) ¿Qué cosas no se negocian al colaborar, y qué actitud cabe mientras esas cosas estén?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -832,9 +1575,85 @@
         ]
       ],
       "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
     }
   ],
-  "column_7": [
+  "column_8": [
     {
       "type": "heading_1",
       "content": "Notas",
@@ -856,7 +1675,368 @@
     },
     {
       "type": "paragraph",
-      "content": "Escribe aquí.",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -894,64 +2074,7 @@
     },
     {
       "type": "paragraph",
-      "content": "1) 3 · 2) 1 · 3) 3 · 4) 1 · 5) 3",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "6) 1 · 7) 3 · 8) 1 · 9) 3 · 10) 1",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "11) 3 · 12) 1 · 13) 3 · 14) 1 · 15) 3",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "16) 1 · 17) 3 · 18) 1 · 19) 3 · 20) 1",
+      "content": "Pregunta) opción correcta: 1) 3 · 2) 2 · 3) 4 · 4) 3 · 5) 1 · 6) 4 · 7) 1 · 8) 4 · 9) 4 · 10) 3 · 11) 1 · 12) 3 · 13) 4 · 14) 4 · 15) 3 · 16) 4 · 17) 1 · 18) 1 · 19) 2 · 20) 1",
       "style_indexes": [
         [
           0,
@@ -969,5 +2092,99 @@
       "height_mm": 0
     }
   ],
-  "column_8": null
+  "footer": {
+    "action": "",
+    "label1": "",
+    "label2": "",
+    "label3": "",
+    "label4": "",
+    "message": "",
+    "value1": "",
+    "value2": "",
+    "value3": "",
+    "value4": ""
+  },
+  "footer_layout": {
+    "action_lh": 0,
+    "action_message_gap": 0,
+    "action_min_h": 0,
+    "action_pad_x": 0,
+    "action_pad_y": 0,
+    "action_size": 0,
+    "body_gutter": 0,
+    "cell_stroke": 0,
+    "chrome_gap": 0,
+    "divider_gap": 0,
+    "divider_inner_stroke": 0,
+    "divider_outer_stroke": 0,
+    "height": 0,
+    "inner_inset": 0,
+    "inner_radius": 0,
+    "inner_stroke": 0,
+    "message_lh": 0,
+    "message_min_h": 0,
+    "message_pad_bottom": 0,
+    "message_pad_top": 0,
+    "message_pad_x": 0,
+    "message_pad_y": 0,
+    "message_size": 0,
+    "meta_col_gap": 0,
+    "meta_gap": 0,
+    "meta_label1_row_h": 0,
+    "meta_label2_pad_top": 0,
+    "meta_label2_row_h": 0,
+    "meta_lh": 0,
+    "meta_pad_x": 0,
+    "meta_pad_y": 0,
+    "meta_row_h": 0,
+    "meta_size": 0,
+    "meta_value_pad_y": 0,
+    "meta_value_row_h": 0,
+    "pad": 0,
+    "pad_bottom": 0,
+    "pad_top": 0,
+    "radius": 0,
+    "stroke": 0,
+    "width": 0
+  },
+  "header": {
+    "author": "Eduardo Osteicoechea",
+    "date": "2026 - 11 - 06",
+    "series": "",
+    "series_chapter": "",
+    "subtitle": "Romanos 15:14-16",
+    "title": "(retirar) La escala global de la obediencia a la fe (2) Quiz"
+  },
+  "header_layout": {
+    "body_gutter": 0,
+    "divider_gap": 0,
+    "divider_inner_stroke": 0,
+    "divider_outer_stroke": 0,
+    "height": 0,
+    "inner_inset": 0,
+    "inner_radius": 0,
+    "inner_stroke": 0,
+    "meta_col_gap": 0,
+    "meta_lh": 0,
+    "meta_pad_top": 0,
+    "meta_row_gap": 0,
+    "meta_size": 0,
+    "pad": 0,
+    "pad_bottom": 0,
+    "pad_top": 0,
+    "pad_x": 0,
+    "radius": 0,
+    "stroke": 0,
+    "subtitle_lh": 0,
+    "subtitle_min_h": 0,
+    "subtitle_pad_top": 0,
+    "subtitle_pad_x": 0,
+    "subtitle_pad_y": 0,
+    "subtitle_size": 0,
+    "title_lh": 0,
+    "title_meta_gap": 0,
+    "title_pad_bottom": 0,
+    "title_size": 0
+  },
+  "type": "pamphlet_single_sheet"
 }

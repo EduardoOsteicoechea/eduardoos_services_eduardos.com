@@ -1,103 +1,65 @@
 {
-  "type": "pamphlet_single_sheet",
-  "header": {
-    "title": "Ministrando a manera de sacerdote (1) Quiz",
-    "subtitle": "Romanos 15:14-16",
-    "author": "Eduardo Osteicoechea",
-    "series": "Romanos 15",
-    "series_chapter": "2",
-    "date": "2026 - 11 - 06"
-  },
-  "footer": {
-    "action": "",
-    "message": "",
-    "label1": "",
-    "value1": "",
-    "label2": "",
-    "value2": "",
-    "label3": "",
-    "value3": "",
-    "label4": "",
-    "value4": ""
-  },
-  "header_layout": {
-    "height": 0,
-    "body_gutter": 0,
-    "pad": 0,
-    "pad_top": 0,
-    "pad_bottom": 0,
-    "pad_x": 0,
-    "radius": 0,
-    "stroke": 0,
-    "inner_inset": 0,
-    "inner_stroke": 0,
-    "inner_radius": 0,
-    "title_size": 0,
-    "title_lh": 0,
-    "title_pad_bottom": 0,
-    "title_meta_gap": 0,
-    "divider_outer_stroke": 0,
-    "divider_gap": 0,
-    "divider_inner_stroke": 0,
-    "subtitle_size": 0,
-    "subtitle_lh": 0,
-    "subtitle_pad_x": 0,
-    "subtitle_pad_top": 0,
-    "subtitle_pad_y": 0,
-    "subtitle_min_h": 0,
-    "meta_size": 0,
-    "meta_lh": 0,
-    "meta_row_gap": 0,
-    "meta_col_gap": 0,
-    "meta_pad_top": 0
-  },
-  "footer_layout": {
-    "height": 0,
-    "width": 0,
-    "body_gutter": 0,
-    "pad": 0,
-    "pad_top": 0,
-    "pad_bottom": 0,
-    "radius": 0,
-    "stroke": 0,
-    "inner_inset": 0,
-    "inner_stroke": 0,
-    "inner_radius": 0,
-    "chrome_gap": 0,
-    "divider_outer_stroke": 0,
-    "divider_gap": 0,
-    "divider_inner_stroke": 0,
-    "action_size": 0,
-    "action_lh": 0,
-    "action_pad_x": 0,
-    "action_pad_y": 0,
-    "action_min_h": 0,
-    "message_size": 0,
-    "message_lh": 0,
-    "message_pad_x": 0,
-    "message_pad_top": 0,
-    "message_pad_bottom": 0,
-    "message_pad_y": 0,
-    "message_min_h": 0,
-    "meta_gap": 0,
-    "meta_col_gap": 0,
-    "meta_row_h": 0,
-    "meta_label1_row_h": 0,
-    "meta_label2_row_h": 0,
-    "meta_label2_pad_top": 0,
-    "meta_value_row_h": 0,
-    "meta_size": 0,
-    "meta_lh": 0,
-    "meta_pad_x": 0,
-    "meta_pad_y": 0,
-    "meta_value_pad_y": 0,
-    "cell_stroke": 0,
-    "action_message_gap": 0
-  },
   "column_1": [
     {
+      "type": "paragraph",
+      "content": "Instrucciones: en la primera parte, marca con un círculo el número de la opción correcta.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "En la segunda parte, escribe tu respuesta en las líneas.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "Al final hay espacio para notas y la clave de respuestas.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
       "type": "heading_1",
-      "content": "Parte 1: Elige una respuesta",
+      "content": "Parte 1: Selección múltiple",
       "style_indexes": [
         [
           0,
@@ -116,7 +78,7 @@
     },
     {
       "type": "quiz",
-      "content": "1) ¿Qué frase de Romanos 15:16 enfoca este estudio?",
+      "content": "1) ¿Qué frase de Romanos 15:16 se enfoca en este estudio?",
       "style_indexes": [
         [
           0,
@@ -133,15 +95,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Capaces de amonestarse los unos a los otros",
-        "Les he escrito con atrevimiento",
-        "Ministrando a manera de sacerdote",
-        "Llenos de bondad"
+        "«Llenos de todo conocimiento»",
+        "«Capaces de amonestarse»",
+        "«Ministrando a manera de sacerdote»",
+        "«Les he escrito con atrevimiento»"
       ]
     },
     {
       "type": "quiz",
-      "content": "2) ¿Con qué relaciona Pablo ese ministrar como sacerdote?",
+      "content": "2) ¿Con qué gracia relaciona Pablo su ministerio sacerdotal?",
       "style_indexes": [
         [
           0,
@@ -158,15 +120,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Con la gracia de ser hecho apóstol a los gentiles",
-        "Con el oficio de sumo sacerdote",
-        "Con un sacerdocio que solo él tenía en todo sentido",
-        "Con el deber de ofrecer holocaustos de animales"
+        "La de ser hijo de la tribu de Leví",
+        "La de ser ministro de Cristo a los gentiles",
+        "La de haber servido en el templo",
+        "La de ser anciano en Jerusalén"
       ]
     },
     {
       "type": "quiz",
-      "content": "3) Antes del oficio particular de Pablo, ¿qué aclara el artículo?",
+      "content": "3) ¿Con qué compara Pablo su trabajo apostólico?",
       "style_indexes": [
         [
           0,
@@ -183,17 +145,42 @@
       ],
       "height_mm": 0,
       "options": [
-        "Que los creyentes no se presentan como ofrenda",
-        "Que el rol sacerdotal es solo de Pablo",
-        "Que, en un sentido, todos los creyentes somos sacerdotes y también ofrenda",
-        "Que ningún creyente es sacerdote"
+        "Con el trabajo de un rey",
+        "Con el trabajo de un pastor de ovejas",
+        "Con el trabajo de un soldado",
+        "Con el trabajo de un sacerdote"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "4) ¿Qué es lo primero que aclara el estudio?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Que solo Pablo era sacerdote",
+        "Que el sacerdocio terminó con Israel",
+        "Que solo los ancianos son sacerdotes",
+        "Que en un sentido todos los creyentes son sacerdotes"
       ]
     }
   ],
   "column_2": [
     {
       "type": "quiz",
-      "content": "4) ¿Qué dice Primera de Pedro 2:9 de los que reciben la carta?",
+      "content": "5) Además de sacerdotes, ¿qué son también los creyentes?",
       "style_indexes": [
         [
           0,
@@ -210,15 +197,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Que son linaje escogido, real sacerdocio, nación santa y pueblo adquirido",
-        "Que solo los apóstoles son real sacerdocio",
-        "Que dejan de ser ofrenda",
-        "Que son el único mediador entre Dios y los hombres"
+        "Ofrenda",
+        "Profetas",
+        "Jueces",
+        "Levitas"
       ]
     },
     {
       "type": "quiz",
-      "content": "5) ¿Por qué el creyente es a la vez sacerdote, entorno y ofrenda?",
+      "content": "6) ¿Qué pasaje llama a los creyentes «real sacerdocio»?",
       "style_indexes": [
         [
           0,
@@ -235,15 +222,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Porque solo una de ellas es verdadera",
-        "Porque el Antiguo Testamento ya no enseña nada",
-        "Porque Dios explica por partes una realidad que vivimos al mismo tiempo",
-        "Porque esas figuras se contradicen"
+        "Romanos 8:28",
+        "1 Pedro 2:9",
+        "Juan 3:16",
+        "Gálatas 5:22"
       ]
     },
     {
       "type": "quiz",
-      "content": "6) ¿Con qué compara Primera de Pedro 2:5 a los creyentes?",
+      "content": "7) Según el estudio, ¿qué tres roles tiene a la vez el creyente?",
       "style_indexes": [
         [
           0,
@@ -260,17 +247,92 @@
       ],
       "height_mm": 0,
       "options": [
-        "Con piedras vivas, edificadas como casa espiritual",
-        "Con el sumo sacerdote de Israel",
-        "Con la tribu de Leví en exclusiva",
-        "Con quienes escriben nueva revelación"
+        "Sacerdote, entorno donde se trabaja y ofrenda",
+        "Rey, profeta y juez",
+        "Levita, sacerdote y sumo sacerdote",
+        "Siervo, mayordomo y heredero"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "8) ¿Para qué usa el Nuevo Testamento las figuras del Antiguo?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Para restaurar el culto del templo",
+        "Para mostrar que se contradicen",
+        "Para separar a judíos y gentiles",
+        "Para explicarnos por partes una realidad compleja"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "9) ¿Con qué figura se compara a los creyentes en 1 Pedro 2:5?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Con piedras vivas",
+        "Con ramas de un olivo",
+        "Con ovejas de un rebaño",
+        "Con soldados de un ejército"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "10) ¿Qué son juntos los creyentes, según 1 Pedro 2:5?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Una casa espiritual",
+        "Un ejército santo",
+        "Un concilio de ancianos",
+        "Una tribu de levitas"
       ]
     }
   ],
   "column_3": [
     {
       "type": "quiz",
-      "content": "7) ¿Para qué es ese sacerdocio santo?",
+      "content": "11) ¿Por medio de quién ofrecemos sacrificios espirituales?",
       "style_indexes": [
         [
           0,
@@ -287,15 +349,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Para reemplazar a Cristo como mediador",
-        "Para vivir del altar como los apóstoles",
-        "Para ofrecer sacrificios espirituales aceptables a Dios por medio de Jesucristo",
-        "Para ofrecer holocaustos por el pecado del pueblo"
+        "Por medio de los apóstoles",
+        "Por medio de los ancianos",
+        "Por medio de Jesucristo",
+        "Por medio de los levitas"
       ]
     },
     {
       "type": "quiz",
-      "content": "8) En esa ofrenda, ¿quién es el intermediario y el sumo sacerdote?",
+      "content": "12) ¿Por qué presentamos las ofrendas por medio de Cristo?",
       "style_indexes": [
         [
           0,
@@ -312,15 +374,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Jesucristo",
-        "Pablo",
-        "Cada creyente por igual",
-        "El sacerdote de la tribu de Leví"
+        "Porque los apóstoles lo ordenaron",
+        "Porque limpió nuestros pecados y nos dio acceso al Padre",
+        "Porque el templo ya no existe",
+        "Porque así lo hacían los levitas"
       ]
     },
     {
       "type": "quiz",
-      "content": "9) ¿Qué pide Romanos 12:1?",
+      "content": "13) ¿Qué nos ruega Pablo en Romanos 12:1?",
       "style_indexes": [
         [
           0,
@@ -337,15 +399,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Vivir del evangelio como derecho de todo creyente",
-        "Hacer la expiación una vez al año",
-        "Presentar los cuerpos como sacrificio vivo y santo, aceptable a Dios",
-        "Presentar animales sobre el altar"
+        "Ofrecer holocaustos en el templo",
+        "Presentar el cuerpo como sacrificio vivo",
+        "Dar el diezmo a los apóstoles",
+        "Ayunar cuarenta días"
       ]
     },
     {
       "type": "quiz",
-      "content": "10) ¿Qué era el Antiguo Testamento, según el artículo?",
+      "content": "14) ¿Qué debemos considerar al presentarnos a Dios, según Romanos 12:1?",
       "style_indexes": [
         [
           0,
@@ -362,15 +424,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Un conjunto de sombras, una manera difusa de ver lo que estaba detrás",
-        "La revelación que ya no necesita a Cristo",
-        "Una contradicción del evangelio",
-        "El sacerdocio que ejercían todos los gentiles"
+        "Sus misericordias en el evangelio",
+        "Nuestros méritos personales",
+        "La opinión de la iglesia",
+        "La ley de Moisés"
       ]
     },
     {
       "type": "quiz",
-      "content": "11) ¿Qué estaba detrás de esas sombras?",
+      "content": "15) ¿Cómo presentamos nuestro cuerpo y manera de vivir?",
       "style_indexes": [
         [
           0,
@@ -387,17 +449,67 @@
       ],
       "height_mm": 0,
       "options": [
-        "Que Pablo ocuparía el lugar del sumo sacerdote",
-        "Que la iglesia dejaría de ser morada del Espíritu",
-        "Que Cristo moriría por nuestros pecados, nos reconciliaría con Dios y nos acercaría a él",
-        "Que cada creyente sería el único mediador"
+        "Como pago por nuestros pecados",
+        "Como una ofrenda de gratitud a Dios",
+        "Como requisito para ser salvos",
+        "Como servicio al sumo sacerdote"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "16) Según la Escritura, ¿qué era el Antiguo Testamento?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Un conjunto de sombras",
+        "Una ley ya sin valor",
+        "Un relato solo histórico",
+        "Una revelación completa"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "17) ¿Qué estaba realmente detrás de esas sombras?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Que Cristo moriría y nos acercaría a Dios",
+        "Que Israel gobernaría el mundo",
+        "Que el templo duraría para siempre",
+        "Que la ley salvaría a los gentiles"
       ]
     }
   ],
   "column_4": [
     {
       "type": "quiz",
-      "content": "12) ¿Hasta dónde llega el rol sacerdotal de todos los creyentes?",
+      "content": "18) Juntos, como iglesia, ¿qué somos en la tierra?",
       "style_indexes": [
         [
           0,
@@ -414,15 +526,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Hasta llevar la verdad, interceder y traer al mundo a la iglesia",
-        "Hasta escribir la revelación que Cristo no escribió",
-        "Hasta ser el único mediador",
-        "Hasta el derecho de vivir del altar"
+        "El nuevo sumo sacerdote",
+        "La tribu de Leví",
+        "La morada del Espíritu",
+        "El altar de los holocaustos"
       ]
     },
     {
       "type": "quiz",
-      "content": "13) ¿Qué había en los sacerdotes de Israel que no es de todo el pueblo?",
+      "content": "19) ¿Qué incluye nuestro rol sacerdotal hacia el mundo?",
       "style_indexes": [
         [
           0,
@@ -439,65 +551,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Todo levita era sacerdote",
-        "El pueblo entero hacía la expiación anual",
-        "Eran una porción pequeña, de mayor responsabilidad y de un alcance mucho mayor",
-        "Todo israelita era sacerdote"
+        "Perdonar pecados en nombre de Cristo",
+        "Hacer la expiación anual",
+        "Escribir nuevas Escrituras",
+        "Llevar la verdad, interceder y traerlo a la iglesia"
       ]
     },
     {
       "type": "quiz",
-      "content": "14) ¿Cómo describe el artículo a la tribu sacerdotal?",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0,
-      "options": [
-        "Era una de doce tribus, la de Leví, y no todo levita era sacerdote",
-        "Era la tribu de Judá, y todo judío era sacerdote",
-        "Abarcaba a las doce tribus por igual",
-        "Coincidía con todo el pueblo de Israel"
-      ]
-    },
-    {
-      "type": "quiz",
-      "content": "15) ¿Qué hacía el sumo sacerdote de Israel?",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0,
-      "options": [
-        "El apostolado de Pablo",
-        "La ofrenda del cuerpo que pide Romanos 12",
-        "La expiación más importante una vez al año, y tenía un rol único",
-        "El mismo trabajo que todo israelita"
-      ]
-    },
-    {
-      "type": "quiz",
-      "content": "16) ¿Quién es el único sumo sacerdote que limpia nuestros pecados?",
+      "content": "20) ¿Quién es el único mediador entre Dios y los hombres?",
       "style_indexes": [
         [
           0,
@@ -516,15 +578,115 @@
       "options": [
         "Cristo",
         "Pablo",
-        "Pedro",
-        "El apóstol apartado para una vasta región"
+        "La iglesia",
+        "Los apóstoles"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "21) ¿Qué tenía el sacerdote que no se aplica a todos los creyentes?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Era una porción pequeña del pueblo de Dios",
+        "Vestía ropas especiales",
+        "Vivía en Jerusalén",
+        "Hablaba en lenguas"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "22) ¿De qué tribu de Israel salían los sacerdotes?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "De Judá",
+        "De Benjamín",
+        "De Efraín",
+        "De Leví"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "23) ¿Qué hacía el sumo sacerdote una vez al año?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "La coronación del rey",
+        "La expiación más importante",
+        "El censo del pueblo",
+        "La lectura de toda la ley"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "24) ¿Cómo describe el estudio el llamado de los apóstoles?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Escaso, de mayor responsabilidad y mayor alcance",
+        "Común a todos los creyentes",
+        "Temporal y sin autoridad",
+        "Limitado a una iglesia local"
       ]
     }
   ],
   "column_5": [
     {
       "type": "quiz",
-      "content": "17) ¿Qué le ha placido a Dios aunque no nos necesita?",
+      "content": "25) ¿Qué pasaje usa Pablo para hablar de su derecho de vivir del evangelio?",
       "style_indexes": [
         [
           0,
@@ -541,15 +703,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Hacer que cada creyente escriba Escritura",
-        "Dejar sin sustento a quienes proclamaban el evangelio",
-        "Usar hombres para traernos la revelación que Cristo dio por el Espíritu",
-        "Prescindir de toda revelación"
+        "Gálatas 1",
+        "1 Corintios 9",
+        "Filipenses 4",
+        "2 Timoteo 3"
       ]
     },
     {
       "type": "quiz",
-      "content": "18) ¿Qué ordenó el Señor, según Primera de Corintios 9:13-15?",
+      "content": "26) ¿Con quiénes compara Pablo a los que proclaman el evangelio en 1 Corintios 9?",
       "style_indexes": [
         [
           0,
@@ -566,15 +728,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "Que los que proclaman el evangelio vivan del evangelio",
-        "Que Pablo exigiera ese derecho para sí",
-        "Que ningún proclamador reciba sustento",
-        "Que todo creyente coma de la comida del templo"
+        "Con los soldados del rey",
+        "Con los labradores del campo",
+        "Con los que sirven al altar",
+        "Con los jueces de Israel"
       ]
     },
     {
       "type": "quiz",
-      "content": "19) ¿A quiénes compara el artículo con sacerdotes apartados para una tarea especial?",
+      "content": "27) Según el estudio, ¿qué le agrada a Dios tener en su pueblo?",
       "style_indexes": [
         [
           0,
@@ -591,15 +753,15 @@
       ],
       "height_mm": 0,
       "options": [
-        "A los ministros de tiempo completo de hoy",
-        "A las plantaciones de iglesias",
-        "A Pablo, Pedro y Juan, apóstoles de Cristo que ya no existen hoy",
-        "A todos los creyentes por igual"
+        "Independencia",
+        "Protagonismo",
+        "Autoridad",
+        "Novedad"
       ]
     },
     {
       "type": "quiz",
-      "content": "20) ¿Qué añade la frase al decir que Pablo ministra como sacerdote?",
+      "content": "28) ¿Qué demuestra que nos moleste la autoridad apostólica?",
       "style_indexes": [
         [
           0,
@@ -616,10 +778,35 @@
       ],
       "height_mm": 0,
       "options": [
-        "Un llamado escaso y apartado, de gran alcance, para traer la revelación y para que la ofrenda de los gentiles sea aceptable",
-        "Que Pablo es el sumo sacerdote",
-        "Que los demás creyentes no son sacerdotes en ningún sentido",
-        "Que la ofrenda de los gentiles no necesita al Espíritu Santo"
+        "Una fe madura",
+        "Una autonomía pecaminosa",
+        "Un celo santo",
+        "Una conciencia sensible"
+      ]
+    },
+    {
+      "type": "quiz",
+      "content": "29) ¿Por medio de qué nos llega hoy la autoridad de los apóstoles?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0,
+      "options": [
+        "Por medio de la Biblia",
+        "Por medio de un concilio",
+        "Por medio de nuevos apóstoles",
+        "Por medio de revelaciones privadas"
       ]
     },
     {
@@ -643,7 +830,121 @@
     },
     {
       "type": "paragraph",
-      "content": "21) ¿En qué sentido todos los creyentes somos sacerdotes y también ofrenda?",
+      "content": "30) Explica con tus palabras qué significa que Pablo ministrara el evangelio «a manera de sacerdote».",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -664,7 +965,7 @@
   "column_6": [
     {
       "type": "paragraph",
-      "content": "22) ¿Por qué Dios usa varias figuras del Antiguo Testamento para hablar de la iglesia?",
+      "content": "31) ¿En qué sentido todos los creyentes somos sacerdotes, templo y ofrenda al mismo tiempo?",
       "style_indexes": [
         [
           0,
@@ -683,7 +984,7 @@
     },
     {
       "type": "paragraph",
-      "content": "23) Explica la imagen de las piedras vivas y de la casa espiritual.",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -702,7 +1003,7 @@
     },
     {
       "type": "paragraph",
-      "content": "24) ¿Qué relación hay entre Romanos 12:1 y esa ofrenda de gratitud?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -721,7 +1022,7 @@
     },
     {
       "type": "paragraph",
-      "content": "25) ¿Por qué el artículo dice que esas figuras no se contradicen?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -740,7 +1041,7 @@
     },
     {
       "type": "paragraph",
-      "content": "26) ¿En qué se diferencia nuestro rol de intermediarios del de Cristo, el único mediador?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -759,7 +1060,7 @@
     },
     {
       "type": "paragraph",
-      "content": "27) ¿Qué del sacerdocio de Israel no pertenece a todo el pueblo y sí se aplica a Pablo?",
+      "content": "32) ¿Por qué estas figuras del Antiguo Testamento no se contradicen entre sí?",
       "style_indexes": [
         [
           0,
@@ -778,7 +1079,7 @@
     },
     {
       "type": "paragraph",
-      "content": "28) ¿Por qué el artículo niega que los apóstoles sean el sumo sacerdote?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -797,7 +1098,7 @@
     },
     {
       "type": "paragraph",
-      "content": "29) ¿Qué enseña Primera de Corintios 9:13-15 sobre una proclamación distinta a la de los demás creyentes?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -816,7 +1117,7 @@
     },
     {
       "type": "paragraph",
-      "content": "30) ¿En qué se diferencia el sacerdocio de Pablo del sacerdocio de todos los creyentes?",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -833,6 +1134,732 @@
       ],
       "height_mm": 0
     },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "33) ¿Qué significa presentar tu cuerpo como sacrificio vivo según Romanos 12:1?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "34) ¿Hasta dónde llega nuestro rol sacerdotal y dónde empieza el de Cristo como único mediador?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "35) ¿Qué diferencia hay entre el sacerdocio de Pablo y el sacerdocio de todos los creyentes?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    }
+  ],
+  "column_7": [
+    {
+      "type": "paragraph",
+      "content": "36) ¿Por qué crees que a Dios le ha placido usar hombres para hacer su obra, aunque no nos necesita?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "37) Describe una situación en la que te cueste sujetar una creencia propia a la enseñanza apostólica.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "38) ¿Qué significa que, para nosotros, los apóstoles son la Biblia?",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "39) Escribe una oración pidiendo un corazón manso y obediente ante la autoridad de la Escritura.",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    }
+  ],
+  "column_8": [
     {
       "type": "heading_1",
       "content": "Notas",
@@ -854,7 +1881,349 @@
     },
     {
       "type": "paragraph",
-      "content": "Escribe aquí.",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
+      "style_indexes": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "height_mm": 0
+    },
+    {
+      "type": "paragraph",
+      "content": "____________________________________",
       "style_indexes": [
         [
           0,
@@ -892,64 +2261,7 @@
     },
     {
       "type": "paragraph",
-      "content": "1) 3 · 2) 1 · 3) 3 · 4) 1 · 5) 3",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "6) 1 · 7) 3 · 8) 1 · 9) 3 · 10) 1",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "11) 3 · 12) 1 · 13) 3 · 14) 1 · 15) 3",
-      "style_indexes": [
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ],
-        [
-          0,
-          0
-        ]
-      ],
-      "height_mm": 0
-    },
-    {
-      "type": "paragraph",
-      "content": "16) 1 · 17) 3 · 18) 1 · 19) 3 · 20) 1",
+      "content": "Pregunta) opción correcta: 1) 3 · 2) 2 · 3) 4 · 4) 4 · 5) 1 · 6) 2 · 7) 1 · 8) 4 · 9) 1 · 10) 1 · 11) 3 · 12) 2 · 13) 2 · 14) 1 · 15) 2 · 16) 1 · 17) 1 · 18) 3 · 19) 4 · 20) 1 · 21) 1 · 22) 4 · 23) 2 · 24) 1 · 25) 2 · 26) 3 · 27) 3 · 28) 2 · 29) 1",
       "style_indexes": [
         [
           0,
@@ -967,6 +2279,99 @@
       "height_mm": 0
     }
   ],
-  "column_7": null,
-  "column_8": null
+  "footer": {
+    "action": "",
+    "label1": "",
+    "label2": "",
+    "label3": "",
+    "label4": "",
+    "message": "",
+    "value1": "",
+    "value2": "",
+    "value3": "",
+    "value4": ""
+  },
+  "footer_layout": {
+    "action_lh": 0,
+    "action_message_gap": 0,
+    "action_min_h": 0,
+    "action_pad_x": 0,
+    "action_pad_y": 0,
+    "action_size": 0,
+    "body_gutter": 0,
+    "cell_stroke": 0,
+    "chrome_gap": 0,
+    "divider_gap": 0,
+    "divider_inner_stroke": 0,
+    "divider_outer_stroke": 0,
+    "height": 0,
+    "inner_inset": 0,
+    "inner_radius": 0,
+    "inner_stroke": 0,
+    "message_lh": 0,
+    "message_min_h": 0,
+    "message_pad_bottom": 0,
+    "message_pad_top": 0,
+    "message_pad_x": 0,
+    "message_pad_y": 0,
+    "message_size": 0,
+    "meta_col_gap": 0,
+    "meta_gap": 0,
+    "meta_label1_row_h": 0,
+    "meta_label2_pad_top": 0,
+    "meta_label2_row_h": 0,
+    "meta_lh": 0,
+    "meta_pad_x": 0,
+    "meta_pad_y": 0,
+    "meta_row_h": 0,
+    "meta_size": 0,
+    "meta_value_pad_y": 0,
+    "meta_value_row_h": 0,
+    "pad": 0,
+    "pad_bottom": 0,
+    "pad_top": 0,
+    "radius": 0,
+    "stroke": 0,
+    "width": 0
+  },
+  "header": {
+    "author": "Eduardo Osteicoechea",
+    "date": "2026 - 11 - 06",
+    "series": "Romanos 15",
+    "series_chapter": "2",
+    "subtitle": "Romanos 15:14-16",
+    "title": "Ministrando a manera de sacerdote Quiz"
+  },
+  "header_layout": {
+    "body_gutter": 0,
+    "divider_gap": 0,
+    "divider_inner_stroke": 0,
+    "divider_outer_stroke": 0,
+    "height": 0,
+    "inner_inset": 0,
+    "inner_radius": 0,
+    "inner_stroke": 0,
+    "meta_col_gap": 0,
+    "meta_lh": 0,
+    "meta_pad_top": 0,
+    "meta_row_gap": 0,
+    "meta_size": 0,
+    "pad": 0,
+    "pad_bottom": 0,
+    "pad_top": 0,
+    "pad_x": 0,
+    "radius": 0,
+    "stroke": 0,
+    "subtitle_lh": 0,
+    "subtitle_min_h": 0,
+    "subtitle_pad_top": 0,
+    "subtitle_pad_x": 0,
+    "subtitle_pad_y": 0,
+    "subtitle_size": 0,
+    "title_lh": 0,
+    "title_meta_gap": 0,
+    "title_pad_bottom": 0,
+    "title_size": 0
+  },
+  "type": "pamphlet_single_sheet"
 }

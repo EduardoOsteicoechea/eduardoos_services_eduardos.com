@@ -2,108 +2,149 @@
 
 ## Romanos 15:14-16
 
-«En cuanto a ustedes, hermanos míos, yo mismo estoy también convencido de que ustedes están llenos de bondad, llenos de todo conocimiento y capaces también de amonestarse los unos a los otros. Pero les he escrito con atrevimiento sobre algunas cosas para así hacer que las recuerden otra vez, por la gracia que me fue dada por Dios para ser ministro de Cristo Jesús a los gentiles, ministrando a manera de sacerdote el evangelio de Dios, a fin de que la ofrenda que hago de los gentiles sea aceptable, santificada por el Espíritu Santo.»
+Romanos 15:14-16 dice lo siguiente: «En cuanto a ustedes, hermanos míos, yo mismo estoy también convencido de que ustedes están llenos de bondad, llenos de todo conocimiento y capaces también de amonestarse los unos a los otros. Pero les he escrito con atrevimiento sobre algunas cosas para así hacer que las recuerden otra vez, por la gracia que me fue dada por Dios para ser ministro de Cristo Jesús a los gentiles, ministrando a manera de sacerdote el evangelio de Dios, a fin de que la ofrenda que hago de los gentiles sea aceptable, santificada por el Espíritu Santo».
 
 En esta ocasión quisiera que reflexionáramos sobre la frase «ministrando a manera de sacerdote el evangelio de Dios».
 
-En un video anterior vimos el carácter sacerdotal del ministerio a los gentiles, y hoy vemos el contenido, porque el apóstol Pablo ministra el evangelio de Dios.
+Pablo describe su ministerio a los gentiles como sacerdotal, y ya reflexionamos sobre ese carácter en un estudio anterior.
 
-Su trabajo como ministro de Cristo Jesús es ministrar el evangelio, y esto, que parece evidente, cambia cómo vemos y organizamos el ministerio en la iglesia.
+Hoy quisiera que viéramos el contenido de ese ministerio, es decir, la verdad que Pablo ministra.
 
-¿Por qué esto es importante? Porque los apóstoles recibieron indicaciones directas de Dios sobre cómo hacer el ministerio y sobre el contenido del mensaje, y Pablo resume ese contenido como el evangelio.
+Y aquí dice que él ministra el evangelio de Dios.
 
-¿Qué enseñaba, qué comunicaba y qué procuraba promover? El evangelio, centro y contenido de su ministerio, y de ahí sale la enseñanza para el trabajo en la iglesia de Cristo.
+## Un ministro del evangelio
 
-## El marco de todo el trabajo
+Su trabajo como ministro de Cristo Jesús es ministrar el evangelio.
 
-¿Haremos solamente enseñanzas evangelísticas, y hablaremos solo del mensaje de salvación en las clases de niños, en las clases de jóvenes, en las canciones, en las predicaciones, en el discipulado, en las reuniones en casa y en las discusiones públicas?
+Esto parece evidente en primera instancia, pero tiene implicaciones para la forma en que vemos el ministerio en la iglesia y para la forma en que lo organizamos.
 
-Dios designó a este hombre para enseñarnos el ministerio y la enseñanza de Cristo, y él dice que ministraba el evangelio, de modo que su patrón, su ejemplo y su filosofía ministerial son los nuestros.
+¿Por qué esto es importante? Porque, como hemos dicho en ocasiones anteriores, los apóstoles recibieron indicaciones directas de parte de Dios sobre cómo hacer el ministerio.
 
-Si el ministerio se enfoca en el evangelio, ningún tema sale de sus objetivos y de sus prioridades, ni con los niños, ni con los adultos, ni con los jóvenes, ni con los ancianos, ni en la casa, ni en el discipulado.
+No recibieron solo la manera de hacer el ministerio, sino también lo que debían ministrar, el contenido del mensaje, la información que debían compartir.
 
-¿Acaso todo lo que hacemos debe estar centrado en el evangelio? En mi opinión, la respuesta es sí, absolutamente todo lo que se hace en la iglesia y en cada grupo.
+Y aquí Pablo resume ese contenido como el evangelio.
 
-Al igual que Pablo, somos ministros del evangelio, buscamos sus objetivos y ponemos toda enseñanza dentro de ese marco.
+¿Qué enseñaba? ¿Qué comunicaba? ¿Qué procuraba promover? El evangelio.
 
-Para demostrarlo, vemos cómo le dice a Timoteo, el líder más cercano, que use la Biblia completa, es decir, que se mantenga en el evangelio.
+El evangelio era el centro de su ministerio, el evangelio era el contenido de su ministerio.
+## ¿Solamente enseñanza evangelística?
 
+Podemos preguntarnos, en principio, si esto implica que en todas las actividades de la iglesia haremos solamente enseñanzas evangelísticas.
+
+¿Acaso hablaremos solamente del mensaje de salvación en las clases de niños, en las clases de jóvenes, en las canciones, en las predicaciones, en el discipulado, en las reuniones en casa y en las discusiones públicas?
+
+La pregunta surge porque este hombre, a quien Dios designó para enseñarnos cómo hacer el ministerio y para transmitirnos la enseñanza de Cristo, dice que él ministraba el evangelio.
+
+Si seguimos su patrón, su ejemplo, su manera de pensar el ministerio, su filosofía ministerial, entonces también nosotros debemos enfocarnos en ministrar el evangelio.
+
+Si es cierto que el ministerio debe enfocarse en el evangelio de Cristo, eso cambia la manera en que hablamos de prácticamente cualquier cosa.
+
+No hablaremos de ningún tema sin conectarlo con el evangelio, ni a los niños, ni a los jóvenes, ni a los adultos, ni a los ancianos, ni en las reuniones en casa, ni en los grupos de discipulado.
+
+No dejaremos que ningún tema salga del marco de los objetivos y de las prioridades del evangelio.
+
+## Todo enmarcado en el evangelio
+
+Por eso es tan clave, tan importante y tan crítico que evaluemos esta pregunta.
+
+¿Acaso todo lo que hacemos debe estar enmarcado, centrado o enfocado en el evangelio? En mi opinión, la respuesta es sí, absolutamente todo.
+
+Todo lo que se hace en la iglesia, y todo lo que se hace en cada grupo de la iglesia, debe estar enmarcado y centrado en el evangelio.
+
+Al igual que el apóstol Pablo, nosotros debemos ser ministros del evangelio.
+
+Al igual que el apóstol Pablo, debemos buscar los objetivos del evangelio y transmitir toda enseñanza dentro del marco de referencia del evangelio de Cristo.
+
+Para demostrar que la frase «ministrando a manera de sacerdote el evangelio de Dios» implica eso, veamos cómo Pablo le dice a su líder más cercano que use la Biblia completa.
 ## Segunda de Timoteo 3
 
-«Pero los hombres malos e impostores irán de mal en peor, engañando y siendo engañados. Tú, sin embargo, persiste en las cosas que has aprendido y de las cuales te convenciste, sabiendo de quién las has aprendido, y que desde la niñez has sabido las Sagradas Escrituras, las cuales te pueden dar la sabiduría que lleva a la salvación mediante la fe en Cristo Jesús. Toda Escritura es inspirada por Dios y útil para enseñar, para reprender, para corregir, para instruir en justicia, a fin de que el hombre de Dios sea perfecto, equipado para toda buena obra.»
+Segunda de Timoteo 3:13-17 dice lo siguiente: «Pero los hombres malos e impostores irán de mal en peor, engañando y siendo engañados. Tú, sin embargo, persiste en las cosas que has aprendido y de las cuales te convenciste, sabiendo de quiénes las has aprendido, y que desde la niñez has sabido las Sagradas Escrituras, las cuales te pueden dar la sabiduría que lleva a la salvación mediante la fe en Cristo Jesús. Toda Escritura es inspirada por Dios y útil para enseñar, para reprender, para corregir, para instruir en justicia, a fin de que el hombre de Dios sea perfecto, equipado para toda buena obra».
 
-Timoteo conoce las Escrituras desde la niñez, y en ese tiempo esa Escritura era el Antiguo Testamento.
+Aquí Pablo le dice a Timoteo que conoce las Escrituras desde la niñez.
 
-La manera de no caer en el camino de los impostores y engañadores es enfocarse en esas Escrituras, porque dan la sabiduría que lleva a la salvación mediante la fe en Cristo Jesús.
+En aquel tiempo, la Escritura que Timoteo tenía era el Antiguo Testamento.
 
-Apegarse al Antiguo Testamento da un entendimiento útil, práctico y eficaz para ser salvo por la fe en Cristo, y enseña a confiar en él.
+Es como si Pablo le dijera: «No caerás en el camino de los impostores y engañadores si te enfocas en el Antiguo Testamento al que tienes acceso, porque te puede dar la sabiduría que lleva a la salvación».
 
-Esto es inspirado por el Espíritu Santo, es decir, el Espíritu pone en la mente de Pablo el decirle a Timoteo que conocer el Antiguo Testamento es aprender a confiar en Cristo.
+En esencia, Pablo dice: «Apegarte al Antiguo Testamento te da un entendimiento útil, práctico y eficaz para comprender cómo ser salvo por la fe en Cristo».
 
-Entendido como el Espíritu quiere, el Antiguo Testamento nos ayuda a confiar en Cristo, y enseñar la Biblia nos lleva a creer el evangelio, a conocerlo y a consolidar la vida en sus principios, en sus objetivos y en su marco.
+Y esto es inspirado por el Espíritu Santo.
 
-Toda la Biblia puede llevarnos a esa fe y, por lo tanto, ministrar la Biblia es ministrar el evangelio, y así nos vemos, igual que Pablo, como ministros del evangelio.
+Es decir, el Espíritu Santo pone en la mente de Pablo decirle a Timoteo: «Cuando conoces el Antiguo Testamento, aprendes a confiar en Cristo».
 
-## No solo el sermón evangelístico
+## Ministrar la Biblia es ministrar el evangelio
 
-Esto no significa que lo único que enseñamos son sermones evangelísticos, sino que toda la revelación de Dios nos lleva a un punto común.
+Cuando el Antiguo Testamento se entiende correctamente, como el Espíritu Santo quiere que lo entendamos, nos ayuda a confiar en Cristo.
 
-Ese punto es la salvación del juicio de Dios por medio de Cristo, y la devoción correcta a Dios a través de Cristo, conforme a su obra, por el Espíritu, según el plan del Padre y en el reino que Dios inauguró por medio de él.
+Entonces podemos entender que enseñar la Biblia nos lleva a confiar en Cristo, a creer el evangelio y a conocer el evangelio.
 
-Estudiar la Biblia como lo enseñaron los apóstoles nos lleva a vivir el evangelio.
+Nos lleva a consolidar nuestra vida en los principios, en los objetivos, en las enseñanzas y en el marco de referencia del evangelio.
 
-Esto disipa la duda que a mí me quedaba la primera vez que escuché que el ministerio debía permanecer dentro del marco del evangelio.
+Toda la Biblia puede llevarnos a confiar en Cristo y, por lo tanto, ministrar la Biblia es, en última instancia, ministrar el evangelio.
 
-Administramos el evangelio, como dice Segunda de Timoteo 3:16, para enseñar, reprender, corregir, instruir en justicia y preparar al hombre de Dios para toda buena obra.
+Por eso podemos vernos, igual que Pablo, como ministros del evangelio.
 
-Cada faceta del evangelio en toda la Biblia sirve para que el hombre confíe en Cristo, entienda su vida en relación con él, lo ame, procure imitarlo y procure servirle, y quede corregido, instruido y lleno de sabiduría.
+No significa que lo único que enseñamos son sermones evangelísticos.
 
-El evangelio es tan extenso como la Biblia completa y es el marco con el cual la vemos, de modo que el Antiguo Testamento ayuda a ser salvos por la fe en Cristo Jesús y la verdad evangélica se aplica en cada punto de la Escritura.
+Lo que sí significa es que toda la revelación de Dios, todo lo que Dios nos quiere dar, todo lo que Dios nos enseña, nos lleva a una realidad común.
 
-## Lo que el amor exige
+Esa realidad común es la salvación del juicio de Dios por medio de Cristo.
 
-Antes de los ejemplos prácticos vemos el corazón de la espiritualidad, porque no hay buen ministerio si el ministro no está centrado en el evangelio.
+Es también la devoción correcta a Dios a través de Cristo, gracias a la obra del Espíritu, al plan del Padre y al reino que Dios inauguró por medio de Cristo.
+## Útil para toda buena obra
 
-Cito dos pasajes que están en el centro de lo importante, que cuestan seguir, que aprovechan mucho y que quitan vanidades de la forma en que ministramos.
+Quisiera que reflexionáramos un poco más en la práctica de esto y en la importancia que tiene para una verdadera espiritualidad.
 
-«Si yo hablara en lenguas humanas y angélicas, pero no tengo amor, he llegado a ser como metal que resuena o címbalo que retiñe. Y si tuviera el don de profecía y entendiera todos los misterios y todo el conocimiento, y si tuviera toda la fe como para trasladar montañas, pero no tengo amor, nada soy. Y si diera todos mis bienes para dar de comer a los pobres, y si entregara mi cuerpo para ser quemado, pero no tengo amor, de nada me aprovecha.»
+Esto puede disipar algunas dudas, como las que a mí me quedaban la primera vez que escuché que el ministerio debía estar enfocado en el evangelio y no salirse de ese marco.
 
-Ninguna obra del cristianismo es válida si carece de amor, y Dios solamente acepta lo que hacemos por amor.
+Como dice Segunda de Timoteo 3:16, administramos el evangelio para enseñar, reprender, corregir, instruir en justicia y preparar al hombre de Dios para toda buena obra.
 
-Ese amor es amor a Dios y amor al prójimo, y si no motiva lo que hacemos, lo que hacemos es inválido.
+No hacemos solamente sermones evangelísticos, sino que usamos cada faceta del evangelio que se expresa en toda la Biblia.
 
-Solamente hacemos las cosas por amor, agradecidos a Dios y con deseo de servirle, y por amor al prójimo, porque esa es la regla más básica de toda la revelación.
+Lo hacemos para que todo hombre confíe en Cristo, entienda su vida en relación con Cristo, ame a Cristo, busque imitar a Cristo y busque servir a Cristo.
 
-Como dijo el Señor Jesucristo, el primer mandamiento es amarás a Dios sobre todas las cosas, y el segundo es amarás a tu prójimo como a ti mismo, pues el amor es la motivación fundamental del cristianismo.
+Lo hacemos para que esté enteramente preparado para toda buena obra, y para que sea corregido, instruido, dirigido y orientado.
 
-## El primer amor
+Lo hacemos para que esté lleno de sabiduría por todas las facetas del evangelio y por todas sus implicaciones en su vida.
 
-Apocalipsis 2 muestra por qué todo el ministerio se une al evangelio y al amor que el evangelio produce.
+El evangelio es tan extenso y tan amplio como la Biblia completa.
 
-«Escribe al ángel de la iglesia en Éfeso: El que tiene las siete estrellas en su mano derecha, aquel que anda entre los siete candelabros de oro, dice esto: Yo conozco tus obras, tu fatiga y tu perseverancia, y que no puedes soportar a los malos, y has sometido a prueba a los que se dicen ser apóstoles y no lo son, y los has hallado mentirosos. Tienes perseverancia y has sufrido por mi nombre y no has desmayado. Pero tengo esto contra ti: que has dejado tu primer amor. Recuerda, por tanto, de dónde has caído, y arrepiéntete y haz las obras que hiciste al principio. Si no, vendré a ti y quitaré tu candelabro de su lugar, si no te arrepientes.»
+Y el evangelio es el marco a través del cual debemos ver la Biblia.
 
-El Señor aplaudía la fatiga, la perseverancia y el discernimiento de Éfeso, y al leer el pasaje es natural pensar que era una iglesia ejemplar y extraordinaria.
+Todo el Antiguo Testamento nos puede hacer confiar en Cristo, y por eso lo vemos como una revelación que nos ayuda a ser salvos por medio de la fe en Cristo Jesús.
 
-Si no se arrepienten, él quitará el candelabro de su lugar, porque dejaron el primer amor, y ese amor podía opacar toda una práctica extensa de buenas obras.
+Por eso enseñamos todo, y corregimos de tal manera que la verdad evangélica se aplique a través de todos los puntos de la Escritura.
 
-Así de importante es que una iglesia ame a Cristo con profundidad y con intensidad.
+## El corazón de la espiritualidad
 
-Sin amor, nada de lo que hacemos agrada a Dios, y por eso el ministerio tiene que centrarse en el evangelio.
+Antes de ver algunos ejemplos prácticos, quisiera que viéramos el corazón de la espiritualidad.
 
-El evangelio anuncia que la muerte de Cristo por nuestros pecados y su resurrección nos reconcilian con Dios, y que él queda como sacerdote de nosotros los pecadores.
+Si vemos en la Escritura qué es lo más esencial en la espiritualidad cristiana, entendemos por qué la centralidad del evangelio es totalmente fundamental.
 
-## El amor que el evangelio enciende
+No se puede hacer un buen ministerio sin ser un ministro centrado en el evangelio.
 
-Cristo intercede en el día del juicio por los que confiamos en él, nos representa para que Dios nos vea justos, y gracias a eso somos salvos.
+Citaré dos pasajes que me gustan mucho porque están en el centro de lo importante.
 
-Cuando enmarcamos la vida en esa realidad, el amor por Cristo crece, pensamos más en él, recordamos lo que merece y recordamos que debemos servirle.
+Son muy difíciles de seguir, son muy provechosos y quitan muchísimas vanidades de la forma en que ministramos.
 
-Si no lo amamos, las obras que hacemos por él no nos son válidas.
+## Primera de Corintios 13
 
-Si perdemos de vista su obra y su dignidad de ser servido, lo que hagamos, tal vez sin amor, no se nos tiene por válido.
+Primera de Corintios 13:1-3 dice: «Si yo hablara en lenguas humanas y angélicas, pero no tengo amor, he llegado a ser como metal que resuena o címbalo que retiñe. Y si tuviera el don de profecía, y entendiera todos los misterios y todo el conocimiento, y si tuviera toda la fe como para trasladar montañas, pero no tengo amor, nada soy. Y si diera todos mis bienes para dar de comer a los pobres, y si entregara mi cuerpo para ser quemado, pero no tengo amor, de nada me aprovecha».
 
-Cristo quiere que guardemos el primer amor, y lo que no se hace por amor no se nos considera.
+Este pasaje dice que ninguna de las obras que se pueden hacer en el cristianismo es válida si carece de amor.
 
-Cumplimos ese primer mandamiento por la centralidad del evangelio, al confiar en Cristo, al amarlo, al seguirlo y al ver toda la Escritura para relacionarnos mejor con él.
+Es decir, Dios solamente aprueba, Dios solamente acepta, las obras que hacemos por amor.
 
-Por eso el ministerio es un ministerio del evangelio, y todo lo que hacemos en la iglesia tiene que promover el amor por Cristo, porque si ese amor no existe, nada se nos considera como una buena devoción a Dios.
+Cuando continuamos leyendo la Escritura, vemos que ese amor es amor a Dios y amor al prójimo.
+
+Si el amor no motiva lo que hacemos, entonces lo que hacemos es inválido.
+
+Solamente debemos hacer las cosas para agradar a Dios, agradecidos con él y queriendo servirle por el amor que le tenemos.
+
+Y solamente debemos hacer las cosas por el amor que tenemos al prójimo.
+
+Esa es la regla más básica de toda la revelación de Dios.
+
+Como dijo el Señor Jesucristo, el primer mandamiento es amarás a Dios sobre todas las cosas, y el segundo es amarás a tu prójimo como a ti mismo.
+
+El amor es la motivación fundamental de todo lo que se hace en el cristianismo.
