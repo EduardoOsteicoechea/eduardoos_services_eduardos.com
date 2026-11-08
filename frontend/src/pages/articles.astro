@@ -38,10 +38,44 @@ import Layout from "../layouts/Layout.astro";
     border: 0;
   }
 
+  /* 0.75× density on Articles: chrome menu, title band, cards, gaps. */
+  .shell:has(.articles-page) {
+    --articles-scale: 0.75;
+  }
+
+  .shell:has(.articles-page) .app-header .header-menu.icon-btn {
+    width: calc(var(--menu-button-size) * var(--articles-scale));
+    height: calc(var(--menu-button-size) * var(--articles-scale));
+  }
+
+  .shell:has(.articles-page) .header-menu-svg {
+    width: calc(var(--menu-button-size) * 0.55 * var(--articles-scale));
+    height: calc(var(--menu-button-size) * 0.55 * var(--articles-scale));
+  }
+
+  .shell:has(.articles-page) > main > .page-title {
+    min-height: calc(
+      (var(--space-padding) + var(--menu-button-size) + var(--space-margin)) * var(--articles-scale)
+    );
+    padding-top: calc(
+      ((var(--menu-button-size) * var(--articles-scale)) - (var(--font-size-xl) * var(--articles-scale) * 1.2)) / 2
+    );
+  }
+
+  .shell:has(.articles-page) > main > .page-title h1 {
+    font-size: calc(var(--font-size-xl) * var(--articles-scale));
+  }
+
   .articles-page {
+    --articles-space: calc(var(--space-padding) * var(--articles-scale, 0.75));
+    --articles-gap: calc(var(--rail-gap) * var(--articles-scale, 0.75));
+    --articles-font-md: calc(var(--font-size-md) * var(--articles-scale, 0.75));
+    --articles-font-sm: calc(var(--font-size-sm) * var(--articles-scale, 0.75));
+    --articles-font-xs: calc(var(--font-size-xs) * var(--articles-scale, 0.75));
+    --articles-icon: calc(var(--icon-size) * var(--articles-scale, 0.75));
     display: flex;
     flex-direction: column;
-    gap: var(--space-padding);
+    gap: var(--articles-space);
     grid-column: 1 / span var(--span-full);
     max-width: none;
     margin-inline: 0;
@@ -53,7 +87,7 @@ import Layout from "../layouts/Layout.astro";
   .articles-page__tree {
     display: flex;
     flex-direction: column;
-    gap: calc(var(--space-padding) * 2);
+    gap: calc(var(--articles-space) * 1.5);
     min-width: 0;
   }
 
@@ -61,9 +95,9 @@ import Layout from "../layouts/Layout.astro";
   .articles-series {
     display: flex;
     flex-direction: column;
-    gap: var(--space-padding);
+    gap: var(--articles-space);
     margin: 0;
-    padding: var(--space-padding);
+    padding: var(--articles-space);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     background: var(--color-surface);
@@ -75,10 +109,10 @@ import Layout from "../layouts/Layout.astro";
   .articles-chapter > summary {
     display: flex;
     align-items: center;
-    gap: var(--rail-gap);
+    gap: var(--articles-gap);
     margin: 0;
     padding: 0;
-    font-size: var(--font-size-md);
+    font-size: var(--articles-font-md);
     font-weight: 650;
     color: var(--color-text);
     border: 0;
@@ -98,7 +132,7 @@ import Layout from "../layouts/Layout.astro";
   .articles-chapter {
     display: flex;
     flex-direction: column;
-    gap: var(--space-padding);
+    gap: var(--articles-space);
     margin: 0;
     padding: 0;
     border: 0;
@@ -106,7 +140,7 @@ import Layout from "../layouts/Layout.astro";
   }
 
   .articles-chapter > summary {
-    font-size: var(--font-size-sm);
+    font-size: var(--articles-font-sm);
     font-weight: 600;
     color: var(--color-muted);
   }
@@ -114,15 +148,39 @@ import Layout from "../layouts/Layout.astro";
   .articles-series__count,
   .articles-chapter__count {
     margin-left: auto;
-    font-size: var(--font-size-xs);
+    font-size: var(--articles-font-xs);
     color: var(--color-muted);
+  }
+
+  .articles-page .product-dash__grid {
+    grid-template-columns: repeat(auto-fill, minmax(calc(11rem * var(--articles-scale, 0.75)), 1fr));
+    gap: var(--articles-gap);
+  }
+
+  .articles-page .product-dash__card {
+    padding: var(--articles-space);
+    gap: var(--articles-gap);
+  }
+
+  .articles-page .product-dash__card-title {
+    font-size: var(--articles-font-sm);
+  }
+
+  .articles-page .product-dash__card-desc {
+    font-size: var(--articles-font-xs);
+  }
+
+  .articles-page .product-dash__card .material-symbols-outlined {
+    font-size: var(--articles-icon);
+    width: var(--articles-icon);
+    height: var(--articles-icon);
   }
 
   .articles-page__empty {
     margin: 0;
-    padding: var(--space-padding);
+    padding: var(--articles-space);
     color: var(--color-muted);
-    font-size: var(--font-size-sm);
+    font-size: var(--articles-font-sm);
     background: var(--surface-sunken, var(--color-surface));
     border: var(--border-width) dashed var(--color-border);
     border-radius: var(--border-radius);
@@ -258,18 +316,20 @@ import Layout from "../layouts/Layout.astro";
     };
 
     const catalogNames = new Map<string, string>();
+    const catalogChaptersBySeries = new Map<string, Array<{ name: string }>>();
     for (const node of catalog) {
       const name = (node.name ?? "").trim();
       if (!name) continue;
-      catalogNames.set(name.toLowerCase(), name);
-      ensureSeries(name, node.chapters ?? []);
+      const key = name.toLowerCase();
+      catalogNames.set(key, name);
+      catalogChaptersBySeries.set(key, node.chapters ?? []);
     }
 
     for (const rec of records) {
       const raw = (rec.series ?? "").trim() || UNASSIGNED_SERIES;
       const key = raw.toLowerCase();
       const displayName = catalogNames.get(key) || raw;
-      ensureSeries(displayName).items.push(rec);
+      ensureSeries(displayName, catalogChaptersBySeries.get(key) || []).items.push(rec);
     }
 
     const seriesKeys = [...seriesMap.keys()].sort((a, b) =>
@@ -279,12 +339,18 @@ import Layout from "../layouts/Layout.astro";
     let count = 0;
     for (const sKey of seriesKeys) {
       const bucket = seriesMap.get(sKey)!;
+      if (!bucket.items.length) continue;
       const chapters = groupChapters(bucket.items, bucket.catalogChapters);
       const seriesCount = chapters.reduce((n, ch) => n + ch.count, 0);
+      if (seriesCount === 0) continue;
       count += seriesCount;
       series.push({ name: bucket.displayName, count: seriesCount, chapters });
     }
     return { count, series };
+  }
+
+  function isQuizArticle(article: ArticleRow): boolean {
+    return /\bquiz\b/i.test(article.title || "");
   }
 
   function appendArticleCard(cards: HTMLElement, article: ArticleRow): void {
@@ -298,7 +364,7 @@ import Layout from "../layouts/Layout.astro";
     const icon = document.createElement("span");
     icon.className = "material-symbols-outlined";
     icon.setAttribute("aria-hidden", "true");
-    icon.textContent = "article";
+    icon.textContent = isQuizArticle(article) ? "quiz" : "article";
     const title = document.createElement("span");
     title.className = "product-dash__card-title";
     title.textContent = article.title || "Untitled";
@@ -334,9 +400,11 @@ import Layout from "../layouts/Layout.astro";
     }
 
     for (const seriesNode of tree.series) {
+      if (seriesNode.count === 0 || !seriesNode.chapters.length) continue;
+
       const seriesEl = document.createElement("details");
       seriesEl.className = "articles-series";
-      seriesEl.open = seriesNode.count > 0;
+      seriesEl.open = true;
 
       const seriesSummary = document.createElement("summary");
       const seriesName = document.createElement("span");
@@ -347,30 +415,24 @@ import Layout from "../layouts/Layout.astro";
       seriesSummary.append(seriesName, seriesCount);
       seriesEl.appendChild(seriesSummary);
 
-      if (seriesNode.chapters.length) {
-        for (const chapter of seriesNode.chapters) {
-          const chapterEl = document.createElement("details");
-          chapterEl.className = "articles-chapter";
-          chapterEl.open = true;
-          const chapterSummary = document.createElement("summary");
-          const chapterName = document.createElement("span");
-          chapterName.textContent = chapter.name;
-          const chapterCount = document.createElement("span");
-          chapterCount.className = "articles-chapter__count";
-          chapterCount.textContent = `${chapter.count}`;
-          chapterSummary.append(chapterName, chapterCount);
-          chapterEl.appendChild(chapterSummary);
-          const cards = document.createElement("ul");
-          cards.className = "product-dash__grid";
-          for (const article of chapter.items) appendArticleCard(cards, article);
-          chapterEl.appendChild(cards);
-          seriesEl.appendChild(chapterEl);
-        }
-      } else {
-        const empty = document.createElement("p");
-        empty.className = "articles-page__empty";
-        empty.textContent = "No articles in this series yet.";
-        seriesEl.appendChild(empty);
+      for (const chapter of seriesNode.chapters) {
+        if (chapter.count === 0) continue;
+        const chapterEl = document.createElement("details");
+        chapterEl.className = "articles-chapter";
+        chapterEl.open = true;
+        const chapterSummary = document.createElement("summary");
+        const chapterName = document.createElement("span");
+        chapterName.textContent = chapter.name;
+        const chapterCount = document.createElement("span");
+        chapterCount.className = "articles-chapter__count";
+        chapterCount.textContent = `${chapter.count}`;
+        chapterSummary.append(chapterName, chapterCount);
+        chapterEl.appendChild(chapterSummary);
+        const cards = document.createElement("ul");
+        cards.className = "product-dash__grid";
+        for (const article of chapter.items) appendArticleCard(cards, article);
+        chapterEl.appendChild(cards);
+        seriesEl.appendChild(chapterEl);
       }
       list.appendChild(seriesEl);
     }
