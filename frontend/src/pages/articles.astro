@@ -47,13 +47,14 @@ import Layout from "../layouts/Layout.astro";
     margin-inline: 0;
     width: auto;
     min-width: 0;
-    justify-self: start;
+    justify-self: stretch;
   }
 
   .articles-page__tree {
     display: flex;
     flex-direction: column;
     gap: calc(var(--space-padding) * 2);
+    min-width: 0;
   }
 
   .articles-recent,
@@ -66,10 +67,12 @@ import Layout from "../layouts/Layout.astro";
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     background: var(--color-surface);
+    min-width: 0;
   }
 
   .articles-recent__title,
-  .articles-series > summary {
+  .articles-series > summary,
+  .articles-chapter > summary {
     display: flex;
     align-items: center;
     gap: var(--rail-gap);
@@ -81,16 +84,35 @@ import Layout from "../layouts/Layout.astro";
     border: 0;
   }
 
-  .articles-series > summary {
+  .articles-series > summary,
+  .articles-chapter > summary {
     cursor: pointer;
     list-style: none;
   }
 
-  .articles-series > summary::-webkit-details-marker {
+  .articles-series > summary::-webkit-details-marker,
+  .articles-chapter > summary::-webkit-details-marker {
     display: none;
   }
 
-  .articles-series__count {
+  .articles-chapter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .articles-chapter > summary {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .articles-series__count,
+  .articles-chapter__count {
     margin-left: auto;
     font-size: var(--font-size-xs);
     color: var(--color-muted);
@@ -131,9 +153,11 @@ import Layout from "../layouts/Layout.astro";
     chapters?: Array<{ name: string }>;
   };
 
+  type ChapterBucket = { name: string; count: number; items: ArticleRow[] };
+
   type SeriesTree = {
     count: number;
-    series: Array<{ name: string; count: number; items: ArticleRow[] }>;
+    series: Array<{ name: string; count: number; chapters: ChapterBucket[] }>;
   };
 
   function articleSortKey(rec: ArticleRow): string {
@@ -151,10 +175,14 @@ import Layout from "../layouts/Layout.astro";
     return `1:${name.toLowerCase()}`;
   }
 
-  function compareArticlesInSeries(a: ArticleRow, b: ArticleRow): number {
-    const ca = chapterSortKey(a.seriesChapter || "");
-    const cb = chapterSortKey(b.seriesChapter || "");
-    if (ca !== cb) return ca.localeCompare(cb);
+  function chapterDisplayName(raw: string): string {
+    const name = raw.trim() || UNASSIGNED_CHAPTER;
+    if (name === UNASSIGNED_CHAPTER) return name;
+    if (/^(capítulo|capitulo|chapter)\b/i.test(name)) return name;
+    return `Capítulo ${name}`;
+  }
+
+  function compareArticlesInChapter(a: ArticleRow, b: ArticleRow): number {
     return (a.title || "").localeCompare(b.title || "") || a.epamId.localeCompare(b.epamId);
   }
 
@@ -169,28 +197,72 @@ import Layout from "../layouts/Layout.astro";
       .slice(0, RECENT_LIMIT);
   }
 
-  function groupBySeries(records: ArticleRow[], catalog: SeriesCatalogNode[] = []): SeriesTree {
-    type SeriesBucket = { displayName: string; items: ArticleRow[] };
-    const seriesMap = new Map<string, SeriesBucket>();
+  function groupChapters(
+    items: ArticleRow[],
+    catalogChapters: Array<{ name: string }> = [],
+  ): ChapterBucket[] {
+    type Bucket = { displayName: string; rawName: string; items: ArticleRow[] };
+    const map = new Map<string, Bucket>();
 
-    const ensureSeries = (raw: string): SeriesBucket => {
-      const displayName = raw.trim() || UNASSIGNED_SERIES;
-      const key = displayName.toLowerCase();
-      let entry = seriesMap.get(key);
+    const ensure = (raw: string): Bucket => {
+      const rawName = raw.trim() || UNASSIGNED_CHAPTER;
+      const key = rawName.toLowerCase();
+      let entry = map.get(key);
       if (!entry) {
-        entry = { displayName, items: [] };
-        seriesMap.set(key, entry);
+        entry = { displayName: chapterDisplayName(rawName), rawName, items: [] };
+        map.set(key, entry);
       }
       return entry;
     };
 
-    // Prefer catalog display names when an article's series matches a catalog entry.
+    for (const ch of catalogChapters) {
+      const name = (ch.name ?? "").trim();
+      if (name) ensure(name);
+    }
+    for (const rec of items) {
+      ensure(rec.seriesChapter || "").items.push(rec);
+    }
+
+    return [...map.values()]
+      .sort((a, b) => chapterSortKey(a.rawName).localeCompare(chapterSortKey(b.rawName)))
+      .map((bucket) => {
+        bucket.items.sort(compareArticlesInChapter);
+        return { name: bucket.displayName, count: bucket.items.length, items: bucket.items };
+      })
+      .filter((ch) => ch.count > 0);
+  }
+
+  function groupBySeries(records: ArticleRow[], catalog: SeriesCatalogNode[] = []): SeriesTree {
+    type SeriesBucket = {
+      displayName: string;
+      items: ArticleRow[];
+      catalogChapters: Array<{ name: string }>;
+    };
+    const seriesMap = new Map<string, SeriesBucket>();
+
+    const ensureSeries = (
+      raw: string,
+      catalogChapters: Array<{ name: string }> = [],
+    ): SeriesBucket => {
+      const displayName = raw.trim() || UNASSIGNED_SERIES;
+      const key = displayName.toLowerCase();
+      let entry = seriesMap.get(key);
+      if (!entry) {
+        entry = { displayName, items: [], catalogChapters: [] };
+        seriesMap.set(key, entry);
+      }
+      if (catalogChapters.length && !entry.catalogChapters.length) {
+        entry.catalogChapters = catalogChapters;
+      }
+      return entry;
+    };
+
     const catalogNames = new Map<string, string>();
     for (const node of catalog) {
       const name = (node.name ?? "").trim();
       if (!name) continue;
       catalogNames.set(name.toLowerCase(), name);
-      ensureSeries(name);
+      ensureSeries(name, node.chapters ?? []);
     }
 
     for (const rec of records) {
@@ -207,9 +279,10 @@ import Layout from "../layouts/Layout.astro";
     let count = 0;
     for (const sKey of seriesKeys) {
       const bucket = seriesMap.get(sKey)!;
-      bucket.items.sort(compareArticlesInSeries);
-      count += bucket.items.length;
-      series.push({ name: bucket.displayName, count: bucket.items.length, items: bucket.items });
+      const chapters = groupChapters(bucket.items, bucket.catalogChapters);
+      const seriesCount = chapters.reduce((n, ch) => n + ch.count, 0);
+      count += seriesCount;
+      series.push({ name: bucket.displayName, count: seriesCount, chapters });
     }
     return { count, series };
   }
@@ -263,7 +336,6 @@ import Layout from "../layouts/Layout.astro";
     for (const seriesNode of tree.series) {
       const seriesEl = document.createElement("details");
       seriesEl.className = "articles-series";
-      // Open series that have articles so cards are visible without an extra chapter click.
       seriesEl.open = seriesNode.count > 0;
 
       const seriesSummary = document.createElement("summary");
@@ -275,11 +347,25 @@ import Layout from "../layouts/Layout.astro";
       seriesSummary.append(seriesName, seriesCount);
       seriesEl.appendChild(seriesSummary);
 
-      if (seriesNode.items.length) {
-        const cards = document.createElement("ul");
-        cards.className = "product-dash__grid";
-        for (const article of seriesNode.items) appendArticleCard(cards, article);
-        seriesEl.appendChild(cards);
+      if (seriesNode.chapters.length) {
+        for (const chapter of seriesNode.chapters) {
+          const chapterEl = document.createElement("details");
+          chapterEl.className = "articles-chapter";
+          chapterEl.open = true;
+          const chapterSummary = document.createElement("summary");
+          const chapterName = document.createElement("span");
+          chapterName.textContent = chapter.name;
+          const chapterCount = document.createElement("span");
+          chapterCount.className = "articles-chapter__count";
+          chapterCount.textContent = `${chapter.count}`;
+          chapterSummary.append(chapterName, chapterCount);
+          chapterEl.appendChild(chapterSummary);
+          const cards = document.createElement("ul");
+          cards.className = "product-dash__grid";
+          for (const article of chapter.items) appendArticleCard(cards, article);
+          chapterEl.appendChild(cards);
+          seriesEl.appendChild(chapterEl);
+        }
       } else {
         const empty = document.createElement("p");
         empty.className = "articles-page__empty";

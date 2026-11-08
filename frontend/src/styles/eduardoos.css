@@ -955,8 +955,9 @@ main > .diag{
   max-width: none;
   margin-inline: 0;
   gap: var(--space-padding);
-  justify-self: start;
+  justify-self: stretch;
   min-width: 0;
+  width: auto;
 }
 
 .articles-page__tree{
