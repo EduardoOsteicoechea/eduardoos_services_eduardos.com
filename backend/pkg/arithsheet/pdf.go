@@ -74,6 +74,96 @@ func (c *canvas) fillRect(x, top, w, h, gray float64) {
 		gray, c.xp(x), c.yp(top+h), mmToPt(w), mmToPt(h))
 }
 
+func (c *canvas) resetColor() {
+	c.b.WriteString("0 g\n0 G\n")
+}
+
+func (c *canvas) fillRGB(r, g, b float64) {
+	fmt.Fprintf(&c.b, "%.3f %.3f %.3f rg\n", r, g, b)
+}
+
+func (c *canvas) strokeRGB(r, g, b, widthMm float64) {
+	fmt.Fprintf(&c.b, "%.3f %.3f %.3f RG\n%.3f w\n", r, g, b, mmToPt(widthMm))
+}
+
+func (c *canvas) fillRectRGB(x, top, w, h, r, g, b float64) {
+	fmt.Fprintf(&c.b, "%.3f %.3f %.3f rg\n%.2f %.2f %.2f %.2f re f\n0 g\n",
+		r, g, b, c.xp(x), c.yp(top+h), mmToPt(w), mmToPt(h))
+}
+
+func (c *canvas) fillStrokeRectRGB(x, top, w, h, fr, fg, fb, sr, sg, sb, widthMm float64) {
+	fmt.Fprintf(&c.b, "%.3f %.3f %.3f rg\n%.3f %.3f %.3f RG\n%.3f w\n%.2f %.2f %.2f %.2f re b\n0 g\n0 G\n",
+		fr, fg, fb, sr, sg, sb, mmToPt(widthMm), c.xp(x), c.yp(top+h), mmToPt(w), mmToPt(h))
+}
+
+func (c *canvas) fillPoly(pts []pt, r, g, b float64) {
+	if len(pts) < 3 {
+		return
+	}
+	fmt.Fprintf(&c.b, "%.3f %.3f %.3f rg\n%.2f %.2f m\n", r, g, b, c.xp(pts[0].x), c.yp(pts[0].top))
+	for _, p := range pts[1:] {
+		fmt.Fprintf(&c.b, "%.2f %.2f l\n", c.xp(p.x), c.yp(p.top))
+	}
+	c.b.WriteString("h f\n0 g\n")
+}
+
+func (c *canvas) fillStrokePoly(pts []pt, fr, fg, fb, sr, sg, sb, widthMm float64) {
+	if len(pts) < 3 {
+		return
+	}
+	fmt.Fprintf(&c.b, "%.3f %.3f %.3f rg\n%.3f %.3f %.3f RG\n%.3f w\n%.2f %.2f m\n",
+		fr, fg, fb, sr, sg, sb, mmToPt(widthMm), c.xp(pts[0].x), c.yp(pts[0].top))
+	for _, p := range pts[1:] {
+		fmt.Fprintf(&c.b, "%.2f %.2f l\n", c.xp(p.x), c.yp(p.top))
+	}
+	c.b.WriteString("h b\n0 g\n0 G\n")
+}
+
+func (c *canvas) fillEllipse(cx, ctop, rx, ry, r, g, b float64) {
+	fmt.Fprintf(&c.b, "%.3f %.3f %.3f rg\n", r, g, b)
+	c.arc(cx, ctop, rx, ry, 0, 2*math.Pi)
+	c.b.WriteString("f\n0 g\n")
+}
+
+func (c *canvas) fillStrokeEllipse(cx, ctop, rx, ry float64, fr, fg, fb, sr, sg, sb, widthMm float64) {
+	fmt.Fprintf(&c.b, "%.3f %.3f %.3f rg\n%.3f %.3f %.3f RG\n%.3f w\n",
+		fr, fg, fb, sr, sg, sb, mmToPt(widthMm))
+	c.arc(cx, ctop, rx, ry, 0, 2*math.Pi)
+	c.b.WriteString("b\n0 g\n0 G\n")
+}
+
+func (c *canvas) fillCircle(cx, ctop, rad, r, g, b float64) {
+	c.fillEllipse(cx, ctop, rad, rad, r, g, b)
+}
+
+func (c *canvas) fillStrokeCircle(cx, ctop, rad float64, fr, fg, fb, sr, sg, sb, widthMm float64) {
+	c.fillStrokeEllipse(cx, ctop, rad, rad, fr, fg, fb, sr, sg, sb, widthMm)
+}
+
+func (c *canvas) fillStrokePie(cx, ctop, rx, ry, a0, a1 float64, fr, fg, fb, sr, sg, sb, widthMm float64) {
+	fmt.Fprintf(&c.b, "%.3f %.3f %.3f rg\n%.3f %.3f %.3f RG\n%.3f w\n",
+		fr, fg, fb, sr, sg, sb, mmToPt(widthMm))
+	fmt.Fprintf(&c.b, "%.2f %.2f m\n", c.xp(cx), c.yp(ctop))
+	p0x, p0t := polar(cx, ctop, rx, ry, a0)
+	fmt.Fprintf(&c.b, "%.2f %.2f l\n", c.xp(p0x), c.yp(p0t))
+	const maxSeg = math.Pi / 2
+	sweep := a1 - a0
+	n := int(math.Ceil(math.Abs(sweep)/maxSeg - 1e-9))
+	if n < 1 {
+		n = 1
+	}
+	step := sweep / float64(n)
+	for i := 0; i < n; i++ {
+		c.arcSeg(cx, ctop, rx, ry, a0+float64(i)*step, a0+float64(i+1)*step, false)
+	}
+	fmt.Fprintf(&c.b, "%.2f %.2f l h b\n0 g\n0 G\n", c.xp(cx), c.yp(ctop))
+}
+
+func (c *canvas) lineRGB(p1, p2 pt, r, g, b, widthMm float64) {
+	fmt.Fprintf(&c.b, "%.3f %.3f %.3f RG\n%.3f w\n%.2f %.2f m %.2f %.2f l S\n0 G\n",
+		r, g, b, mmToPt(widthMm), c.xp(p1.x), c.yp(p1.top), c.xp(p2.x), c.yp(p2.top))
+}
+
 func (c *canvas) arc(cx, ctop, rx, ry, a0, a1 float64) {
 	const maxSeg = math.Pi / 2
 	sweep := a1 - a0
