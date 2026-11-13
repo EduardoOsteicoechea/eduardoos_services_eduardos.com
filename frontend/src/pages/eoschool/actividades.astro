@@ -1,0 +1,273 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import EoschoolDashBack from "../../components/EoschoolDashBack.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Pack de actividades"
+  description="Fotos y calificaciones por celda del pack de aritmética y figuras."
+  page="eoschool-arithpack"
+  robots="noindex,nofollow"
+  showPageTitle={false}
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoschool" data-route title="Homeschool" aria-label="Homeschool">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span></span>
+      Dashboard
+    </a>
+  </Fragment>
+
+  <h1 class="page-title-sr">Pack de actividades</h1>
+
+  <section class="product-dash" data-arithpack>
+    <EoschoolDashBack />
+    <p class="status" data-banner>Cargando…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Necesitas sesión y suscripción Homescool.</p>
+      <a class="button" href="/session" data-route>Sign in</a>
+    </div>
+
+    <div data-authed hidden>
+      <div class="product-dash__grid">
+        <article class="product-dash__card">
+          <header class="product-dash__card-head">
+            <h2 class="product-dash__card-title">Día</h2>
+            <p class="product-dash__card-desc">Fotos de la tarea y el JSON de calificación de cada celda.</p>
+          </header>
+          <form class="arithpack-form" data-form>
+            <label>
+              Niño
+              <input name="studentKey" value="nino" autocomplete="off" required />
+            </label>
+            <label>
+              Fotos
+              <input name="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple />
+            </label>
+            <label>
+              Calificaciones
+              <textarea name="grades" rows="8" required placeholder='{"date":"2026-11-13","cells":[{"page":1,"row":0,"col":0,"kind":"mult","a":31,"b":63,"score":0}]}'></textarea>
+            </label>
+            <button type="submit">Guardar día</button>
+          </form>
+        </article>
+
+        <article class="product-dash__card">
+          <header class="product-dash__card-head">
+            <h2 class="product-dash__card-title">Días cargados</h2>
+            <p class="product-dash__card-desc" data-day-count>Ningún día todavía.</p>
+          </header>
+          <ul class="arithpack-days" data-days></ul>
+        </article>
+      </div>
+
+      <article class="product-dash__card">
+        <header class="product-dash__card-head">
+          <h2 class="product-dash__card-title">Progreso</h2>
+          <p class="product-dash__card-desc" data-avg>Sin calificaciones.</p>
+        </header>
+        <h3 class="arithpack-sub">Multiplicaciones para enfatizar</h3>
+        <ul class="arithpack-facts" data-emphasize></ul>
+        <h3 class="arithpack-sub">Figuras para más adelante</h3>
+        <ul class="arithpack-facts" data-figures></ul>
+      </article>
+
+      <div class="arithpack-photos" data-photos></div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { apiGet, apiSend } from "../../lib/api";
+  import { showErrorModal } from "../../lib/error-modal";
+  import { onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
+
+  type Cell = { page: number; row: number; col: number; kind: string; a?: number; b?: number; shape?: string; score: number };
+  type Photo = { name: string; url: string };
+  type Day = { day: string; studentKey: string; cells: Cell[]; photos: Photo[] };
+  type Fact = { key: string; kind: string; a?: number; b?: number; shape?: string; attempts: number; misses: number; avg: number };
+  type Analytics = { days: number; cells: number; avg: number; emphasize: Fact[] | null; figures: Fact[] | null };
+
+  onAstroPageLoad("eoschool-arithpack", async () => {
+    const root = document.querySelector("[data-arithpack]");
+    if (!(root instanceof HTMLElement)) return;
+    const banner = root.querySelector("[data-banner]");
+    const gate = root.querySelector("[data-gate]");
+    const authed = root.querySelector("[data-authed]");
+    const form = root.querySelector("[data-form]");
+    const result = await requireService("homescool", { requireSubscription: true });
+    if (!result.sessionOk || !result.access.allowed) {
+      if (banner instanceof HTMLElement) banner.textContent = "Inicia sesión con Homescool para continuar.";
+      setHidden(gate, false);
+      setHidden(authed, true);
+      return;
+    }
+    if (banner instanceof HTMLElement) banner.hidden = true;
+    setHidden(gate, true);
+    setHidden(authed, false);
+
+    const studentInput = form?.querySelector('input[name="studentKey"]');
+    const load = async () => {
+      const student = studentInput instanceof HTMLInputElement ? studentInput.value.trim() || "nino" : "nino";
+      const data = await apiGet<{ days: Day[]; analytics: Analytics }>(
+        `/api/eoschool/arithpack/days?studentKey=${encodeURIComponent(student)}`,
+      );
+      paint(root, data.days || [], data.analytics);
+    };
+
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!(form instanceof HTMLFormElement)) return;
+      const body = new FormData(form);
+      const sent = await apiSend<{ day?: Day; message?: string; request_id?: string }>("/api/eoschool/arithpack/days", {
+        method: "POST",
+        body,
+      });
+      if (sent.status < 200 || sent.status >= 300) {
+        showErrorModal({
+          message: sent.data.message || "No se pudo guardar el día.",
+          requestId: sent.requestId,
+        });
+        return;
+      }
+      const file = form.querySelector('input[name="photos"]');
+      if (file instanceof HTMLInputElement) file.value = "";
+      await load();
+    });
+    studentInput?.addEventListener("change", () => {
+      load().catch((err: unknown) => {
+        showErrorModal({ message: err instanceof Error ? err.message : "No se pudo cargar el progreso." });
+      });
+    });
+    try {
+      await load();
+    } catch (err) {
+      showErrorModal({ message: err instanceof Error ? err.message : "No se pudo cargar el progreso." });
+    }
+  });
+
+  function paint(root: HTMLElement, days: Day[], analytics: Analytics) {
+    const count = root.querySelector("[data-day-count]");
+    const list = root.querySelector("[data-days]");
+    const avg = root.querySelector("[data-avg]");
+    const emphasize = root.querySelector("[data-emphasize]");
+    const figures = root.querySelector("[data-figures]");
+    const photos = root.querySelector("[data-photos]");
+    if (count) count.textContent = days.length ? `${days.length} día(s)` : "Ningún día todavía.";
+    if (avg) {
+      avg.textContent = analytics?.cells
+        ? `${analytics.days} días · ${analytics.cells} celdas · promedio ${analytics.avg.toFixed(1)} / 2`
+        : "Sin calificaciones.";
+    }
+    if (list) {
+      list.replaceChildren(
+        ...[...days].reverse().map((day) => {
+          const item = document.createElement("li");
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = `${day.day} · ${day.cells?.length || 0} celdas · ${day.photos?.length || 0} fotos`;
+          button.addEventListener("click", () => showPhotos(photos, day));
+          item.append(button);
+          return item;
+        }),
+      );
+    }
+    fillFacts(emphasize, analytics?.emphasize, (fact) => {
+      const mark = fact.kind === "div" ? "÷" : "×";
+      return `${fact.a} ${mark} ${fact.b} · ${fact.misses} fallo(s)`;
+    });
+    fillFacts(figures, analytics?.figures, (fact) => `${fact.kind} ${fact.shape || fact.key} · ${fact.misses} fallo(s)`);
+    if (photos) photos.replaceChildren();
+  }
+
+  function fillFacts(node: Element | null, facts: Fact[] | null | undefined, label: (fact: Fact) => string) {
+    if (!node) return;
+    const rows = facts || [];
+    if (!rows.length) {
+      const item = document.createElement("li");
+      item.textContent = "Nada por enfatizar.";
+      node.replaceChildren(item);
+      return;
+    }
+    node.replaceChildren(
+      ...rows.map((fact) => {
+        const item = document.createElement("li");
+        item.textContent = label(fact);
+        return item;
+      }),
+    );
+  }
+
+  function showPhotos(host: Element | null, day: Day) {
+    if (!host) return;
+    host.replaceChildren(
+      ...(day.photos || []).map((photo) => {
+        const img = document.createElement("img");
+        img.src = photo.url;
+        img.alt = `${day.day} ${photo.name}`;
+        return img;
+      }),
+    );
+  }
+</script>
+
+<style>
+  .arithpack-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+  .arithpack-form label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    font-size: var(--font-size-sm);
+  }
+  .arithpack-form input,
+  .arithpack-form textarea,
+  .arithpack-form button,
+  .arithpack-days button {
+    font: inherit;
+    font-size: var(--font-size-md);
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+  .arithpack-form input,
+  .arithpack-form button,
+  .arithpack-days button {
+    min-height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+  }
+  .arithpack-form textarea {
+    min-height: var(--textarea-min-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+  }
+  .arithpack-days,
+  .arithpack-facts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .arithpack-days button {
+    text-align: start;
+  }
+  .arithpack-sub {
+    font-size: var(--font-size-md);
+    margin: var(--space-padding) 0 0;
+  }
+  .arithpack-photos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
+  }
+  .arithpack-photos img {
+    width: 16rem;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+</style>
