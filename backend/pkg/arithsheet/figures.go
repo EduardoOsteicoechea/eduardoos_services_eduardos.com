@@ -2,48 +2,96 @@ package arithsheet
 
 import "math"
 
-func renderFigures() string {
+func renderFigures() (string, []sheetImage) {
 	c := newCanvas()
 	g := newGeom()
-	drawHalfChrome(c, g, g.leftX, "Figuras planas")
-	drawHalfChrome(c, g, g.rightX, "Cuerpos geométricos")
 	drawFigureSide(c, g, g.leftX, planeFigs)
-	drawFigureSide(c, g, g.rightX, solidFigs)
+	drawFigureCells(c, g, g.rightX, solidFigs, loadSolidPhotos())
 	drawGrid(c, g, g.leftX)
 	drawGrid(c, g, g.rightX)
-	return c.b.String()
+	return c.b.String(), c.images
+}
+
+// renderFiguresScrambled mixes plane and solid figures across both halves
+// so a later class does not repeat the catalog order.
+func renderFiguresScrambled(seed int64) (string, []sheetImage) {
+	c := newCanvas()
+	g := newGeom()
+	order := scrambledSceneOrder(seed)
+	solids := loadSolidPhotos()
+	half := (len(order) + 1) / 2
+	drawMixedFigures(c, g, g.leftX, order[:half], solids)
+	drawMixedFigures(c, g, g.rightX, order[half:], solids)
+	drawGrid(c, g, g.leftX)
+	drawGrid(c, g, g.rightX)
+	return c.b.String(), c.images
+}
+
+func drawMixedFigures(c *canvas, g sheetGeom, originX float64, ids []int, solids [][]byte) {
+	for i, id := range ids {
+		cell := g.cell(originX, i%gridCols, i/gridCols)
+		drawNameLine(c, cell)
+		box := figureArea(cell)
+		if id < len(planeFigs) {
+			c.figureStroke()
+			planeFigs[id](c, box)
+			c.resetColor()
+			continue
+		}
+		si := id - len(planeFigs)
+		if si < len(solids) && len(solids[si]) > 0 {
+			c.drawPNG(box, solids[si])
+			continue
+		}
+		if si < len(solidFigs) {
+			c.figureStroke()
+			solidFigs[si](c, box)
+			c.resetColor()
+		}
+	}
 }
 
 func drawFigureSide(c *canvas, g sheetGeom, originX float64, figs []func(*canvas, rectMm)) {
+	drawFigureCells(c, g, originX, figs, nil)
+}
+
+func drawFigureCells(c *canvas, g sheetGeom, originX float64, figs []func(*canvas, rectMm), photos [][]byte) {
 	for row := 0; row < gridRows; row++ {
 		for col := 0; col < gridCols; col++ {
 			cell := g.cell(originX, col, row)
 			drawNameLine(c, cell)
 			i := row*gridCols + col
+			if i >= len(figs) && (photos == nil || i >= len(photos)) {
+				continue
+			}
+			if photos != nil && i < len(photos) && len(photos[i]) > 0 {
+				c.drawPNG(figureArea(cell), photos[i])
+				continue
+			}
 			if i >= len(figs) {
 				continue
 			}
 			c.figureStroke()
 			figs[i](c, figureArea(cell))
+			c.resetColor()
 		}
 	}
 }
 
 func figureArea(cell rectMm) rectMm {
-	const pad = 0.8
+	h := cell.H * 0.75
 	return rectMm{
-		X:   cell.X + pad,
-		Top: cell.Top + pad,
-		W:   cell.W - 2*pad,
-		H:   cell.H - nameBandMm - pad,
+		X:   cell.X + 1.5,
+		Top: cell.Top + 0.4,
+		W:   cell.W - 3,
+		H:   h,
 	}
 }
 
 func drawNameLine(c *canvas, cell rectMm) {
-	y := cell.Top + cell.H - nameBandMm
-	const insetX = 1.2
+	y := cell.Top + cell.H*0.77
 	c.sharpStroke(0.25)
-	c.seg(pt{cell.X + insetX, y}, pt{cell.X + cell.W - insetX, y})
+	c.seg(pt{cell.X + 2.5, y}, pt{cell.X + cell.W - 2.5, y})
 }
 
 var planeFigs = []func(*canvas, rectMm){
@@ -103,7 +151,7 @@ func innerSquare(box rectMm, scale float64) rectMm {
 }
 
 func drawNorm(c *canvas, box rectMm, pts [][2]float64) {
-	sq := innerSquare(box, 0.92)
+	sq := innerSquare(box, 0.98)
 	out := make([]pt, len(pts))
 	for i, p := range pts {
 		out[i] = pt{x: sq.X + p[0]*sq.W, top: sq.Top + (1-p[1])*sq.H}
@@ -112,13 +160,54 @@ func drawNorm(c *canvas, box rectMm, pts [][2]float64) {
 }
 
 func drawRegular(c *canvas, box rectMm, n int) {
-	sq := innerSquare(box, 0.92)
+	sq := innerSquare(box, 0.98)
 	cx := sq.X + sq.W/2
 	ctop := sq.Top + sq.H/2
 	a0 := -math.Pi/2 + math.Pi/float64(n)
 	half := sq.W / 2
-	r := half * 0.96 / polyExtent(n, a0)
+	r := half * 0.98 / polyExtent(n, a0)
 	c.poly(ellipsePoly(cx, ctop, r, r, n, a0), true)
+}
+
+func fillStrokeRegular(c *canvas, box rectMm, n int, fr, fg, fb, sr, sg, sb, widthMm float64) {
+	sq := innerSquare(box, 0.98)
+	cx := sq.X + sq.W/2
+	ctop := sq.Top + sq.H/2
+	a0 := -math.Pi/2 + math.Pi/float64(n)
+	half := sq.W / 2
+	r := half * 0.98 / polyExtent(n, a0)
+	c.fillStrokePoly(ellipsePoly(cx, ctop, r, r, n, a0), fr, fg, fb, sr, sg, sb, widthMm)
+}
+
+func fillStrokeStar(c *canvas, box rectMm, fr, fg, fb, sr, sg, sb, widthMm float64) {
+	sq := innerSquare(box, 0.98)
+	cx := sq.X + sq.W/2
+	ctop := sq.Top + sq.H/2
+	outer := sq.W * 0.48
+	inner := outer * 0.4
+	pts := make([]pt, 10)
+	for i := 0; i < 10; i++ {
+		ang := math.Pi/2 + float64(i)*math.Pi/5
+		rad := outer
+		if i%2 == 1 {
+			rad = inner
+		}
+		pts[i] = pt{x: cx + rad*math.Cos(ang), top: ctop - rad*math.Sin(ang)}
+	}
+	c.fillStrokePoly(pts, fr, fg, fb, sr, sg, sb, widthMm)
+}
+
+func fillStrokeGreekCross(c *canvas, box rectMm, fr, fg, fb, sr, sg, sb, widthMm float64) {
+	sq := innerSquare(box, 0.98)
+	normPts := [][2]float64{
+		{0.34, 1}, {0.66, 1}, {0.66, 0.66}, {1, 0.66}, {1, 0.34}, {0.66, 0.34},
+		{0.66, 0}, {0.34, 0}, {0.34, 0.34}, {0, 0.34}, {0, 0.66}, {0.34, 0.66},
+	}
+	pts := make([]pt, len(normPts))
+	for i, p := range normPts {
+		pts[i] = pt{x: sq.X + p[0]*sq.W, top: sq.Top + (1-p[1])*sq.H}
+	}
+	c.fillStrokePoly(pts, fr, fg, fb, sr, sg, sb, widthMm)
 }
 
 func polyExtent(n int, a0 float64) float64 {
@@ -144,20 +233,21 @@ func ellipsePoly(cx, ctop, rx, ry float64, n int, a0 float64) []pt {
 }
 
 func drawCircle(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.9)
+	sq := innerSquare(box, 0.98)
 	r := sq.W / 2
 	c.ellipse(sq.X+r, sq.Top+r, r, r)
 }
 
 func drawEllipse(c *canvas, box rectMm) {
-	rx := box.W * 0.42
-	ry := box.H * 0.32
+	sq := innerSquare(box, 0.98)
+	rx := sq.W * 0.48
+	ry := sq.H * 0.38
 	c.ellipse(box.X+box.W/2, box.Top+box.H/2, rx, ry)
 }
 
 func drawSemicircle(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.9)
-	r := sq.W * 0.46
+	sq := innerSquare(box, 0.98)
+	r := sq.W * 0.49
 	cx := sq.X + sq.W/2
 	ctop := sq.Top + sq.H*0.58
 	c.arc(cx, ctop, r, r, 0, math.Pi)
@@ -169,8 +259,8 @@ func drawSemicircle(c *canvas, box rectMm) {
 func drawSquare(c *canvas, box rectMm) { drawRegular(c, box, 4) }
 
 func drawRectangle(c *canvas, box rectMm) {
-	w := box.W * 0.84
-	h := box.H * 0.5
+	w := box.W * 0.90
+	h := box.H * 0.65
 	x := box.X + (box.W-w)/2
 	top := box.Top + (box.H-h)/2
 	c.rect(x, top, w, h)
@@ -179,45 +269,45 @@ func drawRectangle(c *canvas, box rectMm) {
 func drawEquilateral(c *canvas, box rectMm) { drawRegular(c, box, 3) }
 
 func drawIsosceles(c *canvas, box rectMm) {
-	drawNorm(c, box, [][2]float64{{0.5, 0.94}, {0.08, 0.1}, {0.92, 0.1}})
+	drawNorm(c, box, [][2]float64{{0.5, 0.96}, {0.06, 0.06}, {0.94, 0.06}})
 }
 
 func drawScalene(c *canvas, box rectMm) {
-	drawNorm(c, box, [][2]float64{{0.22, 0.92}, {0.06, 0.12}, {0.94, 0.34}})
+	drawNorm(c, box, [][2]float64{{0.22, 0.94}, {0.06, 0.08}, {0.94, 0.30}})
 }
 
 func drawRightTriangle(c *canvas, box rectMm) {
-	drawNorm(c, box, [][2]float64{{0.1, 0.1}, {0.9, 0.1}, {0.1, 0.9}})
+	drawNorm(c, box, [][2]float64{{0.08, 0.08}, {0.92, 0.08}, {0.08, 0.92}})
 }
 
 func drawRhombus(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.92)
+	sq := innerSquare(box, 0.98)
 	cx := sq.X + sq.W/2
 	ctop := sq.Top + sq.H/2
-	c.poly(ellipsePoly(cx, ctop, sq.W*0.30, sq.H*0.46, 4, math.Pi/2), true)
+	c.poly(ellipsePoly(cx, ctop, sq.W*0.32, sq.H*0.48, 4, math.Pi/2), true)
 }
 
 func drawParallelogram(c *canvas, box rectMm) {
-	drawNorm(c, box, [][2]float64{{0.22, 0.16}, {0.94, 0.16}, {0.78, 0.84}, {0.06, 0.84}})
+	drawNorm(c, box, [][2]float64{{0.22, 0.14}, {0.96, 0.14}, {0.78, 0.86}, {0.04, 0.86}})
 }
 
 func drawIsoTrapezoid(c *canvas, box rectMm) {
-	drawNorm(c, box, [][2]float64{{0.28, 0.84}, {0.72, 0.84}, {0.92, 0.14}, {0.08, 0.14}})
+	drawNorm(c, box, [][2]float64{{0.26, 0.86}, {0.74, 0.86}, {0.94, 0.12}, {0.06, 0.12}})
 }
 
 func drawRightTrapezoid(c *canvas, box rectMm) {
-	drawNorm(c, box, [][2]float64{{0.12, 0.84}, {0.62, 0.84}, {0.9, 0.14}, {0.12, 0.14}})
+	drawNorm(c, box, [][2]float64{{0.10, 0.86}, {0.64, 0.86}, {0.92, 0.12}, {0.10, 0.12}})
 }
 
 func drawKite(c *canvas, box rectMm) {
-	drawNorm(c, box, [][2]float64{{0.5, 0.94}, {0.86, 0.58}, {0.5, 0.08}, {0.14, 0.58}})
+	drawNorm(c, box, [][2]float64{{0.5, 0.96}, {0.88, 0.58}, {0.5, 0.06}, {0.12, 0.58}})
 }
 
 func drawQuarter(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.9)
-	cx := sq.X + sq.W*0.14
-	ctop := sq.Top + sq.H*0.86
-	r := sq.W * 0.72
+	sq := innerSquare(box, 0.98)
+	cx := sq.X + sq.W*0.10
+	ctop := sq.Top + sq.H*0.90
+	r := sq.W * 0.80
 	c.moveTo(cx, ctop)
 	ex, et := polar(cx, ctop, r, r, 0)
 	c.lineTo(ex, et)
@@ -227,7 +317,7 @@ func drawQuarter(c *canvas, box rectMm) {
 }
 
 func drawAnnulus(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.9)
+	sq := innerSquare(box, 0.98)
 	r := sq.W / 2
 	cx := sq.X + r
 	ctop := sq.Top + r
@@ -236,7 +326,7 @@ func drawAnnulus(c *canvas, box rectMm) {
 }
 
 func drawStar(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.92)
+	sq := innerSquare(box, 0.98)
 	cx := sq.X + sq.W/2
 	ctop := sq.Top + sq.H/2
 	outer := sq.W * 0.48
@@ -268,10 +358,10 @@ func drawCuboid(c *canvas, box rectMm) { drawCabinet(c, box, 0.22, 0.28, false) 
 func drawCabinet(c *canvas, box rectMm, dxR, dyR float64, square bool) {
 	var bounds rectMm
 	if square {
-		bounds = innerSquare(box, 0.94)
+		bounds = innerSquare(box, 0.98)
 	} else {
-		bounds = inset(box, box.W*0.04)
-		bounds.H = math.Min(bounds.H, bounds.W*0.72)
+		bounds = inset(box, box.W*0.02)
+		bounds.H = math.Min(box.H*0.96, bounds.W*0.72)
 		bounds.Top = box.Top + (box.H-bounds.H)/2
 	}
 	dx := bounds.W * dxR
@@ -291,7 +381,7 @@ func drawCabinet(c *canvas, box rectMm, dxR, dyR float64, square bool) {
 }
 
 func drawSphere(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.9)
+	sq := innerSquare(box, 0.98)
 	r := sq.W / 2
 	cx := sq.X + r
 	ctop := sq.Top + r
@@ -300,8 +390,8 @@ func drawSphere(c *canvas, box rectMm) {
 }
 
 func drawHemisphere(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.92)
-	r := sq.W * 0.46
+	sq := innerSquare(box, 0.98)
+	r := sq.W * 0.48
 	cx := sq.X + sq.W/2
 	base := sq.Top + sq.H*0.64
 	c.ellipse(cx, base, r, r*0.28)
@@ -310,12 +400,12 @@ func drawHemisphere(c *canvas, box rectMm) {
 }
 
 func drawCylinder(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.94)
+	sq := innerSquare(box, 0.98)
 	cx := sq.X + sq.W/2
-	rx := sq.W * 0.40
+	rx := sq.W * 0.42
 	ry := sq.H * 0.14
-	topY := sq.Top + sq.H*0.28
-	botY := sq.Top + sq.H*0.72
+	topY := sq.Top + sq.H*0.16
+	botY := sq.Top + sq.H*0.84
 	c.ellipse(cx, topY, rx, ry)
 	c.ellipse(cx, botY, rx, ry)
 	c.seg(pt{cx - rx, topY}, pt{cx - rx, botY})
@@ -323,24 +413,24 @@ func drawCylinder(c *canvas, box rectMm) {
 }
 
 func drawCone(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.94)
+	sq := innerSquare(box, 0.98)
 	cx := sq.X + sq.W/2
-	rx := sq.W * 0.42
+	rx := sq.W * 0.44
 	ry := sq.H * 0.14
-	base := sq.Top + sq.H*0.70
-	apex := pt{cx, sq.Top + sq.H*0.08}
+	base := sq.Top + sq.H*0.82
+	apex := pt{cx, sq.Top + sq.H*0.06}
 	c.ellipse(cx, base, rx, ry)
 	c.seg(apex, pt{cx - rx, base})
 	c.seg(apex, pt{cx + rx, base})
 }
 
 func drawConeFrustum(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.94)
+	sq := innerSquare(box, 0.98)
 	cx := sq.X + sq.W/2
-	rx := sq.W * 0.42
+	rx := sq.W * 0.44
 	ry := sq.H * 0.13
-	topY := sq.Top + sq.H*0.26
-	botY := sq.Top + sq.H*0.72
+	topY := sq.Top + sq.H*0.18
+	botY := sq.Top + sq.H*0.82
 	c.ellipse(cx, topY, rx*0.42, ry*0.42)
 	c.ellipse(cx, botY, rx, ry)
 	c.seg(pt{cx - rx*0.42, topY}, pt{cx - rx, botY})
@@ -348,13 +438,13 @@ func drawConeFrustum(c *canvas, box rectMm) {
 }
 
 func drawPyramid(c *canvas, box rectMm, n int) {
-	sq := innerSquare(box, 0.96)
+	sq := innerSquare(box, 0.98)
 	cx := sq.X + sq.W/2
-	rx := sq.W * 0.42
+	rx := sq.W * 0.44
 	ry := sq.H * 0.16
 	a0 := -math.Pi/2 + math.Pi/float64(n)
-	base := ellipsePoly(cx, sq.Top+sq.H*0.72, rx, ry, n, a0)
-	apex := pt{cx, sq.Top + sq.H*0.08}
+	base := ellipsePoly(cx, sq.Top+sq.H*0.82, rx, ry, n, a0)
+	apex := pt{cx, sq.Top + sq.H*0.06}
 	c.poly(base, true)
 	for _, p := range base {
 		c.seg(apex, p)
@@ -362,13 +452,13 @@ func drawPyramid(c *canvas, box rectMm, n int) {
 }
 
 func drawPrism(c *canvas, box rectMm, n int) {
-	sq := innerSquare(box, 0.96)
+	sq := innerSquare(box, 0.98)
 	cx := sq.X + sq.W/2
-	rx := sq.W * 0.40
+	rx := sq.W * 0.42
 	ry := sq.H * 0.15
 	a0 := -math.Pi/2 + math.Pi/float64(n)
-	bot := ellipsePoly(cx, sq.Top+sq.H*0.70, rx, ry, n, a0)
-	top := ellipsePoly(cx, sq.Top+sq.H*0.30, rx, ry, n, a0)
+	bot := ellipsePoly(cx, sq.Top+sq.H*0.80, rx, ry, n, a0)
+	top := ellipsePoly(cx, sq.Top+sq.H*0.20, rx, ry, n, a0)
 	c.poly(bot, true)
 	c.poly(top, true)
 	for i := range bot {
@@ -377,12 +467,12 @@ func drawPrism(c *canvas, box rectMm, n int) {
 }
 
 func drawOctahedron(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.94)
+	sq := innerSquare(box, 0.98)
 	cx := sq.X + sq.W/2
 	mid := sq.Top + sq.H/2
-	eq := ellipsePoly(cx, mid, sq.W*0.42, sq.H*0.16, 4, math.Pi/4)
-	top := pt{cx, sq.Top + sq.H*0.08}
-	bot := pt{cx, sq.Top + sq.H*0.92}
+	eq := ellipsePoly(cx, mid, sq.W*0.44, sq.H*0.16, 4, math.Pi/4)
+	top := pt{cx, sq.Top + sq.H*0.06}
+	bot := pt{cx, sq.Top + sq.H*0.94}
 	c.poly(eq, true)
 	for _, p := range eq {
 		c.seg(top, p)
@@ -391,11 +481,11 @@ func drawOctahedron(c *canvas, box rectMm) {
 }
 
 func drawPyramidFrustum(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.96)
+	sq := innerSquare(box, 0.98)
 	cx := sq.X + sq.W/2
 	a0 := -math.Pi/2 + math.Pi/4
-	bot := ellipsePoly(cx, sq.Top+sq.H*0.74, sq.W*0.44, sq.H*0.16, 4, a0)
-	top := ellipsePoly(cx, sq.Top+sq.H*0.30, sq.W*0.22, sq.H*0.08, 4, a0)
+	bot := ellipsePoly(cx, sq.Top+sq.H*0.82, sq.W*0.44, sq.H*0.16, 4, a0)
+	top := ellipsePoly(cx, sq.Top+sq.H*0.22, sq.W*0.22, sq.H*0.08, 4, a0)
 	c.poly(bot, true)
 	c.poly(top, true)
 	for i := range bot {
@@ -404,7 +494,7 @@ func drawPyramidFrustum(c *canvas, box rectMm) {
 }
 
 func drawTorus(c *canvas, box rectMm) {
-	sq := innerSquare(box, 0.92)
+	sq := innerSquare(box, 0.98)
 	cx := sq.X + sq.W/2
 	ctop := sq.Top + sq.H/2
 	rx := sq.W * 0.46

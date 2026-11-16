@@ -9,8 +9,14 @@ import (
 func mmToPt(mm float64) float64 { return mm * (72.0 / 25.4) }
 
 type canvas struct {
-	b     strings.Builder
-	pageH float64
+	b      strings.Builder
+	pageH  float64
+	images []sheetImage
+}
+
+type sheetImage struct {
+	w, h int
+	data string
 }
 
 func newCanvas() *canvas {
@@ -285,7 +291,20 @@ func escapePDF(s string) string {
 	return b.String()
 }
 
+type pageDoc struct {
+	content string
+	images  []sheetImage
+}
+
 func assemble(pages []string) []byte {
+	docs := make([]pageDoc, len(pages))
+	for i, content := range pages {
+		docs[i] = pageDoc{content: content}
+	}
+	return assembleDocs(docs)
+}
+
+func assembleDocs(pages []pageDoc) []byte {
 	font := "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>\n"
 	kids := make([]string, len(pages))
 	objects := []string{
@@ -293,15 +312,27 @@ func assemble(pages []string) []byte {
 		"", // pages, filled once kids are known
 		font,
 	}
-	for i, content := range pages {
+	for i, page := range pages {
 		pageObj := len(objects) + 1
 		contentObj := pageObj + 1
 		kids[i] = fmt.Sprintf("%d 0 R", pageObj)
+		xobj := ""
+		var imageObjs []string
+		if len(page.images) > 0 {
+			refs := make([]string, len(page.images))
+			imageObjs = make([]string, len(page.images))
+			for n, im := range page.images {
+				refs[n] = fmt.Sprintf("/Im%d %d 0 R", n+1, contentObj+1+n)
+				imageObjs[n] = imageObject(im)
+			}
+			xobj = " /XObject << " + strings.Join(refs, " ") + " >>"
+		}
 		objects = append(objects,
-			fmt.Sprintf("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 %.2f %.2f] /Contents %d 0 R /Resources << /Font << /F1 3 0 R >> >> >>\n",
-				mmToPt(pageWidthMm), mmToPt(pageHeightMm), contentObj),
-			contentObject(content),
+			fmt.Sprintf("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 %.2f %.2f] /Contents %d 0 R /Resources << /Font << /F1 3 0 R >>%s >> >>\n",
+				mmToPt(pageWidthMm), mmToPt(pageHeightMm), contentObj, xobj),
+			contentObject(page.content),
 		)
+		objects = append(objects, imageObjs...)
 	}
 	objects[1] = fmt.Sprintf("<< /Type /Pages /Kids [%s] /Count %d >>\n", strings.Join(kids, " "), len(pages))
 
@@ -320,6 +351,11 @@ func assemble(pages []string) []byte {
 	}
 	fmt.Fprintf(&b, "trailer\n<< /Size %d /Root 1 0 R >>\nstartxref\n%d\n%%%%EOF\n", len(objects)+1, xref)
 	return []byte(b.String())
+}
+
+func imageObject(im sheetImage) string {
+	return fmt.Sprintf("<< /Type /XObject /Subtype /Image /Width %d /Height %d /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /FlateDecode /Length %d >>\nstream\n%s\nendstream\n",
+		im.w, im.h, len(im.data), im.data)
 }
 
 func contentObject(data string) string {

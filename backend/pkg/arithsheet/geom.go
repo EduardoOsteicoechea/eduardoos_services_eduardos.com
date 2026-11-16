@@ -7,13 +7,15 @@ package arithsheet
 const (
 	pageWidthMm    = 279.4
 	pageHeightMm   = 215.9
-	marginOuterMm  = 10
-	marginGutterMm = 20
-	headerHeightMm = 8
-	headerGapMm    = 1.5
+	marginOuterMm  = 5
+	marginGutterMm = 10
 	gridCols       = 4
 	gridRows       = 8
+	arithGridCols  = 3
+	arithGridRows  = 6
 	sampleSeed     = 20261113
+	// classSeed is the next worksheet: new arithmetic and a new geometry shuffle.
+	classSeed = 20261116
 )
 
 // sheetGeom is the shared chrome of both physical sheets.
@@ -25,20 +27,31 @@ type sheetGeom struct {
 	gridTop  float64
 	cellW    float64
 	cellH    float64
+	cols     int
+	rows     int
 }
 
 func newGeom() sheetGeom {
+	return newGeomGrid(gridCols, gridRows)
+}
+
+func newArithGeom() sheetGeom {
+	return newGeomGrid(arithGridCols, arithGridRows)
+}
+
+func newGeomGrid(cols, rows int) sheetGeom {
 	contentW := (pageWidthMm - 2*marginOuterMm - marginGutterMm) / 2
 	contentH := pageHeightMm - 2*marginOuterMm
-	gridH := contentH - headerHeightMm - headerGapMm
 	return sheetGeom{
 		contentW: contentW,
 		contentH: contentH,
 		leftX:    marginOuterMm,
 		rightX:   marginOuterMm + contentW + marginGutterMm,
-		gridTop:  marginOuterMm + headerHeightMm + headerGapMm,
-		cellW:    contentW / gridCols,
-		cellH:    gridH / gridRows,
+		gridTop:  marginOuterMm,
+		cellW:    contentW / float64(cols),
+		cellH:    contentH / float64(rows),
+		cols:     cols,
+		rows:     rows,
 	}
 }
 
