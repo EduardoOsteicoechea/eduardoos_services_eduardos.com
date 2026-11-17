@@ -511,7 +511,7 @@ async function syncEreportConnectorGate(authed: boolean, isAdmin = false): Promi
   });
 }
 
-/** Menu services stay visible; lock (grey + non-navigable) when the user lacks access. */
+/** Public menu services stay visible; lock (grey + non-navigable) when the user lacks access. */
 function setServiceNavLocked(node: HTMLElement, locked: boolean): void {
   node.hidden = false;
   if (locked) {
@@ -527,6 +527,15 @@ function setServiceNavLocked(node: HTMLElement, locked: boolean): void {
   if (node.getAttribute("title") === "Subscription required") {
     node.removeAttribute("title");
   }
+}
+
+/** Admin-only products stay out of the menu for everyone except platform admin. */
+function setServiceNavHidden(node: HTMLElement): void {
+  node.hidden = true;
+  node.classList.add("sidebar-nav--locked");
+  node.setAttribute("aria-disabled", "true");
+  node.setAttribute("tabindex", "-1");
+  node.setAttribute("title", "Subscription required");
 }
 
 async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<void> {
@@ -548,6 +557,11 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
   if (!authed) {
     for (const node of nodes) {
       if (isEreportConnectorNode(node)) continue;
+      const id = (node.getAttribute("data-service") || "").trim().toLowerCase();
+      if (isAdminOnlyProduct(id)) {
+        setServiceNavHidden(node);
+        continue;
+      }
       setServiceNavLocked(node, true);
     }
     sessionLog("chrome.refreshAuth.services", { mode: "guest", count: nodes.length });
@@ -577,7 +591,7 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
     if (isEreportConnectorNode(node)) continue;
     const id = (node.getAttribute("data-service") || "").trim().toLowerCase();
     if (isAdminOnlyProduct(id)) {
-      setServiceNavLocked(node, true);
+      setServiceNavHidden(node);
       continue;
     }
     setServiceNavLocked(node, !allowed.get(id));

@@ -112,7 +112,7 @@ describe("main-menu session chrome", () => {
     expect(checkServiceAccess).not.toHaveBeenCalled();
   });
 
-  it("shows public services for members but keeps admin-only products locked", async () => {
+  it("shows public services for members but hides admin-only products", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
       requestId: "rid-member",
@@ -128,12 +128,9 @@ describe("main-menu session chrome", () => {
     const scrib = document.querySelector('[data-service="scrib"]') as HTMLElement;
     const ereport = document.querySelector('[data-service="ereport"]') as HTMLElement;
     const evoice = document.querySelector('[data-service="evoice"]') as HTMLElement;
-    expect(scrib.hidden).toBe(false);
+    expect(scrib.hidden).toBe(true);
+    expect(evoice.hidden).toBe(true);
     expect(ereport.hidden).toBe(false);
-    expect(evoice.hidden).toBe(false);
-    // scrib/evoice are admin-only in profile-mode even with a stale entitlement claim
-    expect(scrib.classList.contains("sidebar-nav--locked")).toBe(true);
-    expect(evoice.classList.contains("sidebar-nav--locked")).toBe(true);
     expect(ereport.classList.contains("sidebar-nav--locked")).toBe(false);
     expect(ereport.getAttribute("aria-disabled")).toBeNull();
   });
@@ -202,7 +199,7 @@ describe("main-menu session chrome", () => {
     expect(checkServiceAccess).not.toHaveBeenCalled();
   });
 
-  it("shows service links locked for guests and keeps Institutes hidden", async () => {
+  it("hides admin-only services for guests and keeps public ones locked", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 401,
       requestId: "rid-guest",
@@ -211,9 +208,9 @@ describe("main-menu session chrome", () => {
     await refreshAuthChrome();
     const scrib = document.querySelector('[data-service="scrib"]') as HTMLElement;
     const ereport = document.querySelector('[data-service="ereport"]') as HTMLElement;
-    expect(scrib.hidden).toBe(false);
+    expect(scrib.hidden).toBe(true);
     expect(ereport.hidden).toBe(false);
-    expect(scrib.classList.contains("sidebar-nav--locked")).toBe(true);
+    expect(ereport.classList.contains("sidebar-nav--locked")).toBe(true);
     expect(ereport.getAttribute("aria-disabled")).toBe("true");
     expect((document.querySelector('[href="/dashboard/latin/calvins-institutes"]') as HTMLElement).hidden).toBe(true);
     expect(checkServiceAccess).not.toHaveBeenCalled();
