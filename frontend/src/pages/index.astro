@@ -73,7 +73,7 @@ const featured = caseStudies.slice(0, 6);
       <p class="section__lede">{profileStack}</p>
     </section>
 
-    <section class="section" aria-labelledby="cases-heading">
+    <section class="section section--evidence" aria-labelledby="cases-heading">
       <div class="section__head">
         <p class="eyebrow">Evidence</p>
         <h2 class="section__title" id="cases-heading">Featured case studies</h2>
@@ -202,5 +202,19 @@ const featured = caseStudies.slice(0, 6);
     flex-wrap: wrap;
     gap: var(--rail-gap);
     margin-top: var(--space-padding);
+  }
+
+  .section--evidence {
+    background: #000000;
+    margin-inline: calc(-1 * var(--main-inline));
+    padding-inline: var(--main-inline);
+  }
+
+  :global(html[data-theme="light"]) .section--evidence {
+    background: #ffffff;
+  }
+
+  :global(html[data-theme="dark"]) .section--evidence {
+    background: #000000;
   }
 </style>
