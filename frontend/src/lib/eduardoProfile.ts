@@ -18,7 +18,7 @@ export const profileWhoAnswer =
 
 /** Second hero paragraph (home page lead). */
 export const profileWhoLead2 =
-  "This site is my professional profile: case studies, CV, and two public AEC tools - eReport (issue tracking) and eoProject (construction stages, photos, and IFC versions). Fluent English, native Spanish. Remote from Latin America (UTC-4).";
+  "This site is my professional profile: case studies, CV, and two public AEC tools - eReport (issue tracking) and eoProject (construction stages, photos, and IFC versions). Fluent English, native Spanish. Remote.";
 
 export const HOME_HEADING = "Senior BIM Software Developer";
 
@@ -97,7 +97,7 @@ export const profileExperience: ProfileExperience[] = [
     period: "March 2024-April 2025",
     icon: "precision_manufacturing",
     summary:
-      "I support and extend Revit add-ins (Clash Detection, Object Visualizer, Object Quantifier, 4D Simulation, Dynamo Zero Touch Nodes, Mirar, Andiamo, Itera). I built SincronizadorGPS50 (Windows Forms + SQL Server) linking Gestproject2024 and Sage50, and ship AI integrations with OpenAI, StabilityAI, and Replicate-based actions across Windows apps and Revit APIs.",
+      "I support and extend Revit add-ins (Clash Detection, Object Visualizer, Object Quantifier, 4D Simulation, Dynamo Zero Touch Nodes, Mirar, Andiamo, Itera). I built SincronizadorGPS50 (Windows Forms + SQL Server) linking Gestproject2024 and Sage50, and implement agentic workflows that connect Windows apps and Revit APIs to model-driven automation.",
   },
   {
     org: "Freelance",
@@ -215,10 +215,10 @@ export const profileSkillCards: ProfileSkill[] = [
       "EC2, S3, CloudFront, Route 53, DynamoDB, Lambda, SQS, ECR; Linux, systemd, Docker, Nginx, TLS.",
   },
   {
-    title: "Scripting & automation",
-    icon: "terminal",
+    title: "Agentic workflows",
+    icon: "psychology",
     description:
-      "Python geometry and data workflows, Dynamo-Python, PowerShell (basic task automation), GitHub Actions CI/CD.",
+      "I design and implement agentic workflows that orchestrate tools, APIs, and BIM context for AI-assisted delivery.",
   },
   {
     title: "AEC domain",
@@ -231,7 +231,7 @@ export const profileSkillCards: ProfileSkill[] = [
 export const profileSkills: string[] = profileSkillCards.map((s) => s.title);
 
 export const profileStack =
-  "C#, .NET Framework 4.8, .NET 8/9, ASP.NET Core, WPF, Windows Forms, Revit API, AutoCAD API, Autodesk APS/ACC, Dynamo, Python, PowerShell (basic), SQL Server, MySQL, MongoDB, TypeScript, React, Go REST APIs, AWS (EC2, S3, CloudFront, Route 53, DynamoDB, Lambda, SQS, ECR), Linux, Nginx, Docker, GitHub Actions, Stability AI, DeepSeek, Kimi.";
+  "C#, .NET Framework 4.8, .NET 8/9, ASP.NET Core, WPF, Windows Forms, Revit API, AutoCAD API, Autodesk APS/ACC, Dynamo, Python, PowerShell (basic), SQL Server, MySQL, MongoDB, TypeScript, React, Go REST APIs, AWS (EC2, S3, CloudFront, Route 53, DynamoDB, Lambda, SQS, ECR), Linux, Nginx, Docker, GitHub Actions, agentic workflows.";
 
 export const profileFocusAnswer =
   "At Hexagon Multivista I build Revit API tools, APS/ACC automations, and AI-assisted BIM workflows. Independently I ship documented APIs, cloud add-in distribution, and AEC web tools (eReport, eoProject) that complement senior BIM software delivery.";
@@ -316,8 +316,8 @@ export function buildHomeProfileJsonLd(pageUrl: string): Record<string, unknown>
           "Revit API",
           "Architecture",
           "Full-stack software development",
-          "AI-driven development",
-          "AI integrations for AEC",
+          "Agentic workflows",
+          "AI-assisted BIM development",
         ],
         alumniOf: {
           "@type": "CollegeOrUniversity",

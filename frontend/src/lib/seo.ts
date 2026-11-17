@@ -103,6 +103,6 @@ export const HOME_FAQS: FaqItem[] = [
   {
     question: "How can I contact Eduardo?",
     answer:
-      "Use the Contact page or public channels: email eduardooost@gmail.com, WhatsApp https://wa.me/584147281033, LinkedIn, GitHub, or YouTube listed on eduardoos.com. He works remotely from Latin America (UTC-4).",
+      "Use the Contact page or public channels: email eduardooost@gmail.com, WhatsApp https://wa.me/584147281033, LinkedIn, GitHub, or YouTube listed on eduardoos.com. He works remotely.",
   },
 ];

@@ -444,6 +444,10 @@ const jsonLdString =
             </button>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--services">
+            <a href="/" data-route aria-current={path === "/" ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">home</span>
+              Home
+            </a>
             <a href="/portfolio" data-route aria-current={path === "/portfolio" || path.startsWith("/portfolio/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">work</span>
               Portfolio

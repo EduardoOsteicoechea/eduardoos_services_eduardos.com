@@ -99,17 +99,17 @@ export const caseStudies: CaseStudy[] = [
     slug: "ai-revit-rendering",
     title: "AI rendering from Revit views",
     summary:
-      "Capture model views via the Revit API and generate rendered proposal options with local FLUX/ControlNet pipelines and PowerShell installers.",
+      "Capture model views via the Revit API and generate rendered proposal options through local GPU pipelines and PowerShell installers.",
     problem:
       "Early architectural proposals need fast visual options without a full rendering department cycle.",
     role: "Author of Revit capture + AI restyle tooling.",
     approach:
-      "Revit API captures view context; Python/FLUX ControlNet restyles; PowerShell install.ps1 sets up CUDA/venv for local GPU runs.",
+      "Revit API captures view context; a local GPU pipeline restyles images; PowerShell install.ps1 sets up CUDA/venv for local runs.",
     architecture:
-      "Revit add-in → image context → local GPU pipeline (FLUX + ControlNet) → proposal gallery.",
+      "Revit add-in → image context → local GPU pipeline → proposal gallery.",
     outcome:
       "Rapid proposal imagery loop tied to live BIM geometry.",
-    stack: ["C#", "Revit API", "Python", "PowerShell", "FLUX", "ControlNet"],
+    stack: ["C#", "Revit API", "Python", "PowerShell", "local GPU pipeline"],
     links: [{ label: "GitHub profile", href: "https://github.com/EduardoOsteicoechea" }],
     icon: "image",
   },
