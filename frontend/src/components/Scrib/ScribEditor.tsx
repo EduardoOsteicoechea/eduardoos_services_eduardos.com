@@ -933,14 +933,14 @@ export default function ScribEditor() {
 
   if (!ids && error) {
     return (
-      <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription>
+      <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription adminOnly>
         <p className="scrib-dashboard__error">Ruta inválida. <a href={APP_ROUTES.scrib}>Volver</a></p>
       </ServiceGate>
     );
   }
 
   return (
-    <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription>
+    <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription adminOnly>
       {mode === "annotate" ? (
         <div className="scrib-annotate-frame" aria-hidden />
       ) : null}

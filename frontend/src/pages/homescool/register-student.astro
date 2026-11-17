@@ -27,7 +27,7 @@ import Layout from "../../layouts/Layout.astro";
 
   onAstroPageLoad("homescool-register", async () => {
     const resultEl = document.querySelector("[data-result]");
-    const gate = await requireService("homescool", { requireSubscription: true });
+    const gate = await requireService("homescool", { requireSubscription: true, adminOnly: true });
     if (!gate.sessionOk || !gate.access.allowed) {
       apiFail(gate.sessionOk ? "Teacher subscription required." : "Sign in required.");
       return;

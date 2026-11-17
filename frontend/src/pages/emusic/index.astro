@@ -106,7 +106,7 @@ const cards = [
     }
 
     await refreshAuthSession();
-    const gateResult = await requireService("emusic");
+    const gateResult = await requireService("emusic", { adminOnly: true });
     if (!gateResult.sessionOk || !gateResult.access.allowed) {
       if (banner instanceof HTMLElement) {
         banner.hidden = false;

@@ -30,7 +30,7 @@ func (a *App) subscriptionsCatalogHandler(w http.ResponseWriter, r *http.Request
 	a.mustLogf(r, "subscriptions.catalog")
 	out := make([]map[string]any, 0, len(serviceCatalog))
 	for _, s := range serviceCatalog {
-		if s.MonthlyUSD <= 0 {
+		if s.MonthlyUSD <= 0 || productAdminOnly(s.ID) {
 			continue
 		}
 		out = append(out, map[string]any{
@@ -93,6 +93,9 @@ func (a *App) subscriptionsAccessHandler(w http.ResponseWriter, r *http.Request)
 	if user.Role == roleAdmin {
 		allowed = true
 		reason = "admin"
+	} else if productAdminOnly(serviceID) {
+		allowed = false
+		reason = "admin_only"
 	} else if granted, unavailable := a.hasAdminServiceGrant(r, user.ID, serviceID); unavailable {
 		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
 		return
@@ -110,7 +113,7 @@ func (a *App) subscriptionsAccessHandler(w http.ResponseWriter, r *http.Request)
 			reason = "entitlement"
 		}
 	}
-	if !allowed && serviceID == "homescool" && a.homescool != nil {
+	if !allowed && !productAdminOnly(serviceID) && serviceID == "homescool" && a.homescool != nil {
 		if a.homescool.IsLinkedStudent(r.Context(), user.ID) {
 			allowed = true
 			reason = "linked_student"
@@ -215,6 +218,12 @@ func (a *App) paymentsCreateIntentHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 	services := normalizeServiceIDs(body.Services)
+	for _, id := range services {
+		if productAdminOnly(id) {
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			return
+		}
+	}
 	payable := make([]string, 0, len(services))
 	for _, id := range services {
 		if payableService(id) {

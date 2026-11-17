@@ -72,6 +72,10 @@ func (a *App) requireLatinUser(w http.ResponseWriter, r *http.Request) *User {
 		a.writeSafeError(w, r, http.StatusUnauthorized, "unauthorized")
 		return nil
 	}
+	if user.Role != roleAdmin {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return nil
+	}
 	return user
 }
 

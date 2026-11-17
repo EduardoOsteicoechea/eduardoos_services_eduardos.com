@@ -16,9 +16,22 @@ export function personSchema() {
     "@id": `${SITE_ORIGIN}/#person`,
     name: PERSON_NAME,
     url: SITE_ORIGIN,
-    jobTitle: "Architect. BIM Software Developer. AEC AI Technologist",
+    jobTitle: "Senior BIM Software Developer",
     description:
-      "Licensed Building Architect (ULA, Cum Laude) and full-stack desktop–web–cloud developer with focused BIM training. Builds Revit/AutoCAD API tools, AI integrations, and multiplatform products for AEC.",
+      "Licensed Building Architect (ULA, Cum Laude) and Senior BIM Software Developer. Revit/AutoCAD APIs, C#/.NET add-ins, Autodesk APS/ACC, ASP.NET Core, and AWS cloud architectures.",
+    knowsAbout: [
+      "Revit API",
+      "AutoCAD API",
+      "Autodesk Platform Services",
+      "Autodesk Construction Cloud",
+      "C#",
+      ".NET",
+      "ASP.NET Core",
+      "AWS",
+      "Dynamo",
+      "Python",
+      "BIM",
+    ],
     sameAs: [...SAME_AS],
     email: "mailto:eduardooost@gmail.com",
   };
@@ -32,7 +45,7 @@ export function websiteSchema() {
     url: SITE_ORIGIN,
     inLanguage: "en",
     description:
-      "Public home for Eduardo Osteicoechea — AEC AI technologist, licensed architect, BIM practitioner, and full-stack developer.",
+      "Professional profile for Eduardo Osteicoechea — Senior BIM Software Developer, licensed architect, Revit/AutoCAD API and APS engineer.",
     publisher: { "@id": `${SITE_ORIGIN}/#person` },
   };
 }
@@ -75,12 +88,12 @@ export const HOME_FAQS: FaqItem[] = [
   {
     question: "Who is Eduardo Osteicoechea?",
     answer:
-      "Eduardo Osteicoechea is a licensed Building Architect (ULA, Cum Laude) and full-stack developer who builds BIM tools, AI integrations, and production web platforms for AEC.",
+      "Eduardo Osteicoechea is a licensed Building Architect (ULA, Cum Laude) and Senior BIM Software Developer. He builds Revit/AutoCAD API add-ins, APS/ACC automations, ASP.NET Core APIs on AWS, and AEC tools such as eReport and eoProject.",
   },
   {
-    question: "What does Eduardoos publish?",
+    question: "What is public on eduardoos.com?",
     answer:
-      "Eduardoos.com is the public site for product work, technical writing, and services. It is a static Astro frontend that talks to its own Go API only through same-origin /api/.",
+      "His professional profile, portfolio case studies, CV, contact, eReport, eoProject, eApi/API docs, and subscriptions for those public products. Other platform tools are private.",
   },
   {
     question: "Does he hold a Master’s degree in BIM?",
@@ -90,6 +103,6 @@ export const HOME_FAQS: FaqItem[] = [
   {
     question: "How can I contact Eduardo?",
     answer:
-      "Use the Contact page or public channels: email eduardooost@gmail.com, WhatsApp https://wa.me/584147281033, LinkedIn, GitHub, or YouTube listed on eduardoos.com.",
+      "Use the Contact page or public channels: email eduardooost@gmail.com, WhatsApp https://wa.me/584147281033, LinkedIn, GitHub, or YouTube listed on eduardoos.com. He works remotely from Latin America (UTC-4).",
   },
 ];

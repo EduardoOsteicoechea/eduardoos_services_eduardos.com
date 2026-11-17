@@ -262,6 +262,9 @@ func TestUnverifiedEmailIsNotSent(t *testing.T) {
 }
 
 func newTestApp(enable bool) *App {
+	// Product unit tests exercise member entitlements; profile-mode admin-only
+	// gates are covered by tests that call useProfileCatalogVisibility.
+	setAllCatalogVisibility(visibilityPublic)
 	cfg := config{
 		ListenAddr:             "127.0.0.1:8081",
 		MongoDatabase:          mongoDatabase,

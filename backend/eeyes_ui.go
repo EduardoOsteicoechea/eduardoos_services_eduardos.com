@@ -28,7 +28,22 @@ func eeyesUICSP() string {
 	}, "; ")
 }
 
+func (a *App) requireEeyesUIAdmin(w http.ResponseWriter, r *http.Request) bool {
+	if !productAdminOnly(productEeyes) {
+		return true
+	}
+	user := a.currentUser(r)
+	if user == nil || user.Role != roleAdmin {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return false
+	}
+	return true
+}
+
 func (a *App) eeyesUIIndex(w http.ResponseWriter, r *http.Request) {
+	if !a.requireEeyesUIAdmin(w, r) {
+		return
+	}
 	raw, err := eeyesUIFiles.ReadFile("eeyes_ui/index.html")
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
@@ -51,6 +66,9 @@ func (a *App) eeyesUIIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) eeyesUIAsset(w http.ResponseWriter, r *http.Request) {
+	if !a.requireEeyesUIAdmin(w, r) {
+		return
+	}
 	// Extensionless aliases: production Nginx serves *.js/*.css from the static
 	// root before the /api/ proxy, so index.html links app-css / app-js.
 	name := filepathBaseSafe(r.PathValue("asset"))

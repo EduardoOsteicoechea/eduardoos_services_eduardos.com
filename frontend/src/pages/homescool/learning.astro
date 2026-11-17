@@ -55,7 +55,7 @@ import Layout from "../../layouts/Layout.astro";
       }
     }
 
-    const result = await requireService("homescool");
+    const result = await requireService("homescool", { adminOnly: true });
     if (!result.sessionOk || !result.access.allowed) {
       if (banner instanceof HTMLElement) {
         banner.textContent = result.sessionOk ? "Homescool access required." : "Sign in required.";

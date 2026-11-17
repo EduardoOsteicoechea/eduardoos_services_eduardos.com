@@ -105,7 +105,7 @@ import Layout from "../../layouts/Layout.astro";
     }
 
     await refreshAuthSession();
-    const gateResult = await requireService("emusic");
+    const gateResult = await requireService("emusic", { adminOnly: true });
     const admin = isPlatformAdmin();
     if (!gateResult.sessionOk || !gateResult.access.allowed || !admin) {
       if (banner instanceof HTMLElement) {

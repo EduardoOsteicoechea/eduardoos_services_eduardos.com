@@ -23,6 +23,7 @@ import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
 import { startVoiceChat } from "./voice";
 import { go, startClientRouting } from "./router";
+import { isAdminOnlyPath, isAdminOnlyProduct } from "./productVisibility";
 import { checkServiceAccess } from "./serviceAccess";
 
 /** Root font-size steps (10px–22px at a 16px browser default). */
@@ -556,7 +557,7 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
     ...new Set(
       nodes
         .map((node) => (node.getAttribute("data-service") || "").trim().toLowerCase())
-        .filter((id) => id && id !== "ereport-connector"),
+        .filter((id) => id && id !== "ereport-connector" && !isAdminOnlyProduct(id)),
     ),
   ];
   const allowed = new Map<string, boolean>();
@@ -575,6 +576,10 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
   for (const node of nodes) {
     if (isEreportConnectorNode(node)) continue;
     const id = (node.getAttribute("data-service") || "").trim().toLowerCase();
+    if (isAdminOnlyProduct(id)) {
+      setServiceNavLocked(node, true);
+      continue;
+    }
     setServiceNavLocked(node, !allowed.get(id));
   }
   sessionLog("chrome.refreshAuth.services", {
@@ -585,37 +590,36 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
 
 function plainUserBlockedPath(pathname: string): boolean {
   const path = pathname.replace(/\/+$/, "") || "/";
-  if (path === "/" || path === "/contact") return false;
+  if (path === "/" || path === "/contact" || path === "/cv" || path.startsWith("/portfolio")) {
+    return false;
+  }
   if (path.startsWith("/payments")) return false;
   if (path.startsWith("/session")) return false;
-  // Entitled service surfaces keep their own gates; do not soft-block here.
+  if (isAdminOnlyPath(path)) return true;
+  // Public entitled surfaces keep their own gates; do not soft-block here.
   if (
-    path.startsWith("/scrib") ||
-    path.startsWith("/homescool") ||
-    path.startsWith("/eoschool") ||
-    path.startsWith("/documents/pamphlet") ||
-    path.startsWith("/evoice") ||
-    path.startsWith("/emusic") ||
     path.startsWith("/eoproject") ||
-    path.startsWith("/eeyes") ||
     path.startsWith("/ereport") ||
     path.startsWith("/eapi") ||
     path === "/api-docs"
   ) {
     return false;
   }
-  return (
-    path.includes("calvins-institutes") ||
-    path.startsWith("/admin") ||
-    path.startsWith("/publisher")
-  );
+  return path.startsWith("/admin") || path.startsWith("/publisher");
 }
 
 function enforcePlainUserRouteAccess(isPlainUser: boolean): void {
   if (!isPlainUser || typeof window === "undefined") return;
   if (!plainUserBlockedPath(window.location.pathname)) return;
   sessionLog("chrome.plainUser.redirect", { from: window.location.pathname });
-  go("/");
+  go("/404");
+}
+
+function enforceAdminOnlyPathAccess(isAdmin: boolean): void {
+  if (isAdmin || typeof window === "undefined") return;
+  if (!isAdminOnlyPath(window.location.pathname)) return;
+  sessionLog("chrome.adminOnly.redirect", { from: window.location.pathname });
+  go("/404");
 }
 
 function enforceGuestInstitutesAccess(authed: boolean): void {
@@ -688,6 +692,7 @@ export async function refreshAuthChrome(): Promise<void> {
   await syncSubscriptionNav(isAdmin, authed);
   await syncEreportConnectorGate(authed, isAdmin);
   enforceGuestInstitutesAccess(authed);
+  enforceAdminOnlyPathAccess(isAdmin);
   enforcePlainUserRouteAccess(isPlainUser);
   if (authed) {
     applySessionAvatar(data.avatar);

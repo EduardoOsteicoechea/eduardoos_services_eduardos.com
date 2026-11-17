@@ -6,35 +6,70 @@ import (
 	"time"
 )
 
+const (
+	visibilityPublic = "public"
+	visibilityAdmin  = "admin"
+)
+
 // Billable catalog (spec 002). Admin always bypasses entitlements.
+// Visibility gates public marketing/subscription surfaces: admin-only products
+// remain in the codebase but are denied to non-admin callers.
 type serviceInfo struct {
 	ID          string
 	Label       string
 	Description string
 	MonthlyUSD  float64
+	Visibility  string
 }
 
 var serviceCatalog = []serviceInfo{
-	{ID: "epam", Label: "EPAM", Description: "Cloud EPAM editor, .epam documents, and print export.", MonthlyUSD: 1},
-	{ID: productArticles, Label: "Articles", Description: "Eligible pamphlets appear in the admin Articles queue; the site admin controls public visibility.", MonthlyUSD: 1},
-	{ID: "homescool", Label: "Homescool", Description: "Homescool learning surface.", MonthlyUSD: 1},
-	{ID: "scrib", Label: "Scrib", Description: "Layered US Letter manuscript sheets with cloud books.", MonthlyUSD: 1},
-	{ID: "ereport", Label: "eReport", Description: "Issue tracker reports with cloud storage and sharing.", MonthlyUSD: 1},
-	{ID: productEreportConnector, Label: "eReport Connector", Description: "Use the eReport site connector (website registration binding, quick issue modal, and embed).", MonthlyUSD: 1},
-	{ID: "evoice", Label: "eVoice", Description: "Text-to-audio projects (docs → MP3).", MonthlyUSD: 1},
-	{ID: "emusic", Label: "eMusic", Description: "Curated music library with section playlists.", MonthlyUSD: 1},
-	{ID: "eoproject", Label: "eoProject", Description: "Construction project stages, photos, and IFC versions.", MonthlyUSD: 1},
-	{ID: productEeyes, Label: "eEyes", Description: "Pair Android/Desktop shells, plan human capture tasks, and review completions.", MonthlyUSD: 1},
-	{ID: "api", Label: "eApi", Description: "Create API keys and call product APIs from external apps.", MonthlyUSD: 3},
+	{ID: "epam", Label: "EPAM", Description: "Cloud EPAM editor, .epam documents, and print export.", MonthlyUSD: 1, Visibility: visibilityAdmin},
+	{ID: productArticles, Label: "Articles", Description: "Eligible pamphlets appear in the admin Articles queue; the site admin controls public visibility.", MonthlyUSD: 1, Visibility: visibilityAdmin},
+	{ID: "homescool", Label: "Homescool", Description: "Homescool learning surface.", MonthlyUSD: 1, Visibility: visibilityAdmin},
+	{ID: "scrib", Label: "Scrib", Description: "Layered US Letter manuscript sheets with cloud books.", MonthlyUSD: 1, Visibility: visibilityAdmin},
+	{ID: "ereport", Label: "eReport", Description: "Issue tracker reports with cloud storage and sharing.", MonthlyUSD: 1, Visibility: visibilityPublic},
+	{ID: productEreportConnector, Label: "eReport Connector", Description: "Use the eReport site connector (website registration binding, quick issue modal, and embed).", MonthlyUSD: 1, Visibility: visibilityPublic},
+	{ID: "evoice", Label: "eVoice", Description: "Text-to-audio projects (docs → MP3).", MonthlyUSD: 1, Visibility: visibilityAdmin},
+	{ID: "emusic", Label: "eMusic", Description: "Curated music library with section playlists.", MonthlyUSD: 1, Visibility: visibilityAdmin},
+	{ID: "eoproject", Label: "eoProject", Description: "Construction project stages, photos, and IFC versions.", MonthlyUSD: 1, Visibility: visibilityPublic},
+	{ID: productEeyes, Label: "eEyes", Description: "Pair Android/Desktop shells, plan human capture tasks, and review completions.", MonthlyUSD: 1, Visibility: visibilityAdmin},
+	{ID: "api", Label: "eApi", Description: "Create API keys and call product APIs from external apps.", MonthlyUSD: 3, Visibility: visibilityPublic},
 }
 
 var serviceByID map[string]serviceInfo
 
 func init() {
+	rebuildServiceByID()
+}
+
+func rebuildServiceByID() {
 	serviceByID = make(map[string]serviceInfo, len(serviceCatalog))
 	for _, s := range serviceCatalog {
 		serviceByID[s.ID] = s
 	}
+}
+
+// setAllCatalogVisibility is test-only: product unit tests use public so member
+// entitlements still exercise product logic. Profile-mode tests restore admin.
+func setAllCatalogVisibility(vis string) {
+	for i := range serviceCatalog {
+		serviceCatalog[i].Visibility = vis
+	}
+	rebuildServiceByID()
+}
+
+// restoreProfileCatalogVisibility applies the production visibility matrix.
+func restoreProfileCatalogVisibility() {
+	for i := range serviceCatalog {
+		id := serviceCatalog[i].ID
+		switch id {
+		case "ereport", productEreportConnector, "eoproject", "api":
+			serviceCatalog[i].Visibility = visibilityPublic
+		default:
+			serviceCatalog[i].Visibility = visibilityAdmin
+		}
+	}
+	rebuildServiceByID()
 }
 
 func knownService(id string) bool {
@@ -63,9 +98,23 @@ func productIDAliases(id string) []string {
 	return []string{n}
 }
 
+// productAdminOnly reports whether a product is hidden from non-admin users
+// (nav, catalog, entitlements, and API-key product gates).
+func productAdminOnly(id string) bool {
+	s, ok := serviceByID[normalizeProductID(id)]
+	if !ok {
+		return false
+	}
+	vis := strings.TrimSpace(s.Visibility)
+	if vis == "" {
+		vis = visibilityPublic
+	}
+	return vis == visibilityAdmin
+}
+
 // payableService reports whether a service is sold via subscriptions.
 func payableService(id string) bool {
-	return knownService(id) && monthlyPriceUSD(id) > 0
+	return knownService(id) && monthlyPriceUSD(id) > 0 && !productAdminOnly(id)
 }
 
 func serviceLabel(id string) string {

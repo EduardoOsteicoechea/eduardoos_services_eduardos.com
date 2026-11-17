@@ -164,6 +164,7 @@ func TestPamphletRequiresEntitlement(t *testing.T) {
 
 func TestArticlesListIncludesEmptySeriesFromCatalog(t *testing.T) {
 	app := newTestApp(false)
+	useProfileCatalogVisibility(t)
 	app.cfg.PublicArticlesOwnerEmail = "member@eduardoos.com"
 	_, err := app.pamphlet.SaveSeries(context.Background(), EpamSeriesProfile{
 		UserID: "member-1", SeriesID: "ser-empty", Name: "Empty Series",
@@ -172,8 +173,12 @@ func TestArticlesListIncludesEmptySeriesFromCatalog(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	list := httptest.NewRecorder()
-	app.Handler().ServeHTTP(list, httptest.NewRequest(http.MethodGet, "/api/articles", nil))
+	guest := httptest.NewRecorder()
+	app.Handler().ServeHTTP(guest, httptest.NewRequest(http.MethodGet, "/api/articles", nil))
+	if guest.Code != http.StatusNotFound {
+		t.Fatalf("guest articles want 404 got %d %s", guest.Code, guest.Body.String())
+	}
+	list := app.doJSON(t, "admin@eduardoos.com", http.MethodGet, "/api/articles", "")
 	if list.Code != http.StatusOK {
 		t.Fatalf("articles list: %d %s", list.Code, list.Body.String())
 	}
@@ -201,6 +206,7 @@ func TestArticlesListIncludesEmptySeriesFromCatalog(t *testing.T) {
 
 func TestArticlesLoadOnlyPublicPamphletsForConfiguredOwner(t *testing.T) {
 	app := newTestApp(false)
+	useProfileCatalogVisibility(t)
 	app.cfg.PublicArticlesOwnerEmail = "member@eduardoos.com"
 	_, err := app.pamphlet.SaveEpam(context.Background(), EpamRecord{
 		UserID: "member-1", EpamID: "saved", Title: "Saved", Public: true,
@@ -223,18 +229,20 @@ func TestArticlesLoadOnlyPublicPamphletsForConfiguredOwner(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	list := httptest.NewRecorder()
-	app.Handler().ServeHTTP(list, httptest.NewRequest(http.MethodGet, "/api/articles", nil))
+	guestList := httptest.NewRecorder()
+	app.Handler().ServeHTTP(guestList, httptest.NewRequest(http.MethodGet, "/api/articles", nil))
+	if guestList.Code != http.StatusNotFound {
+		t.Fatalf("guest articles want 404 got %d %s", guestList.Code, guestList.Body.String())
+	}
+	list := app.doJSON(t, "admin@eduardoos.com", http.MethodGet, "/api/articles", "")
 	if list.Code != http.StatusOK || decodeMap(t, list)["count"] != float64(1) {
 		t.Fatalf("owner public list: %d %s", list.Code, list.Body.String())
 	}
-	draft := httptest.NewRecorder()
-	app.Handler().ServeHTTP(draft, httptest.NewRequest(http.MethodGet, "/api/articles/draft", nil))
+	draft := app.doJSON(t, "admin@eduardoos.com", http.MethodGet, "/api/articles/draft", "")
 	if draft.Code != http.StatusNotFound {
 		t.Fatalf("unpublished pamphlet should be hidden: %d %s", draft.Code, draft.Body.String())
 	}
-	saved := httptest.NewRecorder()
-	app.Handler().ServeHTTP(saved, httptest.NewRequest(http.MethodGet, "/api/articles/saved", nil))
+	saved := app.doJSON(t, "admin@eduardoos.com", http.MethodGet, "/api/articles/saved", "")
 	if saved.Code != http.StatusOK {
 		t.Fatalf("public article with column text: %d %s", saved.Code, saved.Body.String())
 	}

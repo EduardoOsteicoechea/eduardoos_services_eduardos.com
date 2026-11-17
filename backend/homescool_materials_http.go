@@ -44,6 +44,9 @@ func (a *App) homescoolMaterialOwnerIDs(r *http.Request, user *User) ([]string, 
 	if ok {
 		return appendHomescoolCurriculumOwner([]string{user.ID}), true, true
 	}
+	if productAdminOnly(productHomescool) {
+		return nil, false, false
+	}
 	links, err := a.homescool.ListLinksByStudent(r.Context(), user.ID)
 	if err != nil || len(links) == 0 {
 		return nil, false, false

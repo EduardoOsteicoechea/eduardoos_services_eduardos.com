@@ -99,7 +99,7 @@ const cards = [
       banner.textContent = "Cargando…";
     }
 
-    const result = await requireService("homescool", { requireSubscription: true });
+    const result = await requireService("homescool", { requireSubscription: true, adminOnly: true });
     await refreshAuthSession();
     if (!result.sessionOk || !result.access.allowed) {
       if (banner instanceof HTMLElement) {

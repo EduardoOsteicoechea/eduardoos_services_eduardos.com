@@ -14,13 +14,13 @@ export const PROFILE_YOUTUBE = "https://www.youtube.com/@eduardoosvideos";
 export const PROFILE_GITHUB = "https://github.com/EduardoOsteicoechea";
 
 export const profileWhoAnswer =
-  "I am a licensed Building Architect, AEC AI BIM technologist and Full-Stack Developer across Desktop, Web and Cloud. I build software platforms and agentic workflows to streamline processes, generate new approaches, and experiment on the edge of the various industries.";
+  "I am a licensed Building Architect and Senior BIM Software Developer. I build and maintain C#/.NET add-ins for Revit and AutoCAD, cloud automations on Autodesk Platform Services and Autodesk Construction Cloud, ASP.NET Core APIs on AWS, and Python/Dynamo scripts that remove repetitive work from design teams.";
 
 /** Second hero paragraph (home page lead). */
 export const profileWhoLead2 =
-  "In this page you'll find both my AEC Software profile and my set of productivity services spanning from writing apps to text to audio conversion and even a homeschool app. Contact me through the information provided in this page or Subscribe to my services to boost your productivity.";
+  "This site is my professional profile: case studies, CV, and two public AEC tools — eReport (issue tracking) and eoProject (construction stages, photos, and IFC versions). Fluent English, native Spanish. Remote from Latin America (UTC-4).";
 
-export const HOME_HEADING = "AEC AI Consulting - Productivity Apps";
+export const HOME_HEADING = "Senior BIM Software Developer";
 
 export type HomeServiceOffer = {
   id: string;
@@ -34,103 +34,44 @@ export type HomeServiceOffer = {
   screenshot?: string;
 };
 
-/** Public productivity apps shown on the home Services column. */
+/** Public product surfaces shown on the home / portfolio (profile-mode). */
 export const homeServiceOffers: HomeServiceOffer[] = [
-  {
-    id: "epam",
-    label: "ePam",
-    shortName: "EPAM",
-    description: "Cloud pamphlet editor, .epam documents, and print export.",
-    focus: "Write and densify print-ready pamphlets with PDF-faithful columns.",
-    href: "/documents/pamphlet",
-    icon: "description",
-    screenshot: "/homepage_services_screenshots/epam.png",
-  },
-  {
-    id: "articles",
-    label: "eRead",
-    shortName: "Articles",
-    description: "Public articles queue fed by eligible EPAM pamphlets.",
-    focus: "Publish reading surfaces from pamphlet work with admin visibility control.",
-    href: "/articles",
-    icon: "article",
-    screenshot: "/homepage_services_screenshots/eread.png",
-  },
-  {
-    id: "scrib",
-    label: "eScrib",
-    shortName: "Scrib",
-    description: "Layered US Letter manuscript sheets with cloud books.",
-    focus: "Annotate, draw, and manage layered manuscript sheets.",
-    href: "/scrib",
-    icon: "edit_note",
-    screenshot: "/homepage_services_screenshots/escrib.png",
-  },
-  {
-    id: "homescool",
-    label: "eSchool",
-    shortName: "Homescool",
-    description: "Homeschool curriculum sheets and study workspace.",
-    focus: "Letter study materials, progress, and tutor–student flows.",
-    href: "/eoschool",
-    icon: "school",
-    screenshot: "/homepage_services_screenshots/eschool.png",
-  },
-  {
-    id: "evoice",
-    label: "eVoice",
-    shortName: "eVoice",
-    description: "Text-to-audio projects from documents to MP3.",
-    focus: "Turn written work into spoken audio with cloud project storage.",
-    href: "/evoice",
-    icon: "record_voice_over",
-    screenshot: "/homepage_services_screenshots/evoice.png",
-  },
-  {
-    id: "emusic",
-    label: "eMusic",
-    shortName: "eMusic",
-    description: "Curated music library with section playlists.",
-    focus: "Listen to curated sections such as Salmo 1 from your account.",
-    href: "/emusic",
-    icon: "library_music",
-  },
-  {
-    id: "eoproject",
-    label: "eBuild",
-    shortName: "eoProject",
-    description: "Construction project stages, photos, and IFC versions.",
-    focus: "Track build progress, site photos, and model versions.",
-    href: "/eoproject",
-    icon: "foundation",
-    screenshot: "/homepage_services_screenshots/ebuild.png",
-  },
   {
     id: "ereport",
     label: "eReport",
     shortName: "eReport",
-    description: "Issue tracker reports with cloud storage and sharing.",
-    focus: "Capture issues, statuses, images, and shared invites.",
-    href: "/ereport",
+    description: "Issue tracker with cloud storage, sharing, and an API-key connector.",
+    focus: "Capture AEC issues, statuses, images, and shared invites — a complement to BIM delivery workflows.",
+    href: "/portfolio/ereport",
     icon: "assignment",
     screenshot: "/homepage_services_screenshots/ereport.png",
+  },
+  {
+    id: "eoproject",
+    label: "eoProject",
+    shortName: "eoProject",
+    description: "Construction project stages, photos, and IFC versions.",
+    focus: "Track build progress, site photos, and model versions alongside BIM software work.",
+    href: "/portfolio/eoproject",
+    icon: "foundation",
+    screenshot: "/homepage_services_screenshots/ebuild.png",
   },
   {
     id: "api",
     label: "eApi",
     shortName: "eApi",
     description: "API keys for external apps and Cursor connectors.",
-    focus: "Automate EPAM, eReport, Homescool, and related product routes.",
-    href: "/eapi",
+    focus: "Automate eReport and related product routes with documented /api/v1 endpoints.",
+    href: "/api-docs",
     icon: "key",
   },
 ];
 
 export const homeServicesFocus =
-  "These productivity apps share one account on eduardoos.com: writing and publishing (ePam / eRead), manuscript work (eScrib), homeschool sheets (eSchool), spoken audio (eVoice), curated music (eMusic), construction tracking (eBuild), issue tracking (eReport), and keyed API access for agentic workflows. Subscribe to unlock the surfaces you need and keep your work in one professional stack.";
+  "Public tools on this profile: eReport for issue tracking, eoProject for construction progress and IFC versions, and eApi for keyed automation. Subscribe to unlock what you need; everything else on this platform stays private.";
 
 export const profileExpertiseAnswer =
-  "I specialize in Revit and AutoCAD API tooling, custom Revit add-ins and Dynamo workflows, .NET desktop apps, and full-stack web and cloud delivery. My work connects design technology with AI — clash detection, visualization, quantification, and multiplatform BIM products that learn from how teams actually build.";
+  "I specialize in Revit and AutoCAD API tooling, custom add-ins (WPF/Windows Forms), Dynamo Zero Touch and Python, Autodesk APS Design Automation and ACC data extraction, ASP.NET Core APIs, and AWS cloud architectures (EC2, S3, CloudFront, DynamoDB, Lambda, SQS, ECR).";
 
 export type ProfileExperience = {
   org: string;
@@ -144,11 +85,11 @@ export type ProfileExperience = {
 export const profileExperience: ProfileExperience[] = [
   {
     org: "Hexagon Multivista (formerly Voyansi)",
-    role: "BIM Software Developer",
+    role: "BIM Full Stack Developer (.NET & AI)",
     period: "2025–present",
     icon: "apartment",
     summary:
-      "I develop and support desktop, web, Revit API, cloud, and full-stack AEC software at Hexagon Multivista (Voyansi rebranded under Hexagon).",
+      "Revit model-validation tools inside a large C#/.NET add-in; APS Design Automation and ACC data dashboards; AI rendering from the Revit API; Python geometry scripts; agentic AI development workflows; full-stack internal tools.",
   },
   {
     org: "Avant Leap",
@@ -183,14 +124,6 @@ export const profileExperience: ProfileExperience[] = [
       "I documented electrical rooms and assemblies with collaborative BIM workflows and began visual programming with Revit Dynamo and Python.",
   },
   {
-    org: "Iglesia Palabra Viva",
-    role: "Venezuelan missionary",
-    period: "Until ~2023",
-    icon: "church",
-    summary:
-      "Leadership, teaching, public speaking, and counseling; parallel theology study at Integridad & Sabiduría; I began writing and song creation.",
-  },
-  {
     org: "Galpon5",
     role: "Architectural project assistant",
     period: "2017–2018",
@@ -199,6 +132,14 @@ export const profileExperience: ProfileExperience[] = [
       "I modeled, documented, and rendered buildings in AutoCAD, SketchUp, V-Ray, and 3ds Max for hospitality and commercial projects including Lindo Sol Suites Hotel and Lindo Bakery.",
   },
 ];
+
+export const profileLeadership = {
+  org: "Iglesia Palabra Viva",
+  role: "Leadership & teaching",
+  period: "Until ~2023",
+  summary:
+    "Public speaking, counseling, and teaching; parallel theology study at Integridad & Sabiduría.",
+};
 
 export type ProfileEducationCard = {
   title: string;
@@ -250,50 +191,50 @@ export type ProfileSkill = {
 /** Six featured skills for the home skills grid (brief, CV-grounded). */
 export const profileSkillCards: ProfileSkill[] = [
   {
-    title: "Revit add-ins & API",
+    title: "Autodesk APIs",
     icon: "extension",
     description:
-      "Custom commands, families, and .NET tools that sit inside real BIM workflows.",
+      "Revit API, AutoCAD API, APS Design Automation, ACC data extraction, Dynamo nodes and Python.",
   },
   {
-    title: "AI in BIM",
-    icon: "psychology",
+    title: "Add-in engineering",
+    icon: "build",
     description:
-      "OpenAI, StabilityAI, and Replicate wired into clash, visualize, and automate loops.",
+      "Multi-version C#/.NET add-ins, WPF MVVM, installers, S3 auto-update, troubleshooting large models.",
   },
   {
-    title: "AI-driven products",
-    icon: "auto_awesome",
+    title: "Microsoft stack",
+    icon: "desktop_windows",
     description:
-      "I ship multiplatform tools where model intelligence becomes something teams can run.",
+      "C#, .NET Framework 4.8, .NET 8/9, ASP.NET Core minimal APIs, WPF, Windows Forms, SQL Server, Visual Studio.",
   },
   {
-    title: "Full-stack delivery",
-    icon: "layers",
-    description:
-      "Desktop (.NET/WPF), web (React/TS), and cloud (AWS/Nginx) from one practice.",
-  },
-  {
-    title: "Cloud & DevOps",
+    title: "AWS cloud architecture",
     icon: "cloud",
     description:
-      "AWS hosting, CI/CD, and durable object storage under production prefixes.",
+      "EC2, S3, CloudFront, Route 53, DynamoDB, Lambda, SQS, ECR; Linux, systemd, Docker, Nginx, TLS.",
   },
   {
-    title: "Cross-discipline AEC",
+    title: "Scripting & automation",
+    icon: "terminal",
+    description:
+      "Python geometry and data workflows, Dynamo-Python, PowerShell (basic task automation), GitHub Actions CI/CD.",
+  },
+  {
+    title: "AEC domain",
     icon: "domain",
     description:
-      "Architecture depth plus software delivery — one professional who models and ships.",
+      "Licensed architect; BIM modeling and documentation; model validation / QA; coordination workflows.",
   },
 ];
 
 export const profileSkills: string[] = profileSkillCards.map((s) => s.title);
 
 export const profileStack =
-  ".NET, C#, WPF, Windows Forms, Blazor / Blazor Hybrid, .NET MAUI, Python, PHP, JavaScript, TypeScript, HTML, CSS, React, MySQL, SQLite, SQL Server, Git/GitHub, AutoCAD, Revit, Dynamo, SketchUp, Linux, Nginx, AWS, and AI tooling including StabilityAI and DeepSeek.";
+  "C#, .NET Framework 4.8, .NET 8/9, ASP.NET Core, WPF, Windows Forms, Revit API, AutoCAD API, Autodesk APS/ACC, Dynamo, Python, PowerShell (basic), SQL Server, MySQL, MongoDB, TypeScript, React, Go REST APIs, AWS (EC2, S3, CloudFront, Route 53, DynamoDB, Lambda, SQS, ECR), Linux, Nginx, Docker, GitHub Actions, Stability AI, DeepSeek, Kimi.";
 
 export const profileFocusAnswer =
-  "I am building full-stack applications (React and .NET minimal APIs where relevant), GitHub CI/CD toward AWS, and AI API integrations aimed at multiplatform AI-powered BIM products for AEC. I operate eduardoos.com as my professional platform for documents, articles, music, church, and homescool tooling — and I keep pushing AI-driven development into every product surface that benefits from it.";
+  "At Hexagon Multivista I build Revit API tools, APS/ACC automations, and AI-assisted BIM workflows. Independently I ship documented APIs, cloud add-in distribution, and AEC web tools (eReport, eoProject) that complement senior BIM software delivery.";
 
 export type ProfileFaq = {
   question: string;

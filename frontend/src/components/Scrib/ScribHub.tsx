@@ -65,7 +65,7 @@ const SCRIB_MENU: HeaderMenuItem[] = [
 
 export default function ScribHub() {
   return (
-    <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription>
+    <ServiceGate serviceId="scrib" serviceLabel="Scrib" requireSubscription adminOnly>
       <ScribHubInner />
     </ServiceGate>
   );

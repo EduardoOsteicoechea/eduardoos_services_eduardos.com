@@ -142,7 +142,7 @@ export default function EvoiceInvitePage() {
   }
 
   return (
-    <ServiceGate serviceId="evoice" serviceLabel="eVoice" requireSubscription>
+    <ServiceGate serviceId="evoice" serviceLabel="eVoice" requireSubscription adminOnly>
       <div className="evoice evoice__invite">
         {error ? <p className="evoice__empty">{error}</p> : null}
         {expired || !valid ? (

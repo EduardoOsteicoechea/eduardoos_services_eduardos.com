@@ -1,0 +1,71 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { caseStudies, getCaseStudy } from "../../lib/caseStudies";
+
+export function getStaticPaths() {
+  return caseStudies.map((c) => ({ params: { slug: c.slug } }));
+}
+
+const { slug } = Astro.params;
+const study = getCaseStudy(slug || "");
+if (!study) {
+  return Astro.redirect("/404");
+}
+---
+
+<Layout
+  title={`${study.title} · Portfolio`}
+  description={study.summary}
+  robots="index,follow"
+  page="portfolio"
+>
+  <article class="product-dash case-study">
+    <p class="lede">{study.summary}</p>
+
+    <section class="product-dash__card">
+      <h2 class="product-dash__card-title">Problem</h2>
+      <p class="product-dash__card-desc">{study.problem}</p>
+    </section>
+    <section class="product-dash__card">
+      <h2 class="product-dash__card-title">Role</h2>
+      <p class="product-dash__card-desc">{study.role}</p>
+    </section>
+    <section class="product-dash__card">
+      <h2 class="product-dash__card-title">Approach</h2>
+      <p class="product-dash__card-desc">{study.approach}</p>
+    </section>
+    <section class="product-dash__card">
+      <h2 class="product-dash__card-title">Architecture</h2>
+      <p class="product-dash__card-desc">{study.architecture}</p>
+    </section>
+    <section class="product-dash__card">
+      <h2 class="product-dash__card-title">Outcome</h2>
+      <p class="product-dash__card-desc">{study.outcome}</p>
+    </section>
+    <section class="product-dash__card">
+      <h2 class="product-dash__card-title">Stack</h2>
+      <p class="product-dash__card-desc">{study.stack.join(" · ")}</p>
+    </section>
+    <nav class="case-study__links" aria-label="Case study links">
+      {study.links.map((l) => (
+        <a class="btn btn--primary" href={l.href} data-route={l.href.startsWith("/") ? true : undefined}>
+          {l.label}
+        </a>
+      ))}
+      <a class="btn" href="/portfolio" data-route>All case studies</a>
+    </nav>
+  </article>
+</Layout>
+
+<style>
+  .case-study {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+  .case-study__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
+  }
+</style>

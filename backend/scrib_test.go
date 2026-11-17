@@ -345,7 +345,7 @@ func TestLatinInstitutesPack(t *testing.T) {
 	app.cfg.CalvinParagraphsRoot = root
 
 	seed := httptest.NewRecorder()
-	if _, err := app.issueSession(seed, app.mustUser("member@eduardoos.com")); err != nil {
+	if _, err := app.issueSession(seed, app.mustUser("admin@eduardoos.com")); err != nil {
 		t.Fatal(err)
 	}
 	authedGET := func(path string) *httptest.ResponseRecorder {
@@ -354,6 +354,18 @@ func TestLatinInstitutesPack(t *testing.T) {
 		rec := httptest.NewRecorder()
 		app.Handler().ServeHTTP(rec, req)
 		return rec
+	}
+
+	memberSeed := httptest.NewRecorder()
+	if _, err := app.issueSession(memberSeed, app.mustUser("member@eduardoos.com")); err != nil {
+		t.Fatal(err)
+	}
+	memberReq := httptest.NewRequest(http.MethodGet, "/api/latin/calvins-institutes", nil)
+	copyCookies(memberReq, memberSeed)
+	memberRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(memberRec, memberReq)
+	if memberRec.Code != http.StatusForbidden {
+		t.Fatalf("non-admin latin want 403 got %d body=%s", memberRec.Code, memberRec.Body.String())
 	}
 
 	rec := authedGET("/api/latin/calvins-institutes")

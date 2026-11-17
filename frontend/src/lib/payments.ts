@@ -4,6 +4,7 @@
 
 import { apiRequest, getMe } from "./api";
 import { mustLog } from "./dev-log";
+import { isAdminOnlyProduct } from "./productVisibility";
 
 export type BillingPeriod = "monthly" | "yearly";
 
@@ -30,36 +31,8 @@ const SERVICE_ICONS: Record<string, string> = {
   api: "key",
 };
 
-/** Fallback catalog when API is unreachable (matches backend ServiceCatalog). */
+/** Fallback catalog when API is unreachable (public products only; matches profile-mode). */
 export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
-  {
-    id: "epam",
-    label: "EPAM",
-    description: "Cloud EPAM editor, .epam documents, and print export.",
-    monthlyUsd: 1,
-    icon: "description",
-  },
-  {
-    id: "articles",
-    label: "Articles",
-    description: "Eligible pamphlets appear in the admin Articles queue; the site admin controls public visibility.",
-    monthlyUsd: 1,
-    icon: "article",
-  },
-  {
-    id: "homescool",
-    label: "Homescool",
-    description: "Homescool learning surface.",
-    monthlyUsd: 1,
-    icon: "school",
-  },
-  {
-    id: "scrib",
-    label: "Scrib",
-    description: "Layered US Letter manuscript sheets with cloud books.",
-    monthlyUsd: 1,
-    icon: "edit_note",
-  },
   {
     id: "ereport",
     label: "eReport",
@@ -75,32 +48,11 @@ export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
     icon: "cable",
   },
   {
-    id: "evoice",
-    label: "eVoice",
-    description: "Text-to-audio projects (docs → MP3) with cloud storage under evoice/.",
-    monthlyUsd: 1,
-    icon: "record_voice_over",
-  },
-  {
-    id: "emusic",
-    label: "eMusic",
-    description: "Curated music library with section playlists.",
-    monthlyUsd: 1,
-    icon: "library_music",
-  },
-  {
     id: "eoproject",
     label: "eoProject",
     description: "Construction project stages, photos, and IFC versions.",
     monthlyUsd: 1,
     icon: "architecture",
-  },
-  {
-    id: "eeyes",
-    label: "eEyes",
-    description: "Pair Android/Desktop shells, plan human capture tasks, and review completions.",
-    monthlyUsd: 1,
-    icon: "visibility",
   },
   {
     id: "api",
@@ -222,7 +174,7 @@ function normalizeCatalog(raw: unknown): SubscriptionService[] {
       monthlyUsd: Number(row.monthlyUsd ?? row.monthly_usd ?? row.MonthlyUSD ?? 0),
       icon: SERVICE_ICONS[id] || "payments",
     };
-  }).filter((s) => s.id);
+  }).filter((s) => s.id && !isAdminOnlyProduct(s.id));
 }
 
 export async function fetchSubscriptionCatalog(): Promise<SubscriptionService[]> {

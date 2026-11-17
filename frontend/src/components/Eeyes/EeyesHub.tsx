@@ -75,7 +75,7 @@ const MENU: HeaderMenuItem[] = [
 
 export default function EeyesHub() {
   return (
-    <ServiceGate serviceId="eeyes" serviceLabel="eEyes" requireSubscription>
+    <ServiceGate serviceId="eeyes" serviceLabel="eEyes" requireSubscription adminOnly>
       <EeyesHubInner />
     </ServiceGate>
   );

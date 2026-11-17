@@ -1,19 +1,27 @@
-# Eduardo Osteicoechea — full agent corpus
+# Eduardo Osteicoechea — Senior BIM Software Developer
 
-Eduardo Osteicoechea (Eduardoos) is a licensed Building Architect who graduated from Universidad de Los Andes (ULA) Cum Laude. He is also a full-stack desktop, web, and cloud developer focused on AEC (architecture, engineering, and construction) technology.
+Eduardo Osteicoechea is a licensed Building Architect (Universidad de Los Andes, Cum Laude) and Senior BIM Software Developer based in Latin America (remote, UTC-4). Fluent English, native Spanish.
 
-He completed focused BIM training: an Autodesk Authorized Training Center Course in 2011 and a BIMMASTER.org course. Those are professional training programs, not a Master’s degree. He builds Revit and AutoCAD API tools, AI integrations, and multiplatform products for AEC teams.
+He builds and maintains C#/.NET add-ins for Revit and AutoCAD, cloud automations on Autodesk Platform Services (APS) and Autodesk Construction Cloud (ACC), ASP.NET Core APIs on AWS, and Python/Dynamo scripts for design automation. Current employment includes BIM Full Stack Developer (.NET & AI) work at Hexagon Multivista (formerly Voyansi): Revit model validation, APS/ACC dashboards, AI rendering from Revit views, and agentic development workflows.
 
-The public website https://eduardoos.com/ is a static Astro frontend. Browser clients call only same-origin `/api/` on eduardoos.com. The site does not expose MongoDB URIs, SMTP credentials, JWT secrets, or AI provider keys in the frontend.
+## Public surfaces on eduardoos.com
 
-Current employment: BIM Software Developer at Hexagon Multivista (formerly Voyansi). Prior role: BIM software developer at Avant Leap (March 2024–April 2025).
+- Professional profile home, portfolio case studies, HTML/PDF CV, and contact.
+- eReport: issue tracker with cloud storage, sharing, website registration connector, and API keys.
+- eoProject: construction project stages, photos, and IFC versions.
+- eApi /api-docs: documented product APIs for connectors.
+- Subscriptions for the public products above.
 
-Primary public pages:
+Other platform tools (pamphlet, articles, scrib, homescool, evoice, emusic, eeyes, latin institutes) are private / admin-only and are not part of the public profile.
 
-- Home explains who he is, what he builds, credentials, craft, and answers common questions.
-- Contact lists public channels: email eduardooost@gmail.com, WhatsApp https://wa.me/584147281033, LinkedIn, GitHub, and YouTube.
-- API docs describes the external API catalog for API-key clients; eReport bytes live on the VPS filesystem, not S3, and not in MongoDB.
+## Stack (summary)
 
-Session, diagnostics, and eReport workspace routes are private UX surfaces and should not be treated as marketing or citation sources.
+C#, .NET Framework 4.8, .NET 8/9, ASP.NET Core, WPF, Windows Forms, Revit API, AutoCAD API, APS, ACC, Dynamo, Python, PowerShell (basic), SQL Server, MongoDB, TypeScript, React, Go REST APIs, AWS (EC2, S3, CloudFront, Route 53, DynamoDB, Lambda, SQS, ECR), Linux, Nginx, Docker, GitHub Actions.
 
-For a short index of URLs, see https://eduardoos.com/llms.txt
+## Education note
+
+Autodesk Authorized Training Center Course (2011) and BIMMASTER.org Advanced BIM Modeling are professional training — not a conferred Master’s degree.
+
+## Contact
+
+eduardooost@gmail.com · https://wa.me/584147281033 · https://www.linkedin.com/in/eduardoosteicoechea · https://github.com/EduardoOsteicoechea · https://eduardoos.com/contact

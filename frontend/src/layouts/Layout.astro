@@ -444,6 +444,18 @@ const jsonLdString =
             </button>
           </div>
           <div class="sidebar-nav-section sidebar-nav-section--services">
+            <a href="/portfolio" data-route aria-current={path === "/portfolio" || path.startsWith("/portfolio/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">work</span>
+              Portfolio
+            </a>
+            <a href="/cv" data-route aria-current={path === "/cv" ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">description</span>
+              CV
+            </a>
+            <a href="/contact" data-route aria-current={path === "/contact" ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+              Contact
+            </a>
             <a
               class="sidebar-nav-action"
               href="/payments/subscription"
@@ -453,45 +465,45 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">payments</span>
               Subscribe
             </a>
-            <a href="/articles" data-route aria-current={path.startsWith("/articles") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">article</span>
-              eRead
+            <a href="/ereport" data-route data-service="ereport" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
+              eReport
             </a>
-            <a href="/scrib" data-route data-service="scrib" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/scrib" || path.startsWith("/scrib/") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">edit_note</span>
-              eScrib
-            </a>
-            <a href="/eoschool" data-route data-service="homescool" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/eoschool" || path.startsWith("/eoschool/") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">school</span>
-              eSchool
-            </a>
-            <a href="/documents/pamphlet" data-route data-service="epam" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">description</span>
-              ePam
-            </a>
-            <a href="/evoice" data-route data-service="evoice" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span>
-              eVoice
-            </a>
-            <a href="/emusic" data-route data-service="emusic" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/emusic" || path.startsWith("/emusic/") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">library_music</span>
-              eMusic
+            <a href="/eoproject" data-route data-service="eoproject" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/eoproject" || path.startsWith("/eoproject/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">foundation</span>
+              eoProject
             </a>
             <a href="/eapi" data-route data-service="api" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/eapi" || path.startsWith("/eapi/") || path === "/api-docs" ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">key</span>
               eApi
             </a>
-            <a href="/eoproject" data-route data-service="eoproject" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/eoproject" || path.startsWith("/eoproject/") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">foundation</span>
-              eBuild
+            <a href="/articles" data-route data-admin-only hidden aria-current={path.startsWith("/articles") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">article</span>
+              eRead
             </a>
-            <a href="/eeyes" data-route data-service="eeyes" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/eeyes" || path.startsWith("/eeyes/") ? "page" : undefined}>
+            <a href="/scrib" data-route data-service="scrib" data-admin-only hidden class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/scrib" || path.startsWith("/scrib/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">edit_note</span>
+              eScrib
+            </a>
+            <a href="/eoschool" data-route data-service="homescool" data-admin-only hidden class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/eoschool" || path.startsWith("/eoschool/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">school</span>
+              eSchool
+            </a>
+            <a href="/documents/pamphlet" data-route data-service="epam" data-admin-only hidden class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path.startsWith("/documents/pamphlet") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">description</span>
+              ePam
+            </a>
+            <a href="/evoice" data-route data-service="evoice" data-admin-only hidden class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/evoice" || path.startsWith("/evoice/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">record_voice_over</span>
+              eVoice
+            </a>
+            <a href="/emusic" data-route data-service="emusic" data-admin-only hidden class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/emusic" || path.startsWith("/emusic/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">library_music</span>
+              eMusic
+            </a>
+            <a href="/eeyes" data-route data-service="eeyes" data-admin-only hidden class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/eeyes" || path.startsWith("/eeyes/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
               eEyes
-            </a>
-            <a href="/ereport" data-route data-service="ereport" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/ereport" || path.startsWith("/ereport/") ? "page" : undefined}>
-              <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
-              eReport
             </a>
             <button
               type="button"

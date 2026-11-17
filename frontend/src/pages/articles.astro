@@ -5,7 +5,8 @@ import Layout from "../layouts/Layout.astro";
 <Layout
   title="Articles"
   description="Public reading copies of selected Eduardoos pamphlets, organized by series."
-  robots="index,follow"
+  robots="noindex,nofollow"
+  page="articles"
 >
   <header class="seo-only">
     <p class="eyebrow">
@@ -191,6 +192,7 @@ import Layout from "../layouts/Layout.astro";
   import { apiRequest } from "../lib/api";
   import { showErrorModal } from "../lib/error-modal";
   import { mustLog } from "../lib/dev-log";
+  import { onAstroPageLoad, requireAdminProduct } from "../lib/productGate";
 
   const UNASSIGNED_SERIES = "Sin serie";
   const UNASSIGNED_CHAPTER = "Sin capítulo";
@@ -475,7 +477,9 @@ import Layout from "../layouts/Layout.astro";
     status.hidden = true;
   }
 
-  document.addEventListener("astro:page-load", () => {
-    void loadArticles();
+  onAstroPageLoad("articles", async () => {
+    const gate = await requireAdminProduct();
+    if (!gate.ok) return;
+    await loadArticles();
   });
 </script>

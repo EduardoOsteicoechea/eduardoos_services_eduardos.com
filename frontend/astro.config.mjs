@@ -19,6 +19,7 @@ export default defineConfig({
         !page.includes("/session") &&
         !page.includes("/admin") &&
         !page.includes("/diagnostics") &&
+        !page.includes("/articles") &&
         !page.includes("/ereport") &&
         !page.includes("/scrib") &&
         !page.includes("/homescool") &&

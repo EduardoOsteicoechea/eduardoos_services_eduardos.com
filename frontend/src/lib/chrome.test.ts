@@ -112,16 +112,16 @@ describe("main-menu session chrome", () => {
     expect(checkServiceAccess).not.toHaveBeenCalled();
   });
 
-  it("shows all services for members but locks those without a subscription", async () => {
+  it("shows public services for members but keeps admin-only products locked", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
       requestId: "rid-member",
       data: { id: "member-1", role: "user" },
     });
     vi.mocked(checkServiceAccess).mockImplementation(async (serviceId: string) => ({
-      allowed: serviceId === "scrib" || serviceId === "evoice",
+      allowed: serviceId === "ereport",
       isAdmin: false,
-      hasEntitlement: serviceId === "scrib",
+      hasEntitlement: serviceId === "ereport",
       isHomescoolStudent: false,
     }));
     await refreshAuthChrome();
@@ -131,11 +131,11 @@ describe("main-menu session chrome", () => {
     expect(scrib.hidden).toBe(false);
     expect(ereport.hidden).toBe(false);
     expect(evoice.hidden).toBe(false);
-    expect(scrib.classList.contains("sidebar-nav--locked")).toBe(false);
-    expect(scrib.getAttribute("aria-disabled")).toBeNull();
-    expect(ereport.classList.contains("sidebar-nav--locked")).toBe(true);
-    expect(ereport.getAttribute("aria-disabled")).toBe("true");
+    // scrib/evoice are admin-only in profile-mode even with a stale entitlement claim
+    expect(scrib.classList.contains("sidebar-nav--locked")).toBe(true);
     expect(evoice.classList.contains("sidebar-nav--locked")).toBe(true);
+    expect(ereport.classList.contains("sidebar-nav--locked")).toBe(false);
+    expect(ereport.getAttribute("aria-disabled")).toBeNull();
   });
 
   it("keeps subscriptions and session links for plain members but hides admin", async () => {
@@ -173,7 +173,7 @@ describe("main-menu session chrome", () => {
     expect(go).not.toHaveBeenCalledWith("/");
   });
 
-  it("does not redirect plain members away from eEyes", async () => {
+  it("redirects plain members away from admin-only eEyes", async () => {
     window.history.pushState({}, "", "/eeyes");
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
@@ -187,7 +187,7 @@ describe("main-menu session chrome", () => {
       isHomescoolStudent: false,
     });
     await refreshAuthChrome();
-    expect(go).not.toHaveBeenCalledWith("/");
+    expect(go).toHaveBeenCalledWith("/404");
   });
 
   it("unlocks services when role is Admin with different casing", async () => {

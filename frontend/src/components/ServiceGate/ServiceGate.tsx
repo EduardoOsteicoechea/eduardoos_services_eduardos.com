@@ -34,6 +34,8 @@ interface ServiceGateProps {
    * Homescool student-link bypass is ignored (teacher surfaces).
    */
   requireSubscription?: boolean;
+  /** When true, only platform admin may enter (profile-mode hidden products). */
+  adminOnly?: boolean;
 }
 
 export default function ServiceGate({
@@ -41,8 +43,9 @@ export default function ServiceGate({
   serviceLabel,
   children,
   requireSubscription = false,
+  adminOnly = false,
 }: ServiceGateProps) {
-  const [state, setState] = useState<"loading" | "ok" | "denied" | "signin">("loading");
+  const [state, setState] = useState<"loading" | "ok" | "denied" | "signin" | "hidden">("loading");
 
   useEffect(() => {
     let cancelled = false;
@@ -50,12 +53,12 @@ export default function ServiceGate({
       try {
         await refreshAuthSession();
       } catch {
-        if (!cancelled) setState("signin");
+        if (!cancelled) setState(adminOnly ? "hidden" : "signin");
         return;
       }
       if (cancelled) return;
       if (!isAuthenticated()) {
-        setState("signin");
+        setState(adminOnly ? "hidden" : "signin");
         return;
       }
       try {
@@ -64,6 +67,13 @@ export default function ServiceGate({
         if (cancelled) return;
         if (remote.isAdmin || isPlatformAdmin()) {
           setState("ok");
+          return;
+        }
+        if (adminOnly) {
+          if (typeof window !== "undefined") {
+            window.location.replace("/404");
+          }
+          setState("hidden");
           return;
         }
         if (requireSubscription) {
@@ -90,10 +100,14 @@ export default function ServiceGate({
     return () => {
       cancelled = true;
     };
-  }, [serviceId, requireSubscription]);
+  }, [serviceId, requireSubscription, adminOnly]);
 
   if (state === "loading") {
     return <ViewLoading label={`Checking ${serviceLabel} access…`} />;
+  }
+
+  if (state === "hidden") {
+    return null;
   }
 
   if (state === "signin") {

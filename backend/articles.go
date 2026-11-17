@@ -409,7 +409,24 @@ func (a *App) publicArticlesSeriesCatalog(r *http.Request, userIDs []string) ([]
 	return out, nil
 }
 
+// requireArticlesAdminRead gates public Articles reads when the product is
+// admin-only (profile-mode). Non-admins get not_found (no enumeration).
+func (a *App) requireArticlesAdminRead(w http.ResponseWriter, r *http.Request) bool {
+	if !productAdminOnly(productArticles) {
+		return true
+	}
+	user := a.currentUser(r)
+	if user == nil || user.Role != roleAdmin {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return false
+	}
+	return true
+}
+
 func (a *App) listArticlesHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.requireArticlesAdminRead(w, r) {
+		return
+	}
 	userIDs, err := a.articlesPublisherUserIDs(r)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
@@ -446,6 +463,9 @@ func (a *App) listArticlesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) getArticleHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.requireArticlesAdminRead(w, r) {
+		return
+	}
 	userIDs, err := a.articlesPublisherUserIDs(r)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
@@ -484,6 +504,9 @@ func (a *App) getArticleHandler(w http.ResponseWriter, r *http.Request) {
 
 // GET /api/articles/{id}/pdf — public pamphlet PDF for a published article only.
 func (a *App) getArticlePDFHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.requireArticlesAdminRead(w, r) {
+		return
+	}
 	userIDs, err := a.articlesPublisherUserIDs(r)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

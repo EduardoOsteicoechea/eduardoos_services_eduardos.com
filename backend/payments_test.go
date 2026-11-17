@@ -7,8 +7,16 @@ import (
 	"testing"
 )
 
+func useProfileCatalogVisibility(t *testing.T) {
+	t.Helper()
+	restoreProfileCatalogVisibility()
+	t.Cleanup(func() { setAllCatalogVisibility(visibilityPublic) })
+}
+
 func TestSubscriptionsCatalogPublic(t *testing.T) {
+	useProfileCatalogVisibility(t)
 	app := newTestApp(true)
+	useProfileCatalogVisibility(t) // newTestApp resets to public; restore profile mode
 	app.cfg.PayPalHostedButtonID = "TEST_BUTTON"
 	req := httptest.NewRequest(http.MethodGet, "/api/subscriptions/catalog", nil)
 	rec := httptest.NewRecorder()
@@ -21,8 +29,8 @@ func TestSubscriptionsCatalogPublic(t *testing.T) {
 		t.Fatal(err)
 	}
 	services, ok := body["services"].([]any)
-	if !ok || len(services) < 6 {
-		t.Fatalf("expected catalog services, got %#v", body["services"])
+	if !ok || len(services) < 3 {
+		t.Fatalf("expected public catalog services, got %#v", body["services"])
 	}
 	ids := map[string]bool{}
 	for _, raw := range services {
@@ -30,13 +38,15 @@ func TestSubscriptionsCatalogPublic(t *testing.T) {
 		id, _ := row["id"].(string)
 		ids[id] = true
 	}
-	for _, want := range []string{"epam", "articles", "homescool", "scrib", "ereport", "ereport-connector", "evoice", "emusic", "api"} {
+	for _, want := range []string{"ereport", "ereport-connector", "eoproject", "api"} {
 		if !ids[want] {
-			t.Fatalf("missing catalog id %s in %#v", want, ids)
+			t.Fatalf("missing public catalog id %s in %#v", want, ids)
 		}
 	}
-	if ids["pamphlet"] {
-		t.Fatal("legacy pamphlet id must not appear in public catalog; use epam")
+	for _, hidden := range []string{"epam", "pamphlet", "articles", "homescool", "scrib", "evoice", "emusic", "eeyes"} {
+		if ids[hidden] {
+			t.Fatalf("admin-only product %s must not appear in public catalog", hidden)
+		}
 	}
 	if ids["playlist"] || ids["church-management"] {
 		t.Fatal("playlist and church-management must be omitted")
@@ -45,7 +55,8 @@ func TestSubscriptionsCatalogPublic(t *testing.T) {
 
 func TestSubscriptionsAccessDenyAllow(t *testing.T) {
 	app := newTestApp(true)
-	deny := httptest.NewRequest(http.MethodGet, "/api/subscriptions/access/pamphlet", nil)
+	useProfileCatalogVisibility(t)
+	deny := httptest.NewRequest(http.MethodGet, "/api/subscriptions/access/ereport", nil)
 	denyRec := httptest.NewRecorder()
 	app.Handler().ServeHTTP(denyRec, deny)
 	if denyRec.Code != http.StatusUnauthorized {
@@ -56,7 +67,7 @@ func TestSubscriptionsAccessDenyAllow(t *testing.T) {
 	if _, err := app.issueSession(seed, app.mustUser("member@eduardoos.com")); err != nil {
 		t.Fatal(err)
 	}
-	req := httptest.NewRequest(http.MethodGet, "/api/subscriptions/access/pamphlet", nil)
+	req := httptest.NewRequest(http.MethodGet, "/api/subscriptions/access/ereport", nil)
 	copyCookies(req, seed)
 	rec := httptest.NewRecorder()
 	app.Handler().ServeHTTP(rec, req)
@@ -69,10 +80,10 @@ func TestSubscriptionsAccessDenyAllow(t *testing.T) {
 		t.Fatalf("member without entitlement must be denied: %#v", denied)
 	}
 
-	if err := app.grantEntitlement("member-1", "pamphlet"); err != nil {
+	if err := app.grantEntitlement("member-1", "ereport"); err != nil {
 		t.Fatal(err)
 	}
-	req2 := httptest.NewRequest(http.MethodGet, "/api/subscriptions/access/pamphlet", nil)
+	req2 := httptest.NewRequest(http.MethodGet, "/api/subscriptions/access/ereport", nil)
 	copyCookies(req2, seed)
 	rec2 := httptest.NewRecorder()
 	app.Handler().ServeHTTP(rec2, req2)
@@ -86,6 +97,19 @@ func TestSubscriptionsAccessDenyAllow(t *testing.T) {
 	}
 	if reason, ok := allowed["reason"].(string); ok && reason != "entitlement" && reason != "" {
 		t.Fatalf("unexpected reason: %#v", allowed)
+	}
+
+	if err := app.grantEntitlement("member-1", "epam"); err != nil {
+		t.Fatal(err)
+	}
+	hiddenReq := httptest.NewRequest(http.MethodGet, "/api/subscriptions/access/epam", nil)
+	copyCookies(hiddenReq, seed)
+	hiddenRec := httptest.NewRecorder()
+	app.Handler().ServeHTTP(hiddenRec, hiddenReq)
+	var hidden map[string]any
+	_ = json.Unmarshal(hiddenRec.Body.Bytes(), &hidden)
+	if hidden["allowed"] != false {
+		t.Fatalf("admin-only product must stay denied for members even with entitlement: %#v", hidden)
 	}
 
 	adminSeed := httptest.NewRecorder()
@@ -105,10 +129,11 @@ func TestSubscriptionsAccessDenyAllow(t *testing.T) {
 
 func TestPaymentsCreateIntentAndStatus(t *testing.T) {
 	app := newTestApp(true)
+	useProfileCatalogVisibility(t)
 	app.cfg.PayPalHostedButtonID = "TEST_BUTTON_ID"
 	app.cfg.PayPalCheckoutURL = "https://www.paypal.com/cgi-bin/webscr"
 
-	req, rec := app.memberPOST(t, "/api/payments/intents", `{"services":["pamphlet","scrib"],"billing_period":"monthly"}`)
+	req, rec := app.memberPOST(t, "/api/payments/intents", `{"services":["ereport","eoproject"],"billing_period":"monthly"}`)
 	app.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusOK {
 		t.Fatalf("create intent status=%d body=%s", rec.Code, rec.Body.String())
@@ -123,6 +148,12 @@ func TestPaymentsCreateIntentAndStatus(t *testing.T) {
 	}
 	if created["amount"] != "2.00" {
 		t.Fatalf("amount=%v want 2.00", created["amount"])
+	}
+
+	hiddenReq, hiddenRec := app.memberPOST(t, "/api/payments/intents", `{"services":["epam"],"billing_period":"monthly"}`)
+	app.Handler().ServeHTTP(hiddenRec, hiddenReq)
+	if hiddenRec.Code != http.StatusBadRequest {
+		t.Fatalf("admin-only purchase want 400 got %d body=%s", hiddenRec.Code, hiddenRec.Body.String())
 	}
 
 	seed := httptest.NewRecorder()
@@ -153,6 +184,7 @@ func TestPaymentsCreateIntentRequiresAuth(t *testing.T) {
 }
 
 func TestKnownCatalogHelpers(t *testing.T) {
+	useProfileCatalogVisibility(t)
 	if !knownService("api") || monthlyPriceUSD("api") != 3 {
 		t.Fatal("api catalog broken")
 	}
@@ -161,5 +193,17 @@ func TestKnownCatalogHelpers(t *testing.T) {
 	}
 	if quoteTotalUSD([]string{"api", "ereport"}, "monthly") != 4 {
 		t.Fatal("quote monthly wrong")
+	}
+	if !productAdminOnly("epam") || !productAdminOnly("pamphlet") || !productAdminOnly("scrib") {
+		t.Fatal("expected admin-only products")
+	}
+	if productAdminOnly("ereport") || productAdminOnly("eoproject") || productAdminOnly("api") {
+		t.Fatal("public products must not be admin-only")
+	}
+	if payableService("epam") {
+		t.Fatal("admin-only products must not be payable")
+	}
+	if !payableService("ereport") {
+		t.Fatal("ereport must remain payable")
 	}
 }

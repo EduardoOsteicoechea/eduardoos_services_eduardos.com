@@ -52,7 +52,7 @@ import Layout from "../../../layouts/Layout.astro";
       }
     }
 
-    const result = await requireService("homescool", { requireSubscription: true });
+    const result = await requireService("homescool", { requireSubscription: true, adminOnly: true });
     if (!slug || !result.sessionOk || !result.access.allowed) {
       if (banner instanceof HTMLElement) {
         banner.textContent = !slug

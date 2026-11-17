@@ -4,7 +4,10 @@ Allow: /llms.txt
 Allow: /llms-full.txt
 Disallow: /session/
 Disallow: /admin/
+Disallow: /articles
 Disallow: /ereport/
+Disallow: /eoproject/
+Disallow: /eapi/
 Disallow: /scrib/
 Disallow: /homescool/
 Disallow: /eoschool/

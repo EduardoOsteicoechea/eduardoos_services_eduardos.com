@@ -56,10 +56,34 @@ export async function requireSession(opts?: {
   };
 }
 
+/** Redirect non-admins away from admin-only product pages. */
+export async function requireAdminProduct(): Promise<{ ok: boolean; isAdmin: boolean }> {
+  const session = await requireSession({ quiet: true });
+  const isAdmin = session.ok && session.role === "admin";
+  if (!isAdmin && typeof window !== "undefined") {
+    window.location.replace("/404");
+  }
+  return { ok: isAdmin, isAdmin };
+}
+
 export async function requireService(
   serviceId: string,
-  opts?: { requireSubscription?: boolean },
+  opts?: { requireSubscription?: boolean; adminOnly?: boolean },
 ): Promise<{ sessionOk: boolean; access: ServiceAccessResult }> {
+  if (opts?.adminOnly) {
+    const admin = await requireAdminProduct();
+    if (!admin.ok) {
+      return {
+        sessionOk: false,
+        access: {
+          allowed: false,
+          isAdmin: false,
+          hasEntitlement: false,
+          isHomescoolStudent: false,
+        },
+      };
+    }
+  }
   const session = await requireSession();
   if (!session.ok) {
     return {
