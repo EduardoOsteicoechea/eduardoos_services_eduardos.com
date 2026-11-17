@@ -208,12 +208,13 @@ const featured = caseStudies.slice(0, 6);
   :global(html[data-page="home"]) .section.section--evidence {
     margin-inline: calc(-1 * var(--main-inline));
     padding-inline: var(--main-inline);
-    padding-block: 4rem;
+    padding-top: 5rem;
+    padding-bottom: 3rem;
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      #000000 25%,
-      #000000 75%,
+      #000000 3rem,
+      #000000 calc(100% - 3rem),
       transparent 100%
     );
   }
@@ -222,8 +223,8 @@ const featured = caseStudies.slice(0, 6);
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      #ffffff 25%,
-      #ffffff 75%,
+      #ffffff 3rem,
+      #ffffff calc(100% - 3rem),
       transparent 100%
     );
   }
@@ -232,8 +233,8 @@ const featured = caseStudies.slice(0, 6);
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      #000000 25%,
-      #000000 75%,
+      #000000 3rem,
+      #000000 calc(100% - 3rem),
       transparent 100%
     );
   }
