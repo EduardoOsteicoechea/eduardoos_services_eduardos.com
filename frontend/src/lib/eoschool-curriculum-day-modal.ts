@@ -356,7 +356,11 @@ export function initCurriculumDayModal(root: HTMLElement | null): void {
 
   root.addEventListener("click", (ev) => {
     const target = ev.target;
-    if (target instanceof HTMLElement && target.closest(".eoschool-curriculum__section-check")) {
+    if (
+      target instanceof HTMLElement &&
+      (target.closest(".eoschool-curriculum__section-check") ||
+        target.closest("[data-curriculum-subject-toggle]"))
+    ) {
       ev.stopPropagation();
       return;
     }

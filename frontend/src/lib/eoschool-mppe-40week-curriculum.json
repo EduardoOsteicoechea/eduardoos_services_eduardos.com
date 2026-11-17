@@ -72,23 +72,23 @@
       "day1": [
         "bib",
         "len",
-        "ide",
         "cie"
       ],
       "day2": [
         "bib",
         "len",
+        "ide",
         "mat"
       ],
       "day3": [
         "bib",
         "len",
-        "ide",
         "cie"
       ],
       "day4": [
         "bib",
         "len",
+        "ide",
         "mat"
       ],
       "day5": [
@@ -107,25 +107,25 @@
       "day1": [
         "bib",
         "len",
-        "ide",
         "cie",
         "mat"
       ],
       "day2": [
         "bib",
         "len",
+        "ide",
         "mat"
       ],
       "day3": [
         "bib",
         "len",
-        "ide",
         "cie",
         "mat"
       ],
       "day4": [
         "bib",
         "len",
+        "ide",
         "mat"
       ],
       "day5": [
@@ -144,25 +144,25 @@
       "day1": [
         "bib",
         "len",
-        "ide",
         "cie",
         "mat"
       ],
       "day2": [
         "bib",
         "len",
+        "ide",
         "mat"
       ],
       "day3": [
         "bib",
         "len",
-        "ide",
         "cie",
         "mat"
       ],
       "day4": [
         "bib",
         "len",
+        "ide",
         "mat"
       ],
       "day5": [
@@ -180,9 +180,11 @@
     "teachingDays": {
       "bib": 200,
       "len": 189,
-      "ide": 114,
+      "ide": 112,
       "mat": 178,
       "cie": 114,
+      "teachIde": 75,
+      "teachCie": 77,
       "teachIdeCie": 77,
       "teachMat": 141,
       "teachMatWeeks1to6": 12,
@@ -242,7 +244,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie"
           ],
           "calendarDate": "2026-09-21",
@@ -287,19 +288,6 @@
               "text": "Ejecuta secuencias de acciones interpretando textos instruccionales."
             }
           ],
-          "identity": {
-            "title": "La Humanidad",
-            "contenidos": [
-              "Pasado y presente"
-            ],
-            "learnings": [
-              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
-            ],
-            "weekFocus": "Pasado y presente",
-            "grade": "3er grado",
-            "week": 1,
-            "dayInWeek": 1
-          },
           "cie": [
             {
               "id": "cie:0",
@@ -316,6 +304,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-09-22",
@@ -368,6 +357,19 @@
               "text": "Ejecuta secuencias de acciones interpretando textos instruccionales."
             }
           ],
+          "identity": {
+            "title": "La Humanidad",
+            "contenidos": [
+              "Pasado y presente"
+            ],
+            "learnings": [
+              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
+            ],
+            "weekFocus": "Pasado y presente",
+            "grade": "3er grado",
+            "week": 1,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:0",
@@ -384,7 +386,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie"
           ],
           "calendarDate": "2026-09-23",
@@ -433,19 +434,6 @@
               "text": "Ejecuta secuencias de acciones interpretando textos instruccionales."
             }
           ],
-          "identity": {
-            "title": "La Humanidad",
-            "contenidos": [
-              "Pasado y presente"
-            ],
-            "learnings": [
-              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
-            ],
-            "weekFocus": "Pasado y presente",
-            "grade": "3er grado",
-            "week": 1,
-            "dayInWeek": 3
-          },
           "cie": [
             {
               "id": "cie:0",
@@ -462,6 +450,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-09-24",
@@ -510,6 +499,19 @@
               "text": "Registra por escrito contenidos fundamentales sobre diversos temas, a partir de la lectura de textos."
             }
           ],
+          "identity": {
+            "title": "La Humanidad",
+            "contenidos": [
+              "Pasado y presente"
+            ],
+            "learnings": [
+              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
+            ],
+            "weekFocus": "Pasado y presente",
+            "grade": "3er grado",
+            "week": 1,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:0",
@@ -624,7 +626,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie"
           ],
           "calendarDate": "2026-09-28",
@@ -673,19 +674,6 @@
               "text": "Conoce datos y hechos fundamentales de la biografía de varios personajes destacados: Simón Bolívar, Simón Rodríguez; los epónimos de su estado, municipio e institución escolar (si es el caso); nombres y motivo de la fama de personajes destacados de su localidad."
             }
           ],
-          "identity": {
-            "title": "Nuestro Mundo",
-            "contenidos": [
-              "Entorno cercano y lejano"
-            ],
-            "learnings": [
-              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
-            ],
-            "weekFocus": "Entorno cercano y lejano",
-            "grade": "3er grado",
-            "week": 2,
-            "dayInWeek": 1
-          },
           "cie": [
             {
               "id": "cie:0",
@@ -702,6 +690,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-09-29",
@@ -746,6 +735,19 @@
               "text": "Conoce datos y hechos fundamentales de la biografía de varios personajes destacados: Simón Bolívar, Simón Rodríguez; los epónimos de su estado, municipio e institución escolar (si es el caso); nombres y motivo de la fama de personajes destacados de su localidad."
             }
           ],
+          "identity": {
+            "title": "Nuestro Mundo",
+            "contenidos": [
+              "Entorno cercano y lejano"
+            ],
+            "learnings": [
+              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
+            ],
+            "weekFocus": "Entorno cercano y lejano",
+            "grade": "3er grado",
+            "week": 2,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:0",
@@ -762,7 +764,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie"
           ],
           "calendarDate": "2026-09-30",
@@ -811,19 +812,6 @@
               "text": "Escribe, en forma convencional, palabras con sílabas indirectas (VC): antonio, asterisco, olmo, elsa, intriga, alto, usted…"
             }
           ],
-          "identity": {
-            "title": "Nuestro Mundo",
-            "contenidos": [
-              "Entorno cercano y lejano"
-            ],
-            "learnings": [
-              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
-            ],
-            "weekFocus": "Entorno cercano y lejano",
-            "grade": "3er grado",
-            "week": 2,
-            "dayInWeek": 3
-          },
           "cie": [
             {
               "id": "cie:0",
@@ -840,6 +828,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-10-01",
@@ -892,6 +881,19 @@
               "text": "Escribe, en forma convencional, palabras con sílabas indirectas (VC): antonio, asterisco, olmo, elsa, intriga, alto, usted…"
             }
           ],
+          "identity": {
+            "title": "Nuestro Mundo",
+            "contenidos": [
+              "Entorno cercano y lejano"
+            ],
+            "learnings": [
+              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
+            ],
+            "weekFocus": "Entorno cercano y lejano",
+            "grade": "3er grado",
+            "week": 2,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:0",
@@ -1006,7 +1008,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie"
           ],
           "calendarDate": "2026-10-05",
@@ -1051,19 +1052,6 @@
               "text": "Acude a distintas fuentes para buscar información sobre diversos temas: petróleo, agua, salud, conservación del ambiente…"
             }
           ],
-          "identity": {
-            "title": "Venezuela en el Mundo",
-            "contenidos": [
-              "Nuestro territorio"
-            ],
-            "learnings": [
-              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
-            ],
-            "weekFocus": "Nuestro territorio",
-            "grade": "3er grado",
-            "week": 3,
-            "dayInWeek": 1
-          },
           "cie": [
             {
               "id": "cie:1",
@@ -1080,6 +1068,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-10-06",
@@ -1132,6 +1121,19 @@
               "text": "Acude a distintas fuentes para buscar información sobre diversos temas: petróleo, agua, salud, conservación del ambiente…"
             }
           ],
+          "identity": {
+            "title": "Venezuela en el Mundo",
+            "contenidos": [
+              "Nuestro territorio"
+            ],
+            "learnings": [
+              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
+            ],
+            "weekFocus": "Nuestro territorio",
+            "grade": "3er grado",
+            "week": 3,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:0",
@@ -1148,7 +1150,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie"
           ],
           "calendarDate": "2026-10-07",
@@ -1193,19 +1194,6 @@
               "text": "Escribe palabras que contienen el grupo silábico CVC: mango, pasta, colmo, carta, manzana, salto, percha, santo, pasto…"
             }
           ],
-          "identity": {
-            "title": "Venezuela en el Mundo",
-            "contenidos": [
-              "Nuestro territorio"
-            ],
-            "learnings": [
-              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
-            ],
-            "weekFocus": "Nuestro territorio",
-            "grade": "3er grado",
-            "week": 3,
-            "dayInWeek": 3
-          },
           "cie": [
             {
               "id": "cie:1",
@@ -1222,6 +1210,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-10-08",
@@ -1274,6 +1263,19 @@
               "text": "Escribe palabras que contienen el grupo silábico CVC: mango, pasta, colmo, carta, manzana, salto, percha, santo, pasto…"
             }
           ],
+          "identity": {
+            "title": "Venezuela en el Mundo",
+            "contenidos": [
+              "Nuestro territorio"
+            ],
+            "learnings": [
+              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
+            ],
+            "weekFocus": "Nuestro territorio",
+            "grade": "3er grado",
+            "week": 3,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:0",
@@ -1432,6 +1434,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-10-13",
@@ -1480,6 +1483,19 @@
               "text": "Se interesa por saber acerca del acontecer diario (Lectura de noticias)."
             }
           ],
+          "identity": {
+            "title": "Pueblos Indígenas",
+            "contenidos": [
+              "Resistencia indígena"
+            ],
+            "learnings": [
+              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
+            ],
+            "weekFocus": "Resistencia indígena",
+            "grade": "3er grado",
+            "week": 4,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:1",
@@ -1496,7 +1512,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie"
           ],
           "calendarDate": "2026-10-14",
@@ -1541,19 +1556,6 @@
               "text": "Diferencia oraciones interrogativas y exclamativas, y comienza a utilizar los signos convencionales en la escritura de esas clases de oraciones."
             }
           ],
-          "identity": {
-            "title": "Pueblos Indígenas",
-            "contenidos": [
-              "Resistencia indígena"
-            ],
-            "learnings": [
-              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
-            ],
-            "weekFocus": "Resistencia indígena",
-            "grade": "3er grado",
-            "week": 4,
-            "dayInWeek": 3
-          },
           "cie": [
             {
               "id": "cie:1",
@@ -1570,6 +1572,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-10-15",
@@ -1622,6 +1625,19 @@
               "text": "Diferencia oraciones interrogativas y exclamativas, y comienza a utilizar los signos convencionales en la escritura de esas clases de oraciones."
             }
           ],
+          "identity": {
+            "title": "Pueblos Indígenas",
+            "contenidos": [
+              "Resistencia indígena"
+            ],
+            "learnings": [
+              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
+            ],
+            "weekFocus": "Resistencia indígena",
+            "grade": "3er grado",
+            "week": 4,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:1",
@@ -1736,7 +1752,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie"
           ],
           "calendarDate": "2026-10-19",
@@ -1785,19 +1800,6 @@
               "text": "Usa criterios de preferencia para elegir lo que desea leer."
             }
           ],
-          "identity": {
-            "title": "Pueblos Afrovenezolanos",
-            "contenidos": [
-              "Trabajo y alimentación"
-            ],
-            "learnings": [
-              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
-            ],
-            "weekFocus": "Trabajo y alimentación",
-            "grade": "3er grado",
-            "week": 5,
-            "dayInWeek": 1
-          },
           "cie": [
             {
               "id": "cie:2",
@@ -1814,6 +1816,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-10-20",
@@ -1862,6 +1865,19 @@
               "text": "Usa criterios de preferencia para elegir lo que desea leer."
             }
           ],
+          "identity": {
+            "title": "Pueblos Afrovenezolanos",
+            "contenidos": [
+              "Trabajo y alimentación"
+            ],
+            "learnings": [
+              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
+            ],
+            "weekFocus": "Trabajo y alimentación",
+            "grade": "3er grado",
+            "week": 5,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:1",
@@ -1878,7 +1894,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie"
           ],
           "calendarDate": "2026-10-21",
@@ -1927,19 +1942,6 @@
               "text": "Actúa como hablante-oyente reflexivo y crítico en diversas situaciones comunicativas."
             }
           ],
-          "identity": {
-            "title": "Pueblos Afrovenezolanos",
-            "contenidos": [
-              "Trabajo y alimentación"
-            ],
-            "learnings": [
-              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
-            ],
-            "weekFocus": "Trabajo y alimentación",
-            "grade": "3er grado",
-            "week": 5,
-            "dayInWeek": 3
-          },
           "cie": [
             {
               "id": "cie:2",
@@ -1956,6 +1958,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-10-22",
@@ -2000,6 +2003,19 @@
               "text": "Actúa como hablante-oyente reflexivo y crítico en diversas situaciones comunicativas."
             }
           ],
+          "identity": {
+            "title": "Pueblos Afrovenezolanos",
+            "contenidos": [
+              "Trabajo y alimentación"
+            ],
+            "learnings": [
+              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
+            ],
+            "weekFocus": "Trabajo y alimentación",
+            "grade": "3er grado",
+            "week": 5,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:1",
@@ -2122,7 +2138,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie"
           ],
           "calendarDate": "2026-10-26",
@@ -2167,19 +2182,6 @@
               "text": "Explora índices de libros para ubicar temas que desea o necesita leer."
             }
           ],
-          "identity": {
-            "title": "Libertador Simón Bolívar",
-            "contenidos": [
-              "Juventud y compromiso revolucionario"
-            ],
-            "learnings": [
-              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
-            ],
-            "weekFocus": "Juventud y compromiso revolucionario",
-            "grade": "3er grado",
-            "week": 6,
-            "dayInWeek": 1
-          },
           "cie": [
             {
               "id": "cie:2",
@@ -2196,6 +2198,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-10-27",
@@ -2244,6 +2247,19 @@
               "text": "Usa diversas fórmulas sociales para interactuar con otros en situaciones de la vida cotidiana: gracias, de nada, por favor, con permiso, buenos días, etc."
             }
           ],
+          "identity": {
+            "title": "Libertador Simón Bolívar",
+            "contenidos": [
+              "Juventud y compromiso revolucionario"
+            ],
+            "learnings": [
+              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
+            ],
+            "weekFocus": "Juventud y compromiso revolucionario",
+            "grade": "3er grado",
+            "week": 6,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:2",
@@ -2260,7 +2276,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie"
           ],
           "calendarDate": "2026-10-28",
@@ -2305,19 +2320,6 @@
               "text": "Usa diversas fórmulas sociales para interactuar con otros en situaciones de la vida cotidiana: gracias, de nada, por favor, con permiso, buenos días, etc."
             }
           ],
-          "identity": {
-            "title": "Libertador Simón Bolívar",
-            "contenidos": [
-              "Juventud y compromiso revolucionario"
-            ],
-            "learnings": [
-              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
-            ],
-            "weekFocus": "Juventud y compromiso revolucionario",
-            "grade": "3er grado",
-            "week": 6,
-            "dayInWeek": 3
-          },
           "cie": [
             {
               "id": "cie:3",
@@ -2334,6 +2336,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-10-29",
@@ -2382,6 +2385,19 @@
               "text": "Lee aplicando la modalidad exploratoria del texto para localizar determinados datos."
             }
           ],
+          "identity": {
+            "title": "Libertador Simón Bolívar",
+            "contenidos": [
+              "Juventud y compromiso revolucionario"
+            ],
+            "learnings": [
+              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
+            ],
+            "weekFocus": "Juventud y compromiso revolucionario",
+            "grade": "3er grado",
+            "week": 6,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:2",
@@ -2508,7 +2524,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -2558,19 +2573,6 @@
               "text": "Lee aplicando la modalidad exploratoria del texto para localizar determinados datos."
             }
           ],
-          "identity": {
-            "title": "Nación Agrícola",
-            "contenidos": [
-              "Lucha social y política"
-            ],
-            "learnings": [
-              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
-            ],
-            "weekFocus": "Lucha social y política",
-            "grade": "3er grado",
-            "week": 7,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:2",
@@ -2595,6 +2597,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-11-03",
@@ -2647,6 +2650,19 @@
               "text": "Aporta ideas para la toma de decisiones durante la construcción y revisión permanente de las normas de convivencia en el salón y en otros espacios de la institución escolar."
             }
           ],
+          "identity": {
+            "title": "Nación Agrícola",
+            "contenidos": [
+              "Lucha social y política"
+            ],
+            "learnings": [
+              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
+            ],
+            "weekFocus": "Lucha social y política",
+            "grade": "3er grado",
+            "week": 7,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:2",
@@ -2663,7 +2679,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -2709,19 +2724,6 @@
               "text": "Aporta ideas para la toma de decisiones durante la construcción y revisión permanente de las normas de convivencia en el salón y en otros espacios de la institución escolar."
             }
           ],
-          "identity": {
-            "title": "Nación Agrícola",
-            "contenidos": [
-              "Lucha social y política"
-            ],
-            "learnings": [
-              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
-            ],
-            "weekFocus": "Lucha social y política",
-            "grade": "3er grado",
-            "week": 7,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:2",
@@ -2746,6 +2748,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-11-05",
@@ -2794,6 +2797,19 @@
               "text": "Lee en forma acuciosa con la finalidad de aprender e informar a otros."
             }
           ],
+          "identity": {
+            "title": "Nación Agrícola",
+            "contenidos": [
+              "Lucha social y política"
+            ],
+            "learnings": [
+              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
+            ],
+            "weekFocus": "Lucha social y política",
+            "grade": "3er grado",
+            "week": 7,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:2",
@@ -2914,7 +2930,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -2964,19 +2979,6 @@
               "text": "Manifiesta sus interpretaciones y puntos de vista sobre textos leídos por la/el docente."
             }
           ],
-          "identity": {
-            "title": "Nación Petrolera",
-            "contenidos": [
-              "Venezuela moderna"
-            ],
-            "learnings": [
-              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
-            ],
-            "weekFocus": "Venezuela moderna",
-            "grade": "3er grado",
-            "week": 8,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:2",
@@ -3001,6 +3003,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-11-10",
@@ -3049,6 +3052,19 @@
               "text": "Manifiesta sus interpretaciones y puntos de vista sobre textos leídos por la/el docente."
             }
           ],
+          "identity": {
+            "title": "Nación Petrolera",
+            "contenidos": [
+              "Venezuela moderna"
+            ],
+            "learnings": [
+              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
+            ],
+            "weekFocus": "Venezuela moderna",
+            "grade": "3er grado",
+            "week": 8,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:2",
@@ -3065,7 +3081,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -3115,19 +3130,6 @@
               "text": "Lee para buscar información que requiere para redactar un texto."
             }
           ],
-          "identity": {
-            "title": "Nación Petrolera",
-            "contenidos": [
-              "Venezuela moderna"
-            ],
-            "learnings": [
-              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
-            ],
-            "weekFocus": "Venezuela moderna",
-            "grade": "3er grado",
-            "week": 8,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:2",
@@ -3152,6 +3154,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-11-12",
@@ -3200,6 +3203,19 @@
               "text": "Lee para buscar información que requiere para redactar un texto."
             }
           ],
+          "identity": {
+            "title": "Nación Petrolera",
+            "contenidos": [
+              "Venezuela moderna"
+            ],
+            "learnings": [
+              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
+            ],
+            "weekFocus": "Venezuela moderna",
+            "grade": "3er grado",
+            "week": 8,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:2",
@@ -3314,7 +3330,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -3360,19 +3375,6 @@
               "text": "Escucha con respeto los puntos de vista del otro/otra y defiende los propios con explicaciones y argumentos."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana",
-            "contenidos": [
-              "La venezolanidad"
-            ],
-            "learnings": [
-              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
-            ],
-            "weekFocus": "La venezolanidad",
-            "grade": "3er grado",
-            "week": 9,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:2",
@@ -3397,6 +3399,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-11-17",
@@ -3453,6 +3456,19 @@
               "text": "Escucha con respeto los puntos de vista del otro/otra y defiende los propios con explicaciones y argumentos."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana",
+            "contenidos": [
+              "La venezolanidad"
+            ],
+            "learnings": [
+              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
+            ],
+            "weekFocus": "La venezolanidad",
+            "grade": "3er grado",
+            "week": 9,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:2",
@@ -3469,7 +3485,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -3515,19 +3530,6 @@
               "text": "Ordena palabras escritas sin orden predeterminado para formar oraciones. Ej.: Simón Bolívar nació en Caracas; Caracas es la capital de Venezuela; Simón Rodríguez fue un gran maestro."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana",
-            "contenidos": [
-              "La venezolanidad"
-            ],
-            "learnings": [
-              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
-            ],
-            "weekFocus": "La venezolanidad",
-            "grade": "3er grado",
-            "week": 9,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:2",
@@ -3552,6 +3554,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-11-19",
@@ -3596,6 +3599,19 @@
               "text": "Ordena palabras escritas sin orden predeterminado para formar oraciones. Ej.: Simón Bolívar nació en Caracas; Caracas es la capital de Venezuela; Simón Rodríguez fue un gran maestro."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana",
+            "contenidos": [
+              "La venezolanidad"
+            ],
+            "learnings": [
+              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
+            ],
+            "weekFocus": "La venezolanidad",
+            "grade": "3er grado",
+            "week": 9,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:2",
@@ -3720,7 +3736,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -3766,19 +3781,6 @@
               "text": "Participa en diálogos en variados contextos comunicativos, considerando los puntos de vista de otros/otras: para resolver diferencias, acordar reglas de un juego, manifestar y resolver desacuerdos…"
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
-            "contenidos": [
-              "La venezolanidad"
-            ],
-            "learnings": [
-              "Reconoce los paisajes naturales y conjuntos regionales: Costa-montaña, Llanos y Guayana, así como sus características productivas y conoce momentos de las actividades productivas en la Historia de Venezuela."
-            ],
-            "weekFocus": "La venezolanidad",
-            "grade": "3er grado",
-            "week": 10,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:3",
@@ -3803,6 +3805,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-11-24",
@@ -3851,6 +3854,19 @@
               "text": "Menciona las letras del alfabeto por sus nombres y las usa en la escritura con su valor sonoro."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
+            "contenidos": [
+              "La venezolanidad"
+            ],
+            "learnings": [
+              "Reconoce los paisajes naturales y conjuntos regionales: Costa-montaña, Llanos y Guayana, así como sus características productivas y conoce momentos de las actividades productivas en la Historia de Venezuela."
+            ],
+            "weekFocus": "La venezolanidad",
+            "grade": "3er grado",
+            "week": 10,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:3",
@@ -3867,7 +3883,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -3917,19 +3932,6 @@
               "text": "Menciona las letras del alfabeto por sus nombres y las usa en la escritura con su valor sonoro."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
-            "contenidos": [
-              "La venezolanidad"
-            ],
-            "learnings": [
-              "Reconoce los paisajes naturales y conjuntos regionales: Costa-montaña, Llanos y Guayana, así como sus características productivas y conoce momentos de las actividades productivas en la Historia de Venezuela."
-            ],
-            "weekFocus": "La venezolanidad",
-            "grade": "3er grado",
-            "week": 10,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:3",
@@ -3954,6 +3956,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-11-26",
@@ -4006,6 +4009,19 @@
               "text": "Pregunta y responde sobre contenidos de estudio tratados en el aula."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
+            "contenidos": [
+              "La venezolanidad"
+            ],
+            "learnings": [
+              "Reconoce los paisajes naturales y conjuntos regionales: Costa-montaña, Llanos y Guayana, así como sus características productivas y conoce momentos de las actividades productivas en la Historia de Venezuela."
+            ],
+            "weekFocus": "La venezolanidad",
+            "grade": "3er grado",
+            "week": 10,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:3",
@@ -4122,7 +4138,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -4172,19 +4187,6 @@
               "text": "Pregunta y responde sobre contenidos de estudio tratados en el aula."
             }
           ],
-          "identity": {
-            "title": "La Humanidad",
-            "contenidos": [
-              "Períodos de la Historia de Venezuela"
-            ],
-            "learnings": [
-              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
-            ],
-            "weekFocus": "Períodos de la Historia de Venezuela",
-            "grade": "3er grado",
-            "week": 11,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:3",
@@ -4209,6 +4211,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-12-01",
@@ -4257,6 +4260,19 @@
               "text": "Diferencia entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos, y expresa algunos rasgos que los distinguen."
             }
           ],
+          "identity": {
+            "title": "La Humanidad",
+            "contenidos": [
+              "Períodos de la Historia de Venezuela"
+            ],
+            "learnings": [
+              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
+            ],
+            "weekFocus": "Períodos de la Historia de Venezuela",
+            "grade": "3er grado",
+            "week": 11,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:3",
@@ -4273,7 +4289,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -4327,19 +4342,6 @@
               "text": "Diferencia entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos, y expresa algunos rasgos que los distinguen."
             }
           ],
-          "identity": {
-            "title": "La Humanidad",
-            "contenidos": [
-              "Períodos de la Historia de Venezuela"
-            ],
-            "learnings": [
-              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
-            ],
-            "weekFocus": "Períodos de la Historia de Venezuela",
-            "grade": "3er grado",
-            "week": 11,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:3",
@@ -4364,6 +4366,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-12-03",
@@ -4408,6 +4411,19 @@
               "text": "Pregunta para solicitar la información requerida en diversas situaciones."
             }
           ],
+          "identity": {
+            "title": "La Humanidad",
+            "contenidos": [
+              "Períodos de la Historia de Venezuela"
+            ],
+            "learnings": [
+              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
+            ],
+            "weekFocus": "Períodos de la Historia de Venezuela",
+            "grade": "3er grado",
+            "week": 11,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:3",
@@ -4532,7 +4548,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -4578,19 +4593,6 @@
               "text": "Recomienda obras literarias informando títulos y autores/autoras de un repertorio de cuentos y poemas que conoce."
             }
           ],
-          "identity": {
-            "title": "Nuestro Mundo",
-            "contenidos": [
-              "Caseríos y comunidades"
-            ],
-            "learnings": [
-              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
-            ],
-            "weekFocus": "Caseríos y comunidades",
-            "grade": "3er grado",
-            "week": 12,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:4",
@@ -4615,6 +4617,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-12-08",
@@ -4663,6 +4666,19 @@
               "text": "Recomienda obras literarias informando títulos y autores/autoras de un repertorio de cuentos y poemas que conoce."
             }
           ],
+          "identity": {
+            "title": "Nuestro Mundo",
+            "contenidos": [
+              "Caseríos y comunidades"
+            ],
+            "learnings": [
+              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
+            ],
+            "weekFocus": "Caseríos y comunidades",
+            "grade": "3er grado",
+            "week": 12,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:4",
@@ -4679,7 +4695,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -4725,19 +4740,6 @@
               "text": "Participa en la comparación de respuestas a instrumentos de evaluación mediante intercambios con el grupo de compañeras/ os y docente."
             }
           ],
-          "identity": {
-            "title": "Nuestro Mundo",
-            "contenidos": [
-              "Caseríos y comunidades"
-            ],
-            "learnings": [
-              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
-            ],
-            "weekFocus": "Caseríos y comunidades",
-            "grade": "3er grado",
-            "week": 12,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:4",
@@ -4762,6 +4764,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-12-10",
@@ -4814,6 +4817,19 @@
               "text": "Participa en la comparación de respuestas a instrumentos de evaluación mediante intercambios con el grupo de compañeras/ os y docente."
             }
           ],
+          "identity": {
+            "title": "Nuestro Mundo",
+            "contenidos": [
+              "Caseríos y comunidades"
+            ],
+            "learnings": [
+              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
+            ],
+            "weekFocus": "Caseríos y comunidades",
+            "grade": "3er grado",
+            "week": 12,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:4",
@@ -4934,7 +4950,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -4980,19 +4995,6 @@
               "text": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos."
             }
           ],
-          "identity": {
-            "title": "Venezuela en el Mundo",
-            "contenidos": [
-              "Superficie y fronteras"
-            ],
-            "learnings": [
-              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
-            ],
-            "weekFocus": "Superficie y fronteras",
-            "grade": "3er grado",
-            "week": 13,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:4",
@@ -5017,6 +5019,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-12-15",
@@ -5069,6 +5072,19 @@
               "text": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos."
             }
           ],
+          "identity": {
+            "title": "Venezuela en el Mundo",
+            "contenidos": [
+              "Superficie y fronteras"
+            ],
+            "learnings": [
+              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
+            ],
+            "weekFocus": "Superficie y fronteras",
+            "grade": "3er grado",
+            "week": 13,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:4",
@@ -5085,7 +5101,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -5131,19 +5146,6 @@
               "text": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos."
             }
           ],
-          "identity": {
-            "title": "Venezuela en el Mundo",
-            "contenidos": [
-              "Superficie y fronteras"
-            ],
-            "learnings": [
-              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
-            ],
-            "weekFocus": "Superficie y fronteras",
-            "grade": "3er grado",
-            "week": 13,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:4",
@@ -5168,6 +5170,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-12-17",
@@ -5220,6 +5223,19 @@
               "text": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos."
             }
           ],
+          "identity": {
+            "title": "Venezuela en el Mundo",
+            "contenidos": [
+              "Superficie y fronteras"
+            ],
+            "learnings": [
+              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
+            ],
+            "weekFocus": "Superficie y fronteras",
+            "grade": "3er grado",
+            "week": 13,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:4",
@@ -5334,7 +5350,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -5384,19 +5399,6 @@
               "text": "Resuelve problemas de lectura y escritura planteados en instrumentos de evaluación dirigidos a estimar los avances en el aprendizaje y los efectos de la enseñanza."
             }
           ],
-          "identity": {
-            "title": "Pueblos Indígenas",
-            "contenidos": [
-              "Lucha ancestral"
-            ],
-            "learnings": [
-              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
-            ],
-            "weekFocus": "Lucha ancestral",
-            "grade": "3er grado",
-            "week": 14,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:5",
@@ -5421,6 +5423,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-12-22",
@@ -5465,6 +5468,19 @@
               "text": "Utiliza un repertorio de nuevas palabras que trascienden el léxico utilizado cotidianamente para interactuar en diversidad de situaciones comunicativas y satisfacer distintas necesidades."
             }
           ],
+          "identity": {
+            "title": "Pueblos Indígenas",
+            "contenidos": [
+              "Lucha ancestral"
+            ],
+            "learnings": [
+              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
+            ],
+            "weekFocus": "Lucha ancestral",
+            "grade": "3er grado",
+            "week": 14,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:5",
@@ -5481,7 +5497,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -5531,19 +5546,6 @@
               "text": "Utiliza un repertorio de nuevas palabras que trascienden el léxico utilizado cotidianamente para interactuar en diversidad de situaciones comunicativas y satisfacer distintas necesidades."
             }
           ],
-          "identity": {
-            "title": "Pueblos Indígenas",
-            "contenidos": [
-              "Lucha ancestral"
-            ],
-            "learnings": [
-              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
-            ],
-            "weekFocus": "Lucha ancestral",
-            "grade": "3er grado",
-            "week": 14,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:5",
@@ -5673,7 +5675,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -5719,19 +5720,6 @@
               "text": "Comprende metáforas sencillas en textos literarios."
             }
           ],
-          "identity": {
-            "title": "Pueblos Afrovenezolanos",
-            "contenidos": [
-              "Crianza y labores en el hogar"
-            ],
-            "learnings": [
-              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
-            ],
-            "weekFocus": "Crianza y labores en el hogar",
-            "grade": "3er grado",
-            "week": 15,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:5",
@@ -5756,6 +5744,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2026-12-29",
@@ -5804,6 +5793,19 @@
               "text": "Comprende metáforas sencillas en textos literarios."
             }
           ],
+          "identity": {
+            "title": "Pueblos Afrovenezolanos",
+            "contenidos": [
+              "Crianza y labores en el hogar"
+            ],
+            "learnings": [
+              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
+            ],
+            "weekFocus": "Crianza y labores en el hogar",
+            "grade": "3er grado",
+            "week": 15,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:5",
@@ -5820,7 +5822,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -5870,19 +5871,6 @@
               "text": "Comprende metáforas sencillas en textos literarios."
             }
           ],
-          "identity": {
-            "title": "Pueblos Afrovenezolanos",
-            "contenidos": [
-              "Crianza y labores en el hogar"
-            ],
-            "learnings": [
-              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
-            ],
-            "weekFocus": "Crianza y labores en el hogar",
-            "grade": "3er grado",
-            "week": 15,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:5",
@@ -6012,7 +6000,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -6058,19 +6045,6 @@
               "text": "Narra cuentos conocidos siguiendo la secuencia de los hechos y utilizando descriptores para caracterizar personajes y otros recursos de la narración."
             }
           ],
-          "identity": {
-            "title": "Libertador Simón Bolívar",
-            "contenidos": [
-              "Viajes y educación en Europa"
-            ],
-            "learnings": [
-              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
-            ],
-            "weekFocus": "Viajes y educación en Europa",
-            "grade": "3er grado",
-            "week": 16,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:5",
@@ -6095,6 +6069,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-01-05",
@@ -6143,6 +6118,19 @@
               "text": "Narra cuentos conocidos siguiendo la secuencia de los hechos y utilizando descriptores para caracterizar personajes y otros recursos de la narración."
             }
           ],
+          "identity": {
+            "title": "Libertador Simón Bolívar",
+            "contenidos": [
+              "Viajes y educación en Europa"
+            ],
+            "learnings": [
+              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
+            ],
+            "weekFocus": "Viajes y educación en Europa",
+            "grade": "3er grado",
+            "week": 16,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:5",
@@ -6159,7 +6147,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -6205,19 +6192,6 @@
               "text": "Interpreta las funciones de los signos de interrogación y exclamación en la lectura de textos."
             }
           ],
-          "identity": {
-            "title": "Libertador Simón Bolívar",
-            "contenidos": [
-              "Viajes y educación en Europa"
-            ],
-            "learnings": [
-              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
-            ],
-            "weekFocus": "Viajes y educación en Europa",
-            "grade": "3er grado",
-            "week": 16,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:6",
@@ -6242,6 +6216,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-01-07",
@@ -6294,6 +6269,19 @@
               "text": "Interpreta las funciones de los signos de interrogación y exclamación en la lectura de textos."
             }
           ],
+          "identity": {
+            "title": "Libertador Simón Bolívar",
+            "contenidos": [
+              "Viajes y educación en Europa"
+            ],
+            "learnings": [
+              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
+            ],
+            "weekFocus": "Viajes y educación en Europa",
+            "grade": "3er grado",
+            "week": 16,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:6",
@@ -6410,7 +6398,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -6464,19 +6451,6 @@
               "text": "Utiliza algunas fórmulas de inicio propias de la narración, al relatar sus propios cuentos: había una vez… / En un lugar llamado… / Hace mucho tiempo…"
             }
           ],
-          "identity": {
-            "title": "Nación Agrícola",
-            "contenidos": [
-              "Insurgencias campesinas"
-            ],
-            "learnings": [
-              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
-            ],
-            "weekFocus": "Insurgencias campesinas",
-            "grade": "3er grado",
-            "week": 17,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:6",
@@ -6501,6 +6475,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-01-12",
@@ -6549,6 +6524,19 @@
               "text": "Conoce las funciones de sustantivos y adjetivos."
             }
           ],
+          "identity": {
+            "title": "Nación Agrícola",
+            "contenidos": [
+              "Insurgencias campesinas"
+            ],
+            "learnings": [
+              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
+            ],
+            "weekFocus": "Insurgencias campesinas",
+            "grade": "3er grado",
+            "week": 17,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:6",
@@ -6565,7 +6553,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -6615,19 +6602,6 @@
               "text": "Conoce las funciones de sustantivos y adjetivos."
             }
           ],
-          "identity": {
-            "title": "Nación Agrícola",
-            "contenidos": [
-              "Insurgencias campesinas"
-            ],
-            "learnings": [
-              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
-            ],
-            "weekFocus": "Insurgencias campesinas",
-            "grade": "3er grado",
-            "week": 17,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:6",
@@ -6652,6 +6626,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-01-14",
@@ -6696,6 +6671,19 @@
               "text": "Comunica al grupo del salón información sobre temas de interés."
             }
           ],
+          "identity": {
+            "title": "Nación Agrícola",
+            "contenidos": [
+              "Insurgencias campesinas"
+            ],
+            "learnings": [
+              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
+            ],
+            "weekFocus": "Insurgencias campesinas",
+            "grade": "3er grado",
+            "week": 17,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:6",
@@ -6820,7 +6808,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -6866,19 +6853,6 @@
               "text": "Comunica al grupo del salón información sobre temas de interés."
             }
           ],
-          "identity": {
-            "title": "Nación Petrolera",
-            "contenidos": [
-              "Claves económicas y políticas del siglo XX."
-            ],
-            "learnings": [
-              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
-            ],
-            "weekFocus": "Claves económicas y políticas del siglo XX.",
-            "grade": "3er grado",
-            "week": 18,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:6",
@@ -6903,6 +6877,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-01-19",
@@ -6951,6 +6926,19 @@
               "text": "Analiza algunas “curiosidades” de nuestra lengua. Palíndromos: palabras que se leen igual al derecho y al revés. Ej. Ana, ada, ojo, oro, radar, somos, rapar, reconocer, arepera. Palabras que repiten una misma vocal en todas las sílabas: maraca, cántara / monólogo, fósforo / efervescente, pelele / infringir, incidir… Palabras pentavocálicas (Contienen las cinco vocales). Ej.: aurelio, orquídea, riachuelo, murciélago, comunicarse, educación…"
             }
           ],
+          "identity": {
+            "title": "Nación Petrolera",
+            "contenidos": [
+              "Claves económicas y políticas del siglo XX."
+            ],
+            "learnings": [
+              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
+            ],
+            "weekFocus": "Claves económicas y políticas del siglo XX.",
+            "grade": "3er grado",
+            "week": 18,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:6",
@@ -6967,7 +6955,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -7017,19 +7004,6 @@
               "text": "Analiza algunas “curiosidades” de nuestra lengua. Palíndromos: palabras que se leen igual al derecho y al revés. Ej. Ana, ada, ojo, oro, radar, somos, rapar, reconocer, arepera. Palabras que repiten una misma vocal en todas las sílabas: maraca, cántara / monólogo, fósforo / efervescente, pelele / infringir, incidir… Palabras pentavocálicas (Contienen las cinco vocales). Ej.: aurelio, orquídea, riachuelo, murciélago, comunicarse, educación…"
             }
           ],
-          "identity": {
-            "title": "Nación Petrolera",
-            "contenidos": [
-              "Claves económicas y políticas del siglo XX."
-            ],
-            "learnings": [
-              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
-            ],
-            "weekFocus": "Claves económicas y políticas del siglo XX.",
-            "grade": "3er grado",
-            "week": 18,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:7",
@@ -7054,6 +7028,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-01-21",
@@ -7102,6 +7077,19 @@
               "text": "Conoce y comparte con otras personas un repertorio de expresiones lúdicas de la lengua: chistes, trabalenguas, adivinanzas, cuentos de nunca acabar, retahílas…"
             }
           ],
+          "identity": {
+            "title": "Nación Petrolera",
+            "contenidos": [
+              "Claves económicas y políticas del siglo XX."
+            ],
+            "learnings": [
+              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
+            ],
+            "weekFocus": "Claves económicas y políticas del siglo XX.",
+            "grade": "3er grado",
+            "week": 18,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:7",
@@ -7234,7 +7222,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -7280,19 +7267,6 @@
               "text": "Comprende la composición de palabras en un repertorio de términos comunes (Cumpleaños, guardabosques, paraguas, lavaplatos, telaraña, saltamontes)."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana",
-            "contenidos": [
-              "Educación liberadora y humanista"
-            ],
-            "learnings": [
-              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
-            ],
-            "weekFocus": "Educación liberadora y humanista",
-            "grade": "3er grado",
-            "week": 19,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:7",
@@ -7317,6 +7291,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-01-26",
@@ -7373,6 +7348,19 @@
               "text": "Comprende la composición de palabras en un repertorio de términos comunes (Cumpleaños, guardabosques, paraguas, lavaplatos, telaraña, saltamontes)."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana",
+            "contenidos": [
+              "Educación liberadora y humanista"
+            ],
+            "learnings": [
+              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
+            ],
+            "weekFocus": "Educación liberadora y humanista",
+            "grade": "3er grado",
+            "week": 19,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:7",
@@ -7389,7 +7377,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -7435,19 +7422,6 @@
               "text": "Participa en discusiones sobre la utilidad de la tecnología."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana",
-            "contenidos": [
-              "Educación liberadora y humanista"
-            ],
-            "learnings": [
-              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
-            ],
-            "weekFocus": "Educación liberadora y humanista",
-            "grade": "3er grado",
-            "week": 19,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:7",
@@ -7472,6 +7446,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-01-28",
@@ -7520,6 +7495,19 @@
               "text": "Participa en discusiones sobre la utilidad de la tecnología."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana",
+            "contenidos": [
+              "Educación liberadora y humanista"
+            ],
+            "learnings": [
+              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
+            ],
+            "weekFocus": "Educación liberadora y humanista",
+            "grade": "3er grado",
+            "week": 19,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:7",
@@ -7634,7 +7622,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -7684,19 +7671,6 @@
               "text": "Ubica y lee en el mapa de Venezuela los nombres de un amplio repertorio de estados, ríos, lagos principales y el mar Caribe."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
-            "contenidos": [
-              "Educación liberadora y humanista"
-            ],
-            "learnings": [
-              "Reconoce la diversidad familiar, comprende la importancia de la planificación familiar, e identifica las necesidades básicas para el bienestar de las familias."
-            ],
-            "weekFocus": "Educación liberadora y humanista",
-            "grade": "3er grado",
-            "week": 20,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:7",
@@ -7721,6 +7695,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-02-02",
@@ -7765,6 +7740,19 @@
               "text": "Ubica y lee en el mapa de Venezuela los nombres de un amplio repertorio de estados, ríos, lagos principales y el mar Caribe."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
+            "contenidos": [
+              "Educación liberadora y humanista"
+            ],
+            "learnings": [
+              "Reconoce la diversidad familiar, comprende la importancia de la planificación familiar, e identifica las necesidades básicas para el bienestar de las familias."
+            ],
+            "weekFocus": "Educación liberadora y humanista",
+            "grade": "3er grado",
+            "week": 20,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:7",
@@ -7781,7 +7769,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -7835,19 +7822,6 @@
               "text": "Canta/declama un repertorio de canciones, poemas y coplas, previamente memorizadas, ajustando en lo posible los rasgos de la voz para distintos escenarios."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
-            "contenidos": [
-              "Educación liberadora y humanista"
-            ],
-            "learnings": [
-              "Reconoce la diversidad familiar, comprende la importancia de la planificación familiar, e identifica las necesidades básicas para el bienestar de las familias."
-            ],
-            "weekFocus": "Educación liberadora y humanista",
-            "grade": "3er grado",
-            "week": 20,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:8",
@@ -7872,6 +7846,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-02-04",
@@ -7920,6 +7895,19 @@
               "text": "Canta/declama un repertorio de canciones, poemas y coplas, previamente memorizadas, ajustando en lo posible los rasgos de la voz para distintos escenarios."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
+            "contenidos": [
+              "Educación liberadora y humanista"
+            ],
+            "learnings": [
+              "Reconoce la diversidad familiar, comprende la importancia de la planificación familiar, e identifica las necesidades básicas para el bienestar de las familias."
+            ],
+            "weekFocus": "Educación liberadora y humanista",
+            "grade": "3er grado",
+            "week": 20,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:8",
@@ -8132,7 +8120,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -8186,19 +8173,6 @@
               "text": "Interpreta informaciones contenidas en diferentes representaciones gráficas."
             }
           ],
-          "identity": {
-            "title": "La Humanidad",
-            "contenidos": [
-              "Comunicación humana en el tiempo"
-            ],
-            "learnings": [
-              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
-            ],
-            "weekFocus": "Comunicación humana en el tiempo",
-            "grade": "3er grado",
-            "week": 21,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:8",
@@ -8223,6 +8197,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-02-11",
@@ -8267,6 +8242,19 @@
               "text": "Conoce palabras para denominar sonidos de animales comunes. Además de los vistos en grados anteriores, incluye, por ejemplo: abeja, oveja, elefante, búho…"
             }
           ],
+          "identity": {
+            "title": "La Humanidad",
+            "contenidos": [
+              "Comunicación humana en el tiempo"
+            ],
+            "learnings": [
+              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
+            ],
+            "weekFocus": "Comunicación humana en el tiempo",
+            "grade": "3er grado",
+            "week": 21,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:8",
@@ -8385,7 +8373,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -8431,19 +8418,6 @@
               "text": "Explora el mapamundi en busca de algunos países específicos y otros datos geográficos."
             }
           ],
-          "identity": {
-            "title": "Nuestro Mundo",
-            "contenidos": [
-              "Recorrido en el Caribe"
-            ],
-            "learnings": [
-              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
-            ],
-            "weekFocus": "Recorrido en el Caribe",
-            "grade": "3er grado",
-            "week": 22,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:8",
@@ -8468,6 +8442,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-02-16",
@@ -8516,6 +8491,19 @@
               "text": "Explora el mapamundi en busca de algunos países específicos y otros datos geográficos."
             }
           ],
+          "identity": {
+            "title": "Nuestro Mundo",
+            "contenidos": [
+              "Recorrido en el Caribe"
+            ],
+            "learnings": [
+              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
+            ],
+            "weekFocus": "Recorrido en el Caribe",
+            "grade": "3er grado",
+            "week": 22,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:8",
@@ -8532,7 +8520,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -8578,19 +8565,6 @@
               "text": "Explora el mapamundi en busca de algunos países específicos y otros datos geográficos."
             }
           ],
-          "identity": {
-            "title": "Nuestro Mundo",
-            "contenidos": [
-              "Recorrido en el Caribe"
-            ],
-            "learnings": [
-              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
-            ],
-            "weekFocus": "Recorrido en el Caribe",
-            "grade": "3er grado",
-            "week": 22,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:8",
@@ -8615,6 +8589,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-02-18",
@@ -8671,6 +8646,19 @@
               "text": "Expresa verbalmente historietas y cuentos creados a partir de imágenes."
             }
           ],
+          "identity": {
+            "title": "Nuestro Mundo",
+            "contenidos": [
+              "Recorrido en el Caribe"
+            ],
+            "learnings": [
+              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
+            ],
+            "weekFocus": "Recorrido en el Caribe",
+            "grade": "3er grado",
+            "week": 22,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:8",
@@ -8781,7 +8769,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -8831,19 +8818,6 @@
               "text": "Identifica algunas señales básicas: no pase, peligro, alta tensión, baño de damas / caballeros, algunas señales de tránsito."
             }
           ],
-          "identity": {
-            "title": "Venezuela en el Mundo",
-            "contenidos": [
-              "Organización político-territorial"
-            ],
-            "learnings": [
-              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
-            ],
-            "weekFocus": "Organización político-territorial",
-            "grade": "3er grado",
-            "week": 23,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:9",
@@ -8868,6 +8842,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-02-23",
@@ -8916,6 +8891,19 @@
               "text": "Identifica algunas señales básicas: no pase, peligro, alta tensión, baño de damas / caballeros, algunas señales de tránsito."
             }
           ],
+          "identity": {
+            "title": "Venezuela en el Mundo",
+            "contenidos": [
+              "Organización político-territorial"
+            ],
+            "learnings": [
+              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
+            ],
+            "weekFocus": "Organización político-territorial",
+            "grade": "3er grado",
+            "week": 23,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:9",
@@ -8932,7 +8920,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -8982,19 +8969,6 @@
               "text": "Comenta con otras personas acerca de textos y temas de su interés."
             }
           ],
-          "identity": {
-            "title": "Venezuela en el Mundo",
-            "contenidos": [
-              "Organización político-territorial"
-            ],
-            "learnings": [
-              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
-            ],
-            "weekFocus": "Organización político-territorial",
-            "grade": "3er grado",
-            "week": 23,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:9",
@@ -9019,6 +8993,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-02-25",
@@ -9067,6 +9042,19 @@
               "text": "Comenta con otras personas acerca de textos y temas de su interés."
             }
           ],
+          "identity": {
+            "title": "Venezuela en el Mundo",
+            "contenidos": [
+              "Organización político-territorial"
+            ],
+            "learnings": [
+              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
+            ],
+            "weekFocus": "Organización político-territorial",
+            "grade": "3er grado",
+            "week": 23,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:9",
@@ -9181,7 +9169,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -9231,19 +9218,6 @@
               "text": "Conoce nombres y datos fundamentales de tres o cuatro venezolanos(As) ilustres: Simón Bolívar, Simón Rodríguez, Francisco de Miranda. Si es el caso, epónimos de la escuela, el estado, municipio o parroquia donde reside."
             }
           ],
-          "identity": {
-            "title": "Pueblos Indígenas",
-            "contenidos": [
-              "Organización política"
-            ],
-            "learnings": [
-              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
-            ],
-            "weekFocus": "Organización política",
-            "grade": "3er grado",
-            "week": 24,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:9",
@@ -9268,6 +9242,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-03-02",
@@ -9312,6 +9287,19 @@
               "text": "Conoce nombres y datos fundamentales de tres o cuatro venezolanos(As) ilustres: Simón Bolívar, Simón Rodríguez, Francisco de Miranda. Si es el caso, epónimos de la escuela, el estado, municipio o parroquia donde reside."
             }
           ],
+          "identity": {
+            "title": "Pueblos Indígenas",
+            "contenidos": [
+              "Organización política"
+            ],
+            "learnings": [
+              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
+            ],
+            "weekFocus": "Organización política",
+            "grade": "3er grado",
+            "week": 24,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:9",
@@ -9328,7 +9316,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -9378,19 +9365,6 @@
               "text": "Utiliza un repertorio amplio de adjetivos para describir objetos y situaciones del entorno."
             }
           ],
-          "identity": {
-            "title": "Pueblos Indígenas",
-            "contenidos": [
-              "Organización política"
-            ],
-            "learnings": [
-              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
-            ],
-            "weekFocus": "Organización política",
-            "grade": "3er grado",
-            "week": 24,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:9",
@@ -9415,6 +9389,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-03-04",
@@ -9463,6 +9438,19 @@
               "text": "Utiliza un repertorio amplio de adjetivos para describir objetos y situaciones del entorno."
             }
           ],
+          "identity": {
+            "title": "Pueblos Indígenas",
+            "contenidos": [
+              "Organización política"
+            ],
+            "learnings": [
+              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
+            ],
+            "weekFocus": "Organización política",
+            "grade": "3er grado",
+            "week": 24,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:9",
@@ -9587,7 +9575,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -9633,19 +9620,6 @@
               "text": "Conoce algunos derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela."
             }
           ],
-          "identity": {
-            "title": "Pueblos Afrovenezolanos",
-            "contenidos": [
-              "Pilar de la producción colonial"
-            ],
-            "learnings": [
-              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
-            ],
-            "weekFocus": "Pilar de la producción colonial",
-            "grade": "3er grado",
-            "week": 25,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:10",
@@ -9670,6 +9644,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-03-09",
@@ -9722,6 +9697,19 @@
               "text": "Participa en comentarios de grupo sobre noticias de especial interés."
             }
           ],
+          "identity": {
+            "title": "Pueblos Afrovenezolanos",
+            "contenidos": [
+              "Pilar de la producción colonial"
+            ],
+            "learnings": [
+              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
+            ],
+            "weekFocus": "Pilar de la producción colonial",
+            "grade": "3er grado",
+            "week": 25,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:10",
@@ -9738,7 +9726,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -9784,19 +9771,6 @@
               "text": "Participa en comentarios de grupo sobre noticias de especial interés."
             }
           ],
-          "identity": {
-            "title": "Pueblos Afrovenezolanos",
-            "contenidos": [
-              "Pilar de la producción colonial"
-            ],
-            "learnings": [
-              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
-            ],
-            "weekFocus": "Pilar de la producción colonial",
-            "grade": "3er grado",
-            "week": 25,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:10",
@@ -9821,6 +9795,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-03-11",
@@ -9869,6 +9844,19 @@
               "text": "Comprende el significado e imita algunos gestos básicos de la Lengua de Señas Venezolana."
             }
           ],
+          "identity": {
+            "title": "Pueblos Afrovenezolanos",
+            "contenidos": [
+              "Pilar de la producción colonial"
+            ],
+            "learnings": [
+              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
+            ],
+            "weekFocus": "Pilar de la producción colonial",
+            "grade": "3er grado",
+            "week": 25,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:10",
@@ -9993,7 +9981,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -10043,19 +10030,6 @@
               "text": "Conoce el sentido y usa un repertorio de expresiones, dichos y refranes. Ejemplos: “el papá de los helados”, “hijo de gato, caza ratón”, “no dejes para mañana lo que puedes hacer hoy”, “el que madruga, recoge agua clara”, “en el camino se enderezan las cargas”."
             }
           ],
-          "identity": {
-            "title": "Libertador Simón Bolívar",
-            "contenidos": [
-              "Encuentro y pérdida del amor"
-            ],
-            "learnings": [
-              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
-            ],
-            "weekFocus": "Encuentro y pérdida del amor",
-            "grade": "3er grado",
-            "week": 26,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:10",
@@ -10080,6 +10054,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-03-16",
@@ -10124,6 +10099,19 @@
               "text": "Conoce el sentido y usa un repertorio de expresiones, dichos y refranes. Ejemplos: “el papá de los helados”, “hijo de gato, caza ratón”, “no dejes para mañana lo que puedes hacer hoy”, “el que madruga, recoge agua clara”, “en el camino se enderezan las cargas”."
             }
           ],
+          "identity": {
+            "title": "Libertador Simón Bolívar",
+            "contenidos": [
+              "Encuentro y pérdida del amor"
+            ],
+            "learnings": [
+              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
+            ],
+            "weekFocus": "Encuentro y pérdida del amor",
+            "grade": "3er grado",
+            "week": 26,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:10",
@@ -10140,7 +10128,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -10190,19 +10177,6 @@
               "text": "Conoce el sentido y usa un repertorio de expresiones, dichos y refranes. Ejemplos: “el papá de los helados”, “hijo de gato, caza ratón”, “no dejes para mañana lo que puedes hacer hoy”, “el que madruga, recoge agua clara”, “en el camino se enderezan las cargas”."
             }
           ],
-          "identity": {
-            "title": "Libertador Simón Bolívar",
-            "contenidos": [
-              "Encuentro y pérdida del amor"
-            ],
-            "learnings": [
-              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
-            ],
-            "weekFocus": "Encuentro y pérdida del amor",
-            "grade": "3er grado",
-            "week": 26,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:10",
@@ -10227,6 +10201,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-03-18",
@@ -10275,6 +10250,19 @@
               "text": "Conoce el sentido de la partida de nacimiento y la cédula de identidad."
             }
           ],
+          "identity": {
+            "title": "Libertador Simón Bolívar",
+            "contenidos": [
+              "Encuentro y pérdida del amor"
+            ],
+            "learnings": [
+              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
+            ],
+            "weekFocus": "Encuentro y pérdida del amor",
+            "grade": "3er grado",
+            "week": 26,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:10",
@@ -10385,7 +10373,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -10439,19 +10426,6 @@
               "text": "Actúa como espectador responsable en presentaciones artísticas, festivales, tradiciones y costumbres."
             }
           ],
-          "identity": {
-            "title": "Nación Agrícola",
-            "contenidos": [
-              "Defensa de la soberanía"
-            ],
-            "learnings": [
-              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
-            ],
-            "weekFocus": "Defensa de la soberanía",
-            "grade": "3er grado",
-            "week": 27,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:11",
@@ -10476,6 +10450,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-03-23",
@@ -10524,6 +10499,19 @@
               "text": "Actúa como espectador responsable en presentaciones artísticas, festivales, tradiciones y costumbres."
             }
           ],
+          "identity": {
+            "title": "Nación Agrícola",
+            "contenidos": [
+              "Defensa de la soberanía"
+            ],
+            "learnings": [
+              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
+            ],
+            "weekFocus": "Defensa de la soberanía",
+            "grade": "3er grado",
+            "week": 27,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:11",
@@ -10540,7 +10528,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -10590,19 +10577,6 @@
               "text": "Escribe convencionalmente su nombre y un repertorio de palabras familiares (Nombres propios y otras de uso común)."
             }
           ],
-          "identity": {
-            "title": "Nación Agrícola",
-            "contenidos": [
-              "Defensa de la soberanía"
-            ],
-            "learnings": [
-              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
-            ],
-            "weekFocus": "Defensa de la soberanía",
-            "grade": "3er grado",
-            "week": 27,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:11",
@@ -10728,7 +10702,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -10774,19 +10747,6 @@
               "text": "Escribe convencionalmente su nombre y un repertorio de palabras familiares (Nombres propios y otras de uso común)."
             }
           ],
-          "identity": {
-            "title": "Nación Petrolera",
-            "contenidos": [
-              "Venezuela moderna"
-            ],
-            "learnings": [
-              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
-            ],
-            "weekFocus": "Venezuela moderna",
-            "grade": "3er grado",
-            "week": 28,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:11",
@@ -10811,6 +10771,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-03-30",
@@ -10863,6 +10824,19 @@
               "text": "Mantiene el interés frente a espectáculos y emite opiniones sobre el contenido de las obras."
             }
           ],
+          "identity": {
+            "title": "Nación Petrolera",
+            "contenidos": [
+              "Venezuela moderna"
+            ],
+            "learnings": [
+              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
+            ],
+            "weekFocus": "Venezuela moderna",
+            "grade": "3er grado",
+            "week": 28,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:11",
@@ -10879,7 +10853,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -10925,19 +10898,6 @@
               "text": "Mantiene el interés frente a espectáculos y emite opiniones sobre el contenido de las obras."
             }
           ],
-          "identity": {
-            "title": "Nación Petrolera",
-            "contenidos": [
-              "Venezuela moderna"
-            ],
-            "learnings": [
-              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
-            ],
-            "weekFocus": "Venezuela moderna",
-            "grade": "3er grado",
-            "week": 28,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:11",
@@ -10962,6 +10922,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-04-01",
@@ -11014,6 +10975,19 @@
               "text": "Mantiene el interés frente a espectáculos y emite opiniones sobre el contenido de las obras."
             }
           ],
+          "identity": {
+            "title": "Nación Petrolera",
+            "contenidos": [
+              "Venezuela moderna"
+            ],
+            "learnings": [
+              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
+            ],
+            "weekFocus": "Venezuela moderna",
+            "grade": "3er grado",
+            "week": 28,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:11",
@@ -11124,7 +11098,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -11174,19 +11147,6 @@
               "text": "Conoce y usa la mayúscula inicial en la escritura de nombres propios de personas y lugares."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana",
-            "contenidos": [
-              "El mestizaje"
-            ],
-            "learnings": [
-              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
-            ],
-            "weekFocus": "El mestizaje",
-            "grade": "3er grado",
-            "week": 29,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:11",
@@ -11211,6 +11171,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-04-06",
@@ -11263,6 +11224,19 @@
               "text": "Usa la tilde en la escritura de sus nombres y apellidos, y en un repertorio de palabras familiares."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana",
+            "contenidos": [
+              "El mestizaje"
+            ],
+            "learnings": [
+              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
+            ],
+            "weekFocus": "El mestizaje",
+            "grade": "3er grado",
+            "week": 29,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:12",
@@ -11279,7 +11253,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -11325,19 +11298,6 @@
               "text": "Usa la tilde en la escritura de sus nombres y apellidos, y en un repertorio de palabras familiares."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana",
-            "contenidos": [
-              "El mestizaje"
-            ],
-            "learnings": [
-              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
-            ],
-            "weekFocus": "El mestizaje",
-            "grade": "3er grado",
-            "week": 29,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:12",
@@ -11362,6 +11322,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-04-08",
@@ -11410,6 +11371,19 @@
               "text": "Participa en la revisión permanente y rescritura de las normas de convivencia en la escuela, los deberes con respecto a las demás personas, el cuido del ambiente y el respeto a la patria."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana",
+            "contenidos": [
+              "El mestizaje"
+            ],
+            "learnings": [
+              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
+            ],
+            "weekFocus": "El mestizaje",
+            "grade": "3er grado",
+            "week": 29,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:12",
@@ -11536,7 +11510,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -11586,19 +11559,6 @@
               "text": "Escribe (Por derivación) pares y tríos de palabras de un mismo campo lexical: casa/ casas/casita; niña/niñas/niñita; zapato/ zapatero/zapatazo."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
-            "contenidos": [
-              "El mestizaje"
-            ],
-            "learnings": [
-              "Conoce el origen de nuestra moneda nacional, el Bolívar."
-            ],
-            "weekFocus": "El mestizaje",
-            "grade": "3er grado",
-            "week": 30,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:12",
@@ -11623,6 +11583,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-04-13",
@@ -11667,6 +11628,19 @@
               "text": "Escribe (Por derivación) pares y tríos de palabras de un mismo campo lexical: casa/ casas/casita; niña/niñas/niñita; zapato/ zapatero/zapatazo."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
+            "contenidos": [
+              "El mestizaje"
+            ],
+            "learnings": [
+              "Conoce el origen de nuestra moneda nacional, el Bolívar."
+            ],
+            "weekFocus": "El mestizaje",
+            "grade": "3er grado",
+            "week": 30,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:12",
@@ -11683,7 +11657,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -11737,19 +11710,6 @@
               "text": "Manifiesta interés por resolver juegos de escritura: crucifiguras, crucigramas, dameros, escaleras de palabras y otros."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
-            "contenidos": [
-              "El mestizaje"
-            ],
-            "learnings": [
-              "Conoce el origen de nuestra moneda nacional, el Bolívar."
-            ],
-            "weekFocus": "El mestizaje",
-            "grade": "3er grado",
-            "week": 30,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:12",
@@ -11774,6 +11734,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-04-15",
@@ -11822,6 +11783,19 @@
               "text": "Manifiesta interés por resolver juegos de escritura: crucifiguras, crucigramas, dameros, escaleras de palabras y otros."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
+            "contenidos": [
+              "El mestizaje"
+            ],
+            "learnings": [
+              "Conoce el origen de nuestra moneda nacional, el Bolívar."
+            ],
+            "weekFocus": "El mestizaje",
+            "grade": "3er grado",
+            "week": 30,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:12",
@@ -11986,6 +11960,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-04-20",
@@ -12038,6 +12013,19 @@
               "text": "Tiene conciencia de nociones ortográficas básicas y resuelve sus dudas recurriendo a diversas fuentes (Preguntar a otros, consultar materiales escritos a disposición)."
             }
           ],
+          "identity": {
+            "title": "La Humanidad",
+            "contenidos": [
+              "Las formas del conocimiento."
+            ],
+            "learnings": [
+              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
+            ],
+            "weekFocus": "Las formas del conocimiento.",
+            "grade": "3er grado",
+            "week": 31,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:12",
@@ -12054,7 +12042,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -12104,19 +12091,6 @@
               "text": "Tiene conciencia de nociones ortográficas básicas y resuelve sus dudas recurriendo a diversas fuentes (Preguntar a otros, consultar materiales escritos a disposición)."
             }
           ],
-          "identity": {
-            "title": "La Humanidad",
-            "contenidos": [
-              "Las formas del conocimiento."
-            ],
-            "learnings": [
-              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
-            ],
-            "weekFocus": "Las formas del conocimiento.",
-            "grade": "3er grado",
-            "week": 31,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:13",
@@ -12141,6 +12115,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-04-22",
@@ -12189,6 +12164,19 @@
               "text": "Escribe pares de palabras, y usa en la escritura de textos, la noción de concordancia “sustantivo-adjetivo”: niña talentosa / camisa marrón / blusa pequeña / niño alto."
             }
           ],
+          "identity": {
+            "title": "La Humanidad",
+            "contenidos": [
+              "Las formas del conocimiento."
+            ],
+            "learnings": [
+              "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero."
+            ],
+            "weekFocus": "Las formas del conocimiento.",
+            "grade": "3er grado",
+            "week": 31,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:13",
@@ -12309,7 +12297,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -12359,19 +12346,6 @@
               "text": "Trabaja en equipo para planificar la escritura de textos que serán dictados a la/el docente o escritos por sí mismo."
             }
           ],
-          "identity": {
-            "title": "Nuestro Mundo",
-            "contenidos": [
-              "Cuidado de la Tierra."
-            ],
-            "learnings": [
-              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
-            ],
-            "weekFocus": "Cuidado de la Tierra.",
-            "grade": "3er grado",
-            "week": 32,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:13",
@@ -12396,6 +12370,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-04-27",
@@ -12440,6 +12415,19 @@
               "text": "Trabaja en equipo para planificar la escritura de textos que serán dictados a la/el docente o escritos por sí mismo."
             }
           ],
+          "identity": {
+            "title": "Nuestro Mundo",
+            "contenidos": [
+              "Cuidado de la Tierra."
+            ],
+            "learnings": [
+              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
+            ],
+            "weekFocus": "Cuidado de la Tierra.",
+            "grade": "3er grado",
+            "week": 32,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:13",
@@ -12456,7 +12444,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -12502,19 +12489,6 @@
               "text": "Dicta textos intentando ajustar la voz y el ritmo a los requerimientos del destinatario."
             }
           ],
-          "identity": {
-            "title": "Nuestro Mundo",
-            "contenidos": [
-              "Cuidado de la Tierra."
-            ],
-            "learnings": [
-              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
-            ],
-            "weekFocus": "Cuidado de la Tierra.",
-            "grade": "3er grado",
-            "week": 32,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:13",
@@ -12539,6 +12513,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-04-29",
@@ -12595,6 +12570,19 @@
               "text": "Dicta textos intentando ajustar la voz y el ritmo a los requerimientos del destinatario."
             }
           ],
+          "identity": {
+            "title": "Nuestro Mundo",
+            "contenidos": [
+              "Cuidado de la Tierra."
+            ],
+            "learnings": [
+              "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno."
+            ],
+            "weekFocus": "Cuidado de la Tierra.",
+            "grade": "3er grado",
+            "week": 32,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:13",
@@ -12711,7 +12699,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -12761,19 +12748,6 @@
               "text": "Construye textos ordenando entre tres y cinco palabras escritas sin orden lógico. Por ejemplo: Francisco de Miranda nació en Caracas / Venezuela es mi patria / me gusta mucho leer cuentos / el araguaney es el árbol nacional / la vaca es un animal mamífero."
             }
           ],
-          "identity": {
-            "title": "Venezuela en el Mundo",
-            "contenidos": [
-              "La capital."
-            ],
-            "learnings": [
-              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
-            ],
-            "weekFocus": "La capital.",
-            "grade": "3er grado",
-            "week": 33,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:13",
@@ -12798,6 +12772,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-05-04",
@@ -12846,6 +12821,19 @@
               "text": "Construye textos ordenando entre tres y cinco palabras escritas sin orden lógico. Por ejemplo: Francisco de Miranda nació en Caracas / Venezuela es mi patria / me gusta mucho leer cuentos / el araguaney es el árbol nacional / la vaca es un animal mamífero."
             }
           ],
+          "identity": {
+            "title": "Venezuela en el Mundo",
+            "contenidos": [
+              "La capital."
+            ],
+            "learnings": [
+              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
+            ],
+            "weekFocus": "La capital.",
+            "grade": "3er grado",
+            "week": 33,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:13",
@@ -12862,7 +12850,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -12912,19 +12899,6 @@
               "text": "Escribe por sí mismo diferentes tipos de textos de extensiones variables (En una o varias sesiones), de acuerdo con su nivel de escritura: listas de nombres propios, de animales, lugares, etc., cuentos, carteles, entre otros."
             }
           ],
-          "identity": {
-            "title": "Venezuela en el Mundo",
-            "contenidos": [
-              "La capital."
-            ],
-            "learnings": [
-              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
-            ],
-            "weekFocus": "La capital.",
-            "grade": "3er grado",
-            "week": 33,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:14",
@@ -12949,6 +12923,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-05-06",
@@ -12997,6 +12972,19 @@
               "text": "Escribe por sí mismo diferentes tipos de textos de extensiones variables (En una o varias sesiones), de acuerdo con su nivel de escritura: listas de nombres propios, de animales, lugares, etc., cuentos, carteles, entre otros."
             }
           ],
+          "identity": {
+            "title": "Venezuela en el Mundo",
+            "contenidos": [
+              "La capital."
+            ],
+            "learnings": [
+              "Conoce superficie, estados y capitales; y la ciudad capital, Caracas."
+            ],
+            "weekFocus": "La capital.",
+            "grade": "3er grado",
+            "week": 33,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:14",
@@ -13121,7 +13109,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -13167,19 +13154,6 @@
               "text": "Copia textos con diversos propósitos: para conservar lo que desea recordar, para compartir con otros, para llevar registros de informaciones de interés."
             }
           ],
-          "identity": {
-            "title": "Pueblos Indígenas",
-            "contenidos": [
-              "Liderazgos insurgentes."
-            ],
-            "learnings": [
-              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
-            ],
-            "weekFocus": "Liderazgos insurgentes.",
-            "grade": "3er grado",
-            "week": 34,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:14",
@@ -13204,6 +13178,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-05-11",
@@ -13252,6 +13227,19 @@
               "text": "Toma dictado de textos cortos con propósitos específicos; por ejemplo, para comparar y corregir el escrito con un compañero/o; para registrar información de interés."
             }
           ],
+          "identity": {
+            "title": "Pueblos Indígenas",
+            "contenidos": [
+              "Liderazgos insurgentes."
+            ],
+            "learnings": [
+              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
+            ],
+            "weekFocus": "Liderazgos insurgentes.",
+            "grade": "3er grado",
+            "week": 34,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:14",
@@ -13268,7 +13256,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -13314,19 +13301,6 @@
               "text": "Toma dictado de textos cortos con propósitos específicos; por ejemplo, para comparar y corregir el escrito con un compañero/o; para registrar información de interés."
             }
           ],
-          "identity": {
-            "title": "Pueblos Indígenas",
-            "contenidos": [
-              "Liderazgos insurgentes."
-            ],
-            "learnings": [
-              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
-            ],
-            "weekFocus": "Liderazgos insurgentes.",
-            "grade": "3er grado",
-            "week": 34,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:14",
@@ -13351,6 +13325,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-05-13",
@@ -13403,6 +13378,19 @@
               "text": "Aplica estrategias de revisión y edición de textos que serán publicados, trabajando en equipo con otros y con el apoyo de la/el docente."
             }
           ],
+          "identity": {
+            "title": "Pueblos Indígenas",
+            "contenidos": [
+              "Liderazgos insurgentes."
+            ],
+            "learnings": [
+              "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea."
+            ],
+            "weekFocus": "Liderazgos insurgentes.",
+            "grade": "3er grado",
+            "week": 34,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:14",
@@ -13523,7 +13511,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -13573,19 +13560,6 @@
               "text": "Aplica estrategias de revisión y edición de textos que serán publicados, trabajando en equipo con otros y con el apoyo de la/el docente."
             }
           ],
-          "identity": {
-            "title": "Pueblos Afrovenezolanos",
-            "contenidos": [
-              "Comidas y sabores africanos."
-            ],
-            "learnings": [
-              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
-            ],
-            "weekFocus": "Comidas y sabores africanos.",
-            "grade": "3er grado",
-            "week": 35,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:14",
@@ -13610,6 +13584,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-05-18",
@@ -13658,6 +13633,19 @@
               "text": "Practica el trazo artístico de las letras con fines funcionales y de diseño. Utiliza la caligrafía como forma de expresión artística que vincula la escritura con otras artes como el dibujo y la pintura."
             }
           ],
+          "identity": {
+            "title": "Pueblos Afrovenezolanos",
+            "contenidos": [
+              "Comidas y sabores africanos."
+            ],
+            "learnings": [
+              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
+            ],
+            "weekFocus": "Comidas y sabores africanos.",
+            "grade": "3er grado",
+            "week": 35,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:14",
@@ -13674,7 +13662,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -13720,19 +13707,6 @@
               "text": "Practica el trazo artístico de las letras con fines funcionales y de diseño. Utiliza la caligrafía como forma de expresión artística que vincula la escritura con otras artes como el dibujo y la pintura."
             }
           ],
-          "identity": {
-            "title": "Pueblos Afrovenezolanos",
-            "contenidos": [
-              "Comidas y sabores africanos."
-            ],
-            "learnings": [
-              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
-            ],
-            "weekFocus": "Comidas y sabores africanos.",
-            "grade": "3er grado",
-            "week": 35,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:15",
@@ -13757,6 +13731,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-05-20",
@@ -13805,6 +13780,19 @@
               "text": "Distingue la oposición singular/plural y la usa en la escritura, en los casos en que el plural se forma agregando s al singular y en casos conocidos en que se agrega un sufijo (Lápiz/lápices; cartel/carteles; letra/ letras)."
             }
           ],
+          "identity": {
+            "title": "Pueblos Afrovenezolanos",
+            "contenidos": [
+              "Comidas y sabores africanos."
+            ],
+            "learnings": [
+              "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana."
+            ],
+            "weekFocus": "Comidas y sabores africanos.",
+            "grade": "3er grado",
+            "week": 35,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:15",
@@ -13941,7 +13929,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -13991,19 +13978,6 @@
               "text": "Comprende y usa en la escritura la diferencia femenino/masculino, al menos en tres casos:"
             }
           ],
-          "identity": {
-            "title": "Libertador Simón Bolívar",
-            "contenidos": [
-              "Juramento por la Libertad."
-            ],
-            "learnings": [
-              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
-            ],
-            "weekFocus": "Juramento por la Libertad.",
-            "grade": "3er grado",
-            "week": 36,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:15",
@@ -14028,6 +14002,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-05-25",
@@ -14072,6 +14047,19 @@
               "text": "Comprende y usa en la escritura la diferencia femenino/masculino, al menos en tres casos:"
             }
           ],
+          "identity": {
+            "title": "Libertador Simón Bolívar",
+            "contenidos": [
+              "Juramento por la Libertad."
+            ],
+            "learnings": [
+              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
+            ],
+            "weekFocus": "Juramento por la Libertad.",
+            "grade": "3er grado",
+            "week": 36,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:15",
@@ -14088,7 +14076,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -14138,19 +14125,6 @@
               "text": "A) el femenino se forma agregando a al final de palabra o sustituyendo o por a: pintor/pintora; doctor/doctora; gato/gata; niño/niña; conejo/coneja."
             }
           ],
-          "identity": {
-            "title": "Libertador Simón Bolívar",
-            "contenidos": [
-              "Juramento por la Libertad."
-            ],
-            "learnings": [
-              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
-            ],
-            "weekFocus": "Juramento por la Libertad.",
-            "grade": "3er grado",
-            "week": 36,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:15",
@@ -14175,6 +14149,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-05-27",
@@ -14223,6 +14198,19 @@
               "text": "A) el femenino se forma agregando a al final de palabra o sustituyendo o por a: pintor/pintora; doctor/doctora; gato/gata; niño/niña; conejo/coneja."
             }
           ],
+          "identity": {
+            "title": "Libertador Simón Bolívar",
+            "contenidos": [
+              "Juramento por la Libertad."
+            ],
+            "learnings": [
+              "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez."
+            ],
+            "weekFocus": "Juramento por la Libertad.",
+            "grade": "3er grado",
+            "week": 36,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:15",
@@ -14337,7 +14325,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -14387,19 +14374,6 @@
               "text": "B) el género se diferencia usando palabras diferentes: hombre/mujer, caballo/yegua, vaca/toro."
             }
           ],
-          "identity": {
-            "title": "Nación Agrícola",
-            "contenidos": [
-              "Acontecimientos de los siglos XIX y XX."
-            ],
-            "learnings": [
-              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
-            ],
-            "weekFocus": "Acontecimientos de los siglos XIX y XX.",
-            "grade": "3er grado",
-            "week": 37,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:15",
@@ -14424,6 +14398,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-06-01",
@@ -14476,6 +14451,19 @@
               "text": "B) el género se diferencia usando palabras diferentes: hombre/mujer, caballo/yegua, vaca/toro."
             }
           ],
+          "identity": {
+            "title": "Nación Agrícola",
+            "contenidos": [
+              "Acontecimientos de los siglos XIX y XX."
+            ],
+            "learnings": [
+              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
+            ],
+            "weekFocus": "Acontecimientos de los siglos XIX y XX.",
+            "grade": "3er grado",
+            "week": 37,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:15",
@@ -14492,7 +14480,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -14538,19 +14525,6 @@
               "text": "Escribe cuentos a partir de títulos e imágenes."
             }
           ],
-          "identity": {
-            "title": "Nación Agrícola",
-            "contenidos": [
-              "Acontecimientos de los siglos XIX y XX."
-            ],
-            "learnings": [
-              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
-            ],
-            "weekFocus": "Acontecimientos de los siglos XIX y XX.",
-            "grade": "3er grado",
-            "week": 37,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:16",
@@ -14575,6 +14549,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-06-03",
@@ -14623,6 +14598,19 @@
               "text": "Escribe cuentos a partir de títulos e imágenes."
             }
           ],
+          "identity": {
+            "title": "Nación Agrícola",
+            "contenidos": [
+              "Acontecimientos de los siglos XIX y XX."
+            ],
+            "learnings": [
+              "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero."
+            ],
+            "weekFocus": "Acontecimientos de los siglos XIX y XX.",
+            "grade": "3er grado",
+            "week": 37,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:16",
@@ -14743,7 +14731,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -14789,19 +14776,6 @@
               "text": "Escribe nuevas versiones de cuentos conocidos."
             }
           ],
-          "identity": {
-            "title": "Nación Petrolera",
-            "contenidos": [
-              "Claves económicas y políticas del siglo XX."
-            ],
-            "learnings": [
-              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
-            ],
-            "weekFocus": "Claves económicas y políticas del siglo XX.",
-            "grade": "3er grado",
-            "week": 38,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:16",
@@ -14826,6 +14800,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-06-08",
@@ -14878,6 +14853,19 @@
               "text": "Aplica a la escritura algunas restricciones del sistema de escritura alfabético: dígrafo gu en gue-gui; qu en que-qui."
             }
           ],
+          "identity": {
+            "title": "Nación Petrolera",
+            "contenidos": [
+              "Claves económicas y políticas del siglo XX."
+            ],
+            "learnings": [
+              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
+            ],
+            "weekFocus": "Claves económicas y políticas del siglo XX.",
+            "grade": "3er grado",
+            "week": 38,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:16",
@@ -14894,7 +14882,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -14940,19 +14927,6 @@
               "text": "Aplica a la escritura algunas restricciones del sistema de escritura alfabético: dígrafo gu en gue-gui; qu en que-qui."
             }
           ],
-          "identity": {
-            "title": "Nación Petrolera",
-            "contenidos": [
-              "Claves económicas y políticas del siglo XX."
-            ],
-            "learnings": [
-              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
-            ],
-            "weekFocus": "Claves económicas y políticas del siglo XX.",
-            "grade": "3er grado",
-            "week": 38,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:16",
@@ -14977,6 +14951,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-06-10",
@@ -15029,6 +15004,19 @@
               "text": "Recomienda obras literarias mediante breves reseñas escritas."
             }
           ],
+          "identity": {
+            "title": "Nación Petrolera",
+            "contenidos": [
+              "Claves económicas y políticas del siglo XX."
+            ],
+            "learnings": [
+              "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI."
+            ],
+            "weekFocus": "Claves económicas y políticas del siglo XX.",
+            "grade": "3er grado",
+            "week": 38,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:16",
@@ -15151,7 +15139,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -15201,19 +15188,6 @@
               "text": "Recomienda obras literarias mediante breves reseñas escritas."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana",
-            "contenidos": [
-              "Bandera, escudo e himno nacional."
-            ],
-            "learnings": [
-              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
-            ],
-            "weekFocus": "Bandera, escudo e himno nacional.",
-            "grade": "3er grado",
-            "week": 39,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:16",
@@ -15238,6 +15212,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-06-15",
@@ -15290,6 +15265,19 @@
               "text": "Crea textos a partir de diferentes inicios: sueño con…; si yo fuera escritor/a…; cuando sea grande…; si yo fuera un caballo…; Simón Bolívar fue…"
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana",
+            "contenidos": [
+              "Bandera, escudo e himno nacional."
+            ],
+            "learnings": [
+              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
+            ],
+            "weekFocus": "Bandera, escudo e himno nacional.",
+            "grade": "3er grado",
+            "week": 39,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:16",
@@ -15306,7 +15294,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -15356,19 +15343,6 @@
               "text": "Crea textos a partir de diferentes inicios: sueño con…; si yo fuera escritor/a…; cuando sea grande…; si yo fuera un caballo…; Simón Bolívar fue…"
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana",
-            "contenidos": [
-              "Bandera, escudo e himno nacional."
-            ],
-            "learnings": [
-              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
-            ],
-            "weekFocus": "Bandera, escudo e himno nacional.",
-            "grade": "3er grado",
-            "week": 39,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:17",
@@ -15393,6 +15367,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-06-17",
@@ -15437,6 +15412,19 @@
               "text": "Escribe utilizando algunos recursos ortográficos básicos: mayúsculas en nombres propios y de lugares, al inicio de un texto; el punto al final de un texto."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana",
+            "contenidos": [
+              "Bandera, escudo e himno nacional."
+            ],
+            "learnings": [
+              "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro."
+            ],
+            "weekFocus": "Bandera, escudo e himno nacional.",
+            "grade": "3er grado",
+            "week": 39,
+            "dayInWeek": 4
+          },
           "mat": [
             {
               "id": "mat:17",
@@ -15567,7 +15555,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -15613,19 +15600,6 @@
               "text": "Usa en la escritura ciertas reglas ortográficas básicas: al principio y al final de palabras siempre va una sola r (Rama, reto, risa, ruta, rosa / cantar, trepar, nacer, radar, hangar). Identifica cambios de significado según el uso de r/rr al interior de palabras: carro/ caro; perra/pera; cerro/cero."
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
-            "contenidos": [
-              "Bandera, escudo e himno nacional."
-            ],
-            "learnings": [
-              "Reconoce la importancia de las normas y reglas para la convivencia en la escuela y desarrolla habilidades para el trabajo en equipo, incluyendo la colaboración y la distribución de tareas."
-            ],
-            "weekFocus": "Bandera, escudo e himno nacional.",
-            "grade": "3er grado",
-            "week": 40,
-            "dayInWeek": 1
-          },
           "mat": [
             {
               "id": "mat:17",
@@ -15650,6 +15624,7 @@
           "scheduledSections": [
             "bib",
             "len",
+            "ide",
             "mat"
           ],
           "calendarDate": "2027-06-22",
@@ -15698,6 +15673,19 @@
               "text": "Usa en la escritura ciertas reglas ortográficas básicas: al principio y al final de palabras siempre va una sola r (Rama, reto, risa, ruta, rosa / cantar, trepar, nacer, radar, hangar). Identifica cambios de significado según el uso de r/rr al interior de palabras: carro/ caro; perra/pera; cerro/cero."
             }
           ],
+          "identity": {
+            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
+            "contenidos": [
+              "Bandera, escudo e himno nacional."
+            ],
+            "learnings": [
+              "Reconoce la importancia de las normas y reglas para la convivencia en la escuela y desarrolla habilidades para el trabajo en equipo, incluyendo la colaboración y la distribución de tareas."
+            ],
+            "weekFocus": "Bandera, escudo e himno nacional.",
+            "grade": "3er grado",
+            "week": 40,
+            "dayInWeek": 2
+          },
           "mat": [
             {
               "id": "mat:17",
@@ -15714,7 +15702,6 @@
           "scheduledSections": [
             "bib",
             "len",
-            "ide",
             "cie",
             "mat"
           ],
@@ -15764,19 +15751,6 @@
               "text": "Comienza a escribir convencionalmente las palabras que contienen sílabas del grupo consonante-consonante-vocal (CCV): clase, copla, tropa, fruta, flor, cobre, grama, drama, grillo…"
             }
           ],
-          "identity": {
-            "title": "Cultura Venezolana · Cultura Venezolana · Territorio Productivo · Sociedad y Ciudadanía",
-            "contenidos": [
-              "Bandera, escudo e himno nacional."
-            ],
-            "learnings": [
-              "Reconoce la importancia de las normas y reglas para la convivencia en la escuela y desarrolla habilidades para el trabajo en equipo, incluyendo la colaboración y la distribución de tareas."
-            ],
-            "weekFocus": "Bandera, escudo e himno nacional.",
-            "grade": "3er grado",
-            "week": 40,
-            "dayInWeek": 3
-          },
           "mat": [
             {
               "id": "mat:17",

@@ -3,11 +3,11 @@
  *
  * Weekly pattern (day in week 1–5), unless the calendar day is a VE holiday:
  *   Weeks 1–6:
- *     1,3 → bib + len + ide + cie
- *     2,4 → bib + len + mat
+ *     1,3 → bib + len + cie
+ *     2,4 → bib + len + ide + mat
  *   Weeks 7–40:
- *     1,3 → bib + len + ide + cie + mat  (mat daily with lenguaje)
- *     2,4 → bib + len + mat
+ *     1,3 → bib + len + cie + mat  (mat daily with lenguaje)
+ *     2,4 → bib + len + ide + mat
  *   Day 5 (all weeks) → exposition of scheduled subjects (week focus; no new teach buckets)
  * Holiday → bib only (overrides teach/exposition); content redistributed elsewhere.
  *
@@ -49,12 +49,13 @@ function weekOfPlanDay(planDay) {
  */
 function scheduledSectionsForDayInWeek(d, week) {
   if (d === 5) return ["bib", "ide", "len", "mat", "cie"];
+  // Identidad on Tue/Thu (2, 4); Ciencias on Mon/Wed (1, 3).
   if (week >= DAILY_MATH_FROM_WEEK) {
-    if (d === 1 || d === 3) return ["bib", "len", "ide", "cie", "mat"];
-    return ["bib", "len", "mat"]; // 2, 4
+    if (d === 1 || d === 3) return ["bib", "len", "cie", "mat"];
+    return ["bib", "len", "ide", "mat"]; // 2, 4
   }
-  if (d === 1 || d === 3) return ["bib", "len", "ide", "cie"];
-  return ["bib", "len", "mat"]; // 2, 4
+  if (d === 1 || d === 3) return ["bib", "len", "cie"];
+  return ["bib", "len", "ide", "mat"]; // 2, 4
 }
 
 /** Anonymous Gregorian algorithm → Easter Sunday as Date (UTC noon to avoid TZ drift). */
@@ -294,20 +295,20 @@ function lastNonNull(byDay, fromIdx, stepBackMax) {
 }
 
 const PATTERN_WEEKS_1_6 = {
-  day1: ["bib", "len", "ide", "cie"],
-  day2: ["bib", "len", "mat"],
-  day3: ["bib", "len", "ide", "cie"],
-  day4: ["bib", "len", "mat"],
+  day1: ["bib", "len", "cie"],
+  day2: ["bib", "len", "ide", "mat"],
+  day3: ["bib", "len", "cie"],
+  day4: ["bib", "len", "ide", "mat"],
   day5: ["bib", "ide", "len", "mat", "cie"],
   day5Mode: "exposition",
   holidayOverride: ["bib"],
 };
 
 const PATTERN_FROM_WEEK_7 = {
-  day1: ["bib", "len", "ide", "cie", "mat"],
-  day2: ["bib", "len", "mat"],
-  day3: ["bib", "len", "ide", "cie", "mat"],
-  day4: ["bib", "len", "mat"],
+  day1: ["bib", "len", "cie", "mat"],
+  day2: ["bib", "len", "ide", "mat"],
+  day3: ["bib", "len", "cie", "mat"],
+  day4: ["bib", "len", "ide", "mat"],
   day5: ["bib", "ide", "len", "mat", "cie"],
   day5Mode: "exposition",
   holidayOverride: ["bib"],
@@ -337,7 +338,10 @@ function build40WeekCurriculum(source) {
   const legacyMatDayIndices = [];
   /** Weeks 7+ Mon–Thu teach mat slots. */
   const lateMatDayIndices = [];
-  const ideCieDayIndices = [];
+  /** Ciencias Mon/Wed teach slots. */
+  const cieDayIndices = [];
+  /** Identidad Tue/Thu teach slots. */
+  const ideDayIndices = [];
   let expositionCount = 0;
   let teachMatEarly = 0;
   let teachMatLate = 0;
@@ -354,14 +358,15 @@ function build40WeekCurriculum(source) {
       lateMatDayIndices.push(i);
       teachMatLate += 1;
     }
-    if (d === 1 || d === 3) ideCieDayIndices.push(i);
+    if (d === 1 || d === 3) cieDayIndices.push(i);
+    if (d === 2 || d === 4) ideDayIndices.push(i);
     if (d === 5) expositionCount += 1;
   }
 
   const lenByDay = bucketsForDayIndices(lenAll, lenDayIndices);
   const legacyMatByDay = bucketsForDayIndices(matAll, legacyMatDayIndices);
   const lateMatByDay = bucketsForDayIndices(matFromWeek7, lateMatDayIndices);
-  const cieByDay = bucketsForDayIndices(cieAll, ideCieDayIndices);
+  const cieByDay = bucketsForDayIndices(cieAll, cieDayIndices);
 
   const identities = collectIdentities(planDays);
   const weeks = [];
@@ -460,8 +465,8 @@ function build40WeekCurriculum(source) {
           : cloneRefs(lastNonNull(matSource, idx - 1, 4) ?? matSource[lateMatDayIndices[0] ?? legacyMatDayIndices[0]]);
         block.cie = weekCie.length
           ? weekCie
-          : cloneRefs(lastNonNull(cieByDay, idx - 1, 4) ?? cieByDay[ideCieDayIndices[0]]);
-        // Ensure identity present for exposition even if week had no Mon/Wed (rare).
+          : cloneRefs(lastNonNull(cieByDay, idx - 1, 4) ?? cieByDay[cieDayIndices[0]]);
+        // Ensure identity present for exposition even if week had no Tue/Thu (rare).
         if (!block.identity) {
           block.identity = {
             title: identity.title,
@@ -505,10 +510,12 @@ function build40WeekCurriculum(source) {
       teachingDays: {
         bib: TOTAL_DAYS,
         len: lenScheduledDays,
-        ide: ideCieDayIndices.length + expositionCount,
+        ide: ideDayIndices.length + expositionCount,
         mat: teachMatTotal + expositionCount,
-        cie: ideCieDayIndices.length + expositionCount,
-        teachIdeCie: ideCieDayIndices.length,
+        cie: cieDayIndices.length + expositionCount,
+        teachIde: ideDayIndices.length,
+        teachCie: cieDayIndices.length,
+        teachIdeCie: cieDayIndices.length,
         teachMat: teachMatTotal,
         teachMatWeeks1to6: teachMatEarly,
         teachMatFromWeek7: teachMatLate,

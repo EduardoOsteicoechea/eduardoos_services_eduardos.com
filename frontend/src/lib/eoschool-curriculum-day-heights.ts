@@ -33,6 +33,19 @@ function equalizeOneWeek(weekDays: HTMLElement): void {
   day5.style.maxHeight = heightRem;
 }
 
+let refreshAll: (() => void) | null = null;
+
+/** Re-equalize day card heights after subject expand/collapse. */
+export function refreshCurriculumDayHeights(root: HTMLElement | null): void {
+  if (!root || typeof window === "undefined") return;
+  if (refreshAll) {
+    refreshAll();
+    return;
+  }
+  const weeks = [...root.querySelectorAll<HTMLElement>(".eoschool-curriculum__week-days")];
+  for (const week of weeks) equalizeOneWeek(week);
+}
+
 export function initCurriculumDayHeights(root: HTMLElement | null): void {
   if (!root || typeof window === "undefined") return;
 
@@ -46,6 +59,7 @@ export function initCurriculumDayHeights(root: HTMLElement | null): void {
       for (const week of weeks) equalizeOneWeek(week);
     });
   };
+  refreshAll = run;
 
   run();
   window.addEventListener("resize", run, { passive: true });

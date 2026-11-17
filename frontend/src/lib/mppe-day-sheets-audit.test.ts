@@ -81,13 +81,13 @@ describe("MPPE day sheets (200 días)", () => {
       } else if (dayInWeek === 1 || dayInWeek === 3) {
         expect(raw.dayKind).toBe("teach");
         if (week >= dailyMathFromWeek) {
-          expect(ids).toEqual(["bib", "len", "ide", "cie", "mat"]);
+          expect(ids).toEqual(["bib", "len", "cie", "mat"]);
         } else {
-          expect(ids).toEqual(["bib", "len", "ide", "cie"]);
+          expect(ids).toEqual(["bib", "len", "cie"]);
         }
       } else {
         expect(raw.dayKind).toBe("teach");
-        expect(ids).toEqual(["bib", "len", "mat"]);
+        expect(ids).toEqual(["bib", "len", "ide", "mat"]);
       }
       expect(raw.scheduledSections).toEqual(ids);
     }
