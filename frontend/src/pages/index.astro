@@ -205,16 +205,32 @@ const featured = caseStudies.slice(0, 6);
   }
 
   .section--evidence {
-    background: #000000;
     margin-inline: calc(-1 * var(--main-inline));
     padding-inline: var(--main-inline);
+    padding-block: 2rem;
+    background: linear-gradient(
+      to bottom,
+      #000000 0%,
+      #000000 calc(100% - 2rem),
+      transparent 100%
+    );
   }
 
   :global(html[data-theme="light"]) .section--evidence {
-    background: #ffffff;
+    background: linear-gradient(
+      to bottom,
+      #ffffff 0%,
+      #ffffff calc(100% - 2rem),
+      transparent 100%
+    );
   }
 
   :global(html[data-theme="dark"]) .section--evidence {
-    background: #000000;
+    background: linear-gradient(
+      to bottom,
+      #000000 0%,
+      #000000 calc(100% - 2rem),
+      transparent 100%
+    );
   }
 </style>
