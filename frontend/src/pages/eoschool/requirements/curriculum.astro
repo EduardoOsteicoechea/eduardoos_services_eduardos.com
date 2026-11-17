@@ -965,7 +965,7 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__subject-head {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     gap: var(--rail-gap);
     min-width: 0;
     width: 100%;
@@ -975,11 +975,15 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__section-check {
     display: inline-flex;
     align-items: center;
+    align-self: center;
     justify-content: center;
     flex-shrink: 0;
     cursor: pointer;
     font-size: 1em;
     line-height: 1;
+    box-sizing: border-box;
+    width: auto;
+    height: auto;
     padding: 0.25rem;
     margin: 0;
     border-radius: var(--border-radius);
@@ -1020,7 +1024,10 @@ function weekForPlanDay(planDay: number): number {
     flex: 1;
     min-width: 0;
     margin: 0;
-    padding: var(--rail-gap);
+    padding-block: 0.25rem;
+    padding-inline: var(--rail-gap);
+    height: auto;
+    min-height: 0;
     border: 0;
     border-radius: var(--border-radius);
     background: var(--color-bg);
