@@ -21,7 +21,7 @@ const outDir = path.join(__dirname, "..", "public", "eoschool", "requirements", 
 const SECTION_ORDER = [
   { id: "bib", label: "Biblia" },
   { id: "ide", label: "Identidad" },
-  { id: "len", label: "Prácticas del Lenguaje" },
+  { id: "len", label: "Lenguaje" },
   { id: "mat", label: "Matemáticas" },
   { id: "cie", label: "Ciencias Naturales" },
 ];
@@ -385,7 +385,7 @@ function buildDaySheet(planDay, weeks, prevBlock) {
       );
       return sectionFromPack(
         "len",
-        "Prácticas del Lenguaje",
+        "Lenguaje",
         exposition ? `Exposición · ${objective}` : objective,
         exposition ? `Prepara una exposición sobre lo visto esta semana: ${learning}` : learning,
         pack,
