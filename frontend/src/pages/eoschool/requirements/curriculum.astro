@@ -789,6 +789,7 @@ function weekForPlanDay(planDay: number): number {
     gap: 0;
     min-height: 0;
     border: 0;
+    background: transparent;
   }
 
   .eoschool-curriculum__week.product-dash__card::after {
@@ -909,8 +910,8 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__week.product-dash__card--done {
-    border-color: var(--color-ok);
-    background: color-mix(in srgb, var(--color-ok) 6%, var(--color-surface));
+    border-color: transparent;
+    background: transparent;
   }
 
   .eoschool-curriculum__day-head {
@@ -971,7 +972,7 @@ function weekForPlanDay(planDay: number): number {
     cursor: pointer;
     font-size: 1em;
     line-height: 1;
-    padding: var(--rail-gap);
+    padding: 0.25rem;
     margin: 0;
     border-radius: var(--border-radius);
     background: var(--color-bg);
