@@ -796,9 +796,17 @@ function weekForPlanDay(planDay: number): number {
     display: none;
   }
 
-  .eoschool-curriculum__week:hover,
-  .eoschool-curriculum__week:focus-visible {
+  .eoschool-curriculum__week.product-dash__card:hover,
+  .eoschool-curriculum__week.product-dash__card:focus-visible {
+    background: var(--eo-surface-2, var(--color-surface));
+    border-color: transparent;
+    box-shadow: none;
     transform: none;
+  }
+
+  .eoschool-curriculum__week.product-dash__card--done:hover,
+  .eoschool-curriculum__week.product-dash__card--done:focus-visible {
+    background: color-mix(in srgb, var(--color-ok) 6%, var(--eo-surface-2, var(--color-surface)));
   }
 
   .eoschool-curriculum__week-layout {
