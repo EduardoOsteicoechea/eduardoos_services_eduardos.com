@@ -69,7 +69,7 @@ export const caseStudies: CaseStudy[] = [
     architecture:
       "Revit add-in → HTTPS update API (EC2) → S3 artifacts. Auth API → DynamoDB. CI: aws s3 sync + CloudFront invalidation.",
     outcome:
-      "End-to-end cloud add-in distribution demonstrating ASP.NET Core + AWS skills required by senior BIM software roles.",
+      "End-to-end cloud add-in distribution with ASP.NET Core and AWS (EC2, S3, CloudFront, DynamoDB, ECR).",
     stack: ["C#", "ASP.NET Core", ".NET 8/9", "S3", "EC2", "DynamoDB", "CloudFront", "GitHub Actions"],
     links: [
       { label: "GitHub (update API)", href: "https://github.com/EduardoOsteicoechea/DeepDeepBim.RevitApiAddinUpdateApi" },
