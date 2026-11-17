@@ -204,7 +204,8 @@ const featured = caseStudies.slice(0, 6);
     margin-top: var(--space-padding);
   }
 
-  .section--evidence {
+  /* Home zeros .section padding-block; this selector must beat that rule. */
+  :global(html[data-page="home"]) .section.section--evidence {
     margin-inline: calc(-1 * var(--main-inline));
     padding-inline: var(--main-inline);
     padding-block: 2rem;
@@ -216,7 +217,7 @@ const featured = caseStudies.slice(0, 6);
     );
   }
 
-  :global(html[data-theme="light"]) .section--evidence {
+  :global(html[data-theme="light"][data-page="home"]) .section.section--evidence {
     background: linear-gradient(
       to bottom,
       #ffffff 0%,
@@ -225,7 +226,7 @@ const featured = caseStudies.slice(0, 6);
     );
   }
 
-  :global(html[data-theme="dark"]) .section--evidence {
+  :global(html[data-theme="dark"][data-page="home"]) .section.section--evidence {
     background: linear-gradient(
       to bottom,
       #000000 0%,
