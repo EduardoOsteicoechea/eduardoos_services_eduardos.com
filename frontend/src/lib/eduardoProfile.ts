@@ -18,7 +18,7 @@ export const profileWhoAnswer =
 
 /** Second hero paragraph (home page lead). */
 export const profileWhoLead2 =
-  "This site is my professional profile: case studies, CV, and two public AEC tools — eReport (issue tracking) and eoProject (construction stages, photos, and IFC versions). Fluent English, native Spanish. Remote from Latin America (UTC-4).";
+  "This site is my professional profile: case studies, CV, and two public AEC tools - eReport (issue tracking) and eoProject (construction stages, photos, and IFC versions). Fluent English, native Spanish. Remote from Latin America (UTC-4).";
 
 export const HOME_HEADING = "Senior BIM Software Developer";
 
@@ -41,7 +41,7 @@ export const homeServiceOffers: HomeServiceOffer[] = [
     label: "eReport",
     shortName: "eReport",
     description: "Issue tracker with cloud storage, sharing, and an API-key connector.",
-    focus: "Capture AEC issues, statuses, images, and shared invites — a complement to BIM delivery workflows.",
+    focus: "Capture AEC issues, statuses, images, and shared invites - a complement to BIM delivery workflows.",
     href: "/portfolio/ereport",
     icon: "assignment",
     screenshot: "/homepage_services_screenshots/ereport.png",
@@ -86,7 +86,7 @@ export const profileExperience: ProfileExperience[] = [
   {
     org: "Hexagon Multivista (formerly Voyansi)",
     role: "BIM Full Stack Developer (.NET & AI)",
-    period: "2025–present",
+    period: "2025-present",
     icon: "apartment",
     summary:
       "Revit model-validation tools inside a large C#/.NET add-in; APS Design Automation and ACC data dashboards; AI rendering from the Revit API; Python geometry scripts; agentic AI development workflows; full-stack internal tools.",
@@ -94,7 +94,7 @@ export const profileExperience: ProfileExperience[] = [
   {
     org: "Avant Leap",
     role: "BIM software developer",
-    period: "March 2024–April 2025",
+    period: "March 2024-April 2025",
     icon: "precision_manufacturing",
     summary:
       "I support and extend Revit add-ins (Clash Detection, Object Visualizer, Object Quantifier, 4D Simulation, Dynamo Zero Touch Nodes, Mirar, Andiamo, Itera). I built SincronizadorGPS50 (Windows Forms + SQL Server) linking Gestproject2024 and Sage50, and ship AI integrations with OpenAI, StabilityAI, and Replicate-based actions across Windows apps and Revit APIs.",
@@ -105,7 +105,7 @@ export const profileExperience: ProfileExperience[] = [
     period: "Late 2023 (~six months)",
     icon: "language",
     summary:
-      "I delivered sites including scalaa.com, theinspiratagroup.com, hotelbelensate.com, eduardoos.com, crintt.com, and thedalessiogroup.com — branding, design, coding, hosting, email migration, and media production.",
+      "I delivered sites including scalaa.com, theinspiratagroup.com, hotelbelensate.com, eduardoos.com, crintt.com, and thedalessiogroup.com - branding, design, coding, hosting, email migration, and media production.",
   },
   {
     org: "BIMIQs (Miami)",
@@ -113,7 +113,7 @@ export const profileExperience: ProfileExperience[] = [
     period: "2023",
     icon: "apartment",
     summary:
-      "As the first employee of a US AEC consulting startup, I covered BIM modeling, Revit families, Revit API tools (including Revit Modeler), and graphic design for bimiqs.com — modeling, research, API, and full-stack web in one role.",
+      "As the first employee of a US AEC consulting startup, I covered BIM modeling, Revit families, Revit API tools (including Revit Modeler), and graphic design for bimiqs.com - modeling, research, API, and full-stack web in one role.",
   },
   {
     org: "VDC Works (Miami)",
@@ -126,7 +126,7 @@ export const profileExperience: ProfileExperience[] = [
   {
     org: "Galpon5",
     role: "Architectural project assistant",
-    period: "2017–2018",
+    period: "2017-2018",
     icon: "architecture",
     summary:
       "I modeled, documented, and rendered buildings in AutoCAD, SketchUp, V-Ray, and 3ds Max for hospitality and commercial projects including Lindo Sol Suites Hotel and Lindo Bakery.",
@@ -154,13 +154,13 @@ export const profileEducation: ProfileEducationCard[] = [
     title: "Bachelor of Architecture",
     icon: "school",
     description:
-      "Universidad de Los Andes (ULA), 2009–2017; graduated 2017 (Cum Laude). Architectural design, AutoCAD, SketchUp; BIM training at an Autodesk Authorized Training Center.",
+      "Universidad de Los Andes (ULA), 2009-2017; graduated 2017 (Cum Laude). Architectural design, AutoCAD, SketchUp; BIM training at an Autodesk Authorized Training Center.",
   },
   {
     title: "Autodesk ATC Course",
     icon: "verified",
     description:
-      "Autodesk Authorized Training Center Course (2011) — BIM-related training (not a conferred Master’s degree).",
+      "Autodesk Authorized Training Center Course (2011) - BIM-related training (not a conferred Master’s degree).",
   },
   {
     title: "Advanced BIM Modeling",
@@ -177,7 +177,7 @@ export const profileEducation: ProfileEducationCard[] = [
     title: "Full-stack web development",
     icon: "code",
     description:
-      "Self-study (2020–2023): HTML, CSS, JavaScript, Bootstrap, PHP, MySQL, and modern front-end practice.",
+      "Self-study (2020-2023): HTML, CSS, JavaScript, Bootstrap, PHP, MySQL, and modern front-end practice.",
   },
 ];
 
@@ -255,7 +255,7 @@ export const profileFaq: ProfileFaq[] = [
     question: "What is Eduardo OS?",
     icon: "dns",
     answer:
-      "Eduardo OS is my professional platform at eduardoos.com — services and tools spanning pamphlet documents, articles, music, church, and homescool, alongside my practice in BIM and full-stack software with a strong focus on AI-driven development.",
+      "Eduardo OS is my professional platform at eduardoos.com - services and tools spanning pamphlet documents, articles, music, church, and homescool, alongside my practice in BIM and full-stack software with a strong focus on AI-driven development.",
   },
   {
     question: "How can I contact Eduardo Osteicoechea?",
@@ -285,7 +285,7 @@ export function buildHomeProfileJsonLd(pageUrl: string): Record<string, unknown>
         "@type": "WebPage",
         "@id": `${pageUrl}#webpage`,
         url: pageUrl,
-        name: `Eduardo Osteicoechea — ${HOME_HEADING}`,
+        name: `Eduardo Osteicoechea - ${HOME_HEADING}`,
         description: profileWhoAnswer,
         isPartOf: { "@id": `${PROFILE_SITE}/#website` },
         about: { "@id": `${pageUrl}#person` },

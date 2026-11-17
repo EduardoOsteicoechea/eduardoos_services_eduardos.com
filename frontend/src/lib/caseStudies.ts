@@ -15,11 +15,11 @@ export type CaseStudy = {
 export const caseStudies: CaseStudy[] = [
   {
     slug: "ereport",
-    title: "eReport — AEC issue tracker with API connector",
+    title: "eReport - AEC issue tracker with API connector",
     summary:
       "Owner-scoped issue reports with images, invites, website registration binding, and a docs-first public API for Cursor connectors.",
     problem:
-      "Design and construction teams need structured issue capture that can sit beside BIM delivery — not a generic ticket tool — with safe sharing and automation.",
+      "Design and construction teams need structured issue capture that can sit beside BIM delivery - not a generic ticket tool - with safe sharing and automation.",
     role: "Product owner and full-stack engineer (Go API, Astro/TypeScript UI, connector skill).",
     approach:
       "Cookie session workspace for humans; API-key /api/v1/ereport for agents; website registration purpose so a site can lock feedback to one report; image upload with ownership checks.",
@@ -37,7 +37,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "eoproject",
-    title: "eoProject — construction stages, photos, IFC",
+    title: "eoProject - construction stages, photos, IFC",
     summary:
       "Track construction project stages, site photos, and IFC model versions under one account.",
     problem:
@@ -58,7 +58,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "deepdeepbim",
-    title: "DeepDeepBim — Revit add-in auto-update on AWS",
+    title: "DeepDeepBim - Revit add-in auto-update on AWS",
     summary:
       "ASP.NET Core APIs distribute Revit add-in DLLs from S3, authenticate users with DynamoDB, and serve a static frontend on CloudFront.",
     problem:
@@ -133,7 +133,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "eduardoos-platform",
-    title: "eduardoos.com — path-scoped CI and secure APIs",
+    title: "eduardoos.com - path-scoped CI and secure APIs",
     summary:
       "Go REST API with documented catalog, cookie + API-key auth, MongoDB, Astro frontend, Nginx, and GitHub Actions that deploy only changed scopes.",
     problem:

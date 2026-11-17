@@ -45,7 +45,7 @@ export function websiteSchema() {
     url: SITE_ORIGIN,
     inLanguage: "en",
     description:
-      "Professional profile for Eduardo Osteicoechea — Senior BIM Software Developer, licensed architect, Revit/AutoCAD API and APS engineer.",
+      "Professional profile for Eduardo Osteicoechea - Senior BIM Software Developer, licensed architect, Revit/AutoCAD API and APS engineer.",
     publisher: { "@id": `${SITE_ORIGIN}/#person` },
   };
 }
