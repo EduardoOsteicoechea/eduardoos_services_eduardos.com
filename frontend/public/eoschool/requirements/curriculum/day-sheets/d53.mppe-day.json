@@ -13,7 +13,8 @@
     "bib",
     "len",
     "ide",
-    "cie"
+    "cie",
+    "mat"
   ],
   "sections": [
     {
@@ -74,6 +75,21 @@
       "activities": [
         "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
         "Clasifica: ¿se disuelve o no? Una frase con evidencia."
+      ]
+    },
+    {
+      "id": "mat",
+      "label": "Matemáticas",
+      "objective": "Geometría",
+      "learning": "Diferencia los polígonos de acuerdo al número de lados.",
+      "canDo": "Al terminar puedes clasificar figuras por lados y vértices y nombrarlas con precisión.",
+      "mode": "directo",
+      "activityKind": "geometryShapes",
+      "minutesEstimate": 18,
+      "topicShort": "diferencia los polígonos de acuerdo al número de lados",
+      "activities": [
+        "Recorta o dibuja 6 figuras; ordena en tabla: nombre, número de lados, número de vértices.",
+        "Elige 2 figuras y explica en una oración qué las hace diferentes."
       ]
     }
   ]

@@ -60,6 +60,20 @@ function primaryLearning(refs) {
   return (r.text || r.unitTitle || "").trim() || null;
 }
 
+/** Join all distinct learning texts (Friday exposition may list several week units). */
+function learningsSummary(refs) {
+  if (!refs?.length) return null;
+  const texts = [];
+  const seen = new Set();
+  for (const r of refs) {
+    const t = (r.text || r.unitTitle || "").trim();
+    if (!t || seen.has(t)) continue;
+    seen.add(t);
+    texts.push(t);
+  }
+  return texts.join(" · ") || null;
+}
+
 function objectiveFromRefs(refs) {
   if (!refs?.length) return null;
   const titles = [...new Set(refs.map((r) => r.unitTitle).filter(Boolean))];
@@ -215,7 +229,10 @@ function activityCtx(planDay, week, refs, prevRefs, extra = {}) {
   const continuing = planDay > 1 && Boolean(sameAsPrev);
   /** Same aprendizaje as ayer, pero lunes = arranque de semana (no “repaso del viernes” en plantilla 0). */
   const effectiveContinuing = continuing && !isWeekStart;
-  const learning = extra.learning ?? primaryLearning(refs) ?? "";
+  const learning =
+    extra.learning ??
+    (extra.exposition ? learningsSummary(refs) : primaryLearning(refs)) ??
+    "";
   const objective = extra.objective ?? objectiveFromRefs(refs) ?? "";
   const learningActivity = learningActivityPhrase(learning);
   return {
@@ -361,12 +378,16 @@ function buildDaySheet(planDay, weeks, prevBlock) {
         planDay,
         dedupeObjectiveTitle(objectiveFromRefs(block.len)),
       );
-      const learning = requireRefsField("len", planDay, primaryLearning(block.len));
+      const learning = requireRefsField(
+        "len",
+        planDay,
+        exposition ? learningsSummary(block.len) : primaryLearning(block.len),
+      );
       return sectionFromPack(
         "len",
         "Prácticas del Lenguaje",
         exposition ? `Exposición · ${objective}` : objective,
-        exposition ? `Prepara una exposición sobre: ${learning}` : learning,
+        exposition ? `Prepara una exposición sobre lo visto esta semana: ${learning}` : learning,
         pack,
         exposition,
       );
@@ -381,12 +402,16 @@ function buildDaySheet(planDay, weeks, prevBlock) {
         planDay,
         dedupeObjectiveTitle(objectiveFromRefs(block.mat)),
       );
-      const learning = requireRefsField("mat", planDay, primaryLearning(block.mat));
+      const learning = requireRefsField(
+        "mat",
+        planDay,
+        exposition ? learningsSummary(block.mat) : primaryLearning(block.mat),
+      );
       return sectionFromPack(
         "mat",
         "Matemáticas",
         exposition ? `Exposición · ${objective}` : objective,
-        exposition ? `Prepara una exposición sobre: ${learning}` : learning,
+        exposition ? `Prepara una exposición sobre lo visto esta semana: ${learning}` : learning,
         pack,
         exposition,
       );
@@ -401,12 +426,16 @@ function buildDaySheet(planDay, weeks, prevBlock) {
         planDay,
         dedupeObjectiveTitle(objectiveFromRefs(block.cie)),
       );
-      const learning = requireRefsField("cie", planDay, primaryLearning(block.cie));
+      const learning = requireRefsField(
+        "cie",
+        planDay,
+        exposition ? learningsSummary(block.cie) : primaryLearning(block.cie),
+      );
       return sectionFromPack(
         "cie",
         "Ciencias Naturales",
         exposition ? `Exposición · ${objective}` : objective,
-        exposition ? `Prepara una exposición sobre: ${learning}` : learning,
+        exposition ? `Prepara una exposición sobre lo visto esta semana: ${learning}` : learning,
         pack,
         exposition,
       );

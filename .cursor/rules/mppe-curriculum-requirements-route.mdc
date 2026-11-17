@@ -36,12 +36,25 @@ This route is a **separate product surface** from Homescool workspace classes. D
 
 Within each week (day-in-week 1–5), unless holiday:
 
+**Weeks 1–6**
+
 | Day | Sections | Notes |
 | --- | --- | --- |
 | 1, 3 | `bib`, `len`, `ide`, `cie` | Teach |
 | 2, 4 | `bib`, `len`, `mat` | Teach |
 | 5 | `bib`, `ide`, `len`, `mat`, `cie` | **Exposition** — rehearse week focus; no new teach buckets |
-| holiday | `bib` | Feriado nacional — solo Biblia |
+
+**Weeks 7–40** (`meta.dailyMathFromWeek: 7`): Matemática every teach day with Lenguaje
+
+| Day | Sections | Notes |
+| --- | --- | --- |
+| 1, 3 | `bib`, `len`, `ide`, `cie`, `mat` | Teach |
+| 2, 4 | `bib`, `len`, `mat` | Teach |
+| 5 | `bib`, `ide`, `len`, `mat`, `cie` | **Exposition** — list unique Mon–Thu learnings; no new units |
+
+- Holiday → `bib` only (feriado nacional).
+- Math redistribution from week 7: `mat:2`…`mat:17` across Mon–Thu teach slots; weeks 1–6 keep prior Tue/Thu placement (`mat:0`, `mat:1`, start of `mat:2`).
+- Backup before this change: `frontend/src/lib/backups/pre-week7-daily-math/`.
 
 Progress keys stay `dN:sectionId` (no renumbering / no Mongo migration). Day complete = all **scheduled** sections that day (not always 5/5).
 

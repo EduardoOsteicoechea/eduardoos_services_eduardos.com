@@ -13,7 +13,8 @@
     "bib",
     "len",
     "ide",
-    "cie"
+    "cie",
+    "mat"
   ],
   "sections": [
     {
@@ -74,6 +75,21 @@
       "activities": [
         "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
         "Clasifica: ¿se disuelve o no? Una frase con evidencia."
+      ]
+    },
+    {
+      "id": "mat",
+      "label": "Matemáticas",
+      "objective": "Geometría",
+      "learning": "Diferencia círculo de una circunferencia.",
+      "canDo": "Al terminar puedes comparar círculo y circunferencia en objetos de la casa.",
+      "mode": "apalancado",
+      "activityKind": "geometryCircles",
+      "minutesEstimate": 20,
+      "topicShort": "diferencia círculo de una circunferencia",
+      "activities": [
+        "Busca 2 objetos (plato, aro, moneda); marca si ves círculo relleno o solo borde.",
+        "Tabla: objeto → círculo o circunferencia → por qué."
       ]
     }
   ]

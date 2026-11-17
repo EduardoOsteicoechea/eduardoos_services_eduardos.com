@@ -51,9 +51,13 @@ const curriculumPath = path.join(__dirname, "eoschool-mppe-40week-curriculum.jso
 describe("MPPE day sheets (200 días)", () => {
   it("follows weekly subject rotation; holidays are bib-only", () => {
     const curriculum = JSON.parse(fs.readFileSync(curriculumPath, "utf8")) as {
-      meta?: { holidays?: Array<{ planDay: number; name: string }> };
+      meta?: {
+        holidays?: Array<{ planDay: number; name: string }>;
+        dailyMathFromWeek?: number;
+      };
     };
     const holidayDays = new Set((curriculum.meta?.holidays ?? []).map((h) => h.planDay));
+    const dailyMathFromWeek = curriculum.meta?.dailyMathFromWeek ?? 7;
     expect(holidayDays.size).toBeGreaterThan(0);
 
     for (let planDay = 1; planDay <= 200; planDay++) {
@@ -65,6 +69,7 @@ describe("MPPE day sheets (200 días)", () => {
         sections: Array<{ id: string }>;
       };
       const dayInWeek = ((planDay - 1) % 5) + 1;
+      const week = Math.floor((planDay - 1) / 5) + 1;
       const ids = raw.sections.map((s) => s.id);
       if (holidayDays.has(planDay)) {
         expect(raw.dayKind).toBe("holiday");
@@ -75,7 +80,11 @@ describe("MPPE day sheets (200 días)", () => {
         expect(ids).toEqual(["bib", "ide", "len", "mat", "cie"]);
       } else if (dayInWeek === 1 || dayInWeek === 3) {
         expect(raw.dayKind).toBe("teach");
-        expect(ids).toEqual(["bib", "len", "ide", "cie"]);
+        if (week >= dailyMathFromWeek) {
+          expect(ids).toEqual(["bib", "len", "ide", "cie", "mat"]);
+        } else {
+          expect(ids).toEqual(["bib", "len", "ide", "cie"]);
+        }
       } else {
         expect(raw.dayKind).toBe("teach");
         expect(ids).toEqual(["bib", "len", "mat"]);
@@ -110,6 +119,31 @@ describe("MPPE day sheets (200 días)", () => {
     expect(len.size).toBe(curriculum.meta.counts.lenLearnings);
     expect(mat.size).toBe(curriculum.meta.counts.matLearnings);
     expect(cie.size).toBe(curriculum.meta.counts.cieLearnings);
+  });
+
+  it("Friday exposition only rehearses learnings taught Mon–Thu that week", () => {
+    const curriculum = JSON.parse(fs.readFileSync(curriculumPath, "utf8")) as {
+      weeks: Array<{
+        week: number;
+        blocks: Array<{
+          dayKind?: string;
+          len?: Array<{ id: string }>;
+          mat?: Array<{ id: string }>;
+          cie?: Array<{ id: string }>;
+        }>;
+      }>;
+    };
+    for (const week of curriculum.weeks) {
+      const teach = week.blocks.filter((b) => b.dayKind === "teach");
+      const fri = week.blocks.find((b) => b.dayKind === "exposition");
+      if (!fri) continue;
+      for (const key of ["len", "mat", "cie"] as const) {
+        const teachIds = new Set(teach.flatMap((b) => (b[key] ?? []).map((r) => r.id)));
+        for (const r of fri[key] ?? []) {
+          expect(teachIds.has(r.id), `week ${week.week} fri ${key} ${r.id}`).toBe(true);
+        }
+      }
+    }
   });
 
   it("has no placeholder objectives, learnings, or stub activities", () => {

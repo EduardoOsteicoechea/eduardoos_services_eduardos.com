@@ -22,7 +22,27 @@ export type Mppe40WeekCurriculum = {
     schoolYearStart?: string;
     schoolYearEnd?: string;
     holidays?: Array<{ planDay: number; date: string; name: string }>;
+    /** Week number from which math is taught Mon–Thu with lenguaje (default 7). */
+    dailyMathFromWeek?: number;
     weeklyPattern?: {
+      day1: string[];
+      day2: string[];
+      day3: string[];
+      day4: string[];
+      day5: string[];
+      day5Mode?: string;
+      holidayOverride?: string[];
+    };
+    weeklyPatternWeeks1to6?: {
+      day1: string[];
+      day2: string[];
+      day3: string[];
+      day4: string[];
+      day5: string[];
+      day5Mode?: string;
+      holidayOverride?: string[];
+    };
+    weeklyPatternFromWeek7?: {
       day1: string[];
       day2: string[];
       day3: string[];

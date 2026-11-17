@@ -67,7 +67,8 @@
         "name": "Batalla de Carabobo"
       }
     ],
-    "weeklyPattern": {
+    "dailyMathFromWeek": 7,
+    "weeklyPatternWeeks1to6": {
       "day1": [
         "bib",
         "len",
@@ -102,14 +103,90 @@
         "bib"
       ]
     },
+    "weeklyPatternFromWeek7": {
+      "day1": [
+        "bib",
+        "len",
+        "ide",
+        "cie",
+        "mat"
+      ],
+      "day2": [
+        "bib",
+        "len",
+        "mat"
+      ],
+      "day3": [
+        "bib",
+        "len",
+        "ide",
+        "cie",
+        "mat"
+      ],
+      "day4": [
+        "bib",
+        "len",
+        "mat"
+      ],
+      "day5": [
+        "bib",
+        "ide",
+        "len",
+        "mat",
+        "cie"
+      ],
+      "day5Mode": "exposition",
+      "holidayOverride": [
+        "bib"
+      ]
+    },
+    "weeklyPattern": {
+      "day1": [
+        "bib",
+        "len",
+        "ide",
+        "cie",
+        "mat"
+      ],
+      "day2": [
+        "bib",
+        "len",
+        "mat"
+      ],
+      "day3": [
+        "bib",
+        "len",
+        "ide",
+        "cie",
+        "mat"
+      ],
+      "day4": [
+        "bib",
+        "len",
+        "mat"
+      ],
+      "day5": [
+        "bib",
+        "ide",
+        "len",
+        "mat",
+        "cie"
+      ],
+      "day5Mode": "exposition",
+      "holidayOverride": [
+        "bib"
+      ]
+    },
     "teachingDays": {
       "bib": 200,
       "len": 189,
       "ide": 114,
-      "mat": 112,
+      "mat": 178,
       "cie": 114,
       "teachIdeCie": 77,
-      "teachMat": 75,
+      "teachMat": 141,
+      "teachMatWeeks1to6": 12,
+      "teachMatFromWeek7": 129,
       "exposition": 37,
       "holiday": 11
     },
@@ -493,6 +570,12 @@
           },
           "len": [
             {
+              "id": "len:0",
+              "unitTitle": "Leer para hacer… (Interpretar textos instruccionales).",
+              "axis": "Lectura",
+              "text": "Ejecuta secuencias de acciones interpretando textos instruccionales."
+            },
+            {
               "id": "len:56",
               "unitTitle": "Escribir ideas relevantes sobre temas leídos.",
               "axis": "Escritura",
@@ -868,6 +951,12 @@
             ]
           },
           "len": [
+            {
+              "id": "len:1",
+              "unitTitle": "Leer para conocer sobre la vida y obra de personajes destacados en diferentes áreas. (Biografías).",
+              "axis": "Lectura",
+              "text": "Conoce datos y hechos fundamentales de la biografía de varios personajes destacados: Simón Bolívar, Simón Rodríguez; los epónimos de su estado, municipio e institución escolar (si es el caso); nombres y motivo de la fama de personajes destacados de su localidad."
+            },
             {
               "id": "len:57",
               "unitTitle": "Escribir convencionalmente palabras que contienen sílabas indirectas (VC) y del grupo silábico CVC.",
@@ -1245,6 +1334,12 @@
           },
           "len": [
             {
+              "id": "len:2",
+              "unitTitle": "Leer para informarse y aprender sobre diversas áreas del conocimiento. (Textos informativos: científicos, noticias).",
+              "axis": "Lectura",
+              "text": "Acude a distintas fuentes para buscar información sobre diversos temas: petróleo, agua, salud, conservación del ambiente…"
+            },
+            {
               "id": "len:58",
               "unitTitle": "Escribir convencionalmente palabras que contienen sílabas indirectas (VC) y del grupo silábico CVC.",
               "axis": "Escritura",
@@ -1586,6 +1681,12 @@
             ]
           },
           "len": [
+            {
+              "id": "len:3",
+              "unitTitle": "Leer para informarse y aprender sobre diversas áreas del conocimiento. (Textos informativos: científicos, noticias).",
+              "axis": "Lectura",
+              "text": "Se interesa por saber acerca del acontecer diario (Lectura de noticias)."
+            },
             {
               "id": "len:59",
               "unitTitle": "Conocer funciones y usos de los signos de interrogación y exclamación.",
@@ -1967,6 +2068,12 @@
           },
           "len": [
             {
+              "id": "len:4",
+              "unitTitle": "Seleccionar lo que se desea leer aplicando criterios de preferencia.",
+              "axis": "Lectura",
+              "text": "Usa criterios de preferencia para elegir lo que desea leer."
+            },
+            {
               "id": "len:60",
               "unitTitle": "Expresarse con diversas intenciones: manifestar sentimientos, solicitar, reclamar, narrar, opinar, describir, explicar, argumentar…",
               "axis": "Oralidad",
@@ -2335,6 +2442,18 @@
           },
           "len": [
             {
+              "id": "len:5",
+              "unitTitle": "Utilizar el índice de libros para ubicar el contenido que se necesita o desea leer.",
+              "axis": "Lectura",
+              "text": "Explora índices de libros para ubicar temas que desea o necesita leer."
+            },
+            {
+              "id": "len:61",
+              "unitTitle": "Utilizar ciertas expresiones de la lengua formal en diferentes contextos de comunicación.",
+              "axis": "Oralidad",
+              "text": "Usa diversas fórmulas sociales para interactuar con otros en situaciones de la vida cotidiana: gracias, de nada, por favor, con permiso, buenos días, etc."
+            },
+            {
               "id": "len:6",
               "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
               "axis": "Lectura",
@@ -2364,6 +2483,12 @@
           ],
           "cie": [
             {
+              "id": "cie:2",
+              "unitTitle": "Salud integral — La alimentación en Venezuela",
+              "axis": null,
+              "text": "Reconoce los platos típicos de Venezuela y sus ingredientes principales."
+            },
+            {
               "id": "cie:3",
               "unitTitle": "Salud integral — La alimentación en Venezuela",
               "axis": null,
@@ -2384,7 +2509,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-11-02",
           "bible": {
@@ -2445,6 +2571,14 @@
             "week": 7,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:2",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:3",
@@ -2530,7 +2664,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-11-04",
           "bible": {
@@ -2587,6 +2722,14 @@
             "week": 7,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:2",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:3",
@@ -2711,6 +2854,18 @@
           },
           "len": [
             {
+              "id": "len:6",
+              "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
+              "axis": "Lectura",
+              "text": "Lee aplicando la modalidad exploratoria del texto para localizar determinados datos."
+            },
+            {
+              "id": "len:62",
+              "unitTitle": "Hacer escuchar la voz propia y considerar la de otros en la toma de decisiones colectivas.",
+              "axis": "Oralidad",
+              "text": "Aporta ideas para la toma de decisiones durante la construcción y revisión permanente de las normas de convivencia en el salón y en otros espacios de la institución escolar."
+            },
+            {
               "id": "len:7",
               "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
               "axis": "Lectura",
@@ -2760,7 +2915,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-11-09",
           "bible": {
@@ -2821,6 +2977,14 @@
             "week": 8,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:2",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:4",
@@ -2887,10 +3051,10 @@
           ],
           "mat": [
             {
-              "id": "mat:3",
+              "id": "mat:2",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia los polígonos de acuerdo al número de lados."
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
             }
           ]
         },
@@ -2902,7 +3066,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-11-11",
           "bible": {
@@ -2963,6 +3128,14 @@
             "week": 8,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:2",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:4",
@@ -3029,10 +3202,10 @@
           ],
           "mat": [
             {
-              "id": "mat:3",
+              "id": "mat:2",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia los polígonos de acuerdo al número de lados."
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
             }
           ]
         },
@@ -3087,6 +3260,12 @@
           },
           "len": [
             {
+              "id": "len:63",
+              "unitTitle": "Actuar en intercambios grupales para confrontar interpretaciones y puntos de vista acerca de textos leídos por la/el docente (Cuentos, biografías, noticias, historietas, textos informativos sobre diversos temas).",
+              "axis": "Oralidad",
+              "text": "Manifiesta sus interpretaciones y puntos de vista sobre textos leídos por la/el docente."
+            },
+            {
               "id": "len:8",
               "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
               "axis": "Lectura",
@@ -3108,10 +3287,10 @@
           },
           "mat": [
             {
-              "id": "mat:3",
+              "id": "mat:2",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia los polígonos de acuerdo al número de lados."
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
             }
           ],
           "cie": [
@@ -3136,7 +3315,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-11-16",
           "bible": {
@@ -3193,6 +3373,14 @@
             "week": 9,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:2",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:4",
@@ -3267,10 +3455,10 @@
           ],
           "mat": [
             {
-              "id": "mat:3",
+              "id": "mat:2",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia los polígonos de acuerdo al número de lados."
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
             }
           ]
         },
@@ -3282,7 +3470,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-11-18",
           "bible": {
@@ -3339,6 +3528,14 @@
             "week": 9,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:2",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:5",
@@ -3401,10 +3598,10 @@
           ],
           "mat": [
             {
-              "id": "mat:3",
+              "id": "mat:2",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia los polígonos de acuerdo al número de lados."
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
             }
           ]
         },
@@ -3463,6 +3660,12 @@
           },
           "len": [
             {
+              "id": "len:64",
+              "unitTitle": "Actuar en intercambios grupales para confrontar interpretaciones y puntos de vista acerca de textos leídos por la/el docente (Cuentos, biografías, noticias, historietas, textos informativos sobre diversos temas).",
+              "axis": "Oralidad",
+              "text": "Escucha con respeto los puntos de vista del otro/otra y defiende los propios con explicaciones y argumentos."
+            },
+            {
               "id": "len:9",
               "unitTitle": "Ordenar palabras para formar textos, previa información del escrito que debe resultar.",
               "axis": "Lectura",
@@ -3484,13 +3687,19 @@
           },
           "mat": [
             {
-              "id": "mat:3",
+              "id": "mat:2",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia los polígonos de acuerdo al número de lados."
+              "text": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos."
             }
           ],
           "cie": [
+            {
+              "id": "cie:4",
+              "unitTitle": "Salud integral — La alimentación en Venezuela",
+              "axis": null,
+              "text": "Valora la importancia de una alimentación saludable para el bienestar comunitario."
+            },
             {
               "id": "cie:5",
               "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
@@ -3512,7 +3721,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-11-23",
           "bible": {
@@ -3569,6 +3779,14 @@
             "week": 10,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:3",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia los polígonos de acuerdo al número de lados."
+            }
+          ],
           "cie": [
             {
               "id": "cie:5",
@@ -3635,10 +3853,10 @@
           ],
           "mat": [
             {
-              "id": "mat:4",
+              "id": "mat:3",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Identifica los elementos de los cuerpos geométricos."
+              "text": "Diferencia los polígonos de acuerdo al número de lados."
             }
           ]
         },
@@ -3650,7 +3868,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-11-25",
           "bible": {
@@ -3711,6 +3930,14 @@
             "week": 10,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:3",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia los polígonos de acuerdo al número de lados."
+            }
+          ],
           "cie": [
             {
               "id": "cie:5",
@@ -3781,10 +4008,10 @@
           ],
           "mat": [
             {
-              "id": "mat:4",
+              "id": "mat:3",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Identifica los elementos de los cuerpos geométricos."
+              "text": "Diferencia los polígonos de acuerdo al número de lados."
             }
           ]
         },
@@ -3835,6 +4062,18 @@
           },
           "len": [
             {
+              "id": "len:65",
+              "unitTitle": "Dialogar con diferentes intenciones y propósitos.",
+              "axis": "Oralidad",
+              "text": "Participa en diálogos en variados contextos comunicativos, considerando los puntos de vista de otros/otras: para resolver diferencias, acordar reglas de un juego, manifestar y resolver desacuerdos…"
+            },
+            {
+              "id": "len:10",
+              "unitTitle": "Participar en actividades lúdicas y significativas para conocer los nombres de todas las letras del alfabeto.",
+              "axis": "Lectura",
+              "text": "Menciona las letras del alfabeto por sus nombres y las usa en la escritura con su valor sonoro."
+            },
+            {
               "id": "len:66",
               "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
               "axis": "Oralidad",
@@ -3856,10 +4095,10 @@
           },
           "mat": [
             {
-              "id": "mat:4",
+              "id": "mat:3",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Identifica los elementos de los cuerpos geométricos."
+              "text": "Diferencia los polígonos de acuerdo al número de lados."
             }
           ],
           "cie": [
@@ -3884,7 +4123,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-11-30",
           "bible": {
@@ -3945,6 +4185,14 @@
             "week": 11,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:3",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia los polígonos de acuerdo al número de lados."
+            }
+          ],
           "cie": [
             {
               "id": "cie:6",
@@ -4011,10 +4259,10 @@
           ],
           "mat": [
             {
-              "id": "mat:4",
+              "id": "mat:3",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Identifica los elementos de los cuerpos geométricos."
+              "text": "Diferencia los polígonos de acuerdo al número de lados."
             }
           ]
         },
@@ -4026,7 +4274,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-12-02",
           "bible": {
@@ -4091,6 +4340,14 @@
             "week": 11,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:3",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia los polígonos de acuerdo al número de lados."
+            }
+          ],
           "cie": [
             {
               "id": "cie:6",
@@ -4153,10 +4410,10 @@
           ],
           "mat": [
             {
-              "id": "mat:4",
+              "id": "mat:3",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Identifica los elementos de los cuerpos geométricos."
+              "text": "Diferencia los polígonos de acuerdo al número de lados."
             }
           ]
         },
@@ -4215,6 +4472,18 @@
           },
           "len": [
             {
+              "id": "len:66",
+              "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
+              "axis": "Oralidad",
+              "text": "Pregunta y responde sobre contenidos de estudio tratados en el aula."
+            },
+            {
+              "id": "len:11",
+              "unitTitle": "Diferenciar entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos.",
+              "axis": "Lectura",
+              "text": "Diferencia entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos, y expresa algunos rasgos que los distinguen."
+            },
+            {
               "id": "len:67",
               "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
               "axis": "Oralidad",
@@ -4236,10 +4505,10 @@
           },
           "mat": [
             {
-              "id": "mat:4",
+              "id": "mat:3",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Identifica los elementos de los cuerpos geométricos."
+              "text": "Diferencia los polígonos de acuerdo al número de lados."
             }
           ],
           "cie": [
@@ -4264,7 +4533,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-12-07",
           "bible": {
@@ -4321,6 +4591,14 @@
             "week": 12,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:4",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Identifica los elementos de los cuerpos geométricos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:6",
@@ -4387,10 +4665,10 @@
           ],
           "mat": [
             {
-              "id": "mat:5",
+              "id": "mat:4",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia círculo de una circunferencia."
+              "text": "Identifica los elementos de los cuerpos geométricos."
             }
           ]
         },
@@ -4402,7 +4680,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-12-09",
           "bible": {
@@ -4459,6 +4738,14 @@
             "week": 12,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:4",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Identifica los elementos de los cuerpos geométricos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:7",
@@ -4529,10 +4816,10 @@
           ],
           "mat": [
             {
-              "id": "mat:5",
+              "id": "mat:4",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia círculo de una circunferencia."
+              "text": "Identifica los elementos de los cuerpos geométricos."
             }
           ]
         },
@@ -4587,6 +4874,12 @@
           },
           "len": [
             {
+              "id": "len:12",
+              "unitTitle": "Recomendar obras literarias.",
+              "axis": "Lectura",
+              "text": "Recomienda obras literarias informando títulos y autores/autoras de un repertorio de cuentos y poemas que conoce."
+            },
+            {
               "id": "len:68",
               "unitTitle": "Participar en intercambios de grupo sobre respuestas a instrumentos de evaluación.",
               "axis": "Oralidad",
@@ -4608,13 +4901,19 @@
           },
           "mat": [
             {
-              "id": "mat:5",
+              "id": "mat:4",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia círculo de una circunferencia."
+              "text": "Identifica los elementos de los cuerpos geométricos."
             }
           ],
           "cie": [
+            {
+              "id": "cie:6",
+              "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
+              "axis": null,
+              "text": "Describe las propiedades de las mezclas homogéneas y heterogéneas."
+            },
             {
               "id": "cie:7",
               "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
@@ -4636,7 +4935,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-12-14",
           "bible": {
@@ -4693,6 +4993,14 @@
             "week": 13,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:4",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Identifica los elementos de los cuerpos geométricos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:7",
@@ -4763,10 +5071,10 @@
           ],
           "mat": [
             {
-              "id": "mat:5",
+              "id": "mat:4",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia círculo de una circunferencia."
+              "text": "Identifica los elementos de los cuerpos geométricos."
             }
           ]
         },
@@ -4778,7 +5086,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-12-16",
           "bible": {
@@ -4835,6 +5144,14 @@
             "week": 13,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:4",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Identifica los elementos de los cuerpos geométricos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:7",
@@ -4905,10 +5222,10 @@
           ],
           "mat": [
             {
-              "id": "mat:5",
+              "id": "mat:4",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia círculo de una circunferencia."
+              "text": "Identifica los elementos de los cuerpos geométricos."
             }
           ]
         },
@@ -4963,6 +5280,12 @@
           },
           "len": [
             {
+              "id": "len:13",
+              "unitTitle": "Comprender la estructura de textos narrativos.",
+              "axis": "Lectura",
+              "text": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos."
+            },
+            {
               "id": "len:69",
               "unitTitle": "Participar en cine foros.",
               "axis": "Oralidad",
@@ -4984,10 +5307,10 @@
           },
           "mat": [
             {
-              "id": "mat:5",
+              "id": "mat:4",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia círculo de una circunferencia."
+              "text": "Identifica los elementos de los cuerpos geométricos."
             }
           ],
           "cie": [
@@ -5012,7 +5335,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-12-21",
           "bible": {
@@ -5073,6 +5397,14 @@
             "week": 14,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:5",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia círculo de una circunferencia."
+            }
+          ],
           "cie": [
             {
               "id": "cie:8",
@@ -5150,7 +5482,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-12-23",
           "bible": {
@@ -5211,6 +5544,14 @@
             "week": 14,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:5",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia círculo de una circunferencia."
+            }
+          ],
           "cie": [
             {
               "id": "cie:8",
@@ -5333,7 +5674,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-12-28",
           "bible": {
@@ -5390,6 +5732,14 @@
             "week": 15,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:5",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia círculo de una circunferencia."
+            }
+          ],
           "cie": [
             {
               "id": "cie:8",
@@ -5456,10 +5806,10 @@
           ],
           "mat": [
             {
-              "id": "mat:6",
+              "id": "mat:5",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
+              "text": "Diferencia círculo de una circunferencia."
             }
           ]
         },
@@ -5471,7 +5821,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2026-12-30",
           "bible": {
@@ -5532,6 +5883,14 @@
             "week": 15,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:5",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia círculo de una circunferencia."
+            }
+          ],
           "cie": [
             {
               "id": "cie:9",
@@ -5654,7 +6013,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-01-04",
           "bible": {
@@ -5711,6 +6071,14 @@
             "week": 16,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:5",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia círculo de una circunferencia."
+            }
+          ],
           "cie": [
             {
               "id": "cie:9",
@@ -5777,10 +6145,10 @@
           ],
           "mat": [
             {
-              "id": "mat:6",
+              "id": "mat:5",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
+              "text": "Diferencia círculo de una circunferencia."
             }
           ]
         },
@@ -5792,7 +6160,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-01-06",
           "bible": {
@@ -5849,6 +6218,14 @@
             "week": 16,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:6",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
+            }
+          ],
           "cie": [
             {
               "id": "cie:9",
@@ -5973,6 +6350,12 @@
           },
           "len": [
             {
+              "id": "len:71",
+              "unitTitle": "Narrar cuentos conocidos para distintas audiencias.",
+              "axis": "Oralidad",
+              "text": "Narra cuentos conocidos siguiendo la secuencia de los hechos y utilizando descriptores para caracterizar personajes y otros recursos de la narración."
+            },
+            {
               "id": "len:16",
               "unitTitle": "Interpretar la función de ciertos signos ortográficos.",
               "axis": "Lectura",
@@ -5993,6 +6376,12 @@
             "dayInWeek": 5
           },
           "mat": [
+            {
+              "id": "mat:5",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia círculo de una circunferencia."
+            },
             {
               "id": "mat:6",
               "unitTitle": "Geometría",
@@ -6022,7 +6411,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-01-11",
           "bible": {
@@ -6087,6 +6477,14 @@
             "week": 17,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:6",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
+            }
+          ],
           "cie": [
             {
               "id": "cie:10",
@@ -6168,7 +6566,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-01-13",
           "bible": {
@@ -6229,6 +6628,14 @@
             "week": 17,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:6",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
+            }
+          ],
           "cie": [
             {
               "id": "cie:10",
@@ -6291,10 +6698,10 @@
           ],
           "mat": [
             {
-              "id": "mat:7",
+              "id": "mat:6",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia recta y punto, y la traza en un plano."
+              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
             }
           ]
         },
@@ -6353,6 +6760,18 @@
           },
           "len": [
             {
+              "id": "len:72",
+              "unitTitle": "Narrar cuentos conocidos para distintas audiencias.",
+              "axis": "Oralidad",
+              "text": "Utiliza algunas fórmulas de inicio propias de la narración, al relatar sus propios cuentos: había una vez… / En un lugar llamado… / Hace mucho tiempo…"
+            },
+            {
+              "id": "len:17",
+              "unitTitle": "Diferenciar clases de palabras fundamentales.",
+              "axis": "Lectura",
+              "text": "Conoce las funciones de sustantivos y adjetivos."
+            },
+            {
               "id": "len:73",
               "unitTitle": "Exponer informaciones sobre distintas áreas del conocimiento.",
               "axis": "Oralidad",
@@ -6374,10 +6793,10 @@
           },
           "mat": [
             {
-              "id": "mat:7",
+              "id": "mat:6",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia recta y punto, y la traza en un plano."
+              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
             }
           ],
           "cie": [
@@ -6402,7 +6821,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-01-18",
           "bible": {
@@ -6459,6 +6879,14 @@
             "week": 18,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:6",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
+            }
+          ],
           "cie": [
             {
               "id": "cie:10",
@@ -6525,10 +6953,10 @@
           ],
           "mat": [
             {
-              "id": "mat:7",
+              "id": "mat:6",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia recta y punto, y la traza en un plano."
+              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
             }
           ]
         },
@@ -6540,7 +6968,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-01-20",
           "bible": {
@@ -6601,6 +7030,14 @@
             "week": 18,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:7",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia recta y punto, y la traza en un plano."
+            }
+          ],
           "cie": [
             {
               "id": "cie:11",
@@ -6725,6 +7162,18 @@
           },
           "len": [
             {
+              "id": "len:73",
+              "unitTitle": "Exponer informaciones sobre distintas áreas del conocimiento.",
+              "axis": "Oralidad",
+              "text": "Comunica al grupo del salón información sobre temas de interés."
+            },
+            {
+              "id": "len:18",
+              "unitTitle": "Conocer algunas particularidades de la lengua.",
+              "axis": "Lectura",
+              "text": "Analiza algunas “curiosidades” de nuestra lengua. Palíndromos: palabras que se leen igual al derecho y al revés. Ej. Ana, ada, ojo, oro, radar, somos, rapar, reconocer, arepera. Palabras que repiten una misma vocal en todas las sílabas: maraca, cántara / monólogo, fósforo / efervescente, pelele / infringir, incidir… Palabras pentavocálicas (Contienen las cinco vocales). Ej.: aurelio, orquídea, riachuelo, murciélago, comunicarse, educación…"
+            },
+            {
               "id": "len:74",
               "unitTitle": "Divertirse y entretener a otros con diversas expresiones lúdicas del lenguaje.",
               "axis": "Oralidad",
@@ -6746,6 +7195,12 @@
           },
           "mat": [
             {
+              "id": "mat:6",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Es capaz de trazar un croquis partiendo de un punto de referencia."
+            },
+            {
               "id": "mat:7",
               "unitTitle": "Geometría",
               "axis": null,
@@ -6753,6 +7208,12 @@
             }
           ],
           "cie": [
+            {
+              "id": "cie:10",
+              "unitTitle": "El ambiente y sus interacciones — Biodiversidad",
+              "axis": null,
+              "text": "Observa y describe la biodiversidad y su importancia en los ecosistemas de su entorno."
+            },
             {
               "id": "cie:11",
               "unitTitle": "El ambiente y sus interacciones — Biodiversidad",
@@ -6774,7 +7235,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-01-25",
           "bible": {
@@ -6831,6 +7293,14 @@
             "week": 19,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:7",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia recta y punto, y la traza en un plano."
+            }
+          ],
           "cie": [
             {
               "id": "cie:11",
@@ -6920,7 +7390,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-01-27",
           "bible": {
@@ -6977,6 +7448,14 @@
             "week": 19,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:7",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia recta y punto, y la traza en un plano."
+            }
+          ],
           "cie": [
             {
               "id": "cie:11",
@@ -7043,10 +7522,10 @@
           ],
           "mat": [
             {
-              "id": "mat:8",
+              "id": "mat:7",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia rectas paralelas y perpendiculares."
+              "text": "Diferencia recta y punto, y la traza en un plano."
             }
           ]
         },
@@ -7101,6 +7580,12 @@
           },
           "len": [
             {
+              "id": "len:19",
+              "unitTitle": "Interpretar palabras compuestas.",
+              "axis": "Lectura",
+              "text": "Comprende la composición de palabras en un repertorio de términos comunes (Cumpleaños, guardabosques, paraguas, lavaplatos, telaraña, saltamontes)."
+            },
+            {
               "id": "len:75",
               "unitTitle": "Participar en intercambios sobre la utilidad de la tecnología.",
               "axis": "Oralidad",
@@ -7122,10 +7607,10 @@
           },
           "mat": [
             {
-              "id": "mat:8",
+              "id": "mat:7",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia rectas paralelas y perpendiculares."
+              "text": "Diferencia recta y punto, y la traza en un plano."
             }
           ],
           "cie": [
@@ -7150,7 +7635,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-02-01",
           "bible": {
@@ -7211,6 +7697,14 @@
             "week": 20,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:7",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia recta y punto, y la traza en un plano."
+            }
+          ],
           "cie": [
             {
               "id": "cie:12",
@@ -7273,10 +7767,10 @@
           ],
           "mat": [
             {
-              "id": "mat:8",
+              "id": "mat:7",
               "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia rectas paralelas y perpendiculares."
+              "text": "Diferencia recta y punto, y la traza en un plano."
             }
           ]
         },
@@ -7288,7 +7782,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-02-03",
           "bible": {
@@ -7353,6 +7848,14 @@
             "week": 20,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:8",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia rectas paralelas y perpendiculares."
+            }
+          ],
           "cie": [
             {
               "id": "cie:12",
@@ -7477,6 +7980,12 @@
           },
           "len": [
             {
+              "id": "len:20",
+              "unitTitle": "Localizar datos en mapas y gráficos.",
+              "axis": "Lectura",
+              "text": "Ubica y lee en el mapa de Venezuela los nombres de un amplio repertorio de estados, ríos, lagos principales y el mar Caribe."
+            },
+            {
               "id": "len:76",
               "unitTitle": "Cantar y declamar para diversas audiencias.",
               "axis": "Oralidad",
@@ -7497,6 +8006,12 @@
             "dayInWeek": 5
           },
           "mat": [
+            {
+              "id": "mat:7",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia recta y punto, y la traza en un plano."
+            },
             {
               "id": "mat:8",
               "unitTitle": "Geometría",
@@ -7618,7 +8133,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-02-10",
           "bible": {
@@ -7683,6 +8199,14 @@
             "week": 21,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:8",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia rectas paralelas y perpendiculares."
+            }
+          ],
           "cie": [
             {
               "id": "cie:13",
@@ -7807,6 +8331,12 @@
           },
           "len": [
             {
+              "id": "len:21",
+              "unitTitle": "Localizar datos en mapas y gráficos.",
+              "axis": "Lectura",
+              "text": "Interpreta informaciones contenidas en diferentes representaciones gráficas."
+            },
+            {
               "id": "len:77",
               "unitTitle": "Denominar sonidos que emiten animales conocidos.",
               "axis": "Oralidad",
@@ -7856,7 +8386,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-02-15",
           "bible": {
@@ -7913,6 +8444,14 @@
             "week": 22,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:8",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia rectas paralelas y perpendiculares."
+            }
+          ],
           "cie": [
             {
               "id": "cie:13",
@@ -7979,10 +8518,10 @@
           ],
           "mat": [
             {
-              "id": "mat:9",
-              "unitTitle": "Magnitudes y medidas",
+              "id": "mat:8",
+              "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia medidas convencionales y no convencionales."
+              "text": "Diferencia rectas paralelas y perpendiculares."
             }
           ]
         },
@@ -7994,7 +8533,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-02-17",
           "bible": {
@@ -8051,6 +8591,14 @@
             "week": 22,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:8",
+              "unitTitle": "Geometría",
+              "axis": null,
+              "text": "Diferencia rectas paralelas y perpendiculares."
+            }
+          ],
           "cie": [
             {
               "id": "cie:13",
@@ -8125,10 +8673,10 @@
           ],
           "mat": [
             {
-              "id": "mat:9",
-              "unitTitle": "Magnitudes y medidas",
+              "id": "mat:8",
+              "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia medidas convencionales y no convencionales."
+              "text": "Diferencia rectas paralelas y perpendiculares."
             }
           ]
         },
@@ -8179,6 +8727,12 @@
           },
           "len": [
             {
+              "id": "len:22",
+              "unitTitle": "Localizar datos en mapas y gráficos.",
+              "axis": "Lectura",
+              "text": "Explora el mapamundi en busca de algunos países específicos y otros datos geográficos."
+            },
+            {
               "id": "len:78",
               "unitTitle": "Inventar historietas y cuentos a partir de imágenes.",
               "axis": "Oralidad",
@@ -8200,10 +8754,10 @@
           },
           "mat": [
             {
-              "id": "mat:9",
-              "unitTitle": "Magnitudes y medidas",
+              "id": "mat:8",
+              "unitTitle": "Geometría",
               "axis": null,
-              "text": "Diferencia medidas convencionales y no convencionales."
+              "text": "Diferencia rectas paralelas y perpendiculares."
             }
           ],
           "cie": [
@@ -8228,7 +8782,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-02-22",
           "bible": {
@@ -8289,6 +8844,14 @@
             "week": 23,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:9",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Diferencia medidas convencionales y no convencionales."
+            }
+          ],
           "cie": [
             {
               "id": "cie:14",
@@ -8370,7 +8933,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-02-24",
           "bible": {
@@ -8431,6 +8995,14 @@
             "week": 23,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:9",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Diferencia medidas convencionales y no convencionales."
+            }
+          ],
           "cie": [
             {
               "id": "cie:14",
@@ -8555,6 +9127,12 @@
           },
           "len": [
             {
+              "id": "len:23",
+              "unitTitle": "Entender el significado de algunos elementos de la señalética.",
+              "axis": "Lectura",
+              "text": "Identifica algunas señales básicas: no pase, peligro, alta tensión, baño de damas / caballeros, algunas señales de tránsito."
+            },
+            {
               "id": "len:79",
               "unitTitle": "Comentar acerca de textos y temas de interés.",
               "axis": "Oralidad",
@@ -8604,7 +9182,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-03-01",
           "bible": {
@@ -8665,6 +9244,14 @@
             "week": 24,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:9",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Diferencia medidas convencionales y no convencionales."
+            }
+          ],
           "cie": [
             {
               "id": "cie:14",
@@ -8727,10 +9314,10 @@
           ],
           "mat": [
             {
-              "id": "mat:10",
+              "id": "mat:9",
               "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Utiliza su cuerpo para medir distintas superficies."
+              "text": "Diferencia medidas convencionales y no convencionales."
             }
           ]
         },
@@ -8742,7 +9329,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-03-03",
           "bible": {
@@ -8803,6 +9391,14 @@
             "week": 24,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:9",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Diferencia medidas convencionales y no convencionales."
+            }
+          ],
           "cie": [
             {
               "id": "cie:15",
@@ -8869,10 +9465,10 @@
           ],
           "mat": [
             {
-              "id": "mat:10",
+              "id": "mat:9",
               "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Utiliza su cuerpo para medir distintas superficies."
+              "text": "Diferencia medidas convencionales y no convencionales."
             }
           ]
         },
@@ -8931,6 +9527,12 @@
           },
           "len": [
             {
+              "id": "len:24",
+              "unitTitle": "Conocer personajes destacados de la historia venezolana.",
+              "axis": "Lectura",
+              "text": "Conoce nombres y datos fundamentales de tres o cuatro venezolanos(As) ilustres: Simón Bolívar, Simón Rodríguez, Francisco de Miranda. Si es el caso, epónimos de la escuela, el estado, municipio o parroquia donde reside."
+            },
+            {
               "id": "len:80",
               "unitTitle": "Utilizar un repertorio de adjetivos para describir objetos y situaciones del entorno.",
               "axis": "Oralidad",
@@ -8952,13 +9554,19 @@
           },
           "mat": [
             {
-              "id": "mat:10",
+              "id": "mat:9",
               "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Utiliza su cuerpo para medir distintas superficies."
+              "text": "Diferencia medidas convencionales y no convencionales."
             }
           ],
           "cie": [
+            {
+              "id": "cie:14",
+              "unitTitle": "El ambiente y sus interacciones — Biodiversidad",
+              "axis": null,
+              "text": "Valora y protege la biodiversidad."
+            },
             {
               "id": "cie:15",
               "unitTitle": "Seres vivos — Las plantas",
@@ -8980,7 +9588,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-03-08",
           "bible": {
@@ -9037,6 +9646,14 @@
             "week": 25,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:10",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Utiliza su cuerpo para medir distintas superficies."
+            }
+          ],
           "cie": [
             {
               "id": "cie:15",
@@ -9122,7 +9739,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-03-10",
           "bible": {
@@ -9179,6 +9797,14 @@
             "week": 25,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:10",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Utiliza su cuerpo para medir distintas superficies."
+            }
+          ],
           "cie": [
             {
               "id": "cie:15",
@@ -9307,6 +9933,18 @@
           },
           "len": [
             {
+              "id": "len:25",
+              "unitTitle": "Conocer derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela.",
+              "axis": "Lectura",
+              "text": "Conoce algunos derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela."
+            },
+            {
+              "id": "len:81",
+              "unitTitle": "Comentar con docentes y compañeros noticias de actualidad (Locales, nacionales e internacionales).",
+              "axis": "Oralidad",
+              "text": "Participa en comentarios de grupo sobre noticias de especial interés."
+            },
+            {
               "id": "len:26",
               "unitTitle": "Conocer sobre la existencia de la Lengua de Señas Venezolana.",
               "axis": "Lectura",
@@ -9356,7 +9994,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-03-15",
           "bible": {
@@ -9417,6 +10056,14 @@
             "week": 26,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:10",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Utiliza su cuerpo para medir distintas superficies."
+            }
+          ],
           "cie": [
             {
               "id": "cie:16",
@@ -9479,10 +10126,10 @@
           ],
           "mat": [
             {
-              "id": "mat:11",
+              "id": "mat:10",
               "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
+              "text": "Utiliza su cuerpo para medir distintas superficies."
             }
           ]
         },
@@ -9494,7 +10141,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-03-17",
           "bible": {
@@ -9555,6 +10203,14 @@
             "week": 26,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:10",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Utiliza su cuerpo para medir distintas superficies."
+            }
+          ],
           "cie": [
             {
               "id": "cie:16",
@@ -9621,10 +10277,10 @@
           ],
           "mat": [
             {
-              "id": "mat:11",
+              "id": "mat:10",
               "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
+              "text": "Utiliza su cuerpo para medir distintas superficies."
             }
           ]
         },
@@ -9675,6 +10331,12 @@
           },
           "len": [
             {
+              "id": "len:82",
+              "unitTitle": "Interpretar y usar refranes, expresiones y dichos del repertorio popular venezolano.",
+              "axis": "Oralidad",
+              "text": "Conoce el sentido y usa un repertorio de expresiones, dichos y refranes. Ejemplos: “el papá de los helados”, “hijo de gato, caza ratón”, “no dejes para mañana lo que puedes hacer hoy”, “el que madruga, recoge agua clara”, “en el camino se enderezan las cargas”."
+            },
+            {
               "id": "len:27",
               "unitTitle": "Conocer la función de ciertos documentos legales.",
               "axis": "Lectura",
@@ -9696,10 +10358,10 @@
           },
           "mat": [
             {
-              "id": "mat:11",
+              "id": "mat:10",
               "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
+              "text": "Utiliza su cuerpo para medir distintas superficies."
             }
           ],
           "cie": [
@@ -9724,7 +10386,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-03-22",
           "bible": {
@@ -9789,6 +10452,14 @@
             "week": 27,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:11",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:16",
@@ -9870,7 +10541,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-03-24",
           "bible": {
@@ -9931,6 +10603,14 @@
             "week": 27,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:11",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:17",
@@ -10049,7 +10729,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-03-29",
           "bible": {
@@ -10106,6 +10787,14 @@
             "week": 28,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:11",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:17",
@@ -10191,7 +10880,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-03-31",
           "bible": {
@@ -10248,6 +10938,14 @@
             "week": 28,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:11",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:17",
@@ -10372,6 +11070,12 @@
           },
           "len": [
             {
+              "id": "len:28",
+              "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
+              "axis": "Escritura",
+              "text": "Escribe convencionalmente su nombre y un repertorio de palabras familiares (Nombres propios y otras de uso común)."
+            },
+            {
               "id": "len:84",
               "unitTitle": "Actuar como espectador en diversidad de espectáculos artísticos.",
               "axis": "Oralidad",
@@ -10421,7 +11125,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-04-05",
           "bible": {
@@ -10482,6 +11187,14 @@
             "week": 29,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:11",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:18",
@@ -10567,7 +11280,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-04-07",
           "bible": {
@@ -10624,6 +11338,14 @@
             "week": 29,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:12",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Realiza cálculos con cambios de la moneda nacional."
+            }
+          ],
           "cie": [
             {
               "id": "cie:18",
@@ -10748,6 +11470,18 @@
           },
           "len": [
             {
+              "id": "len:29",
+              "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
+              "axis": "Escritura",
+              "text": "Conoce y usa la mayúscula inicial en la escritura de nombres propios de personas y lugares."
+            },
+            {
+              "id": "len:30",
+              "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
+              "axis": "Escritura",
+              "text": "Usa la tilde en la escritura de sus nombres y apellidos, y en un repertorio de palabras familiares."
+            },
+            {
               "id": "len:31",
               "unitTitle": "Participar en la escritura de normas de convivencia y deberes.",
               "axis": "Escritura",
@@ -10768,6 +11502,12 @@
             "dayInWeek": 5
           },
           "mat": [
+            {
+              "id": "mat:11",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos."
+            },
             {
               "id": "mat:12",
               "unitTitle": "Magnitudes y medidas",
@@ -10797,7 +11537,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-04-12",
           "bible": {
@@ -10858,6 +11599,14 @@
             "week": 30,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:12",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Realiza cálculos con cambios de la moneda nacional."
+            }
+          ],
           "cie": [
             {
               "id": "cie:18",
@@ -10935,7 +11684,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-04-14",
           "bible": {
@@ -11000,6 +11750,14 @@
             "week": 30,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:12",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Realiza cálculos con cambios de la moneda nacional."
+            }
+          ],
           "cie": [
             {
               "id": "cie:19",
@@ -11124,6 +11882,12 @@
           },
           "len": [
             {
+              "id": "len:32",
+              "unitTitle": "Derivar palabras a partir de sustantivos.",
+              "axis": "Escritura",
+              "text": "Escribe (Por derivación) pares y tríos de palabras de un mismo campo lexical: casa/ casas/casita; niña/niñas/niñita; zapato/ zapatero/zapatazo."
+            },
+            {
               "id": "len:33",
               "unitTitle": "Entretenerse con la resolución de juegos con palabras.",
               "axis": "Escritura",
@@ -11152,6 +11916,12 @@
             }
           ],
           "cie": [
+            {
+              "id": "cie:18",
+              "unitTitle": "Seres vivos — Las plantas",
+              "axis": null,
+              "text": "Reflexiona sobre la importancia de las plantas en el ambiente y su rol en la producción de oxígeno."
+            },
             {
               "id": "cie:19",
               "unitTitle": "Energía – materia — La energía en las comunidades",
@@ -11270,10 +12040,10 @@
           ],
           "mat": [
             {
-              "id": "mat:13",
-              "unitTitle": "Números y operaciones",
+              "id": "mat:12",
+              "unitTitle": "Magnitudes y medidas",
               "axis": null,
-              "text": "Utilizan el cartel de valores para ubicar números o cantidades, hasta el diez mil."
+              "text": "Realiza cálculos con cambios de la moneda nacional."
             }
           ]
         },
@@ -11285,7 +12055,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-04-21",
           "bible": {
@@ -11346,6 +12117,14 @@
             "week": 31,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:13",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Utilizan el cartel de valores para ubicar números o cantidades, hasta el diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:19",
@@ -11470,6 +12249,12 @@
           },
           "len": [
             {
+              "id": "len:34",
+              "unitTitle": "Tomar conciencia de la duda ortográfica.",
+              "axis": "Escritura",
+              "text": "Tiene conciencia de nociones ortográficas básicas y resuelve sus dudas recurriendo a diversas fuentes (Preguntar a otros, consultar materiales escritos a disposición)."
+            },
+            {
               "id": "len:35",
               "unitTitle": "Usar en la escritura la noción de concordancia sustantivo-adjetivo.",
               "axis": "Escritura",
@@ -11490,6 +12275,12 @@
             "dayInWeek": 5
           },
           "mat": [
+            {
+              "id": "mat:12",
+              "unitTitle": "Magnitudes y medidas",
+              "axis": null,
+              "text": "Realiza cálculos con cambios de la moneda nacional."
+            },
             {
               "id": "mat:13",
               "unitTitle": "Números y operaciones",
@@ -11519,7 +12310,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-04-26",
           "bible": {
@@ -11580,6 +12372,14 @@
             "week": 32,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:13",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Utilizan el cartel de valores para ubicar números o cantidades, hasta el diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:19",
@@ -11657,7 +12457,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-04-28",
           "bible": {
@@ -11714,6 +12515,14 @@
             "week": 32,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:13",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Utilizan el cartel de valores para ubicar números o cantidades, hasta el diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:20",
@@ -11842,6 +12651,12 @@
           },
           "len": [
             {
+              "id": "len:36",
+              "unitTitle": "Planificar la escritura de cuentos y otros textos.",
+              "axis": "Escritura",
+              "text": "Trabaja en equipo para planificar la escritura de textos que serán dictados a la/el docente o escritos por sí mismo."
+            },
+            {
               "id": "len:37",
               "unitTitle": "Planificar la escritura de cuentos y otros textos.",
               "axis": "Escritura",
@@ -11871,6 +12686,12 @@
           ],
           "cie": [
             {
+              "id": "cie:19",
+              "unitTitle": "Energía – materia — La energía en las comunidades",
+              "axis": null,
+              "text": "Comprende la presencia de la energía en el ambiente, sus diferentes formas y fuentes."
+            },
+            {
               "id": "cie:20",
               "unitTitle": "Energía – materia — La energía en las comunidades",
               "axis": null,
@@ -11891,7 +12712,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-05-03",
           "bible": {
@@ -11952,6 +12774,14 @@
             "week": 33,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:13",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Utilizan el cartel de valores para ubicar números o cantidades, hasta el diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:20",
@@ -12018,10 +12848,10 @@
           ],
           "mat": [
             {
-              "id": "mat:14",
+              "id": "mat:13",
               "unitTitle": "Números y operaciones",
               "axis": null,
-              "text": "Realiza adiciones, sus propiedades y sustracciones con números hasta diez mil."
+              "text": "Utilizan el cartel de valores para ubicar números o cantidades, hasta el diez mil."
             }
           ]
         },
@@ -12033,7 +12863,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-05-05",
           "bible": {
@@ -12094,6 +12925,14 @@
             "week": 33,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:14",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Realiza adiciones, sus propiedades y sustracciones con números hasta diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:20",
@@ -12222,6 +13061,12 @@
           },
           "len": [
             {
+              "id": "len:38",
+              "unitTitle": "Ordenar conjuntos de palabras para formar oraciones (Previa información acerca de cuál es la oración que debe formarse).",
+              "axis": "Escritura",
+              "text": "Construye textos ordenando entre tres y cinco palabras escritas sin orden lógico. Por ejemplo: Francisco de Miranda nació en Caracas / Venezuela es mi patria / me gusta mucho leer cuentos / el araguaney es el árbol nacional / la vaca es un animal mamífero."
+            },
+            {
               "id": "len:39",
               "unitTitle": "Escribir de manera relativamente legible de acuerdo con las convenciones básicas del sistema de escritura.",
               "axis": "Escritura",
@@ -12242,6 +13087,12 @@
             "dayInWeek": 5
           },
           "mat": [
+            {
+              "id": "mat:13",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Utilizan el cartel de valores para ubicar números o cantidades, hasta el diez mil."
+            },
             {
               "id": "mat:14",
               "unitTitle": "Números y operaciones",
@@ -12271,7 +13122,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-05-10",
           "bible": {
@@ -12328,6 +13180,14 @@
             "week": 34,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:14",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Realiza adiciones, sus propiedades y sustracciones con números hasta diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:21",
@@ -12409,7 +13269,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-05-12",
           "bible": {
@@ -12466,6 +13327,14 @@
             "week": 34,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:14",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Realiza adiciones, sus propiedades y sustracciones con números hasta diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:21",
@@ -12594,6 +13463,18 @@
           },
           "len": [
             {
+              "id": "len:40",
+              "unitTitle": "Copiar con diversos propósitos reales.",
+              "axis": "Escritura",
+              "text": "Copia textos con diversos propósitos: para conservar lo que desea recordar, para compartir con otros, para llevar registros de informaciones de interés."
+            },
+            {
+              "id": "len:41",
+              "unitTitle": "Tomar dictados con propósitos definidos.",
+              "axis": "Escritura",
+              "text": "Toma dictado de textos cortos con propósitos específicos; por ejemplo, para comparar y corregir el escrito con un compañero/o; para registrar información de interés."
+            },
+            {
               "id": "len:42",
               "unitTitle": "Revisar y corregir textos destinados a la publicación.",
               "axis": "Escritura",
@@ -12643,7 +13524,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-05-17",
           "bible": {
@@ -12704,6 +13586,14 @@
             "week": 35,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:14",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Realiza adiciones, sus propiedades y sustracciones con números hasta diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:21",
@@ -12770,10 +13660,10 @@
           ],
           "mat": [
             {
-              "id": "mat:15",
+              "id": "mat:14",
               "unitTitle": "Números y operaciones",
               "axis": null,
-              "text": "Cuenta y lee cantidades hasta el diez mil."
+              "text": "Realiza adiciones, sus propiedades y sustracciones con números hasta diez mil."
             }
           ]
         },
@@ -12785,7 +13675,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-05-19",
           "bible": {
@@ -12842,6 +13733,14 @@
             "week": 35,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:15",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Cuenta y lee cantidades hasta el diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:22",
@@ -12970,6 +13869,18 @@
           },
           "len": [
             {
+              "id": "len:42",
+              "unitTitle": "Revisar y corregir textos destinados a la publicación.",
+              "axis": "Escritura",
+              "text": "Aplica estrategias de revisión y edición de textos que serán publicados, trabajando en equipo con otros y con el apoyo de la/el docente."
+            },
+            {
+              "id": "len:43",
+              "unitTitle": "Cuidar la estética y legibilidad de la escritura con propósitos específicos.",
+              "axis": "Escritura",
+              "text": "Practica el trazo artístico de las letras con fines funcionales y de diseño. Utiliza la caligrafía como forma de expresión artística que vincula la escritura con otras artes como el dibujo y la pintura."
+            },
+            {
               "id": "len:44",
               "unitTitle": "Conocer y usar en la escritura la diferencia singular / plural.",
               "axis": "Escritura",
@@ -12991,6 +13902,12 @@
           },
           "mat": [
             {
+              "id": "mat:14",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Realiza adiciones, sus propiedades y sustracciones con números hasta diez mil."
+            },
+            {
               "id": "mat:15",
               "unitTitle": "Números y operaciones",
               "axis": null,
@@ -12998,6 +13915,12 @@
             }
           ],
           "cie": [
+            {
+              "id": "cie:21",
+              "unitTitle": "Energía – materia — La energía en las comunidades",
+              "axis": null,
+              "text": "Demuestra una actitud responsable hacia el consumo de energía."
+            },
             {
               "id": "cie:22",
               "unitTitle": "Energía – materia — La energía en las comunidades",
@@ -13019,7 +13942,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-05-24",
           "bible": {
@@ -13080,6 +14004,14 @@
             "week": 36,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:15",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Cuenta y lee cantidades hasta el diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:22",
@@ -13157,7 +14089,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-05-26",
           "bible": {
@@ -13218,6 +14151,14 @@
             "week": 36,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:15",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Cuenta y lee cantidades hasta el diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:22",
@@ -13342,6 +14283,12 @@
           },
           "len": [
             {
+              "id": "len:45",
+              "unitTitle": "Conocer y usar en la escritura la diferencia de género femenino/masculino.",
+              "axis": "Escritura",
+              "text": "Comprende y usa en la escritura la diferencia femenino/masculino, al menos en tres casos:"
+            },
+            {
               "id": "len:46",
               "unitTitle": "Conocer y usar en la escritura la diferencia de género femenino/masculino.",
               "axis": "Escritura",
@@ -13391,7 +14338,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-05-31",
           "bible": {
@@ -13452,6 +14400,14 @@
             "week": 37,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:15",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Cuenta y lee cantidades hasta el diez mil."
+            }
+          ],
           "cie": [
             {
               "id": "cie:23",
@@ -13522,10 +14478,10 @@
           ],
           "mat": [
             {
-              "id": "mat:16",
+              "id": "mat:15",
               "unitTitle": "Números y operaciones",
               "axis": null,
-              "text": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero."
+              "text": "Cuenta y lee cantidades hasta el diez mil."
             }
           ]
         },
@@ -13537,7 +14493,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-06-02",
           "bible": {
@@ -13594,6 +14551,14 @@
             "week": 37,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:16",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero."
+            }
+          ],
           "cie": [
             {
               "id": "cie:23",
@@ -13718,6 +14683,12 @@
           },
           "len": [
             {
+              "id": "len:47",
+              "unitTitle": "Conocer y usar en la escritura la diferencia de género femenino/masculino.",
+              "axis": "Escritura",
+              "text": "B) el género se diferencia usando palabras diferentes: hombre/mujer, caballo/yegua, vaca/toro."
+            },
+            {
               "id": "len:48",
               "unitTitle": "Producir cuentos a partir de títulos o imágenes.",
               "axis": "Escritura",
@@ -13738,6 +14709,12 @@
             "dayInWeek": 5
           },
           "mat": [
+            {
+              "id": "mat:15",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Cuenta y lee cantidades hasta el diez mil."
+            },
             {
               "id": "mat:16",
               "unitTitle": "Números y operaciones",
@@ -13767,7 +14744,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-06-07",
           "bible": {
@@ -13824,6 +14802,14 @@
             "week": 38,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:16",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero."
+            }
+          ],
           "cie": [
             {
               "id": "cie:23",
@@ -13909,7 +14895,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-06-09",
           "bible": {
@@ -13966,6 +14953,14 @@
             "week": 38,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:16",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero."
+            }
+          ],
           "cie": [
             {
               "id": "cie:24",
@@ -14090,6 +15085,18 @@
           },
           "len": [
             {
+              "id": "len:49",
+              "unitTitle": "Crear nuevas versiones de cuentos conocidos.",
+              "axis": "Escritura",
+              "text": "Escribe nuevas versiones de cuentos conocidos."
+            },
+            {
+              "id": "len:50",
+              "unitTitle": "Usar en la escritura ciertas restricciones del sistema de escritura alfabético.",
+              "axis": "Escritura",
+              "text": "Aplica a la escritura algunas restricciones del sistema de escritura alfabético: dígrafo gu en gue-gui; qu en que-qui."
+            },
+            {
               "id": "len:51",
               "unitTitle": "Escribir reseñas de obras literarias.",
               "axis": "Escritura",
@@ -14119,6 +15126,12 @@
           ],
           "cie": [
             {
+              "id": "cie:23",
+              "unitTitle": "La Tierra en el universo — La fuerza de gravedad",
+              "axis": null,
+              "text": "Comprende el origen y la importancia de la fuerza de gravedad para mantener a los objetos en su lugar tanto en la Tierra como en el espacio."
+            },
+            {
               "id": "cie:24",
               "unitTitle": "La Tierra en el universo — La fuerza de gravedad",
               "axis": null,
@@ -14139,7 +15152,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-06-14",
           "bible": {
@@ -14200,6 +15214,14 @@
             "week": 39,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:16",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero."
+            }
+          ],
           "cie": [
             {
               "id": "cie:24",
@@ -14270,10 +15292,10 @@
           ],
           "mat": [
             {
-              "id": "mat:17",
-              "unitTitle": "Estadística y probabilidad",
+              "id": "mat:16",
+              "unitTitle": "Números y operaciones",
               "axis": null,
-              "text": "Recopila, organiza, clasifica y representa gráficamente datos."
+              "text": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero."
             }
           ]
         },
@@ -14285,7 +15307,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-06-16",
           "bible": {
@@ -14346,6 +15369,14 @@
             "week": 39,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:17",
+              "unitTitle": "Estadística y probabilidad",
+              "axis": null,
+              "text": "Recopila, organiza, clasifica y representa gráficamente datos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:24",
@@ -14470,6 +15501,18 @@
           },
           "len": [
             {
+              "id": "len:51",
+              "unitTitle": "Escribir reseñas de obras literarias.",
+              "axis": "Escritura",
+              "text": "Recomienda obras literarias mediante breves reseñas escritas."
+            },
+            {
+              "id": "len:52",
+              "unitTitle": "Producir textos a partir de diferentes inicios.",
+              "axis": "Escritura",
+              "text": "Crea textos a partir de diferentes inicios: sueño con…; si yo fuera escritor/a…; cuando sea grande…; si yo fuera un caballo…; Simón Bolívar fue…"
+            },
+            {
               "id": "len:53",
               "unitTitle": "Utilizar en la escritura recursos ortográficos fundamentales.",
               "axis": "Escritura",
@@ -14490,6 +15533,12 @@
             "dayInWeek": 5
           },
           "mat": [
+            {
+              "id": "mat:16",
+              "unitTitle": "Números y operaciones",
+              "axis": null,
+              "text": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero."
+            },
             {
               "id": "mat:17",
               "unitTitle": "Estadística y probabilidad",
@@ -14519,7 +15568,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-06-21",
           "bible": {
@@ -14576,6 +15626,14 @@
             "week": 40,
             "dayInWeek": 1
           },
+          "mat": [
+            {
+              "id": "mat:17",
+              "unitTitle": "Estadística y probabilidad",
+              "axis": null,
+              "text": "Recopila, organiza, clasifica y representa gráficamente datos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:25",
@@ -14657,7 +15715,8 @@
             "bib",
             "len",
             "ide",
-            "cie"
+            "cie",
+            "mat"
           ],
           "calendarDate": "2027-06-23",
           "bible": {
@@ -14718,6 +15777,14 @@
             "week": 40,
             "dayInWeek": 3
           },
+          "mat": [
+            {
+              "id": "mat:17",
+              "unitTitle": "Estadística y probabilidad",
+              "axis": null,
+              "text": "Recopila, organiza, clasifica y representa gráficamente datos."
+            }
+          ],
           "cie": [
             {
               "id": "cie:25",
@@ -14825,6 +15892,12 @@
             ]
           },
           "len": [
+            {
+              "id": "len:54",
+              "unitTitle": "Conocer nociones ortográficas del sistema de escritura.",
+              "axis": "Escritura",
+              "text": "Usa en la escritura ciertas reglas ortográficas básicas: al principio y al final de palabras siempre va una sola r (Rama, reto, risa, ruta, rosa / cantar, trepar, nacer, radar, hangar). Identifica cambios de significado según el uso de r/rr al interior de palabras: carro/ caro; perra/pera; cerro/cero."
+            },
             {
               "id": "len:55",
               "unitTitle": "Escribir convencionalmente palabras con sílabas complejas.",
