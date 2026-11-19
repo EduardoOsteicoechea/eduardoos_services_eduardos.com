@@ -123,12 +123,23 @@ function weekForPlanDay(planDay: number): number {
                 >
                   <span class="material-symbols-outlined" aria-hidden="true">print</span>
                 </button>
+                <button
+                  class="icon-btn eoschool-curriculum__week-toggle"
+                  type="button"
+                  title={`Contraer semana ${weekPlan.week}`}
+                  aria-label={`Contraer semana ${weekPlan.week}`}
+                  aria-expanded="true"
+                  aria-controls={`week-days-${weekPlan.week}`}
+                  data-curriculum-week-toggle
+                >
+                  <span class="material-symbols-outlined" aria-hidden="true" data-curriculum-week-chevron>expand_less</span>
+                </button>
                 <h2 class="eoschool-curriculum__week-title" id={`week-title-${weekPlan.week}`}>
                   Semana {weekPlan.week}{weekDateLabel ? ` · ${weekDateLabel}` : ""}
                 </h2>
               </div>
 
-              <div class="eoschool-curriculum__week-days">
+              <div class="eoschool-curriculum__week-days" id={`week-days-${weekPlan.week}`}>
               {weekPlan.blocks
                 .flatMap((block) => (block.bible?.days ?? []).map((bibleDay) => ({ block, bibleDay })))
                 .sort((a, b) => a.bibleDay.dayInPlan - b.bibleDay.dayInPlan)
@@ -524,6 +535,7 @@ function weekForPlanDay(planDay: number): number {
   import { initCurriculumSubjectCollapse } from "../../../lib/eoschool-curriculum-subject-collapse";
   import { bindCurriculumTreatModal } from "../../../lib/eoschool-curriculum-treat-modal";
   import { initCurriculumWeekPrint } from "../../../lib/eoschool-curriculum-week-print";
+  import { initCurriculumWeekCollapse } from "../../../lib/eoschool-curriculum-week-collapse";
 
   function bootCurriculumChrome() {
     const root = document.querySelector<HTMLElement>("[data-curriculum-progress]");
@@ -545,6 +557,7 @@ function weekForPlanDay(planDay: number): number {
       void initCurriculumProgress(root);
     }
     initCurriculumSubjectCollapse(root);
+    initCurriculumWeekCollapse(root);
     initCurriculumDayModal(root);
     initCurriculumWeekPrint(root);
     initCurriculumDayHeights(root);
@@ -840,6 +853,39 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__week-print.icon-btn .material-symbols-outlined {
     font-size: calc(var(--icon-size) * 0.87);
     color: currentColor;
+  }
+
+  .eoschool-curriculum__week-toggle.icon-btn {
+    flex-shrink: 0;
+    width: calc(var(--button-size) * 0.87);
+    height: calc(var(--button-size) * 0.87);
+    color: var(--color-text);
+    background: transparent;
+    border: var(--border-width) solid var(--color-border);
+  }
+
+  .eoschool-curriculum__week-toggle.icon-btn .material-symbols-outlined {
+    font-size: calc(var(--icon-size) * 0.87);
+    color: currentColor;
+  }
+
+  .eoschool-curriculum__week.product-dash__card.eoschool-curriculum__week--collapsed {
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+  }
+
+  .eoschool-curriculum__week.product-dash__card.eoschool-curriculum__week--done.eoschool-curriculum__week--collapsed {
+    border-color: var(--color-ok);
+    background: color-mix(in srgb, var(--color-ok) 8%, var(--color-surface));
+  }
+
+  .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-days {
+    display: none;
+  }
+
+  .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-title {
+    flex: 0 0 auto;
   }
 
   .eoschool-curriculum__week-title {

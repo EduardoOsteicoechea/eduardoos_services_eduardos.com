@@ -6,6 +6,7 @@ import {
   type CurriculumStudent,
 } from "./eoschool-curriculum-api";
 import { daySectionsComplete, sectionProgressKey } from "./eoschool-curriculum-progress-status";
+import { syncCompletedWeekCollapse } from "./eoschool-curriculum-week-collapse";
 import { openCurriculumTreatModal } from "./eoschool-curriculum-treat-modal";
 import { showErrorModal } from "./error-modal";
 import { mustLog } from "./dev-log";
@@ -65,6 +66,8 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
     week.classList.toggle("eoschool-curriculum__week--done", complete);
     week.classList.toggle("product-dash__card--done", complete);
   });
+
+  syncCompletedWeekCollapse(root);
 }
 
 function formatStudentBanner(student: CurriculumStudent): string {
