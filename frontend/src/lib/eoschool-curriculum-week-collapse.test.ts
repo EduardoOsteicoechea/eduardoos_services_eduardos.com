@@ -1,72 +1,79 @@
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import {
-  applyWeekCollapsed,
+  DEFAULT_CURRENT_WEEK,
   initCurriculumWeekCollapse,
-  syncCompletedWeekCollapse,
+  selectCurrentWeek,
 } from "./eoschool-curriculum-week-collapse";
 
-function weekMarkup(week: number, done = false): string {
-  return `<section class="eoschool-curriculum__week${done ? " eoschool-curriculum__week--done" : ""}" data-curriculum-week="w${week}" data-week="${week}">
-    <button type="button" data-curriculum-week-toggle aria-expanded="true" aria-label="Contraer semana ${week}">
-      <span data-curriculum-week-chevron>expand_less</span>
-    </button>
+function weekMarkup(week: number): string {
+  return `<section class="eoschool-curriculum__week" data-curriculum-week="w${week}" data-week="${week}">
+    <input type="radio" name="eoschool-current-week" value="${week}" data-curriculum-week-current />
     <div class="eoschool-curriculum__week-days"></div>
   </section>`;
 }
 
-describe("syncCompletedWeekCollapse", () => {
-  it("collapses completed weeks and leaves the rest open", () => {
-    const root = document.createElement("div");
-    root.innerHTML = weekMarkup(1, true) + weekMarkup(2, false);
-    syncCompletedWeekCollapse(root);
+function rootWithWeeks(): HTMLElement {
+  const root = document.createElement("div");
+  root.innerHTML = [1, 7, 8].map(weekMarkup).join("");
+  return root;
+}
+
+beforeEach(() => {
+  localStorage.clear();
+});
+
+describe("selectCurrentWeek", () => {
+  it("expands only the chosen week", () => {
+    const root = rootWithWeeks();
+    expect(selectCurrentWeek(root, 7)).toBe(7);
 
     const weeks = [...root.querySelectorAll<HTMLElement>("[data-curriculum-week]")];
-    expect(weeks[0].classList.contains("eoschool-curriculum__week--collapsed")).toBe(true);
-    expect(weeks[0].querySelector<HTMLElement>(".eoschool-curriculum__week-days")?.hidden).toBe(true);
-    expect(weeks[0].querySelector("[data-curriculum-week-toggle]")?.getAttribute("aria-expanded")).toBe("false");
-    expect(weeks[0].querySelector("[data-curriculum-week-chevron]")?.textContent).toBe("expand_more");
-
-    expect(weeks[1].classList.contains("eoschool-curriculum__week--collapsed")).toBe(false);
+    expect(weeks.map((week) => week.classList.contains("eoschool-curriculum__week--collapsed"))).toEqual([
+      true,
+      false,
+      true,
+    ]);
+    expect(weeks[1].getAttribute("aria-current")).toBe("true");
+    expect(weeks[0].hasAttribute("aria-current")).toBe(false);
     expect(weeks[1].querySelector<HTMLElement>(".eoschool-curriculum__week-days")?.hidden).toBe(false);
+    expect(weeks[0].querySelector<HTMLElement>(".eoschool-curriculum__week-days")?.hidden).toBe(true);
+    expect(root.querySelectorAll<HTMLInputElement>("[data-curriculum-week-current]:checked")).toHaveLength(1);
+    expect(root.querySelector<HTMLInputElement>("[data-curriculum-week-current]:checked")?.value).toBe("7");
   });
 
-  it("keeps a manual pin over the completed default", () => {
-    const root = document.createElement("div");
-    root.innerHTML = weekMarkup(3, true);
-    const week = root.querySelector<HTMLElement>("[data-curriculum-week]")!;
-    week.dataset.weekCollapseUser = "open";
-    syncCompletedWeekCollapse(root);
-    expect(week.classList.contains("eoschool-curriculum__week--collapsed")).toBe(false);
+  it("falls back to week 7 when the requested week is missing", () => {
+    const root = rootWithWeeks();
+    expect(selectCurrentWeek(root, 40)).toBe(DEFAULT_CURRENT_WEEK);
+    expect(root.querySelector<HTMLInputElement>("[data-curriculum-week-current]:checked")?.value).toBe("7");
   });
 });
 
 describe("initCurriculumWeekCollapse", () => {
-  it("toggles from the week rail and pins the choice", () => {
-    const root = document.createElement("div");
-    root.innerHTML = weekMarkup(4, false);
+  it("starts on week 7 and switches with the radio", () => {
+    const root = rootWithWeeks();
     initCurriculumWeekCollapse(root);
-    const toggle = root.querySelector<HTMLButtonElement>("[data-curriculum-week-toggle]")!;
-    toggle.click();
+    expect(root.querySelector<HTMLInputElement>("[data-curriculum-week-current]:checked")?.value).toBe("7");
 
-    const week = root.querySelector<HTMLElement>("[data-curriculum-week]")!;
-    expect(week.classList.contains("eoschool-curriculum__week--collapsed")).toBe(true);
-    expect(week.dataset.weekCollapseUser).toBe("closed");
-    expect(toggle.getAttribute("aria-label")).toBe("Expandir semana 4");
+    const week1 = root.querySelector<HTMLInputElement>('[data-curriculum-week-current][value="1"]')!;
+    week1.checked = true;
+    week1.dispatchEvent(new Event("change", { bubbles: true }));
 
-    toggle.click();
-    expect(week.classList.contains("eoschool-curriculum__week--collapsed")).toBe(false);
-    expect(week.dataset.weekCollapseUser).toBe("open");
+    expect(root.querySelector('[data-week="1"]')?.classList.contains("eoschool-curriculum__week--collapsed")).toBe(
+      false,
+    );
+    expect(root.querySelector('[data-week="7"]')?.classList.contains("eoschool-curriculum__week--collapsed")).toBe(
+      true,
+    );
+    expect(localStorage.getItem("eoschool-curriculum-current-week")).toBe("1");
   });
-});
 
-describe("applyWeekCollapsed", () => {
-  it("sets the expand label when collapsed", () => {
-    const root = document.createElement("div");
-    root.innerHTML = weekMarkup(8, true);
-    const week = root.querySelector<HTMLElement>("[data-curriculum-week]")!;
-    applyWeekCollapsed(week, true);
-    expect(week.querySelector("[data-curriculum-week-toggle]")?.getAttribute("aria-label")).toBe(
-      "Expandir semana 8",
+  it("restores the stored current week", () => {
+    localStorage.setItem("eoschool-curriculum-current-week", "8");
+    const root = rootWithWeeks();
+    initCurriculumWeekCollapse(root);
+    expect(root.querySelector<HTMLInputElement>("[data-curriculum-week-current]:checked")?.value).toBe("8");
+    expect(root.querySelector('[data-week="7"]')?.classList.contains("eoschool-curriculum__week--collapsed")).toBe(
+      true,
     );
   });
 });

@@ -10,6 +10,7 @@ import {
   identityGroups,
   scheduledSectionsForBlock,
 } from "../../../lib/eoschool-mppe-curriculum-view";
+import { DEFAULT_CURRENT_WEEK } from "../../../lib/eoschool-curriculum-week-collapse";
 
 const { meta, weeks } = MPPE_40WEEK_CURRICULUM;
 const indexRows = weeks.map(buildWeekIndexRow);
@@ -105,15 +106,31 @@ function weekForPlanDay(planDay: number): number {
           const weekDateLabel = formatPlanDate(weekStartDate(weekPlan));
           return (
           <section
-            class="product-dash__card eoschool-curriculum__week"
+            class:list={[
+              "product-dash__card",
+              "eoschool-curriculum__week",
+              weekPlan.week !== DEFAULT_CURRENT_WEEK && "eoschool-curriculum__week--collapsed",
+            ]}
             id={`week-${weekPlan.week}`}
             data-curriculum-week={`w${weekPlan.week}`}
             data-week={weekPlan.week}
             data-week-plan-days={weekPlanDays.join(",")}
             aria-labelledby={`week-title-${weekPlan.week}`}
+            aria-current={weekPlan.week === DEFAULT_CURRENT_WEEK ? "true" : undefined}
           >
             <div class="eoschool-curriculum__week-layout">
               <div class="eoschool-curriculum__week-rail">
+                <label class="eoschool-curriculum__week-current" title={`Semana ${weekPlan.week} actual`}>
+                  <input
+                    class="eoschool-curriculum__week-radio"
+                    type="radio"
+                    name="eoschool-current-week"
+                    value={weekPlan.week}
+                    checked={weekPlan.week === DEFAULT_CURRENT_WEEK}
+                    aria-label={`Hacer actual la semana ${weekPlan.week}`}
+                    data-curriculum-week-current
+                  />
+                </label>
                 <button
                   class="icon-btn eoschool-curriculum__week-print"
                   type="button"
@@ -123,23 +140,16 @@ function weekForPlanDay(planDay: number): number {
                 >
                   <span class="material-symbols-outlined" aria-hidden="true">print</span>
                 </button>
-                <button
-                  class="icon-btn eoschool-curriculum__week-toggle"
-                  type="button"
-                  title={`Contraer semana ${weekPlan.week}`}
-                  aria-label={`Contraer semana ${weekPlan.week}`}
-                  aria-expanded="true"
-                  aria-controls={`week-days-${weekPlan.week}`}
-                  data-curriculum-week-toggle
-                >
-                  <span class="material-symbols-outlined" aria-hidden="true" data-curriculum-week-chevron>expand_less</span>
-                </button>
                 <h2 class="eoschool-curriculum__week-title" id={`week-title-${weekPlan.week}`}>
                   Semana {weekPlan.week}{weekDateLabel ? ` · ${weekDateLabel}` : ""}
                 </h2>
               </div>
 
-              <div class="eoschool-curriculum__week-days" id={`week-days-${weekPlan.week}`}>
+              <div
+                class="eoschool-curriculum__week-days"
+                id={`week-days-${weekPlan.week}`}
+                hidden={weekPlan.week !== DEFAULT_CURRENT_WEEK}
+              >
               {weekPlan.blocks
                 .flatMap((block) => (block.bible?.days ?? []).map((bibleDay) => ({ block, bibleDay })))
                 .sort((a, b) => a.bibleDay.dayInPlan - b.bibleDay.dayInPlan)
@@ -855,21 +865,28 @@ function weekForPlanDay(planDay: number): number {
     color: currentColor;
   }
 
-  .eoschool-curriculum__week-toggle.icon-btn {
+  .eoschool-curriculum__week-current {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
     width: calc(var(--button-size) * 0.87);
     height: calc(var(--button-size) * 0.87);
-    color: var(--color-text);
-    background: transparent;
-    border: var(--border-width) solid var(--color-border);
+    margin: 0;
+    cursor: pointer;
   }
 
-  .eoschool-curriculum__week-toggle.icon-btn .material-symbols-outlined {
-    font-size: calc(var(--icon-size) * 0.87);
-    color: currentColor;
+  .eoschool-curriculum__week-radio {
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    accent-color: var(--color-text);
+    cursor: pointer;
   }
 
   .eoschool-curriculum__week.product-dash__card.eoschool-curriculum__week--collapsed {
+    min-height: 0;
+    height: auto;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     background: var(--color-surface);
@@ -880,12 +897,44 @@ function weekForPlanDay(planDay: number): number {
     background: color-mix(in srgb, var(--color-ok) 8%, var(--color-surface));
   }
 
+  .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-layout {
+    align-items: center;
+    min-height: 0;
+  }
+
+  .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-rail {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: var(--rail-gap);
+  }
+
+  .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-current {
+    order: 0;
+  }
+
+  .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-print {
+    order: 2;
+    margin-inline-start: auto;
+  }
+
   .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-days {
     display: none;
   }
 
   .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-title {
-    flex: 0 0 auto;
+    order: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: flex-start;
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    transform: none;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .eoschool-curriculum__week-title {
