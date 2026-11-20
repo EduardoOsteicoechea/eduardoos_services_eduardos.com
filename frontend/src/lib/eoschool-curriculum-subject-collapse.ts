@@ -1,6 +1,24 @@
-/** Collapse/expand subject bodies on the curriculum day cards (start collapsed). */
+/** Collapse/expand subject bodies on the curriculum day cards. */
 
 import { refreshCurriculumDayHeights } from "./eoschool-curriculum-day-heights";
+
+export function setCurriculumSubjectOpen(subject: HTMLElement, open: boolean): void {
+  const toggle = subject.querySelector<HTMLButtonElement>("[data-curriculum-subject-toggle]");
+  const body = subject.querySelector<HTMLElement>("[data-curriculum-subject-body]");
+  if (!toggle || !body) return;
+  toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  body.hidden = !open;
+  subject.classList.toggle("eoschool-curriculum__subject--open", open);
+  const chevron = toggle.querySelector<HTMLElement>("[data-curriculum-subject-chevron]");
+  if (chevron) chevron.textContent = open ? "expand_less" : "expand_more";
+}
+
+/** Open every subject on the current week's day cards. */
+export function expandWeekSubjects(week: HTMLElement): void {
+  week.querySelectorAll<HTMLElement>("[data-curriculum-section]").forEach((subject) => {
+    setCurriculumSubjectOpen(subject, true);
+  });
+}
 
 export function initCurriculumSubjectCollapse(root: HTMLElement | null): void {
   if (!root) return;
@@ -22,14 +40,8 @@ export function initCurriculumSubjectCollapse(root: HTMLElement | null): void {
     const body = subject.querySelector<HTMLElement>("[data-curriculum-subject-body]");
     if (!body) return;
 
-    const open = toggle.getAttribute("aria-expanded") === "true";
-    const nextOpen = !open;
-    toggle.setAttribute("aria-expanded", nextOpen ? "true" : "false");
-    body.hidden = !nextOpen;
-    subject.classList.toggle("eoschool-curriculum__subject--open", nextOpen);
-
-    const chevron = toggle.querySelector<HTMLElement>("[data-curriculum-subject-chevron]");
-    if (chevron) chevron.textContent = nextOpen ? "expand_less" : "expand_more";
+    const nextOpen = toggle.getAttribute("aria-expanded") !== "true";
+    setCurriculumSubjectOpen(subject, nextOpen);
 
     refreshCurriculumDayHeights(root);
   });

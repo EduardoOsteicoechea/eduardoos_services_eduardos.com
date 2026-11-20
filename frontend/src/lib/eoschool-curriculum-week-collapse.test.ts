@@ -41,6 +41,25 @@ describe("selectCurrentWeek", () => {
     expect(root.querySelector<HTMLInputElement>("[data-curriculum-week-current]:checked")?.value).toBe("7");
   });
 
+  it("opens subject bodies on the current week", () => {
+    const root = rootWithWeeks();
+    const week = root.querySelector<HTMLElement>('[data-week="7"]')!;
+    const days = week.querySelector(".eoschool-curriculum__week-days");
+    if (!days) throw new Error("missing days");
+    days.innerHTML = `<div data-curriculum-section>
+      <button type="button" data-curriculum-subject-toggle aria-expanded="false">
+        <span data-curriculum-subject-chevron>expand_more</span>
+      </button>
+      <div data-curriculum-subject-body hidden></div>
+    </div>`;
+
+    selectCurrentWeek(root, 7);
+
+    expect(week.querySelector("[data-curriculum-subject-toggle]")?.getAttribute("aria-expanded")).toBe("true");
+    expect(week.querySelector<HTMLElement>("[data-curriculum-subject-body]")?.hidden).toBe(false);
+    expect(week.querySelector("[data-curriculum-subject-chevron]")?.textContent).toBe("expand_less");
+  });
+
   it("falls back to week 7 when the requested week is missing", () => {
     const root = rootWithWeeks();
     expect(selectCurrentWeek(root, 40)).toBe(DEFAULT_CURRENT_WEEK);

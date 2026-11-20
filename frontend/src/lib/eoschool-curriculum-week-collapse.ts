@@ -1,6 +1,7 @@
 /** Only the current curriculum week stays expanded. A radio picks that week. */
 
 import { refreshCurriculumDayHeights } from "./eoschool-curriculum-day-heights";
+import { expandWeekSubjects } from "./eoschool-curriculum-subject-collapse";
 
 export const DEFAULT_CURRENT_WEEK = 7;
 const STORAGE_KEY = "eoschool-curriculum-current-week";
@@ -36,6 +37,7 @@ export function applyWeekCollapsed(week: HTMLElement, collapsed: boolean): void 
 
   const days = week.querySelector<HTMLElement>(".eoschool-curriculum__week-days");
   if (days) days.hidden = collapsed;
+  if (!collapsed) expandWeekSubjects(week);
 
   const radio = week.querySelector<HTMLInputElement>("[data-curriculum-week-current]");
   if (radio) radio.checked = !collapsed;

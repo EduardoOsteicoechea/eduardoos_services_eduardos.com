@@ -102,6 +102,7 @@ function weekForPlanDay(planDay: number): number {
             .flatMap((block) => (block.bible?.days ?? []).map((bibleDay) => bibleDay.dayInPlan))
             .sort((a, b) => a - b);
           const weekDateLabel = formatPlanDate(weekStartDate(weekPlan));
+          const subjectsOpen = weekPlan.week === DEFAULT_CURRENT_WEEK;
           return (
           <section
             class:list={[
@@ -248,7 +249,10 @@ function weekForPlanDay(planDay: number): number {
                         const subjectBodyId = `${blockId}-${area.sectionId}-body`;
                         return (
                           <div
-                            class="eoschool-curriculum__subject"
+                            class:list={[
+                              "eoschool-curriculum__subject",
+                              subjectsOpen && "eoschool-curriculum__subject--open",
+                            ]}
                             data-curriculum-section={area.sectionId}
                           >
                             <div class="eoschool-curriculum__subject-head">
@@ -265,7 +269,7 @@ function weekForPlanDay(planDay: number): number {
                                 type="button"
                                 class="eoschool-curriculum__subject-toggle"
                                 data-curriculum-subject-toggle
-                                aria-expanded="false"
+                                aria-expanded={subjectsOpen ? "true" : "false"}
                                 aria-controls={subjectBodyId}
                               >
                                 <span
@@ -273,7 +277,7 @@ function weekForPlanDay(planDay: number): number {
                                   data-curriculum-subject-chevron
                                   aria-hidden="true"
                                 >
-                                  expand_more
+                                  {subjectsOpen ? "expand_less" : "expand_more"}
                                 </span>
                                 <h4 class="eoschool-curriculum__subject-title">
                                   <span class="eoschool-curriculum__subject-num">{idx + 1}.</span>
@@ -285,7 +289,7 @@ function weekForPlanDay(planDay: number): number {
                               class="eoschool-curriculum__subject-body eoschool-curriculum__subject-body--card"
                               id={subjectBodyId}
                               data-curriculum-subject-body
-                              hidden
+                              hidden={!subjectsOpen}
                             >
                               {isHoliday ? (
                                 <p class="eoschool-curriculum__expo-hint">
