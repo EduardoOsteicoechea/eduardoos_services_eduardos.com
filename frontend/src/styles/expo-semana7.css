@@ -99,7 +99,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-padding);
-  padding: var(--space-padding);
+  margin-top: var(--space-margin);
+  padding: var(--main-padding) var(--space-padding) var(--space-padding);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--border-radius);
 }
@@ -125,6 +126,7 @@
 
 .expo-outline__list {
   counter-reset: expo-beat;
+  gap: var(--main-padding);
 }
 
 .expo-outline__lines {
@@ -135,8 +137,13 @@
 .expo-outline__beat {
   display: flex;
   flex-direction: column;
-  gap: var(--rail-gap);
+  gap: var(--space-padding);
   counter-increment: expo-beat;
+}
+
+.expo-outline__beat + .expo-outline__beat {
+  padding-top: var(--space-padding);
+  border-top: var(--border-width) solid var(--color-border);
 }
 
 .expo-outline__title::before {
@@ -227,6 +234,7 @@
   }
 
   body:has(.expo-week) .expo-outline {
+    margin-top: 0;
     border: 0;
     padding: 0;
   }
