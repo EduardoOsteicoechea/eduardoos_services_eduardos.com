@@ -34,7 +34,7 @@ const lineControl = (line: ExpoLine) => line;
 
     <div data-expo-form hidden>
       <p class="expo-week__lead">
-        Responde con oraciones completas. Al imprimir sale el guion, una hoja por materia, para que lo leas al exponer.
+        Escribe una oración en cada pregunta. Abajo se arma el esquema para exponer, y se guarda cada vez que cambias una respuesta.
       </p>
       <div class="expo-week__who">
         <label class="expo-field expo-field--grow">
@@ -72,54 +72,23 @@ const lineControl = (line: ExpoLine) => line;
           <header class="expo-class__block">
             <h2 class="expo-class__heading">{sheet.title}</h2>
             <p class="expo-class__note">{sheet.note}</p>
-            <ol class="expo-class__order">
-              {sheet.order.map((step) => <li>{step}</li>)}
-            </ol>
           </header>
 
           <div class="expo-questions expo-class__block">
-            <h3 class="expo-class__heading">Preguntas para juntar lo estudiado</h3>
+            <h3 class="expo-class__heading">Preguntas</h3>
             {sheet.questions.map((line) => (
               <label class="expo-field">
                 <span class="expo-field__label">{lineControl(line).label}</span>
-                <textarea data-expo-field={line.id} name={line.id} rows={2}></textarea>
+                <textarea data-expo-field={line.id} name={line.id} rows={3}></textarea>
               </label>
             ))}
           </div>
 
-          <div class="expo-speak">
-            <div class="expo-class__block">
-              <h3 class="expo-class__heading">Lo que vas a decir</h3>
-              {sheet.speakLeft.map((line) =>
-                line.kind === "check" ? (
-                  <label class="expo-check">
-                    <input type="checkbox" data-expo-field={line.id} name={line.id} />
-                    <span>{line.label}</span>
-                  </label>
-                ) : (
-                  <label class="expo-field">
-                    <span class="expo-field__label">{line.label}</span>
-                    <textarea data-expo-field={line.id} name={line.id} rows={2}></textarea>
-                  </label>
-                ),
-              )}
-            </div>
-            <div class="expo-class__block">
-              {sheet.speakRight.map((line) =>
-                line.kind === "check" ? (
-                  <label class="expo-check">
-                    <input type="checkbox" data-expo-field={line.id} name={line.id} />
-                    <span>{line.label}</span>
-                  </label>
-                ) : (
-                  <label class="expo-field">
-                    <span class="expo-field__label">{line.label}</span>
-                    <textarea data-expo-field={line.id} name={line.id} rows={2}></textarea>
-                  </label>
-                ),
-              )}
-            </div>
-          </div>
+          <section class="expo-outline" data-expo-outline aria-live="polite">
+            <h3 class="expo-class__heading">Para exponer</h3>
+            <p class="expo-outline__who" data-expo-outline-who></p>
+            <ol class="expo-outline__list" data-expo-outline-list></ol>
+          </section>
         </article>
       ))}
 
@@ -133,7 +102,13 @@ const lineControl = (line: ExpoLine) => line;
 <script>
   import { mustLog } from "../../../lib/dev-log";
   import {
+    EXPO_DATE_ID,
+    EXPO_NAME_ID,
+    EXPO_SHEETS,
     EXPO_STORAGE_KEY,
+    outlineFromAnswers,
+    outlinePlainText,
+    outlineStorageId,
     parseExpoAnswers,
   } from "../../../lib/expo-semana7-dia5";
   import { onAstroPageLoad, requireService, setHidden } from "../../../lib/productGate";
@@ -202,16 +177,58 @@ const lineControl = (line: ExpoLine) => line;
       saved = {};
     }
     apply(root, saved);
-    if (mustLog) console.log("[expo-s7d5] restored", { fields: Object.keys(saved).length });
 
-    const persist = (): void => {
-      try {
-        localStorage.setItem(EXPO_STORAGE_KEY, JSON.stringify(collect(root)));
-      } catch {
-        /* el navegador puede bloquear el almacén; la hoja sigue en memoria */
+    const paintOutlines = (answers: Record<string, string>): Record<string, string> => {
+      const stored = { ...answers };
+      const who = [answers[EXPO_NAME_ID], answers[EXPO_DATE_ID]].filter(Boolean).join(" · ");
+      for (const sheet of EXPO_SHEETS) {
+        const panel = root.querySelector<HTMLElement>(`[data-expo-sheet="${sheet.id}"]`);
+        const list = panel?.querySelector<HTMLOListElement>("[data-expo-outline-list]");
+        const whoEl = panel?.querySelector<HTMLElement>("[data-expo-outline-who]");
+        if (whoEl) whoEl.textContent = who;
+        if (!list) continue;
+        list.replaceChildren();
+        for (const beat of outlineFromAnswers(sheet, answers)) {
+          const item = document.createElement("li");
+          item.className = "expo-outline__beat";
+          const title = document.createElement("p");
+          title.className = "expo-outline__title";
+          title.textContent = beat.title;
+          item.append(title);
+          if (beat.lines.length === 0) {
+            const empty = document.createElement("p");
+            empty.className = "expo-outline__empty";
+            empty.textContent = "Todavía no hay oración aquí.";
+            item.append(empty);
+          } else {
+            const lines = document.createElement("ul");
+            lines.className = "expo-outline__lines";
+            for (const line of beat.lines) {
+              const li = document.createElement("li");
+              li.textContent = line;
+              lines.append(li);
+            }
+            item.append(lines);
+          }
+          list.append(item);
+        }
+        stored[outlineStorageId(sheet.id)] = outlinePlainText(sheet, answers);
       }
+      return stored;
     };
 
+    const persist = (): void => {
+      const answers = collect(root);
+      const stored = paintOutlines(answers);
+      try {
+        localStorage.setItem(EXPO_STORAGE_KEY, JSON.stringify(stored));
+      } catch {
+        /* el navegador puede bloquear el almacén; el esquema sigue en la página */
+      }
+      if (mustLog) console.log("[expo-s7d5] saved", { fields: Object.keys(answers).length });
+    };
+
+    persist();
     root.addEventListener("input", persist);
     root.addEventListener("change", persist);
 

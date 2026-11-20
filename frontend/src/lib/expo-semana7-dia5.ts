@@ -10,15 +10,25 @@ export type ExpoLine = {
   kind: "text" | "check";
 };
 
+export type ExpoBeat = {
+  title: string;
+  fieldIds: string[];
+};
+
+export type ExpoOutlineBeat = {
+  title: string;
+  lines: string[];
+};
+
 export type ExpoSheet = {
   id: string;
   title: string;
   note: string;
   order: string[];
   questions: ExpoLine[];
-  /** Columna izquierda del PDF. */
+  /** Agrupa las respuestas en el orden de la exposición. */
+  beats: ExpoBeat[];
   speakLeft: ExpoLine[];
-  /** Columna derecha del PDF. */
   speakRight: ExpoLine[];
 };
 
@@ -52,6 +62,15 @@ export const EXPO_SHEETS: ExpoSheet[] = [
       text("bib-q13", "Para ese hermano, una oración sobre el tabernáculo."),
       text("bib-q14", "Para ese hermano, una oración sobre Jesús en esta semana."),
       text("bib-q15", "¿Qué capítulo contarías primero si solo tuvieras un minuto?"),
+    ],
+    beats: [
+      { title: "El desierto", fieldIds: ["bib-q1", "bib-q2", "bib-q12"] },
+      { title: "La ley", fieldIds: ["bib-q3", "bib-q4"] },
+      { title: "El tabernáculo", fieldIds: ["bib-q5", "bib-q6", "bib-q13"] },
+      {
+        title: "El Evangelio y el cierre",
+        fieldIds: ["bib-q7", "bib-q8", "bib-q9", "bib-q10", "bib-q11", "bib-q14", "bib-q15"],
+      },
     ],
     speakLeft: [
       text("bib-s1", "El desierto. La comida."),
@@ -100,6 +119,12 @@ export const EXPO_SHEETS: ExpoSheet[] = [
       text("ide-q13", "¿En qué año fue el bloqueo y qué países lo hicieron?"),
       text("ide-q14", "¿Dónde nació Castro, y en qué no se parece a Zamora?"),
     ],
+    beats: [
+      { title: "Nación agrícola", fieldIds: ["ide-q9"] },
+      { title: "Zamora", fieldIds: ["ide-q1", "ide-q2", "ide-q3", "ide-q4", "ide-q11", "ide-q12"] },
+      { title: "Castro", fieldIds: ["ide-q5", "ide-q6", "ide-q7", "ide-q13", "ide-q14"] },
+      { title: "No son la misma historia", fieldIds: ["ide-q8", "ide-q10"] },
+    ],
     speakLeft: [
       text("ide-s1", "Nación agrícola, en una oración."),
       text("ide-s2", "Zamora. Dónde nació y qué no es Barinas."),
@@ -142,6 +167,12 @@ export const EXPO_SHEETS: ExpoSheet[] = [
       text("len-q12", "¿Qué se pierde si en el plan del día solo hablas tú?"),
       text("len-q13", "¿Qué modo usas para contarle Apocalipsis a tu familia?"),
       text("len-q14", "¿Qué modo usas para buscar en qué ciudad estuvo Pablo?"),
+    ],
+    beats: [
+      { title: "Lectura exploratoria", fieldIds: ["len-q1", "len-q2", "len-q14"] },
+      { title: "Oralidad", fieldIds: ["len-q3", "len-q4", "len-q5", "len-q12"] },
+      { title: "Lectura acuciosa", fieldIds: ["len-q6", "len-q7", "len-q11", "len-q13"] },
+      { title: "Cuándo uso cada modo", fieldIds: ["len-q8", "len-q9", "len-q10"] },
     ],
     speakLeft: [
       text("len-s1", "Exploratoria. El lugar de Pablo y el capítulo."),
@@ -186,6 +217,12 @@ export const EXPO_SHEETS: ExpoSheet[] = [
       text("mat-q13", "Una semejanza entre el cubo y el cuadrado, y la diferencia."),
       text("mat-q14", "¿Por qué el resultado solo se dice al final?"),
     ],
+    beats: [
+      { title: "Dos formas planas", fieldIds: ["mat-q1", "mat-q2", "mat-q3", "mat-q13"] },
+      { title: "Un cuerpo", fieldIds: ["mat-q4", "mat-q5", "mat-q6", "mat-q11"] },
+      { title: "El ejercicio, paso a paso", fieldIds: ["mat-q7", "mat-q8", "mat-q9", "mat-q10", "mat-q14"] },
+      { title: "Qué hoja usé", fieldIds: ["mat-q12"] },
+    ],
     speakLeft: [
       text("mat-s1", "Dos formas planas. El nombre."),
       text("mat-s2", "En qué se parecen y en qué no."),
@@ -229,6 +266,12 @@ export const EXPO_SHEETS: ExpoSheet[] = [
       text("cie-q13", "Cilantro, cebollín y ajo son hortalizas. ¿Cuál aporta más vitaminas?"),
       text("cie-q14", "¿Por qué la fruta no va dentro de la pisca y aun así hace falta?"),
     ],
+    beats: [
+      { title: "Qué es la pisca", fieldIds: ["cie-q9", "cie-q8"] },
+      { title: "Tres ingredientes", fieldIds: ["cie-q1", "cie-q2", "cie-q3", "cie-q10", "cie-q13"] },
+      { title: "Fuera del caldero", fieldIds: ["cie-q4", "cie-q5", "cie-q6", "cie-q7", "cie-q14"] },
+      { title: "Una comida de mi casa", fieldIds: ["cie-q11", "cie-q12"] },
+    ],
     speakLeft: [
       text("cie-s1", "La pisca es, y se come en…"),
       text("cie-s2", "Ingrediente 1. Nombre, grupo y puntaje."),
@@ -267,11 +310,42 @@ export function parseExpoAnswers(raw: string | null): Record<string, string> {
     return {};
   }
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
-  const allowed = new Set([...expoFieldIds(), EXPO_NAME_ID, EXPO_DATE_ID]);
+  const allowed = new Set([
+    ...expoFieldIds(),
+    EXPO_NAME_ID,
+    EXPO_DATE_ID,
+    ...EXPO_SHEETS.map((sheet) => outlineStorageId(sheet.id)),
+  ]);
   const out: Record<string, string> = {};
   for (const [key, value] of Object.entries(parsed)) {
     if (!allowed.has(key) || typeof value !== "string") continue;
     out[key] = value.slice(0, 2000);
   }
   return out;
+}
+
+export function outlineStorageId(sheetId: string): string {
+  return `outline-${sheetId}`;
+}
+
+/** Arma el esquema de exposición con las oraciones ya escritas. */
+export function outlineFromAnswers(
+  sheet: ExpoSheet,
+  answers: Record<string, string>,
+): ExpoOutlineBeat[] {
+  return sheet.beats.map((beat) => ({
+    title: beat.title,
+    lines: beat.fieldIds
+      .map((id) => (answers[id] ?? "").trim())
+      .filter((line) => line.length > 0),
+  }));
+}
+
+export function outlinePlainText(sheet: ExpoSheet, answers: Record<string, string>): string {
+  return outlineFromAnswers(sheet, answers)
+    .map((beat, index) => {
+      const body = beat.lines.length > 0 ? beat.lines.map((line) => `- ${line}`).join("\n") : "-";
+      return `${index + 1}. ${beat.title}\n${body}`;
+    })
+    .join("\n");
 }
