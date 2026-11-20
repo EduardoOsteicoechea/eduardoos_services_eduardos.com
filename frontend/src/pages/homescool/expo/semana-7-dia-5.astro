@@ -205,7 +205,13 @@ const lineControl = (line: ExpoLine) => line;
             lines.className = "expo-outline__lines";
             for (const line of beat.lines) {
               const li = document.createElement("li");
-              li.textContent = line;
+              const prompt = document.createElement("p");
+              prompt.className = "expo-outline__prompt";
+              prompt.textContent = line.prompt;
+              const answer = document.createElement("p");
+              answer.className = "expo-outline__answer";
+              answer.textContent = line.answer;
+              li.append(prompt, answer);
               lines.append(li);
             }
             item.append(lines);

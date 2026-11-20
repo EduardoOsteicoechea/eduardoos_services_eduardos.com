@@ -156,6 +156,25 @@
   line-height: 1.4;
 }
 
+.expo-outline__lines li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.expo-outline__prompt {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
+.expo-outline__answer {
+  margin: 0;
+  font-size: var(--font-size-md);
+  line-height: 1.4;
+}
+
 .expo-outline__empty {
   color: var(--color-muted);
   font-size: var(--font-size-sm);
@@ -220,7 +239,8 @@
   }
 
   body:has(.expo-week) .expo-outline__title,
-  body:has(.expo-week) .expo-outline__lines li {
+  body:has(.expo-week) .expo-outline__prompt,
+  body:has(.expo-week) .expo-outline__answer {
     font-size: var(--font-size-md);
   }
 }

@@ -15,9 +15,14 @@ export type ExpoBeat = {
   fieldIds: string[];
 };
 
+export type ExpoOutlineLine = {
+  prompt: string;
+  answer: string;
+};
+
 export type ExpoOutlineBeat = {
   title: string;
-  lines: string[];
+  lines: ExpoOutlineLine[];
 };
 
 export type ExpoSheet = {
@@ -328,23 +333,29 @@ export function outlineStorageId(sheetId: string): string {
   return `outline-${sheetId}`;
 }
 
-/** Arma el esquema de exposición con las oraciones ya escritas. */
+/** Arma el esquema con la pregunta y la oración que el niño escribió. */
 export function outlineFromAnswers(
   sheet: ExpoSheet,
   answers: Record<string, string>,
 ): ExpoOutlineBeat[] {
+  const prompts = new Map(sheet.questions.map((line) => [line.id, line.label]));
   return sheet.beats.map((beat) => ({
     title: beat.title,
-    lines: beat.fieldIds
-      .map((id) => (answers[id] ?? "").trim())
-      .filter((line) => line.length > 0),
+    lines: beat.fieldIds.flatMap((id) => {
+      const answer = (answers[id] ?? "").trim();
+      if (!answer) return [];
+      return [{ prompt: prompts.get(id) ?? "", answer }];
+    }),
   }));
 }
 
 export function outlinePlainText(sheet: ExpoSheet, answers: Record<string, string>): string {
   return outlineFromAnswers(sheet, answers)
     .map((beat, index) => {
-      const body = beat.lines.length > 0 ? beat.lines.map((line) => `- ${line}`).join("\n") : "-";
+      const body =
+        beat.lines.length > 0
+          ? beat.lines.map((line) => `? ${line.prompt}\n  ${line.answer}`).join("\n")
+          : "-";
       return `${index + 1}. ${beat.title}\n${body}`;
     })
     .join("\n");

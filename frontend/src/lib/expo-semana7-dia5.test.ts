@@ -24,12 +24,21 @@ describe("expo semana 7 día 5", () => {
   it("arma el esquema solo con lo que ya está escrito", () => {
     const bib = EXPO_SHEETS[0];
     const beats = outlineFromAnswers(bib, { "bib-q1": "  El maná y el pan alimentan.  ", "bib-q3": "" });
-    expect(beats[0]).toEqual({ title: "El desierto", lines: ["El maná y el pan alimentan."] });
+    expect(beats[0]).toEqual({
+      title: "El desierto",
+      lines: [
+        {
+          prompt: "¿Qué comparten el maná y el pan de tu mesa, y qué no?",
+          answer: "El maná y el pan alimentan.",
+        },
+      ],
+    });
     expect(beats[1].lines).toEqual([]);
     const saved = parseExpoAnswers(
       JSON.stringify({ [outlineStorageId("bib")]: outlinePlainText(bib, { "bib-q1": "El maná alimenta." }) }),
     );
     expect(saved[outlineStorageId("bib")]).toContain("1. El desierto");
+    expect(saved[outlineStorageId("bib")]).toContain("¿Qué comparten el maná");
     expect(saved[outlineStorageId("bib")]).toContain("El maná alimenta.");
   });
 
