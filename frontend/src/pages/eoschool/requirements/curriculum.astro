@@ -5,7 +5,6 @@ import Layout from "../../../layouts/Layout.astro";
 import { MPPE_40WEEK_CURRICULUM } from "../../../lib/eoschool-mppe-40week-curriculum";
 import {
   bibleGroupsForDay,
-  buildWeekIndexRow,
   groupLearningRefs,
   identityGroups,
   scheduledSectionsForBlock,
@@ -13,7 +12,6 @@ import {
 import { DEFAULT_CURRENT_WEEK } from "../../../lib/eoschool-curriculum-week-collapse";
 
 const { meta, weeks } = MPPE_40WEEK_CURRICULUM;
-const indexRows = weeks.map(buildWeekIndexRow);
 const curriculumMode = Astro.url.searchParams.get("mode") === "browse" ? "browse" : "study";
 const initialStudentKey = Astro.url.searchParams.get("studentKey")?.trim() || "";
 
@@ -427,62 +425,6 @@ function weekForPlanDay(planDay: number): number {
       </p>
     </div>
 
-    <nav class="eoschool-curriculum__index" data-curriculum-index aria-label="Índice por semana">
-      <div class="eoschool-curriculum__index-head">
-        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--sem">Sem</span>
-        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
-          Bibl
-          <button
-            type="button"
-            class="eoschool-curriculum__index-resizer"
-            data-resize-col="bib"
-            aria-label="Ajustar ancho de columna Biblia"
-          ></button>
-        </span>
-        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
-          Identidad
-          <button
-            type="button"
-            class="eoschool-curriculum__index-resizer"
-            data-resize-col="ide"
-            aria-label="Ajustar ancho de columna Identidad"
-          ></button>
-        </span>
-        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
-          Leng
-          <button
-            type="button"
-            class="eoschool-curriculum__index-resizer"
-            data-resize-col="len"
-            aria-label="Ajustar ancho de columna Lenguaje"
-          ></button>
-        </span>
-        <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">
-          Mat
-          <button
-            type="button"
-            class="eoschool-curriculum__index-resizer"
-            data-resize-col="mat"
-            aria-label="Ajustar ancho de columna Matemáticas"
-          ></button>
-        </span>
-        <span class="eoschool-curriculum__index-cell">Cienc</span>
-      </div>
-      {
-        indexRows.map((row) => (
-          <a class="eoschool-curriculum__index-row" href={`#week-${row.week}`}>
-            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--sem eoschool-curriculum__index-week">
-              S{row.week}
-            </span>
-            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.bib}</span>
-            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.ide}</span>
-            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.len}</span>
-            <span class="eoschool-curriculum__index-cell eoschool-curriculum__index-cell--bordered">{row.mat}</span>
-            <span class="eoschool-curriculum__index-cell">{row.cie}</span>
-          </a>
-        ))
-      }
-    </nav>
   </section>
 
   <div class="eoschool-curriculum-modal" data-curriculum-day-modal hidden>
@@ -579,7 +521,6 @@ function weekForPlanDay(planDay: number): number {
 </Layout>
 
 <script>
-  import { initCurriculumIndexResize } from "../../../lib/eoschool-curriculum-index-resize";
   import { initCurriculumDayHeights } from "../../../lib/eoschool-curriculum-day-heights";
   import { initCurriculumDayModal } from "../../../lib/eoschool-curriculum-day-modal";
   import { initCurriculumProgress } from "../../../lib/eoschool-curriculum-progress";
@@ -590,7 +531,6 @@ function weekForPlanDay(planDay: number): number {
 
   function bootCurriculumChrome() {
     const root = document.querySelector<HTMLElement>("[data-curriculum-progress]");
-    initCurriculumIndexResize(document.querySelector("[data-curriculum-index]"));
     bindCurriculumTreatModal();
     const mode = root?.dataset.curriculumMode || "study";
     if (mode === "browse") {
