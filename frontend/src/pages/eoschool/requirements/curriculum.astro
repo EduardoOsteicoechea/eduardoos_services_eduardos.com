@@ -156,10 +156,7 @@ function weekForPlanDay(planDay: number): number {
                   id={`week-title-${weekPlan.week}`}
                   aria-label={`Semana ${weekPlan.week}${weekDateLabel ? `, ${weekDateLabel}` : ""}`}
                 >
-                  <span class="eoschool-curriculum__week-name">
-                    <span class="eoschool-curriculum__week-word">Semana </span>
-                    {weekPlan.week}
-                  </span>
+                  <span class="eoschool-curriculum__week-name">{weekPlan.week}</span>
                   {weekDateLabel ? <span class="eoschool-curriculum__week-date">{weekDateLabel}</span> : null}
                 </h2>
               </div>
@@ -1025,10 +1022,6 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-name {
     min-width: 0;
     overflow: hidden;
-  }
-
-  .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-word {
-    display: none;
   }
 
   .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-date {
