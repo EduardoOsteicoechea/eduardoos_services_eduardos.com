@@ -359,7 +359,8 @@ export function initCurriculumDayModal(root: HTMLElement | null): void {
     if (
       target instanceof HTMLElement &&
       (target.closest(".eoschool-curriculum__section-check") ||
-        target.closest("[data-curriculum-subject-toggle]"))
+        target.closest("[data-curriculum-subject-toggle]") ||
+        target.closest("[data-expo-route]"))
     ) {
       ev.stopPropagation();
       return;

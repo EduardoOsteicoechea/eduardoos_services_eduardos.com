@@ -1,0 +1,234 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import {
+  EXPO_DATE_ID,
+  EXPO_NAME_ID,
+  EXPO_SHEETS,
+  type ExpoLine,
+} from "../../../lib/expo-semana7-dia5";
+import "../../../styles/expo-semana7.css";
+
+const lineControl = (line: ExpoLine) => line;
+---
+
+<Layout
+  title="Exposiciones semana 7"
+  description="El niño escribe las respuestas de las exposiciones del viernes y las imprime para decirlas en orden."
+  page="homescool-expo-s7d5"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/homescool" data-route title="Homescool" aria-label="Homescool">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">home</span></span>
+      Homescool
+    </a>
+    <button class="dhs-action" type="button" data-expo-print title="Imprimir el guion" aria-label="Imprimir el guion">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">print</span></span>
+      Imprimir PDF
+    </button>
+  </Fragment>
+
+  <section class="expo-week" data-expo-week hidden>
+    <p class="status" data-banner>Cargando…</p>
+    <p class="hint" data-gate hidden>Entra con tu cuenta de Homescool para escribir y imprimir.</p>
+
+    <div data-expo-form hidden>
+      <p class="expo-week__lead">
+        Responde con oraciones completas. Al imprimir sale el guion, una hoja por materia, para que lo leas al exponer.
+      </p>
+      <div class="expo-week__who">
+        <label class="expo-field expo-field--grow">
+          <span class="expo-field__label">Nombre</span>
+          <input type="text" name={EXPO_NAME_ID} data-expo-field={EXPO_NAME_ID} autocomplete="name" />
+        </label>
+        <label class="expo-field">
+          <span class="expo-field__label">Fecha</span>
+          <input type="text" name={EXPO_DATE_ID} data-expo-field={EXPO_DATE_ID} autocomplete="off" />
+        </label>
+      </div>
+
+      <div class="expo-week__tabs" role="tablist" aria-label="Materias">
+        {EXPO_SHEETS.map((sheet, index) => (
+          <button
+            class="btn expo-week__tab"
+            type="button"
+            role="tab"
+            data-expo-tab={sheet.id}
+            aria-pressed={index === 0 ? "true" : "false"}
+            aria-controls={`expo-${sheet.id}`}
+          >
+            {sheet.title}
+          </button>
+        ))}
+      </div>
+
+      {EXPO_SHEETS.map((sheet, index) => (
+        <article
+          class:list={["expo-class", index === 0 ? "" : "expo-class--off"]}
+          id={`expo-${sheet.id}`}
+          data-expo-sheet={sheet.id}
+          role="tabpanel"
+        >
+          <header class="expo-class__block">
+            <h2 class="expo-class__heading">{sheet.title}</h2>
+            <p class="expo-class__note">{sheet.note}</p>
+            <ol class="expo-class__order">
+              {sheet.order.map((step) => <li>{step}</li>)}
+            </ol>
+          </header>
+
+          <div class="expo-questions expo-class__block">
+            <h3 class="expo-class__heading">Preguntas para juntar lo estudiado</h3>
+            {sheet.questions.map((line) => (
+              <label class="expo-field">
+                <span class="expo-field__label">{lineControl(line).label}</span>
+                <textarea data-expo-field={line.id} name={line.id} rows={2}></textarea>
+              </label>
+            ))}
+          </div>
+
+          <div class="expo-speak">
+            <div class="expo-class__block">
+              <h3 class="expo-class__heading">Lo que vas a decir</h3>
+              {sheet.speakLeft.map((line) =>
+                line.kind === "check" ? (
+                  <label class="expo-check">
+                    <input type="checkbox" data-expo-field={line.id} name={line.id} />
+                    <span>{line.label}</span>
+                  </label>
+                ) : (
+                  <label class="expo-field">
+                    <span class="expo-field__label">{line.label}</span>
+                    <textarea data-expo-field={line.id} name={line.id} rows={2}></textarea>
+                  </label>
+                ),
+              )}
+            </div>
+            <div class="expo-class__block">
+              {sheet.speakRight.map((line) =>
+                line.kind === "check" ? (
+                  <label class="expo-check">
+                    <input type="checkbox" data-expo-field={line.id} name={line.id} />
+                    <span>{line.label}</span>
+                  </label>
+                ) : (
+                  <label class="expo-field">
+                    <span class="expo-field__label">{line.label}</span>
+                    <textarea data-expo-field={line.id} name={line.id} rows={2}></textarea>
+                  </label>
+                ),
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+
+      <div class="expo-week__actions">
+        <button class="btn" type="button" data-expo-print>Imprimir PDF</button>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { mustLog } from "../../../lib/dev-log";
+  import {
+    EXPO_STORAGE_KEY,
+    parseExpoAnswers,
+  } from "../../../lib/expo-semana7-dia5";
+  import { onAstroPageLoad, requireService, setHidden } from "../../../lib/productGate";
+
+  function collect(root: ParentNode): Record<string, string> {
+    const out: Record<string, string> = {};
+    root.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-expo-field]").forEach((el) => {
+      const id = el.dataset.expoField;
+      if (!id) return;
+      if (el instanceof HTMLInputElement && el.type === "checkbox") {
+        if (el.checked) out[id] = "on";
+        return;
+      }
+      const value = el.value.trim();
+      if (value) out[id] = value;
+    });
+    return out;
+  }
+
+  function apply(root: ParentNode, saved: Record<string, string>): void {
+    root.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-expo-field]").forEach((el) => {
+      const id = el.dataset.expoField;
+      if (!id || !(id in saved)) return;
+      if (el instanceof HTMLInputElement && el.type === "checkbox") {
+        el.checked = saved[id] === "on";
+        return;
+      }
+      el.value = saved[id];
+    });
+  }
+
+  function showSheet(root: HTMLElement, id: string): void {
+    root.querySelectorAll<HTMLElement>("[data-expo-sheet]").forEach((sheet) => {
+      sheet.classList.toggle("expo-class--off", sheet.dataset.expoSheet !== id);
+    });
+    root.querySelectorAll<HTMLButtonElement>("[data-expo-tab]").forEach((tab) => {
+      tab.setAttribute("aria-pressed", tab.dataset.expoTab === id ? "true" : "false");
+    });
+  }
+
+  onAstroPageLoad("homescool-expo-s7d5", async () => {
+    const root = document.querySelector<HTMLElement>("[data-expo-week]");
+    if (!root || root.dataset.expoBound === "true") return;
+    root.dataset.expoBound = "true";
+    setHidden(root, false);
+
+    const banner = root.querySelector<HTMLElement>("[data-banner]");
+    const gate = root.querySelector<HTMLElement>("[data-gate]");
+    const form = root.querySelector<HTMLElement>("[data-expo-form]");
+
+    const result = await requireService("homescool");
+    if (!result.sessionOk || !result.access.allowed) {
+      if (banner) banner.hidden = true;
+      setHidden(gate, false);
+      setHidden(form, true);
+      return;
+    }
+    if (banner) banner.hidden = true;
+    setHidden(gate, true);
+    setHidden(form, false);
+
+    let saved: Record<string, string> = {};
+    try {
+      saved = parseExpoAnswers(localStorage.getItem(EXPO_STORAGE_KEY));
+    } catch {
+      saved = {};
+    }
+    apply(root, saved);
+    if (mustLog) console.log("[expo-s7d5] restored", { fields: Object.keys(saved).length });
+
+    const persist = (): void => {
+      try {
+        localStorage.setItem(EXPO_STORAGE_KEY, JSON.stringify(collect(root)));
+      } catch {
+        /* el navegador puede bloquear el almacén; la hoja sigue en memoria */
+      }
+    };
+
+    root.addEventListener("input", persist);
+    root.addEventListener("change", persist);
+
+    root.addEventListener("click", (ev) => {
+      const target = ev.target;
+      if (!(target instanceof Element)) return;
+      const tab = target.closest<HTMLButtonElement>("[data-expo-tab]");
+      if (tab?.dataset.expoTab) showSheet(root, tab.dataset.expoTab);
+    });
+
+    const printSheet = (): void => {
+      persist();
+      if (mustLog) console.log("[expo-s7d5] print");
+      window.print();
+    };
+    document.querySelectorAll<HTMLButtonElement>("[data-expo-print]").forEach((btn) => {
+      btn.addEventListener("click", printSheet);
+    });
+  });
+</script>

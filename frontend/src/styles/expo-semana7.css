@@ -1,0 +1,140 @@
+.expo-week {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding-bottom: var(--space-padding);
+}
+
+.expo-week__lead {
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+.expo-week__who {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.expo-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  min-width: 0;
+}
+
+.expo-field--grow {
+  flex: 1;
+}
+
+.expo-field__label {
+  font-size: var(--font-size-sm);
+}
+
+.expo-week__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+.expo-week__tab[aria-pressed="true"] {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.expo-class {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-padding);
+}
+
+.expo-class--off {
+  display: none;
+}
+
+.expo-speak {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-padding);
+}
+
+.expo-class__note,
+.expo-class__order {
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+.expo-class__order {
+  padding-left: var(--space-padding);
+}
+
+.expo-class__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.expo-class__heading {
+  margin: 0;
+  font-size: var(--font-size-md);
+}
+
+.expo-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--rail-gap);
+  font-size: var(--font-size-sm);
+}
+
+.expo-week__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+}
+
+@media print {
+  @page {
+    size: letter landscape;
+    margin: 1cm;
+  }
+
+  body:has(.expo-week) .app-header,
+  body:has(.expo-week) .sidebar-left,
+  body:has(.expo-week) .sidebar-right,
+  body:has(.expo-week) .page-title,
+  body:has(.expo-week) #error-modal,
+  body:has(.expo-week) .expo-week__lead,
+  body:has(.expo-week) .expo-week__tabs,
+  body:has(.expo-week) .expo-week__actions,
+  body:has(.expo-week) .expo-questions,
+  body:has(.expo-week) [data-banner],
+  body:has(.expo-week) [data-gate] {
+    display: none;
+  }
+
+  body:has(.expo-week) main {
+    display: block;
+    padding: 0;
+  }
+
+  body:has(.expo-week) .expo-class,
+  body:has(.expo-week) .expo-class--off {
+    display: block;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  body:has(.expo-week) .expo-speak {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2cm;
+    align-items: start;
+  }
+
+  body:has(.expo-week) .expo-class__heading,
+  body:has(.expo-week) .expo-field__label,
+  body:has(.expo-week) .expo-check,
+  body:has(.expo-week) textarea {
+    font-size: var(--font-size-sm);
+  }
+}

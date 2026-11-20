@@ -269,7 +269,21 @@ function weekForPlanDay(planDay: number): number {
                                 </p>
                               ) : null}
                               {isExpo ? (
-                                <p class="eoschool-curriculum__expo-hint">Preparar exposición de la semana</p>
+                                <p class="eoschool-curriculum__expo-hint">
+                                  Preparar exposición de la semana
+                                  {weekPlan.week === 7 ? (
+                                    <>
+                                      {" "}
+                                      <a
+                                        href="/homescool/expo/semana-7-dia-5"
+                                        data-route
+                                        data-expo-route
+                                      >
+                                        Escribir e imprimir
+                                      </a>
+                                    </>
+                                  ) : null}
+                                </p>
                               ) : null}
                               {groups.some((g) => g.learnings.length) ? (
                                 <ul class="eoschool-curriculum__learnings eoschool-curriculum__learnings--card">
