@@ -51,6 +51,13 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
     const complete = dayComplete(card, dayId, done);
     card.classList.toggle("eoschool-curriculum__day-card--done", complete);
     card.classList.toggle("product-dash__card--done", complete);
+
+    const scheduled = scheduledForCard(card);
+    let finished = 0;
+    for (const sectionId of scheduled) {
+      if (done.has(sectionProgressKey(dayId, sectionId))) finished += 1;
+    }
+    paintDayProgress(card, finished, scheduled.length);
   });
 
   root.querySelectorAll<HTMLElement>("[data-curriculum-week]").forEach((week) => {
@@ -81,16 +88,43 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
 }
 
 export function paintWeekProgress(week: HTMLElement, finished: number, total: number): void {
-  const progress = week.querySelector<HTMLElement>("[data-curriculum-week-progress]");
-  const fill = week.querySelector<HTMLElement>("[data-curriculum-week-progress-fill]");
+  paintProgressBar(
+    week,
+    ":scope > [data-curriculum-week-progress]",
+    "[data-curriculum-week-progress-fill]",
+    finished,
+    total,
+    `Progreso de la semana ${week.dataset.week ?? ""}: ${finished} de ${total}`,
+  );
+}
+
+function paintDayProgress(card: HTMLElement, finished: number, total: number): void {
+  const day = card.dataset.planDay || card.dataset.curriculumDay || "";
+  paintProgressBar(
+    card,
+    ":scope > [data-curriculum-day-progress]",
+    "[data-curriculum-day-progress-fill]",
+    finished,
+    total,
+    `Progreso del día ${day}: ${finished} de ${total}`,
+  );
+}
+
+function paintProgressBar(
+  host: HTMLElement,
+  barSelector: string,
+  fillSelector: string,
+  finished: number,
+  total: number,
+  label: string,
+): void {
+  const progress = host.querySelector<HTMLElement>(barSelector);
+  const fill = progress?.querySelector<HTMLElement>(fillSelector);
   const ratio = total > 0 ? Math.min(1, finished / total) : 0;
   if (fill) fill.style.transform = `scaleX(${ratio})`;
   if (!progress) return;
   progress.setAttribute("aria-valuenow", String(Math.round(ratio * 100)));
-  progress.setAttribute(
-    "aria-label",
-    `Progreso de la semana ${week.dataset.week ?? ""}: ${finished} de ${total}`,
-  );
+  progress.setAttribute("aria-label", label);
 }
 
 function formatStudentBanner(student: CurriculumStudent): string {

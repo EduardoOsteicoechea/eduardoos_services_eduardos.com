@@ -200,6 +200,17 @@ function weekForPlanDay(planDay: number): number {
                     role="button"
                     aria-label={ariaDay}
                   >
+                    <div
+                      class="eoschool-curriculum__week-progress"
+                      role="progressbar"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      aria-valuenow="0"
+                      aria-label={`Progreso del día ${bibleDay.dayInPlan}`}
+                      data-curriculum-day-progress
+                    >
+                      <span class="eoschool-curriculum__week-progress__fill" data-curriculum-day-progress-fill></span>
+                    </div>
                     <header class="eoschool-curriculum__day-head">
                       <h3 class="eoschool-curriculum__day-title">
                         Día {bibleDay.dayInPlan}
@@ -878,6 +889,16 @@ function weekForPlanDay(planDay: number): number {
     background: #16a34a;
     transform: scaleX(0);
     transform-origin: left center;
+  }
+
+  .eoschool-curriculum__week:not(.eoschool-curriculum__week--collapsed) > .eoschool-curriculum__week-progress {
+    display: none;
+  }
+
+  .eoschool-curriculum__day-card > .eoschool-curriculum__week-progress {
+    margin-block-start: calc(var(--space-padding) * -1);
+    margin-inline: calc(var(--space-padding) * -1);
+    margin-block-end: 0;
   }
 
   .eoschool-curriculum__week-layout {
