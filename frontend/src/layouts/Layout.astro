@@ -96,6 +96,7 @@ const showSiteFooter =
   !path.startsWith("/documents/pamphlet") &&
   !path.startsWith("/emusic") &&
   !path.startsWith("/eapi") &&
+  path !== "/eoschool/requirements/curriculum" &&
   htmlPage !== "pamphlet";
 const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
 const canonical = new URL(Astro.url.pathname, Astro.site).toString().replace(/\/$/, "") || "https://eduardoos.com";
