@@ -64,7 +64,33 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
 
     week.classList.toggle("eoschool-curriculum__week--done", complete);
     week.classList.toggle("product-dash__card--done", complete);
+
+    let sectionTotal = 0;
+    let sectionDone = 0;
+    for (const card of dayCards) {
+      const id = card.dataset.curriculumDay;
+      if (!id) continue;
+      const scheduled = scheduledForCard(card);
+      sectionTotal += scheduled.length;
+      for (const sectionId of scheduled) {
+        if (done.has(sectionProgressKey(id, sectionId))) sectionDone += 1;
+      }
+    }
+    paintWeekProgress(week, sectionDone, sectionTotal);
   });
+}
+
+export function paintWeekProgress(week: HTMLElement, finished: number, total: number): void {
+  const progress = week.querySelector<HTMLElement>("[data-curriculum-week-progress]");
+  const fill = week.querySelector<HTMLElement>("[data-curriculum-week-progress-fill]");
+  const ratio = total > 0 ? Math.min(1, finished / total) : 0;
+  if (fill) fill.style.transform = `scaleX(${ratio})`;
+  if (!progress) return;
+  progress.setAttribute("aria-valuenow", String(Math.round(ratio * 100)));
+  progress.setAttribute(
+    "aria-label",
+    `Progreso de la semana ${week.dataset.week ?? ""}: ${finished} de ${total}`,
+  );
 }
 
 function formatStudentBanner(student: CurriculumStudent): string {

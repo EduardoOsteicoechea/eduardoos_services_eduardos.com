@@ -118,6 +118,17 @@ function weekForPlanDay(planDay: number): number {
             aria-labelledby={`week-title-${weekPlan.week}`}
             aria-current={weekPlan.week === DEFAULT_CURRENT_WEEK ? "true" : undefined}
           >
+            <div
+              class="eoschool-curriculum__week-progress"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+              aria-label={`Progreso de la semana ${weekPlan.week}`}
+              data-curriculum-week-progress
+            >
+              <span class="eoschool-curriculum__week-progress__fill" data-curriculum-week-progress-fill></span>
+            </div>
             <div class="eoschool-curriculum__week-layout">
               <div class="eoschool-curriculum__week-rail">
                 <label class="eoschool-curriculum__week-current" title={`Semana ${weekPlan.week} actual`}>
@@ -804,11 +815,16 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__weeks {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-padding);
+    align-items: start;
     min-width: 0;
     width: 100%;
+  }
+
+  .eoschool-curriculum__week:not(.eoschool-curriculum__week--collapsed) {
+    grid-column: 1 / -1;
   }
 
   .eoschool-curriculum__week {
@@ -844,6 +860,24 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__week.product-dash__card--done:hover,
   .eoschool-curriculum__week.product-dash__card--done:focus-visible {
     background: color-mix(in srgb, var(--color-ok) 6%, var(--eo-surface-2, var(--color-surface)));
+  }
+
+  .eoschool-curriculum__week-progress {
+    align-self: stretch;
+    position: relative;
+    height: 0.375rem;
+    overflow: hidden;
+    background: color-mix(in srgb, #16a34a 22%, var(--color-border));
+    border-start-start-radius: var(--border-radius);
+    border-start-end-radius: var(--border-radius);
+  }
+
+  .eoschool-curriculum__week-progress__fill {
+    position: absolute;
+    inset: 0;
+    background: #16a34a;
+    transform: scaleX(0);
+    transform-origin: left center;
   }
 
   .eoschool-curriculum__week-layout {
