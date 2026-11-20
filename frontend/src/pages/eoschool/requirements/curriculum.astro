@@ -151,8 +151,15 @@ function weekForPlanDay(planDay: number): number {
                 >
                   <span class="material-symbols-outlined" aria-hidden="true">print</span>
                 </button>
-                <h2 class="eoschool-curriculum__week-title" id={`week-title-${weekPlan.week}`}>
-                  <span class="eoschool-curriculum__week-name">Semana {weekPlan.week}</span>
+                <h2
+                  class="eoschool-curriculum__week-title"
+                  id={`week-title-${weekPlan.week}`}
+                  aria-label={`Semana ${weekPlan.week}${weekDateLabel ? `, ${weekDateLabel}` : ""}`}
+                >
+                  <span class="eoschool-curriculum__week-name">
+                    <span class="eoschool-curriculum__week-word">Semana </span>
+                    {weekPlan.week}
+                  </span>
                   {weekDateLabel ? <span class="eoschool-curriculum__week-date">{weekDateLabel}</span> : null}
                 </h2>
               </div>
@@ -829,7 +836,7 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__weeks {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: var(--space-padding);
+    gap: var(--rail-gap);
     align-items: start;
     min-width: 0;
     width: 100%;
@@ -877,7 +884,7 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__week-progress {
     align-self: stretch;
     position: relative;
-    height: 0.75rem;
+    height: 0.1rem;
     overflow: hidden;
     background: color-mix(in srgb, #16a34a 22%, var(--color-border));
     border-start-start-radius: var(--border-radius);
@@ -1018,6 +1025,10 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-name {
     min-width: 0;
     overflow: hidden;
+  }
+
+  .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-word {
+    display: none;
   }
 
   .eoschool-curriculum__week--collapsed .eoschool-curriculum__week-date {
