@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Árbol de la serie Romanos</title>
+<style>
+  :root {
+    --bg: #f6f4ef;
+    --ink: #1c1b19;
+    --muted: #5c574e;
+    --line: #c8c2b4;
+    --chip: #e7e1d4;
+    --app: #3d5c45;
+    --focus: #1c1b19;
+  }
+  * { box-sizing: border-box; }
+  html { font-size: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Segoe UI", "Iowan Old Style", Palatino, Georgia, serif;
+    line-height: 1.45;
+  }
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0.85rem 1.25rem;
+    background: var(--bg);
+    border-bottom: 0.0625rem solid var(--line);
+  }
+  h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 650;
+  }
+  p.lede {
+    margin: 0.2rem 0 0;
+    max-width: 42rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .tools { display: flex; gap: 0.5rem; }
+  button {
+    font: inherit;
+    font-size: 0.875rem;
+    padding: 0.35rem 0.7rem;
+    border: 0.0625rem solid var(--ink);
+    border-radius: 0.25rem;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  button:hover, button:focus-visible { background: var(--ink); color: var(--bg); }
+  main { padding: 1rem 1.25rem 3rem; }
+  .tree, .tree ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .tree ul {
+    margin-left: 0.7rem;
+    padding-left: 0.85rem;
+    border-left: 0.0625rem solid var(--line);
+  }
+  .tree li { margin: 0.28rem 0; }
+  summary {
+    cursor: pointer;
+    font-weight: 650;
+  }
+  summary:focus-visible { outline: 0.125rem solid var(--focus); outline-offset: 0.15rem; }
+  .tree li > span.nodo,
+  summary .nodo { font-weight: 450; }
+  .hoja { font-weight: 450; }
+  .pieza {
+    display: inline-block;
+    margin-left: 0.4rem;
+    padding: 0 0.35rem;
+    border-radius: 0.2rem;
+    background: var(--chip);
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 550;
+    font-family: "Segoe UI", sans-serif;
+    letter-spacing: 0.01em;
+    vertical-align: 0.05rem;
+  }
+  .ap {
+    color: var(--app);
+    font-size: 0.75rem;
+    font-weight: 650;
+    font-family: "Segoe UI", sans-serif;
+    margin-right: 0.25rem;
+  }
+  .tension { font-style: italic; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Romanos 15:13–19</h1>
+    <p class="lede">Cada tema se dice una vez. El hijo es el matiz, la salvedad o la tensión que ese tema no absorbe. La marca indica la pieza.</p>
+  </div>
+  <div class="tools">
+    <button type="button" id="abrir">Abrir todo</button>
+    <button type="button" id="cerrar">Cerrar todo</button>
+  </div>
+</header>
+<main>
+<ul class="tree">
+<li>
+<details open>
+<summary>Dios es el autor final, y limita su obra al llamamiento <span class="pieza">S1 a2</span></summary>
+<ul>
+<li>
+<details>
+<summary>Autor de la carta</summary>
+<ul>
+  <li><span class="hoja">Puso en Pablo la gracia, las vivencias y las habilidades para redactar Romanos.</span> <span class="pieza">S1 a2</span></li>
+  <li><span class="hoja">Si Dios no da esa gracia, Pablo no escribe la carta.</span> <span class="pieza">S1 a3</span></li>
+  <li><span class="hoja">Pablo no escribe para manipular ni para transmitir solo lo que aprendió por su cuenta.</span> <span class="pieza">S1 a2</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>Emperador</summary>
+<ul>
+  <li><span class="hoja">Fuimos creados para disfrutar la creación en obediencia, adoración y servicio.</span> <span class="pieza">S1 a2</span></li>
+  <li><span class="hoja">No fuimos creados únicamente para disfrutarla, aunque en efecto lo fuimos.</span> <span class="pieza">S1 a2</span></li>
+  <li><span class="hoja">Cristo es Rey de reyes, designado para que toda criatura doble la rodilla, y se manifestará en su segunda venida.</span> <span class="pieza">S1 a2</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>Sus caminos no se explican del todo desde aquí</summary>
+<ul>
+  <li><span class="hoja">Limita su obra a llamamientos.</span> <span class="pieza">S1 a4</span></li>
+  <li><span class="hoja">No hace por un instrumento todo lo bueno que ese instrumento podría hacer.</span> <span class="pieza">S1 a4</span></li>
+  <li><span class="hoja">Podría teletransportar y hacer bajar ángeles, y no lo hace.</span> <span class="pieza">S2 a3</span></li>
+  <li><span class="hoja">A Dios le ha placido poner a los hombres a hacer su obra, aunque no nos necesita.</span> <span class="pieza">S2 a4</span></li>
+  <li><span class="hoja">Por qué lo hizo así, el autor dice que no lo sabe.</span> <span class="pieza">S2 a4</span></li>
+</ul>
+</details>
+</li>
+</ul>
+</details>
+</li>
+
+<li>
+<details open>
+<summary>La Escritura es mandato, y se lee según la intención con que fue dada <span class="pieza">S1 a2</span></summary>
+<ul>
+<li>
+<details>
+<summary>Autoridad</summary>
+<ul>
+  <li><span class="hoja">Romanos, y la Biblia, es mandato del Dios eterno, no un punto de vista al lado del nuestro.</span> <span class="pieza">Rom 16:25–26 · S1 a2</span></li>
+  <li><span class="hoja">Decir que la carta no importa es decir que lo que Dios quiere decirnos no importa.</span> <span class="pieza">S1 a3</span></li>
+  <li><span class="hoja">Tiene más peso que nuestras opiniones y debe regularlas en todo lo que trata.</span> <span class="pieza">S1 a3</span></li>
+  <li><span class="hoja">La Biblia no habla de todos los temas. De lo que sí habla, ninguna opinión, concilio, ministerio ni grupo está por encima.</span> <span class="pieza">S2 a4</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>Intención</summary>
+<ul>
+  <li><span class="hoja">Las palabras llevan intención. Interpretar fuera del objetivo declarado es peligroso.</span> <span class="pieza">S1 a2</span></li>
+  <li><span class="hoja">Dios ejecutó a los hijos de Aarón por adorar como ellos pensaban.</span> <span class="pieza">S1 a2</span></li>
+  <li><span class="hoja">Romanos 15 dice para qué se escribió la carta y por eso enmarca el resto del libro.</span> <span class="pieza">S1 a1</span></li>
+  <li><span class="hoja">Hay que desconfiar de las intenciones propias cuando se lee.</span> <span class="pieza">S1 a2</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>Cómo se lee</summary>
+<ul>
+  <li><span class="hoja">El Antiguo Testamento, leído como el Espíritu quiere, da la sabiduría que lleva a la salvación por la fe en Cristo Jesús.</span> <span class="pieza">2 Tim 3 · S2 a5</span></li>
+  <li><span class="hoja">Toda Escritura es útil para enseñar, reprender, corregir e instruir, a fin de que el hombre de Dios quede preparado para toda buena obra.</span> <span class="pieza">S2 a5</span></li>
+  <li><span class="hoja">El evangelio es tan extenso como la Biblia, y la Biblia se lee desde el misterio ya revelado, que es Cristo.</span> <span class="pieza">S2 a5</span></li>
+  <li><span class="hoja">La Escritura no es objeto de adoración. Es el medio por el cual Dios se presenta y da a conocer a Cristo.</span> <span class="pieza">S3 1</span></li>
+</ul>
+</details>
+</li>
+</ul>
+</details>
+</li>
+
+<li>
+<details open>
+<summary>El ministerio es de Cristo Jesús, siervo y Señor <span class="pieza">S1 a5</span></summary>
+<ul>
+<li>
+<details>
+<summary>Siervo, aunque apóstol</summary>
+<ul>
+  <li><span class="hoja">Aunque el llamamiento sea extraordinario, el apóstol es siervo, diácono, oficial, enviado y delegado.</span> <span class="pieza">S1 a5</span></li>
+  <li><span class="hoja">El apostolado ocurre bajo el reino de Cristo y por amor de su nombre.</span> <span class="pieza">Rom 1:1, 1:5 · S1 a5</span></li>
+  <li><span class="hoja">Cristo es el Hijo, distinto en persona del Padre, uno en esencia con él.</span> <span class="pieza">S1 a5</span></li>
+  <li><span class="hoja">El Padre nos dio al Hijo como esposo y rey.</span> <span class="pieza">S1 a5</span></li>
+  <li><span class="hoja">A él se lo exalta de manera diferenciada. No se dice que más que al Padre y al Espíritu.</span> <span class="pieza">S1 a5</span></li>
+  <li><span class="hoja">El Padre glorifica al Hijo, el Hijo al Padre, el Espíritu a ambos. Nosotros somos beneficiarios.</span> <span class="pieza">S1 a5</span></li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Pensar el día como ofrenda al Hijo, con reverencia de rey y cercanía de esposo.</span> <span class="pieza">S1 a5</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary class="tension">Cercano y majestuoso, sin forzarlos a un mismo nivel</summary>
+<ul>
+  <li><span class="hoja">En su humillación, el discípulo amado se recostaba en su pecho, y se acercaban los niños.</span> <span class="pieza">Jn 13 · S1 a5</span></li>
+  <li><span class="hoja">Exaltado, Juan cae como muerto.</span> <span class="pieza">Ap 1 · S1 a5</span></li>
+  <li><span class="hoja">Las dos cosas son verdaderas. El autor dice que no tiene idea de cómo ponerlas al mismo nivel, y no las fuerza.</span> <span class="pieza">S1 a5</span></li>
+  <li><span class="hoja">Lo amamos aunque no lo hemos visto. Solo el Espíritu revela esa dignidad y esa cercanía.</span> <span class="pieza">1 Pe 1:8 · S1 a5</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>Cristo actúa por medio del ministro</summary>
+<ul>
+  <li><span class="hoja">«No me atreveré a hablar sino de lo que Cristo ha hecho por medio de mí.»</span> <span class="pieza">Rom 15:18</span></li>
+  <li><span class="hoja">La visión, la perseverancia, la redacción, los sermones y el evangelismo de Pablo son actividad de Cristo en él.</span> <span class="pieza">S1 a5 · S2 a1</span></li>
+  <li><span class="hoja">Lo mismo ocurre en el ministerio de los hermanos. El pecado a veces lo tapa, y el orgullo es insensato porque el pecado sí es nuestro.</span> <span class="pieza">S1 a5</span></li>
+  <li><span class="hoja">Cristo no escribió un libro. Predicó, enseñó a los apóstoles, se apareció cuarenta días, llevó a Pablo al tercer cielo y centralizó la revelación en esos hombres.</span> <span class="pieza">S3 1 · S3 3</span></li>
+  <li><span class="hoja">Tal vez, y el autor dice que no lo sabe, no escribió para que, recibiendo los escritos, sepamos cómo obedecerlo.</span> <span class="pieza">S3 3</span></li>
+</ul>
+</details>
+</li>
+</ul>
+</details>
+</li>
+
+<li>
+<details open>
+<summary>La gracia es regalo, y esta gracia es el apostolado a los gentiles <span class="pieza">S1 a3</span></summary>
+<ul>
+  <li><span class="hoja">No corresponde al mérito. Por la transgresión de Adán vino condenación a los muchos. Por la dádiva de Cristo, justificación, a pesar de muchas transgresiones.</span> <span class="pieza">Rom 5:15–17 · S1 a3</span></li>
+  <li><span class="hoja">Pablo escribe «por la gracia que me fue dada». No por capacidad propia.</span> <span class="pieza">S1 a2</span></li>
+  <li><span class="hoja">Se llama el más insignificante de los apóstoles, indigno porque persiguió a la iglesia, y dice que trabajó más que todos, aunque no él, sino la gracia de Dios en él.</span> <span class="pieza">1 Cor 15:9–10 · S1 a3</span></li>
+  <li><span class="hoja">Escribe con autoridad porque Dios le asignó el trabajo, aunque no lo merece.</span> <span class="pieza">S1 a3</span></li>
+  <li>
+  <details>
+  <summary>No es una gracia genérica</summary>
+  <ul>
+    <li><span class="hoja">Es la gracia para ser ministro a los gentiles, es decir, el apostolado.</span> <span class="pieza">S1 a4</span></li>
+    <li><span class="hoja">Le da obligación y confianza de que Dios santificará a los gentiles por medio del evangelio.</span> <span class="pieza">S1 a4</span></li>
+    <li><span class="hoja">La gracia no es un truco mental para mantener la visión. La gracia ordena la mente. Hay enfoque humano, y también Cristo actuando.</span> <span class="pieza">S2 a1</span></li>
+  </ul>
+  </details>
+  </li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Ejercer la autoridad propia con humildad, como delegados indignos del llamamiento.</span> <span class="pieza">S1 a3</span></li>
+</ul>
+</details>
+</li>
+
+<li>
+<details open>
+<summary>La carta es atrevida para hacer recordar lo fundamental <span class="pieza">S1 a1</span></summary>
+<ul>
+<li>
+<details>
+<summary>Atrevimiento</summary>
+<ul>
+  <li><span class="hoja">Más extensa, más categórica, más firme que otros escritos.</span> <span class="pieza">S1 a1</span></li>
+  <li><span class="hoja">Sinónimo cultural: arrojada, valerosa, tenaz.</span> <span class="pieza">S1 a1</span></li>
+  <li><span class="hoja">Sobrepasa los estándares normales incluso de Pablo. El Espíritu Santo inspira esa calificación.</span> <span class="pieza">S1 a1</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>El «para» es hacer recordar</summary>
+<ul>
+  <li><span class="hoja">Se escribe a quienes ya conocen, no solo a quienes ignoran.</span> <span class="pieza">S1 a1</span></li>
+  <li><span class="hoja">«Recuerden otra vez» es redundancia deliberada: traer de nuevo lo ya sabido.</span> <span class="pieza">S1 a1</span></li>
+  <li><span class="hoja">La iglesia de Roma está llena de bondad, de conocimiento y es capaz de amonestarse, y aun así la carta suma lo que esa capacidad no aporta.</span> <span class="pieza">Rom 15:14 · S3 1</span></li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Sondear qué recuerdan los hermanos y reforzar lo que Dios considera importante.</span> <span class="pieza">S1 a1</span></li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Obedecer Romanos porque es seguro: Dios lo envió.</span> <span class="pieza">S1 a2</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>El ministerio que agrada afianza, y la creatividad no es el centro</summary>
+<ul>
+  <li><span class="hoja">Imitar a los apóstoles está por encima de nuestras ideas de ministerio. Ellos fueron delegados, estuvieron con él, y el Espíritu les puso en la mente cómo ministrar.</span> <span class="pieza">2 Tim 3 · S1 a1</span></li>
+  <li><span class="hoja">No sabremos un millón de cosas sobre cómo hacer el trabajo, y a ellos los designaron para revelarnos cómo hacerlo.</span> <span class="pieza">S1 a2</span></li>
+  <li><span class="hoja">Dios no quiere ser adorado como a nosotros se nos ocurre.</span> <span class="pieza">S1 a1</span></li>
+  <li><span class="hoja">El ministerio que agrada a Dios no se define por ser creativo, innovador, atractivo o misterioso.</span> <span class="pieza">S1 a1</span></li>
+  <li><span class="hoja">El autor confiesa haber enseñado demasiado ancho.</span> <span class="pieza">S1 a1</span></li>
+  <li><span class="hoja">La creatividad para hacer el bien es lícita, y las iglesias pueden diferir en el cómo.</span> <span class="pieza">S3 1</span></li>
+  <li><span class="hoja">Esa particularidad no puede ser el centro. Sin un núcleo común no hay unidad.</span> <span class="pieza">S3 1</span></li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Buscar la unidad en la Biblia, no en la particularidad de cada ministerio.</span> <span class="pieza">S3 1</span></li>
+</ul>
+</details>
+</li>
+</ul>
+</details>
+</li>
+
+<li>
+<details open>
+<summary>Hay tres apostolados, y solo el de revelación sigue hoy en la Escritura <span class="pieza">S3 4</span></summary>
+<ul>
+<li>
+<details>
+<summary>Agentes de revelación</summary>
+<ul>
+  <li><span class="hoja">Los doce, y Pablo. Designados por Cristo, con revelaciones extraordinarias y señales de verdadero apóstol.</span> <span class="pieza">S3 4</span></li>
+  <li><span class="hoja">Máxima autoridad humana de la iglesia del primer siglo. Trajeron la Escritura.</span> <span class="pieza">S3 4 · S1 a3</span></li>
+  <li><span class="hoja">Hay debate si el número es doce, o si entran Matías y Pablo como trece. Al autor le basta que la revelación autoritativa llegó por esos hombres y ahora llega por sus escritos.</span> <span class="pieza">S2 a4 · S3 1</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>Apóstoles funcionales, con autoridad radicalmente menor</summary>
+<ul>
+  <li><span class="hoja">Bernabé, y el plural «apóstoles de Cristo» cuando Pablo viaja con otros.</span> <span class="pieza">Hch 14:14 · 1 Tes 2:6 · S3 4</span></li>
+  <li><span class="hoja">El autor incluye, como lectura suya, a Silas, Timoteo, Tito y Afrodito.</span> <span class="pieza">S3 4</span></li>
+  <li><span class="hoja">Llamar a unos «apóstoles de Cristo» y a otros «apóstoles de la iglesia» le parece una categoría imprecisa, porque el texto llama apóstoles de Cristo también a los compañeros. No dice que esa etiqueta esté mal.</span> <span class="pieza">S3 4</span></li>
+  <li><span class="hoja">Aun así, Pablo les manda como apóstol, Timoteo recuerda los caminos de Pablo, y Pablo no exige de ellos las señales del verdadero apóstol.</span> <span class="pieza">1 Cor 4 · S3 4</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>Falsos apóstoles</summary>
+<ul>
+  <li><span class="hoja">Obreros fraudulentos, disfrazados de apóstoles de Cristo y de servidores de justicia. Satanás se disfraza de ángel de luz.</span> <span class="pieza">2 Cor 11 · S3 4</span></li>
+  <li><span class="hoja">Niegan al Señor, arrastran discípulos, explotan por avaricia y hacen que se blasfeme el camino.</span> <span class="pieza">2 Pe 2 · S3 4</span></li>
+  <li><span class="hoja">Es una realidad triste, necesaria y continua, como los falsos profetas del Antiguo Testamento y los falsos maestros del nuevo pacto.</span> <span class="pieza">S3 4</span></li>
+  <li><span class="hoja">La sensualidad con que atraen no es necesariamente sexual: son vanidades y estrategias que capturan a los inmaduros. Su dios es su estómago.</span> <span class="pieza">S3 4</span></li>
+  <li><span class="hoja">Causan disensiones contra la enseñanza apostólica y engañan a los ingenuos con palabras suaves.</span> <span class="pieza">Rom 16 · S3 4</span></li>
+  <li><span class="hoja">Hay que detectarlos, exponerlos y expulsarlos. Parte de amar a Cristo es proteger a los pequeños y reducir la blasfemia.</span> <span class="pieza">S3 4</span></li>
+  <li><span class="hoja">El precio de no hacerlo es división, explotación y blasfemia del evangelio.</span> <span class="pieza">S3 4</span></li>
+  <li><span class="hoja">Mientras más creyentes nominales, gente en las iglesias que no ha nacido de nuevo, los sigan en Latinoamérica, más se blasfema el nombre de Cristo.</span> <span class="pieza">S3 4</span></li>
+  <li><span class="hoja">Aquí no da un método, porque sería demasiado largo, y lo considera importante.</span> <span class="pieza">S3 4</span></li>
+  <li><span class="hoja">Señalar cualquier error, ignorancia o debilidad como falso apostolado puede acusar a quien está honestamente confundido, y arrancar la cizaña demasiado rápido rompe el trigo.</span> <span class="pieza">S3 4</span></li>
+  <li><span class="hoja">Hay que ser prudentes y no actuar de prisa, y hay que hacer algo, porque el Espíritu lo advirtió y elogió a Éfeso por probar a los que se decían apóstoles y no lo eran.</span> <span class="pieza">Ap 2 · S3 4</span></li>
+  <li class="tension"><span class="hoja">Le preocupa que hermanos maduros, a quienes aplaude por la unidad, la paciencia, la reconciliación y el diálogo, estiren esa virtud hasta tapar el deber de probar los apostolados.</span> <span class="pieza">S3 4</span></li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Probar quién se dice apóstol. Amar a Cristo es obedecer el apostolado que él validó.</span> <span class="pieza">S3 4</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>Dios valida la revelación con palabra y obra</summary>
+<ul>
+  <li><span class="hoja">Lo hace en hitos escasos: Moisés, Samuel, Elías, Eliseo, Cristo, los apóstoles, Pablo.</span> <span class="pieza">S3 2</span></li>
+  <li><span class="hoja">Cristo dijo que si no le creían a él, creyeran las obras. Resucitó, comió y se mostró a más de quinientos.</span> <span class="pieza">S3 2 · S3 3</span></li>
+  <li><span class="hoja">Pablo: «con el poder de señales y prodigios, en el poder del Espíritu».</span> <span class="pieza">Rom 15:18–19</span></li>
+  <li><span class="hoja">En Éfeso, dos años, milagros extraordinarios, pañuelos y delantales, en la escuela de Tirano.</span> <span class="pieza">Hch 19 · S3 2</span></li>
+  <li><span class="hoja">En Corinto, las señales de un verdadero apóstol, con toda perseverancia. No fueron de un día. Eran públicas, históricas y multitudinarias.</span> <span class="pieza">2 Cor 12 · S3 2</span></li>
+  <li><span class="hoja">Pablo se hizo «insensato» porque Corinto, inmadura, seguía a falsos apóstoles.</span> <span class="pieza">S3 2</span></li>
+  <li><span class="hoja">Esas señales de apóstol ya no están. Hay sanidad, oración y eventos extraordinarios, y no este patrón de Moisés, Cristo, Elías o Pablo.</span> <span class="pieza">S3 2</span></li>
+  <li><span class="hoja">El fundamento ya se puso. Los apóstoles murieron y dejaron la Biblia.</span> <span class="pieza">S3 2 · S1 a4</span></li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Recibir la carta con confianza porque las señales perseverantes autenticaron a quien la escribió.</span> <span class="pieza">S3 2</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>La Biblia es ese apostolado para nosotros</summary>
+<ul>
+  <li><span class="hoja">No hay hoy un Pablo, un Pedro ni un Juan que añada otro libro, gobierne como ellos o haga sus señales.</span> <span class="pieza">S2 a4 · S3 1</span></li>
+  <li><span class="hoja">El rol terminó con la muerte de los apóstoles y continúa en la Escritura: cristalización de la doctrina apostólica, unidad con el Antiguo Testamento y clave para interpretarlo.</span> <span class="pieza">S3 1</span></li>
+  <li><span class="hoja">El amor es centro de la unidad, y eso se sabe porque un apóstol lo escribió. Sin la Biblia no habría de qué hablar ese amor como fundamento.</span> <span class="pieza">S3 1</span></li>
+  <li><span class="hoja">Pastores, evangelistas y quienes se dicen profetas no hacen lo que hace el apostolado.</span> <span class="pieza">S3 1</span></li>
+  <li><span class="hoja">La iglesia local capaz igual lo necesita. De la fe de Roma se habla en el mundo, y Pablo les escribe igual.</span> <span class="pieza">Rom 15:14 · Rom 1:8 · S3 1</span></li>
+  <li><span class="hoja">A Dios le agrada tener autoridad en su pueblo. Resistirse a ser enseñado por los apóstoles, o soltar una creencia propia solo cuando toca sujetarse a una creencia apostólica, es autonomía.</span> <span class="pieza">S2 a4</span></li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Sujetarse a la Escritura como apostolado recibido, y examinar si molesta ser enseñado.</span> <span class="pieza">S2 a4</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>Para la obediencia de los gentiles</summary>
+<ul>
+  <li><span class="hoja">Cristo engrandeció el apostolado para esa obediencia. Simplificó la obediencia poniendo la revelación en un lugar.</span> <span class="pieza">S3 3</span></li>
+  <li><span class="hoja">Amar a Cristo es guardar sus mandamientos, y él los centralizó ahí.</span> <span class="pieza">S3 4</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>La autoridad es delegada y humilde</summary>
+<ul>
+  <li><span class="hoja">Hay autoridad en el gobierno, en la iglesia y en la familia. Es buena porque Dios la dio.</span> <span class="pieza">S1 a3</span></li>
+  <li><span class="hoja">No es licencia para imponer deseos. Es responsabilidad delegada para cumplir la voluntad de Dios.</span> <span class="pieza">S1 a3</span></li>
+  <li><span class="hoja">Si la autoridad máxima, el apóstol, fue humilde, las inferiores mucho más.</span> <span class="pieza">S1 a3</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>Colaboradores posteriores, sin el misterio ni las señales</summary>
+<ul>
+  <li><span class="hoja">En el primer siglo los apóstoles confirmaban iglesias, con colaboradores.</span> <span class="pieza">S1 a4</span></li>
+  <li><span class="hoja">En su opinión y desde su experiencia, las iglesias siguen necesitando hermanos que unifiquen, entrenen líderes y corrijan errores, no por jerarquía ni gloria, sino por funcionamiento.</span> <span class="pieza">S1 a4</span></li>
+  <li><span class="hoja">Aunque no se quiera aceptar, y aunque se diga que no debe existir otra cosa que la iglesia local, siempre terminan habiendo quienes van de una iglesia a otra, escriben, ponen un seminario o unos materiales, y a quienes los líderes siguen.</span> <span class="pieza">S1 a4</span></li>
+  <li><span class="hoja">No dice que tenga que continuar por ellos todo el misterio ni todo el ejercicio apostólico.</span> <span class="pieza">S1 a4</span></li>
+  <li><span class="hoja">Una estructura por encima de la iglesia local, sin esos dones, se le vuelve burocrática. No dice que sea cierto siempre.</span> <span class="pieza">S1 a4</span></li>
+</ul>
+</details>
+</li>
+</ul>
+</details>
+</li>
+
+<li>
+<details open>
+<summary>Pablo ministra a manera de sacerdote, y el contenido es el evangelio <span class="pieza">S2 a4</span></summary>
+<ul>
+<li>
+<details>
+<summary>Dos sentidos de sacerdote, vividos a la vez</summary>
+<ul>
+  <li><span class="hoja">Todo creyente es real sacerdocio, piedra viva, templo, y a la vez ofrenda.</span> <span class="pieza">1 Pe 2:5, 2:9 · Rom 12:1 · S2 a4</span></li>
+  <li><span class="hoja">Cristo es el único sumo sacerdote y el único mediador. El Antiguo Testamento es sombra.</span> <span class="pieza">S2 a4</span></li>
+  <li><span class="hoja">Dios explica por partes una realidad que vivimos a la vez: ofrenda, sacerdote y templo. No son contradicciones.</span> <span class="pieza">S2 a4</span></li>
+  <li><span class="hoja">El sacerdocio que Pablo se aplica, y que no es de todos, es el de un grupo escaso dentro del pueblo, como Leví dentro de Israel.</span> <span class="pieza">S2 a4</span></li>
+  <li><span class="hoja">Dios entrega por ellos la revelación que Cristo no escribió, y por ellos presenta a los gentiles como ofrenda aceptable, santificada por el Espíritu.</span> <span class="pieza">S2 a4</span></li>
+  <li><span class="hoja">Pablo usa el sacerdocio también para el derecho de vivir del evangelio, y no se aprovechó de ese derecho. El autor no extiende aquí ese punto a misiones ni a ministros de tiempo completo.</span> <span class="pieza">1 Cor 9 · S2 a4</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>El contenido es el evangelio, y el corazón es el amor</summary>
+<ul>
+  <li><span class="hoja">No significa que solo haya sermones evangelísticos.</span> <span class="pieza">S2 a5</span></li>
+  <li><span class="hoja">Ningún tema de la iglesia sale del marco del evangelio: ni niños, ni jóvenes, ni adultos, ni ancianos, ni la casa, ni el discipulado, ni la discusión pública.</span> <span class="pieza">S2 a5</span></li>
+  <li><span class="hoja">Toda la Biblia, bien leída, lleva a confiar en Cristo.</span> <span class="pieza">S2 a5</span></li>
+  <li><span class="hoja">Sin amor, lenguas, profecía, fe que mueve montes, dar los bienes y entregar el cuerpo no aprovechan.</span> <span class="pieza">1 Cor 13 · S2 a5</span></li>
+  <li><span class="hoja">El primer mandamiento es amar a Dios. El segundo, al prójimo.</span> <span class="pieza">S2 a5</span></li>
+  <li><span class="hoja">Éfeso tenía obras, fatiga, discernimiento de falsos apóstoles y perseverancia, y Cristo amenaza con quitar el candelabro por haber dejado el primer amor.</span> <span class="pieza">Ap 2 · S2 a5</span></li>
+  <li><span class="hoja">Sin amor a Cristo, la obra no se cuenta. El evangelio mantiene ese amor porque recuerda la reconciliación por su muerte y resurrección, su intercesión y la justicia que nos representa.</span> <span class="pieza">S2 a5</span></li>
+  <li>
+  <details>
+  <summary>En la práctica: la clase de niños</summary>
+  <ul>
+    <li><span class="hoja">Se les enseña el marco de la realidad, el mundo y cada relación, y se les ayuda a memorizar esas realidades. Lo mismo necesitan los adultos.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Existen en un mundo creado por Dios a través de Cristo, su palabra. Cristo hizo los materiales, las montañas, los árboles, la tierra y las frutas.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Cristo sustenta todas las cosas por el poder de su palabra. Cada respiración y cada despertar es porque él lo permitió, y por eso se agradece al Padre por el Hijo y al Hijo por todo.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">La primera relación es la de los padres, dentro de «Padres, críen a sus hijos en la disciplina e instrucción del Señor», y Señor es Cristo.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Se les enseña a honrar a sus padres, y que nos acercamos a Dios, a pesar de ser pecadores, por la misericordia de Cristo.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Existen bajo el reino de un Dios y de un Mesías que el Padre ha puesto y que nos permite acceder al Padre. Todo lo que hagan debe agradar a este creador y honrar a este Salvador.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Son pecadores, hay maldad en su pensamiento, y Cristo puede limpiarlos y dar el poder del Espíritu para vencer el pecado.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Los padres también son pecadores, piden perdón cuando pecan contra ellos, se perdonan, perdonan a los enemigos, oran por quienes los persiguen y quieren que los demás se conviertan.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Se apartan recursos para la obra de Cristo, se le imita al hablar, al gastar y al relacionarse, y se organiza el tiempo para servirle.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Los hermanos son la familia. El trabajo, también el de los niños, que es aprender, ayudar en la casa y trabajar con los padres, se hace como para Cristo.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Oran sin cesar porque Cristo intercede y permite que la oración llegue al Padre.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Así se ve que es imposible hacer nada en la realidad sin que esté centrado en el evangelio.</span> <span class="pieza">S2 a5</span></li>
+  </ul>
+  </details>
+  </li>
+  <li>
+  <details>
+  <summary>En la práctica: la comunidad, y las áreas de la vida adulta</summary>
+  <ul>
+    <li><span class="hoja">Hay que ocuparse en buenas obras útiles para los hombres, porque antes se vivía en malas obras.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">La participación ciudadana se enfoca en esas buenas obras por la redención que Cristo ha dado.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Hay que someterse a los gobernantes porque Dios los puso, y dar al César lo que es del César y a Dios lo que es de Dios.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Cristo se obedece antes que a los gobernantes y, por obedecerlo, se es mejor ciudadano.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Salud emocional, propósito, finanzas y planificación se trabajan con el poder que Cristo da para vencer el pecado, la prioridad del reino y los afectos por él, que dominan los demás afectos, incluida la tristeza, la desilusión, el quebranto y el gozo de la prosperidad.</span> <span class="pieza">S2 a5</span></li>
+  </ul>
+  </details>
+  </li>
+  <li>
+  <details>
+  <summary>Las sombras del Antiguo Testamento son Cristo</summary>
+  <ul>
+    <li><span class="hoja">Después de la resurrección y del envío de los apóstoles se reveló el misterio, se despejaron las sombras y se ve la realidad: Cristo, su reino y la relación con el Padre a través de él.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Génesis 3: la libertad del reino de Satanás la da Cristo.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Génesis 12: la nación prometida es el reino de Cristo, la descendencia de Abraham.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Los sacerdotes son figura del trabajo sacerdotal del pueblo, del sacerdocio de los apóstoles y del sumo sacerdote, que es Cristo.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Moisés: Cristo es ahora nuestro Moisés, hace señales y nos saca del reino de Satanás, que es el faraón.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">David: el rey del pueblo es ahora Cristo, no como David que peca, sino un rey perfecto.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">Cuando venga, será un mejor Salomón y pondrá un reino de paz en todo el mundo.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">En los profetas, Cristo es el gran profeta, que conoce a Dios en persona y viene a revelar al Padre.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">En Israel, Cristo es el nuevo Adán, que crea un nuevo pueblo y une a Israel y a los gentiles.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">«Destruyan este templo, y en tres días lo levantaré.» Cristo es el templo, el sumo sacerdote, la piedra angular, el cordero y el sacrificio por el pecado.</span> <span class="pieza">S2 a5</span></li>
+    <li><span class="hoja">«Yo ministro el evangelio» resume el ministerio de Pablo, y debiera resumir el nuestro: proclamar a Cristo en toda su extensión, en todas sus capas y en toda su capacidad de regular lo que hacemos.</span> <span class="pieza">S2 a5</span></li>
+  </ul>
+  </details>
+  </li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Enmarcar toda enseñanza en Cristo, hablar de él, meditarlo y existir como el evangelio enseña que Dios quiere que existamos.</span> <span class="pieza">S2 a5</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary>«Gentil» tiene tres sentidos, y la salvación es un pueblo</summary>
+<ul>
+  <li><span class="hoja">Fuera de la salvación y de los pactos: el impenitente es como el gentil y el publicano.</span> <span class="pieza">Mt 18 · S2 a2</span></li>
+  <li><span class="hoja">No descendiente de Abraham que, al creer, es injertado y hecho coheredero. El misterio fue revelado a apóstoles y profetas.</span> <span class="pieza">Ef 3 · S2 a2</span></li>
+  <li><span class="hoja">El mundo no judío que hay que alcanzar.</span> <span class="pieza">S2 a2</span></li>
+  <li><span class="hoja">En Romanos 15 el autor lee el alcance de la misión, unido al sentido de injerto.</span> <span class="pieza">S2 a2</span></li>
+  <li><span class="hoja">La salvación no es solo individual. Es ciudadanía, linaje y pueblo. Estar fuera de la ciudadanía de Israel y de los pactos de la promesa era estar sin esperanza y sin Dios.</span> <span class="pieza">Ef 2 · S2 a2</span></li>
+  <li><span class="hoja">Cristo hizo de los dos un solo hombre nuevo. Ya no hay dos pueblos.</span> <span class="pieza">S2 a2</span></li>
+  <li><span class="hoja">No todo Israel es Israel. El Israel verdadero es el linaje creyente, y en el Antiguo Testamento ya incluía gentiles que creían.</span> <span class="pieza">S2 a2</span></li>
+  <li><span class="hoja">Enseñar dos pueblos separados, iglesia e Israel, le parece un daño de cierta forma de dispensacionalismo, no de todas. No dice que todas las maneras de enseñarla lleguen al mismo lugar.</span> <span class="pieza">S2 a2</span></li>
+  <li><span class="hoja">Los pactos de Abraham, de David y el nuevo pacto son, en este sentido, la base de la salvación que heredamos. Más al fondo está el decreto de Dios.</span> <span class="pieza">S2 a2</span></li>
+  <li><span class="hoja">Menospreciar el linaje se parece, para él, a menospreciar lo que otros hicieron para que nosotros estemos aquí.</span> <span class="pieza">S2 a2</span></li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Valorar el pueblo y los pactos, no solo la experiencia individual.</span> <span class="pieza">S2 a2</span></li>
+</ul>
+</details>
+</li>
+<li>
+<details>
+<summary class="tension">El alcance es todos los gentiles, dentro de los límites que Dios pone</summary>
+<ul>
+  <li><span class="hoja">Pablo es deudor a griegos y bárbaros, sabios e ignorantes, y por eso ansía anunciar el evangelio también en Roma.</span> <span class="pieza">Rom 1:14–15 · S2 a3</span></li>
+  <li><span class="hoja">No podía contentarse con Asia o Macedonia. Debía promover la obediencia a la fe entre todos los gentiles.</span> <span class="pieza">S2 a3</span></li>
+  <li><span class="hoja">El pueblo de Dios anuncia las virtudes de quien lo llamó. Pablo celebra que de la fe de Roma se habla en el mundo, y que la palabra salió de Tesalónica por Macedonia, Acaya y todas partes.</span> <span class="pieza">1 Pe 2:9 · Rom 1:8 · 1 Tes 1:8 · S2 a3</span></li>
+  <li><span class="hoja">La gran comisión es hacer discípulos de todas las etnias, bautizar y enseñar a guardar todo lo mandado. El deber es de la iglesia, no solo de los apóstoles.</span> <span class="pieza">Mt 28 · S2 a3</span></li>
+  <li><span class="hoja">Cambiar el alcance cambia la estrategia. Pensar en todas las personas de un país, como unos treinta millones, ya ordena el pensamiento.</span> <span class="pieza">S2 a3</span></li>
+  <li><span class="hoja">Dios limita recursos, tiempo y ámbito, como limitó a Pablo en Jerusalén. El deber global permanece dentro de esos límites.</span> <span class="pieza">S2 a3</span></li>
+  <li><span class="hoja">No está por encima de la familia, la iglesia local, el trabajo y la comunidad. Todos los deberes se cumplen a la vez, con urgencia hacia el discipulado de las naciones.</span> <span class="pieza">S2 a3</span></li>
+  <li><span class="hoja">En Apocalipsis, aun con señales, naciones rehusarán creer, y los escogidos responderán.</span> <span class="pieza">S2 a3</span></li>
+  <li><span class="hoja">El camino que propone es ejemplo, no norma única: relación con Dios por la Escritura y la iglesia local; ser estudiante, porque todos discipulan; el entorno inmediato; la iglesia local, que es la parte de las naciones que ya se discipula y nunca termina; la región, con estrategias más amplias que la presencia propia; naciones y continentes, apoyando obra ya experta.</span> <span class="pieza">S2 a3</span></li>
+  <li><span class="hoja">Las horas que uno pueda dar son un ejemplo pobre. Pueden ser cinco, diez o muchos más. Hacer algo con lo que se puede.</span> <span class="pieza">S2 a3</span></li>
+  <li><span class="hoja">Asociarse es difícil porque cuesta definir «todo lo que Cristo mandó», sobre todo entre protestantes. Mejor algo parcial que nada.</span> <span class="pieza">S2 a3</span></li>
+  <li><span class="hoja">Paciencia, porque Dios ha sido paciente con nosotros. No se negocia el evangelio, la integridad ni la doctrina apostólica.</span> <span class="pieza">S2 a3</span></li>
+  <li><span class="hoja">Priorizar lo no alcanzado antes de lo ya alcanzado es de Pablo, y el autor lo deja para más adelante.</span> <span class="pieza">S2 a1</span></li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Asumir el deber global dentro de los límites y de los demás deberes.</span> <span class="pieza">S2 a3</span></li>
+</ul>
+</details>
+</li>
+</ul>
+</details>
+</li>
+
+<li>
+<details open>
+<summary>El llamamiento ordena la visión, la mente y la eficacia <span class="pieza">S2 a1</span></summary>
+<ul>
+  <li><span class="hoja">Incluye, en su opinión, la manera de usar los dones en el tiempo, las circunstancias y la esfera de cada uno.</span> <span class="pieza">S1 a4</span></li>
+  <li><span class="hoja">Los dones son capacidades del Espíritu para edificar de una forma particular. El término llamamiento no está, para él, tan delineado como el de don.</span> <span class="pieza">S1 a4</span></li>
+  <li><span class="hoja">Dios define la visión con tres cosas: deberes generales del reino, habilidades específicas y circunstancias.</span> <span class="pieza">S2 a1</span></li>
+  <li><span class="hoja">Nosotros no definimos nuestro propósito. Fuimos comprados. Somos siervos de la justicia y existimos para la voluntad de Cristo.</span> <span class="pieza">Rom 6 · S2 a1</span></li>
+  <li>
+  <details>
+  <summary>Dios reorienta, y la negligencia es otra cosa</summary>
+  <ul>
+    <li><span class="hoja">Pablo, formado a los pies de Gamaliel y perseguidor, se cree ideal para Jerusalén. Cristo le dice que salga pronto y lo envía a los gentiles.</span> <span class="pieza">Hch 22 · S1 a4</span></li>
+    <li><span class="hoja">Otras reorientaciones: el sueño que desvía el viaje desde Antioquía, y el impedimento repetido de llegar a Roma.</span> <span class="pieza">S2 a1</span></li>
+    <li><span class="hoja">Si algo bueno está a la mano, debe hacerse. Cuando el espacio no se abre, puede ser el llamamiento cerrando otra puerta.</span> <span class="pieza">S1 a4</span></li>
+    <li><span class="hoja">Nada tuerce un plan de Dios. Si algo no sale, puede ser negligencia, y eso se cambia con arrepentimiento, obediencia y disciplina.</span> <span class="pieza">S2 a1</span></li>
+    <li><span class="hoja">Si aun así no sale, muy probablemente Dios reorienta.</span> <span class="pieza">S2 a1</span></li>
+  </ul>
+  </details>
+  </li>
+  <li>
+  <details>
+  <summary>La eficacia también la define el llamamiento</summary>
+  <ul>
+    <li><span class="hoja">Cristo actúa dentro de esos contornos.</span> <span class="pieza">S1 a4</span></li>
+    <li><span class="hoja">Pablo llenó de evangelio desde Jerusalén hasta el Ilírico con señales de apóstol porque tenía ese llamamiento, no porque todo creyente deba tenerlo.</span> <span class="pieza">S1 a4</span></li>
+    <li><span class="hoja">No hay diez mil Moisés ni diez mil Pablos. Dios podría hacerlo, incluso por incrédulos, como hizo profetizar a Saúl.</span> <span class="pieza">S1 a4</span></li>
+    <li><span class="hoja">En opinión del autor, Dios no lo quiere. No niega que la negligencia estorbe. Por qué no le interesa, dice que no lo sabe.</span> <span class="pieza">S1 a4</span></li>
+  </ul>
+  </details>
+  </li>
+  <li>
+  <details>
+  <summary>Identificarlo, enfocarse y contentarse</summary>
+  <ul>
+    <li><span class="hoja">«No digo que nos vaya a gustar.» A Pablo no le gustó salir de Jerusalén.</span> <span class="pieza">S1 a4</span></li>
+    <li><span class="hoja">El contentamiento y la oración son necesarios.</span> <span class="pieza">S2 a1</span></li>
+    <li><span class="hoja">Entre la gran comisión, la iglesia, la familia, el trabajo y la comunidad, todavía hay que discernir la ruta.</span> <span class="pieza">S2 a1</span></li>
+    <li><span class="hoja">Corresponder con esfuerzos débiles, dedicados a él, puede llenar de gozo, porque es vivir para aquello por lo que fuimos creados.</span> <span class="pieza">S2 a1</span></li>
+    <li><span class="ap">Aplicación</span><span class="hoja">Descubrir el llamamiento y contentarse.</span> <span class="pieza">S1 a4 · S2 a1</span></li>
+  </ul>
+  </details>
+  </li>
+</ul>
+</details>
+</li>
+
+<li>
+<details open>
+<summary class="tension">La fe es evidencial, y también es confiar en lo escrito cuando no se siente <span class="pieza">S3 3</span></summary>
+<ul>
+  <li><span class="hoja">No es fe irracional ni fe de meras impresiones. Menospreciar las evidencias es menospreciar la obra del Espíritu.</span> <span class="pieza">S3 3</span></li>
+  <li><span class="hoja">Hay un elemento de confiar sin poder probarlo todo, y no se pierde el fundamento público.</span> <span class="pieza">S3 3</span></li>
+  <li><span class="hoja">Las evidencias están en la historia: Moisés, Elías, Eliseo, Cristo, los quinientos y la comida después de resucitar.</span> <span class="pieza">S3 3</span></li>
+  <li><span class="hoja">La fe que ahora se pide es confiar en los escritos apostólicos aunque no se sienta cada día el impacto emocional.</span> <span class="pieza">S3 3</span></li>
+  <li><span class="hoja">Desear la experiencia, el milagro y la venida es normal y está bien.</span> <span class="pieza">S3 3</span></li>
+  <li><span class="hoja">Abraham caminó años sin ver el cumplimiento, después de haber recibido una evidencia. Los héroes de la fe perseveraron sin ver, y habían visto al principio.</span> <span class="pieza">S3 3</span></li>
+  <li><span class="hoja">Corinto tenía dones y aun así se despegaba de Pablo. Tomás dudó de lo que podía ver.</span> <span class="pieza">S3 3</span></li>
+  <li><span class="hoja">Creer la Escritura contra una palabra de líder que la contradice requiere fe.</span> <span class="pieza">S3 3</span></li>
+  <li><span class="hoja">La fe es relacional con el Hijo, a quien amamos sin haberlo visto, con gozo inefable.</span> <span class="pieza">1 Pe 1:8 · S1 a5</span></li>
+  <li><span class="ap">Aplicación</span><span class="hoja">Volver a la Escritura para oír a Cristo aunque no se sienta cerca cada día.</span> <span class="pieza">S3 3</span></li>
+</ul>
+</details>
+</li>
+</ul>
+</main>
+<script>
+  var nodos = document.querySelectorAll("details");
+  document.getElementById("abrir").addEventListener("click", function () {
+    nodos.forEach(function (nodo) { nodo.open = true; });
+  });
+  document.getElementById("cerrar").addEventListener("click", function () {
+    nodos.forEach(function (nodo) { nodo.open = false; });
+  });
+</script>
+</body>
+</html>
