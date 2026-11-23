@@ -14,13 +14,13 @@ export const PROFILE_YOUTUBE = "https://www.youtube.com/@eduardoosvideos";
 export const PROFILE_GITHUB = "https://github.com/EduardoOsteicoechea";
 
 export const profileWhoAnswer =
-  "I am a licensed Building Architect and Senior BIM Software Developer. I build and maintain C#/.NET add-ins for Revit and AutoCAD, cloud automations on Autodesk Platform Services and Autodesk Construction Cloud, ASP.NET Core APIs on AWS, and Python/Dynamo scripts that remove repetitive work from design teams.";
+  "I am a licensed Building Architect and BIM Software Developer. I build and maintain C#/.NET add-ins for Revit and AutoCAD, cloud automations on Autodesk Platform Services and Autodesk Construction Cloud, ASP.NET Core APIs on AWS, and Python/Dynamo scripts that remove repetitive work from design teams.";
 
 /** Second hero paragraph (home page lead). */
 export const profileWhoLead2 =
   "This site is my professional profile: case studies, CV, and two public AEC tools - eReport (issue tracking) and eoProject (construction stages, photos, and IFC versions). Fluent English, native Spanish. Remote.";
 
-export const HOME_HEADING = "Senior BIM Software Developer";
+export const HOME_HEADING = "BIM Software Developer";
 
 export type HomeServiceOffer = {
   id: string;

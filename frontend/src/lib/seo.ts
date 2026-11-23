@@ -16,9 +16,9 @@ export function personSchema() {
     "@id": `${SITE_ORIGIN}/#person`,
     name: PERSON_NAME,
     url: SITE_ORIGIN,
-    jobTitle: "Senior BIM Software Developer",
+    jobTitle: "BIM Software Developer",
     description:
-      "Licensed Building Architect (ULA, Cum Laude) and Senior BIM Software Developer. Revit/AutoCAD APIs, C#/.NET add-ins, Autodesk APS/ACC, ASP.NET Core, and AWS cloud architectures.",
+      "Licensed Building Architect (ULA, Cum Laude) and BIM Software Developer. Revit/AutoCAD APIs, C#/.NET add-ins, Autodesk APS/ACC, ASP.NET Core, and AWS cloud architectures.",
     knowsAbout: [
       "Revit API",
       "AutoCAD API",
@@ -45,7 +45,7 @@ export function websiteSchema() {
     url: SITE_ORIGIN,
     inLanguage: "en",
     description:
-      "Professional profile for Eduardo Osteicoechea - Senior BIM Software Developer, licensed architect, Revit/AutoCAD API and APS engineer.",
+      "Professional profile for Eduardo Osteicoechea - BIM Software Developer, licensed architect, Revit/AutoCAD API and APS engineer.",
     publisher: { "@id": `${SITE_ORIGIN}/#person` },
   };
 }
@@ -88,7 +88,7 @@ export const HOME_FAQS: FaqItem[] = [
   {
     question: "Who is Eduardo Osteicoechea?",
     answer:
-      "Eduardo Osteicoechea is a licensed Building Architect (ULA, Cum Laude) and Senior BIM Software Developer. He builds Revit/AutoCAD API add-ins, APS/ACC automations, ASP.NET Core APIs on AWS, and AEC tools such as eReport and eoProject.",
+      "Eduardo Osteicoechea is a licensed Building Architect (ULA, Cum Laude) and BIM Software Developer. He builds Revit/AutoCAD API add-ins, APS/ACC automations, ASP.NET Core APIs on AWS, and AEC tools such as eReport and eoProject.",
   },
   {
     question: "What is public on eduardoos.com?",
