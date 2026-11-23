@@ -260,7 +260,8 @@ function weekForPlanDay(planDay: number): number {
                             ? `${area.label} · Expo`
                             : area.label;
                         const subjectBodyId = `${blockId}-${area.sectionId}-body`;
-                        const subjectOpen = isExpo ? area.sectionId === "bib" && weekSubjectsOpen : subjectsOpen;
+                        const expoBible = isExpo && area.sectionId === "bib";
+                        const subjectOpen = isExpo ? expoBible : subjectsOpen;
                         return (
                           <div
                             class:list={[
@@ -285,7 +286,7 @@ function weekForPlanDay(planDay: number): number {
                               <span class="eoschool-curriculum__subject-icon" title={label}>
                                 <span class="material-symbols-outlined" aria-hidden="true">{area.icon}</span>
                               </span>
-                              {isExpo ? (
+                              {isExpo && !expoBible ? (
                                 <button
                                   type="button"
                                   class="eoschool-curriculum__subject-toggle eoschool-curriculum__subject-toggle--icon"
@@ -316,6 +317,9 @@ function weekForPlanDay(planDay: number): number {
                             </div>
                             <div class="eoschool-curriculum__subject-copy">
                             <h4 class="page-title-sr">{label}</h4>
+                            {isExpo && !expoBible ? (
+                              <p class="eoschool-curriculum__expo-word">Expo</p>
+                            ) : null}
                             <div
                               class="eoschool-curriculum__subject-body eoschool-curriculum__subject-body--card"
                               id={subjectBodyId}
@@ -328,21 +332,15 @@ function weekForPlanDay(planDay: number): number {
                                   {block.calendarDate ? ` · ${block.calendarDate}` : ""}
                                 </p>
                               ) : null}
-                              {isExpo ? (
+                              {expoBible && weekPlan.week === 7 ? (
                                 <p class="eoschool-curriculum__expo-hint">
-                                  Preparar exposición de la semana
-                                  {weekPlan.week === 7 ? (
-                                    <>
-                                      {" "}
-                                      <a
-                                        href="/homescool/expo/semana-7-dia-5"
-                                        data-route
-                                        data-expo-route
-                                      >
-                                        Escribir e imprimir
-                                      </a>
-                                    </>
-                                  ) : null}
+                                  <a
+                                    href="/homescool/expo/semana-7-dia-5"
+                                    data-route
+                                    data-expo-route
+                                  >
+                                    Escribir e imprimir
+                                  </a>
                                 </p>
                               ) : null}
                               {groups.some((g) => g.learnings.length) ? (
@@ -1104,8 +1102,16 @@ function weekForPlanDay(planDay: number): number {
     justify-content: flex-start;
   }
 
-  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject:not(.eoschool-curriculum__subject--open) .eoschool-curriculum__subject-copy {
+  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject:not(.eoschool-curriculum__subject--open) .eoschool-curriculum__subject-body,
+  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject:not(.eoschool-curriculum__subject--open) .eoschool-curriculum__subject-detail {
     display: none;
+  }
+
+  .eoschool-curriculum__expo-word {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    line-height: 1.2;
+    color: var(--color-text);
   }
 
   .eoschool-curriculum__day-card:hover,

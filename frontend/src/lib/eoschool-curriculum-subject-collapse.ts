@@ -41,6 +41,11 @@ export function initCurriculumSubjectCollapse(root: HTMLElement | null): void {
 
     const subject = toggle.closest<HTMLElement>("[data-curriculum-section]");
     if (!subject) return;
+    const day = subject.closest<HTMLElement>("[data-curriculum-day]");
+    if (day?.dataset.curriculumDayKind === "exposition" && subject.dataset.curriculumSection === "bib") {
+      setCurriculumSubjectOpen(subject, true);
+      return;
+    }
 
     const body = subject.querySelector<HTMLElement>("[data-curriculum-subject-body]");
     if (!body) return;
