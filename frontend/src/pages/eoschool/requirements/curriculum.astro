@@ -1072,18 +1072,17 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__day-card--expo .eoschool-curriculum__day-body {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    align-content: flex-start;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
   }
 
-  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject--open {
-    flex: 1 1 100%;
-  }
-
+  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject,
+  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject--open,
   .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject:not(.eoschool-curriculum__subject--open) {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
   }
 
   .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject-rail {
