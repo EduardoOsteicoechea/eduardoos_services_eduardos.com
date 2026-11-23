@@ -44,6 +44,7 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
       const key = sectionProgressKey(dayId, sectionId);
       const checked = done.has(key);
       sectionEl.classList.toggle("eoschool-curriculum__subject--done", checked);
+      paintSubjectProgress(sectionEl, checked);
       const input = sectionEl.querySelector<HTMLInputElement>("[data-curriculum-section-check]");
       if (input) input.checked = checked;
     });
@@ -96,6 +97,16 @@ export function paintWeekProgress(week: HTMLElement, finished: number, total: nu
     total,
     `Progreso de la semana ${week.dataset.week ?? ""}: ${finished} de ${total}`,
   );
+}
+
+/** Checked subjects fill green. Open ones stay yellow at 10%. */
+export function paintSubjectProgress(section: HTMLElement, checked: boolean): void {
+  const bar = section.querySelector<HTMLElement>("[data-curriculum-subject-progress]");
+  if (!bar) return;
+  const ratio = checked ? 1 : 0.1;
+  bar.setAttribute("aria-valuenow", String(Math.round(ratio * 100)));
+  const name = bar.getAttribute("aria-label")?.replace(/: .*$/, "") || "Progreso de la materia";
+  bar.setAttribute("aria-label", `${name}: ${checked ? "completada" : "pendiente"}`);
 }
 
 function paintDayProgress(card: HTMLElement, finished: number, total: number): void {

@@ -269,6 +269,17 @@ function weekForPlanDay(planDay: number): number {
                             ]}
                             data-curriculum-section={area.sectionId}
                           >
+                            <div
+                              class="eoschool-curriculum__subject-progress"
+                              role="progressbar"
+                              aria-valuemin="0"
+                              aria-valuemax="100"
+                              aria-valuenow="10"
+                              aria-label={`Progreso de ${label}`}
+                              data-curriculum-subject-progress
+                            >
+                              <span class="eoschool-curriculum__subject-progress__fill"></span>
+                            </div>
                             <div class="eoschool-curriculum__subject-rail">
                               <span class="eoschool-curriculum__subject-icon" title={label}>
                                 <span class="material-symbols-outlined" aria-hidden="true">{area.icon}</span>
@@ -1300,9 +1311,37 @@ function weekForPlanDay(planDay: number): number {
     align-items: flex-start;
     gap: var(--rail-gap);
     min-width: 0;
+    position: relative;
     padding: var(--rail-gap);
     border-block-start: 0;
     border-radius: var(--border-radius);
+  }
+
+  .eoschool-curriculum__subject-progress {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    height: 0.15rem;
+    overflow: hidden;
+    background: color-mix(in srgb, #ca8a04 28%, transparent);
+    pointer-events: none;
+  }
+
+  .eoschool-curriculum__subject-progress__fill {
+    position: absolute;
+    inset: 0;
+    background: #eab308;
+    transform: scaleX(0.1);
+    transform-origin: left center;
+  }
+
+  .eoschool-curriculum__subject--done .eoschool-curriculum__subject-progress {
+    background: color-mix(in srgb, #16a34a 22%, transparent);
+  }
+
+  .eoschool-curriculum__subject--done .eoschool-curriculum__subject-progress__fill {
+    background: #16a34a;
+    transform: scaleX(1);
   }
 
   .eoschool-curriculum__subject-rail {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { paintWeekProgress } from "./eoschool-curriculum-progress";
+import { paintSubjectProgress, paintWeekProgress } from "./eoschool-curriculum-progress";
 
 describe("paintWeekProgress", () => {
   it("fills the bar from completed sections", () => {
@@ -14,6 +14,18 @@ describe("paintWeekProgress", () => {
     expect(fill.style.transform).toBe("scaleX(0.25)");
     expect(bar.getAttribute("aria-valuenow")).toBe("25");
     expect(bar.getAttribute("aria-label")).toBe("Progreso de la semana 7: 1 de 4");
+  });
+
+  it("marks an open subject yellow at 10% and a checked one complete", () => {
+    const section = document.createElement("div");
+    section.innerHTML = `<div data-curriculum-subject-progress role="progressbar" aria-valuenow="10" aria-label="Progreso de Biblia"></div>`;
+    paintSubjectProgress(section, false);
+    const bar = section.querySelector<HTMLElement>("[data-curriculum-subject-progress]")!;
+    expect(bar.getAttribute("aria-valuenow")).toBe("10");
+    expect(bar.getAttribute("aria-label")).toBe("Progreso de Biblia: pendiente");
+    paintSubjectProgress(section, true);
+    expect(bar.getAttribute("aria-valuenow")).toBe("100");
+    expect(bar.getAttribute("aria-label")).toBe("Progreso de Biblia: completada");
   });
 
   it("stays empty when the week has no sections", () => {
