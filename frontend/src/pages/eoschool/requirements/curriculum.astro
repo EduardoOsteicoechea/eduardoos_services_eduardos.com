@@ -1047,7 +1047,7 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__day-body {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: var(--rail-gap);
     min-width: 0;
     flex: 1;
     overflow-x: hidden;
@@ -1254,8 +1254,57 @@ function weekForPlanDay(planDay: number): number {
     flex-direction: column;
     gap: 0;
     min-width: 0;
-    padding-block-start: 0;
+    padding: var(--rail-gap);
     border-block-start: 0;
+    border-radius: var(--border-radius);
+  }
+
+  html[data-theme="light"] .eoschool-curriculum__subject[data-curriculum-section="bib"] {
+    background: #f4eef8;
+  }
+
+  html[data-theme="light"] .eoschool-curriculum__subject[data-curriculum-section="ide"] {
+    background: #f8f1ea;
+  }
+
+  html[data-theme="light"] .eoschool-curriculum__subject[data-curriculum-section="len"] {
+    background: #eef6f1;
+  }
+
+  html[data-theme="light"] .eoschool-curriculum__subject[data-curriculum-section="mat"] {
+    background: #f7f4ea;
+  }
+
+  html[data-theme="light"] .eoschool-curriculum__subject[data-curriculum-section="cie"] {
+    background: #eef4f8;
+  }
+
+  html[data-theme="light"] .eoschool-curriculum__subject[data-curriculum-section="eng"] {
+    background: #f8eef2;
+  }
+
+  html:not([data-theme="light"]) .eoschool-curriculum__subject[data-curriculum-section="bib"] {
+    background: #221e28;
+  }
+
+  html:not([data-theme="light"]) .eoschool-curriculum__subject[data-curriculum-section="ide"] {
+    background: #28221e;
+  }
+
+  html:not([data-theme="light"]) .eoschool-curriculum__subject[data-curriculum-section="len"] {
+    background: #1c2620;
+  }
+
+  html:not([data-theme="light"]) .eoschool-curriculum__subject[data-curriculum-section="mat"] {
+    background: #28241c;
+  }
+
+  html:not([data-theme="light"]) .eoschool-curriculum__subject[data-curriculum-section="cie"] {
+    background: #1c2428;
+  }
+
+  html:not([data-theme="light"]) .eoschool-curriculum__subject[data-curriculum-section="eng"] {
+    background: #281e24;
   }
 
   .eoschool-curriculum__day-body > .eoschool-curriculum__subject:first-child {
