@@ -376,6 +376,14 @@ export function initCurriculumDayModal(root: HTMLElement | null): void {
 
   root.addEventListener("keydown", (ev) => {
     if (ev.key !== "Enter" && ev.key !== " ") return;
+    const keyTarget = ev.target;
+    if (
+      keyTarget instanceof Element &&
+      (keyTarget.closest("[data-curriculum-subject-toggle]") ||
+        keyTarget.closest(".eoschool-curriculum__section-check"))
+    ) {
+      return;
+    }
     const card = (ev.target as HTMLElement | null)?.closest<HTMLElement>("[data-curriculum-day-trigger]");
     if (!card) return;
     ev.preventDefault();

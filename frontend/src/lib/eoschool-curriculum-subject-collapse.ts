@@ -15,12 +15,13 @@ export function setCurriculumSubjectOpen(subject: HTMLElement, open: boolean): v
   subject.classList.toggle("eoschool-curriculum__subject--open", open);
 }
 
-/** Open every subject on the current week's day cards. Day 5 (exposition) stays closed. */
+/** Open teach-day subjects. On day 5 only Biblia starts open. */
 export function expandWeekSubjects(week: HTMLElement): void {
   week.querySelectorAll<HTMLElement>("[data-curriculum-section]").forEach((subject) => {
     const day = subject.closest<HTMLElement>("[data-curriculum-day]");
     const exposition = day?.dataset.curriculumDayKind === "exposition";
-    setCurriculumSubjectOpen(subject, !exposition);
+    const open = exposition ? subject.dataset.curriculumSection === "bib" : true;
+    setCurriculumSubjectOpen(subject, open);
   });
 }
 
