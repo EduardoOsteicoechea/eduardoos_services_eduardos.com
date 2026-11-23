@@ -10,17 +10,21 @@ function pxToRem(px: number): string {
   return `${px / rootFontSizePx()}rem`;
 }
 
+const PHONE_QUERY = "(max-width: 47.999rem)";
+
 function equalizeOneWeek(weekDays: HTMLElement): void {
   const cards = [...weekDays.querySelectorAll<HTMLElement>(".eoschool-curriculum__day-card")];
   if (cards.length < 5) return;
-
-  const first4 = cards.slice(0, 4);
-  const day5 = cards[4];
 
   for (const card of cards) {
     card.style.height = "";
     card.style.maxHeight = "";
   }
+
+  if (window.matchMedia(PHONE_QUERY).matches) return;
+
+  const first4 = cards.slice(0, 4);
+  const day5 = cards[4];
 
   const maxPx = Math.max(...first4.map((c) => c.getBoundingClientRect().height));
   if (!(maxPx > 0)) return;

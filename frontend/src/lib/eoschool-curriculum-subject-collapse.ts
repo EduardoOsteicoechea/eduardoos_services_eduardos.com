@@ -13,10 +13,12 @@ export function setCurriculumSubjectOpen(subject: HTMLElement, open: boolean): v
   if (chevron) chevron.textContent = open ? "expand_less" : "expand_more";
 }
 
-/** Open every subject on the current week's day cards. */
+/** Open every subject on the current week's day cards. Day 5 (exposition) stays closed. */
 export function expandWeekSubjects(week: HTMLElement): void {
   week.querySelectorAll<HTMLElement>("[data-curriculum-section]").forEach((subject) => {
-    setCurriculumSubjectOpen(subject, true);
+    const day = subject.closest<HTMLElement>("[data-curriculum-day]");
+    const exposition = day?.dataset.curriculumDayKind === "exposition";
+    setCurriculumSubjectOpen(subject, !exposition);
   });
 }
 

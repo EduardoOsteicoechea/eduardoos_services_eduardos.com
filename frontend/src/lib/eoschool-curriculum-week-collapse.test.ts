@@ -60,6 +60,38 @@ describe("selectCurrentWeek", () => {
     expect(week.querySelector("[data-curriculum-subject-chevron]")?.textContent).toBe("expand_less");
   });
 
+  it("keeps day 5 exposition subjects closed", () => {
+    const root = rootWithWeeks();
+    const week = root.querySelector<HTMLElement>('[data-week="7"]')!;
+    const days = week.querySelector(".eoschool-curriculum__week-days");
+    if (!days) throw new Error("missing days");
+    days.innerHTML = `<article data-curriculum-day data-curriculum-day-kind="teach">
+      <div data-curriculum-section>
+        <button type="button" data-curriculum-subject-toggle aria-expanded="false">
+          <span data-curriculum-subject-chevron>expand_more</span>
+        </button>
+        <div data-curriculum-subject-body hidden></div>
+      </div>
+    </article>
+    <article data-curriculum-day data-curriculum-day-kind="exposition">
+      <div data-curriculum-section>
+        <button type="button" data-curriculum-subject-toggle aria-expanded="true">
+          <span data-curriculum-subject-chevron>expand_less</span>
+        </button>
+        <div data-curriculum-subject-body></div>
+      </div>
+    </article>`;
+
+    selectCurrentWeek(root, 7);
+
+    const toggles = [...week.querySelectorAll("[data-curriculum-subject-toggle]")];
+    expect(toggles[0]?.getAttribute("aria-expanded")).toBe("true");
+    expect(toggles[1]?.getAttribute("aria-expanded")).toBe("false");
+    expect(week.querySelector<HTMLElement>('[data-curriculum-day-kind="exposition"] [data-curriculum-subject-body]')?.hidden).toBe(
+      true,
+    );
+  });
+
   it("falls back to week 7 when the requested week is missing", () => {
     const root = rootWithWeeks();
     expect(selectCurrentWeek(root, 40)).toBe(DEFAULT_CURRENT_WEEK);

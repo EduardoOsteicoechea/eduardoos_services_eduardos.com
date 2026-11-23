@@ -102,7 +102,7 @@ function weekForPlanDay(planDay: number): number {
             .flatMap((block) => (block.bible?.days ?? []).map((bibleDay) => bibleDay.dayInPlan))
             .sort((a, b) => a - b);
           const weekDateLabel = formatPlanDate(weekStartDate(weekPlan));
-          const subjectsOpen = weekPlan.week === DEFAULT_CURRENT_WEEK;
+          const weekSubjectsOpen = weekPlan.week === DEFAULT_CURRENT_WEEK;
           return (
           <section
             class:list={[
@@ -173,6 +173,7 @@ function weekForPlanDay(planDay: number): number {
                 const blockId = `w${weekPlan.week}-b${block.block}`;
                 const scheduled = scheduledSectionsForBlock(block);
                 const isExpo = block.dayKind === "exposition";
+                const subjectsOpen = weekSubjectsOpen && !isExpo;
                 const isHoliday = block.dayKind === "holiday";
                 const dayTitleSuffix = isHoliday
                   ? ` · Feriado — ${block.holidayName ?? "Feriado"}`
@@ -1347,6 +1348,15 @@ function weekForPlanDay(planDay: number): number {
   }
 
   @media (max-width: 47.999rem) {
+    .eoschool-curriculum__weeks {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .eoschool-curriculum__week-days {
+      grid-template-columns: minmax(0, 1fr);
+      overflow-x: visible;
+    }
+
     .eoschool-curriculum .lede {
       font-size: var(--font-size-sm);
     }
