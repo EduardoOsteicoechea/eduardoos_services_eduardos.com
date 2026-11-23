@@ -272,7 +272,8 @@ function openModal(card: HTMLElement): void {
         : scheduledRaw.length
           ? [...scheduledRaw]
           : loaded?.sections.map((s) => s.id) ?? ["bib"];
-      if (dayKind !== "holiday" && !scheduled.includes("eng")) scheduled.push("eng");
+      const week = Number(card.dataset.curriculumWeek || "0");
+      if (week >= 8 && dayKind !== "holiday" && !scheduled.includes("eng")) scheduled.push("eng");
       tabs.forEach((tab) => {
         const sid = tab.dataset.curriculumModalTab as CurriculumPlanSectionId;
         const has = scheduled.includes(sid);

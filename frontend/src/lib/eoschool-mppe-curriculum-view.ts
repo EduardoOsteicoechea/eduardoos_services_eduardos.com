@@ -175,8 +175,8 @@ export function identityGroups(block: CurriculumBlock): SubjectObjectiveGroup[] 
 
 export type PlanDaySectionId = "bib" | "ide" | "len" | "mat" | "cie" | "eng";
 
-/** Sections scheduled for a plan block. English is the daily sentence signature. */
-export function scheduledSectionsForBlock(block: CurriculumBlock): PlanDaySectionId[] {
+/** Sections scheduled for a plan block. English starts at week 8. */
+export function scheduledSectionsForBlock(block: CurriculumBlock, week = 0): PlanDaySectionId[] {
   const out: PlanDaySectionId[] = block.scheduledSections?.length ? [...block.scheduledSections] : ["bib"];
   if (!block.scheduledSections?.length) {
     if (block.identity) out.push("ide");
@@ -184,6 +184,6 @@ export function scheduledSectionsForBlock(block: CurriculumBlock): PlanDaySectio
     if (block.mat?.length) out.push("mat");
     if (block.cie?.length) out.push("cie");
   }
-  if (block.dayKind !== "holiday" && !out.includes("eng")) out.push("eng");
+  if (week >= 8 && block.dayKind !== "holiday" && !out.includes("eng")) out.push("eng");
   return out;
 }

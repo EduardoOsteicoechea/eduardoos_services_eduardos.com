@@ -6,14 +6,16 @@ export function sectionProgressKey(dayId: string, sectionId: CurriculumPlanSecti
   return `${dayId}:${sectionId}`;
 }
 
+const CORE_SECTION_IDS = CURRICULUM_SECTION_IDS.filter((id) => id !== "eng");
+
 function normalizeScheduled(
   scheduledSections?: Iterable<CurriculumPlanSectionId> | null,
 ): CurriculumPlanSectionId[] {
-  if (!scheduledSections) return [...CURRICULUM_SECTION_IDS];
+  if (!scheduledSections) return [...CORE_SECTION_IDS];
   const list = [...scheduledSections].filter((id): id is CurriculumPlanSectionId =>
     CURRICULUM_SECTION_IDS.includes(id),
   );
-  return list.length ? list : [...CURRICULUM_SECTION_IDS];
+  return list.length ? list : [...CORE_SECTION_IDS];
 }
 
 /** Green = all scheduled sections done; yellow = some; red = 0. */

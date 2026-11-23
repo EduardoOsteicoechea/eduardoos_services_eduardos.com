@@ -9,6 +9,11 @@ import {
   identityGroups,
   scheduledSectionsForBlock,
 } from "../../../lib/eoschool-mppe-curriculum-view";
+import {
+  englishGroupsForDay,
+  englishSheetLink,
+  englishWeekday,
+} from "../../../lib/eoschool-english-signature";
 import { DEFAULT_CURRENT_WEEK } from "../../../lib/eoschool-curriculum-week-collapse";
 
 const { meta, weeks } = MPPE_40WEEK_CURRICULUM;
@@ -16,15 +21,6 @@ const curriculumMode = Astro.url.searchParams.get("mode") === "browse" ? "browse
 const initialStudentKey = Astro.url.searchParams.get("studentKey")?.trim() || "";
 
 const bibleMeta = meta.bible;
-const ENGLISH_SIGNATURE = [
-  {
-    objective: "Armar oraciones en presente, pasado y futuro, con la preposición en su lugar.",
-    learnings: [
-      "La misma idea en presente, en pasado y en futuro.",
-      "La preposición va con el lugar o el tiempo: in, on, at, under, next to.",
-    ],
-  },
-];
 
 const areaDefs = [
   { num: 1, label: "Biblia", kind: "bible" as const, sectionId: "bib" as const },
@@ -182,7 +178,7 @@ function weekForPlanDay(planDay: number): number {
                 .map(({ block, bibleDay }, daySlot) => {
                 const dayId = `d${bibleDay.dayInPlan}`;
                 const blockId = `w${weekPlan.week}-b${block.block}`;
-                const scheduled = scheduledSectionsForBlock(block);
+                const scheduled = scheduledSectionsForBlock(block, weekPlan.week);
                 const isExpo = block.dayKind === "exposition";
                 const subjectsOpen = weekSubjectsOpen && !isExpo;
                 const isHoliday = block.dayKind === "holiday";
@@ -210,6 +206,7 @@ function weekForPlanDay(planDay: number): number {
                     data-plan-day={bibleDay.dayInPlan}
                     data-curriculum-day-slot={daySlot + 1}
                     data-curriculum-scheduled={scheduled.join(",")}
+                    data-curriculum-week={weekPlan.week}
                     data-curriculum-day-kind={block.dayKind ?? "teach"}
                     data-curriculum-day-trigger
                     tabindex="0"
@@ -241,13 +238,15 @@ function weekForPlanDay(planDay: number): number {
                       {scheduled.map((sectionId, idx) => {
                         const area = areaBySection[sectionId];
                         if (!area) return null;
+                        const englishDay = englishWeekday(block.calendarDate, daySlot + 1);
+                        const englishSheet = sectionId === "eng" ? englishSheetLink(block.calendarDate) : null;
                         const groups =
                           area.kind === "bible"
                             ? bibleGroupsForDay(bibleDay)
                             : area.kind === "identity"
                               ? identityGroups(block)
                               : area.kind === "english"
-                                ? ENGLISH_SIGNATURE
+                                ? englishGroupsForDay(weekPlan.week, englishDay, block.calendarDate)
                                 : groupLearningRefs(
                                     (area.kind === "len"
                                       ? block.len
@@ -337,10 +336,10 @@ function weekForPlanDay(planDay: number): number {
                               ) : (
                                 <p class="eoschool-curriculum__empty">—</p>
                               )}
-                              {sectionId === "eng" ? (
+                              {englishSheet ? (
                                 <p class="eoschool-curriculum__expo-hint">
-                                  <a href="/eoschool/classes/eng-oraciones-2026-11-23.pdf" data-eng-sheet>
-                                    Hoja del 23 nov
+                                  <a href={englishSheet.href} data-eng-sheet>
+                                    {englishSheet.label}
                                   </a>
                                 </p>
                               ) : null}
@@ -364,9 +363,9 @@ function weekForPlanDay(planDay: number): number {
                                   ) : null}
                                 </div>
                               ))}
-                              {sectionId === "eng" ? (
+                              {englishSheet ? (
                                 <p class="eoschool-curriculum__objective">
-                                  <a href="/eoschool/classes/eng-oraciones-2026-11-23.pdf" data-eng-sheet>Hoja del 23 nov</a>
+                                  <a href={englishSheet.href} data-eng-sheet>{englishSheet.label}</a>
                                 </p>
                               ) : null}
                             </div>
@@ -438,7 +437,8 @@ function weekForPlanDay(planDay: number): number {
           ? ` (${meta.schoolYearStart} → ${meta.schoolYearEnd})`
           : ""}
         . Cada día: Biblia y Lenguaje. Días 1 y 3: Identidad y Ciencias. Días 2 y 4: Matemáticas. Día 5:
-        exposiciones de las cinco asignaturas. En feriados oficiales VE solo Biblia
+        exposiciones de las cinco asignaturas. Inglés, de la semana 8 en adelante: lunes presente, martes
+        pasado, miércoles futuro, jueves preposición, viernes repaso. En feriados oficiales VE solo Biblia
         {meta.holidays?.length ? ` (${meta.holidays.length} días)` : ""}. Abre un día para ver objetivo,
         aprendizaje y hoja PDF.
       </p>

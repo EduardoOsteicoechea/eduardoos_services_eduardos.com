@@ -16,9 +16,15 @@ const sectionLabels: Record<string, string> = {
 
 const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
   week.blocks
-    .flatMap((block) => (block.bible?.days ?? []).map((d) => ({ week: week.week, planDay: d.dayInPlan })))
-    .sort((a, b) => a.planDay - b.planDay)
-    .map((d) => ({ week: d.week, planDay: d.planDay, dayId: `d${d.planDay}` })),
+    .flatMap((block) =>
+      (block.bible?.days ?? []).map((d) => ({
+        week: week.week,
+        planDay: d.dayInPlan,
+        dayId: `d${d.planDay}`,
+        english: week.week >= 8 && block.dayKind !== "holiday",
+      })),
+    )
+    .sort((a, b) => a.planDay - b.planDay),
 );
 ---
 
@@ -69,12 +75,16 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
                   <td>{day.planDay}</td>
                   {CURRICULUM_SECTION_IDS.map((sid) => (
                     <td>
-                      <span
-                        class="eoschool-dot"
-                        data-section-dot
-                        data-section={sid}
-                        aria-label={sectionLabels[sid]}
-                      ></span>
+                      {sid === "eng" && !day.english ? (
+                        <span class="eoschool-progress__na" aria-label="Sin inglés">—</span>
+                      ) : (
+                        <span
+                          class="eoschool-dot"
+                          data-section-dot
+                          data-section={sid}
+                          aria-label={sectionLabels[sid]}
+                        ></span>
+                      )}
                     </td>
                   ))}
                 </tr>
@@ -265,5 +275,10 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
 
   .eoschool-dot--red {
     background: var(--color-err);
+  }
+
+  .eoschool-progress__na {
+    color: var(--color-muted);
+    font-size: var(--font-size-sm);
   }
 </style>
