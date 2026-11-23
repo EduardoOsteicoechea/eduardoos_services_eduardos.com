@@ -1244,7 +1244,7 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__subject {
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    align-items: flex-start;
     gap: var(--rail-gap);
     min-width: 0;
     padding: var(--rail-gap);
@@ -1257,6 +1257,7 @@ function weekForPlanDay(planDay: number): number {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    align-self: stretch;
     flex-shrink: 0;
     gap: var(--rail-gap);
   }
@@ -1283,8 +1284,16 @@ function weekForPlanDay(planDay: number): number {
     display: flex;
     flex-direction: column;
     flex: 1;
+    align-self: flex-start;
     min-width: 0;
-    gap: var(--rail-gap);
+    gap: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .eoschool-curriculum__subject-body {
+    margin: 0;
+    padding: 0;
   }
 
   html[data-theme="light"] .eoschool-curriculum__subject[data-curriculum-section="bib"] {
@@ -1337,7 +1346,6 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__day-body > .eoschool-curriculum__subject:first-child {
     border-block-start: 0;
-    padding-block-start: 0;
     margin-block-start: 0;
   }
 
@@ -1438,6 +1446,14 @@ function weekForPlanDay(planDay: number): number {
     font-size: var(--font-size-sm);
     min-width: 0;
     list-style: decimal;
+  }
+
+  .eoschool-curriculum__learnings.eoschool-curriculum__learnings--card {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--font-size-xs);
+    gap: 0.25rem;
   }
 
   .eoschool-curriculum__learnings li {
