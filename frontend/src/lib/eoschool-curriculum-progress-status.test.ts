@@ -10,10 +10,14 @@ describe("dayTrafficStatus", () => {
     expect(dayTrafficStatus("d1", ["d1:bib", "d1:mat"])).toBe("yellow");
   });
 
-  it("green when all five done (default schedule)", () => {
+  it("green when the default schedule includes the english signature", () => {
     expect(
-      dayTrafficStatus("d1", ["d1:bib", "d1:ide", "d1:len", "d1:mat", "d1:cie"]),
+      dayTrafficStatus("d1", ["d1:bib", "d1:ide", "d1:len", "d1:mat", "d1:cie", "d1:eng"]),
     ).toBe("green");
+  });
+
+  it("yellow when the five are done and english is still open", () => {
+    expect(dayTrafficStatus("d1", ["d1:bib", "d1:ide", "d1:len", "d1:mat", "d1:cie"])).toBe("yellow");
   });
 
   it("green when all scheduled sections done (3-subject day)", () => {

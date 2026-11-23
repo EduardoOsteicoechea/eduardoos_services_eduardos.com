@@ -173,13 +173,17 @@ export function identityGroups(block: CurriculumBlock): SubjectObjectiveGroup[] 
   return [{ objective: block.identity.title, learnings: block.identity.learnings ?? [] }];
 }
 
-/** Sections scheduled for a plan block (falls back to content presence). */
-export function scheduledSectionsForBlock(block: CurriculumBlock): Array<"bib" | "ide" | "len" | "mat" | "cie"> {
-  if (block.scheduledSections?.length) return [...block.scheduledSections];
-  const out: Array<"bib" | "ide" | "len" | "mat" | "cie"> = ["bib"];
-  if (block.identity) out.push("ide");
-  if (block.len?.length) out.push("len");
-  if (block.mat?.length) out.push("mat");
-  if (block.cie?.length) out.push("cie");
+export type PlanDaySectionId = "bib" | "ide" | "len" | "mat" | "cie" | "eng";
+
+/** Sections scheduled for a plan block. English is the daily sentence signature. */
+export function scheduledSectionsForBlock(block: CurriculumBlock): PlanDaySectionId[] {
+  const out: PlanDaySectionId[] = block.scheduledSections?.length ? [...block.scheduledSections] : ["bib"];
+  if (!block.scheduledSections?.length) {
+    if (block.identity) out.push("ide");
+    if (block.len?.length) out.push("len");
+    if (block.mat?.length) out.push("mat");
+    if (block.cie?.length) out.push("cie");
+  }
+  if (block.dayKind !== "holiday" && !out.includes("eng")) out.push("eng");
   return out;
 }

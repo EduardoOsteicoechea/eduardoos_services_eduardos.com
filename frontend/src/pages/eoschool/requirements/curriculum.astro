@@ -16,12 +16,23 @@ const curriculumMode = Astro.url.searchParams.get("mode") === "browse" ? "browse
 const initialStudentKey = Astro.url.searchParams.get("studentKey")?.trim() || "";
 
 const bibleMeta = meta.bible;
+const ENGLISH_SIGNATURE = [
+  {
+    objective: "Armar oraciones en presente, pasado y futuro, con la preposición en su lugar.",
+    learnings: [
+      "La misma idea en presente, en pasado y en futuro.",
+      "La preposición va con el lugar o el tiempo: in, on, at, under, next to.",
+    ],
+  },
+];
+
 const areaDefs = [
   { num: 1, label: "Biblia", kind: "bible" as const, sectionId: "bib" as const },
   { num: 2, label: "Identidad", kind: "identity" as const, sectionId: "ide" as const },
   { num: 3, label: "Lenguaje", kind: "len" as const, sectionId: "len" as const },
   { num: 4, label: "Matemáticas", kind: "mat" as const, sectionId: "mat" as const },
   { num: 5, label: "Ciencias Naturales", kind: "cie" as const, sectionId: "cie" as const },
+  { num: 6, label: "Inglés", kind: "english" as const, sectionId: "eng" as const },
 ];
 const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
 
@@ -235,13 +246,15 @@ function weekForPlanDay(planDay: number): number {
                             ? bibleGroupsForDay(bibleDay)
                             : area.kind === "identity"
                               ? identityGroups(block)
-                              : groupLearningRefs(
-                                  (area.kind === "len"
-                                    ? block.len
-                                    : area.kind === "mat"
-                                      ? block.mat
-                                      : block.cie) ?? [],
-                                );
+                              : area.kind === "english"
+                                ? ENGLISH_SIGNATURE
+                                : groupLearningRefs(
+                                    (area.kind === "len"
+                                      ? block.len
+                                      : area.kind === "mat"
+                                        ? block.mat
+                                        : block.cie) ?? [],
+                                  );
                         const label = isHoliday
                           ? `${area.label} · Feriado`
                           : isExpo
@@ -324,6 +337,13 @@ function weekForPlanDay(planDay: number): number {
                               ) : (
                                 <p class="eoschool-curriculum__empty">—</p>
                               )}
+                              {sectionId === "eng" ? (
+                                <p class="eoschool-curriculum__expo-hint">
+                                  <a href="/eoschool/classes/eng-oraciones-2026-11-23.pdf" data-eng-sheet>
+                                    Hoja del 23 nov
+                                  </a>
+                                </p>
+                              ) : null}
                             </div>
                             <div class="eoschool-curriculum__subject-detail" hidden>
                               {groups.map((group) => (
@@ -344,6 +364,11 @@ function weekForPlanDay(planDay: number): number {
                                   ) : null}
                                 </div>
                               ))}
+                              {sectionId === "eng" ? (
+                                <p class="eoschool-curriculum__objective">
+                                  <a href="/eoschool/classes/eng-oraciones-2026-11-23.pdf" data-eng-sheet>Hoja del 23 nov</a>
+                                </p>
+                              ) : null}
                             </div>
                           </div>
                         );
@@ -463,6 +488,9 @@ function weekForPlanDay(planDay: number): number {
         </button>
         <button type="button" class="eoschool-curriculum-modal__tab" data-curriculum-modal-tab="cie" role="tab">
           Ciencias
+        </button>
+        <button type="button" class="eoschool-curriculum-modal__tab" data-curriculum-modal-tab="eng" role="tab">
+          Inglés
         </button>
       </div>
 

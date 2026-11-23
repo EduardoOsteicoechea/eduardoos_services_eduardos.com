@@ -27,7 +27,7 @@ const (
 var eoschoolCurriculumDayID = regexp.MustCompile(`^d[1-9][0-9]*$`)
 
 var eoschoolCurriculumSectionIDs = map[string]bool{
-	"bib": true, "ide": true, "len": true, "mat": true, "cie": true,
+	"bib": true, "ide": true, "len": true, "mat": true, "cie": true, "eng": true,
 }
 
 var eoschoolCurriculumStudentKeyRe = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)

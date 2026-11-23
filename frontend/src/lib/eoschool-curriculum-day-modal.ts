@@ -267,12 +267,12 @@ function openModal(card: HTMLElement): void {
   loadPromise
     .then((loaded) => {
       sheet = loaded;
-      const scheduled =
-        loaded?.scheduledSections?.length
-          ? loaded.scheduledSections
-          : scheduledRaw.length
-            ? scheduledRaw
-            : loaded?.sections.map((s) => s.id) ?? ["bib"];
+      const scheduled: string[] = loaded?.scheduledSections?.length
+        ? [...loaded.scheduledSections]
+        : scheduledRaw.length
+          ? [...scheduledRaw]
+          : loaded?.sections.map((s) => s.id) ?? ["bib"];
+      if (dayKind !== "holiday" && !scheduled.includes("eng")) scheduled.push("eng");
       tabs.forEach((tab) => {
         const sid = tab.dataset.curriculumModalTab as CurriculumPlanSectionId;
         const has = scheduled.includes(sid);
@@ -360,7 +360,8 @@ export function initCurriculumDayModal(root: HTMLElement | null): void {
       target instanceof HTMLElement &&
       (target.closest(".eoschool-curriculum__section-check") ||
         target.closest("[data-curriculum-subject-toggle]") ||
-        target.closest("[data-expo-route]"))
+        target.closest("[data-expo-route]") ||
+        target.closest("[data-eng-sheet]"))
     ) {
       ev.stopPropagation();
       return;
