@@ -288,6 +288,7 @@ function weekForPlanDay(planDay: number): number {
                               class="eoschool-curriculum__subject-body eoschool-curriculum__subject-body--card"
                               id={subjectBodyId}
                               data-curriculum-subject-body
+                              hidden={!subjectsOpen}
                             >
                               {isHoliday ? (
                                 <p class="eoschool-curriculum__expo-hint">
@@ -1105,6 +1106,9 @@ function weekForPlanDay(planDay: number): number {
     width: 1em;
     height: 1em;
     line-height: 1;
+    color: var(--color-text);
+    background: transparent;
+    border-radius: 0;
   }
 
   .eoschool-curriculum__subject-head {
@@ -1207,6 +1211,8 @@ function weekForPlanDay(planDay: number): number {
     height: 1em;
     line-height: 1;
     color: inherit;
+    background: transparent;
+    border-radius: 0;
   }
 
   .eoschool-curriculum__section-check-icon {
@@ -1263,11 +1269,14 @@ function weekForPlanDay(planDay: number): number {
     line-height: 1;
   }
 
-  .eoschool-curriculum__subject-icon .material-symbols-outlined {
+  .eoschool-curriculum__day-card .eoschool-curriculum__subject-icon .material-symbols-outlined {
     font-size: var(--icon-size);
     width: var(--icon-size);
     height: var(--icon-size);
     line-height: 1;
+    color: var(--color-text);
+    background: transparent;
+    border-radius: 0;
   }
 
   .eoschool-curriculum__subject-copy {

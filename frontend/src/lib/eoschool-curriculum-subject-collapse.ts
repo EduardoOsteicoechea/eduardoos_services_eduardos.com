@@ -3,14 +3,16 @@
 import { refreshCurriculumDayHeights } from "./eoschool-curriculum-day-heights";
 
 export function setCurriculumSubjectOpen(subject: HTMLElement, open: boolean): void {
-  const toggle = subject.querySelector<HTMLButtonElement>("[data-curriculum-subject-toggle]");
   const body = subject.querySelector<HTMLElement>("[data-curriculum-subject-body]");
-  if (!toggle || !body) return;
-  toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  if (!body) return;
+  const toggle = subject.querySelector<HTMLButtonElement>("[data-curriculum-subject-toggle]");
+  if (toggle) {
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    const chevron = toggle.querySelector<HTMLElement>("[data-curriculum-subject-chevron]");
+    if (chevron) chevron.textContent = open ? "expand_less" : "expand_more";
+  }
   body.hidden = !open;
   subject.classList.toggle("eoschool-curriculum__subject--open", open);
-  const chevron = toggle.querySelector<HTMLElement>("[data-curriculum-subject-chevron]");
-  if (chevron) chevron.textContent = open ? "expand_less" : "expand_more";
 }
 
 /** Open every subject on the current week's day cards. Day 5 (exposition) stays closed. */

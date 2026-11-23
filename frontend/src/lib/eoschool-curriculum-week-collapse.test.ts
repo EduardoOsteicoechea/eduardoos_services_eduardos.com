@@ -92,6 +92,32 @@ describe("selectCurrentWeek", () => {
     );
   });
 
+  it("keeps day 5 closed when the card has no heading toggle", () => {
+    const root = rootWithWeeks();
+    const week = root.querySelector<HTMLElement>('[data-week="7"]')!;
+    const days = week.querySelector(".eoschool-curriculum__week-days");
+    if (!days) throw new Error("missing days");
+    days.innerHTML = `<article data-curriculum-day data-curriculum-day-kind="teach">
+      <div data-curriculum-section class="eoschool-curriculum__subject">
+        <div data-curriculum-subject-body hidden></div>
+      </div>
+    </article>
+    <article data-curriculum-day data-curriculum-day-kind="exposition">
+      <div data-curriculum-section class="eoschool-curriculum__subject eoschool-curriculum__subject--open">
+        <div data-curriculum-subject-body></div>
+      </div>
+    </article>`;
+
+    selectCurrentWeek(root, 7);
+
+    const teach = week.querySelector<HTMLElement>('[data-curriculum-day-kind="teach"] [data-curriculum-section]')!;
+    const expo = week.querySelector<HTMLElement>('[data-curriculum-day-kind="exposition"] [data-curriculum-section]')!;
+    expect(teach.classList.contains("eoschool-curriculum__subject--open")).toBe(true);
+    expect(teach.querySelector<HTMLElement>("[data-curriculum-subject-body]")?.hidden).toBe(false);
+    expect(expo.classList.contains("eoschool-curriculum__subject--open")).toBe(false);
+    expect(expo.querySelector<HTMLElement>("[data-curriculum-subject-body]")?.hidden).toBe(true);
+  });
+
   it("falls back to week 7 when the requested week is missing", () => {
     const root = rootWithWeeks();
     expect(selectCurrentWeek(root, 40)).toBe(DEFAULT_CURRENT_WEEK);
