@@ -23,12 +23,12 @@ const initialStudentKey = Astro.url.searchParams.get("studentKey")?.trim() || ""
 const bibleMeta = meta.bible;
 
 const areaDefs = [
-  { num: 1, label: "Biblia", kind: "bible" as const, sectionId: "bib" as const },
-  { num: 2, label: "Identidad", kind: "identity" as const, sectionId: "ide" as const },
-  { num: 3, label: "Lenguaje", kind: "len" as const, sectionId: "len" as const },
-  { num: 4, label: "Matemáticas", kind: "mat" as const, sectionId: "mat" as const },
-  { num: 5, label: "Ciencias Naturales", kind: "cie" as const, sectionId: "cie" as const },
-  { num: 6, label: "Inglés", kind: "english" as const, sectionId: "eng" as const },
+  { num: 1, label: "Biblia", kind: "bible" as const, sectionId: "bib" as const, icon: "menu_book" },
+  { num: 2, label: "Identidad", kind: "identity" as const, sectionId: "ide" as const, icon: "public" },
+  { num: 3, label: "Lenguaje", kind: "len" as const, sectionId: "len" as const, icon: "article" },
+  { num: 4, label: "Matemáticas", kind: "mat" as const, sectionId: "mat" as const, icon: "calculate" },
+  { num: 5, label: "Ciencias Naturales", kind: "cie" as const, sectionId: "cie" as const, icon: "science" },
+  { num: 6, label: "Inglés", kind: "english" as const, sectionId: "eng" as const, icon: "translate" },
 ];
 const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
 
@@ -235,7 +235,7 @@ function weekForPlanDay(planDay: number): number {
                     </header>
 
                     <div class="eoschool-curriculum__day-body">
-                      {scheduled.map((sectionId, idx) => {
+                      {scheduled.map((sectionId) => {
                         const area = areaBySection[sectionId];
                         if (!area) return null;
                         const englishDay = englishWeekday(block.calendarDate, daySlot + 1);
@@ -268,7 +268,10 @@ function weekForPlanDay(planDay: number): number {
                             ]}
                             data-curriculum-section={area.sectionId}
                           >
-                            <div class="eoschool-curriculum__subject-head">
+                            <div class="eoschool-curriculum__subject-rail">
+                              <span class="eoschool-curriculum__subject-icon" title={label}>
+                                <span class="material-symbols-outlined" aria-hidden="true">{area.icon}</span>
+                              </span>
                               <label class="eoschool-curriculum__section-check">
                                 <input type="checkbox" data-curriculum-section-check />
                                 <span class="page-title-sr">Sección completada: {label}</span>
@@ -278,31 +281,13 @@ function weekForPlanDay(planDay: number): number {
                                   </span>
                                 </span>
                               </label>
-                              <button
-                                type="button"
-                                class="eoschool-curriculum__subject-toggle"
-                                data-curriculum-subject-toggle
-                                aria-expanded={subjectsOpen ? "true" : "false"}
-                                aria-controls={subjectBodyId}
-                              >
-                                <span
-                                  class="material-symbols-outlined eoschool-curriculum__subject-chevron"
-                                  data-curriculum-subject-chevron
-                                  aria-hidden="true"
-                                >
-                                  {subjectsOpen ? "expand_less" : "expand_more"}
-                                </span>
-                                <h4 class="eoschool-curriculum__subject-title">
-                                  <span class="eoschool-curriculum__subject-num">{idx + 1}.</span>
-                                  {label}
-                                </h4>
-                              </button>
                             </div>
+                            <div class="eoschool-curriculum__subject-copy">
+                            <h4 class="page-title-sr">{label}</h4>
                             <div
                               class="eoschool-curriculum__subject-body eoschool-curriculum__subject-body--card"
                               id={subjectBodyId}
                               data-curriculum-subject-body
-                              hidden={!subjectsOpen}
                             >
                               {isHoliday ? (
                                 <p class="eoschool-curriculum__expo-hint">
@@ -368,6 +353,7 @@ function weekForPlanDay(planDay: number): number {
                                   <a href={englishSheet.href} data-eng-sheet>{englishSheet.label}</a>
                                 </p>
                               ) : null}
+                            </div>
                             </div>
                           </div>
                         );
@@ -1251,12 +1237,45 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__subject {
     display: flex;
-    flex-direction: column;
-    gap: 0;
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--rail-gap);
     min-width: 0;
     padding: var(--rail-gap);
     border-block-start: 0;
     border-radius: var(--border-radius);
+  }
+
+  .eoschool-curriculum__subject-rail {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-shrink: 0;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum__subject-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text);
+    line-height: 1;
+  }
+
+  .eoschool-curriculum__subject-icon .material-symbols-outlined {
+    font-size: var(--icon-size);
+    width: var(--icon-size);
+    height: var(--icon-size);
+    line-height: 1;
+  }
+
+  .eoschool-curriculum__subject-copy {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    gap: var(--rail-gap);
   }
 
   html[data-theme="light"] .eoschool-curriculum__subject[data-curriculum-section="bib"] {
@@ -1378,8 +1397,8 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__learnings--card {
     margin: 0;
-    padding-inline-start: 1rem;
-    list-style: disc;
+    padding-inline-start: 0;
+    list-style: none;
     font-size: var(--font-size-xs);
     gap: 0.25rem;
   }
