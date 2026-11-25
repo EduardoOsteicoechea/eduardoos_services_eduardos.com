@@ -4,8 +4,17 @@ import {
   GRADE3_STANDARDS_CROSSWALK,
   type Grade3CrosswalkRow,
 } from "../lib/eoschool-grade3-standards-crosswalk";
+import {
+  STANDARDS_PROGRESS_THROUGH_DAY,
+  foreignStars,
+  learningsCoveredThroughDay,
+  venezuelaStars,
+} from "../lib/eoschool-grade3-standards-score";
 
-const { meta, areas } = GRADE3_STANDARDS_CROSSWALK;
+const { areas } = GRADE3_STANDARDS_CROSSWALK;
+const covered = learningsCoveredThroughDay(STANDARDS_PROGRESS_THROUGH_DAY);
+const tones = ["a", "b", "c", "d"] as const;
+const starSlots = [0, 1, 2, 3, 4];
 
 const fitHint: Record<keyof typeof FIT_LABEL, string> = {
   directo: "El mismo saber, en ese grado.",
@@ -14,8 +23,19 @@ const fitHint: Record<keyof typeof FIT_LABEL, string> = {
   anterior: "Ese saber está en un grado previo del otro programa.",
 };
 
-function groupsOf(rows: Grade3CrosswalkRow[]) {
-  const groups: { title: string; rows: Grade3CrosswalkRow[] }[] = [];
+type RatedRow = Grade3CrosswalkRow & {
+  tone: (typeof tones)[number];
+  covered: boolean;
+  vzlaStars: number;
+  usStars: number;
+  ukStars: number;
+  bestVzla: boolean;
+  bestUs: boolean;
+  bestUk: boolean;
+};
+
+function groupsOf(rows: RatedRow[]) {
+  const groups: { title: string; rows: RatedRow[] }[] = [];
   for (const row of rows) {
     const last = groups[groups.length - 1];
     if (last && last.title === row.unitTitle) last.rows.push(row);
@@ -24,80 +44,122 @@ function groupsOf(rows: Grade3CrosswalkRow[]) {
   return groups;
 }
 
-const panels = areas.map((area) => ({ ...area, groups: groupsOf(area.rows) }));
+const panels = areas.map((area) => {
+  const rows: RatedRow[] = area.rows.map((row, index) => {
+    const vzlaStars = venezuelaStars(row.us, row.uk);
+    const usStars = foreignStars(row.us);
+    const ukStars = foreignStars(row.uk);
+    const best = Math.max(vzlaStars, usStars, ukStars);
+    return {
+      ...row,
+      tone: tones[index % tones.length],
+      covered: covered.has(row.learning),
+      vzlaStars,
+      usStars,
+      ukStars,
+      bestVzla: vzlaStars === best,
+      bestUs: usStars === best,
+      bestUk: ukStars === best,
+    };
+  });
+  return { ...area, groups: groupsOf(rows) };
+});
+
+function starLabel(count: number, best: boolean) {
+  return best ? `${count} de 5. La mejor de la fila.` : `${count} de 5.`;
+}
 ---
 
 <div class="standards-compare">
-  <p class="hint">
-    Cada fila es un aprendizaje de 3.er grado del MPPE. Estados Unidos e Inglaterra muestran el saber más cercano.
-  </p>
-  <ul class="standards-legend">
+  {
+    panels.map((area, index) => (
+      <input
+        class="standards-rail__input"
+        type="radio"
+        name="standards-area"
+        id={`standards-${area.id}`}
+        checked={index === 0}
+      />
+    ))
+  }
+  <nav class="standards-rail" aria-label="Materias">
     {
-      (Object.keys(FIT_LABEL) as (keyof typeof FIT_LABEL)[]).map((fit) => (
-        <li>
-          <span class:list={["standards-fit", `standards-fit--${fit}`]}>{FIT_LABEL[fit]}</span>
-          <span>{fitHint[fit]}</span>
-        </li>
+      panels.map((area) => (
+        <label class="standards-rail__btn" for={`standards-${area.id}`} title={area.title}>
+          <span class="material-symbols-outlined" aria-hidden="true">{area.icon}</span>
+          <span class="page-title-sr">{area.title}</span>
+        </label>
       ))
     }
-  </ul>
+  </nav>
 
-  <div class="standards-app">
-    {
-      panels.map((area, index) => (
-        <input
-          class="standards-rail__input"
-          type="radio"
-          name="standards-area"
-          id={`standards-${area.id}`}
-          checked={index === 0}
-        />
-      ))
-    }
-    <nav class="standards-rail" aria-label="Materias">
+  <div class="standards-body">
+    <slot name="toolbar" />
+    <p class="hint">
+      Cada fila es un aprendizaje de 3.er grado del MPPE. Cinco estrellas es la formulación más precisa para 8–9 años; el borde marca la mejor de la fila. La marca de la derecha indica que ese aprendizaje ya está en el plan, hasta el día {STANDARDS_PROGRESS_THROUGH_DAY}.
+    </p>
+    <ul class="standards-legend">
       {
-        panels.map((area) => (
-          <label class="standards-rail__btn" for={`standards-${area.id}`} title={area.title}>
-            <span class="material-symbols-outlined" aria-hidden="true">{area.icon}</span>
-            <span class="page-title-sr">{area.title}</span>
-          </label>
+        (Object.keys(FIT_LABEL) as (keyof typeof FIT_LABEL)[]).map((fit) => (
+          <li>
+            <span class:list={["standards-fit", `standards-fit--${fit}`]}>{FIT_LABEL[fit]}</span>
+            <span>{fitHint[fit]}</span>
+          </li>
         ))
       }
-    </nav>
+    </ul>
 
     <div class="standards-main">
       {
         panels.map((area) => (
           <section class="standards-panel" data-area={area.id} aria-labelledby={`standards-heading-${area.id}`}>
             <h2 class="product-dash__section-title" id={`standards-heading-${area.id}`}>{area.title}</h2>
-            <div class="standards-columns-head" aria-hidden="true">
-              {meta.columns.map((column) => (
-                <p>{column.title}</p>
-              ))}
-            </div>
             {
               area.groups.map((group) => (
                 <section class="standards-unit">
                   <h3 class="standards-unit__title">{group.title}</h3>
                   {
                     group.rows.map((row) => (
-                      <div class="standards-row">
-                        <article class="product-dash__card standards-card">
-                          <p class="standards-card__place">Venezuela</p>
-                          <p class="standards-card__text">{row.learning}</p>
-                        </article>
-                        <article class="product-dash__card standards-card">
-                          <p class="standards-card__place">Estados Unidos</p>
-                          <a class="standards-card__code" href={row.us.href} rel="noopener noreferrer">{row.us.code}</a>
-                          <p class="standards-card__text">{row.us.text}</p>
-                          <span class:list={["standards-fit", `standards-fit--${row.us.fit}`]}>{FIT_LABEL[row.us.fit]}</span>
-                        </article>
-                        <article class="product-dash__card standards-card">
-                          <p class="standards-card__place">Inglaterra</p>
-                          <a class="standards-card__code" href={row.uk.href} rel="noopener noreferrer">{row.uk.code}</a>
-                          <p class="standards-card__text">{row.uk.text}</p>
-                          <span class:list={["standards-fit", `standards-fit--${row.uk.fit}`]}>{FIT_LABEL[row.uk.fit]}</span>
-                        </article>
+                      <div class:list={["standards-row", `standards-row--${row.tone}`]}>
+                        <div class="standards-row__cards">
+                          <article class:list={["product-dash__card", "standards-card", row.bestVzla && "standards-card--best"]}>
+                            <p class="standards-card__place">Venezuela</p>
+                            <p class="standards-card__text">{row.learning}</p>
+                            <p class="standards-stars" aria-label={starLabel(row.vzlaStars, row.bestVzla)}>
+                              {starSlots.map((slot) => (
+                                <span class:list={["material-symbols-outlined", "standards-star", slot < row.vzlaStars && "standards-star--on"]} aria-hidden="true">star</span>
+                              ))}
+                            </p>
+                          </article>
+                          <article class:list={["product-dash__card", "standards-card", row.bestUs && "standards-card--best"]}>
+                            <p class="standards-card__place">Estados Unidos</p>
+                            <a class="standards-card__code" href={row.us.href} rel="noopener noreferrer">{row.us.code}</a>
+                            <p class="standards-card__text">{row.us.text}</p>
+                            <span class:list={["standards-fit", `standards-fit--${row.us.fit}`]}>{FIT_LABEL[row.us.fit]}</span>
+                            <p class="standards-stars" aria-label={starLabel(row.usStars, row.bestUs)}>
+                              {starSlots.map((slot) => (
+                                <span class:list={["material-symbols-outlined", "standards-star", slot < row.usStars && "standards-star--on"]} aria-hidden="true">star</span>
+                              ))}
+                            </p>
+                          </article>
+                          <article class:list={["product-dash__card", "standards-card", row.bestUk && "standards-card--best"]}>
+                            <p class="standards-card__place">Inglaterra</p>
+                            <a class="standards-card__code" href={row.uk.href} rel="noopener noreferrer">{row.uk.code}</a>
+                            <p class="standards-card__text">{row.uk.text}</p>
+                            <span class:list={["standards-fit", `standards-fit--${row.uk.fit}`]}>{FIT_LABEL[row.uk.fit]}</span>
+                            <p class="standards-stars" aria-label={starLabel(row.ukStars, row.bestUk)}>
+                              {starSlots.map((slot) => (
+                                <span class:list={["material-symbols-outlined", "standards-star", slot < row.ukStars && "standards-star--on"]} aria-hidden="true">star</span>
+                              ))}
+                            </p>
+                          </article>
+                        </div>
+                        <p class="standards-row__mark">
+                          {row.covered ? (
+                            <span class="material-symbols-outlined" aria-hidden="true">check</span>
+                          ) : null}
+                          <span class="page-title-sr">{row.covered ? `Visto hasta el día ${STANDARDS_PROGRESS_THROUGH_DAY}` : "Todavía no está en el plan"}</span>
+                        </p>
                       </div>
                     ))
                   }
@@ -108,32 +170,40 @@ const panels = areas.map((area) => ({ ...area, groups: groupsOf(area.rows) }));
         ))
       }
     </div>
-  </div>
 
-  <footer class="standards-sources">
-    <h2 class="product-dash__section-title">Fuentes</h2>
-    <ul>
-      {
-        meta.sources.map((source) => (
-          <li>
-            <a
-              href={source.href}
-              rel={source.href.startsWith("https://") ? "noopener noreferrer" : undefined}
-              data-route={source.href.startsWith("/") ? true : undefined}
-            >{source.title}</a>
-            <span>{source.note}</span>
-          </li>
-        ))
-      }
-    </ul>
-  </footer>
+    <footer class="standards-sources">
+      <h2 class="product-dash__section-title">Fuentes</h2>
+      <ul>
+        {
+          GRADE3_STANDARDS_CROSSWALK.meta.sources.map((source) => (
+            <li>
+              <a
+                href={source.href}
+                rel={source.href.startsWith("https://") ? "noopener noreferrer" : undefined}
+                data-route={source.href.startsWith("/") ? true : undefined}
+              >{source.title}</a>
+              <span>{source.note}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </footer>
+  </div>
 </div>
 
 <style>
   .standards-compare {
     display: flex;
+    align-items: flex-start;
+    gap: var(--rail-gap);
+  }
+
+  .standards-body {
+    display: flex;
     flex-direction: column;
     gap: var(--space-padding);
+    flex: 1;
+    min-width: 0;
   }
 
   .standards-legend {
@@ -154,12 +224,6 @@ const panels = areas.map((area) => ({ ...area, groups: groupsOf(area.rows) }));
     gap: var(--rail-gap);
   }
 
-  .standards-app {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--rail-gap);
-  }
-
   .standards-rail__input {
     position: absolute;
     width: 0.0625rem;
@@ -174,7 +238,7 @@ const panels = areas.map((area) => ({ ...area, groups: groupsOf(area.rows) }));
 
   .standards-rail {
     position: sticky;
-    top: var(--mobile-header-height);
+    top: var(--space-padding);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -219,7 +283,6 @@ const panels = areas.map((area) => ({ ...area, groups: groupsOf(area.rows) }));
     display: flex;
     flex-direction: column;
     gap: var(--space-padding);
-    flex: 1;
     min-width: 0;
   }
 
@@ -229,47 +292,92 @@ const panels = areas.map((area) => ({ ...area, groups: groupsOf(area.rows) }));
     gap: var(--space-padding);
   }
 
-  #standards-len:checked ~ .standards-main .standards-panel[data-area="len"],
-  #standards-mat:checked ~ .standards-main .standards-panel[data-area="mat"],
-  #standards-cie:checked ~ .standards-main .standards-panel[data-area="cie"],
-  #standards-ide:checked ~ .standards-main .standards-panel[data-area="ide"] {
+  #standards-len:checked ~ .standards-body .standards-panel[data-area="len"],
+  #standards-mat:checked ~ .standards-body .standards-panel[data-area="mat"],
+  #standards-cie:checked ~ .standards-body .standards-panel[data-area="cie"],
+  #standards-ide:checked ~ .standards-body .standards-panel[data-area="ide"] {
     display: flex;
-  }
-
-  .standards-columns-head {
-    display: none;
   }
 
   .standards-unit {
     display: flex;
     flex-direction: column;
-    gap: var(--rail-gap);
   }
 
   .standards-unit__title {
     margin: 0;
+    padding: var(--rail-gap) var(--space-padding) 0;
     font-size: var(--font-size-sm);
     font-weight: 650;
   }
 
   .standards-row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
     gap: var(--rail-gap);
+    padding: var(--rail-gap) var(--space-padding);
+    border-bottom: var(--border-width) solid color-mix(in srgb, var(--color-text) 22%, var(--color-border));
   }
 
-  .standards-card {
-    min-height: 0;
+  .standards-row--a {
+    background: color-mix(in srgb, #d7e6f8 78%, var(--color-bg));
+  }
+
+  .standards-row--b {
+    background: color-mix(in srgb, #d9f3e6 78%, var(--color-bg));
+  }
+
+  .standards-row--c {
+    background: color-mix(in srgb, #f8ebc8 78%, var(--color-bg));
+  }
+
+  .standards-row--d {
+    background: color-mix(in srgb, #f7d9e6 78%, var(--color-bg));
+  }
+
+  .standards-row__cards {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: calc(var(--space-padding) + var(--rail-gap));
+    min-width: 0;
+  }
+
+  .standards-row__mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-size);
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  .standards-row__mark .material-symbols-outlined {
+    font-size: var(--icon-size);
+    font-variation-settings: "FILL" 1;
+  }
+
+  .standards-card.product-dash__card {
+    height: 100%;
+    background: transparent;
+    border-color: transparent;
     cursor: default;
   }
 
   .standards-card.product-dash__card:hover {
-    border-color: var(--color-border);
+    border-color: transparent;
+  }
+
+  .standards-card--best.product-dash__card,
+  .standards-card--best.product-dash__card:hover {
+    background: color-mix(in srgb, var(--color-bg) 45%, transparent);
+    border-color: var(--color-text);
   }
 
   .standards-card__place,
   .standards-card__code,
-  .standards-card__text {
+  .standards-card__text,
+  .standards-stars {
     margin: 0;
   }
 
@@ -288,6 +396,26 @@ const panels = areas.map((area) => ({ ...area, groups: groupsOf(area.rows) }));
 
   .standards-card__text {
     font-size: var(--font-size-sm);
+  }
+
+  .standards-stars {
+    display: flex;
+    gap: 0.125rem;
+    margin-top: auto;
+  }
+
+  .standards-star {
+    font-size: var(--font-size-sm);
+    color: color-mix(in srgb, var(--color-text) 28%, var(--color-bg));
+  }
+
+  .standards-star--on {
+    font-variation-settings: "FILL" 1;
+    color: var(--color-muted);
+  }
+
+  .standards-card--best .standards-star--on {
+    color: var(--color-text);
   }
 
   .standards-fit {
@@ -322,19 +450,7 @@ const panels = areas.map((area) => ({ ...area, groups: groupsOf(area.rows) }));
   }
 
   @media (min-width: 64rem) {
-    .standards-columns-head {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--rail-gap);
-    }
-
-    .standards-columns-head p {
-      margin: 0;
-      font-size: var(--font-size-sm);
-      font-weight: 650;
-    }
-
-    .standards-row {
+    .standards-row__cards {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 

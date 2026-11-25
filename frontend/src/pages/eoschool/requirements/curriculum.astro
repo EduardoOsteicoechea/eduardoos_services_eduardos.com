@@ -1,6 +1,5 @@
 ---
 import { Fragment } from "astro/jsx-runtime";
-import EoschoolDashBack from "../../../components/EoschoolDashBack.astro";
 import Grade3StandardsCompare from "../../../components/Grade3StandardsCompare.astro";
 import Layout from "../../../layouts/Layout.astro";
 import { MPPE_40WEEK_CURRICULUM } from "../../../lib/eoschool-mppe-40week-curriculum";
@@ -117,7 +116,6 @@ function weekForPlanDay(planDay: number): number {
       checked={standardsView}
     />
     <div class="eoschool-curriculum__toolbar">
-      <EoschoolDashBack />
       <div class="eoschool-curriculum__viewbar" role="radiogroup" aria-label="Vista del programa">
         <label class="eoschool-curriculum__viewbtn" for="curriculum-view-plan">Programa</label>
         <label class="eoschool-curriculum__viewbtn" for="curriculum-view-standards">
@@ -500,7 +498,17 @@ function weekForPlanDay(planDay: number): number {
     </div>
 
     <div class="eoschool-curriculum__standards">
-      <Grade3StandardsCompare />
+      <Grade3StandardsCompare>
+        <div slot="toolbar" class="eoschool-curriculum__toolbar">
+          <div class="eoschool-curriculum__viewbar" role="radiogroup" aria-label="Vista del programa">
+            <label class="eoschool-curriculum__viewbtn" for="curriculum-view-plan">Programa</label>
+            <label class="eoschool-curriculum__viewbtn" for="curriculum-view-standards">
+              <span class="material-symbols-outlined" aria-hidden="true">view_column</span>
+              Estándares
+            </label>
+          </div>
+        </div>
+      </Grade3StandardsCompare>
     </div>
 
   </section>
@@ -663,15 +671,20 @@ function weekForPlanDay(planDay: number): number {
     border: 0;
   }
 
+  .eoschool-curriculum {
+    padding-top: var(--space-padding);
+  }
+
   .eoschool-curriculum__toolbar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--rail-gap);
+    min-height: var(--menu-button-size);
   }
 
-  .eoschool-curriculum__toolbar :global(.product-dash__back) {
-    margin-top: 0;
+  #curriculum-view-standards:checked ~ .eoschool-curriculum__toolbar {
+    display: none;
   }
 
   .eoschool-curriculum__viewbar {
@@ -701,12 +714,18 @@ function weekForPlanDay(planDay: number): number {
   }
 
   #curriculum-view-plan:checked ~ .eoschool-curriculum__toolbar label[for="curriculum-view-plan"],
-  #curriculum-view-standards:checked ~ .eoschool-curriculum__toolbar label[for="curriculum-view-standards"],
+  #curriculum-view-standards:checked ~ .eoschool-curriculum__standards label[for="curriculum-view-standards"],
   #curriculum-view-plan:focus-visible ~ .eoschool-curriculum__toolbar label[for="curriculum-view-plan"],
-  #curriculum-view-standards:focus-visible ~ .eoschool-curriculum__toolbar label[for="curriculum-view-standards"] {
+  #curriculum-view-standards:focus-visible ~ .eoschool-curriculum__standards label[for="curriculum-view-standards"] {
     color: var(--color-bg);
     background: var(--color-text);
     border-color: var(--color-text);
+  }
+
+  @media (max-width: 47.999rem) {
+    .eoschool-curriculum__toolbar {
+      padding-right: calc(var(--menu-button-size) + var(--space-padding));
+    }
   }
 
   .eoschool-curriculum__plan {
