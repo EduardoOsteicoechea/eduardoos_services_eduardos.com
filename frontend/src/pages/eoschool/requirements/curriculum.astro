@@ -519,10 +519,17 @@ function weekForPlanDay(planDay: number): number {
         <section class="eoschool-curriculum-modal__panel eoschool-curriculum-modal__panel--pdf" aria-label="Clase PDF">
           <div class="eoschool-curriculum-modal__panel-head">
             <h3 class="eoschool-curriculum-modal__panel-title">Hoja del día (materias del día)</h3>
-            <button type="button" class="eoschool-curriculum-modal__download" data-curriculum-modal-download disabled>
-              Descargar PDF
-            </button>
+            <div class="eoschool-curriculum-modal__panel-actions">
+              <button type="button" class="eoschool-curriculum-modal__print" data-curriculum-day-print hidden>
+                <span class="material-symbols-outlined" aria-hidden="true">print</span>
+                Imprimir
+              </button>
+              <button type="button" class="eoschool-curriculum-modal__download" data-curriculum-modal-download disabled>
+                Descargar PDF
+              </button>
+            </div>
           </div>
+          <iframe class="eoschool-curriculum-modal__print-frame" data-curriculum-day-print-frame title="Impresión del día"></iframe>
           <p class="eoschool-curriculum-modal__pdf-empty" data-curriculum-modal-pdf-empty hidden>
             Clase en preparación para este día.
           </p>
@@ -1718,6 +1725,13 @@ function weekForPlanDay(planDay: number): number {
     flex-wrap: wrap;
   }
 
+  .eoschool-curriculum-modal__panel-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum-modal__print,
   .eoschool-curriculum-modal__download {
     height: var(--control-height);
     padding: var(--control-padding-block) var(--control-padding-inline);
@@ -1727,6 +1741,26 @@ function weekForPlanDay(planDay: number): number {
     background: var(--color-button-bg);
     color: var(--color-button-fg);
     cursor: pointer;
+  }
+
+  .eoschool-curriculum-modal__print {
+    display: flex;
+    align-items: center;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum-modal__print .material-symbols-outlined {
+    font-size: var(--icon-size);
+    width: var(--icon-size);
+    height: var(--icon-size);
+  }
+
+  .eoschool-curriculum-modal__print-frame {
+    position: fixed;
+    width: 0;
+    height: 0;
+    border: 0;
+    opacity: 0;
   }
 
   .eoschool-curriculum-modal__download:disabled {
