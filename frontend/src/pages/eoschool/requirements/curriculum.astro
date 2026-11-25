@@ -618,11 +618,16 @@ function weekForPlanDay(planDay: number): number {
   import { initCurriculumWeekCollapse } from "../../../lib/eoschool-curriculum-week-collapse";
 
   function bootCurriculumChrome() {
+    const params = new URLSearchParams(location.search);
+    const view = params.get("view");
+    const planRadio = document.querySelector<HTMLInputElement>("#curriculum-view-plan");
     const standardsRadio = document.querySelector<HTMLInputElement>("#curriculum-view-standards");
-    if (standardsRadio && new URLSearchParams(location.search).get("view") === "standards") {
-      standardsRadio.checked = true;
-    }
+    const gapsRadio = document.querySelector<HTMLInputElement>("#curriculum-view-gaps");
+    if (view === "standards" && standardsRadio) standardsRadio.checked = true;
+    else if (view === "gaps" && gapsRadio) gapsRadio.checked = true;
+    else if (planRadio) planRadio.checked = true;
     const root = document.querySelector<HTMLElement>("[data-curriculum-progress]");
+    if (root && params.get("mode") === "browse") root.dataset.curriculumMode = "browse";
     bindCurriculumTreatModal();
     const mode = root?.dataset.curriculumMode || "study";
     if (mode === "browse") {
