@@ -65,6 +65,15 @@ function measurePreviewBox(host: HTMLElement): { widthPx: number; heightPx: numb
   return { widthPx, heightPx };
 }
 
+function containedPreviewWidth(host: HTMLElement, fallbackPx: number): number {
+  const style = getComputedStyle(host);
+  const padX = (Number.parseFloat(style.paddingLeft) || 0) + (Number.parseFloat(style.paddingRight) || 0);
+  const inner = host.clientWidth - padX;
+  const root = rootFontSizePx();
+  if (inner >= root * 8) return inner;
+  return Math.min(fallbackPx, root * 18);
+}
+
 export async function fetchHomescoolPdfPreview(doc: EoschoolDocument): Promise<{
   ok: boolean;
   data?: HomescoolPreviewResponse;
@@ -115,6 +124,8 @@ export async function renderHomescoolPdfPreview(
     isStale?: () => boolean;
     /** When true, scale to width only (do not stretch preview to stage height). */
     fitWidth?: boolean;
+    /** Fit the host column. Skips the workspace width floor so a phone modal does not paint a sheet wider than the screen. */
+    containWidth?: boolean;
   },
 ): Promise<number> {
   const pageWidthMm = opts?.pageWidthMm && opts.pageWidthMm > 0 ? opts.pageWidthMm : 215.9;
@@ -136,8 +147,8 @@ export async function renderHomescoolPdfPreview(
   let cssWidthPx: number;
   let cssHeightPx: number;
   if (opts?.fitWidth) {
-    cssWidthPx = availW;
-    cssHeightPx = availW / aspect;
+    cssWidthPx = opts.containWidth ? containedPreviewWidth(host, availW) : availW;
+    cssHeightPx = cssWidthPx / aspect;
   } else {
     // Fit Letter inside the stage: prefer height (tall page), then clamp by width.
     cssWidthPx = availH * aspect;

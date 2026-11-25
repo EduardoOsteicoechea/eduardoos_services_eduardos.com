@@ -57,6 +57,7 @@ func TestEoschoolActivityMarksPersist(t *testing.T) {
 	}
 	doc, err := store.UpdateStudent(ctx, owner, eoschoolCurriculumDefaultStudentKey, func(row *EoschoolCurriculumProgressDoc) error {
 		row.ActivityScores = map[string]int{"d38:len": 80}
+		row.ActivityScoreNotes = map[string]string{"d38:len": "  Faltó la trompeta.  ", "d38:eng": "   "}
 		row.ActivityPhotos = map[string]string{"d38:len": "p0123456789abcdef.webp"}
 		row.ActivityPhotoList = map[string][]string{"d38:len": {"p0123456789abcdef.webp", "pabcdef0123456789.webp"}}
 		return nil
@@ -67,6 +68,16 @@ func TestEoschoolActivityMarksPersist(t *testing.T) {
 	view := curriculumProgressJSON(doc)
 	if view.ActivityScores["d38:len"] != 80 {
 		t.Fatalf("score %#v", view.ActivityScores)
+	}
+	if view.ActivityScoreNotes["d38:len"] != "Faltó la trompeta." || len(view.ActivityScoreNotes) != 1 {
+		t.Fatalf("notes %#v", view.ActivityScoreNotes)
+	}
+	applyEoschoolActivityScore(&doc, "d38:len", 70)
+	if doc.ActivityScores["d38:len"] != 70 {
+		t.Fatalf("rescore %#v", doc.ActivityScores)
+	}
+	if _, ok := doc.ActivityScoreNotes["d38:len"]; ok {
+		t.Fatal("stale note")
 	}
 	if len(view.ActivityPhotos) != 1 || view.ActivityPhotos[0] != "d38:len" {
 		t.Fatalf("photos %#v", view.ActivityPhotos)

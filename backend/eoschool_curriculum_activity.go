@@ -37,6 +37,14 @@ func eoschoolActivityScoreKeyOK(user *User, key string) bool {
 	return subtle.ConstantTimeCompare(got, want) == 1
 }
 
+func applyEoschoolActivityScore(row *EoschoolCurriculumProgressDoc, key string, score int) {
+	if row.ActivityScores == nil {
+		row.ActivityScores = map[string]int{}
+	}
+	row.ActivityScores[key] = score
+	delete(row.ActivityScoreNotes, key)
+}
+
 func dropEoschoolActivityPhoto(row *EoschoolCurriculumProgressDoc, key, name string) bool {
 	names := eoschoolActivityPhotoNames(*row, key)
 	next := make([]string, 0, len(names))
@@ -342,10 +350,7 @@ func (a *App) patchEoschoolCurriculumActivityScoreHandler(w http.ResponseWriter,
 	}
 	key := eoschoolCurriculumSectionKey(dayID, sectionID)
 	doc, err := a.eoschoolCurriculum.UpdateStudent(r.Context(), ownerID, studentKey, func(row *EoschoolCurriculumProgressDoc) error {
-		if row.ActivityScores == nil {
-			row.ActivityScores = map[string]int{}
-		}
-		row.ActivityScores[key] = body.Score
+		applyEoschoolActivityScore(row, key, body.Score)
 		return nil
 	})
 	if err != nil {

@@ -44,6 +44,25 @@ describe("activity thumbnails", () => {
   });
 });
 
+describe("score reason", () => {
+  it("opens the saved justification", () => {
+    const modal = document.createElement("div");
+    modal.innerHTML = `<div data-curriculum-activity hidden></div>`;
+    const card = document.createElement("article");
+    card.dataset.planDay = "38";
+    card.dataset.curriculumDay = "d38";
+    setActivityMarks({ "d38:cie": 89 }, [], undefined, {
+      "d38:cie": "El grupo del queso es lácteos.",
+    });
+    renderCurriculumActivity(modal, card, "cie");
+    const why = modal.querySelector<HTMLButtonElement>("[data-curriculum-score-why]");
+    expect(why?.textContent).toBe("Por qué");
+    why?.click();
+    const text = modal.querySelector("[data-curriculum-score-reason-text]");
+    expect(text?.textContent).toBe("El grupo del queso es lácteos.");
+  });
+});
+
 describe("paintCurriculumSubjectScores", () => {
   it("writes the saved score on the subject", () => {
     const root = document.createElement("div");

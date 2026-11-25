@@ -208,7 +208,12 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
       studentKey = loaded.data.student.studentKey;
       root.dataset.curriculumStudentKey = studentKey;
       loaded.data.sectionsDone.forEach((key) => done.add(key));
-      setActivityMarks(loaded.data.activityScores, loaded.data.activityPhotos, loaded.data.activityPhotoFiles);
+      setActivityMarks(
+        loaded.data.activityScores,
+        loaded.data.activityPhotos,
+        loaded.data.activityPhotoFiles,
+        loaded.data.activityScoreNotes,
+      );
       setStudentBanner(root, loaded.data.student, "remote");
       if (mustLog) {
         console.log("[curriculum.progress] loaded", {
@@ -277,7 +282,7 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
       });
       done.clear();
       data.sectionsDone.forEach((k) => done.add(k));
-      setActivityMarks(data.activityScores, data.activityPhotos, data.activityPhotoFiles);
+      setActivityMarks(data.activityScores, data.activityPhotos, data.activityPhotoFiles, data.activityScoreNotes);
       setStudentBanner(root, data.student, "remote");
       applyProgress(root, done);
     } catch (err) {

@@ -2342,6 +2342,56 @@ function weekForPlanDay(planDay: number): number {
     }
   }
 
+  @media (max-width: 47.999rem) {
+    .eoschool-curriculum-modal__dialog {
+      height: calc(100% - 2rem);
+    }
+
+    .eoschool-curriculum-modal__body {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      gap: var(--rail-gap);
+    }
+
+    .eoschool-curriculum-modal__panel {
+      overflow: hidden;
+      gap: 0.25rem;
+    }
+
+    .eoschool-curriculum-modal__panel:not(.eoschool-curriculum-modal__panel--pdf) {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+    }
+
+    .eoschool-curriculum-modal__panel--pdf {
+      flex: 0 0 auto;
+      max-height: 42%;
+      overflow: hidden;
+    }
+
+    .eoschool-curriculum-modal__panel-title {
+      font-size: var(--font-size-sm);
+    }
+
+    .eoschool-curriculum-modal__pdf {
+      flex: 1 1 auto;
+      min-height: 8rem;
+      max-height: 10rem;
+      overflow: auto;
+    }
+
+    .eoschool-curriculum-activity {
+      padding: var(--rail-gap);
+      gap: 0.25rem;
+    }
+
+    .eoschool-curriculum-modal__section-content {
+      font-size: var(--font-size-xs);
+    }
+  }
+
   .eoschool-curriculum-treat {
     position: fixed;
     inset: 0;
@@ -2574,5 +2624,84 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum-activity__key-actions {
     flex-direction: row;
     flex-wrap: wrap;
+  }
+
+  .eoschool-curriculum-activity__why-open {
+    height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-sm);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .eoschool-curriculum-activity__reason {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-padding);
+    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+  }
+
+  .eoschool-curriculum-activity__reason-box {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    width: min(24rem, 100%);
+    max-height: calc(100% - 2rem);
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .eoschool-curriculum-activity__reason-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum-activity__reason-title {
+    margin: 0;
+    font-size: var(--font-size-md);
+    font-weight: 650;
+  }
+
+  .eoschool-curriculum-activity__reason-close {
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .eoschool-curriculum-activity__reason-body {
+    margin: 0;
+    overflow-y: auto;
+    font-size: var(--font-size-sm);
+    line-height: 1.45;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 47.999rem) {
+    .mppe-day-sheet {
+      gap: var(--rail-gap);
+    }
+
+    .mppe-day-sheet__block {
+      gap: 0.25rem;
+    }
+
+    .mppe-day-sheet__area,
+    .mppe-day-sheet__label,
+    .mppe-day-sheet__text,
+    .mppe-day-sheet__list {
+      line-height: 1.3;
+    }
   }
 </style>

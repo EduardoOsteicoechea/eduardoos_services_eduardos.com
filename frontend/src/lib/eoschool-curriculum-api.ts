@@ -17,6 +17,7 @@ export type CurriculumProgressPayload = {
   student: CurriculumStudent;
   sectionsDone: string[];
   activityScores?: Record<string, number>;
+  activityScoreNotes?: Record<string, string>;
   activityPhotos?: string[];
   activityPhotoFiles?: Record<string, string[]>;
 };

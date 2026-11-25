@@ -14,6 +14,7 @@ import { mustLog } from "./dev-log";
 export const ACTIVITY_FROM_PLAN_DAY = 38;
 
 const scores = new Map<string, number>();
+const scoreNotes = new Map<string, string>();
 const photoFiles = new Map<string, string[]>();
 const photoRev = new Map<string, string>();
 
@@ -30,11 +31,17 @@ export function setActivityMarks(
   nextScores: Record<string, number> | undefined,
   nextPhotos: string[] | undefined,
   nextFiles?: Record<string, string[]>,
+  nextNotes?: Record<string, string>,
 ): void {
   scores.clear();
+  scoreNotes.clear();
   photoFiles.clear();
   for (const [key, value] of Object.entries(nextScores || {})) {
     if (typeof value === "number" && value >= 0 && value <= 100) scores.set(key, value);
+  }
+  for (const [key, value] of Object.entries(nextNotes || {})) {
+    const text = typeof value === "string" ? value.trim() : "";
+    if (text) scoreNotes.set(key, text);
   }
   for (const [key, names] of Object.entries(nextFiles || {})) {
     const clean = names.filter((name) => typeof name === "string" && name.length > 0);
@@ -79,7 +86,7 @@ function requestIdOf(err: unknown): string | undefined {
 }
 
 function applyPayload(data: CurriculumProgressPayload, key: string): void {
-  setActivityMarks(data.activityScores, data.activityPhotos, data.activityPhotoFiles);
+  setActivityMarks(data.activityScores, data.activityPhotos, data.activityPhotoFiles, data.activityScoreNotes);
   photoRev.set(key, String(Date.now()));
   const root = document.querySelector<HTMLElement>("[data-curriculum-progress]");
   if (root) paintCurriculumSubjectScores(root);
@@ -131,6 +138,18 @@ export function renderCurriculumActivity(
   save.type = "button";
   save.textContent = "Guardar puntaje";
   scoreRow.append(scoreText, scoreInput, save);
+  if (score != null) {
+    const why = document.createElement("button");
+    why.type = "button";
+    why.className = "eoschool-curriculum-activity__why-open";
+    why.dataset.curriculumScoreWhy = "";
+    why.textContent = "Por qué";
+    why.setAttribute("aria-label", "Ver por qué este puntaje");
+    why.addEventListener("click", () => {
+      openScoreReasonDialog(modal, scoreNotes.get(key) || "");
+    });
+    scoreRow.append(why);
+  }
 
   host.append(fileLabel);
   if (names.length) {
@@ -219,6 +238,53 @@ export function renderCurriculumActivity(
         return "failed";
       }
     });
+  });
+}
+
+function openScoreReasonDialog(modal: HTMLElement, note: string): void {
+  modal.querySelector("[data-curriculum-score-reason]")?.remove();
+  const layer = document.createElement("div");
+  layer.className = "eoschool-curriculum-activity__reason";
+  layer.dataset.curriculumScoreReason = "";
+  layer.setAttribute("role", "dialog");
+  layer.setAttribute("aria-modal", "true");
+  layer.setAttribute("aria-labelledby", "curriculum-score-reason-title");
+
+  const box = document.createElement("div");
+  box.className = "eoschool-curriculum-activity__reason-box";
+  const top = document.createElement("div");
+  top.className = "eoschool-curriculum-activity__reason-top";
+  const title = document.createElement("h2");
+  title.className = "eoschool-curriculum-activity__reason-title";
+  title.id = "curriculum-score-reason-title";
+  title.textContent = "Por qué este puntaje";
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.className = "icon-btn eoschool-curriculum-activity__reason-close";
+  closeBtn.setAttribute("aria-label", "Cerrar");
+  const icon = document.createElement("span");
+  icon.className = "material-symbols-outlined";
+  icon.setAttribute("aria-hidden", "true");
+  icon.textContent = "close";
+  closeBtn.append(icon);
+  top.append(title, closeBtn);
+
+  const body = document.createElement("p");
+  body.className = "eoschool-curriculum-activity__reason-body";
+  body.dataset.curriculumScoreReasonText = "";
+  body.textContent = note || "Este puntaje no tiene justificación escrita.";
+  box.append(top, body);
+  layer.append(box);
+  modal.append(layer);
+  closeBtn.focus();
+
+  const close = () => layer.remove();
+  closeBtn.addEventListener("click", close);
+  layer.addEventListener("click", (ev) => {
+    if (ev.target === layer) close();
+  });
+  layer.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape") close();
   });
 }
 
