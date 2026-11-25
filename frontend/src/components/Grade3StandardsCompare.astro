@@ -100,8 +100,7 @@ function starLabel(count: number, best: boolean) {
     <div class="standards-main">
       {
         panels.map((area) => (
-          <section class="standards-panel" data-area={area.id} aria-labelledby={`${viewId}-heading-${area.id}`}>
-            <h2 class="product-dash__section-title" id={`${viewId}-heading-${area.id}`}>{area.title}</h2>
+          <section class="standards-panel" data-area={area.id} aria-label={area.title}>
             {
               area.groups.map((group) => (
                 <section class="standards-unit">
