@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   activityPhotoNames,
   activityTaskCopy,
@@ -38,6 +38,14 @@ describe("activity thumbnails", () => {
     expect(img?.getAttribute("src")).toContain("name=p0123456789abcdef.webp");
     expect(remove?.getAttribute("aria-label")).toBe("Borrar foto");
     expect(remove?.querySelector(".material-symbols-outlined")?.textContent).toBe("delete");
+    const progress = modal.querySelector<HTMLProgressElement>(".eoschool-curriculum-activity__progress");
+    const file = modal.querySelector(".eoschool-curriculum-activity__file");
+    expect(file?.contains(progress ?? null)).toBe(true);
+    expect(progress?.hidden).toBe(true);
+    const ask = vi.spyOn(window, "confirm").mockReturnValue(false);
+    remove?.click();
+    expect(ask).toHaveBeenCalledWith("¿Borrar esta foto?");
+    ask.mockRestore();
     const score = modal.querySelector(".eoschool-curriculum-activity__score");
     expect(score?.textContent).toContain("Puntaje");
     expect(score?.querySelector("input[type='number']")).not.toBeNull();

@@ -1,4 +1,4 @@
-import { apiRequest, apiSend } from "./api";
+import { apiRequest, apiSend, uploadFileWithProgress, type UploadProgress } from "./api";
 
 export const DEFAULT_CURRICULUM_STUDENT_KEY = "elias-osteicoechea";
 
@@ -159,16 +159,20 @@ export async function uploadCurriculumActivityPhoto(input: {
   dayId: string;
   sectionId: string;
   photo: File;
+  onProgress?: (progress: UploadProgress) => void;
 }): Promise<CurriculumProgressPayload> {
-  const body = new FormData();
-  body.set("studentKey", input.studentKey);
-  body.set("dayId", input.dayId);
-  body.set("sectionId", input.sectionId);
-  body.set("photo", input.photo);
-  const { status, data, requestId } = await apiSend<CurriculumProgressPayload>(
+  const { status, data, requestId } = await uploadFileWithProgress<CurriculumProgressPayload>(
     "/eoschool/curriculum/activities/photo",
-    { method: "POST", body },
-    { timeoutMs: 120000 },
+    input.photo,
+    {
+      field: "photo",
+      fields: {
+        studentKey: input.studentKey,
+        dayId: input.dayId,
+        sectionId: input.sectionId,
+      },
+      onProgress: input.onProgress,
+    },
   );
   if (status < 200 || status >= 300) {
     const err = new Error(data.message || "No se pudo subir la foto.") as Error & { requestId?: string };

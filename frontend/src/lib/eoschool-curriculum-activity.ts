@@ -120,7 +120,16 @@ export function renderCurriculumActivity(
   fileInput.accept = "image/jpeg,image/png,image/webp";
   fileInput.multiple = true;
   fileInput.setAttribute("aria-label", "Fotos de la tarea");
-  fileLabel.append(fileInput);
+  const progress = document.createElement("progress");
+  progress.className = "eoschool-curriculum-activity__progress";
+  progress.max = 100;
+  progress.value = 0;
+  progress.hidden = true;
+  progress.setAttribute("aria-label", "Progreso de la foto");
+  const progressLabel = document.createElement("span");
+  progressLabel.className = "eoschool-curriculum-activity__progress-label";
+  progressLabel.hidden = true;
+  fileLabel.append(fileInput, progress, progressLabel);
 
   const scoreRow = document.createElement("div");
   scoreRow.className = "eoschool-curriculum-activity__score";
@@ -174,6 +183,7 @@ export function renderCurriculumActivity(
       icon.textContent = "delete";
       remove.append(icon);
       remove.addEventListener("click", () => {
+        if (!window.confirm("¿Borrar esta foto?")) return;
         if (mustLog) console.log("[curriculum.activity] photo.delete", { dayId, sectionId, name });
         void deleteCurriculumActivityPhoto({ studentKey, dayId, sectionId, name })
           .then((data) => {
@@ -199,16 +209,34 @@ export function renderCurriculumActivity(
     fileInput.value = "";
     if (!files.length) return;
     if (mustLog) console.log("[curriculum.activity] photo.upload", { dayId, sectionId, count: files.length });
+    fileInput.disabled = true;
+    progress.hidden = false;
+    progressLabel.hidden = false;
     void (async () => {
       let data: CurriculumProgressPayload | null = null;
-      for (const file of files) {
-        data = await uploadCurriculumActivityPhoto({ studentKey, dayId, sectionId, photo: file });
+      for (let i = 0; i < files.length; i++) {
+        const which = files.length > 1 ? ` ${i + 1} de ${files.length}` : "";
+        progressLabel.textContent = `Subiendo${which}…`;
+        progress.value = 0;
+        data = await uploadCurriculumActivityPhoto({
+          studentKey,
+          dayId,
+          sectionId,
+          photo: files[i],
+          onProgress: (event) => {
+            progress.value = event.percent;
+            if (event.percent >= 100) progressLabel.textContent = `Procesando${which}…`;
+          },
+        });
       }
       if (data) {
         applyPayload(data, key);
         renderCurriculumActivity(modal, card, sectionId);
       }
     })().catch((err) => {
+      progress.hidden = true;
+      progressLabel.hidden = true;
+      fileInput.disabled = false;
       showErrorModal({
         message: err instanceof Error ? err.message : "No se pudo subir la foto.",
         requestId: requestIdOf(err),

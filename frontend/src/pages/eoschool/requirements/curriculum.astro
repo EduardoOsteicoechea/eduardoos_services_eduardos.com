@@ -2592,6 +2592,33 @@ function weekForPlanDay(planDay: number): number {
 </style>
 
 <style is:global>
+  .eoschool-curriculum-activity__file {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum-activity__progress {
+    display: block;
+    height: 0.5rem;
+    margin: 0;
+    accent-color: var(--color-accent);
+  }
+
+  .eoschool-curriculum-activity__progress[hidden] {
+    display: none;
+  }
+
+  .eoschool-curriculum-activity__progress-label {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--color-muted);
+  }
+
+  .eoschool-curriculum-activity__progress-label[hidden] {
+    display: none;
+  }
+
   .eoschool-curriculum-activity__photos {
     display: flex;
     flex-wrap: wrap;
