@@ -459,7 +459,7 @@ function buildDaySheet(planDay, weeks, prevBlock) {
       label: "Inteligencia Artificial",
       objective: ai.objective,
       learning: ai.learning,
-      canDo: "Al terminar puedes decir la respuesta con tus palabras.",
+      canDo: ai.canDo || "Al terminar puedes decir la respuesta con tus palabras.",
       mode: "directo",
       activityKind: "ai",
       minutesEstimate: 15,

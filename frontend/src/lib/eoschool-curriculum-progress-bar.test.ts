@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { paintSubjectProgress, paintWeekProgress } from "./eoschool-curriculum-progress";
+import { paintDayProgress, paintSubjectProgress, paintWeekProgress } from "./eoschool-curriculum-progress";
 
 describe("paintWeekProgress", () => {
   it("fills the bar from completed sections", () => {
@@ -36,5 +36,16 @@ describe("paintWeekProgress", () => {
     expect(week.querySelector<HTMLElement>("[data-curriculum-week-progress-fill]")!.style.transform).toBe(
       "scaleX(0)",
     );
+  });
+
+  it("fills the day bubble as subjects are checked", () => {
+    const card = document.createElement("article");
+    card.dataset.planDay = "38";
+    card.innerHTML = `<button data-curriculum-day-bubble><span data-curriculum-day-bubble-fill role="progressbar"></span></button>`;
+    paintDayProgress(card, 3, 6);
+    const fill = card.querySelector<HTMLElement>("[data-curriculum-day-bubble-fill]")!;
+    expect(fill.style.height).toBe("50%");
+    expect(fill.getAttribute("aria-valuenow")).toBe("50");
+    expect(fill.getAttribute("aria-label")).toBe("Progreso del día 38: 3 de 6");
   });
 });

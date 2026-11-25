@@ -109,16 +109,14 @@ export function paintSubjectProgress(section: HTMLElement, checked: boolean): vo
   bar.setAttribute("aria-label", `${name}: ${checked ? "completada" : "pendiente"}`);
 }
 
-function paintDayProgress(card: HTMLElement, finished: number, total: number): void {
+export function paintDayProgress(card: HTMLElement, finished: number, total: number): void {
   const day = card.dataset.planDay || card.dataset.curriculumDay || "";
-  paintProgressBar(
-    card,
-    ":scope > [data-curriculum-day-progress]",
-    "[data-curriculum-day-progress-fill]",
-    finished,
-    total,
-    `Progreso del día ${day}: ${finished} de ${total}`,
-  );
+  const ratio = total > 0 ? Math.min(1, finished / total) : 0;
+  const fill = card.querySelector<HTMLElement>("[data-curriculum-day-bubble-fill]");
+  if (!fill) return;
+  fill.style.height = `${Math.round(ratio * 100)}%`;
+  fill.setAttribute("aria-valuenow", String(Math.round(ratio * 100)));
+  fill.setAttribute("aria-label", `Progreso del día ${day}: ${finished} de ${total}`);
 }
 
 function paintProgressBar(

@@ -235,19 +235,17 @@ function weekForPlanDay(planDay: number): number {
                       data-curriculum-day-bubble
                       aria-label={ariaDay}
                     >
-                      {bibleDay.dayInPlan}
+                      <span
+                        class="eoschool-curriculum__day-bubble__fill"
+                        data-curriculum-day-bubble-fill
+                        role="progressbar"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        aria-valuenow="0"
+                        aria-label={`Progreso del día ${bibleDay.dayInPlan}`}
+                      ></span>
+                      <span class="eoschool-curriculum__day-bubble__num">{bibleDay.dayInPlan}</span>
                     </button>
-                    <div
-                      class="eoschool-curriculum__week-progress"
-                      role="progressbar"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                      aria-valuenow="0"
-                      aria-label={`Progreso del día ${bibleDay.dayInPlan}`}
-                      data-curriculum-day-progress
-                    >
-                      <span class="eoschool-curriculum__week-progress__fill" data-curriculum-day-progress-fill></span>
-                    </div>
                     <div class="eoschool-curriculum__day-body">
                       {scheduled.map((sectionId) => {
                         const area = areaBySection[sectionId];
@@ -975,15 +973,6 @@ function weekForPlanDay(planDay: number): number {
     display: none;
   }
 
-  .eoschool-curriculum__day-card > .eoschool-curriculum__week-progress {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: 0;
-    height: 0.1rem;
-  }
-
   .eoschool-curriculum__week-layout {
     display: flex;
     flex-direction: row;
@@ -1136,8 +1125,8 @@ function weekForPlanDay(planDay: number): number {
     min-width: 0;
     align-items: stretch;
     overflow: visible;
-    padding-block: calc(var(--button-size) * 0.375) 0;
-    padding-inline: calc(var(--button-size) * 0.375);
+    padding-block: calc(var(--button-size) * 0.28125) 0;
+    padding-inline: calc(var(--button-size) * 0.28125);
   }
 
   .eoschool-curriculum__day-card {
@@ -1146,7 +1135,7 @@ function weekForPlanDay(planDay: number): number {
     gap: 0;
     min-width: 0;
     min-height: 0;
-    padding: var(--space-padding);
+    padding: var(--rail-gap);
     display: flex;
     flex-direction: column;
     overflow: visible;
@@ -1161,8 +1150,9 @@ function weekForPlanDay(planDay: number): number {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: calc(var(--button-size) * 0.75);
-    height: calc(var(--button-size) * 0.75);
+    overflow: hidden;
+    width: calc(var(--button-size) * 0.5625);
+    height: calc(var(--button-size) * 0.5625);
     margin: 0;
     padding: 0;
     border: var(--border-width) solid var(--color-text);
@@ -1173,6 +1163,21 @@ function weekForPlanDay(planDay: number): number {
     font-weight: 650;
     line-height: 1;
     cursor: pointer;
+  }
+
+  .eoschool-curriculum__day-bubble__fill {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    height: 0%;
+    background: #16a34a;
+  }
+
+  .eoschool-curriculum__day-bubble__num {
+    position: relative;
+    z-index: 1;
   }
 
   .eoschool-curriculum__day-card.product-dash__card {
