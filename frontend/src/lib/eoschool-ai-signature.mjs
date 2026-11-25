@@ -68,6 +68,38 @@ export function aiSheetSection(planDay) {
       canDo: "Al terminar puedes mostrar 10 fotos en la carpeta, 10 fichas confirmadas en la app y los repetidos a la vista.",
     };
   }
+  if (planDay === 39) {
+    return {
+      objective: "Inventario",
+      learning:
+        "Miras una pieza. · Dices el tipo, el color y cuántas hay. · El agente escribe solo lo que tú dices. · Si cambia una palabra, tú la corriges.",
+      activities: [
+        "¿Qué pieza elegiste?",
+        "¿De qué tipo es?",
+        "¿De qué color es?",
+        "¿Cuántas hay?",
+        "¿El agente escribió exactamente lo que dijiste?",
+        "Si cambió una palabra, ¿cuál corriges?",
+        "Escribe la ficha en una sola línea: tipo, color y cantidad.",
+      ],
+      canDo: "Al terminar puedes dictar una ficha: tipo, color y cantidad.",
+    };
+  }
+  if (planDay === 40) {
+    return {
+      objective: "Página",
+      learning:
+        "La página del inventario muestra un solo dato de una ficha que tú ya confirmaste. · Puede ser el color, la forma o la cantidad. · Si tú no lo dijiste, la página no lo pone.",
+      activities: [
+        "¿Qué pieza ya confirmaste?",
+        "¿Qué dato eliges para la página: color, forma o cantidad?",
+        "Escribe ese dato, tal como lo confirmaste.",
+        "¿Puede la página poner un color que tú no dijiste?",
+        "Escribe la línea de la página.",
+      ],
+      canDo: "Al terminar puedes elegir un dato confirmado y escribir la línea que muestra la página.",
+    };
+  }
   const group = aiGroupsForDay(planDay)[0];
   const learning = group.learnings[0] ?? "";
   return {

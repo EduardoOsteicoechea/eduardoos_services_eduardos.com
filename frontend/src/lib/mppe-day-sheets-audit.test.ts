@@ -71,6 +71,11 @@ describe("MPPE day sheets (200 días)", () => {
       const dayInWeek = ((planDay - 1) % 5) + 1;
       const week = Math.floor((planDay - 1) / 5) + 1;
       const ids = raw.sections.map((s) => s.id);
+      const coreIds = ids.filter((id) => id !== "eng");
+      if (ids.includes("eng")) {
+        expect(week).toBeGreaterThanOrEqual(8);
+        expect(ids.filter((id) => id === "eng")).toHaveLength(1);
+      }
       const withAi = (base: string[]) => (planDay >= 38 ? [...base, "ia"] : base);
       if (holidayDays.has(planDay)) {
         expect(raw.dayKind).toBe("holiday");
@@ -78,17 +83,17 @@ describe("MPPE day sheets (200 días)", () => {
         expect(raw.holidayName).toBeTruthy();
       } else if (dayInWeek === 5) {
         expect(raw.dayKind).toBe("exposition");
-        expect(ids).toEqual(withAi(["bib", "ide", "len", "mat", "cie"]));
+        expect(coreIds).toEqual(withAi(["bib", "ide", "len", "mat", "cie"]));
       } else if (dayInWeek === 1 || dayInWeek === 3) {
         expect(raw.dayKind).toBe("teach");
         if (week >= dailyMathFromWeek) {
-          expect(ids).toEqual(withAi(["bib", "len", "cie", "mat"]));
+          expect(coreIds).toEqual(withAi(["bib", "len", "cie", "mat"]));
         } else {
-          expect(ids).toEqual(withAi(["bib", "len", "cie"]));
+          expect(coreIds).toEqual(withAi(["bib", "len", "cie"]));
         }
       } else {
         expect(raw.dayKind).toBe("teach");
-        expect(ids).toEqual(withAi(["bib", "len", "ide", "mat"]));
+        expect(coreIds).toEqual(withAi(["bib", "len", "ide", "mat"]));
       }
       expect(raw.scheduledSections).toEqual(ids);
     }
