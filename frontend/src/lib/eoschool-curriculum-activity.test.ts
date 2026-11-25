@@ -3,6 +3,7 @@ import {
   activityPhotoNames,
   activityTaskCopy,
   paintCurriculumSubjectScores,
+  renderCurriculumActivity,
   setActivityMarks,
 } from "./eoschool-curriculum-activity";
 
@@ -18,6 +19,25 @@ describe("activity photos", () => {
   it("keeps every uploaded image for the subject", () => {
     setActivityMarks({}, ["d38:len"], { "d38:len": ["p0123456789abcdef.webp", "pabcdef0123456789.webp"] });
     expect(activityPhotoNames("d38:len")).toEqual(["p0123456789abcdef.webp", "pabcdef0123456789.webp"]);
+  });
+});
+
+describe("activity thumbnails", () => {
+  it("draws a small frame and a delete control on each photo", () => {
+    const modal = document.createElement("div");
+    modal.innerHTML = `<div data-curriculum-activity hidden></div>`;
+    const card = document.createElement("article");
+    card.dataset.planDay = "38";
+    card.dataset.curriculumDay = "d38";
+    setActivityMarks({}, ["d38:eng"], { "d38:eng": ["p0123456789abcdef.webp"] });
+    renderCurriculumActivity(modal, card, "eng");
+    const thumb = modal.querySelector<HTMLElement>(".eoschool-curriculum-activity__thumb");
+    const img = modal.querySelector<HTMLImageElement>(".eoschool-curriculum-activity__preview");
+    const remove = modal.querySelector<HTMLButtonElement>(".eoschool-curriculum-activity__remove");
+    expect(thumb).not.toBeNull();
+    expect(img?.getAttribute("src")).toContain("name=p0123456789abcdef.webp");
+    expect(remove?.getAttribute("aria-label")).toBe("Borrar foto");
+    expect(remove?.querySelector(".material-symbols-outlined")?.textContent).toBe("delete");
   });
 });
 

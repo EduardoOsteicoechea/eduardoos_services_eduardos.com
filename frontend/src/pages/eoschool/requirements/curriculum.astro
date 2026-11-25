@@ -1808,6 +1808,7 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum-activity {
+    --activity-thumb: 9.375rem;
     display: flex;
     flex-direction: column;
     gap: var(--rail-gap);
@@ -1815,6 +1816,12 @@ function weekForPlanDay(planDay: number): number {
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     background: var(--color-bg);
+  }
+
+  @media (max-width: 47.999rem) {
+    .eoschool-curriculum-activity {
+      --activity-thumb: 3.125rem;
+    }
   }
 
   .eoschool-curriculum-activity__task,
@@ -1836,20 +1843,6 @@ function weekForPlanDay(planDay: number): number {
     width: calc(var(--button-size) * 2);
     height: var(--control-height);
     font-size: var(--font-size-md);
-  }
-
-  .eoschool-curriculum-activity__photos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--rail-gap);
-  }
-
-  .eoschool-curriculum-activity__preview {
-    width: 9.375rem;
-    height: 9.375rem;
-    flex-shrink: 0;
-    object-fit: cover;
-    border-radius: var(--border-radius);
   }
 
   .eoschool-curriculum-modal__panel-head {
@@ -2469,5 +2462,55 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum-treat__ok {
     margin-top: var(--rail-gap);
+  }
+</style>
+
+<style is:global>
+  .eoschool-curriculum-activity__photos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum-activity__thumb {
+    position: relative;
+    width: var(--activity-thumb, 3.125rem);
+    height: var(--activity-thumb, 3.125rem);
+    flex: 0 0 var(--activity-thumb, 3.125rem);
+  }
+
+  .eoschool-curriculum-activity__preview {
+    width: var(--activity-thumb, 3.125rem);
+    height: var(--activity-thumb, 3.125rem);
+    max-width: var(--activity-thumb, 3.125rem);
+    max-height: var(--activity-thumb, 3.125rem);
+    object-fit: cover;
+    display: block;
+    border-radius: var(--border-radius);
+  }
+
+  .eoschool-curriculum-activity__remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 1.25rem;
+    height: 1.25rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .eoschool-curriculum-activity__remove .material-symbols-outlined {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+    line-height: 1;
   }
 </style>

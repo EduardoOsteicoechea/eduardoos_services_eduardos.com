@@ -23,6 +23,36 @@ func validEoschoolActivityPhotoName(name string) bool {
 	return name == eoschoolActivityPhotoName || eoschoolActivityPhotoFileRe.MatchString(name)
 }
 
+func dropEoschoolActivityPhoto(row *EoschoolCurriculumProgressDoc, key, name string) bool {
+	names := eoschoolActivityPhotoNames(*row, key)
+	next := make([]string, 0, len(names))
+	found := false
+	for _, item := range names {
+		if item == name {
+			found = true
+			continue
+		}
+		next = append(next, item)
+	}
+	if !found {
+		return false
+	}
+	if row.ActivityPhotoList == nil {
+		row.ActivityPhotoList = map[string][]string{}
+	}
+	if row.ActivityPhotos == nil {
+		row.ActivityPhotos = map[string]string{}
+	}
+	if len(next) == 0 {
+		delete(row.ActivityPhotoList, key)
+		delete(row.ActivityPhotos, key)
+		return true
+	}
+	row.ActivityPhotoList[key] = next
+	row.ActivityPhotos[key] = next[len(next)-1]
+	return true
+}
+
 func eoschoolActivityPhotoNames(doc EoschoolCurriculumProgressDoc, key string) []string {
 	if names := doc.ActivityPhotoList[key]; len(names) > 0 {
 		out := make([]string, 0, len(names))
@@ -143,6 +173,62 @@ func (a *App) postEoschoolCurriculumActivityPhotoHandler(w http.ResponseWriter, 
 		return
 	}
 	a.auditEvent(r, "eoschool_curriculum_activity_photo", "ok", user.ID)
+	writeJSON(w, http.StatusOK, curriculumProgressJSON(doc))
+}
+
+type eoschoolCurriculumActivityPhotoDelete struct {
+	StudentKey string `json:"studentKey"`
+	DayID      string `json:"dayId"`
+	SectionID  string `json:"sectionId"`
+	Name       string `json:"name"`
+}
+
+func (a *App) deleteEoschoolCurriculumActivityPhotoHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.validOrigin(r) || !a.validCSRF(r) {
+		a.writeSafeError(w, r, http.StatusForbidden, "csrf_invalid")
+		return
+	}
+	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 8192))
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	var body eoschoolCurriculumActivityPhotoDelete
+	if err = json.Unmarshal(raw, &body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	studentKey := normalizeEoschoolCurriculumStudentKey(body.StudentKey)
+	dayID := strings.TrimSpace(body.DayID)
+	sectionID := strings.TrimSpace(body.SectionID)
+	name := strings.TrimSpace(body.Name)
+	if !validateEoschoolCurriculumSectionToggle(dayID, sectionID) || !validEoschoolActivityPhotoName(name) {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	user, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	key := eoschoolCurriculumSectionKey(dayID, sectionID)
+	doc, err := a.eoschoolCurriculum.UpdateStudent(r.Context(), ownerID, studentKey, func(row *EoschoolCurriculumProgressDoc) error {
+		if !dropEoschoolActivityPhoto(row, key, name) {
+			return errEoschoolCurriculumStudentNotFound
+		}
+		return nil
+	})
+	if errors.Is(err, errEoschoolCurriculumStudentNotFound) {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if delErr := a.curriculumMaterialsFS.delete(ownerID, studentKey, dayID, sectionID, name); delErr != nil {
+		a.mustLogf(r, "eoschool.activity.photo.delete_err", "err", delErr.Error())
+	}
+	a.auditEvent(r, "eoschool_curriculum_activity_photo_delete", "ok", user.ID)
 	writeJSON(w, http.StatusOK, curriculumProgressJSON(doc))
 }
 

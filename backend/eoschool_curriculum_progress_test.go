@@ -76,6 +76,34 @@ func TestEoschoolActivityMarksPersist(t *testing.T) {
 	}
 }
 
+func TestDropEoschoolActivityPhoto(t *testing.T) {
+	row := EoschoolCurriculumProgressDoc{
+		ActivityPhotos:    map[string]string{"d38:eng": "pabcdef0123456789.webp"},
+		ActivityPhotoList: map[string][]string{"d38:eng": {"p0123456789abcdef.webp", "pabcdef0123456789.webp"}},
+	}
+	if !dropEoschoolActivityPhoto(&row, "d38:eng", "p0123456789abcdef.webp") {
+		t.Fatal("expected drop")
+	}
+	if got := row.ActivityPhotoList["d38:eng"]; len(got) != 1 || got[0] != "pabcdef0123456789.webp" {
+		t.Fatalf("list %#v", got)
+	}
+	if row.ActivityPhotos["d38:eng"] != "pabcdef0123456789.webp" {
+		t.Fatalf("latest %#v", row.ActivityPhotos["d38:eng"])
+	}
+	if !dropEoschoolActivityPhoto(&row, "d38:eng", "pabcdef0123456789.webp") {
+		t.Fatal("expected last drop")
+	}
+	if _, ok := row.ActivityPhotoList["d38:eng"]; ok {
+		t.Fatal("list should be gone")
+	}
+	if _, ok := row.ActivityPhotos["d38:eng"]; ok {
+		t.Fatal("latest should be gone")
+	}
+	if dropEoschoolActivityPhoto(&row, "d38:eng", "p0123456789abcdef.webp") {
+		t.Fatal("missing name should not drop")
+	}
+}
+
 func TestPrepareEoschoolActivityPhotoRejectsGarbage(t *testing.T) {
 	if _, err := prepareEoschoolActivityPhoto([]byte("not-an-image")); err == nil {
 		t.Fatal("expected reject")

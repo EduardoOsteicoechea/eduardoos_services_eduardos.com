@@ -177,6 +177,28 @@ export async function uploadCurriculumActivityPhoto(input: {
   return data;
 }
 
+export async function deleteCurriculumActivityPhoto(input: {
+  studentKey: string;
+  dayId: string;
+  sectionId: string;
+  name: string;
+}): Promise<CurriculumProgressPayload> {
+  const { status, data, requestId } = await apiSend<CurriculumProgressPayload>(
+    "/eoschool/curriculum/activities/photo",
+    {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    },
+  );
+  if (status < 200 || status >= 300) {
+    const err = new Error(data.message || "No se pudo borrar la foto.") as Error & { requestId?: string };
+    err.requestId = requestId;
+    throw err;
+  }
+  return data;
+}
+
 export async function patchCurriculumActivityScore(input: {
   studentKey: string;
   dayId: string;

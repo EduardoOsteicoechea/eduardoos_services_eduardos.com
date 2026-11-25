@@ -2,6 +2,7 @@ import type { CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes
 import {
   curriculumActivityPhotoURL,
   DEFAULT_CURRICULUM_STUDENT_KEY,
+  deleteCurriculumActivityPhoto,
   patchCurriculumActivityScore,
   uploadCurriculumActivityPhoto,
   type CurriculumProgressPayload,
@@ -137,11 +138,38 @@ export function renderCurriculumActivity(
     gallery.className = "eoschool-curriculum-activity__photos";
     for (const name of names) {
       const viewURL = curriculumActivityPhotoURL(studentKey, dayId, sectionId, name);
+      const thumb = document.createElement("div");
+      thumb.className = "eoschool-curriculum-activity__thumb";
       const img = document.createElement("img");
       img.className = "eoschool-curriculum-activity__preview";
       img.alt = "";
       img.src = rev ? `${viewURL}&v=${encodeURIComponent(rev)}` : viewURL;
-      gallery.append(img);
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "eoschool-curriculum-activity__remove";
+      remove.title = "Borrar foto";
+      remove.setAttribute("aria-label", "Borrar foto");
+      const icon = document.createElement("span");
+      icon.className = "material-symbols-outlined";
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = "delete";
+      remove.append(icon);
+      remove.addEventListener("click", () => {
+        if (mustLog) console.log("[curriculum.activity] photo.delete", { dayId, sectionId, name });
+        void deleteCurriculumActivityPhoto({ studentKey, dayId, sectionId, name })
+          .then((data) => {
+            applyPayload(data, key);
+            renderCurriculumActivity(modal, card, sectionId);
+          })
+          .catch((err) => {
+            showErrorModal({
+              message: err instanceof Error ? err.message : "No se pudo borrar la foto.",
+              requestId: requestIdOf(err),
+            });
+          });
+      });
+      thumb.append(img, remove);
+      gallery.append(thumb);
     }
     host.append(gallery);
   }
