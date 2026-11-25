@@ -120,10 +120,9 @@ export function paintDayProgress(card: HTMLElement, finished: number, total: num
   fill.style.height = `${Math.round(ratio * 100)}%`;
   fill.setAttribute("aria-valuenow", String(Math.round(ratio * 100)));
   fill.setAttribute("aria-label", `Progreso del día ${day}: ${finished} de ${total}`);
-  fill.closest(".eoschool-curriculum__day-bubble")?.classList.toggle(
-    "eoschool-curriculum__day-bubble--green",
-    ratio >= 0.5,
-  );
+  const bubble = fill.closest<HTMLElement>(".eoschool-curriculum__day-bubble");
+  bubble?.style.setProperty("--day-progress", String(ratio));
+  bubble?.classList.toggle("eoschool-curriculum__day-bubble--green", ratio >= 0.5);
 }
 
 function paintProgressBar(

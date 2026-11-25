@@ -681,7 +681,7 @@ function weekForPlanDay(planDay: number): number {
   }
 
   :global(html[data-page="eoschool-requirements-curriculum"] main) {
-    padding-left: 0;
+    padding-left: var(--space-padding);
   }
 
   :global(html[data-page="eoschool-requirements-curriculum"] .standards-compare) {
@@ -1053,7 +1053,7 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__week.product-dash__card.eoschool-curriculum__week--done.eoschool-curriculum__week--collapsed {
-    border-color: var(--color-ok);
+    border-color: var(--color-border);
     background: color-mix(in srgb, var(--color-ok) 8%, var(--color-surface));
   }
 
@@ -1169,9 +1169,12 @@ function weekForPlanDay(planDay: number): number {
     padding: 0;
     border: var(--border-width) solid var(--color-border);
     border-radius: 50%;
-    background: var(--color-bg);
+    background: conic-gradient(
+      #16a34a calc(var(--day-progress, 0) * 100%),
+      var(--color-bg) 0
+    );
     color: var(--color-text);
-    font-size: calc(var(--font-size-xs) * 1.5);
+    font-size: calc(var(--font-size-xs) * 1.125);
     font-weight: 650;
     line-height: 1;
     cursor: pointer;
@@ -1179,12 +1182,14 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__day-bubble__fill {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 0;
-    height: 0%;
-    background: #16a34a;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .eoschool-curriculum__day-bubble__num {
@@ -1209,18 +1214,21 @@ function weekForPlanDay(planDay: number): number {
     height: calc(var(--button-size) * 0.84375);
     margin: 0;
     padding: 0;
-    border: var(--border-width) solid var(--color-border);
+    border: 0;
     border-radius: 50%;
-    background: var(--color-bg);
+    background: transparent;
     color: var(--color-text);
     cursor: pointer;
   }
 
   .eoschool-curriculum__day-open .material-symbols-outlined {
-    font-size: var(--font-size-md);
     width: var(--font-size-md);
     height: var(--font-size-md);
+    font-size: var(--font-size-md);
     line-height: 1;
+    color: var(--color-text);
+    background: transparent;
+    border-radius: 0;
   }
 
   .eoschool-curriculum__day-card.product-dash__card {
@@ -1287,8 +1295,13 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__day-card--done,
-  .eoschool-curriculum__day-card.product-dash__card--done {
-    border-color: var(--color-ok);
+  .eoschool-curriculum__day-card.product-dash__card--done,
+  .eoschool-curriculum__day-card--done:hover,
+  .eoschool-curriculum__day-card--done:focus-visible,
+  .eoschool-curriculum__day-card.product-dash__card--done:hover,
+  .eoschool-curriculum__day-card.product-dash__card--done:focus-visible {
+    border-color: var(--color-border);
+    box-shadow: none;
     background: color-mix(in srgb, var(--color-ok) 10%, var(--color-surface));
   }
 

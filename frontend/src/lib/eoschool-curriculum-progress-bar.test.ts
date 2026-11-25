@@ -45,6 +45,7 @@ describe("paintWeekProgress", () => {
     paintDayProgress(card, 3, 6);
     const fill = card.querySelector<HTMLElement>("[data-curriculum-day-bubble-fill]")!;
     expect(fill.style.height).toBe("50%");
+    expect(card.querySelector<HTMLElement>(".eoschool-curriculum__day-bubble")?.style.getPropertyValue("--day-progress")).toBe("0.5");
     expect(fill.getAttribute("aria-valuenow")).toBe("50");
     expect(fill.getAttribute("aria-label")).toBe("Progreso del día 38: 3 de 6");
     expect(card.querySelector(".eoschool-curriculum__day-bubble")?.classList.contains("eoschool-curriculum__day-bubble--green")).toBe(true);
