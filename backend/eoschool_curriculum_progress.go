@@ -44,21 +44,22 @@ type EoschoolCurriculumStudent struct {
 }
 
 type EoschoolCurriculumProgressDoc struct {
-	ID               string            `json:"id" bson:"id"`
-	OwnerUserID      string            `json:"ownerUserId" bson:"owner_user_id"`
-	StudentKey       string            `json:"studentKey" bson:"student_key"`
-	FirstName        string            `json:"firstName" bson:"first_name"`
-	LastName         string            `json:"lastName" bson:"last_name"`
-	DisplayName      string            `json:"displayName" bson:"display_name"`
-	Age              int               `json:"age" bson:"age"`
-	Grade            string            `json:"grade" bson:"grade"`
-	PhotoStorageName string            `json:"photoStorageName,omitempty" bson:"photo_storage_name,omitempty"`
-	PhotoContentType string            `json:"photoContentType,omitempty" bson:"photo_content_type,omitempty"`
-	SectionsDone     []string          `json:"sectionsDone" bson:"sections_done"`
-	ActivityScores   map[string]int    `json:"activityScores,omitempty" bson:"activity_scores,omitempty"`
-	ActivityPhotos   map[string]string `json:"-" bson:"activity_photos,omitempty"`
-	CreatedAt        time.Time         `json:"createdAt" bson:"created_at"`
-	UpdatedAt        time.Time         `json:"updatedAt" bson:"updated_at"`
+	ID                string              `json:"id" bson:"id"`
+	OwnerUserID       string              `json:"ownerUserId" bson:"owner_user_id"`
+	StudentKey        string              `json:"studentKey" bson:"student_key"`
+	FirstName         string              `json:"firstName" bson:"first_name"`
+	LastName          string              `json:"lastName" bson:"last_name"`
+	DisplayName       string              `json:"displayName" bson:"display_name"`
+	Age               int                 `json:"age" bson:"age"`
+	Grade             string              `json:"grade" bson:"grade"`
+	PhotoStorageName  string              `json:"photoStorageName,omitempty" bson:"photo_storage_name,omitempty"`
+	PhotoContentType  string              `json:"photoContentType,omitempty" bson:"photo_content_type,omitempty"`
+	SectionsDone      []string            `json:"sectionsDone" bson:"sections_done"`
+	ActivityScores    map[string]int      `json:"activityScores,omitempty" bson:"activity_scores,omitempty"`
+	ActivityPhotos    map[string]string   `json:"-" bson:"activity_photos,omitempty"`
+	ActivityPhotoList map[string][]string `json:"-" bson:"activity_photo_list,omitempty"`
+	CreatedAt         time.Time           `json:"createdAt" bson:"created_at"`
+	UpdatedAt         time.Time           `json:"updatedAt" bson:"updated_at"`
 }
 
 func eoschoolCurriculumSectionKey(dayID, sectionID string) string {

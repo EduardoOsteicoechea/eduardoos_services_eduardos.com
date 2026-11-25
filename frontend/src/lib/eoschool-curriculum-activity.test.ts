@@ -1,12 +1,23 @@
 import { describe, expect, it } from "vitest";
-import { activityTaskCopy, paintCurriculumSubjectScores, setActivityMarks } from "./eoschool-curriculum-activity";
+import {
+  activityPhotoNames,
+  activityTaskCopy,
+  paintCurriculumSubjectScores,
+  setActivityMarks,
+} from "./eoschool-curriculum-activity";
 
 describe("activityTaskCopy", () => {
-  it("starts at plan day 38 and gives Bible its own sheet", () => {
+  it("starts at plan day 38 without instruction text", () => {
     expect(activityTaskCopy(37, "bib")).toBe("");
-    expect(activityTaskCopy(38, "len")).toContain("preguntas");
-    expect(activityTaskCopy(38, "bib")).toContain("pareo");
-    expect(activityTaskCopy(38, "bib")).toContain("reflexión");
+    expect(activityTaskCopy(38, "len")).toBe("");
+    expect(activityTaskCopy(38, "bib")).toBe("");
+  });
+});
+
+describe("activity photos", () => {
+  it("keeps every uploaded image for the subject", () => {
+    setActivityMarks({}, ["d38:len"], { "d38:len": ["p0123456789abcdef.webp", "pabcdef0123456789.webp"] });
+    expect(activityPhotoNames("d38:len")).toEqual(["p0123456789abcdef.webp", "pabcdef0123456789.webp"]);
   });
 });
 

@@ -18,6 +18,7 @@ export type CurriculumProgressPayload = {
   sectionsDone: string[];
   activityScores?: Record<string, number>;
   activityPhotos?: string[];
+  activityPhotoFiles?: Record<string, string[]>;
 };
 
 export type CurriculumStudentsPayload = {
@@ -202,10 +203,10 @@ export function curriculumActivityPhotoURL(
   studentKey: string,
   dayId: string,
   sectionId: string,
-  download = false,
+  name?: string,
 ): string {
   const q = new URLSearchParams({ studentKey, dayId, sectionId });
-  if (download) q.set("download", "1");
+  if (name) q.set("name", name);
   return `/api/eoschool/curriculum/activities/photo?${q}`;
 }
 

@@ -6,10 +6,40 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"regexp"
 	"strings"
 )
 
-const eoschoolActivityPhotoName = "activity.webp"
+const (
+	eoschoolActivityPhotoName = "activity.webp"
+	eoschoolActivityPhotoMax  = 40
+)
+
+var errEoschoolActivityPhotoLimit = errors.New("activity photo limit")
+
+var eoschoolActivityPhotoFileRe = regexp.MustCompile(`^p[0-9a-f]{16}\.webp$`)
+
+func validEoschoolActivityPhotoName(name string) bool {
+	return name == eoschoolActivityPhotoName || eoschoolActivityPhotoFileRe.MatchString(name)
+}
+
+func eoschoolActivityPhotoNames(doc EoschoolCurriculumProgressDoc, key string) []string {
+	if names := doc.ActivityPhotoList[key]; len(names) > 0 {
+		out := make([]string, 0, len(names))
+		for _, name := range names {
+			if validEoschoolActivityPhotoName(name) {
+				out = append(out, name)
+			}
+		}
+		if len(out) > 0 {
+			return out
+		}
+	}
+	if name := doc.ActivityPhotos[key]; validEoschoolActivityPhotoName(name) {
+		return []string{name}
+	}
+	return nil
+}
 
 func prepareEoschoolActivityPhoto(data []byte) ([]byte, error) {
 	if int64(len(data)) > eoschoolCurriculumStudentMaxPhoto {
@@ -68,13 +98,23 @@ func (a *App) postEoschoolCurriculumActivityPhotoHandler(w http.ResponseWriter, 
 		a.writeSafeError(w, r, status, code)
 		return
 	}
-	if err = a.curriculumMaterialsFS.put(ownerID, studentKey, dayID, sectionID, eoschoolActivityPhotoName, prepared); err != nil {
-		a.mustLogf(r, "eoschool.activity.photo.put_err", "err", err.Error())
+	name := "p" + randomID(8) + ".webp"
+	key := eoschoolCurriculumSectionKey(dayID, sectionID)
+	if _, err = a.eoschoolCurriculum.GetOrCreate(r.Context(), ownerID, studentKey); err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	key := eoschoolCurriculumSectionKey(dayID, sectionID)
-	if _, err = a.eoschoolCurriculum.GetOrCreate(r.Context(), ownerID, studentKey); err != nil {
+	current, _, err := a.eoschoolCurriculum.Get(r.Context(), ownerID, studentKey)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	if len(eoschoolActivityPhotoNames(current, key)) >= eoschoolActivityPhotoMax {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	if err = a.curriculumMaterialsFS.put(ownerID, studentKey, dayID, sectionID, name, prepared); err != nil {
+		a.mustLogf(r, "eoschool.activity.photo.put_err", "err", err.Error())
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
@@ -82,9 +122,22 @@ func (a *App) postEoschoolCurriculumActivityPhotoHandler(w http.ResponseWriter, 
 		if row.ActivityPhotos == nil {
 			row.ActivityPhotos = map[string]string{}
 		}
-		row.ActivityPhotos[key] = eoschoolActivityPhotoName
+		if row.ActivityPhotoList == nil {
+			row.ActivityPhotoList = map[string][]string{}
+		}
+		names := append([]string{}, eoschoolActivityPhotoNames(*row, key)...)
+		if len(names) >= eoschoolActivityPhotoMax {
+			return errEoschoolActivityPhotoLimit
+		}
+		row.ActivityPhotoList[key] = append(names, name)
+		row.ActivityPhotos[key] = name
 		return nil
 	})
+	if errors.Is(err, errEoschoolActivityPhotoLimit) {
+		_ = a.curriculumMaterialsFS.delete(ownerID, studentKey, dayID, sectionID, name)
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
@@ -111,11 +164,27 @@ func (a *App) getEoschoolCurriculumActivityPhotoHandler(w http.ResponseWriter, r
 		return
 	}
 	key := eoschoolCurriculumSectionKey(dayID, sectionID)
-	if !found || doc.ActivityPhotos[key] == "" {
+	names := eoschoolActivityPhotoNames(doc, key)
+	if !found || len(names) == 0 {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
-	f, info, err := a.curriculumMaterialsFS.open(ownerID, studentKey, dayID, sectionID, eoschoolActivityPhotoName)
+	name := strings.TrimSpace(r.URL.Query().Get("name"))
+	if name == "" {
+		name = names[len(names)-1]
+	}
+	allowed := false
+	for _, item := range names {
+		if item == name {
+			allowed = true
+			break
+		}
+	}
+	if !allowed || !validEoschoolActivityPhotoName(name) {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	f, info, err := a.curriculumMaterialsFS.open(ownerID, studentKey, dayID, sectionID, name)
 	if err != nil {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return

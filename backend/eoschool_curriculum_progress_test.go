@@ -57,7 +57,8 @@ func TestEoschoolActivityMarksPersist(t *testing.T) {
 	}
 	doc, err := store.UpdateStudent(ctx, owner, eoschoolCurriculumDefaultStudentKey, func(row *EoschoolCurriculumProgressDoc) error {
 		row.ActivityScores = map[string]int{"d38:len": 80}
-		row.ActivityPhotos = map[string]string{"d38:len": eoschoolActivityPhotoName}
+		row.ActivityPhotos = map[string]string{"d38:len": "p0123456789abcdef.webp"}
+		row.ActivityPhotoList = map[string][]string{"d38:len": {"p0123456789abcdef.webp", "pabcdef0123456789.webp"}}
 		return nil
 	})
 	if err != nil {
@@ -69,6 +70,9 @@ func TestEoschoolActivityMarksPersist(t *testing.T) {
 	}
 	if len(view.ActivityPhotos) != 1 || view.ActivityPhotos[0] != "d38:len" {
 		t.Fatalf("photos %#v", view.ActivityPhotos)
+	}
+	if got := view.ActivityPhotoFiles["d38:len"]; len(got) != 2 || got[0] != "p0123456789abcdef.webp" {
+		t.Fatalf("files %#v", view.ActivityPhotoFiles)
 	}
 }
 

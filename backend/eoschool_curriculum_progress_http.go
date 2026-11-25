@@ -9,10 +9,11 @@ import (
 )
 
 type eoschoolCurriculumProgressResponse struct {
-	Student        EoschoolCurriculumStudent `json:"student"`
-	SectionsDone   []string                  `json:"sectionsDone"`
-	ActivityScores map[string]int            `json:"activityScores"`
-	ActivityPhotos []string                  `json:"activityPhotos"`
+	Student            EoschoolCurriculumStudent `json:"student"`
+	SectionsDone       []string                  `json:"sectionsDone"`
+	ActivityScores     map[string]int            `json:"activityScores"`
+	ActivityPhotos     []string                  `json:"activityPhotos"`
+	ActivityPhotoFiles map[string][]string       `json:"activityPhotoFiles"`
 }
 
 func curriculumProgressJSON(doc EoschoolCurriculumProgressDoc) eoschoolCurriculumProgressResponse {
@@ -20,16 +21,35 @@ func curriculumProgressJSON(doc EoschoolCurriculumProgressDoc) eoschoolCurriculu
 	if scores == nil {
 		scores = map[string]int{}
 	}
-	photos := make([]string, 0, len(doc.ActivityPhotos))
-	for key := range doc.ActivityPhotos {
+	files := map[string][]string{}
+	for key, names := range doc.ActivityPhotoList {
+		clean := make([]string, 0, len(names))
+		for _, name := range names {
+			if validEoschoolActivityPhotoName(name) {
+				clean = append(clean, name)
+			}
+		}
+		if len(clean) > 0 {
+			files[key] = clean
+		}
+	}
+	for key, name := range doc.ActivityPhotos {
+		if _, ok := files[key]; ok || !validEoschoolActivityPhotoName(name) {
+			continue
+		}
+		files[key] = []string{name}
+	}
+	photos := make([]string, 0, len(files))
+	for key := range files {
 		photos = append(photos, key)
 	}
 	sort.Strings(photos)
 	return eoschoolCurriculumProgressResponse{
-		Student:        doc.studentView(),
-		SectionsDone:   doc.SectionsDone,
-		ActivityScores: scores,
-		ActivityPhotos: photos,
+		Student:            doc.studentView(),
+		SectionsDone:       doc.SectionsDone,
+		ActivityScores:     scores,
+		ActivityPhotos:     photos,
+		ActivityPhotoFiles: files,
 	}
 }
 

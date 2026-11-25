@@ -13,27 +13,35 @@ import { mustLog } from "./dev-log";
 export const ACTIVITY_FROM_PLAN_DAY = 38;
 
 const scores = new Map<string, number>();
-const photos = new Set<string>();
+const photoFiles = new Map<string, string[]>();
 const photoRev = new Map<string, string>();
 
-export function activityTaskCopy(planDay: number, sectionId: string): string {
+export function activityTaskCopy(planDay: number, _sectionId: string): string {
   if (!Number.isFinite(planDay) || planDay < ACTIVITY_FROM_PLAN_DAY) return "";
-  if (sectionId === "bib") {
-    return "Una hoja. A la izquierda: preguntas, pareo y selección. A la derecha: escribe una enseñanza o una reflexión. Sube la foto de la hoja.";
-  }
-  return "Responde las preguntas de la hoja y escribe con tus palabras. Sube la foto de la hoja.";
+  return "";
+}
+
+export function activityPhotoNames(key: string): string[] {
+  return photoFiles.get(key) ?? [];
 }
 
 export function setActivityMarks(
   nextScores: Record<string, number> | undefined,
   nextPhotos: string[] | undefined,
+  nextFiles?: Record<string, string[]>,
 ): void {
   scores.clear();
-  photos.clear();
+  photoFiles.clear();
   for (const [key, value] of Object.entries(nextScores || {})) {
     if (typeof value === "number" && value >= 0 && value <= 100) scores.set(key, value);
   }
-  for (const key of nextPhotos || []) photos.add(key);
+  for (const [key, names] of Object.entries(nextFiles || {})) {
+    const clean = names.filter((name) => typeof name === "string" && name.length > 0);
+    if (clean.length) photoFiles.set(key, clean);
+  }
+  for (const key of nextPhotos || []) {
+    if (!photoFiles.has(key)) photoFiles.set(key, ["activity.webp"]);
+  }
 }
 
 export function paintCurriculumSubjectScores(root: HTMLElement): void {
@@ -70,7 +78,7 @@ function requestIdOf(err: unknown): string | undefined {
 }
 
 function applyPayload(data: CurriculumProgressPayload, key: string): void {
-  setActivityMarks(data.activityScores, data.activityPhotos);
+  setActivityMarks(data.activityScores, data.activityPhotos, data.activityPhotoFiles);
   photoRev.set(key, String(Date.now()));
   const root = document.querySelector<HTMLElement>("[data-curriculum-progress]");
   if (root) paintCurriculumSubjectScores(root);
@@ -85,35 +93,26 @@ export function renderCurriculumActivity(
   if (!host) return;
   const planDay = Number(card.dataset.planDay || "0");
   const dayId = card.dataset.curriculumDay || "";
-  const copy = activityTaskCopy(planDay, sectionId);
   host.replaceChildren();
-  if (!copy || !dayId) {
+  if (!dayId || !Number.isFinite(planDay) || planDay < ACTIVITY_FROM_PLAN_DAY) {
     host.hidden = true;
     return;
   }
   host.hidden = false;
   const key = sectionProgressKey(dayId, sectionId);
   const score = scores.get(key);
-  const hasPhoto = photos.has(key);
+  const names = activityPhotoNames(key);
   const studentKey = studentKeyFromPage();
   const rev = photoRev.get(key);
-  const viewURL = curriculumActivityPhotoURL(studentKey, dayId, sectionId);
-  const downloadURL = curriculumActivityPhotoURL(studentKey, dayId, sectionId, true);
-
-  const task = document.createElement("p");
-  task.className = "eoschool-curriculum-activity__task";
-  task.textContent = copy;
 
   const fileLabel = document.createElement("label");
   fileLabel.className = "eoschool-curriculum-activity__file";
-  const fileCaption = document.createElement("span");
-  fileCaption.textContent = "Foto de la tarea";
   const fileInput = document.createElement("input");
   fileInput.type = "file";
   fileInput.accept = "image/jpeg,image/png,image/webp";
-  fileInput.required = true;
-  fileInput.setAttribute("aria-label", "Foto de la tarea");
-  fileLabel.append(fileCaption, fileInput);
+  fileInput.multiple = true;
+  fileInput.setAttribute("aria-label", "Fotos de la tarea");
+  fileLabel.append(fileInput);
 
   const scoreRow = document.createElement("div");
   scoreRow.className = "eoschool-curriculum-activity__score";
@@ -132,34 +131,42 @@ export function renderCurriculumActivity(
   scoreLabel.append(scoreInput);
   scoreRow.append(scoreLabel, save);
 
-  host.append(task, fileLabel);
-  if (hasPhoto) {
-    const img = document.createElement("img");
-    img.className = "eoschool-curriculum-activity__preview";
-    img.alt = "Foto de la tarea";
-    img.src = rev ? `${viewURL}&v=${encodeURIComponent(rev)}` : viewURL;
-    const link = document.createElement("a");
-    link.href = downloadURL;
-    link.textContent = "Descargar foto";
-    host.append(img, link);
+  host.append(fileLabel);
+  if (names.length) {
+    const gallery = document.createElement("div");
+    gallery.className = "eoschool-curriculum-activity__photos";
+    for (const name of names) {
+      const viewURL = curriculumActivityPhotoURL(studentKey, dayId, sectionId, name);
+      const img = document.createElement("img");
+      img.className = "eoschool-curriculum-activity__preview";
+      img.alt = "";
+      img.src = rev ? `${viewURL}&v=${encodeURIComponent(rev)}` : viewURL;
+      gallery.append(img);
+    }
+    host.append(gallery);
   }
   host.append(scoreRow);
 
   fileInput.addEventListener("change", () => {
-    const file = fileInput.files?.[0];
-    if (!file) return;
-    if (mustLog) console.log("[curriculum.activity] photo.upload", { dayId, sectionId });
-    void uploadCurriculumActivityPhoto({ studentKey, dayId, sectionId, photo: file })
-      .then((data) => {
+    const files = [...(fileInput.files || [])];
+    fileInput.value = "";
+    if (!files.length) return;
+    if (mustLog) console.log("[curriculum.activity] photo.upload", { dayId, sectionId, count: files.length });
+    void (async () => {
+      let data: CurriculumProgressPayload | null = null;
+      for (const file of files) {
+        data = await uploadCurriculumActivityPhoto({ studentKey, dayId, sectionId, photo: file });
+      }
+      if (data) {
         applyPayload(data, key);
         renderCurriculumActivity(modal, card, sectionId);
-      })
-      .catch((err) => {
-        showErrorModal({
-          message: err instanceof Error ? err.message : "No se pudo subir la foto.",
-          requestId: requestIdOf(err),
-        });
+      }
+    })().catch((err) => {
+      showErrorModal({
+        message: err instanceof Error ? err.message : "No se pudo subir la foto.",
+        requestId: requestIdOf(err),
       });
+    });
   });
 
   save.addEventListener("click", () => {
