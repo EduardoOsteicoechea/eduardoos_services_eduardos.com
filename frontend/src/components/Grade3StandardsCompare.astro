@@ -190,14 +190,14 @@ function starLabel(count: number, best: boolean) {
   .standards-compare {
     display: flex;
     align-items: flex-start;
-    gap: var(--rail-gap);
-    padding-left: var(--space-padding);
+    gap: 0.5rem;
+    padding-left: 0;
   }
 
   .standards-body {
     display: flex;
     flex-direction: column;
-    gap: var(--space-padding);
+    gap: 0.5rem;
     flex: 1;
     min-width: 0;
   }
@@ -262,14 +262,14 @@ function starLabel(count: number, best: boolean) {
   .standards-main {
     display: flex;
     flex-direction: column;
-    gap: var(--space-padding);
+    gap: 0.5rem;
     min-width: 0;
   }
 
   .standards-panel {
     display: none;
     flex-direction: column;
-    gap: var(--space-padding);
+    gap: 0.5rem;
   }
 
   .standards-rail__input[data-area="len"]:checked ~ .standards-body .standards-panel[data-area="len"],
@@ -282,11 +282,12 @@ function starLabel(count: number, best: boolean) {
   .standards-unit {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
   }
 
   .standards-unit__title {
-    margin: calc(var(--space-padding) * 2) 0 var(--space-padding);
-    padding: 0 var(--space-padding);
+    margin: 0;
+    padding: 0;
     font-size: var(--font-size-sm);
     font-weight: 650;
   }
@@ -294,9 +295,9 @@ function starLabel(count: number, best: boolean) {
   .standards-row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    align-items: stretch;
-    gap: var(--rail-gap);
-    padding: var(--rail-gap) var(--space-padding);
+    align-items: start;
+    gap: 0.5rem;
+    padding: 0.5rem;
     border-bottom: var(--border-width) solid color-mix(in srgb, var(--color-text) 22%, var(--color-border));
   }
 
@@ -318,8 +319,9 @@ function starLabel(count: number, best: boolean) {
 
   .standards-row__cards {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: calc(var(--space-padding) + var(--rail-gap));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: 0.5rem;
     min-width: 0;
   }
 
@@ -338,15 +340,23 @@ function starLabel(count: number, best: boolean) {
   }
 
   .standards-card.product-dash__card {
-    height: 100%;
-    padding-left: var(--rail-gap);
-    background: transparent;
-    border-color: transparent;
+    height: auto;
+    min-height: 0;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: var(--color-bg);
+    border-color: var(--color-border);
     cursor: default;
   }
 
+  .standards-card.product-dash__card::after {
+    content: none;
+  }
+
   .standards-card.product-dash__card:hover {
-    border-color: transparent;
+    border-color: var(--color-border);
+    box-shadow: none;
+    transform: none;
   }
 
   .standards-card--best.product-dash__card,
@@ -360,6 +370,18 @@ function starLabel(count: number, best: boolean) {
   .standards-card__text,
   .standards-stars {
     margin: 0;
+  }
+
+  .standards-card__place {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .standards-card__place,
@@ -382,7 +404,7 @@ function starLabel(count: number, best: boolean) {
   .standards-stars {
     display: flex;
     gap: 0.125rem;
-    margin-top: auto;
+    margin-top: 0;
     background: transparent;
   }
 
@@ -432,21 +454,4 @@ function starLabel(count: number, best: boolean) {
     color: var(--color-muted);
   }
 
-  @media (min-width: 64rem) {
-    .standards-row__cards {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .standards-card__place {
-      position: absolute;
-      width: 0.0625rem;
-      height: 0.0625rem;
-      padding: 0;
-      margin: -0.0625rem;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-  }
 </style>
