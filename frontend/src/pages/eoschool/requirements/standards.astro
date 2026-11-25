@@ -1,0 +1,402 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import EoschoolDashBack from "../../../components/EoschoolDashBack.astro";
+import Layout from "../../../layouts/Layout.astro";
+import {
+  FIT_LABEL,
+  GRADE3_STANDARDS_CROSSWALK,
+  type Grade3CrosswalkRow,
+} from "../../../lib/eoschool-grade3-standards-crosswalk";
+
+const { meta, areas } = GRADE3_STANDARDS_CROSSWALK;
+
+const fitHint: Record<keyof typeof FIT_LABEL, string> = {
+  directo: "El mismo saber, en ese grado.",
+  parcial: "Se parece, pero el grado o el alcance no coinciden.",
+  nacional: "El contenido es de Venezuela. La otra columna muestra el saber más cercano.",
+  anterior: "Ese saber está en un grado previo del otro programa.",
+};
+
+function groupsOf(rows: Grade3CrosswalkRow[]) {
+  const groups: { title: string; rows: Grade3CrosswalkRow[] }[] = [];
+  for (const row of rows) {
+    const last = groups[groups.length - 1];
+    if (last && last.title === row.unitTitle) last.rows.push(row);
+    else groups.push({ title: row.unitTitle, rows: [row] });
+  }
+  return groups;
+}
+
+const panels = areas.map((area) => ({ ...area, groups: groupsOf(area.rows) }));
+---
+
+<Layout
+  title="Estándares 3.er grado"
+  description="Cruce de 3.er grado: aprendizajes MPPE de Venezuela con Common Core, NGSS y el National Curriculum de Inglaterra, Year 4."
+  page="eoschool-standards"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoschool" data-route title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span></span>
+      Dashboard
+    </a>
+  </Fragment>
+
+  <section class="product-dash page-span-all" data-grade3-standards>
+    <EoschoolDashBack />
+    <p class="status" data-banner>Cargando…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Necesitas sesión y suscripción Homescool.</p>
+      <a class="button" href="/session" data-route>Sign in</a>
+    </div>
+
+    <div data-authed hidden>
+      <p class="hint">
+        Cada fila es un aprendizaje de 3.er grado del MPPE. Estados Unidos e Inglaterra muestran el saber más cercano.
+      </p>
+      <ul class="standards-legend">
+        {
+          (Object.keys(FIT_LABEL) as (keyof typeof FIT_LABEL)[]).map((fit) => (
+            <li>
+              <span class:list={["standards-fit", `standards-fit--${fit}`]}>{FIT_LABEL[fit]}</span>
+              <span>{fitHint[fit]}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="standards-app">
+        {
+          panels.map((area, index) => (
+            <input
+              class="standards-rail__input"
+              type="radio"
+              name="standards-area"
+              id={`standards-${area.id}`}
+              checked={index === 0}
+            />
+          ))
+        }
+        <nav class="standards-rail" aria-label="Materias">
+          {
+            panels.map((area) => (
+              <label class="standards-rail__btn" for={`standards-${area.id}`} title={area.title}>
+                <span class="material-symbols-outlined" aria-hidden="true">{area.icon}</span>
+                <span class="page-title-sr">{area.title}</span>
+              </label>
+            ))
+          }
+        </nav>
+
+        <div class="standards-main">
+          {
+            panels.map((area) => (
+              <section class="standards-panel" data-area={area.id} aria-labelledby={`standards-heading-${area.id}`}>
+                <h2 class="product-dash__section-title" id={`standards-heading-${area.id}`}>{area.title}</h2>
+                <div class="standards-columns-head" aria-hidden="true">
+                  {meta.columns.map((column) => (
+                    <p>{column.title}</p>
+                  ))}
+                </div>
+                {
+                  area.groups.map((group) => (
+                    <section class="standards-unit">
+                      <h3 class="standards-unit__title">{group.title}</h3>
+                      {
+                        group.rows.map((row) => (
+                          <div class="standards-row">
+                            <article class="product-dash__card standards-card">
+                              <p class="standards-card__place">Venezuela</p>
+                              <p class="standards-card__text">{row.learning}</p>
+                            </article>
+                            <article class="product-dash__card standards-card">
+                              <p class="standards-card__place">Estados Unidos</p>
+                              <a class="standards-card__code" href={row.us.href} rel="noopener noreferrer">{row.us.code}</a>
+                              <p class="standards-card__text">{row.us.text}</p>
+                              <span class:list={["standards-fit", `standards-fit--${row.us.fit}`]}>{FIT_LABEL[row.us.fit]}</span>
+                            </article>
+                            <article class="product-dash__card standards-card">
+                              <p class="standards-card__place">Inglaterra</p>
+                              <a class="standards-card__code" href={row.uk.href} rel="noopener noreferrer">{row.uk.code}</a>
+                              <p class="standards-card__text">{row.uk.text}</p>
+                              <span class:list={["standards-fit", `standards-fit--${row.uk.fit}`]}>{FIT_LABEL[row.uk.fit]}</span>
+                            </article>
+                          </div>
+                        ))
+                      }
+                    </section>
+                  ))
+                }
+              </section>
+            ))
+          }
+        </div>
+      </div>
+
+      <footer class="standards-sources">
+        <h2 class="product-dash__section-title">Fuentes</h2>
+        <ul>
+          {
+            meta.sources.map((source) => (
+              <li>
+                <a
+                  href={source.href}
+                  rel={source.href.startsWith("https://") ? "noopener noreferrer" : undefined}
+                  data-route={source.href.startsWith("/") ? true : undefined}
+                >{source.title}</a>
+                <span>{source.note}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </footer>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { onAstroPageLoad, requireService, setHidden } from "../../../lib/productGate";
+
+  onAstroPageLoad("eoschool-standards", async () => {
+    const root = document.querySelector("[data-grade3-standards]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const authed = root?.querySelector("[data-authed]");
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Cargando…";
+    }
+    const result = await requireService("homescool", { requireSubscription: true, adminOnly: true });
+    if (!result.sessionOk || !result.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = result.sessionOk
+          ? "Necesitas suscripción Homescool."
+          : "Inicia sesión para continuar.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+    } else {
+      if (banner instanceof HTMLElement) banner.hidden = true;
+      setHidden(gate, true);
+      setHidden(authed, false);
+    }
+  });
+</script>
+
+<style>
+  .standards-legend {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--font-size-sm);
+    color: var(--color-muted);
+  }
+
+  .standards-legend li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--rail-gap);
+  }
+
+  .standards-app {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--rail-gap);
+  }
+
+  .standards-rail__input {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .standards-rail {
+    position: sticky;
+    top: var(--mobile-header-height);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--rail-gap);
+    width: 3.125rem;
+    flex: 0 0 3.125rem;
+  }
+
+  .standards-rail__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-size);
+    height: var(--button-size);
+    margin: 0;
+    padding: 0;
+    color: var(--color-text);
+    background: transparent;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+  }
+
+  .standards-rail__btn .material-symbols-outlined {
+    font-size: var(--icon-size);
+  }
+
+  #standards-len:checked ~ .standards-rail label[for="standards-len"],
+  #standards-mat:checked ~ .standards-rail label[for="standards-mat"],
+  #standards-cie:checked ~ .standards-rail label[for="standards-cie"],
+  #standards-ide:checked ~ .standards-rail label[for="standards-ide"],
+  #standards-len:focus-visible ~ .standards-rail label[for="standards-len"],
+  #standards-mat:focus-visible ~ .standards-rail label[for="standards-mat"],
+  #standards-cie:focus-visible ~ .standards-rail label[for="standards-cie"],
+  #standards-ide:focus-visible ~ .standards-rail label[for="standards-ide"] {
+    color: var(--color-bg);
+    background: var(--color-text);
+    border-color: var(--color-text);
+  }
+
+  .standards-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .standards-panel {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-padding);
+  }
+
+  #standards-len:checked ~ .standards-main .standards-panel[data-area="len"],
+  #standards-mat:checked ~ .standards-main .standards-panel[data-area="mat"],
+  #standards-cie:checked ~ .standards-main .standards-panel[data-area="cie"],
+  #standards-ide:checked ~ .standards-main .standards-panel[data-area="ide"] {
+    display: flex;
+  }
+
+  .standards-columns-head {
+    display: none;
+  }
+
+  .standards-unit {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+
+  .standards-unit__title {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+  }
+
+  .standards-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--rail-gap);
+  }
+
+  .standards-card {
+    min-height: 0;
+    cursor: default;
+  }
+
+  .standards-card.product-dash__card:hover {
+    border-color: var(--color-border);
+  }
+
+  .standards-card__place,
+  .standards-card__code,
+  .standards-card__text {
+    margin: 0;
+  }
+
+  .standards-card__place,
+  .standards-card__code {
+    font-size: var(--font-size-xs);
+  }
+
+  .standards-card__place {
+    color: var(--color-muted);
+  }
+
+  .standards-card__code {
+    color: var(--color-link);
+  }
+
+  .standards-card__text {
+    font-size: var(--font-size-sm);
+  }
+
+  .standards-fit {
+    font-size: var(--font-size-xs);
+    font-weight: 650;
+  }
+
+  .standards-sources {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+
+  .standards-sources ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--font-size-sm);
+  }
+
+  .standards-sources li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+  }
+
+  .standards-sources span {
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 64rem) {
+    .standards-columns-head {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--rail-gap);
+    }
+
+    .standards-columns-head p {
+      margin: 0;
+      font-size: var(--font-size-sm);
+      font-weight: 650;
+    }
+
+    .standards-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .standards-card__place {
+      position: absolute;
+      width: 0.0625rem;
+      height: 0.0625rem;
+      padding: 0;
+      margin: -0.0625rem;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  }
+</style>

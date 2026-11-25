@@ -1,0 +1,2468 @@
+{
+  "meta": {
+    "grade": "3er grado",
+    "columns": [
+      {
+        "id": "vzla",
+        "title": "Venezuela",
+        "programme": "MPPE, aprendizajes de 3.er grado"
+      },
+      {
+        "id": "us",
+        "title": "Estados Unidos",
+        "programme": "Common Core Grade 3, NGSS y marco C3"
+      },
+      {
+        "id": "uk",
+        "title": "Inglaterra",
+        "programme": "National Curriculum Year 4 y Key Stage 2"
+      }
+    ],
+    "sources": [
+      {
+        "id": "vzla",
+        "title": "MPPE, propuestas de contenidos de 3.er grado",
+        "href": "/eoschool/requirements/national",
+        "note": "Aprendizajes ya cargados en este sitio. La columna Venezuela los repite sin cambiar el texto."
+      },
+      {
+        "id": "ccss",
+        "title": "Common Core State Standards",
+        "href": "https://www.thecorestandards.org/",
+        "note": "© 2010 National Governors Association Center for Best Practices and Council of Chief State School Officers. All rights reserved."
+      },
+      {
+        "id": "ngss",
+        "title": "Next Generation Science Standards",
+        "href": "https://www.nextgenscience.org/",
+        "note": "Cuando el tema no está en Grade 3, el código indica el grado donde sí aparece."
+      },
+      {
+        "id": "c3",
+        "title": "College, Career, and Civic Life (C3) Framework",
+        "href": "https://www.socialstudies.org/standards/c3",
+        "note": "Marco de ciencias sociales para los grados 3–5. No es un estándar federal."
+      },
+      {
+        "id": "dfe",
+        "title": "National curriculum in England: primary curriculum",
+        "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-primary-curriculum",
+        "note": "Contains public sector information licensed under the Open Government Licence v3.0. Lengua, matemática y ciencias citan Year 4 cuando el programa lo fija; Historia y Geografía son de Key Stage 2."
+      }
+    ]
+  },
+  "areas": [
+    {
+      "id": "len",
+      "title": "Prácticas del Lenguaje",
+      "icon": "menu_book",
+      "rows": [
+        {
+          "unitTitle": "Leer para hacer… (Interpretar textos instruccionales).",
+          "learning": "Ejecuta secuencias de acciones interpretando textos instruccionales.",
+          "us": {
+            "code": "RI.3.3",
+            "text": "Grade 3 describe la relación entre los pasos de un procedimiento técnico.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RI/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "En Years 3–4 se recupera información de textos de no ficción y se atiende a su estructura.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Leer para conocer sobre la vida y obra de personajes destacados en diferentes áreas. (Biografías).",
+          "learning": "Conoce datos y hechos fundamentales de la biografía de varios personajes destacados: Simón Bolívar, Simón Rodríguez; los epónimos de su estado, municipio e institución escolar (si es el caso); nombres y motivo de la fama de personajes destacados de su localidad.",
+          "us": {
+            "code": "RI.3.2",
+            "text": "Grade 3 resume la idea principal y los detalles de un texto informativo. Las biografías citadas son venezolanas.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RI/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 leen no ficción y resumen ideas. Bolívar, Rodríguez y los epónimos locales no están en el programa inglés.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Leer para informarse y aprender sobre diversas áreas del conocimiento. (Textos informativos: científicos, noticias).",
+          "learning": "Acude a distintas fuentes para buscar información sobre diversos temas: petróleo, agua, salud, conservación del ambiente…",
+          "us": {
+            "code": "W.3.7",
+            "text": "Grade 3 hace investigaciones cortas para aprender sobre un tema.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 recuperan y registran información de textos de no ficción.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Leer para informarse y aprender sobre diversas áreas del conocimiento. (Textos informativos: científicos, noticias).",
+          "learning": "Se interesa por saber acerca del acontecer diario (Lectura de noticias).",
+          "us": {
+            "code": "RI.3.2",
+            "text": "Grade 3 determina la idea principal y los detalles de un texto informativo, incluidas las noticias.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RI/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 leen libros organizados de distintas maneras y con distintos propósitos, incluida la no ficción.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Seleccionar lo que se desea leer aplicando criterios de preferencia.",
+          "learning": "Usa criterios de preferencia para elegir lo que desea leer.",
+          "us": {
+            "code": "RL.3.10",
+            "text": "Grade 3 lee y comprende literatura y textos informativos del grado. Elegir por gusto personal no es un criterio del estándar.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RL/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 desarrollan una actitud positiva hacia la lectura de un rango amplio. El criterio de preferencia no se nombra.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Utilizar el índice de libros para ubicar el contenido que se necesita o desea leer.",
+          "learning": "Explora índices de libros para ubicar temas que desea o necesita leer.",
+          "us": {
+            "code": "RI.3.5",
+            "text": "Grade 3 usa las partes del texto y herramientas de búsqueda para localizar información.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RI/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 recuperan información de la no ficción y ven cómo la presentación contribuye al sentido.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
+          "learning": "Lee aplicando la modalidad exploratoria del texto para localizar determinados datos.",
+          "us": {
+            "code": "RI.3.5",
+            "text": "Grade 3 localiza información de un tema con eficacia, usando rasgos del texto.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RI/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 recuperan y registran información de textos de no ficción.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
+          "learning": "Lee en forma acuciosa con la finalidad de aprender e informar a otros.",
+          "us": {
+            "code": "RI.3.1",
+            "text": "Grade 3 hace y responde preguntas y se apoya de forma explícita en el texto.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RI/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 identifican las ideas principales de más de un párrafo y las resumen.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Utilizar la modalidad de lectura adecuada al propósito.",
+          "learning": "Lee para buscar información que requiere para redactar un texto.",
+          "us": {
+            "code": "W.3.8",
+            "text": "Grade 3 reúne información de fuentes impresas o digitales, toma notas breves y ordena la evidencia.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "Years 3–4 redactan material de no ficción y organizan lo que van a escribir a partir de lo leído.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Ordenar palabras para formar textos, previa información del escrito que debe resultar.",
+          "learning": "Ordena palabras escritas sin orden predeterminado para formar oraciones. Ej.: Simón Bolívar nació en Caracas; Caracas es la capital de Venezuela; Simón Rodríguez fue un gran maestro.",
+          "us": {
+            "code": "L.K.1.f",
+            "text": "Ordenar palabras ya dadas para formar una oración conocida es una práctica de kindergarten, no de Grade 3.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/K/"
+          },
+          "uk": {
+            "code": "En/Y1/Writing",
+            "text": "Year 1 compone una oración en voz alta antes de escribirla y secuencia oraciones cortas.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Participar en actividades lúdicas y significativas para conocer los nombres de todas las letras del alfabeto.",
+          "learning": "Menciona las letras del alfabeto por sus nombres y las usa en la escritura con su valor sonoro.",
+          "us": {
+            "code": "RF.K.1.d",
+            "text": "Reconocer y nombrar todas las letras mayúsculas y minúsculas es un estándar de kindergarten.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RF/K/"
+          },
+          "uk": {
+            "code": "En/Y1/Spelling",
+            "text": "Year 1 nombra las letras del alfabeto en orden.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Diferenciar entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos.",
+          "learning": "Diferencia entre diversos tipos de textos: cuentos, poemas, coplas, adivinanzas, noticias, biografías, informativos, y expresa algunos rasgos que los distinguen.",
+          "us": {
+            "code": "RL.3.5",
+            "text": "Grade 3 se refiere a partes de cuentos, obras y poemas. Noticias y biografías caen en el texto informativo, no en este código.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RL/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 discuten ficción, poesía, teatro, no ficción y libros de consulta, y reconocen formas distintas de poesía.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Recomendar obras literarias.",
+          "learning": "Recomienda obras literarias informando títulos y autores/autoras de un repertorio de cuentos y poemas que conoce.",
+          "us": {
+            "code": "SL.3.4",
+            "text": "Grade 3 informa sobre un texto con detalles pertinentes. Recomendar título y autor no es un requisito aparte.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "El habla pide descripciones bien estructuradas y participar en la conversación sobre libros.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Comprender la estructura de textos narrativos.",
+          "learning": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos.",
+          "us": {
+            "code": "RL.3.3",
+            "text": "Grade 3 describe personajes y explica cómo sus acciones contribuyen a la secuencia de hechos.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RL/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 infieren sentimientos y motivos de los personajes y, al escribir, crean escenario, personajes y trama.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Resolver instrumentos de evaluación.",
+          "learning": "Resuelve problemas de lectura y escritura planteados en instrumentos de evaluación dirigidos a estimar los avances en el aprendizaje y los efectos de la enseñanza.",
+          "us": {
+            "code": "W.3.10",
+            "text": "Grade 3 escribe con regularidad para tareas del grado. Resolver instrumentos de evaluación no es un contenido del estándar.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "Years 3–4 evalúan y corrigen lo escrito. La prueba como contenido no está en el programa.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Interpretar metáforas.",
+          "learning": "Comprende metáforas sencillas en textos literarios.",
+          "us": {
+            "code": "RL.3.4",
+            "text": "Grade 3 distingue el lenguaje literal del no literal.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RL/3/"
+          },
+          "uk": {
+            "code": "En/Y5-6/Reading",
+            "text": "El lenguaje figurado se discute en Years 5–6. Years 3–4 hablan de palabras y frases que llaman la atención, sin nombrar la metáfora.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Interpretar la función de ciertos signos ortográficos.",
+          "learning": "Interpreta las funciones de los signos de interrogación y exclamación en la lectura de textos.",
+          "us": {
+            "code": "L.1.2.b",
+            "text": "Usar la puntuación final de la oración, incluidos interrogación y exclamación, es de Grade 1.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/1/"
+          },
+          "uk": {
+            "code": "En/Y2/GPS",
+            "text": "Year 2 usa signos de interrogación y de exclamación para delimitar oraciones.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Diferenciar clases de palabras fundamentales.",
+          "learning": "Conoce las funciones de sustantivos y adjetivos.",
+          "us": {
+            "code": "L.3.1.a",
+            "text": "Grade 3 explica la función de sustantivos, pronombres, verbos, adjetivos y adverbios.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y4/Appendix2",
+            "text": "Year 4 amplía el sintagma nominal con adjetivos, sustantivos y frases preposicionales.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Conocer algunas particularidades de la lengua.",
+          "learning": "Analiza algunas “curiosidades” de nuestra lengua. Palíndromos: palabras que se leen igual al derecho y al revés. Ej. Ana, ada, ojo, oro, radar, somos, rapar, reconocer, arepera. Palabras que repiten una misma vocal en todas las sílabas: maraca, cántara / monólogo, fósforo / efervescente, pelele / infringir, incidir… Palabras pentavocálicas (Contienen las cinco vocales). Ej.: aurelio, orquídea, riachuelo, murciélago, comunicarse, educación…",
+          "us": {
+            "code": "RF.3.3",
+            "text": "Grade 3 analiza palabras del grado. Palíndromos, pentavocálicas y curiosidades no son un contenido nombrado.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RF/3/"
+          },
+          "uk": {
+            "code": "En/Y4/Spelling",
+            "text": "Year 4 trabaja patrones de ortografía. Esas curiosidades del español no están en la lista.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Interpretar palabras compuestas.",
+          "learning": "Comprende la composición de palabras en un repertorio de términos comunes (Cumpleaños, guardabosques, paraguas, lavaplatos, telaraña, saltamontes).",
+          "us": {
+            "code": "L.2.4.d",
+            "text": "Predecir el significado de palabras compuestas a partir de sus partes es de Grade 2.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/2/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 usan el diccionario y discuten el sentido de las palabras. La composición no es un apartado de Year 4.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Localizar datos en mapas y gráficos.",
+          "learning": "Ubica y lee en el mapa de Venezuela los nombres de un amplio repertorio de estados, ríos, lagos principales y el mar Caribe.",
+          "us": {
+            "code": "RI.3.7",
+            "text": "Grade 3 usa mapas e ilustraciones para entender un texto. Los estados, ríos y el mar Caribe son contenido venezolano.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RI/3/"
+          },
+          "uk": {
+            "code": "Ge/KS2/Maps",
+            "text": "Key Stage 2 usa mapas y atlas para localizar países. El mapa político de Venezuela no es el contenido inglés.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Localizar datos en mapas y gráficos.",
+          "learning": "Interpreta informaciones contenidas en diferentes representaciones gráficas.",
+          "us": {
+            "code": "3.MD.B.3",
+            "text": "Grade 3 dibuja e interpreta pictogramas y gráficos de barras a escala.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/Math/Content/3/MD/"
+          },
+          "uk": {
+            "code": "Ma/Y4/Statistics",
+            "text": "Year 4 interpreta y presenta datos con gráficos de barras y gráficos de tiempo.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Localizar datos en mapas y gráficos.",
+          "learning": "Explora el mapamundi en busca de algunos países específicos y otros datos geográficos.",
+          "us": {
+            "code": "RI.3.7",
+            "text": "Grade 3 obtiene información de mapas e ilustraciones. Recorrer el mapamundi en busca de países es más geografía que lengua.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RI/3/"
+          },
+          "uk": {
+            "code": "Ge/KS2/Locational",
+            "text": "Key Stage 2 localiza países del mundo en mapas, con atención a Europa y a América.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Entender el significado de algunos elementos de la señalética.",
+          "learning": "Identifica algunas señales básicas: no pase, peligro, alta tensión, baño de damas / caballeros, algunas señales de tránsito.",
+          "us": {
+            "code": "RI.3.7",
+            "text": "Grade 3 lee ilustraciones junto con las palabras. Las señales de tránsito y de peligro no son un contenido nombrado.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RI/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 identifican cómo la presentación contribuye al sentido. La señalética vial no está en el programa.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Conocer personajes destacados de la historia venezolana.",
+          "learning": "Conoce nombres y datos fundamentales de tres o cuatro venezolanos(As) ilustres: Simón Bolívar, Simón Rodríguez, Francisco de Miranda. Si es el caso, epónimos de la escuela, el estado, municipio o parroquia donde reside.",
+          "us": {
+            "code": "C3 D2.His.3.3-5",
+            "text": "El marco C3, grados 3–5, pregunta por personas y grupos que cambiaron la historia. Miranda, Bolívar y Rodríguez son contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "Key Stage 2 estudia historia británica y local. Esos nombres venezolanos no están en el programa.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Conocer derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela.",
+          "learning": "Conoce algunos derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela.",
+          "us": {
+            "code": "C3 D2.Civ.7.3-5",
+            "text": "El marco C3 aplica virtudes cívicas. Los artículos de la Constitución de Venezuela son contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "Primaria en Inglaterra no tiene un programa estatutario de ciudadanía ni de la Constitución venezolana.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Conocer sobre la existencia de la Lengua de Señas Venezolana.",
+          "learning": "Comprende el significado e imita algunos gestos básicos de la Lengua de Señas Venezolana.",
+          "us": {
+            "code": "SL.3.1",
+            "text": "Grade 3 conversa sobre temas del grado. No hay estándar de lengua de señas venezolana.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "El programa de habla es oral. La Lengua de Señas Venezolana no está en el National Curriculum.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Conocer la función de ciertos documentos legales.",
+          "learning": "Conoce el sentido de la partida de nacimiento y la cédula de identidad.",
+          "us": {
+            "code": "RI.3.5",
+            "text": "Grade 3 usa rasgos del texto para localizar información. Partida de nacimiento y cédula no son un contenido del grado.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RI/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 leen no ficción. Esos documentos legales venezolanos no están en el programa.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
+          "learning": "Escribe convencionalmente su nombre y un repertorio de palabras familiares (Nombres propios y otras de uso común).",
+          "us": {
+            "code": "L.1.2.a",
+            "text": "Escribir el propio nombre y palabras muy frecuentes con mayúscula inicial es de Grade 1.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/1/"
+          },
+          "uk": {
+            "code": "En/Y1/GPS",
+            "text": "Year 1 usa mayúscula en nombres y escribe palabras con los fonemas ya enseñados.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
+          "learning": "Conoce y usa la mayúscula inicial en la escritura de nombres propios de personas y lugares.",
+          "us": {
+            "code": "L.2.2.a",
+            "text": "Las mayúsculas en nombres de personas son de Grade 1 y las de lugares geográficos, de Grade 2.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/2/"
+          },
+          "uk": {
+            "code": "En/Y2/GPS",
+            "text": "Year 2 usa mayúsculas en nombres de personas, lugares y días de la semana.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
+          "learning": "Usa la tilde en la escritura de sus nombres y apellidos, y en un repertorio de palabras familiares.",
+          "us": {
+            "code": "L.3.2.e",
+            "text": "Grade 3 usa la ortografía convencional del inglés. La tilde del español no existe en ese sistema.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y4/Spelling",
+            "text": "La ortografía de Year 4 no incluye la tilde.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Participar en la escritura de normas de convivencia y deberes.",
+          "learning": "Participa en la revisión permanente y rescritura de las normas de convivencia en la escuela, los deberes con respecto a las demás personas, el cuido del ambiente y el respeto a la patria.",
+          "us": {
+            "code": "W.3.2",
+            "text": "Grade 3 escribe textos informativos. Reescribir normas de convivencia se parece a eso; el respeto a la patria es contenido nacional.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "Years 3–4 planifican, redactan y revisan textos. El deber con la patria venezolana no está en el programa.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Derivar palabras a partir de sustantivos.",
+          "learning": "Escribe (Por derivación) pares y tríos de palabras de un mismo campo lexical: casa/ casas/casita; niña/niñas/niñita; zapato/ zapatero/zapatazo.",
+          "us": {
+            "code": "RF.3.3.a",
+            "text": "Grade 3 conoce prefijos y sufijos derivativos frecuentes. El diminutivo español -ita no es uno de ellos.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RF/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Spelling",
+            "text": "Years 3–4 añaden prefijos y sufijos y ven cómo cambian la palabra. Los diminutivos del español no están en la lista.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Entretenerse con la resolución de juegos con palabras.",
+          "learning": "Manifiesta interés por resolver juegos de escritura: crucifiguras, crucigramas, dameros, escaleras de palabras y otros.",
+          "us": {
+            "code": "L.3.4",
+            "text": "Grade 3 aclara el sentido de palabras desconocidas. Crucigramas y dameros no son un contenido nombrado.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 usan diccionarios para comprobar el significado. Los juegos de palabras no son un apartado.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Tomar conciencia de la duda ortográfica.",
+          "learning": "Tiene conciencia de nociones ortográficas básicas y resuelve sus dudas recurriendo a diversas fuentes (Preguntar a otros, consultar materiales escritos a disposición).",
+          "us": {
+            "code": "L.3.2.g",
+            "text": "Grade 3 consulta diccionarios y otros materiales para revisar la ortografía.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "Years 3–4 revisan la ortografía y la puntuación de lo que escribieron.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Usar en la escritura la noción de concordancia sustantivo-adjetivo.",
+          "learning": "Escribe pares de palabras, y usa en la escritura de textos, la noción de concordancia “sustantivo-adjetivo”: niña talentosa / camisa marrón / blusa pequeña / niño alto.",
+          "us": {
+            "code": "L.3.1.a",
+            "text": "Grade 3 explica la función del adjetivo. El inglés no concuerda el adjetivo en género y número con el sustantivo.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y4/Appendix2",
+            "text": "Year 4 amplía el sintagma con adjetivos. Esos adjetivos no concuerdan en género ni en número.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Planificar la escritura de cuentos y otros textos.",
+          "learning": "Trabaja en equipo para planificar la escritura de textos que serán dictados a la/el docente o escritos por sí mismo.",
+          "us": {
+            "code": "W.3.5",
+            "text": "Con apoyo de pares y adultos, Grade 3 planifica, revisa y edita lo que escribe.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "Years 3–4 planifican la escritura comentando textos parecidos y ensayan las oraciones en voz alta.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Planificar la escritura de cuentos y otros textos.",
+          "learning": "Dicta textos intentando ajustar la voz y el ritmo a los requerimientos del destinatario.",
+          "us": {
+            "code": "SL.3.4",
+            "text": "Grade 3 cuenta una experiencia o informa un tema con claridad y a un ritmo comprensible.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "Years 3–4 componen y ensayan oraciones en voz alta, incluido el diálogo, antes de escribirlas.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Ordenar conjuntos de palabras para formar oraciones (Previa información acerca de cuál es la oración que debe formarse).",
+          "learning": "Construye textos ordenando entre tres y cinco palabras escritas sin orden lógico. Por ejemplo: Francisco de Miranda nació en Caracas / Venezuela es mi patria / me gusta mucho leer cuentos / el araguaney es el árbol nacional / la vaca es un animal mamífero.",
+          "us": {
+            "code": "L.1.1.j",
+            "text": "Producir y ampliar oraciones simples y compuestas a partir de un modelo es de Grade 1.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/1/"
+          },
+          "uk": {
+            "code": "En/Y1/Writing",
+            "text": "Year 1 secuencia oraciones para formar narrativas cortas.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Escribir de manera relativamente legible de acuerdo con las convenciones básicas del sistema de escritura.",
+          "learning": "Escribe por sí mismo diferentes tipos de textos de extensiones variables (En una o varias sesiones), de acuerdo con su nivel de escritura: listas de nombres propios, de animales, lugares, etc., cuentos, carteles, entre otros.",
+          "us": {
+            "code": "W.3.10",
+            "text": "Grade 3 escribe con regularidad textos de distinta extensión y propósito.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "Years 3–4 redactan organizando párrafos, en narrativa y en otros textos.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Copiar con diversos propósitos reales.",
+          "learning": "Copia textos con diversos propósitos: para conservar lo que desea recordar, para compartir con otros, para llevar registros de informaciones de interés.",
+          "us": {
+            "code": "L.1.1.a",
+            "text": "Imprimir todas las letras es de Grade 1. Copiar como método ya no es un estándar de Grade 3.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/1/"
+          },
+          "uk": {
+            "code": "En/Y2/Handwriting",
+            "text": "Year 2 forma las minúsculas con tamaño relativo correcto. Copiar no es un objetivo de Year 4.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Tomar dictados con propósitos definidos.",
+          "learning": "Toma dictado de textos cortos con propósitos específicos; por ejemplo, para comparar y corregir el escrito con un compañero/o; para registrar información de interés.",
+          "us": {
+            "code": "L.3.2.e",
+            "text": "Grade 3 escribe con la ortografía convencional de las palabras estudiadas. El dictado es un método, no el estándar.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y4/Spelling",
+            "text": "Year 4 aplica las reglas de ortografía del apéndice. El dictado no es un contenido aparte.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Revisar y corregir textos destinados a la publicación.",
+          "learning": "Aplica estrategias de revisión y edición de textos que serán publicados, trabajando en equipo con otros y con el apoyo de la/el docente.",
+          "us": {
+            "code": "W.3.5",
+            "text": "Con apoyo, Grade 3 fortalece el texto planificando, revisando y editando.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "Years 3–4 evalúan la propia escritura y la de otros, proponen mejoras y revisan la prueba.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Cuidar la estética y legibilidad de la escritura con propósitos específicos.",
+          "learning": "Practica el trazo artístico de las letras con fines funcionales y de diseño. Utiliza la caligrafía como forma de expresión artística que vincula la escritura con otras artes como el dibujo y la pintura.",
+          "us": {
+            "code": "L.1.1.a",
+            "text": "La caligrafía artística no está en Grade 3. El trazo de las letras es de Grade 1.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/1/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Handwriting",
+            "text": "Years 3–4 aumentan la legibilidad, la constancia y la calidad de la letra unida.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Conocer y usar en la escritura la diferencia singular / plural.",
+          "learning": "Distingue la oposición singular/plural y la usa en la escritura, en los casos en que el plural se forma agregando s al singular y en casos conocidos en que se agrega un sufijo (Lápiz/lápices; cartel/carteles; letra/ letras).",
+          "us": {
+            "code": "L.3.1.b",
+            "text": "Grade 3 forma y usa plurales regulares e irregulares.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y1/GPS",
+            "text": "El plural en -s o -es se enseña en Year 1. Year 4 no lo vuelve a fijar.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Conocer y usar en la escritura la diferencia de género femenino/masculino.",
+          "learning": "Comprende y usa en la escritura la diferencia femenino/masculino, al menos en tres casos:",
+          "us": {
+            "code": "L.3.1.a",
+            "text": "Grade 3 explica la función de sustantivos y adjetivos. El género gramatical del español no tiene paralelo en inglés.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y4/Appendix2",
+            "text": "Year 4 modifica el sustantivo con adjetivos. Esos adjetivos no marcan género.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Conocer y usar en la escritura la diferencia de género femenino/masculino.",
+          "learning": "A) el femenino se forma agregando a al final de palabra o sustituyendo o por a: pintor/pintora; doctor/doctora; gato/gata; niño/niña; conejo/coneja.",
+          "us": {
+            "code": "L.3.1.a",
+            "text": "Añadir -a para el femenino es morfología del español. Grade 3 no tiene ese sistema.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y4/Appendix2",
+            "text": "Year 4 no forma el femenino cambiando la terminación de la palabra.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Conocer y usar en la escritura la diferencia de género femenino/masculino.",
+          "learning": "B) el género se diferencia usando palabras diferentes: hombre/mujer, caballo/yegua, vaca/toro.",
+          "us": {
+            "code": "L.3.5.b",
+            "text": "Grade 3 relaciona palabras con su uso en la vida real. Pares como hombre/mujer son léxico, no un sistema de género.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 amplían vocabulario. No estudian el género por palabras distintas, como en español.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Producir cuentos a partir de títulos o imágenes.",
+          "learning": "Escribe cuentos a partir de títulos e imágenes.",
+          "us": {
+            "code": "W.3.3",
+            "text": "Grade 3 escribe narraciones con secuencia clara, detalles y técnica adecuada.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "En narrativa, Years 3–4 crean escenario, personajes y trama.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Crear nuevas versiones de cuentos conocidos.",
+          "learning": "Escribe nuevas versiones de cuentos conocidos.",
+          "us": {
+            "code": "W.3.3",
+            "text": "Grade 3 escribe narraciones. Reescribir un cuento conocido como versión nueva no está especificado.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "Years 3–4 crean trama y escenario. Recontar cuentos conocidos es sobre todo oral, no una reescritura.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Usar en la escritura ciertas restricciones del sistema de escritura alfabético.",
+          "learning": "Aplica a la escritura algunas restricciones del sistema de escritura alfabético: dígrafo gu en gue-gui; qu en que-qui.",
+          "us": {
+            "code": "RF.3.3",
+            "text": "Grade 3 decodifica palabras del inglés. Los dígrafos gu/qu del español no están en ese estándar.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RF/3/"
+          },
+          "uk": {
+            "code": "En/Y4/Spelling",
+            "text": "La ortografía de Year 4 no incluye gue, gui, que ni qui.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Escribir reseñas de obras literarias.",
+          "learning": "Recomienda obras literarias mediante breves reseñas escritas.",
+          "us": {
+            "code": "W.3.1",
+            "text": "Grade 3 escribe opiniones sobre textos y las sostiene con razones.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "Years 3–4 escriben material que no es narrativo y lo organizan. La reseña como género no se nombra.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Producir textos a partir de diferentes inicios.",
+          "learning": "Crea textos a partir de diferentes inicios: sueño con…; si yo fuera escritor/a…; cuando sea grande…; si yo fuera un caballo…; Simón Bolívar fue…",
+          "us": {
+            "code": "W.3.3",
+            "text": "Grade 3 establece una situación e introduce narrador o personajes al escribir una narración.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Writing",
+            "text": "Years 3–4 componen narraciones con escenario, personajes y trama.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Utilizar en la escritura recursos ortográficos fundamentales.",
+          "learning": "Escribe utilizando algunos recursos ortográficos básicos: mayúsculas en nombres propios y de lugares, al inicio de un texto; el punto al final de un texto.",
+          "us": {
+            "code": "L.3.2",
+            "text": "Grade 3 domina mayúsculas, puntuación y ortografía del grado. El punto final y la mayúscula inicial ya son de grados previos.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y2/GPS",
+            "text": "Year 2 delimita oraciones con mayúscula y punto, y usa mayúsculas en nombres.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Conocer nociones ortográficas del sistema de escritura.",
+          "learning": "Usa en la escritura ciertas reglas ortográficas básicas: al principio y al final de palabras siempre va una sola r (Rama, reto, risa, ruta, rosa / cantar, trepar, nacer, radar, hangar). Identifica cambios de significado según el uso de r/rr al interior de palabras: carro/ caro; perra/pera; cerro/cero.",
+          "us": {
+            "code": "L.3.2.f",
+            "text": "Grade 3 usa patrones de ortografía del inglés. La regla de r/rr es del español.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y4/Spelling",
+            "text": "Year 4 no enseña la oposición r/rr.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Escribir convencionalmente palabras con sílabas complejas.",
+          "learning": "Comienza a escribir convencionalmente las palabras que contienen sílabas del grupo consonante-consonante-vocal (CCV): clase, copla, tropa, fruta, flor, cobre, grama, drama, grillo…",
+          "us": {
+            "code": "RF.1.3",
+            "text": "Los grupos consonánticos al inicio de sílaba se decodifican en Grade 1.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RF/1/"
+          },
+          "uk": {
+            "code": "En/Y1/Spelling",
+            "text": "Year 1 trabaja los grupos consonánticos iniciales.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Escribir ideas relevantes sobre temas leídos.",
+          "learning": "Registra por escrito contenidos fundamentales sobre diversos temas, a partir de la lectura de textos.",
+          "us": {
+            "code": "W.3.8",
+            "text": "Grade 3 toma notas breves de lo leído y ordena la evidencia.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/W/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 identifican las ideas principales, las resumen y registran información de la no ficción.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Escribir convencionalmente palabras que contienen sílabas indirectas (VC) y del grupo silábico CVC.",
+          "learning": "Escribe, en forma convencional, palabras con sílabas indirectas (VC): antonio, asterisco, olmo, elsa, intriga, alto, usted…",
+          "us": {
+            "code": "RF.1.3",
+            "text": "Las sílabas cerradas y los patrones básicos de decodificación son de Grade 1.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RF/1/"
+          },
+          "uk": {
+            "code": "En/Y1/Spelling",
+            "text": "Year 1 corresponde sonidos y grafías en sílabas simples.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Escribir convencionalmente palabras que contienen sílabas indirectas (VC) y del grupo silábico CVC.",
+          "learning": "Escribe palabras que contienen el grupo silábico CVC: mango, pasta, colmo, carta, manzana, salto, percha, santo, pasto…",
+          "us": {
+            "code": "RF.1.3",
+            "text": "El patrón consonante-vocal-consonante de una sílaba es de los primeros grados, no de Grade 3.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RF/1/"
+          },
+          "uk": {
+            "code": "En/Y1/Spelling",
+            "text": "Year 1 escribe palabras con los fonemas y las grafías ya enseñadas, incluidas sílabas CVC.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Conocer funciones y usos de los signos de interrogación y exclamación.",
+          "learning": "Diferencia oraciones interrogativas y exclamativas, y comienza a utilizar los signos convencionales en la escritura de esas clases de oraciones.",
+          "us": {
+            "code": "L.1.2.b",
+            "text": "Usar la puntuación final, pregunta y exclamación, es de Grade 1.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/1/"
+          },
+          "uk": {
+            "code": "En/Y2/GPS",
+            "text": "Year 2 escribe oraciones interrogativas y exclamativas con sus signos.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Expresarse con diversas intenciones: manifestar sentimientos, solicitar, reclamar, narrar, opinar, describir, explicar, argumentar…",
+          "learning": "Actúa como hablante-oyente reflexivo y crítico en diversas situaciones comunicativas.",
+          "us": {
+            "code": "SL.3.1",
+            "text": "Grade 3 participa en conversaciones con distintos compañeros, construye sobre las ideas de otros y expresa las propias con claridad.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Escucha, responde y expresa respuestas, argumentos y opiniones.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Utilizar ciertas expresiones de la lengua formal en diferentes contextos de comunicación.",
+          "learning": "Usa diversas fórmulas sociales para interactuar con otros en situaciones de la vida cotidiana: gracias, de nada, por favor, con permiso, buenos días, etc.",
+          "us": {
+            "code": "SL.3.6",
+            "text": "Grade 3 habla en oraciones completas cuando la situación lo pide. Las fórmulas de cortesía no son un contenido nombrado.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Se elige el registro adecuado a la situación. Gracias, por favor y los saludos no forman una lista del programa.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Hacer escuchar la voz propia y considerar la de otros en la toma de decisiones colectivas.",
+          "learning": "Aporta ideas para la toma de decisiones durante la construcción y revisión permanente de las normas de convivencia en el salón y en otros espacios de la institución escolar.",
+          "us": {
+            "code": "SL.3.1.d",
+            "text": "Grade 3 explica sus propias ideas a la luz de la conversación.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Articula y justifica respuestas, argumentos y opiniones.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Actuar en intercambios grupales para confrontar interpretaciones y puntos de vista acerca de textos leídos por la/el docente (Cuentos, biografías, noticias, historietas, textos informativos sobre diversos temas).",
+          "learning": "Manifiesta sus interpretaciones y puntos de vista sobre textos leídos por la/el docente.",
+          "us": {
+            "code": "SL.3.2",
+            "text": "Grade 3 identifica las ideas principales de un texto leído en voz alta o presentado en otros medios.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 conversan sobre libros que les leen y sobre los que leen solos, por turnos.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Actuar en intercambios grupales para confrontar interpretaciones y puntos de vista acerca de textos leídos por la/el docente (Cuentos, biografías, noticias, historietas, textos informativos sobre diversos temas).",
+          "learning": "Escucha con respeto los puntos de vista del otro/otra y defiende los propios con explicaciones y argumentos.",
+          "us": {
+            "code": "SL.3.1.d",
+            "text": "Grade 3 explica sus ideas y tiene en cuenta lo que dijeron los demás.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Considera y evalúa puntos de vista distintos, y construye sobre lo que aportan otros.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Dialogar con diferentes intenciones y propósitos.",
+          "learning": "Participa en diálogos en variados contextos comunicativos, considerando los puntos de vista de otros/otras: para resolver diferencias, acordar reglas de un juego, manifestar y resolver desacuerdos…",
+          "us": {
+            "code": "SL.3.1",
+            "text": "Grade 3 conversa en parejas, en grupo y con el docente para construir ideas.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Mantiene la atención y participa en conversaciones de colaboración.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
+          "learning": "Pregunta y responde sobre contenidos de estudio tratados en el aula.",
+          "us": {
+            "code": "SL.3.3",
+            "text": "Grade 3 hace y responde preguntas sobre lo que dice otra persona, con elaboración y detalle.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Hace preguntas pertinentes para ampliar lo que entiende.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Formular preguntas y emitir respuestas acerca de diversos temas.",
+          "learning": "Pregunta para solicitar la información requerida en diversas situaciones.",
+          "us": {
+            "code": "SL.3.3",
+            "text": "Grade 3 pide información con preguntas y responde a las de otros.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Hace preguntas pertinentes para ampliar su conocimiento.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Participar en intercambios de grupo sobre respuestas a instrumentos de evaluación.",
+          "learning": "Participa en la comparación de respuestas a instrumentos de evaluación mediante intercambios con el grupo de compañeras/ os y docente.",
+          "us": {
+            "code": "SL.3.1",
+            "text": "Grade 3 discute ideas del grado. Comparar respuestas de una prueba no es un contenido nombrado.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Evalúa puntos de vista en la conversación. La comparación de pruebas no está en el programa.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Participar en cine foros.",
+          "learning": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos.",
+          "us": {
+            "code": "SL.3.2",
+            "text": "Grade 3 saca las ideas principales de información presentada en medios visuales y orales.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Participa en discusiones y da explicaciones. El cine foro no es un contenido de Year 4.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Utilizar en la expresión un repertorio léxico cada vez más amplio.",
+          "learning": "Utiliza un repertorio de nuevas palabras que trascienden el léxico utilizado cotidianamente para interactuar en diversidad de situaciones comunicativas y satisfacer distintas necesidades.",
+          "us": {
+            "code": "L.3.6",
+            "text": "Grade 3 adquiere y usa con precisión vocabulario conversacional, académico y de las materias.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 discuten palabras y frases, y amplían el vocabulario de lo que leen.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Narrar cuentos conocidos para distintas audiencias.",
+          "learning": "Narra cuentos conocidos siguiendo la secuencia de los hechos y utilizando descriptores para caracterizar personajes y otros recursos de la narración.",
+          "us": {
+            "code": "SL.3.4",
+            "text": "Grade 3 cuenta una historia con hechos y detalles descriptivos, hablando con claridad.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 se familiarizan con cuentos y los recuentan en voz alta.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Narrar cuentos conocidos para distintas audiencias.",
+          "learning": "Utiliza algunas fórmulas de inicio propias de la narración, al relatar sus propios cuentos: había una vez… / En un lugar llamado… / Hace mucho tiempo…",
+          "us": {
+            "code": "SL.3.4",
+            "text": "Grade 3 cuenta una historia con claridad. Las fórmulas de inicio no están especificadas.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 recuentan cuentos. Había una vez y las otras fórmulas no están en el programa.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Exponer informaciones sobre distintas áreas del conocimiento.",
+          "learning": "Comunica al grupo del salón información sobre temas de interés.",
+          "us": {
+            "code": "SL.3.4",
+            "text": "Grade 3 informa sobre un tema, habla con claridad y a un ritmo comprensible.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Da descripciones y explicaciones bien estructuradas, y habla con fluidez.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Divertirse y entretener a otros con diversas expresiones lúdicas del lenguaje.",
+          "learning": "Conoce y comparte con otras personas un repertorio de expresiones lúdicas de la lengua: chistes, trabalenguas, adivinanzas, cuentos de nunca acabar, retahílas…",
+          "us": {
+            "code": "SL.3.4",
+            "text": "Grade 3 cuenta y describe. Chistes, trabalenguas y adivinanzas no son un contenido nombrado.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 preparan poemas para leerlos en voz alta y reconocen formas distintas de poesía.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Participar en intercambios sobre la utilidad de la tecnología.",
+          "learning": "Participa en discusiones sobre la utilidad de la tecnología.",
+          "us": {
+            "code": "SL.3.1",
+            "text": "Grade 3 discute temas del grado. No hay un estándar de lengua sobre la utilidad de la tecnología.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "Co/KS2",
+            "text": "Key Stage 2 entiende las redes, incluido internet, y usa la tecnología de forma segura y responsable.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-computing-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Cantar y declamar para diversas audiencias.",
+          "learning": "Canta/declama un repertorio de canciones, poemas y coplas, previamente memorizadas, ajustando en lo posible los rasgos de la voz para distintos escenarios.",
+          "us": {
+            "code": "RF.3.4.b",
+            "text": "Grade 3 lee prosa y poesía del grado en voz alta, con precisión, ritmo y expresión.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RF/3/"
+          },
+          "uk": {
+            "code": "Mu/KS2",
+            "text": "Key Stage 2 canta y toca con creciente precisión, fluidez y expresión. La declamación de coplas es, además, inglés.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-music-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Denominar sonidos que emiten animales conocidos.",
+          "learning": "Conoce palabras para denominar sonidos de animales comunes. Además de los vistos en grados anteriores, incluye, por ejemplo: abeja, oveja, elefante, búho…",
+          "us": {
+            "code": "L.3.6",
+            "text": "Grade 3 amplía el vocabulario del grado. Los nombres de sonidos de animales no son un apartado.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 discuten palabras y frases. El repertorio de sonidos de animales no está en el programa.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Inventar historietas y cuentos a partir de imágenes.",
+          "learning": "Expresa verbalmente historietas y cuentos creados a partir de imágenes.",
+          "us": {
+            "code": "SL.3.4",
+            "text": "Grade 3 cuenta una historia con detalles descriptivos y habla con claridad.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Da narraciones bien estructuradas para distintos propósitos.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Comentar acerca de textos y temas de interés.",
+          "learning": "Comenta con otras personas acerca de textos y temas de su interés.",
+          "us": {
+            "code": "SL.3.1",
+            "text": "Grade 3 conversa sobre temas y textos del grado y expresa sus ideas con claridad.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 participan en la discusión sobre libros, por turnos y escuchando.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Utilizar un repertorio de adjetivos para describir objetos y situaciones del entorno.",
+          "learning": "Utiliza un repertorio amplio de adjetivos para describir objetos y situaciones del entorno.",
+          "us": {
+            "code": "L.3.1.a",
+            "text": "Grade 3 explica la función de los adjetivos.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/L/3/"
+          },
+          "uk": {
+            "code": "En/Y4/Appendix2",
+            "text": "Year 4 amplía el sintagma nominal con adjetivos modificadores.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Comentar con docentes y compañeros noticias de actualidad (Locales, nacionales e internacionales).",
+          "learning": "Participa en comentarios de grupo sobre noticias de especial interés.",
+          "us": {
+            "code": "SL.3.1",
+            "text": "Grade 3 discute textos del grado. El comentario de noticias es un caso de esa conversación.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "Considera puntos de vista y participa en la conversación. La noticia de actualidad no es un apartado.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Interpretar y usar refranes, expresiones y dichos del repertorio popular venezolano.",
+          "learning": "Conoce el sentido y usa un repertorio de expresiones, dichos y refranes. Ejemplos: “el papá de los helados”, “hijo de gato, caza ratón”, “no dejes para mañana lo que puedes hacer hoy”, “el que madruga, recoge agua clara”, “en el camino se enderezan las cargas”.",
+          "us": {
+            "code": "RL.3.4",
+            "text": "Grade 3 distingue el sentido literal del no literal. El repertorio de refranes citado es venezolano.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RL/3/"
+          },
+          "uk": {
+            "code": "En/Y3-4/Reading",
+            "text": "Years 3–4 discuten palabras y frases. Esos dichos populares venezolanos no están en el programa.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Actuar como espectador en diversidad de espectáculos artísticos.",
+          "learning": "Actúa como espectador responsable en presentaciones artísticas, festivales, tradiciones y costumbres.",
+          "us": {
+            "code": "SL.3.2",
+            "text": "No hay estándar federal de artes en Grade 3. Lo más cercano es atender a una presentación y comentarla.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "Mu/KS2",
+            "text": "Key Stage 2 escucha música en vivo y grabada con atención. Festivales y tradiciones venezolanas no son el contenido.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-music-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Actuar como espectador en diversidad de espectáculos artísticos.",
+          "learning": "Mantiene el interés frente a espectáculos y emite opiniones sobre el contenido de las obras.",
+          "us": {
+            "code": "SL.3.1.d",
+            "text": "Grade 3 explica sus ideas después de escuchar. Opinar sobre una obra no es un estándar de artes.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/SL/3/"
+          },
+          "uk": {
+            "code": "Mu/KS2",
+            "text": "Key Stage 2 aprecia música de distintas tradiciones y de grandes compositores, y desarrolla una idea de la historia de la música.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-music-programmes-of-study"
+          }
+        }
+      ]
+    },
+    {
+      "id": "mat",
+      "title": "Matemáticas",
+      "icon": "calculate",
+      "rows": [
+        {
+          "unitTitle": "Geometría",
+          "learning": "Se orienta espacialmente.",
+          "us": {
+            "code": "K.G.A.1",
+            "text": "Describir posiciones relativas —arriba, abajo, al lado, delante, detrás— es de kindergarten.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/Math/Content/K/G/"
+          },
+          "uk": {
+            "code": "Ma/Y1/Position",
+            "text": "Year 1 describe posición, dirección y movimiento, incluidos giros de cuarto y de medio.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Geometría",
+          "learning": "Se orienta temporalmente.",
+          "us": {
+            "code": "3.MD.A.1",
+            "text": "Grade 3 dice y escribe la hora al minuto y resuelve problemas de intervalos. Orientarse en el tiempo es más amplio que el reloj.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/Math/Content/3/MD/"
+          },
+          "uk": {
+            "code": "Ma/Y4/Measurement",
+            "text": "Year 4 lee relojes analógicos y digitales de 12 y 24 horas y convierte horas, minutos y segundos.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Geometría",
+          "learning": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos.",
+          "us": {
+            "code": "3.G.A.1",
+            "text": "Grade 3 entiende que las figuras comparten atributos y así forman familias. Los cuerpos geométricos pesan menos en este código.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/Math/Content/3/G/"
+          },
+          "uk": {
+            "code": "Ma/Y4/Geometry",
+            "text": "Year 4 compara y clasifica figuras, incluidos cuadriláteros y triángulos, por propiedades y tamaño.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Geometría",
+          "learning": "Diferencia los polígonos de acuerdo al número de lados.",
+          "us": {
+            "code": "2.G.A.1",
+            "text": "Identificar triángulos, cuadriláteros, pentágonos, hexágonos y cubos es de Grade 2.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/Math/Content/2/G/"
+          },
+          "uk": {
+            "code": "Ma/Y2/Geometry",
+            "text": "Year 2 describe figuras planas por el número de lados. Year 4 clasifica por propiedades, sin volver a contar lados como objetivo.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Geometría",
+          "learning": "Identifica los elementos de los cuerpos geométricos.",
+          "us": {
+            "code": "2.G.A.1",
+            "text": "Grade 2 reconoce figuras con un número dado de caras iguales e identifica cubos.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/Math/Content/2/G/"
+          },
+          "uk": {
+            "code": "Ma/Y2/Geometry",
+            "text": "Year 2 describe cuerpos e incluye el número de aristas, vértices y caras.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Geometría",
+          "learning": "Diferencia círculo de una circunferencia.",
+          "us": {
+            "code": "3.G.A.1",
+            "text": "Grade 3 clasifica figuras planas y no distingue el círculo de la circunferencia.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/Math/Content/3/G/"
+          },
+          "uk": {
+            "code": "Ma/Y4/Geometry",
+            "text": "Year 4 clasifica figuras por propiedades. No separa círculo y circunferencia.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Geometría",
+          "learning": "Es capaz de trazar un croquis partiendo de un punto de referencia.",
+          "us": {
+            "code": "C3 D2.Geo.1.3-5",
+            "text": "El marco C3, grados 3–5, construye mapas de lugares conocidos. No es un estándar de geometría de Grade 3.",
+            "fit": "parcial",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Ge/KS2/Fieldwork",
+            "text": "Key Stage 2 observa el entorno y lo presenta con métodos que incluyen el croquis.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Geometría",
+          "learning": "Diferencia recta y punto, y la traza en un plano.",
+          "us": {
+            "code": "4.G.A.1",
+            "text": "Dibujar puntos, rectas, segmentos, rayos y ángulos es de Grade 4. El plano no está en ese estándar.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/Math/Content/4/G/"
+          },
+          "uk": {
+            "code": "Ma/Y3/Geometry",
+            "text": "Year 3 reconoce ángulos y líneas horizontales y verticales. El punto y el plano no se definen en Year 4.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Geometría",
+          "learning": "Diferencia rectas paralelas y perpendiculares.",
+          "us": {
+            "code": "4.G.A.1",
+            "text": "Identificar y trazar rectas paralelas y perpendiculares es de Grade 4, no de Grade 3.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/Math/Content/4/G/"
+          },
+          "uk": {
+            "code": "Ma/Y3/Geometry",
+            "text": "Year 3 identifica pares de rectas perpendiculares y paralelas.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Magnitudes y medidas",
+          "learning": "Diferencia medidas convencionales y no convencionales.",
+          "us": {
+            "code": "1.MD.A.2",
+            "text": "Medir longitudes con unidades no convencionales, repitiendo un objeto corto, es de Grade 1.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/Math/Content/1/MD/"
+          },
+          "uk": {
+            "code": "Ma/Y1/Measurement",
+            "text": "Year 1 compara y empieza a medir longitudes. La distinción convencional / no convencional es de ese tramo.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Magnitudes y medidas",
+          "learning": "Utiliza su cuerpo para medir distintas superficies.",
+          "us": {
+            "code": "1.MD.A.2",
+            "text": "Medir una longitud con el propio cuerpo o con otra unidad no convencional es de Grade 1.",
+            "fit": "anterior",
+            "href": "https://www.thecorestandards.org/Math/Content/1/MD/"
+          },
+          "uk": {
+            "code": "Ma/Y1/Measurement",
+            "text": "Year 1 mide longitudes y alturas con unidades al alcance del niño, antes del sistema métrico de años posteriores.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Magnitudes y medidas",
+          "learning": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos.",
+          "us": {
+            "code": "3.MD.A.2",
+            "text": "Grade 3 mide y estima masas y volúmenes en gramos, kilogramos y litros. Longitud y tiempo están en estándares vecinos.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/Math/Content/3/MD/"
+          },
+          "uk": {
+            "code": "Ma/Y3/Measurement",
+            "text": "Year 3 mide, compara, suma y resta longitudes, masa y capacidad. Year 4 convierte unidades ya conocidas.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Magnitudes y medidas",
+          "learning": "Realiza cálculos con cambios de la moneda nacional.",
+          "us": {
+            "code": "4.MD.A.2",
+            "text": "Grade 4 resuelve problemas de dinero con las cuatro operaciones. Grade 3 no tiene ese estándar, y la unidad es el dólar, no el bolívar.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/Math/Content/4/MD/"
+          },
+          "uk": {
+            "code": "Ma/Y4/Measurement",
+            "text": "Year 4 estima, compara y calcula medidas, incluido el dinero en libras y peniques.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Números y operaciones",
+          "learning": "Utilizan el cartel de valores para ubicar números o cantidades, hasta el diez mil.",
+          "us": {
+            "code": "4.NBT.A.2",
+            "text": "Leer y comparar números de varias cifras es de Grade 4. Grade 3 opera dentro del millar.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/Math/Content/4/NBT/"
+          },
+          "uk": {
+            "code": "Ma/Y4/NPV",
+            "text": "Year 4 reconoce el valor de cada cifra en un número de cuatro cifras y compara números más allá de 1000.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Números y operaciones",
+          "learning": "Realiza adiciones, sus propiedades y sustracciones con números hasta diez mil.",
+          "us": {
+            "code": "4.NBT.B.4",
+            "text": "Sumar y restar números de varias cifras con fluidez es de Grade 4. Grade 3 suma y resta dentro de 1000.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/Math/Content/4/NBT/"
+          },
+          "uk": {
+            "code": "Ma/Y4/Add",
+            "text": "Year 4 suma y resta números de hasta cuatro cifras con el método en columnas. Las propiedades de la adición se ven antes.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Números y operaciones",
+          "learning": "Cuenta y lee cantidades hasta el diez mil.",
+          "us": {
+            "code": "4.NBT.A.2",
+            "text": "Leer y escribir números de varias cifras, y decir su nombre, es de Grade 4.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/Math/Content/4/NBT/"
+          },
+          "uk": {
+            "code": "Ma/Y4/NPV",
+            "text": "Year 4 representa, estima, ordena y compara números más allá de 1000.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Números y operaciones",
+          "learning": "Realiza cálculos de multiplicaciones con dos dígitos y por la unidad seguida de cero.",
+          "us": {
+            "code": "4.NBT.B.5",
+            "text": "Multiplicar un número de hasta cuatro cifras por uno de una cifra, y dos números de dos cifras, es de Grade 4. Por 10, 20… 90 también está en Grade 3, dentro de un rango menor.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/Math/Content/4/NBT/"
+          },
+          "uk": {
+            "code": "Ma/Y4/Mul",
+            "text": "Year 4 multiplica números de dos y de tres cifras por uno de una cifra. Multiplicar y dividir por 10, 100 y 1000 se fija en Year 5.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Estadística y probabilidad",
+          "learning": "Recopila, organiza, clasifica y representa gráficamente datos.",
+          "us": {
+            "code": "3.MD.B.3",
+            "text": "Grade 3 representa datos en pictogramas y gráficos de barras a escala, y resuelve problemas de comparación.",
+            "fit": "directo",
+            "href": "https://www.thecorestandards.org/Math/Content/3/MD/"
+          },
+          "uk": {
+            "code": "Ma/Y4/Statistics",
+            "text": "Year 4 interpreta y presenta datos discretos y continuos con gráficos de barras y de tiempo, y usa también pictogramas y tablas.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cie",
+      "title": "Ciencias Naturales",
+      "icon": "science",
+      "rows": [
+        {
+          "unitTitle": "Salud integral — La alimentación en Venezuela",
+          "learning": "Comprende qué es una alimentación saludable e identifica los diferentes grupos de alimentos.",
+          "us": {
+            "code": "5-PS3-1",
+            "text": "No hay un desempeño de Grade 3 sobre grupos de alimentos. Grade 5 modela que la energía de la comida de los animales vino del sol.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y3/Animals",
+            "text": "Year 3 identifica que los animales, humanos incluidos, necesitan el tipo y la cantidad adecuados de nutrición.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Salud integral — La alimentación en Venezuela",
+          "learning": "Reconoce la importancia de la alimentación saludable, para mantener un estado óptimo de salud.",
+          "us": {
+            "code": "5-PS3-1",
+            "text": "Grade 5 relaciona la comida con la energía del cuerpo. Grade 3 no tiene un estándar de alimentación saludable.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y3/Animals",
+            "text": "Year 3 explica que las personas y los demás animales obtienen la nutrición de lo que comen.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Salud integral — La alimentación en Venezuela",
+          "learning": "Reconoce los platos típicos de Venezuela y sus ingredientes principales.",
+          "us": {
+            "code": "5-PS3-1",
+            "text": "Los platos típicos de Venezuela no están en NGSS. Lo más cercano es la energía de los alimentos, en Grade 5.",
+            "fit": "nacional",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y3/Animals",
+            "text": "Year 3 trata la nutrición, no la cocina venezolana.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Salud integral — La alimentación en Venezuela",
+          "learning": "Demuestra gusto por las tradiciones culinarias venezolanas y la diversidad alimentaria.",
+          "us": {
+            "code": "5-PS3-1",
+            "text": "Valorar las tradiciones culinarias venezolanas no es un desempeño NGSS.",
+            "fit": "nacional",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y3/Animals",
+            "text": "Year 3 no incluye el gusto por las tradiciones culinarias de Venezuela.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Salud integral — La alimentación en Venezuela",
+          "learning": "Valora la importancia de una alimentación saludable para el bienestar comunitario.",
+          "us": {
+            "code": "5-PS3-1",
+            "text": "Grade 5 habla de la energía de los alimentos para el cuerpo, no del bienestar de la comunidad.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y3/Animals",
+            "text": "Year 3 trata la nutrición del organismo, no el bienestar comunitario.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
+          "learning": "Observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas, a partir de experiencias prácticas.",
+          "us": {
+            "code": "5-PS1-4",
+            "text": "Investigar si al mezclar dos o más sustancias aparece una sustancia nueva es de Grade 5, no de Grade 3.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y5/Materials",
+            "text": "Year 5 decide cómo separar mezclas filtrando, tamizando o evaporando. Year 4 estudia sólidos, líquidos y gases, no esa clasificación.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
+          "learning": "Describe las propiedades de las mezclas homogéneas y heterogéneas.",
+          "us": {
+            "code": "5-PS1-3",
+            "text": "Identificar materiales por sus propiedades, con observaciones y mediciones, es de Grade 5.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y5/Materials",
+            "text": "Year 5 compara y agrupa materiales según propiedades y entiende las mezclas. Year 4 se queda en los estados de la materia.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
+          "learning": "Identifica diferentes métodos sencillos para separar componentes en mezclas y describe cómo funcionan.",
+          "us": {
+            "code": "5-PS1-4",
+            "text": "Grade 5 investiga el resultado de mezclar sustancias. Los métodos de separación no son un desempeño de Grade 3.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y5/Materials",
+            "text": "Year 5 separa mezclas por filtrado, tamizado y evaporación.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
+          "learning": "Desarrolla la curiosidad científica a través de la realización de experimentos simples que impliquen la mezcla de materiales, observando los cambios que ocurren.",
+          "us": {
+            "code": "5-PS1-4",
+            "text": "Grade 5 conduce una investigación sobre mezclas. Ese desempeño no está en Grade 3.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y5/Materials",
+            "text": "Year 5 investiga cambios y mezclas. La indagación científica de Years 3–4 pide preguntas y observaciones, pero el contenido de mezclas es de Year 5.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Ciencia, tecnología y sociedad — Las mezclas",
+          "learning": "Desarrolla habilidades para formular preguntas, hacer observaciones y sacar conclusiones basadas en la experiencia con mezclas y la separación de sus componentes.",
+          "us": {
+            "code": "5-PS1-4",
+            "text": "Sacar conclusiones de una investigación sobre mezclas corresponde a Grade 5.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y3-4/WS",
+            "text": "En Years 3–4 se usan los resultados para sacar conclusiones simples, predecir y plantear nuevas preguntas. El contenido de mezclas es de Year 5.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "El ambiente y sus interacciones — Biodiversidad",
+          "learning": "Observa y describe la biodiversidad y su importancia en los ecosistemas de su entorno.",
+          "us": {
+            "code": "3-LS4-3",
+            "text": "Grade 3 argumenta que en un hábitat unos organismos sobreviven bien, otros menos y otros no.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y4/Living",
+            "text": "Year 4 agrupa seres vivos, usa claves de clasificación del entorno y reconoce que el ambiente puede cambiar.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "El ambiente y sus interacciones — Biodiversidad",
+          "learning": "Reconoce el papel fundamental del agua en la vida de los organismos.",
+          "us": {
+            "code": "3-LS4-3",
+            "text": "Grade 3 relaciona el hábitat con la supervivencia. El papel del agua en todos los organismos no es el enunciado.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y3/Plants",
+            "text": "Year 3 explora que las plantas necesitan aire, luz, agua, nutrientes del suelo y espacio.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "El ambiente y sus interacciones — Biodiversidad",
+          "learning": "Participa en proyectos sobre conservación del agua y biodiversidad local.",
+          "us": {
+            "code": "3-LS4-4",
+            "text": "Grade 3 valora una solución cuando el ambiente cambia y pueden cambiar las plantas y los animales que viven ahí.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y4/Living",
+            "text": "Year 4 reconoce que los ambientes pueden cambiar y que eso a veces pone en peligro a los seres vivos.",
+            "fit": "directo",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "El ambiente y sus interacciones — Biodiversidad",
+          "learning": "Reconoce los efectos del cambio climático y sus consecuencias sobre la biodiversidad.",
+          "us": {
+            "code": "3-LS4-4",
+            "text": "Grade 3 trata el cambio del ambiente y su efecto en los seres vivos. No nombra el cambio climático.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y4/Living",
+            "text": "Year 4 reconoce que un ambiente que cambia puede poner en peligro a los seres vivos. No nombra el cambio climático.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "El ambiente y sus interacciones — Biodiversidad",
+          "learning": "Valora y protege la biodiversidad.",
+          "us": {
+            "code": "3-LS4-4",
+            "text": "Grade 3 argumenta sobre soluciones cuando cambia el ambiente. La actitud de proteger la biodiversidad no es el desempeño.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y4/Living",
+            "text": "Year 4 ve el peligro de un ambiente que cambia. Valorar y proteger no es una frase del programa.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Seres vivos — Las plantas",
+          "learning": "Identifica y clasifica diferentes tipos de plantas de su entorno, y describe sus partes principales y sus funciones.",
+          "us": {
+            "code": "4-LS1-1",
+            "text": "Argumentar que plantas y animales tienen estructuras internas y externas que sirven para sobrevivir y crecer es de Grade 4.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y3/Plants",
+            "text": "Year 3 identifica y describe la función de raíz, tallo, hojas y flores.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Seres vivos — Las plantas",
+          "learning": "Reconoce las etapas del crecimiento y desarrollo de una planta.",
+          "us": {
+            "code": "3-LS1-1",
+            "text": "Grade 3 modela que los organismos tienen ciclos de vida distintos y que todos nacen, crecen, se reproducen y mueren.",
+            "fit": "directo",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y3/Plants",
+            "text": "Year 3 explora el papel de la flor en el ciclo de las plantas con flor, incluida la formación de la semilla.",
+            "fit": "anterior",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Seres vivos — Las plantas",
+          "learning": "Comprende la importancia de la fotosíntesis para las plantas y otros seres vivos.",
+          "us": {
+            "code": "MS-LS1-6",
+            "text": "El papel de la fotosíntesis en el ciclo de la materia es de secundaria, no de Grade 3.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y3/Plants",
+            "text": "Year 3 explora que las plantas necesitan aire, luz y agua para vivir y crecer. No nombra la fotosíntesis.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Seres vivos — Las plantas",
+          "learning": "Reflexiona sobre la importancia de las plantas en el ambiente y su rol en la producción de oxígeno.",
+          "us": {
+            "code": "5-LS2-1",
+            "text": "Modelar el movimiento de la materia entre plantas, animales, descomponedores y el ambiente es de Grade 5.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y4/Living",
+            "text": "Year 4 agrupa seres vivos y ve ambientes que cambian. No describe la producción de oxígeno.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Energía – materia — La energía en las comunidades",
+          "learning": "Comprende la presencia de la energía en el ambiente, sus diferentes formas y fuentes.",
+          "us": {
+            "code": "4-ESS3-1",
+            "text": "Grade 4 describe que la energía y los combustibles vienen de recursos naturales y que su uso afecta el ambiente.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y4/Electricity",
+            "text": "Year 4 identifica aparatos que funcionan con electricidad y construye un circuito en serie. No cubre todas las formas y fuentes.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Energía – materia — La energía en las comunidades",
+          "learning": "Reconoce la importancia del acceso a la energía en el desarrollo comunitario.",
+          "us": {
+            "code": "4-ESS3-1",
+            "text": "Grade 4 relaciona energía, combustibles y efecto ambiental. El acceso de la comunidad al desarrollo no es el enunciado.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Ge/KS2/Human",
+            "text": "Key Stage 2 describe la distribución de recursos naturales, incluida la energía.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Energía – materia — La energía en las comunidades",
+          "learning": "Demuestra una actitud responsable hacia el consumo de energía.",
+          "us": {
+            "code": "4-ESS3-1",
+            "text": "Grade 4 ve que el uso de la energía afecta el ambiente. La actitud de consumo responsable no es el desempeño.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y4/Electricity",
+            "text": "Year 4 identifica aparatos eléctricos. No fija una actitud de consumo.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Energía – materia — La energía en las comunidades",
+          "learning": "Valorar la importancia de hacer buen uso de la energía en la comunidad para un uso sostenible de la misma.",
+          "us": {
+            "code": "4-ESS3-1",
+            "text": "Grade 4 obtiene información sobre energía, combustibles y su efecto en el ambiente.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Ge/KS2/Human",
+            "text": "Key Stage 2 estudia recursos naturales, incluida la energía, y el uso del suelo.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "La Tierra en el universo — La fuerza de gravedad",
+          "learning": "Comprende el origen y la importancia de la fuerza de gravedad para mantener a los objetos en su lugar tanto en la Tierra como en el espacio.",
+          "us": {
+            "code": "5-PS2-1",
+            "text": "Argumentar que la gravedad de la Tierra sobre los objetos se dirige hacia abajo es de Grade 5. Grade 3 estudia fuerzas equilibradas y desequilibradas.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y5/Forces",
+            "text": "Year 5 explica que los objetos sin apoyo caen hacia la Tierra por la gravedad. Year 4 no tiene ese contenido.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "La Tierra en el universo — La fuerza de gravedad",
+          "learning": "Realiza actividades prácticas para observar los efectos de la fuerza de gravedad en diferentes objetos (caída libre, peso).",
+          "us": {
+            "code": "5-PS2-1",
+            "text": "La caída hacia la Tierra por la gravedad es de Grade 5.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y5/Forces",
+            "text": "Year 5 observa el efecto de la gravedad y también la resistencia del aire, el agua y la fricción.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "La Tierra en el universo — La fuerza de gravedad",
+          "learning": "Desarrolla habilidades para observar y registrar fenómenos astronómicos.",
+          "us": {
+            "code": "5-ESS1-2",
+            "text": "Representar patrones del día y la noche y de algunas estrellas es de Grade 5.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Sc/Y5/Earth",
+            "text": "Year 5 describe el movimiento de la Tierra y de otros planetas, y explica el día y la noche por la rotación.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ide",
+      "title": "Identidad",
+      "icon": "public",
+      "rows": [
+        {
+          "unitTitle": "La Humanidad",
+          "learning": "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero.",
+          "us": {
+            "code": "C3 D2.His.1.3-5",
+            "text": "El marco C3, grados 3–5, ordena hechos relacionados en una secuencia. Los períodos indígena, colonial, agrícola y petrolero son de Venezuela.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "Key Stage 2 construye una cronología segura de la historia británica, local y mundial. Esos períodos venezolanos no están en el programa.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "La Humanidad",
+          "learning": "Identifica las distintas formas de comunicación y transmisión de conocimientos, historias y experiencias, desde las primeras culturas humanas, hasta la actualidad.",
+          "us": {
+            "code": "C3 D2.His.2.3-5",
+            "text": "El marco C3 compara la vida en un período histórico con la vida de hoy.",
+            "fit": "parcial",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "Key Stage 2 estudia las primeras civilizaciones y cómo cambia lo que sabemos del pasado. La historia de la comunicación no es un tema cerrado de Year 4.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Nuestro Mundo",
+          "learning": "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
+          "us": {
+            "code": "C3 D2.Geo.1.3-5",
+            "text": "El marco C3 construye mapas de lugares familiares y no familiares.",
+            "fit": "parcial",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Ge/KS2/Fieldwork",
+            "text": "Key Stage 2 hace trabajo de campo del entorno cercano y puede presentarlo con croquis. El caserío venezolano es un ejemplo local, no el contenido inglés.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Nuestro Mundo",
+          "learning": "Conoce el mar Caribe, la navegación y pesca en sus espacios, así como el fenómeno de los ciclones y aprende a utilizar responsablemente el agua potable, conociendo la importancia de cuidar el planeta Tierra.",
+          "us": {
+            "code": "3-ESS3-1",
+            "text": "Grade 3 argumenta sobre una solución de diseño que reduce el impacto de un peligro meteorológico. El mar Caribe y la pesca son contenido regional.",
+            "fit": "parcial",
+            "href": "https://www.nextgenscience.org/"
+          },
+          "uk": {
+            "code": "Ge/KS2/Physical",
+            "text": "Key Stage 2 describe clima, ríos, costas y el ciclo del agua, y puede estudiar una región de América.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Venezuela en el Mundo",
+          "learning": "Conoce superficie, estados y capitales; y la ciudad capital, Caracas.",
+          "us": {
+            "code": "C3 D2.Geo.3.3-5",
+            "text": "El marco C3 usa mapas de distintas escalas para localizar rasgos. Estados, capitales y Caracas son contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Ge/KS2/Locational",
+            "text": "Key Stage 2 nombra y localiza condados y ciudades del Reino Unido. La organización territorial de Venezuela no está en el programa.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Pueblos Indígenas",
+          "learning": "Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea.",
+          "us": {
+            "code": "C3 D2.His.3.3-5",
+            "text": "El marco C3 pregunta por personas y grupos que marcaron cambios históricos. La resistencia indígena y el cacicazgo son contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "Key Stage 2 estudia sociedades no europeas como contraste con la historia británica. Esos liderazgos venezolanos no están en el programa.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Pueblos Afrovenezolanos",
+          "learning": "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
+          "us": {
+            "code": "C3 D2.His.3.3-5",
+            "text": "El marco C3 atiende a grupos que sostuvieron cambios históricos. El trabajo afrovenezolano y esa gastronomía son contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "Key Stage 2 no incluye la historia afrovenezolana ni los alimentos de origen africano en la cocina de Venezuela.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Libertador Simón Bolívar",
+          "learning": "Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez.",
+          "us": {
+            "code": "C3 D2.His.3.3-5",
+            "text": "El marco C3 estudia personas que marcaron la historia. La juventud de Bolívar es contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "Key Stage 2 puede estudiar a una persona significativa en un estudio local o británico. No incluye la biografía de Bolívar.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Libertador Simón Bolívar",
+          "learning": "Conoce el Juramento en el Monte Sacro como el compromiso que hace Bolívar con la Libertad de América y vida hasta 1810.",
+          "us": {
+            "code": "C3 D2.His.3.3-5",
+            "text": "El marco C3 genera preguntas sobre personas y hechos. El Juramento del Monte Sacro es contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "Key Stage 2 no incluye el Juramento del Monte Sacro.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Nación Agrícola",
+          "learning": "Conoce al general Ezequiel Zamora, líder de las luchas campesinas y al general Cipriano Castro, defensor de la soberanía nacional ante el bloqueo extranjero.",
+          "us": {
+            "code": "C3 D2.His.3.3-5",
+            "text": "El marco C3 atiende a líderes de cambios históricos. Zamora y Cipriano Castro son contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "Key Stage 2 no incluye a Ezequiel Zamora ni a Cipriano Castro.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Nación Petrolera",
+          "learning": "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
+          "us": {
+            "code": "C3 D2.Civ.1.3-5",
+            "text": "El marco C3 distingue responsabilidades de cargos de gobierno. La lista de presidentes de Venezuela es contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "Key Stage 2 extiende la cronología británica más allá de 1066. No lista presidentes de Venezuela.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Cultura Venezolana",
+          "learning": "Conoce a los grandes maestros venezolanos Simón Rodríguez y Luis Beltrán Prieto Figueroa y valora el día del Maestro.",
+          "us": {
+            "code": "C3 D2.His.3.3-5",
+            "text": "El marco C3 estudia personas que marcaron cambios. Simón Rodríguez, Prieto Figueroa y el Día del Maestro son contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "Key Stage 2 no incluye a esos maestros ni el Día del Maestro venezolano.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Cultura Venezolana",
+          "learning": "Reconoce la diversidad cultural de la población venezolana y comprende el proceso de mestizaje en nuestra Historia.",
+          "us": {
+            "code": "C3 D2.Geo.4.3-5",
+            "text": "El marco C3 explica cómo la cultura influye en la forma de vivir un lugar. El mestizaje venezolano es contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Ge/KS2/Place",
+            "text": "Key Stage 2 compara la geografía humana de una región del Reino Unido, una de Europa y una de América. No estudia el mestizaje venezolano.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Cultura Venezolana",
+          "learning": "Describe los símbolos patrios y conoce su significado.",
+          "us": {
+            "code": "C3 D2.Civ.10.3-5",
+            "text": "El marco C3 identifica creencias y valores detrás de un punto de vista cívico. Los símbolos patrios de Venezuela son contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Hi/KS2",
+            "text": "El National Curriculum de primaria no fija una lección sobre bandera, escudo e himno de Venezuela.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Cultura Venezolana",
+          "learning": "Conoce el origen de nuestra moneda nacional, el Bolívar.",
+          "us": {
+            "code": "2.MD.C.8",
+            "text": "Grade 2 resuelve problemas con dólares y centavos. El origen del bolívar no está en el estándar.",
+            "fit": "nacional",
+            "href": "https://www.thecorestandards.org/Math/Content/2/MD/"
+          },
+          "uk": {
+            "code": "Ma/Y4/Measurement",
+            "text": "Year 4 calcula con libras y peniques. No estudia el origen del bolívar.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Territorio Productivo",
+          "learning": "Reconoce los paisajes naturales y conjuntos regionales: Costa-montaña, Llanos y Guayana, así como sus características productivas y conoce momentos de las actividades productivas en la Historia de Venezuela.",
+          "us": {
+            "code": "C3 D2.Geo.8.3-5",
+            "text": "El marco C3 relaciona asentamientos con el uso de recursos naturales. Costa-montaña, Llanos y Guayana son contenido nacional.",
+            "fit": "nacional",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Ge/KS2/Locational",
+            "text": "Key Stage 2 localiza regiones del Reino Unido, su relieve y el uso del suelo. Esas regiones venezolanas no están en el programa.",
+            "fit": "nacional",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Sociedad y Ciudadanía",
+          "learning": "Conoce qué es la comunidad, tipos y organizaciones comunitarias; identifica a la escuela como parte de una comunidad más amplia, y valora los diferentes roles de las personas en la comunidad escolar (maestros, estudiantes, personal obrero, etc.).",
+          "us": {
+            "code": "C3 D2.Civ.2.3-5",
+            "text": "El marco C3 explica que una democracia depende de la participación de las personas.",
+            "fit": "parcial",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "Ge/KS2/Fieldwork",
+            "text": "Key Stage 2 observa rasgos humanos del entorno cercano. Los roles de la escuela no son un apartado.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Sociedad y Ciudadanía",
+          "learning": "Reconoce la importancia de las normas y reglas para la convivencia en la escuela y desarrolla habilidades para el trabajo en equipo, incluyendo la colaboración y la distribución de tareas.",
+          "us": {
+            "code": "C3 D2.Civ.12.3-5",
+            "text": "El marco C3 explica cómo las reglas y las leyes cambian la sociedad y cómo las personas cambian las reglas.",
+            "fit": "parcial",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "En/Spoken",
+            "text": "El programa de habla pide participar en conversaciones de colaboración. Repartir tareas del equipo no es un objetivo de Year 4.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-english-programmes-of-study"
+          }
+        },
+        {
+          "unitTitle": "Sociedad y Ciudadanía",
+          "learning": "Reconoce la diversidad familiar, comprende la importancia de la planificación familiar, e identifica las necesidades básicas para el bienestar de las familias.",
+          "us": {
+            "code": "C3 D2.Civ.10.3-5",
+            "text": "No hay estándar de Grade 3 sobre planificación familiar. El marco C3 sí pide reconocer puntos de vista distintos sobre asuntos cívicos.",
+            "fit": "parcial",
+            "href": "https://www.socialstudies.org/standards/c3"
+          },
+          "uk": {
+            "code": "NC/KS2",
+            "text": "El National Curriculum de 2014 no fija un programa de Year 4 sobre diversidad familiar ni planificación familiar.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-primary-curriculum"
+          }
+        },
+        {
+          "unitTitle": "Sociedad y Ciudadanía",
+          "learning": "Conoce las señales de tránsito para conductores y peatones.",
+          "us": {
+            "code": "RI.3.7",
+            "text": "Grade 3 lee ilustraciones y símbolos junto con un texto. Las señales de tránsito para conductores y peatones no son el contenido.",
+            "fit": "parcial",
+            "href": "https://www.thecorestandards.org/ELA-Literacy/RI/3/"
+          },
+          "uk": {
+            "code": "Ge/KS2/Maps",
+            "text": "Key Stage 2 usa símbolos y leyenda en mapas. No son las señales de tránsito.",
+            "fit": "parcial",
+            "href": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+          }
+        }
+      ]
+    }
+  ]
+}
