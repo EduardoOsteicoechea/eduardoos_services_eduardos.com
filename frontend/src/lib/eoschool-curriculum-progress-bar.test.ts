@@ -41,11 +41,14 @@ describe("paintWeekProgress", () => {
   it("fills the day bubble as subjects are checked", () => {
     const card = document.createElement("article");
     card.dataset.planDay = "38";
-    card.innerHTML = `<button data-curriculum-day-bubble><span data-curriculum-day-bubble-fill role="progressbar"></span></button>`;
+    card.innerHTML = `<button class="eoschool-curriculum__day-bubble" data-curriculum-day-bubble><span data-curriculum-day-bubble-fill role="progressbar"></span></button>`;
     paintDayProgress(card, 3, 6);
     const fill = card.querySelector<HTMLElement>("[data-curriculum-day-bubble-fill]")!;
     expect(fill.style.height).toBe("50%");
     expect(fill.getAttribute("aria-valuenow")).toBe("50");
     expect(fill.getAttribute("aria-label")).toBe("Progreso del día 38: 3 de 6");
+    expect(card.querySelector(".eoschool-curriculum__day-bubble")?.classList.contains("eoschool-curriculum__day-bubble--green")).toBe(true);
+    paintDayProgress(card, 1, 6);
+    expect(card.querySelector(".eoschool-curriculum__day-bubble")?.classList.contains("eoschool-curriculum__day-bubble--green")).toBe(false);
   });
 });
