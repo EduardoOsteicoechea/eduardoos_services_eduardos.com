@@ -36,6 +36,11 @@ const areaDefs = [
 ];
 const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
 
+function biblePortion(learning: string): string {
+  const cut = learning.indexOf(": ");
+  return cut >= 0 ? learning.slice(cut + 2) : learning;
+}
+
 const HOLIDAY_FIXED = [
   { name: "Año Nuevo", when: "1 de enero" },
   { name: "Declaración de la Independencia", when: "19 de abril" },
@@ -369,9 +374,17 @@ function weekForPlanDay(planDay: number): number {
                                 </p>
                               ) : null}
                               {groups.some((g) => g.learnings.length) ? (
-                                <ul class="eoschool-curriculum__learnings eoschool-curriculum__learnings--card">
+                                <ul
+                                  class:list={[
+                                    "eoschool-curriculum__learnings",
+                                    "eoschool-curriculum__learnings--card",
+                                    area.sectionId === "bib" && "eoschool-curriculum__learnings--portions",
+                                  ]}
+                                >
                                   {groups.flatMap((group) =>
-                                    group.learnings.map((learning) => <li>{learning}</li>),
+                                    group.learnings.map((learning) => (
+                                      <li>{area.sectionId === "bib" ? biblePortion(learning) : learning}</li>
+                                    )),
                                   )}
                                 </ul>
                               ) : (
@@ -1701,6 +1714,17 @@ function weekForPlanDay(planDay: number): number {
     list-style: none;
     font-size: var(--font-size-xs);
     gap: 0.25rem;
+  }
+
+  .eoschool-curriculum__learnings.eoschool-curriculum__learnings--portions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum__learnings--portions li {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 
   .eoschool-curriculum__learnings li {
