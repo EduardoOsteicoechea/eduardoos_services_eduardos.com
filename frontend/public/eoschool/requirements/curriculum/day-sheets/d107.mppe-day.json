@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 107",
   "dayKind": "teach",
-  "calendarDate": "2027-02-16",
+  "calendarDate": "2027-03-02",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,31 +35,31 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Localizar datos en mapas y gráficos.",
-      "learning": "Explora el mapamundi en busca de algunos países específicos y otros datos geográficos.",
-      "canDo": "Al terminar puedes localizar y etiquetar información en un mapa o esquema.",
+      "objective": "Cantar y declamar para diversas audiencias.",
+      "learning": "Canta/declama un repertorio de canciones, poemas y coplas, previamente memorizadas, ajustando en lo posible los rasgos de la voz para distintos escenarios.",
+      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
-      "activityKind": "map",
+      "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "explora el mapamundi en busca de algunos países específicos y…",
+      "topicShort": "canta/declama un repertorio de canciones, poemas y coplas, previamente memorizadas,…",
       "activities": [
-        "Dibuja o usa un mapa del tema; etiqueta 5 lugares y escribe 2 frases de ubicación.",
-        "Haz 3 preguntas «¿dónde está…?» y respóndelas con el mapa."
+        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
+        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
       ]
     },
     {
       "id": "ide",
       "label": "Identidad",
-      "objective": "Nuestro Mundo",
-      "learning": "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
+      "objective": "Otra civilización",
+      "learning": "En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar.",
+      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
       "mode": "directo",
-      "activityKind": "mapPlaces",
+      "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "las características de su vivienda y de un caserío campesino…",
+      "topicShort": "en los grados 3–5 se compara cómo vivía la gente…",
       "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
+        "Investiga con un adulto 4 hechos de Otra civilización; escríbelos en oraciones.",
+        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
         "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Modelo",
+      "learning": "Di qué hacer si faltan piezas de un color.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Modelo",
+      "activities": [
+        "Di qué hacer si faltan piezas de un color."
       ]
     }
   ]

@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 41",
   "dayKind": "teach",
-  "calendarDate": "2026-11-16",
+  "calendarDate": "2026-11-30",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -49,31 +50,45 @@
     {
       "id": "cie",
       "label": "Ciencias Naturales",
-      "objective": "Salud integral — La alimentación en Venezuela",
-      "learning": "Valora la importancia de una alimentación saludable para el bienestar comunitario.",
-      "canDo": "Al terminar puedes clasificar alimentos en grupos y elegir una comida equilibrada.",
+      "objective": "Fósiles",
+      "learning": "Grade 3 usa fósiles para describir organismos y ambientes de hace mucho tiempo.",
+      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
       "mode": "directo",
-      "activityKind": "nutrition",
+      "activityKind": "observation",
       "minutesEstimate": 18,
-      "topicShort": "alimentación saludable y grupos de alimentos",
+      "topicShort": "grade 3 usa fósiles para describir organismos y ambientes de…",
       "activities": [
-        "Dibuja o lista 8 alimentos de tu cocina; clasifica en 3 grupos (energía, construcción, protección).",
-        "Marca con ✓ una merienda saludable y explica en 2 frases."
+        "Observa 15 min algo de grade 3 usa fósiles para describir organismos y ambientes de…; tabla con 3 filas de datos.",
+        "Compara 2 filas: similitud y diferencia."
       ]
     },
     {
       "id": "mat",
       "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos.",
-      "canDo": "Al terminar puedes practicar el contenido de hoy con procedimiento escrito.",
+      "objective": "Perímetro",
+      "learning": "Grade 3 halla el perímetro de un polígono a partir de sus lados y resuelve problemas con esa medida.",
+      "canDo": "Al terminar puedes clasificar figuras por lados y vértices y nombrarlas con precisión.",
       "mode": "directo",
-      "activityKind": "default",
+      "activityKind": "geometryShapes",
       "minutesEstimate": 18,
-      "topicShort": "las semejanzas y diferencias entre formas y cuerpos geométricos",
+      "topicShort": "grade 3 halla el perímetro de un polígono a partir…",
       "activities": [
-        "Resuelve: 234 + 156 = 8000 − 325 = 47 × 6 = 84 ÷ 4 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
-        "Explica en 2 oraciones qué estrategia usaste."
+        "Recorta o dibuja 6 figuras; ordena en tabla: nombre, número de lados, número de vértices.",
+        "Elige 2 figuras y explica en una oración qué las hace diferentes."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Imagen",
+      "learning": "Dicta qué quieres ver en la imagen y qué no debe salir.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Imagen",
+      "activities": [
+        "Dicta qué quieres ver en la imagen y qué no debe salir."
       ]
     }
   ]

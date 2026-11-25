@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 68",
   "dayKind": "teach",
-  "calendarDate": "2026-12-23",
+  "calendarDate": "2027-01-06",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,13 +35,13 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Utilizar en la expresión un repertorio léxico cada vez más amplio.",
-      "learning": "Utiliza un repertorio de nuevas palabras que trascienden el léxico utilizado cotidianamente para interactuar en diversidad de situaciones comunicativas y satisfacer distintas necesidades.",
+      "objective": "Participar en cine foros.",
+      "learning": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos.",
       "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
       "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "utiliza un repertorio de nuevas palabras que trascienden el léxico…",
+      "topicShort": "actúa como espectador de películas y, posteriormente, en comentarios grupales…",
       "activities": [
         "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
         "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
@@ -50,12 +51,12 @@
       "id": "cie",
       "label": "Ciencias Naturales",
       "objective": "Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Desarrolla la curiosidad científica a través de la realización de experimentos simples que impliquen la mezcla de materiales, observando los cambios que ocurren.",
+      "learning": "Identifica diferentes métodos sencillos para separar componentes en mezclas y describe cómo funcionan.",
       "canDo": "Al terminar puedes probar 3 mezclas seguras y registrar qué pasa.",
       "mode": "directo",
       "activityKind": "mixture",
       "minutesEstimate": 18,
-      "topicShort": "la curiosidad científica a través de la realización de experimentos…",
+      "topicShort": "diferentes métodos sencillos para separar componentes en mezclas y describe…",
       "activities": [
         "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
         "Clasifica: ¿se disuelve o no? Una frase con evidencia."
@@ -74,6 +75,20 @@
       "activities": [
         "Busca 2 objetos (plato, aro, moneda); marca si ves círculo relleno o solo borde.",
         "Tabla: objeto → círculo o circunferencia → por qué."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Revisión",
+      "learning": "Di un criterio y cuántos puntos vale.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Revisión",
+      "activities": [
+        "Di un criterio y cuántos puntos vale."
       ]
     }
   ]

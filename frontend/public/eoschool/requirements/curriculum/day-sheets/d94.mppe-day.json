@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 94",
   "dayKind": "teach",
-  "calendarDate": "2027-01-28",
+  "calendarDate": "2027-02-11",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,16 +35,16 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Participar en intercambios sobre la utilidad de la tecnología.",
-      "learning": "Participa en discusiones sobre la utilidad de la tecnología.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
+      "objective": "Conocer algunas particularidades de la lengua.",
+      "learning": "Analiza algunas “curiosidades” de nuestra lengua. Palíndromos: palabras que se leen igual al derecho y al revés. Ej. Ana, ada, ojo, oro, radar, somos, rapar, reconocer, arepera. Palabras que repiten una misma vocal en todas las sílabas: maraca, cántara / monólogo, fósforo / efervescente, pelele / infringir, incidir… Palabras pentavocálicas (Contienen las cinco vocales). Ej.: aurelio, orquídea, riachuelo, murciélago, comunicarse, educación…",
+      "canDo": "Al terminar puedes resumir la idea central en 4 oraciones.",
+      "mode": "fragmentado",
       "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "discusiones sobre la utilidad de la tecnología",
+      "minutesEstimate": 15,
+      "topicShort": "analiza algunas “curiosidades” de nuestra lengua. Palíndromos",
       "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+        "4 oraciones que expliquen la idea central de analiza algunas “curiosidades” de nuestra lengua. Palíndromos; no todo…",
+        "Dibuja un ícono que represente la idea."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
         "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Inventario",
+      "learning": "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Inventario",
+      "activities": [
+        "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota."
       ]
     }
   ]

@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 93",
   "dayKind": "teach",
-  "calendarDate": "2027-01-27",
+  "calendarDate": "2027-02-10",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,13 +35,13 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Participar en intercambios sobre la utilidad de la tecnología.",
-      "learning": "Participa en discusiones sobre la utilidad de la tecnología.",
+      "objective": "Exponer informaciones sobre distintas áreas del conocimiento.",
+      "learning": "Comunica al grupo del salón información sobre temas de interés.",
       "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
       "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "discusiones sobre la utilidad de la tecnología",
+      "topicShort": "comunica al grupo del salón información sobre temas de interés",
       "activities": [
         "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
         "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
@@ -74,6 +75,20 @@
       "activities": [
         "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
         "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Revisión",
+      "learning": "Di un criterio y cuántos puntos vale.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Revisión",
+      "activities": [
+        "Di un criterio y cuántos puntos vale."
       ]
     }
   ]

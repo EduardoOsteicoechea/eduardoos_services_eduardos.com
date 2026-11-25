@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 73",
   "dayKind": "teach",
-  "calendarDate": "2026-12-30",
+  "calendarDate": "2027-01-13",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,13 +35,13 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Interpretar metáforas.",
-      "learning": "Comprende metáforas sencillas en textos literarios.",
+      "objective": "Resolver instrumentos de evaluación.",
+      "learning": "Resuelve problemas de lectura y escritura planteados en instrumentos de evaluación dirigidos a estimar los avances en el aprendizaje y los efectos de la enseñanza.",
       "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
       "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "metáforas sencillas en textos literarios",
+      "topicShort": "resuelve problemas de lectura y escritura planteados en instrumentos de…",
       "activities": [
         "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
         "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
@@ -50,12 +51,12 @@
       "id": "cie",
       "label": "Ciencias Naturales",
       "objective": "Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Desarrolla habilidades para formular preguntas, hacer observaciones y sacar conclusiones basadas en la experiencia con mezclas y la separación de sus componentes.",
+      "learning": "Desarrolla la curiosidad científica a través de la realización de experimentos simples que impliquen la mezcla de materiales, observando los cambios que ocurren.",
       "canDo": "Al terminar puedes probar 3 mezclas seguras y registrar qué pasa.",
       "mode": "directo",
       "activityKind": "mixture",
       "minutesEstimate": 18,
-      "topicShort": "formular preguntas, hacer observaciones y sacar conclusiones basadas en la…",
+      "topicShort": "la curiosidad científica a través de la realización de experimentos…",
       "activities": [
         "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
         "Clasifica: ¿se disuelve o no? Una frase con evidencia."
@@ -74,6 +75,20 @@
       "activities": [
         "Busca 2 objetos (plato, aro, moneda); marca si ves círculo relleno o solo borde.",
         "Tabla: objeto → círculo o circunferencia → por qué."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Revisión",
+      "learning": "Di un criterio y cuántos puntos vale.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Revisión",
+      "activities": [
+        "Di un criterio y cuántos puntos vale."
       ]
     }
   ]

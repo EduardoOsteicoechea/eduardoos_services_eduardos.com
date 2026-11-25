@@ -1,6 +1,6 @@
 /** MPPE requirements route day sheet (independent from Homescool eoschool). */
 
-export type MppeCurriculumSectionId = "bib" | "ide" | "len" | "mat" | "cie";
+export type MppeCurriculumSectionId = "bib" | "ide" | "len" | "mat" | "cie" | "ia";
 
 export type MppeCurriculumDaySection = {
   id: MppeCurriculumSectionId;

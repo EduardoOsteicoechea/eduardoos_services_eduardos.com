@@ -14,6 +14,7 @@ import {
   englishSheetLink,
   englishWeekday,
 } from "../../../lib/eoschool-english-signature";
+import { aiGroupsForDay } from "../../../lib/eoschool-ai-signature";
 import { DEFAULT_CURRENT_WEEK } from "../../../lib/eoschool-curriculum-week-collapse";
 
 const { meta, weeks } = MPPE_40WEEK_CURRICULUM;
@@ -31,6 +32,7 @@ const areaDefs = [
   { num: 4, label: "Matemáticas", kind: "mat" as const, sectionId: "mat" as const, icon: "calculate" },
   { num: 5, label: "Ciencias Naturales", kind: "cie" as const, sectionId: "cie" as const, icon: "science" },
   { num: 6, label: "Inglés", kind: "english" as const, sectionId: "eng" as const, icon: "translate" },
+  { num: 7, label: "Inteligencia Artificial", kind: "ia" as const, sectionId: "ia" as const, icon: "psychology" },
 ];
 const areaBySection = Object.fromEntries(areaDefs.map((a) => [a.sectionId, a]));
 
@@ -267,9 +269,11 @@ function weekForPlanDay(planDay: number): number {
                             ? bibleGroupsForDay(bibleDay)
                             : area.kind === "identity"
                               ? identityGroups(block)
-                              : area.kind === "english"
-                                ? englishGroupsForDay(weekPlan.week, englishDay, block.calendarDate)
-                                : groupLearningRefs(
+                            : area.kind === "english"
+                              ? englishGroupsForDay(weekPlan.week, englishDay, block.calendarDate)
+                              : area.kind === "ia"
+                                ? aiGroupsForDay(bibleDay.dayInPlan)
+                              : groupLearningRefs(
                                     (area.kind === "len"
                                       ? block.len
                                       : area.kind === "mat"
@@ -338,7 +342,7 @@ function weekForPlanDay(planDay: number): number {
                               </label>
                             </div>
                             <div class="eoschool-curriculum__subject-copy">
-                            <h4 class="page-title-sr">{label}</h4>
+                            <h4 class="eoschool-curriculum__subject-title">{label}</h4>
                             {isExpo && !expoBible ? (
                               <p class="eoschool-curriculum__expo-word">Expo</p>
                             ) : null}
@@ -477,7 +481,8 @@ function weekForPlanDay(planDay: number): number {
           : ""}
         . Cada día: Biblia y Lenguaje. Días 1 y 3: Identidad y Ciencias. Días 2 y 4: Matemáticas. Día 5:
         exposiciones de las cinco asignaturas. Inglés, de la semana 8 en adelante: lunes presente, martes
-        pasado, miércoles futuro, jueves preposición, viernes repaso. En feriados oficiales VE solo Biblia
+        pasado, miércoles futuro, jueves preposición, viernes repaso. Inteligencia Artificial, desde el día 38:
+        una pregunta por día. En feriados oficiales VE solo Biblia
         {meta.holidays?.length ? ` (${meta.holidays.length} días)` : ""}. Abre un día para ver objetivo,
         aprendizaje y hoja PDF.
       </p>
@@ -539,6 +544,9 @@ function weekForPlanDay(planDay: number): number {
         </button>
         <button type="button" class="eoschool-curriculum-modal__tab" data-curriculum-modal-tab="eng" role="tab">
           Inglés
+        </button>
+        <button type="button" class="eoschool-curriculum-modal__tab" data-curriculum-modal-tab="ia" role="tab" aria-label="Inteligencia Artificial">
+          IA
         </button>
       </div>
 
@@ -1509,6 +1517,10 @@ function weekForPlanDay(planDay: number): number {
     background: #f8eef2;
   }
 
+  html[data-theme="light"] .eoschool-curriculum__subject[data-curriculum-section="ia"] {
+    background: #e7f4f2;
+  }
+
   html:not([data-theme="light"]) .eoschool-curriculum__subject[data-curriculum-section="bib"] {
     background: #221e28;
   }
@@ -1533,6 +1545,10 @@ function weekForPlanDay(planDay: number): number {
     background: #281e24;
   }
 
+  html:not([data-theme="light"]) .eoschool-curriculum__subject[data-curriculum-section="ia"] {
+    background: #1c2826;
+  }
+
   .eoschool-curriculum__day-body > .eoschool-curriculum__subject:first-child {
     border-block-start: 0;
     margin-block-start: 0;
@@ -1544,11 +1560,7 @@ function weekForPlanDay(planDay: number): number {
     font-weight: 650;
     line-height: 1.25;
     color: var(--color-accent);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 1;
-    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .eoschool-curriculum__subject-num {

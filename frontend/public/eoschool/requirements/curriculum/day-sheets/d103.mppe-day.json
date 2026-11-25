@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 103",
   "dayKind": "teach",
-  "calendarDate": "2027-02-10",
+  "calendarDate": "2027-02-24",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -35,15 +36,15 @@
       "id": "len",
       "label": "Lenguaje",
       "objective": "Localizar datos en mapas y gráficos.",
-      "learning": "Interpreta informaciones contenidas en diferentes representaciones gráficas.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
+      "learning": "Ubica y lee en el mapa de Venezuela los nombres de un amplio repertorio de estados, ríos, lagos principales y el mar Caribe.",
+      "canDo": "Al terminar puedes localizar y etiquetar información en un mapa o esquema.",
       "mode": "directo",
-      "activityKind": "default",
+      "activityKind": "map",
       "minutesEstimate": 18,
-      "topicShort": "interpreta informaciones contenidas en diferentes representaciones gráficas",
+      "topicShort": "ubica y lee en el mapa de Venezuela los nombres…",
       "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+        "Dibuja o usa un mapa del tema; etiqueta 5 lugares y escribe 2 frases de ubicación.",
+        "Haz 3 preguntas «¿dónde está…?» y respóndelas con el mapa."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
         "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Revisión",
+      "learning": "Di un criterio y cuántos puntos vale.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Revisión",
+      "activities": [
+        "Di un criterio y cuántos puntos vale."
       ]
     }
   ]

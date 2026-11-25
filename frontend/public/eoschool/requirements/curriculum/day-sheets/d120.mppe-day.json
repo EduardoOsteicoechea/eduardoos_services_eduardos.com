@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 120 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2027-03-05",
+  "calendarDate": "2027-03-19",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -35,30 +36,30 @@
     {
       "id": "ide",
       "label": "Identidad · Exposición",
-      "objective": "Exposición · Pueblos Indígenas",
-      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Comprende el significado y la importancia de la resistencia indígena y conoce cómo es el cacicazgo y quiénes fueron las principales lideresas y líderes que enfrentaron a la invasión europea.",
+      "objective": "Exposición · Otra civilización",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar. En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
       "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "el significado y la importancia de la resistencia indígena y…",
+      "topicShort": "en los grados 3–5 se compara cómo vivía la gente…",
       "activities": [
-        "Prepara una exposición de 1 minuto sobre el significado y la importancia de la resistencia indígena y…: 3 hechos y…",
+        "Prepara una exposición de 1 minuto sobre en los grados 3–5 se compara cómo vivía la gente…: 3 hechos y por qué…",
         "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
       "label": "Lenguaje · Exposición",
-      "objective": "Exposición · Conocer personajes destacados de la historia venezolana. · Utilizar un repertorio de adjetivos para describir objetos y situaciones del entorno.",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Conoce nombres y datos fundamentales de tres o cuatro venezolanos(As) ilustres: Simón Bolívar, Simón Rodríguez, Francisco de Miranda. Si es el caso, epónimos de la escuela, el estado, municipio o parroquia donde reside. · Utiliza un repertorio amplio de adjetivos para describir objetos y situaciones del entorno.",
+      "objective": "Exposición · Entender el significado de algunos elementos de la señalética. · Comentar acerca de textos y temas de interés.",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Identifica algunas señales básicas: no pase, peligro, alta tensión, baño de damas / caballeros, algunas señales de tránsito. · Comenta con otras personas acerca de textos y temas de su interés.",
       "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "nombres y datos fundamentales de tres o cuatro venezolanos(As) ilustres:…",
+      "topicShort": "señales de seguridad y tránsito",
       "activities": [
-        "Escribe 4 oraciones o un párrafo corto que resuma nombres y datos fundamentales de tres o cuatro venezolanos(As)…",
+        "Escribe 4 oraciones o un párrafo corto que resuma señales de seguridad y tránsito para tu exposición.",
         "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
@@ -90,6 +91,20 @@
       "activities": [
         "Prepara una exposición sobre valora y protege la biodiversidad. · Identifica y clasifica diferentes…. · Identifica…",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

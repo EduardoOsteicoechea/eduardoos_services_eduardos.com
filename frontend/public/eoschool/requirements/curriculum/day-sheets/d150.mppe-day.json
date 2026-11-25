@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 150 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2027-04-16",
+  "calendarDate": "2027-04-30",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -50,15 +51,15 @@
     {
       "id": "len",
       "label": "Lenguaje · Exposición",
-      "objective": "Exposición · Derivar palabras a partir de sustantivos. · Entretenerse con la resolución de juegos con palabras.",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Escribe (Por derivación) pares y tríos de palabras de un mismo campo lexical: casa/ casas/casita; niña/niñas/niñita; zapato/ zapatero/zapatazo. · Manifiesta interés por resolver juegos de escritura: crucifiguras, crucigramas, dameros, escaleras de palabras y otros.",
+      "objective": "Exposición · Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano. · Actuar como espectador en diversidad de espectáculos artísticos.",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Escribe convencionalmente su nombre y un repertorio de palabras familiares (Nombres propios y otras de uso común). · Mantiene el interés frente a espectáculos y emite opiniones sobre el contenido de las obras.",
       "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "escribe (Por derivación) pares y tríos de palabras de un…",
+      "topicShort": "escribe convencionalmente su nombre y un repertorio de palabras familiares…",
       "activities": [
-        "Escribe 4 oraciones o un párrafo corto que resuma escribe (Por derivación) pares y tríos de palabras de un… para tu…",
+        "Escribe 4 oraciones o un párrafo corto que resuma escribe convencionalmente su nombre y un repertorio de palabras…",
         "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
@@ -90,6 +91,20 @@
       "activities": [
         "Prepara una exposición sobre reflexiona sobre la importancia de las plantas en el ambiente…: observa o recuerda una…",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

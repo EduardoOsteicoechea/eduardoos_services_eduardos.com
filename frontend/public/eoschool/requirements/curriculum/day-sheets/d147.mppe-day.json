@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 147",
   "dayKind": "teach",
-  "calendarDate": "2027-04-13",
+  "calendarDate": "2027-04-27",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,13 +35,13 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Derivar palabras a partir de sustantivos.",
-      "learning": "Escribe (Por derivación) pares y tríos de palabras de un mismo campo lexical: casa/ casas/casita; niña/niñas/niñita; zapato/ zapatero/zapatazo.",
+      "objective": "Actuar como espectador en diversidad de espectáculos artísticos.",
+      "learning": "Mantiene el interés frente a espectáculos y emite opiniones sobre el contenido de las obras.",
       "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
       "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "escribe (Por derivación) pares y tríos de palabras de un…",
+      "topicShort": "mantiene el interés frente a espectáculos y emite opiniones sobre…",
       "activities": [
         "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
         "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
@@ -74,6 +75,20 @@
       "activities": [
         "3 precios de realiza cálculos con cambios de la moneda nacional; suma el total y simula pago con billetes/monedas…",
         "Un problema de vuelto en 2 pasos; muestra cuentas."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Modelo",
+      "learning": "Di qué hacer si faltan piezas de un color.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Modelo",
+      "activities": [
+        "Di qué hacer si faltan piezas de un color."
       ]
     }
   ]

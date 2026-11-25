@@ -4,28 +4,91 @@
   "planDay": 151,
   "week": 31,
   "grade": "3er grado",
-  "title": "Día 151 · Feriado — Declaración de la Independencia",
-  "dayKind": "holiday",
-  "calendarDate": "2027-04-19",
-  "holidayName": "Declaración de la Independencia",
-  "holidayDate": "2027-04-19",
+  "title": "Día 151",
+  "dayKind": "teach",
+  "calendarDate": "2027-05-03",
+  "holidayName": null,
+  "holidayDate": null,
   "scheduledSections": [
-    "bib"
+    "bib",
+    "len",
+    "cie",
+    "mat",
+    "ia"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia · Feriado",
-      "objective": "Feriado nacional — Declaración de la Independencia",
-      "learning": "Lectura bíblica del día (feriado). Gén–Ester: 2 Reyes 15, 16 · Job–Mal: Ezequiel 5, 6 · NT: 1 Timoteo 6",
+      "label": "Biblia",
+      "objective": "Lectura bíblica diaria (tres pistas)",
+      "learning": "Gén–Ester: 2 Reyes 15, 16 · Job–Mal: Ezequiel 5, 6 · NT: 1 Timoteo 6",
       "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "holiday",
+      "mode": "directo",
       "activityKind": "bible",
       "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
+      ]
+    },
+    {
+      "id": "len",
+      "label": "Lenguaje",
+      "objective": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
+      "learning": "Conoce y usa la mayúscula inicial en la escritura de nombres propios de personas y lugares.",
+      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
+      "mode": "directo",
+      "activityKind": "default",
+      "minutesEstimate": 18,
+      "topicShort": "y usa la mayúscula inicial en la escritura de nombres…",
+      "activities": [
+        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
+        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+      ]
+    },
+    {
+      "id": "cie",
+      "label": "Ciencias Naturales",
+      "objective": "Fuerzas e imanes",
+      "learning": "Grade 3 pregunta cómo un imán atrae o repele a otro sin tocarlo.",
+      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
+      "mode": "directo",
+      "activityKind": "observation",
+      "minutesEstimate": 18,
+      "topicShort": "grade 3 pregunta cómo un imán atrae o repele a…",
+      "activities": [
+        "Observa 15 min algo de grade 3 pregunta cómo un imán atrae o repele a…; tabla con 3 filas de datos.",
+        "Compara 2 filas: similitud y diferencia."
+      ]
+    },
+    {
+      "id": "mat",
+      "label": "Matemáticas",
+      "objective": "Fracciones",
+      "learning": "Grade 3 entiende una fracción como partes iguales de un entero y la ubica en la recta.",
+      "canDo": "Al terminar puedes trazar rectas y puntos o clasificar figuras con vocabulario de geometría.",
+      "mode": "directo",
+      "activityKind": "geometry",
+      "minutesEstimate": 18,
+      "topicShort": "grade 3 entiende una fracción como partes iguales de un…",
+      "activities": [
+        "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
+        "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Imagen",
+      "learning": "Dicta qué quieres ver en la imagen y qué no debe salir.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Imagen",
+      "activities": [
+        "Dicta qué quieres ver en la imagen y qué no debe salir."
       ]
     }
   ]

@@ -6,7 +6,7 @@ export function sectionProgressKey(dayId: string, sectionId: CurriculumPlanSecti
   return `${dayId}:${sectionId}`;
 }
 
-const CORE_SECTION_IDS = CURRICULUM_SECTION_IDS.filter((id) => id !== "eng");
+const CORE_SECTION_IDS = CURRICULUM_SECTION_IDS.filter((id) => id !== "eng" && id !== "ia");
 
 function normalizeScheduled(
   scheduledSections?: Iterable<CurriculumPlanSectionId> | null,

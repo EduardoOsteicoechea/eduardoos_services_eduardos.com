@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 58",
   "dayKind": "teach",
-  "calendarDate": "2026-12-09",
+  "calendarDate": "2026-12-23",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -74,6 +75,20 @@
       "activities": [
         "Resuelve: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
         "Explica en 2 oraciones qué estrategia usaste."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Revisión",
+      "learning": "Di un criterio y cuántos puntos vale.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Revisión",
+      "activities": [
+        "Di un criterio y cuántos puntos vale."
       ]
     }
   ]

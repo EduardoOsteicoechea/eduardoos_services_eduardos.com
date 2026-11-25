@@ -3,7 +3,7 @@
 import { refreshCurriculumDayHeights } from "./eoschool-curriculum-day-heights";
 import { expandWeekSubjects } from "./eoschool-curriculum-subject-collapse";
 
-export const DEFAULT_CURRENT_WEEK = 7;
+export const DEFAULT_CURRENT_WEEK = 8;
 const STORAGE_KEY = "eoschool-curriculum-current-week";
 
 function weeksIn(root: HTMLElement): HTMLElement[] {

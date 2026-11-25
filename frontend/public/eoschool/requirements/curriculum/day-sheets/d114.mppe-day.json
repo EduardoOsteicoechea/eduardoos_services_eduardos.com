@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 114",
   "dayKind": "teach",
-  "calendarDate": "2027-02-25",
+  "calendarDate": "2027-03-11",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,28 +35,28 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Comentar acerca de textos y temas de interés.",
-      "learning": "Comenta con otras personas acerca de textos y temas de su interés.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
+      "objective": "Inventar historietas y cuentos a partir de imágenes.",
+      "learning": "Expresa verbalmente historietas y cuentos creados a partir de imágenes.",
+      "canDo": "Al terminar puedes escribir un párrafo narrativo de 6 líneas.",
       "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "comenta con otras personas acerca de textos y temas de…",
+      "activityKind": "narrative",
+      "minutesEstimate": 20,
+      "topicShort": "expresa verbalmente historietas y cuentos creados a partir de imágenes",
       "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+        "Lee un texto corto del tema; escribe un final alternativo de 6 líneas.",
+        "Subraya verbo y sustantivo en 3 oraciones."
       ]
     },
     {
       "id": "ide",
       "label": "Identidad",
-      "objective": "Venezuela en el Mundo",
-      "learning": "Conoce superficie, estados y capitales; y la ciudad capital, Caracas.",
+      "objective": "El mundo",
+      "learning": "En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
       "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
       "mode": "directo",
       "activityKind": "mapPlaces",
       "minutesEstimate": 18,
-      "topicShort": "superficie, estados y capitales",
+      "topicShort": "en los grados 3–5 se usan mapas para localizar lugares…",
       "activities": [
         "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
         "2 frases: «___ está al ___ de ___»."
@@ -74,6 +75,20 @@
       "activities": [
         "Mide 4 objetos con regla o cinta; tabla: objeto, medida, unidad.",
         "Compara dos medidas: ¿cuánto más largo es uno? Escribe la resta."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Inventario",
+      "learning": "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Inventario",
+      "activities": [
+        "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota."
       ]
     }
   ]

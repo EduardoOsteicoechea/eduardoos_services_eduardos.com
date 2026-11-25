@@ -4,76 +4,28 @@
   "planDay": 196,
   "week": 40,
   "grade": "3er grado",
-  "title": "Día 196",
-  "dayKind": "teach",
-  "calendarDate": "2027-06-21",
-  "holidayName": null,
-  "holidayDate": null,
+  "title": "Día 196 · Feriado — Día de la Independencia",
+  "dayKind": "holiday",
+  "calendarDate": "2027-07-05",
+  "holidayName": "Día de la Independencia",
+  "holidayDate": "2027-07-05",
   "scheduledSections": [
-    "bib",
-    "len",
-    "cie",
-    "mat"
+    "bib"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Nehemías 13; Ester 1 · Job–Mal: Zacarías 7, 8 · NT: Apocalipsis 17",
+      "label": "Biblia · Feriado",
+      "objective": "Feriado nacional — Día de la Independencia",
+      "learning": "Lectura bíblica del día (feriado). Gén–Ester: Nehemías 13; Ester 1 · Job–Mal: Zacarías 7, 8 · NT: Apocalipsis 17",
       "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
+      "mode": "holiday",
       "activityKind": "bible",
       "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
         "Elige solo NT o AT si el día es muy largo; lee una sección.",
         "Dibuja un símbolo del pasaje. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "len",
-      "label": "Lenguaje",
-      "objective": "Conocer nociones ortográficas del sistema de escritura.",
-      "learning": "Usa en la escritura ciertas reglas ortográficas básicas: al principio y al final de palabras siempre va una sola r (Rama, reto, risa, ruta, rosa / cantar, trepar, nacer, radar, hangar). Identifica cambios de significado según el uso de r/rr al interior de palabras: carro/ caro; perra/pera; cerro/cero.",
-      "canDo": "Al terminar puedes escribir 6 palabras con r o rr sin confundirlas.",
-      "mode": "fragmentado",
-      "activityKind": "orthography",
-      "minutesEstimate": 15,
-      "topicShort": "ciertas reglas ortográficas básicas",
-      "activities": [
-        "Solo 6 palabras hoy; corrige con un adulto.",
-        "2 oraciones con la palabra más difícil."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "La Tierra en el universo — La fuerza de gravedad",
-      "learning": "Desarrolla habilidades para observar y registrar fenómenos astronómicos.",
-      "canDo": "Al terminar puedes registrar 3 caídas o empujes y describir la dirección.",
-      "mode": "directo",
-      "activityKind": "forces",
-      "minutesEstimate": 18,
-      "topicShort": "observar y registrar fenómenos astronómicos",
-      "activities": [
-        "3 pruebas seguras de caída o rodar; anota altura y qué pasó.",
-        "Frase: «La fuerza de gravedad hace que…»."
-      ]
-    },
-    {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Estadística y probabilidad",
-      "learning": "Recopila, organiza, clasifica y representa gráficamente datos.",
-      "canDo": "Al terminar puedes armar un pictograma o barras con 4 datos y leerlo.",
-      "mode": "directo",
-      "activityKind": "data",
-      "minutesEstimate": 18,
-      "topicShort": "organiza, clasifica y representa gráficamente datos",
-      "activities": [
-        "Encuesta a 4 personas: «¿Cuál es tu fruta favorita?»; registra y haz barras o pictograma.",
-        "Escribe 2 preguntas que se respondan mirando tu gráfico."
       ]
     }
   ]

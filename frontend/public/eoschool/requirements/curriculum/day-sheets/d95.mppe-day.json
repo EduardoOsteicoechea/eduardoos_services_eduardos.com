@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 95 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2027-01-29",
+  "calendarDate": "2027-02-12",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -50,15 +51,15 @@
     {
       "id": "len",
       "label": "Lenguaje · Exposición",
-      "objective": "Exposición · Interpretar palabras compuestas. · Participar en intercambios sobre la utilidad de la tecnología.",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Comprende la composición de palabras en un repertorio de términos comunes (Cumpleaños, guardabosques, paraguas, lavaplatos, telaraña, saltamontes). · Participa en discusiones sobre la utilidad de la tecnología.",
+      "objective": "Exposición · Exponer informaciones sobre distintas áreas del conocimiento. · Conocer algunas particularidades de la lengua.",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Comunica al grupo del salón información sobre temas de interés. · Analiza algunas “curiosidades” de nuestra lengua. Palíndromos: palabras que se leen igual al derecho y al revés. Ej. Ana, ada, ojo, oro, radar, somos, rapar, reconocer, arepera. Palabras que repiten una misma vocal en todas las sílabas: maraca, cántara / monólogo, fósforo / efervescente, pelele / infringir, incidir… Palabras pentavocálicas (Contienen las cinco vocales). Ej.: aurelio, orquídea, riachuelo, murciélago, comunicarse, educación…",
       "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "el agua y la vida",
+      "topicShort": "comunica al grupo del salón información sobre temas de interés.…",
       "activities": [
-        "Escribe 4 oraciones o un párrafo corto que resuma el agua y la vida para tu exposición.",
+        "Escribe 4 oraciones o un párrafo corto que resuma comunica al grupo del salón información sobre temas de interés.…",
         "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
@@ -90,6 +91,20 @@
       "activities": [
         "Prepara una exposición sobre el agua y la vida: observa o recuerda una evidencia y anota 3 datos.",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

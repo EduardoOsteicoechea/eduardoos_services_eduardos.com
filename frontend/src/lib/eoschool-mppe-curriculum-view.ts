@@ -5,6 +5,7 @@ import type {
   CurriculumLearningRef,
   CurriculumWeek,
 } from "./eoschool-mppe-40week-curriculum";
+import { AI_FROM_PLAN_DAY } from "./eoschool-ai-signature";
 
 export type SubjectObjectiveGroup = {
   objective: string;
@@ -173,7 +174,7 @@ export function identityGroups(block: CurriculumBlock): SubjectObjectiveGroup[] 
   return [{ objective: block.identity.title, learnings: block.identity.learnings ?? [] }];
 }
 
-export type PlanDaySectionId = "bib" | "ide" | "len" | "mat" | "cie" | "eng";
+export type PlanDaySectionId = "bib" | "ide" | "len" | "mat" | "cie" | "eng" | "ia";
 
 /** Sections scheduled for a plan block. English starts at week 8. */
 export function scheduledSectionsForBlock(block: CurriculumBlock, week = 0): PlanDaySectionId[] {
@@ -185,5 +186,7 @@ export function scheduledSectionsForBlock(block: CurriculumBlock, week = 0): Pla
     if (block.cie?.length) out.push("cie");
   }
   if (week >= 8 && block.dayKind !== "holiday" && !out.includes("eng")) out.push("eng");
+  const planDay = block.bible?.days?.[0]?.dayInPlan ?? 0;
+  if (planDay >= AI_FROM_PLAN_DAY && block.dayKind !== "holiday" && !out.includes("ia")) out.push("ia");
   return out;
 }

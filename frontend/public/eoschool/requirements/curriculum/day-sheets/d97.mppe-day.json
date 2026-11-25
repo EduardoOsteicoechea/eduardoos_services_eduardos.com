@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 97",
   "dayKind": "teach",
-  "calendarDate": "2027-02-02",
+  "calendarDate": "2027-02-16",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,16 +35,16 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Localizar datos en mapas y gráficos.",
-      "learning": "Ubica y lee en el mapa de Venezuela los nombres de un amplio repertorio de estados, ríos, lagos principales y el mar Caribe.",
-      "canDo": "Al terminar puedes localizar y etiquetar información en un mapa o esquema.",
+      "objective": "Divertirse y entretener a otros con diversas expresiones lúdicas del lenguaje.",
+      "learning": "Conoce y comparte con otras personas un repertorio de expresiones lúdicas de la lengua: chistes, trabalenguas, adivinanzas, cuentos de nunca acabar, retahílas…",
+      "canDo": "Al terminar puedes escribir un párrafo narrativo de 6 líneas.",
       "mode": "directo",
-      "activityKind": "map",
-      "minutesEstimate": 18,
-      "topicShort": "ubica y lee en el mapa de Venezuela los nombres…",
+      "activityKind": "narrative",
+      "minutesEstimate": 20,
+      "topicShort": "juegos de palabras y cuentos cortos",
       "activities": [
-        "Dibuja o usa un mapa del tema; etiqueta 5 lugares y escribe 2 frases de ubicación.",
-        "Haz 3 preguntas «¿dónde está…?» y respóndelas con el mapa."
+        "Lee un texto corto del tema; escribe un final alternativo de 6 líneas.",
+        "Subraya verbo y sustantivo en 3 oraciones."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
         "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Modelo",
+      "learning": "Di qué hacer si faltan piezas de un color.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Modelo",
+      "activities": [
+        "Di qué hacer si faltan piezas de un color."
       ]
     }
   ]

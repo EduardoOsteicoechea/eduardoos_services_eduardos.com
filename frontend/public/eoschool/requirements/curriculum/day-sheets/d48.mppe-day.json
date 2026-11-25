@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 48",
   "dayKind": "teach",
-  "calendarDate": "2026-11-25",
+  "calendarDate": "2026-12-09",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -74,6 +75,20 @@
       "activities": [
         "Recorta o dibuja 6 figuras; ordena en tabla: nombre, número de lados, número de vértices.",
         "Elige 2 figuras y explica en una oración qué las hace diferentes."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Revisión",
+      "learning": "Di un criterio y cuántos puntos vale.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Revisión",
+      "activities": [
+        "Di un criterio y cuántos puntos vale."
       ]
     }
   ]

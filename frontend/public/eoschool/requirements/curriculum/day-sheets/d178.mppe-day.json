@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 178",
   "dayKind": "teach",
-  "calendarDate": "2027-05-26",
+  "calendarDate": "2027-06-09",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,13 +35,13 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Conocer y usar en la escritura la diferencia de género femenino/masculino.",
-      "learning": "A) el femenino se forma agregando a al final de palabra o sustituyendo o por a: pintor/pintora; doctor/doctora; gato/gata; niño/niña; conejo/coneja.",
+      "objective": "Revisar y corregir textos destinados a la publicación.",
+      "learning": "Aplica estrategias de revisión y edición de textos que serán publicados, trabajando en equipo con otros y con el apoyo de la/el docente.",
       "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
       "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "a) el femenino se forma agregando a al final de…",
+      "topicShort": "aplica estrategias de revisión y edición de textos que serán…",
       "activities": [
         "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
         "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
@@ -74,6 +75,20 @@
       "activities": [
         "Resuelve: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
         "Explica en 2 oraciones qué estrategia usaste."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Revisión",
+      "learning": "Di un criterio y cuántos puntos vale.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Revisión",
+      "activities": [
+        "Di un criterio y cuántos puntos vale."
       ]
     }
   ]

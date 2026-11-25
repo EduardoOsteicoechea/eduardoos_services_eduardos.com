@@ -4,76 +4,28 @@
   "planDay": 91,
   "week": 19,
   "grade": "3er grado",
-  "title": "Día 91",
-  "dayKind": "teach",
-  "calendarDate": "2027-01-25",
-  "holidayName": null,
-  "holidayDate": null,
+  "title": "Día 91 · Feriado — Lunes de Carnaval",
+  "dayKind": "holiday",
+  "calendarDate": "2027-02-08",
+  "holidayName": "Lunes de Carnaval",
+  "holidayDate": "2027-02-08",
   "scheduledSections": [
-    "bib",
-    "len",
-    "cie",
-    "mat"
+    "bib"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Josué 10, 11 · Job–Mal: Proverbios 31; Eclesiastés 1 · NT: Romanos 1",
+      "label": "Biblia · Feriado",
+      "objective": "Feriado nacional — Lunes de Carnaval",
+      "learning": "Lectura bíblica del día (feriado). Gén–Ester: Josué 10, 11 · Job–Mal: Proverbios 31; Eclesiastés 1 · NT: Romanos 1",
       "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
+      "mode": "holiday",
       "activityKind": "bible",
       "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
-      ]
-    },
-    {
-      "id": "len",
-      "label": "Lenguaje",
-      "objective": "Interpretar palabras compuestas.",
-      "learning": "Comprende la composición de palabras en un repertorio de términos comunes (Cumpleaños, guardabosques, paraguas, lavaplatos, telaraña, saltamontes).",
-      "canDo": "Al terminar puedes resumir la idea central en 4 oraciones.",
-      "mode": "fragmentado",
-      "activityKind": "default",
-      "minutesEstimate": 15,
-      "topicShort": "el agua y la vida",
-      "activities": [
-        "4 oraciones que expliquen la idea central de el agua y la vida; no todo el listado del plan.",
-        "Dibuja un ícono que represente la idea."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "El ambiente y sus interacciones — Biodiversidad",
-      "learning": "Reconoce el papel fundamental del agua en la vida de los organismos.",
-      "canDo": "Al terminar puedes explicar por qué el agua es vital con evidencia de observación.",
-      "mode": "directo",
-      "activityKind": "water",
-      "minutesEstimate": 18,
-      "topicShort": "el agua y la vida",
-      "activities": [
-        "Observa cómo usas el agua en casa hoy; anota 4 usos en lista.",
-        "Escribe 2 oraciones: «Los seres vivos necesitan agua porque…» con un ejemplo que viste."
-      ]
-    },
-    {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Diferencia recta y punto, y la traza en un plano.",
-      "canDo": "Al terminar puedes trazar rectas y puntos o clasificar figuras con vocabulario de geometría.",
-      "mode": "directo",
-      "activityKind": "geometry",
-      "minutesEstimate": 18,
-      "topicShort": "diferencia recta y punto, y la traza en un plano",
-      "activities": [
-        "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
-        "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
       ]
     }
   ]

@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 40 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2026-11-13",
+  "calendarDate": "2026-11-27",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -36,7 +37,7 @@
       "id": "ide",
       "label": "Identidad · Exposición",
       "objective": "Exposición · Nación Petrolera",
-      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI. En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
       "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
       "mode": "exposition",
       "activityKind": "exposition",
@@ -65,23 +66,23 @@
     {
       "id": "mat",
       "label": "Matemáticas · Exposición",
-      "objective": "Exposición · Geometría",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Identifica las semejanzas y diferencias entre formas y cuerpos geométricos.",
+      "objective": "Exposición · Geometría · Fracciones · División",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Identifica las semejanzas y diferencias entre formas y cuerpos geométricos. · Grade 3 entiende una fracción como partes iguales de un entero y la ubica en la recta. · Grade 3 entiende la división como un reparto en grupos iguales y la relaciona con la multiplicación.",
       "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "las semejanzas y diferencias entre formas y cuerpos geométricos",
+      "topicShort": "las semejanzas y diferencias entre formas y cuerpos geométricos. ·…",
       "activities": [
-        "Resuelve en el cuaderno 1 problema o croquis sobre las semejanzas y diferencias entre formas y cuerpos geométricos…",
+        "Resuelve en el cuaderno 1 problema o croquis sobre las semejanzas y diferencias entre formas y cuerpos geométricos.…",
         "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
       "label": "Ciencias Naturales · Exposición",
-      "objective": "Exposición · Salud integral — La alimentación en Venezuela",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Valora la importancia de una alimentación saludable para el bienestar comunitario.",
+      "objective": "Exposición · Salud integral — La alimentación en Venezuela · Fuerzas e imanes",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Valora la importancia de una alimentación saludable para el bienestar comunitario. · Grade 3 pregunta cómo un imán atrae o repele a otro sin tocarlo.",
       "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
       "mode": "exposition",
       "activityKind": "exposition",
@@ -90,6 +91,20 @@
       "activities": [
         "Prepara una exposición sobre alimentación saludable y grupos de alimentos: observa o recuerda una evidencia y anota…",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

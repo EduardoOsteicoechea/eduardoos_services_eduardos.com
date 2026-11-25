@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 154",
   "dayKind": "teach",
-  "calendarDate": "2027-04-22",
+  "calendarDate": "2027-05-06",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,13 +35,13 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Usar en la escritura la noción de concordancia sustantivo-adjetivo.",
-      "learning": "Escribe pares de palabras, y usa en la escritura de textos, la noción de concordancia “sustantivo-adjetivo”: niña talentosa / camisa marrón / blusa pequeña / niño alto.",
+      "objective": "Participar en la escritura de normas de convivencia y deberes.",
+      "learning": "Participa en la revisión permanente y rescritura de las normas de convivencia en la escuela, los deberes con respecto a las demás personas, el cuido del ambiente y el respeto a la patria.",
       "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
       "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "escribe pares de palabras, y usa en la escritura de…",
+      "topicShort": "normas de convivencia y trabajo en equipo",
       "activities": [
         "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
         "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
@@ -49,16 +50,16 @@
     {
       "id": "ide",
       "label": "Identidad",
-      "objective": "La Humanidad",
-      "learning": "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero.",
-      "canDo": "Al terminar puedes anotar 3 hitos históricos con fecha o lugar.",
+      "objective": "Otra civilización",
+      "learning": "En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar.",
+      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
       "mode": "directo",
-      "activityKind": "historyMilestones",
+      "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "los períodos de la Historia de Venezuela",
+      "topicShort": "en los grados 3–5 se compara cómo vivía la gente…",
       "activities": [
-        "Lee con un adulto sobre los períodos de la Historia de Venezuela; 3 hitos en línea de tiempo (fecha o siglo + hecho).",
-        "Dibuja un símbolo por hito (petróleo, independencia, etc. si aplica)."
+        "Investiga con un adulto 4 hechos de Otra civilización; escríbelos en oraciones.",
+        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "Resuelve en el cuaderno: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Muestra el procedimiento en al menos 2.",
         "Elige 1 resultado y explica con palabras por qué tiene sentido."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Inventario",
+      "learning": "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Inventario",
+      "activities": [
+        "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota."
       ]
     }
   ]

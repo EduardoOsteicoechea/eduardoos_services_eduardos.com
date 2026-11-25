@@ -4,92 +4,28 @@
   "planDay": 125,
   "week": 25,
   "grade": "3er grado",
-  "title": "Día 125 · Exposiciones",
-  "dayKind": "exposition",
-  "calendarDate": "2027-03-12",
-  "holidayName": null,
-  "holidayDate": null,
+  "title": "Día 125 · Feriado — Viernes Santo",
+  "dayKind": "holiday",
+  "calendarDate": "2027-03-26",
+  "holidayName": "Viernes Santo",
+  "holidayDate": "2027-03-26",
   "scheduledSections": [
-    "bib",
-    "ide",
-    "len",
-    "mat",
-    "cie"
+    "bib"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia · Exposición",
-      "objective": "Exposición bíblica (repaso de la semana)",
-      "learning": "Prepara una exposición breve sobre la lectura de la semana. Gén–Ester: 2 Samuel 4, 5, 6 · Job–Mal: Isaías 64, 65 · NT: 2 Corintios 13; Gálatas 1",
-      "canDo": "Al terminar puedes contar en 1 minuto la idea del pasaje y una aplicación en casa.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 12,
+      "label": "Biblia · Feriado",
+      "objective": "Feriado nacional — Viernes Santo",
+      "learning": "Lectura bíblica del día (feriado). Gén–Ester: 2 Samuel 4, 5, 6 · Job–Mal: Isaías 64, 65 · NT: 2 Corintios 13; Gálatas 1",
+      "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
+      "mode": "holiday",
+      "activityKind": "bible",
+      "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
-        "Lee en voz alta el pasaje de la semana sobre el tema del día; subraya 3 palabras clave.",
-        "Ensayo oral: explica qué pasó, qué enseña y una frase que puedes aplicar hoy en casa."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad · Exposición",
-      "objective": "Exposición · Pueblos Afrovenezolanos",
-      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
-      "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "que los pueblos afrovenezolanos son los trabajadores que sostienen a…",
-      "activities": [
-        "Prepara una exposición de 1 minuto sobre que los pueblos afrovenezolanos son los trabajadores que sostienen a…: 3…",
-        "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
-      ]
-    },
-    {
-      "id": "len",
-      "label": "Lenguaje · Exposición",
-      "objective": "Exposición · Conocer derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela. · Comentar con docentes y compañeros noticias de actualidad (Locales, nacionales e internacionales). · Conocer sobre la existencia de la Lengua de Señas Venezolana.",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Conoce algunos derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela. · Participa en comentarios de grupo sobre noticias de especial interés. · Comprende el significado e imita algunos gestos básicos de la Lengua de Señas Venezolana.",
-      "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "algunos derechos fundamentales establecidos en la Constitución de la República…",
-      "activities": [
-        "Escribe 4 oraciones o un párrafo corto que resuma algunos derechos fundamentales establecidos en la Constitución de…",
-        "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
-      ]
-    },
-    {
-      "id": "mat",
-      "label": "Matemáticas · Exposición",
-      "objective": "Exposición · Magnitudes y medidas",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Utiliza su cuerpo para medir distintas superficies.",
-      "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "usar su cuerpo para medir distintas superficies",
-      "activities": [
-        "Resuelve en el cuaderno 1 problema o croquis sobre usar su cuerpo para medir distintas superficies y etiqueta los…",
-        "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales · Exposición",
-      "objective": "Exposición · Seres vivos — Las plantas",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Identifica y clasifica diferentes tipos de plantas de su entorno, y describe sus partes principales y sus funciones.",
-      "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
-      "mode": "exposition",
-      "activityKind": "exposition",
-      "minutesEstimate": 18,
-      "topicShort": "y clasifica diferentes tipos de plantas de su entorno, y…",
-      "activities": [
-        "Prepara una exposición sobre y clasifica diferentes tipos de plantas de su entorno, y…: observa o recuerda una…",
-        "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+        "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
+        "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
       ]
     }
   ]

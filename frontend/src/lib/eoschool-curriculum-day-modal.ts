@@ -1,6 +1,7 @@
 import { showErrorModal } from "./error-modal";
 import { clonePdfBytes, downloadPdfBytes, renderHomescoolPdfPreview } from "./homescool-pdf-preview";
 import type { CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
+import { AI_FROM_PLAN_DAY } from "./eoschool-ai-signature";
 import {
   bindCurriculumMaterialsPanel,
   loadCurriculumMaterialsPanel,
@@ -358,6 +359,10 @@ function openModal(card: HTMLElement): void {
           : loaded?.sections.map((s) => s.id) ?? ["bib"];
       const week = Number(card.dataset.curriculumWeek || "0");
       if (week >= 8 && dayKind !== "holiday" && !scheduled.includes("eng")) scheduled.push("eng");
+      const planDayNum = Number(card.dataset.planDay || "0");
+      if (planDayNum >= AI_FROM_PLAN_DAY && dayKind !== "holiday" && !scheduled.includes("ia")) {
+        scheduled.push("ia");
+      }
       tabs.forEach((tab) => {
         const sid = tab.dataset.curriculumModalTab as CurriculumPlanSectionId;
         const has = scheduled.includes(sid);

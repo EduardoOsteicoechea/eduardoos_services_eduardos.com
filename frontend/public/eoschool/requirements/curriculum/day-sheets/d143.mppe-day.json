@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 143",
   "dayKind": "teach",
-  "calendarDate": "2027-04-07",
+  "calendarDate": "2027-04-21",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,13 +35,13 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
-      "learning": "Usa la tilde en la escritura de sus nombres y apellidos, y en un repertorio de palabras familiares.",
+      "objective": "Actuar como espectador en diversidad de espectáculos artísticos.",
+      "learning": "Actúa como espectador responsable en presentaciones artísticas, festivales, tradiciones y costumbres.",
       "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
       "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "usa la tilde en la escritura de sus nombres y…",
+      "topicShort": "actúa como espectador responsable en presentaciones artísticas, festivales, tradiciones y…",
       "activities": [
         "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
         "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
@@ -74,6 +75,20 @@
       "activities": [
         "3 precios de realiza cálculos con cambios de la moneda nacional; suma el total y simula pago con billetes/monedas…",
         "Un problema de vuelto en 2 pasos; muestra cuentas."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Revisión",
+      "learning": "Di un criterio y cuántos puntos vale.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Revisión",
+      "activities": [
+        "Di un criterio y cuántos puntos vale."
       ]
     }
   ]

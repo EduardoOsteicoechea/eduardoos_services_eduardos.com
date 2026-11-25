@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 160 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2027-04-30",
+  "calendarDate": "2027-05-14",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -35,30 +36,30 @@
     {
       "id": "ide",
       "label": "Identidad · Exposición",
-      "objective": "Exposición · Nuestro Mundo",
-      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
+      "objective": "Exposición · El mundo",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente. En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar.",
       "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "las características de su vivienda y de un caserío campesino…",
+      "topicShort": "en los grados 3–5 se usan mapas para localizar lugares…",
       "activities": [
-        "Prepara una exposición de 1 minuto sobre las características de su vivienda y de un caserío campesino…: 3 hechos y…",
+        "Prepara una exposición de 1 minuto sobre en los grados 3–5 se usan mapas para localizar lugares…: 3 hechos y por…",
         "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
       "label": "Lenguaje · Exposición",
-      "objective": "Exposición · Planificar la escritura de cuentos y otros textos.",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Trabaja en equipo para planificar la escritura de textos que serán dictados a la/el docente o escritos por sí mismo. · Dicta textos intentando ajustar la voz y el ritmo a los requerimientos del destinatario.",
+      "objective": "Exposición · Derivar palabras a partir de sustantivos. · Entretenerse con la resolución de juegos con palabras.",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Escribe (Por derivación) pares y tríos de palabras de un mismo campo lexical: casa/ casas/casita; niña/niñas/niñita; zapato/ zapatero/zapatazo. · Manifiesta interés por resolver juegos de escritura: crucifiguras, crucigramas, dameros, escaleras de palabras y otros.",
       "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "trabaja en equipo para planificar la escritura de textos que…",
+      "topicShort": "escribe (Por derivación) pares y tríos de palabras de un…",
       "activities": [
-        "Escribe 4 oraciones o un párrafo corto que resuma trabaja en equipo para planificar la escritura de textos que…",
+        "Escribe 4 oraciones o un párrafo corto que resuma escribe (Por derivación) pares y tríos de palabras de un… para tu…",
         "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
@@ -90,6 +91,20 @@
       "activities": [
         "Prepara una exposición sobre la presencia de la energía en el ambiente, sus diferentes…: observa o recuerda una…",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

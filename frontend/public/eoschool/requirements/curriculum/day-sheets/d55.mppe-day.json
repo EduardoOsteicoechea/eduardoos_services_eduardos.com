@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 55 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2026-12-04",
+  "calendarDate": "2026-12-18",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -35,15 +36,15 @@
     {
       "id": "ide",
       "label": "Identidad · Exposición",
-      "objective": "Exposición · La Humanidad",
-      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero.",
+      "objective": "Exposición · Otra civilización",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar. En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
       "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "los períodos de la Historia de Venezuela",
+      "topicShort": "en los grados 3–5 se compara cómo vivía la gente…",
       "activities": [
-        "Prepara una exposición de 1 minuto sobre los períodos de la Historia de Venezuela: 3 hechos y por qué importa en tu…",
+        "Prepara una exposición de 1 minuto sobre en los grados 3–5 se compara cómo vivía la gente…: 3 hechos y por qué…",
         "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
@@ -90,6 +91,20 @@
       "activities": [
         "Prepara una exposición sobre describe las propiedades de las mezclas homogéneas y heterogéneas: observa o recuerda…",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

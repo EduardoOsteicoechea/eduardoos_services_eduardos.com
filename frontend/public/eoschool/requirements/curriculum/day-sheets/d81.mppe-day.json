@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 81",
   "dayKind": "teach",
-  "calendarDate": "2027-01-11",
+  "calendarDate": "2027-01-25",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -35,12 +36,12 @@
       "id": "len",
       "label": "Lenguaje",
       "objective": "Narrar cuentos conocidos para distintas audiencias.",
-      "learning": "Utiliza algunas fórmulas de inicio propias de la narración, al relatar sus propios cuentos: había una vez… / En un lugar llamado… / Hace mucho tiempo…",
+      "learning": "Narra cuentos conocidos siguiendo la secuencia de los hechos y utilizando descriptores para caracterizar personajes y otros recursos de la narración.",
       "canDo": "Al terminar puedes escribir un párrafo narrativo de 6 líneas.",
       "mode": "directo",
       "activityKind": "narrative",
       "minutesEstimate": 20,
-      "topicShort": "utiliza algunas fórmulas de inicio propias de la narración, al…",
+      "topicShort": "narra cuentos conocidos siguiendo la secuencia de los hechos y…",
       "activities": [
         "Lee un texto corto del tema; escribe un final alternativo de 6 líneas.",
         "Subraya verbo y sustantivo en 3 oraciones."
@@ -74,6 +75,20 @@
       "activities": [
         "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
         "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Imagen",
+      "learning": "Dicta qué quieres ver en la imagen y qué no debe salir.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Imagen",
+      "activities": [
+        "Dicta qué quieres ver en la imagen y qué no debe salir."
       ]
     }
   ]

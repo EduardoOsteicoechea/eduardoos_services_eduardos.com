@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 173",
   "dayKind": "teach",
-  "calendarDate": "2027-05-19",
+  "calendarDate": "2027-06-02",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,16 +35,16 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Cuidar la estética y legibilidad de la escritura con propósitos específicos.",
-      "learning": "Practica el trazo artístico de las letras con fines funcionales y de diseño. Utiliza la caligrafía como forma de expresión artística que vincula la escritura con otras artes como el dibujo y la pintura.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
-      "activityKind": "default",
+      "objective": "Escribir de manera relativamente legible de acuerdo con las convenciones básicas del sistema de escritura.",
+      "learning": "Escribe por sí mismo diferentes tipos de textos de extensiones variables (En una o varias sesiones), de acuerdo con su nivel de escritura: listas de nombres propios, de animales, lugares, etc., cuentos, carteles, entre otros.",
+      "canDo": "Al terminar puedes escribir 5 oraciones de un relato del tema.",
+      "mode": "fragmentado",
+      "activityKind": "narrative",
       "minutesEstimate": 18,
-      "topicShort": "practica el trazo artístico de las letras con fines funcionales…",
+      "topicShort": "escribe por sí mismo diferentes tipos de textos de extensiones…",
       "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+        "5 oraciones solamente; personaje y problema claros sobre escribe por sí mismo diferentes tipos de textos de…",
+        "Título creativo en una línea."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "Resuelve: 234 + 156 = 8000 − 325 = 47 × 6 = 84 ÷ 4 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
         "Explica en 2 oraciones qué estrategia usaste."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Revisión",
+      "learning": "Di un criterio y cuántos puntos vale.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Revisión",
+      "activities": [
+        "Di un criterio y cuántos puntos vale."
       ]
     }
   ]

@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 109",
   "dayKind": "teach",
-  "calendarDate": "2027-02-18",
+  "calendarDate": "2027-03-04",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,28 +35,28 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Inventar historietas y cuentos a partir de imágenes.",
-      "learning": "Expresa verbalmente historietas y cuentos creados a partir de imágenes.",
-      "canDo": "Al terminar puedes escribir un párrafo narrativo de 6 líneas.",
-      "mode": "directo",
-      "activityKind": "narrative",
-      "minutesEstimate": 20,
-      "topicShort": "expresa verbalmente historietas y cuentos creados a partir de imágenes",
+      "objective": "Denominar sonidos que emiten animales conocidos.",
+      "learning": "Conoce palabras para denominar sonidos de animales comunes. Además de los vistos en grados anteriores, incluye, por ejemplo: abeja, oveja, elefante, búho…",
+      "canDo": "Al terminar puedes resumir la idea central en 4 oraciones.",
+      "mode": "fragmentado",
+      "activityKind": "default",
+      "minutesEstimate": 15,
+      "topicShort": "palabras para denominar sonidos de animales comunes. Además de los…",
       "activities": [
-        "Lee un texto corto del tema; escribe un final alternativo de 6 líneas.",
-        "Subraya verbo y sustantivo en 3 oraciones."
+        "4 oraciones que expliquen la idea central de palabras para denominar sonidos de animales comunes. Además de los…;…",
+        "Dibuja un ícono que represente la idea."
       ]
     },
     {
       "id": "ide",
       "label": "Identidad",
-      "objective": "Nuestro Mundo",
-      "learning": "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
+      "objective": "El mundo",
+      "learning": "En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
       "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
       "mode": "directo",
       "activityKind": "mapPlaces",
       "minutesEstimate": 18,
-      "topicShort": "las características de su vivienda y de un caserío campesino…",
+      "topicShort": "en los grados 3–5 se usan mapas para localizar lugares…",
       "activities": [
         "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
         "2 frases: «___ está al ___ de ___»."
@@ -74,6 +75,20 @@
       "activities": [
         "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
         "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Inventario",
+      "learning": "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Inventario",
+      "activities": [
+        "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota."
       ]
     }
   ]

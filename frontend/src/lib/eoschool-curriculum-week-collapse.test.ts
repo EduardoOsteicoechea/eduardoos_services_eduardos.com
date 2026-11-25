@@ -133,18 +133,22 @@ describe("selectCurrentWeek", () => {
     expect(language.querySelector<HTMLElement>("[data-curriculum-subject-body]")?.hidden).toBe(true);
   });
 
-  it("falls back to week 7 when the requested week is missing", () => {
+  it("falls back to the current week when the requested week is missing", () => {
     const root = rootWithWeeks();
     expect(selectCurrentWeek(root, 40)).toBe(DEFAULT_CURRENT_WEEK);
-    expect(root.querySelector<HTMLInputElement>("[data-curriculum-week-current]:checked")?.value).toBe("7");
+    expect(root.querySelector<HTMLInputElement>("[data-curriculum-week-current]:checked")?.value).toBe(
+      String(DEFAULT_CURRENT_WEEK),
+    );
   });
 });
 
 describe("initCurriculumWeekCollapse", () => {
-  it("starts on week 7 and switches with the radio", () => {
+  it("starts on the current week and switches with the radio", () => {
     const root = rootWithWeeks();
     initCurriculumWeekCollapse(root);
-    expect(root.querySelector<HTMLInputElement>("[data-curriculum-week-current]:checked")?.value).toBe("7");
+    expect(root.querySelector<HTMLInputElement>("[data-curriculum-week-current]:checked")?.value).toBe(
+      String(DEFAULT_CURRENT_WEEK),
+    );
 
     const week1 = root.querySelector<HTMLInputElement>('[data-curriculum-week-current][value="1"]')!;
     week1.checked = true;

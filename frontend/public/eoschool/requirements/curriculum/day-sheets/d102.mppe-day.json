@@ -4,28 +4,91 @@
   "planDay": 102,
   "week": 21,
   "grade": "3er grado",
-  "title": "Día 102 · Feriado — Martes de Carnaval",
-  "dayKind": "holiday",
-  "calendarDate": "2027-02-09",
-  "holidayName": "Martes de Carnaval",
-  "holidayDate": "2027-02-09",
+  "title": "Día 102",
+  "dayKind": "teach",
+  "calendarDate": "2027-02-23",
+  "holidayName": null,
+  "holidayDate": null,
   "scheduledSections": [
-    "bib"
+    "bib",
+    "len",
+    "ide",
+    "mat",
+    "ia"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia · Feriado",
-      "objective": "Feriado nacional — Martes de Carnaval",
-      "learning": "Lectura bíblica del día (feriado). Gén–Ester: Jueces 10, 11 · Job–Mal: Isaías 7, 8 · NT: Romanos 15, 16",
+      "label": "Biblia",
+      "objective": "Lectura bíblica diaria (tres pistas)",
+      "learning": "Gén–Ester: Jueces 10, 11 · Job–Mal: Isaías 7, 8 · NT: Romanos 15, 16",
       "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "holiday",
+      "mode": "directo",
       "activityKind": "bible",
       "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
         "Lee por turnos una pista cada persona.",
         "Anota 2 palabras nuevas y su significado. Cierra con 1 frase de aplicación en familia."
+      ]
+    },
+    {
+      "id": "len",
+      "label": "Lenguaje",
+      "objective": "Participar en intercambios sobre la utilidad de la tecnología.",
+      "learning": "Participa en discusiones sobre la utilidad de la tecnología.",
+      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
+      "mode": "directo",
+      "activityKind": "default",
+      "minutesEstimate": 18,
+      "topicShort": "discusiones sobre la utilidad de la tecnología",
+      "activities": [
+        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
+        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+      ]
+    },
+    {
+      "id": "ide",
+      "label": "Identidad",
+      "objective": "Otra civilización",
+      "learning": "En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar.",
+      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
+      "mode": "directo",
+      "activityKind": "default",
+      "minutesEstimate": 18,
+      "topicShort": "en los grados 3–5 se compara cómo vivía la gente…",
+      "activities": [
+        "Investiga con un adulto 4 hechos de Otra civilización; escríbelos en oraciones.",
+        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
+      ]
+    },
+    {
+      "id": "mat",
+      "label": "Matemáticas",
+      "objective": "Área",
+      "learning": "Grade 3 entiende el área como el número de unidades cuadradas que cubren una figura, sin huecos ni solapes.",
+      "canDo": "Al terminar puedes clasificar figuras por lados y vértices y nombrarlas con precisión.",
+      "mode": "directo",
+      "activityKind": "geometryShapes",
+      "minutesEstimate": 18,
+      "topicShort": "grade 3 entiende el área como el número de unidades…",
+      "activities": [
+        "Recorta o dibuja 6 figuras; ordena en tabla: nombre, número de lados, número de vértices.",
+        "Elige 2 figuras y explica en una oración qué las hace diferentes."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Modelo",
+      "learning": "Di qué hacer si faltan piezas de un color.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Modelo",
+      "activities": [
+        "Di qué hacer si faltan piezas de un color."
       ]
     }
   ]

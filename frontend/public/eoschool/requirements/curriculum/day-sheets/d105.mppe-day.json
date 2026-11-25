@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 105 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2027-02-12",
+  "calendarDate": "2027-02-26",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -35,53 +36,53 @@
     {
       "id": "ide",
       "label": "Identidad · Exposición",
-      "objective": "Exposición · La Humanidad",
-      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero.",
+      "objective": "Exposición · Otra civilización",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar. En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
       "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "los períodos de la Historia de Venezuela",
+      "topicShort": "en los grados 3–5 se compara cómo vivía la gente…",
       "activities": [
-        "Prepara una exposición de 1 minuto sobre los períodos de la Historia de Venezuela: 3 hechos y por qué importa en tu…",
+        "Prepara una exposición de 1 minuto sobre en los grados 3–5 se compara cómo vivía la gente…: 3 hechos y por qué…",
         "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
       "label": "Lenguaje · Exposición",
-      "objective": "Exposición · Localizar datos en mapas y gráficos. · Denominar sonidos que emiten animales conocidos.",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Interpreta informaciones contenidas en diferentes representaciones gráficas. · Conoce palabras para denominar sonidos de animales comunes. Además de los vistos en grados anteriores, incluye, por ejemplo: abeja, oveja, elefante, búho…",
+      "objective": "Exposición · Participar en intercambios sobre la utilidad de la tecnología. · Localizar datos en mapas y gráficos.",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Participa en discusiones sobre la utilidad de la tecnología. · Ubica y lee en el mapa de Venezuela los nombres de un amplio repertorio de estados, ríos, lagos principales y el mar Caribe.",
       "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "interpreta informaciones contenidas en diferentes representaciones gráficas. · Conoce palabras…",
+      "topicShort": "discusiones sobre la utilidad de la tecnología. · Ubica y…",
       "activities": [
-        "Escribe 4 oraciones o un párrafo corto que resuma interpreta informaciones contenidas en diferentes…",
+        "Escribe 4 oraciones o un párrafo corto que resuma discusiones sobre la utilidad de la tecnología. · Ubica y… para…",
         "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
     {
       "id": "mat",
       "label": "Matemáticas · Exposición",
-      "objective": "Exposición · Geometría",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Diferencia rectas paralelas y perpendiculares.",
+      "objective": "Exposición · Perímetro · Área · Geometría",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Grade 3 halla el perímetro de un polígono a partir de sus lados y resuelve problemas con esa medida. · Grade 3 entiende el área como el número de unidades cuadradas que cubren una figura, sin huecos ni solapes. · Diferencia rectas paralelas y perpendiculares.",
       "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "diferencia rectas paralelas y perpendiculares",
+      "topicShort": "grade 3 halla el perímetro de un polígono a partir…",
       "activities": [
-        "Resuelve en el cuaderno 1 problema o croquis sobre diferencia rectas paralelas y perpendiculares y etiqueta los pasos.",
+        "Resuelve en el cuaderno 1 problema o croquis sobre grade 3 halla el perímetro de un polígono a partir… y etiqueta…",
         "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
       "label": "Ciencias Naturales · Exposición",
-      "objective": "Exposición · El ambiente y sus interacciones — Biodiversidad",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Reconoce los efectos del cambio climático y sus consecuencias sobre la biodiversidad.",
+      "objective": "Exposición · Tiempo y ciclo del agua · El ambiente y sus interacciones — Biodiversidad",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Grade 3 representa datos del tiempo de una estación y describe el clima de una región. · Reconoce los efectos del cambio climático y sus consecuencias sobre la biodiversidad.",
       "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
       "mode": "exposition",
       "activityKind": "exposition",
@@ -90,6 +91,20 @@
       "activities": [
         "Prepara una exposición sobre el clima y su cuidado: observa o recuerda una evidencia y anota 3 datos.",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

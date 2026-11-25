@@ -13,6 +13,7 @@ import {
   qaDaySheet,
   SAMPLE_DAYS,
 } from "./mppe-day-activity-engine.mjs";
+import { aiOnThisDay, aiSheetSection } from "../src/lib/eoschool-ai-signature.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const curriculumPath = path.join(__dirname, "..", "src", "lib", "eoschool-mppe-40week-curriculum.json");
@@ -449,6 +450,24 @@ function buildDaySheet(planDay, weeks, prevBlock) {
     sections.push(build());
   }
 
+  const scheduledOut = [...scheduled];
+  if (aiOnThisDay(planDay, isHoliday ? "holiday" : exposition ? "exposition" : "teach")) {
+    const ai = aiSheetSection(planDay);
+    scheduledOut.push("ia");
+    sections.push({
+      id: "ia",
+      label: "Inteligencia Artificial",
+      objective: ai.objective,
+      learning: ai.learning,
+      canDo: "Al terminar puedes decir la respuesta con tus palabras.",
+      mode: "directo",
+      activityKind: "ai",
+      minutesEstimate: 15,
+      topicShort: ai.objective,
+      activities: ai.activities,
+    });
+  }
+
   const dayKind = isHoliday ? "holiday" : exposition ? "exposition" : "teach";
   let title = `Día ${planDay}`;
   if (isHoliday) title = `Día ${planDay} · Feriado — ${block.holidayName || "Feriado"}`;
@@ -465,7 +484,7 @@ function buildDaySheet(planDay, weeks, prevBlock) {
     calendarDate: block.calendarDate ?? null,
     holidayName: isHoliday ? block.holidayName ?? null : null,
     holidayDate: isHoliday ? block.holidayDate ?? null : null,
-    scheduledSections: scheduled,
+    scheduledSections: scheduledOut,
     sections,
   };
 }
@@ -492,7 +511,7 @@ for (let planDay = 1; planDay <= total; planDay++) {
 const manifest = {
   format: "mppe-curriculum-day-manifest",
   version: 3,
-  contentRevision: 9,
+  contentRevision: 10,
   grade: "3er grado",
   schoolYearStart: curriculum.meta?.schoolYearStart ?? null,
   schoolYearEnd: curriculum.meta?.schoolYearEnd ?? null,
@@ -513,8 +532,12 @@ let sampleSectionCount = 0;
 for (const planDay of SAMPLE_DAYS) {
   const file = path.join(outDir, `d${planDay}.mppe-day.json`);
   const sheet = JSON.parse(fs.readFileSync(file, "utf8"));
-  sampleSectionCount += sheet.sections?.length ?? 0;
-  sampleFailures.push(...qaDaySheet(sheet));
+  const qaSheet = {
+    ...sheet,
+    sections: (sheet.sections ?? []).filter((section) => section.id !== "ia"),
+  };
+  sampleSectionCount += qaSheet.sections.length;
+  sampleFailures.push(...qaDaySheet(qaSheet));
 }
 const samplePass = sampleSectionCount > 0 ? 1 - sampleFailures.length / sampleSectionCount : 1;
 console.log(

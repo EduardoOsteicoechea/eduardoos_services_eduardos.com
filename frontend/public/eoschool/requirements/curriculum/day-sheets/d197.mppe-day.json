@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 197",
   "dayKind": "teach",
-  "calendarDate": "2027-06-22",
+  "calendarDate": "2027-07-06",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,16 +35,16 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Conocer nociones ortográficas del sistema de escritura.",
-      "learning": "Usa en la escritura ciertas reglas ortográficas básicas: al principio y al final de palabras siempre va una sola r (Rama, reto, risa, ruta, rosa / cantar, trepar, nacer, radar, hangar). Identifica cambios de significado según el uso de r/rr al interior de palabras: carro/ caro; perra/pera; cerro/cero.",
-      "canDo": "Al terminar puedes escribir 6 palabras con r o rr sin confundirlas.",
-      "mode": "fragmentado",
-      "activityKind": "orthography",
-      "minutesEstimate": 15,
-      "topicShort": "ciertas reglas ortográficas básicas",
+      "objective": "Crear nuevas versiones de cuentos conocidos.",
+      "learning": "Escribe nuevas versiones de cuentos conocidos.",
+      "canDo": "Al terminar puedes escribir un párrafo narrativo de 6 líneas.",
+      "mode": "directo",
+      "activityKind": "narrative",
+      "minutesEstimate": 20,
+      "topicShort": "escribir nuevas versiones de cuentos conocidos",
       "activities": [
-        "Solo 6 palabras hoy; corrige con un adulto.",
-        "2 oraciones con la palabra más difícil."
+        "Lee un texto corto del tema; escribe un final alternativo de 6 líneas.",
+        "Subraya verbo y sustantivo en 3 oraciones."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "Encuesta a 4 personas: «¿Cuál es tu fruta favorita?»; registra y haz barras o pictograma.",
         "Escribe 2 preguntas que se respondan mirando tu gráfico."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Modelo",
+      "learning": "Di qué hacer si faltan piezas de un color.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Modelo",
+      "activities": [
+        "Di qué hacer si faltan piezas de un color."
       ]
     }
   ]

@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 72",
   "dayKind": "teach",
-  "calendarDate": "2026-12-29",
+  "calendarDate": "2027-01-12",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,13 +35,13 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Interpretar metáforas.",
-      "learning": "Comprende metáforas sencillas en textos literarios.",
+      "objective": "Participar en cine foros.",
+      "learning": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos.",
       "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
       "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "metáforas sencillas en textos literarios",
+      "topicShort": "actúa como espectador de películas y, posteriormente, en comentarios grupales…",
       "activities": [
         "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
         "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
@@ -49,16 +50,16 @@
     {
       "id": "ide",
       "label": "Identidad",
-      "objective": "Pueblos Afrovenezolanos",
-      "learning": "Conoce que los pueblos afrovenezolanos son los trabajadores que sostienen a la sociedad colonial e identifica alimentos de origen africano que formen parte de la gastronomía venezolana.",
-      "canDo": "Al terminar puedes registrar 3 hechos culturales y una conexión personal.",
+      "objective": "Otra civilización",
+      "learning": "En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar.",
+      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
       "mode": "directo",
-      "activityKind": "culture",
+      "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "que los pueblos afrovenezolanos son los trabajadores que sostienen a…",
+      "topicShort": "en los grados 3–5 se compara cómo vivía la gente…",
       "activities": [
-        "3 hechos de Pueblos Afrovenezolanos (comida, música o fiesta); viñetas.",
-        "«En mi casa nosotros…» — 2 frases."
+        "Investiga con un adulto 4 hechos de Otra civilización; escríbelos en oraciones.",
+        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "Busca 2 objetos (plato, aro, moneda); marca si ves círculo relleno o solo borde.",
         "Tabla: objeto → círculo o circunferencia → por qué."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Modelo",
+      "learning": "Di qué hacer si faltan piezas de un color.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Modelo",
+      "activities": [
+        "Di qué hacer si faltan piezas de un color."
       ]
     }
   ]

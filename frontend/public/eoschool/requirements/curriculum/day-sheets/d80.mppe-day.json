@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 80 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2027-01-08",
+  "calendarDate": "2027-01-22",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -35,30 +36,30 @@
     {
       "id": "ide",
       "label": "Identidad · Exposición",
-      "objective": "Exposición · Libertador Simón Bolívar",
-      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez.",
+      "objective": "Exposición · Otra civilización",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar. En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
       "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "cómo es la juventud de Bolívar, sus viajes a Europa,…",
+      "topicShort": "en los grados 3–5 se compara cómo vivía la gente…",
       "activities": [
-        "Prepara una exposición de 1 minuto sobre cómo es la juventud de Bolívar, sus viajes a Europa,…: 3 hechos y por qué…",
+        "Prepara una exposición de 1 minuto sobre en los grados 3–5 se compara cómo vivía la gente…: 3 hechos y por qué…",
         "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
       "label": "Lenguaje · Exposición",
-      "objective": "Exposición · Narrar cuentos conocidos para distintas audiencias. · Interpretar la función de ciertos signos ortográficos.",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Narra cuentos conocidos siguiendo la secuencia de los hechos y utilizando descriptores para caracterizar personajes y otros recursos de la narración. · Interpreta las funciones de los signos de interrogación y exclamación en la lectura de textos.",
+      "objective": "Exposición · Utilizar en la expresión un repertorio léxico cada vez más amplio. · Interpretar metáforas.",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Utiliza un repertorio de nuevas palabras que trascienden el léxico utilizado cotidianamente para interactuar en diversidad de situaciones comunicativas y satisfacer distintas necesidades. · Comprende metáforas sencillas en textos literarios.",
       "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "ideas de un texto leído",
+      "topicShort": "utiliza un repertorio de nuevas palabras que trascienden el léxico…",
       "activities": [
-        "Escribe 4 oraciones o un párrafo corto que resuma ideas de un texto leído para tu exposición.",
+        "Escribe 4 oraciones o un párrafo corto que resuma utiliza un repertorio de nuevas palabras que trascienden el…",
         "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
@@ -90,6 +91,20 @@
       "activities": [
         "Prepara una exposición sobre formular preguntas, hacer observaciones y sacar conclusiones basadas en la…: observa o…",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

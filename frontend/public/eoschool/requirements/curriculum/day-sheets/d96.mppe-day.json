@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 96",
   "dayKind": "teach",
-  "calendarDate": "2027-02-01",
+  "calendarDate": "2027-02-15",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,16 +35,16 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Localizar datos en mapas y gráficos.",
-      "learning": "Ubica y lee en el mapa de Venezuela los nombres de un amplio repertorio de estados, ríos, lagos principales y el mar Caribe.",
-      "canDo": "Al terminar puedes localizar y etiquetar información en un mapa o esquema.",
-      "mode": "directo",
-      "activityKind": "map",
-      "minutesEstimate": 18,
-      "topicShort": "ubica y lee en el mapa de Venezuela los nombres…",
+      "objective": "Conocer algunas particularidades de la lengua.",
+      "learning": "Analiza algunas “curiosidades” de nuestra lengua. Palíndromos: palabras que se leen igual al derecho y al revés. Ej. Ana, ada, ojo, oro, radar, somos, rapar, reconocer, arepera. Palabras que repiten una misma vocal en todas las sílabas: maraca, cántara / monólogo, fósforo / efervescente, pelele / infringir, incidir… Palabras pentavocálicas (Contienen las cinco vocales). Ej.: aurelio, orquídea, riachuelo, murciélago, comunicarse, educación…",
+      "canDo": "Al terminar puedes resumir la idea central en 4 oraciones.",
+      "mode": "fragmentado",
+      "activityKind": "default",
+      "minutesEstimate": 15,
+      "topicShort": "analiza algunas “curiosidades” de nuestra lengua. Palíndromos",
       "activities": [
-        "Dibuja o usa un mapa del tema; etiqueta 5 lugares y escribe 2 frases de ubicación.",
-        "Haz 3 preguntas «¿dónde está…?» y respóndelas con el mapa."
+        "4 oraciones que expliquen la idea central de analiza algunas “curiosidades” de nuestra lengua. Palíndromos; no todo…",
+        "Dibuja un ícono que represente la idea."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
         "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Imagen",
+      "learning": "Dicta qué quieres ver en la imagen y qué no debe salir.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Imagen",
+      "activities": [
+        "Dicta qué quieres ver en la imagen y qué no debe salir."
       ]
     }
   ]

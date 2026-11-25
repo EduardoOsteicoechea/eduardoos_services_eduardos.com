@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 54",
   "dayKind": "teach",
-  "calendarDate": "2026-12-03",
+  "calendarDate": "2026-12-17",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -49,16 +50,16 @@
     {
       "id": "ide",
       "label": "Identidad",
-      "objective": "La Humanidad",
-      "learning": "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero.",
-      "canDo": "Al terminar puedes anotar 3 hitos históricos con fecha o lugar.",
+      "objective": "El mundo",
+      "learning": "En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
+      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
       "mode": "directo",
-      "activityKind": "historyMilestones",
+      "activityKind": "mapPlaces",
       "minutesEstimate": 18,
-      "topicShort": "los períodos de la Historia de Venezuela",
+      "topicShort": "en los grados 3–5 se usan mapas para localizar lugares…",
       "activities": [
-        "Lee con un adulto sobre los períodos de la Historia de Venezuela; 3 hitos en línea de tiempo (fecha o siglo + hecho).",
-        "Dibuja un símbolo por hito (petróleo, independencia, etc. si aplica)."
+        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
+        "2 frases: «___ está al ___ de ___»."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "Recorta o dibuja 6 figuras; ordena en tabla: nombre, número de lados, número de vértices.",
         "Elige 2 figuras y explica en una oración qué las hace diferentes."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Inventario",
+      "learning": "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Inventario",
+      "activities": [
+        "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota."
       ]
     }
   ]

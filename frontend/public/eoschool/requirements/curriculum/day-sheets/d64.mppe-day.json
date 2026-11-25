@@ -4,76 +4,28 @@
   "planDay": 64,
   "week": 13,
   "grade": "3er grado",
-  "title": "Día 64",
-  "dayKind": "teach",
-  "calendarDate": "2026-12-17",
-  "holidayName": null,
-  "holidayDate": null,
+  "title": "Día 64 · Feriado — Fin de Año",
+  "dayKind": "holiday",
+  "calendarDate": "2026-12-31",
+  "holidayName": "Fin de Año",
+  "holidayDate": "2026-12-31",
   "scheduledSections": [
-    "bib",
-    "len",
-    "ide",
-    "mat"
+    "bib"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: Números 21, 22, 23 · Job–Mal: Salmos 114, 115, 116 · NT: Juan 15",
+      "label": "Biblia · Feriado",
+      "objective": "Feriado nacional — Fin de Año",
+      "learning": "Lectura bíblica del día (feriado). Gén–Ester: Números 21, 22, 23 · Job–Mal: Salmos 114, 115, 116 · NT: Juan 15",
       "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
+      "mode": "holiday",
       "activityKind": "bible",
       "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
         "Elige solo NT o AT si el día es muy largo; lee una sección.",
         "Dibuja un símbolo del pasaje. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "len",
-      "label": "Lenguaje",
-      "objective": "Participar en cine foros.",
-      "learning": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "actúa como espectador de películas y, posteriormente, en comentarios grupales…",
-      "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
-      ]
-    },
-    {
-      "id": "ide",
-      "label": "Identidad",
-      "objective": "Venezuela en el Mundo",
-      "learning": "Conoce superficie, estados y capitales; y la ciudad capital, Caracas.",
-      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
-      "mode": "directo",
-      "activityKind": "mapPlaces",
-      "minutesEstimate": 18,
-      "topicShort": "superficie, estados y capitales",
-      "activities": [
-        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
-        "2 frases: «___ está al ___ de ___»."
-      ]
-    },
-    {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Identifica los elementos de los cuerpos geométricos.",
-      "canDo": "Al terminar puedes practicar el contenido de hoy con procedimiento escrito.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "identificar los elementos de los cuerpos geométricos",
-      "activities": [
-        "Resuelve: 589 + 211 = 4500 − 1893 = 25 × 4 = 63 ÷ 7 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
-        "Explica en 2 oraciones qué estrategia usaste."
       ]
     }
   ]

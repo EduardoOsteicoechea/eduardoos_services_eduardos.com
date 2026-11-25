@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 45 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2026-11-20",
+  "calendarDate": "2026-12-04",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -65,31 +66,45 @@
     {
       "id": "mat",
       "label": "Matemáticas · Exposición",
-      "objective": "Exposición · Geometría",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Identifica las semejanzas y diferencias entre formas y cuerpos geométricos.",
+      "objective": "Exposición · Perímetro · Área · Redondeo · Fracciones",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Grade 3 halla el perímetro de un polígono a partir de sus lados y resuelve problemas con esa medida. · Grade 3 entiende el área como el número de unidades cuadradas que cubren una figura, sin huecos ni solapes. · Grade 3 redondea un número de hasta tres cifras a la decena o a la centena más cercana. · Grade 3 entiende una fracción como partes iguales de un entero y la ubica en la recta.",
       "canDo": "Al terminar puedes mostrar un ejemplo resuelto y explicar los pasos en voz alta.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "las semejanzas y diferencias entre formas y cuerpos geométricos",
+      "topicShort": "grade 3 halla el perímetro de un polígono a partir…",
       "activities": [
-        "Resuelve en el cuaderno 1 problema o croquis sobre las semejanzas y diferencias entre formas y cuerpos geométricos…",
+        "Resuelve en el cuaderno 1 problema o croquis sobre grade 3 halla el perímetro de un polígono a partir… y etiqueta…",
         "Exposición: explica el procedimiento, compara con un adulto y corrige si hace falta."
       ]
     },
     {
       "id": "cie",
       "label": "Ciencias Naturales · Exposición",
-      "objective": "Exposición · Salud integral — La alimentación en Venezuela · Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Valora la importancia de una alimentación saludable para el bienestar comunitario. · Observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas, a partir de experiencias prácticas.",
+      "objective": "Exposición · Fósiles · Ciencia, tecnología y sociedad — Las mezclas",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Grade 3 usa fósiles para describir organismos y ambientes de hace mucho tiempo. · Observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas, a partir de experiencias prácticas.",
       "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "alimentación saludable y grupos de alimentos",
+      "topicShort": "grade 3 usa fósiles para describir organismos y ambientes de…",
       "activities": [
-        "Prepara una exposición sobre alimentación saludable y grupos de alimentos: observa o recuerda una evidencia y anota…",
+        "Prepara una exposición sobre grade 3 usa fósiles para describir organismos y ambientes de…: observa o recuerda una…",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

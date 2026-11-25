@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 50 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2026-11-27",
+  "calendarDate": "2026-12-11",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -90,6 +91,20 @@
       "activities": [
         "Prepara una exposición sobre observa, describe, identifica y clasifica mezclas homogéneas y heterogéneas, a…:…",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

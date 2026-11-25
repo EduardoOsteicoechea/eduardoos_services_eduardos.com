@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 130 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2027-03-19",
+  "calendarDate": "2027-04-02",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -35,30 +36,30 @@
     {
       "id": "ide",
       "label": "Identidad · Exposición",
-      "objective": "Exposición · Libertador Simón Bolívar",
-      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Reconoce cómo es la juventud de Bolívar, sus viajes a Europa, matrimonio y viudez.",
+      "objective": "Exposición · El mundo",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente. En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar.",
       "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "cómo es la juventud de Bolívar, sus viajes a Europa,…",
+      "topicShort": "en los grados 3–5 se usan mapas para localizar lugares…",
       "activities": [
-        "Prepara una exposición de 1 minuto sobre cómo es la juventud de Bolívar, sus viajes a Europa,…: 3 hechos y por qué…",
+        "Prepara una exposición de 1 minuto sobre en los grados 3–5 se usan mapas para localizar lugares…: 3 hechos y por…",
         "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
       "label": "Lenguaje · Exposición",
-      "objective": "Exposición · Interpretar y usar refranes, expresiones y dichos del repertorio popular venezolano. · Conocer la función de ciertos documentos legales.",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Conoce el sentido y usa un repertorio de expresiones, dichos y refranes. Ejemplos: “el papá de los helados”, “hijo de gato, caza ratón”, “no dejes para mañana lo que puedes hacer hoy”, “el que madruga, recoge agua clara”, “en el camino se enderezan las cargas”. · Conoce el sentido de la partida de nacimiento y la cédula de identidad.",
+      "objective": "Exposición · Utilizar un repertorio de adjetivos para describir objetos y situaciones del entorno. · Conocer derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela. · Comentar con docentes y compañeros noticias de actualidad (Locales, nacionales e internacionales).",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Utiliza un repertorio amplio de adjetivos para describir objetos y situaciones del entorno. · Conoce algunos derechos fundamentales establecidos en la Constitución de la República Bolivariana de Venezuela. · Participa en comentarios de grupo sobre noticias de especial interés.",
       "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "el agua y la vida",
+      "topicShort": "utiliza un repertorio amplio de adjetivos para describir objetos y…",
       "activities": [
-        "Escribe 4 oraciones o un párrafo corto que resuma el agua y la vida para tu exposición.",
+        "Escribe 4 oraciones o un párrafo corto que resuma utiliza un repertorio amplio de adjetivos para describir objetos…",
         "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
@@ -81,15 +82,29 @@
       "id": "cie",
       "label": "Ciencias Naturales · Exposición",
       "objective": "Exposición · Seres vivos — Las plantas",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Reconoce las etapas del crecimiento y desarrollo de una planta.",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Identifica y clasifica diferentes tipos de plantas de su entorno, y describe sus partes principales y sus funciones. · Reconoce las etapas del crecimiento y desarrollo de una planta.",
       "canDo": "Al terminar puedes explicar la idea científica de la semana con una evidencia u observación.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "las etapas del crecimiento y desarrollo de una planta",
+      "topicShort": "y clasifica diferentes tipos de plantas de su entorno, y…",
       "activities": [
-        "Prepara una exposición sobre las etapas del crecimiento y desarrollo de una planta: observa o recuerda una…",
+        "Prepara una exposición sobre y clasifica diferentes tipos de plantas de su entorno, y…: observa o recuerda una…",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

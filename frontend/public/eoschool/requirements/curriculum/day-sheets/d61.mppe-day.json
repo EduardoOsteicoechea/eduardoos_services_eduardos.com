@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 61",
   "dayKind": "teach",
-  "calendarDate": "2026-12-14",
+  "calendarDate": "2026-12-28",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,28 +35,28 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Comprender la estructura de textos narrativos.",
-      "learning": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos.",
-      "canDo": "Al terminar puedes escribir un párrafo narrativo de 6 líneas.",
+      "objective": "Participar en intercambios de grupo sobre respuestas a instrumentos de evaluación.",
+      "learning": "Participa en la comparación de respuestas a instrumentos de evaluación mediante intercambios con el grupo de compañeras/ os y docente.",
+      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
-      "activityKind": "narrative",
-      "minutesEstimate": 20,
-      "topicShort": "la estructura de la trama y demás rasgos de los…",
+      "activityKind": "default",
+      "minutesEstimate": 18,
+      "topicShort": "la comparación de respuestas a instrumentos de evaluación mediante intercambios…",
       "activities": [
-        "Lee un texto corto del tema; escribe un final alternativo de 6 líneas.",
-        "Subraya verbo y sustantivo en 3 oraciones."
+        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
+        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
       ]
     },
     {
       "id": "cie",
       "label": "Ciencias Naturales",
       "objective": "Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Identifica diferentes métodos sencillos para separar componentes en mezclas y describe cómo funcionan.",
+      "learning": "Describe las propiedades de las mezclas homogéneas y heterogéneas.",
       "canDo": "Al terminar puedes probar 3 mezclas seguras y registrar qué pasa.",
       "mode": "directo",
       "activityKind": "mixture",
       "minutesEstimate": 18,
-      "topicShort": "diferentes métodos sencillos para separar componentes en mezclas y describe…",
+      "topicShort": "describe las propiedades de las mezclas homogéneas y heterogéneas",
       "activities": [
         "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
         "Clasifica: ¿se disuelve o no? Una frase con evidencia."
@@ -74,6 +75,20 @@
       "activities": [
         "Resuelve: 234 + 156 = 8000 − 325 = 47 × 6 = 84 ÷ 4 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
         "Explica en 2 oraciones qué estrategia usaste."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Imagen",
+      "learning": "Dicta qué quieres ver en la imagen y qué no debe salir.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Imagen",
+      "activities": [
+        "Dicta qué quieres ver en la imagen y qué no debe salir."
       ]
     }
   ]

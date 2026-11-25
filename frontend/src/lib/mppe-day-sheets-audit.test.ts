@@ -71,23 +71,24 @@ describe("MPPE day sheets (200 días)", () => {
       const dayInWeek = ((planDay - 1) % 5) + 1;
       const week = Math.floor((planDay - 1) / 5) + 1;
       const ids = raw.sections.map((s) => s.id);
+      const withAi = (base: string[]) => (planDay >= 38 ? [...base, "ia"] : base);
       if (holidayDays.has(planDay)) {
         expect(raw.dayKind).toBe("holiday");
         expect(ids).toEqual(["bib"]);
         expect(raw.holidayName).toBeTruthy();
       } else if (dayInWeek === 5) {
         expect(raw.dayKind).toBe("exposition");
-        expect(ids).toEqual(["bib", "ide", "len", "mat", "cie"]);
+        expect(ids).toEqual(withAi(["bib", "ide", "len", "mat", "cie"]));
       } else if (dayInWeek === 1 || dayInWeek === 3) {
         expect(raw.dayKind).toBe("teach");
         if (week >= dailyMathFromWeek) {
-          expect(ids).toEqual(["bib", "len", "cie", "mat"]);
+          expect(ids).toEqual(withAi(["bib", "len", "cie", "mat"]));
         } else {
-          expect(ids).toEqual(["bib", "len", "cie"]);
+          expect(ids).toEqual(withAi(["bib", "len", "cie"]));
         }
       } else {
         expect(raw.dayKind).toBe("teach");
-        expect(ids).toEqual(["bib", "len", "ide", "mat"]);
+        expect(ids).toEqual(withAi(["bib", "len", "ide", "mat"]));
       }
       expect(raw.scheduledSections).toEqual(ids);
     }
@@ -116,9 +117,10 @@ describe("MPPE day sheets (200 días)", () => {
         for (const r of block.cie ?? []) cie.add(r.id);
       }
     }
-    expect(len.size).toBe(curriculum.meta.counts.lenLearnings);
-    expect(mat.size).toBe(curriculum.meta.counts.matLearnings);
-    expect(cie.size).toBe(curriculum.meta.counts.cieLearnings);
+    const national = (ids: Set<string>) => [...ids].filter((id) => !id.startsWith("gap:")).length;
+    expect(national(len)).toBe(curriculum.meta.counts.lenLearnings);
+    expect(national(mat)).toBe(curriculum.meta.counts.matLearnings);
+    expect(national(cie)).toBe(curriculum.meta.counts.cieLearnings);
   });
 
   it("Friday exposition only rehearses learnings taught Mon–Thu that week", () => {

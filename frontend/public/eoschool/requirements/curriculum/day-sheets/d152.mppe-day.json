@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 152",
   "dayKind": "teach",
-  "calendarDate": "2027-04-20",
+  "calendarDate": "2027-05-04",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,13 +35,13 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Tomar conciencia de la duda ortográfica.",
-      "learning": "Tiene conciencia de nociones ortográficas básicas y resuelve sus dudas recurriendo a diversas fuentes (Preguntar a otros, consultar materiales escritos a disposición).",
+      "objective": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
+      "learning": "Usa la tilde en la escritura de sus nombres y apellidos, y en un repertorio de palabras familiares.",
       "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
       "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "tiene conciencia de nociones ortográficas básicas y resuelve sus dudas…",
+      "topicShort": "usa la tilde en la escritura de sus nombres y…",
       "activities": [
         "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
         "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
@@ -49,16 +50,16 @@
     {
       "id": "ide",
       "label": "Identidad",
-      "objective": "La Humanidad",
-      "learning": "Conoce los períodos de la Historia de Venezuela: indígena, colonial, republicano agrícola y republicano petrolero.",
-      "canDo": "Al terminar puedes anotar 3 hitos históricos con fecha o lugar.",
+      "objective": "El mundo",
+      "learning": "En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
+      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
       "mode": "directo",
-      "activityKind": "historyMilestones",
+      "activityKind": "mapPlaces",
       "minutesEstimate": 18,
-      "topicShort": "los períodos de la Historia de Venezuela",
+      "topicShort": "en los grados 3–5 se usan mapas para localizar lugares…",
       "activities": [
-        "Lee con un adulto sobre los períodos de la Historia de Venezuela; 3 hitos en línea de tiempo (fecha o siglo + hecho).",
-        "Dibuja un símbolo por hito (petróleo, independencia, etc. si aplica)."
+        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
+        "2 frases: «___ está al ___ de ___»."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "3 precios de realiza cálculos con cambios de la moneda nacional; suma el total y simula pago con billetes/monedas…",
         "Un problema de vuelto en 2 pasos; muestra cuentas."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Modelo",
+      "learning": "Di qué hacer si faltan piezas de un color.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Modelo",
+      "activities": [
+        "Di qué hacer si faltan piezas de un color."
       ]
     }
   ]

@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 87",
   "dayKind": "teach",
-  "calendarDate": "2027-01-19",
+  "calendarDate": "2027-02-02",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,31 +35,31 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Conocer algunas particularidades de la lengua.",
-      "learning": "Analiza algunas “curiosidades” de nuestra lengua. Palíndromos: palabras que se leen igual al derecho y al revés. Ej. Ana, ada, ojo, oro, radar, somos, rapar, reconocer, arepera. Palabras que repiten una misma vocal en todas las sílabas: maraca, cántara / monólogo, fósforo / efervescente, pelele / infringir, incidir… Palabras pentavocálicas (Contienen las cinco vocales). Ej.: aurelio, orquídea, riachuelo, murciélago, comunicarse, educación…",
-      "canDo": "Al terminar puedes resumir la idea central en 4 oraciones.",
-      "mode": "fragmentado",
+      "objective": "Diferenciar clases de palabras fundamentales.",
+      "learning": "Conoce las funciones de sustantivos y adjetivos.",
+      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
+      "mode": "directo",
       "activityKind": "default",
-      "minutesEstimate": 15,
-      "topicShort": "analiza algunas “curiosidades” de nuestra lengua. Palíndromos",
+      "minutesEstimate": 18,
+      "topicShort": "las funciones de sustantivos y adjetivos",
       "activities": [
-        "4 oraciones que expliquen la idea central de analiza algunas “curiosidades” de nuestra lengua. Palíndromos; no todo…",
-        "Dibuja un ícono que represente la idea."
+        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
+        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
       ]
     },
     {
       "id": "ide",
       "label": "Identidad",
-      "objective": "Nación Petrolera",
-      "learning": "Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
-      "canDo": "Al terminar puedes quedarte con 3 hitos del tema de hoy.",
-      "mode": "fragmentado",
-      "activityKind": "historyMilestones",
-      "minutesEstimate": 15,
-      "topicShort": "hitos de la historia reciente de Venezuela",
+      "objective": "Otra civilización",
+      "learning": "En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar.",
+      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
+      "mode": "directo",
+      "activityKind": "default",
+      "minutesEstimate": 18,
+      "topicShort": "en los grados 3–5 se compara cómo vivía la gente…",
       "activities": [
-        "Solo 3 hitos (no toda la lista del plan); viñetas con año o lugar.",
-        "Mapa o dibujo con 3 etiquetas."
+        "Investiga con un adulto 4 hechos de Otra civilización; escríbelos en oraciones.",
+        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
         "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Modelo",
+      "learning": "Di qué hacer si faltan piezas de un color.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Modelo",
+      "activities": [
+        "Di qué hacer si faltan piezas de un color."
       ]
     }
   ]

@@ -4,28 +4,91 @@
   "planDay": 199,
   "week": 40,
   "grade": "3er grado",
-  "title": "Día 199 · Feriado — Batalla de Carabobo",
-  "dayKind": "holiday",
-  "calendarDate": "2027-06-24",
-  "holidayName": "Batalla de Carabobo",
-  "holidayDate": "2027-06-24",
+  "title": "Día 199",
+  "dayKind": "teach",
+  "calendarDate": "2027-07-08",
+  "holidayName": null,
+  "holidayDate": null,
   "scheduledSections": [
-    "bib"
+    "bib",
+    "len",
+    "ide",
+    "mat",
+    "ia"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia · Feriado",
-      "objective": "Feriado nacional — Batalla de Carabobo",
-      "learning": "Lectura bíblica del día (feriado). Gén–Ester: Ester 7, 8 · Job–Mal: Zacarías 14; Malaquías 1, 2 · NT: Apocalipsis 20, 21",
+      "label": "Biblia",
+      "objective": "Lectura bíblica diaria (tres pistas)",
+      "learning": "Gén–Ester: Ester 7, 8 · Job–Mal: Zacarías 14; Malaquías 1, 2 · NT: Apocalipsis 20, 21",
       "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "holiday",
+      "mode": "directo",
       "activityKind": "bible",
       "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
         "Lee en silencio y marca un versículo clave (8–12 versículos si es largo).",
         "Responde: ¿qué pasó? — 2 frases."
+      ]
+    },
+    {
+      "id": "len",
+      "label": "Lenguaje",
+      "objective": "Usar en la escritura ciertas restricciones del sistema de escritura alfabético. · Escribir reseñas de obras literarias. · Producir textos a partir de diferentes inicios. · Utilizar en la escritura recursos ortográficos fundamentales. · Conocer nociones ortográficas del sistema de escritura. · Escribir convencionalmente palabras con sílabas complejas.",
+      "learning": "Aplica a la escritura algunas restricciones del sistema de escritura alfabético: dígrafo gu en gue-gui; qu en que-qui.",
+      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
+      "mode": "directo",
+      "activityKind": "default",
+      "minutesEstimate": 18,
+      "topicShort": "aplica a la escritura algunas restricciones del sistema de escritura…",
+      "activities": [
+        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
+        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+      ]
+    },
+    {
+      "id": "ide",
+      "label": "Identidad",
+      "objective": "Otra civilización",
+      "learning": "En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar.",
+      "canDo": "Al terminar puedes explicar 4 hechos concretos del tema con tus palabras.",
+      "mode": "directo",
+      "activityKind": "default",
+      "minutesEstimate": 18,
+      "topicShort": "en los grados 3–5 se compara cómo vivía la gente…",
+      "activities": [
+        "Investiga con un adulto 4 hechos de Otra civilización; escríbelos en oraciones.",
+        "Conecta 1 hecho con tu vida: «Esto me importa porque…»."
+      ]
+    },
+    {
+      "id": "mat",
+      "label": "Matemáticas",
+      "objective": "División",
+      "learning": "Grade 3 entiende la división como un reparto en grupos iguales y la relaciona con la multiplicación.",
+      "canDo": "Al terminar puedes resolver 4 ítems y explicar un procedimiento en el cuaderno.",
+      "mode": "directo",
+      "activityKind": "operations",
+      "minutesEstimate": 20,
+      "topicShort": "grade 3 entiende la división como un reparto en grupos…",
+      "activities": [
+        "Resuelve en el cuaderno: 367 + 428 = 10000 − 4567 = 12 × 9 = 72 ÷ 6 =. Muestra el procedimiento en al menos 2.",
+        "Elige 1 resultado y explica con palabras por qué tiene sentido."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Inventario",
+      "learning": "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Inventario",
+      "activities": [
+        "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota."
       ]
     }
   ]

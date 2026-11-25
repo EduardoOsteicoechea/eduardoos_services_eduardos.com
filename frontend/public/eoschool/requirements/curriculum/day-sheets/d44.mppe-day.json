@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 44",
   "dayKind": "teach",
-  "calendarDate": "2026-11-19",
+  "calendarDate": "2026-12-03",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -64,16 +65,30 @@
     {
       "id": "mat",
       "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos.",
-      "canDo": "Al terminar puedes practicar el contenido de hoy con procedimiento escrito.",
+      "objective": "Fracciones",
+      "learning": "Grade 3 entiende una fracción como partes iguales de un entero y la ubica en la recta.",
+      "canDo": "Al terminar puedes trazar rectas y puntos o clasificar figuras con vocabulario de geometría.",
       "mode": "directo",
-      "activityKind": "default",
+      "activityKind": "geometry",
       "minutesEstimate": 18,
-      "topicShort": "las semejanzas y diferencias entre formas y cuerpos geométricos",
+      "topicShort": "grade 3 entiende una fracción como partes iguales de un…",
       "activities": [
-        "Resuelve: 589 + 211 = 4500 − 1893 = 25 × 4 = 63 ÷ 7 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
-        "Explica en 2 oraciones qué estrategia usaste."
+        "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
+        "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Inventario",
+      "learning": "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Inventario",
+      "activities": [
+        "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota."
       ]
     }
   ]

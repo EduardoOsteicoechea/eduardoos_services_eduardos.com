@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 183",
   "dayKind": "teach",
-  "calendarDate": "2027-06-02",
+  "calendarDate": "2027-06-16",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,16 +35,16 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Producir cuentos a partir de títulos o imágenes.",
-      "learning": "Escribe cuentos a partir de títulos e imágenes.",
-      "canDo": "Al terminar puedes escribir un párrafo narrativo de 6 líneas.",
-      "mode": "directo",
-      "activityKind": "narrative",
-      "minutesEstimate": 20,
-      "topicShort": "escribir cuentos a partir de títulos e imágenes",
+      "objective": "Conocer y usar en la escritura la diferencia singular / plural.",
+      "learning": "Distingue la oposición singular/plural y la usa en la escritura, en los casos en que el plural se forma agregando s al singular y en casos conocidos en que se agrega un sufijo (Lápiz/lápices; cartel/carteles; letra/ letras).",
+      "canDo": "Al terminar puedes escribir 6 palabras con r o rr sin confundirlas.",
+      "mode": "fragmentado",
+      "activityKind": "orthography",
+      "minutesEstimate": 15,
+      "topicShort": "distingue la oposición singular/plural y la usa en la escritura,…",
       "activities": [
-        "Lee un texto corto del tema; escribe un final alternativo de 6 líneas.",
-        "Subraya verbo y sustantivo en 3 oraciones."
+        "Solo 6 palabras hoy; corrige con un adulto.",
+        "2 oraciones con la palabra más difícil."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "Resuelve en el cuaderno: 367 + 428 = 10000 − 4567 = 12 × 9 = 72 ÷ 6 =. Muestra el procedimiento en al menos 2.",
         "Elige 1 resultado y explica con palabras por qué tiene sentido."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Revisión",
+      "learning": "Di un criterio y cuántos puntos vale.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Revisión",
+      "activities": [
+        "Di un criterio y cuántos puntos vale."
       ]
     }
   ]

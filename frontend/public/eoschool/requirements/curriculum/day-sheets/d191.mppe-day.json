@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 191",
   "dayKind": "teach",
-  "calendarDate": "2027-06-14",
+  "calendarDate": "2027-06-28",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,16 +35,16 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Escribir reseñas de obras literarias.",
-      "learning": "Recomienda obras literarias mediante breves reseñas escritas.",
-      "canDo": "Al terminar puedes escribir una reseña corta de 6–8 líneas.",
+      "objective": "Conocer y usar en la escritura la diferencia de género femenino/masculino.",
+      "learning": "B) el género se diferencia usando palabras diferentes: hombre/mujer, caballo/yegua, vaca/toro.",
+      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
-      "activityKind": "review",
-      "minutesEstimate": 20,
-      "topicShort": "escribir reseñas de libros",
+      "activityKind": "default",
+      "minutesEstimate": 18,
+      "topicShort": "b) el género se diferencia usando palabras diferentes",
       "activities": [
-        "Reseña: título, de qué trata, parte que más te gustó y por qué (6–8 líneas).",
-        "Ilustra la escena favorita en un dibujo pequeño."
+        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
+        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
       ]
     },
     {
@@ -74,6 +75,20 @@
       "activities": [
         "Resuelve en el cuaderno: 367 + 428 = 10000 − 4567 = 12 × 9 = 72 ÷ 6 =. Muestra el procedimiento en al menos 2.",
         "Elige 1 resultado y explica con palabras por qué tiene sentido."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Imagen",
+      "learning": "Dicta qué quieres ver en la imagen y qué no debe salir.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Imagen",
+      "activities": [
+        "Dicta qué quieres ver en la imagen y qué no debe salir."
       ]
     }
   ]

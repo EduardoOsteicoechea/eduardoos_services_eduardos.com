@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 66",
   "dayKind": "teach",
-  "calendarDate": "2026-12-21",
+  "calendarDate": "2027-01-04",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,28 +35,28 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Resolver instrumentos de evaluación.",
-      "learning": "Resuelve problemas de lectura y escritura planteados en instrumentos de evaluación dirigidos a estimar los avances en el aprendizaje y los efectos de la enseñanza.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
+      "objective": "Comprender la estructura de textos narrativos.",
+      "learning": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos.",
+      "canDo": "Al terminar puedes escribir un párrafo narrativo de 6 líneas.",
       "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "resuelve problemas de lectura y escritura planteados en instrumentos de…",
+      "activityKind": "narrative",
+      "minutesEstimate": 20,
+      "topicShort": "la estructura de la trama y demás rasgos de los…",
       "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+        "Lee un texto corto del tema; escribe un final alternativo de 6 líneas.",
+        "Subraya verbo y sustantivo en 3 oraciones."
       ]
     },
     {
       "id": "cie",
       "label": "Ciencias Naturales",
       "objective": "Ciencia, tecnología y sociedad — Las mezclas",
-      "learning": "Desarrolla la curiosidad científica a través de la realización de experimentos simples que impliquen la mezcla de materiales, observando los cambios que ocurren.",
+      "learning": "Identifica diferentes métodos sencillos para separar componentes en mezclas y describe cómo funcionan.",
       "canDo": "Al terminar puedes probar 3 mezclas seguras y registrar qué pasa.",
       "mode": "directo",
       "activityKind": "mixture",
       "minutesEstimate": 18,
-      "topicShort": "la curiosidad científica a través de la realización de experimentos…",
+      "topicShort": "diferentes métodos sencillos para separar componentes en mezclas y describe…",
       "activities": [
         "3 mezclas con agua, sal, aceite o azúcar (con adulto); tabla: materiales, qué observé.",
         "Clasifica: ¿se disuelve o no? Una frase con evidencia."
@@ -65,15 +66,29 @@
       "id": "mat",
       "label": "Matemáticas",
       "objective": "Geometría",
-      "learning": "Diferencia círculo de una circunferencia.",
-      "canDo": "Al terminar puedes comparar círculo y circunferencia en objetos de la casa.",
-      "mode": "apalancado",
-      "activityKind": "geometryCircles",
-      "minutesEstimate": 20,
-      "topicShort": "diferencia círculo de una circunferencia",
+      "learning": "Identifica los elementos de los cuerpos geométricos.",
+      "canDo": "Al terminar puedes practicar el contenido de hoy con procedimiento escrito.",
+      "mode": "directo",
+      "activityKind": "default",
+      "minutesEstimate": 18,
+      "topicShort": "identificar los elementos de los cuerpos geométricos",
       "activities": [
-        "Busca 2 objetos (plato, aro, moneda); marca si ves círculo relleno o solo borde.",
-        "Tabla: objeto → círculo o circunferencia → por qué."
+        "Resuelve: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
+        "Explica en 2 oraciones qué estrategia usaste."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Imagen",
+      "learning": "Dicta qué quieres ver en la imagen y qué no debe salir.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Imagen",
+      "activities": [
+        "Dicta qué quieres ver en la imagen y qué no debe salir."
       ]
     }
   ]

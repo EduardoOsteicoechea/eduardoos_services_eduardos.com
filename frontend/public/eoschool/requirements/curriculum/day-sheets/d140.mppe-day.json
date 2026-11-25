@@ -6,7 +6,7 @@
   "grade": "3er grado",
   "title": "Día 140 · Exposiciones",
   "dayKind": "exposition",
-  "calendarDate": "2027-04-02",
+  "calendarDate": "2027-04-16",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
@@ -14,7 +14,8 @@
     "ide",
     "len",
     "mat",
-    "cie"
+    "cie",
+    "ia"
   ],
   "sections": [
     {
@@ -35,30 +36,30 @@
     {
       "id": "ide",
       "label": "Identidad · Exposición",
-      "objective": "Exposición · Nación Petrolera",
-      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: Reconoce los diferentes presidentes de Venezuela y momentos de la Historia del siglo XX y XXI.",
+      "objective": "Exposición · El mundo",
+      "learning": "Prepara una exposición sobre el foco de Identidad de la semana: En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente. En los grados 3–5 se compara cómo vivía la gente en otro tiempo y en otro lugar.",
       "canDo": "Al terminar puedes explicar el tema de Identidad de la semana con un ejemplo personal.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "hitos de la historia reciente de Venezuela",
+      "topicShort": "en los grados 3–5 se usan mapas para localizar lugares…",
       "activities": [
-        "Prepara una exposición de 1 minuto sobre hitos de la historia reciente de Venezuela: 3 hechos y por qué importa en…",
+        "Prepara una exposición de 1 minuto sobre en los grados 3–5 se usan mapas para localizar lugares…: 3 hechos y por…",
         "Dibuja o etiqueta un apoyo visual (mapa, línea o cartel) y ensaya la exposición con un adulto."
       ]
     },
     {
       "id": "len",
       "label": "Lenguaje · Exposición",
-      "objective": "Exposición · Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano. · Actuar como espectador en diversidad de espectáculos artísticos.",
-      "learning": "Prepara una exposición sobre lo visto esta semana: Escribe convencionalmente su nombre y un repertorio de palabras familiares (Nombres propios y otras de uso común). · Mantiene el interés frente a espectáculos y emite opiniones sobre el contenido de las obras.",
+      "objective": "Exposición · Interpretar y usar refranes, expresiones y dichos del repertorio popular venezolano. · Conocer la función de ciertos documentos legales.",
+      "learning": "Prepara una exposición sobre lo visto esta semana: Conoce el sentido y usa un repertorio de expresiones, dichos y refranes. Ejemplos: “el papá de los helados”, “hijo de gato, caza ratón”, “no dejes para mañana lo que puedes hacer hoy”, “el que madruga, recoge agua clara”, “en el camino se enderezan las cargas”. · Conoce el sentido de la partida de nacimiento y la cédula de identidad.",
       "canDo": "Al terminar puedes exponer el aprendizaje de Lenguaje con un ejemplo oral o escrito corto.",
       "mode": "exposition",
       "activityKind": "exposition",
       "minutesEstimate": 18,
-      "topicShort": "escribe convencionalmente su nombre y un repertorio de palabras familiares…",
+      "topicShort": "el agua y la vida",
       "activities": [
-        "Escribe 4 oraciones o un párrafo corto que resuma escribe convencionalmente su nombre y un repertorio de palabras…",
+        "Escribe 4 oraciones o un párrafo corto que resuma el agua y la vida para tu exposición.",
         "Lee en voz alta tu texto; corrige mayúsculas y explica por qué importa lo que escribiste."
       ]
     },
@@ -90,6 +91,20 @@
       "activities": [
         "Prepara una exposición sobre la importancia de la fotosíntesis para las plantas y otros…: observa o recuerda una…",
         "Explica en voz alta tu conclusión y por qué crees que es así; dibuja un esquema de apoyo."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Página",
+      "learning": "Decide un dato del inventario que la página muestra.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Página",
+      "activities": [
+        "Decide un dato del inventario que la página muestra."
       ]
     }
   ]

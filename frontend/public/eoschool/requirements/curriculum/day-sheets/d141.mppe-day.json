@@ -4,76 +4,28 @@
   "planDay": 141,
   "week": 29,
   "grade": "3er grado",
-  "title": "Día 141",
-  "dayKind": "teach",
-  "calendarDate": "2027-04-05",
-  "holidayName": null,
-  "holidayDate": null,
+  "title": "Día 141 · Feriado — Declaración de la Independencia",
+  "dayKind": "holiday",
+  "calendarDate": "2027-04-19",
+  "holidayName": "Declaración de la Independencia",
+  "holidayDate": "2027-04-19",
   "scheduledSections": [
-    "bib",
-    "len",
-    "cie",
-    "mat"
+    "bib"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia",
-      "objective": "Lectura bíblica diaria (tres pistas)",
-      "learning": "Gén–Ester: 1 Reyes 15, 16 · Job–Mal: Jeremías 37, 38, 39 · NT: 1 Tesalonicenses 1",
+      "label": "Biblia · Feriado",
+      "objective": "Feriado nacional — Declaración de la Independencia",
+      "learning": "Lectura bíblica del día (feriado). Gén–Ester: 1 Reyes 15, 16 · Job–Mal: Jeremías 37, 38, 39 · NT: 1 Tesalonicenses 1",
       "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "directo",
+      "mode": "holiday",
       "activityKind": "bible",
       "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
         "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
         "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
-      ]
-    },
-    {
-      "id": "len",
-      "label": "Lenguaje",
-      "objective": "Escribir sus nombres y apellidos, y los de otras personas de su entorno cercano.",
-      "learning": "Conoce y usa la mayúscula inicial en la escritura de nombres propios de personas y lugares.",
-      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
-      "mode": "directo",
-      "activityKind": "default",
-      "minutesEstimate": 18,
-      "topicShort": "y usa la mayúscula inicial en la escritura de nombres…",
-      "activities": [
-        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
-        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
-      ]
-    },
-    {
-      "id": "cie",
-      "label": "Ciencias Naturales",
-      "objective": "Seres vivos — Las plantas",
-      "learning": "Reflexiona sobre la importancia de las plantas en el ambiente y su rol en la producción de oxígeno.",
-      "canDo": "Al terminar puedes observar una planta y registrar partes y función.",
-      "mode": "directo",
-      "activityKind": "plants",
-      "minutesEstimate": 18,
-      "topicShort": "reflexiona sobre la importancia de las plantas en el ambiente…",
-      "activities": [
-        "Observa una planta 10 min; dibujo etiquetado (raíz, tallo, hoja).",
-        "2 frases: qué necesita para vivir según reflexiona sobre la importancia de las plantas en el ambiente…."
-      ]
-    },
-    {
-      "id": "mat",
-      "label": "Matemáticas",
-      "objective": "Magnitudes y medidas",
-      "learning": "Utiliza las medidas de longitud, masa, capacidad y tiempo para medir diferentes objetos.",
-      "canDo": "Al terminar puedes medir, registrar y comparar dos longitudes con unidades.",
-      "mode": "directo",
-      "activityKind": "measurement",
-      "minutesEstimate": 18,
-      "topicShort": "utiliza las medidas de longitud, masa, capacidad y tiempo para…",
-      "activities": [
-        "Mide 4 objetos con regla o cinta; tabla: objeto, medida, unidad.",
-        "Compara dos medidas: ¿cuánto más largo es uno? Escribe la resta."
       ]
     }
   ]

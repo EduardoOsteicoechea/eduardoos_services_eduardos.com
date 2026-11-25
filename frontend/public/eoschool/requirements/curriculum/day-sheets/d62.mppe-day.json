@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 62",
   "dayKind": "teach",
-  "calendarDate": "2026-12-15",
+  "calendarDate": "2026-12-29",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,13 +35,13 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Comprender la estructura de textos narrativos.",
-      "learning": "Conoce la estructura de la trama y demás rasgos de los textos narrativos: personajes, escenarios, diálogos.",
+      "objective": "Recomendar obras literarias.",
+      "learning": "Recomienda obras literarias informando títulos y autores/autoras de un repertorio de cuentos y poemas que conoce.",
       "canDo": "Al terminar puedes escribir un párrafo narrativo de 6 líneas.",
       "mode": "directo",
       "activityKind": "narrative",
       "minutesEstimate": 20,
-      "topicShort": "la estructura de la trama y demás rasgos de los…",
+      "topicShort": "obras literarias informando títulos y autores/autoras de un repertorio de…",
       "activities": [
         "Lee un texto corto del tema; escribe un final alternativo de 6 líneas.",
         "Subraya verbo y sustantivo en 3 oraciones."
@@ -49,13 +50,13 @@
     {
       "id": "ide",
       "label": "Identidad",
-      "objective": "Venezuela en el Mundo",
-      "learning": "Conoce superficie, estados y capitales; y la ciudad capital, Caracas.",
+      "objective": "El mundo",
+      "learning": "En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
       "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
       "mode": "directo",
       "activityKind": "mapPlaces",
       "minutesEstimate": 18,
-      "topicShort": "superficie, estados y capitales",
+      "topicShort": "en los grados 3–5 se usan mapas para localizar lugares…",
       "activities": [
         "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
         "2 frases: «___ está al ___ de ___»."
@@ -74,6 +75,20 @@
       "activities": [
         "Resuelve: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
         "Explica en 2 oraciones qué estrategia usaste."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Modelo",
+      "learning": "Di qué hacer si faltan piezas de un color.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Modelo",
+      "activities": [
+        "Di qué hacer si faltan piezas de un color."
       ]
     }
   ]

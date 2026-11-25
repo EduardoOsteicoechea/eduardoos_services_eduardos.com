@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 157",
   "dayKind": "teach",
-  "calendarDate": "2027-04-27",
+  "calendarDate": "2027-05-11",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -34,28 +35,28 @@
     {
       "id": "len",
       "label": "Lenguaje",
-      "objective": "Planificar la escritura de cuentos y otros textos.",
-      "learning": "Trabaja en equipo para planificar la escritura de textos que serán dictados a la/el docente o escritos por sí mismo.",
-      "canDo": "Al terminar puedes escribir un dictado con ortografía revisada.",
+      "objective": "Derivar palabras a partir de sustantivos.",
+      "learning": "Escribe (Por derivación) pares y tríos de palabras de un mismo campo lexical: casa/ casas/casita; niña/niñas/niñita; zapato/ zapatero/zapatazo.",
+      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
       "mode": "directo",
-      "activityKind": "dictation",
+      "activityKind": "default",
       "minutesEstimate": 18,
-      "topicShort": "trabaja en equipo para planificar la escritura de textos que…",
+      "topicShort": "escribe (Por derivación) pares y tríos de palabras de un…",
       "activities": [
-        "Dictado: el adulto lee 8 palabras (tema del día); corrige y copia la versión final.",
-        "Elige 3 palabras y úsalas en oraciones propias."
+        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
+        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
       ]
     },
     {
       "id": "ide",
       "label": "Identidad",
-      "objective": "Nuestro Mundo",
-      "learning": "Reconoce las características de su vivienda y de un caserío campesino e identifica los elementos que conforman una comunidad, y elabora pequeños planos de su entorno.",
+      "objective": "El mundo",
+      "learning": "En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
       "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
       "mode": "directo",
       "activityKind": "mapPlaces",
       "minutesEstimate": 18,
-      "topicShort": "las características de su vivienda y de un caserío campesino…",
+      "topicShort": "en los grados 3–5 se usan mapas para localizar lugares…",
       "activities": [
         "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
         "2 frases: «___ está al ___ de ___»."
@@ -74,6 +75,20 @@
       "activities": [
         "Resuelve en el cuaderno: 234 + 156 = 8000 − 325 = 47 × 6 = 84 ÷ 4 =. Muestra el procedimiento en al menos 2.",
         "Elige 1 resultado y explica con palabras por qué tiene sentido."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Modelo",
+      "learning": "Di qué hacer si faltan piezas de un color.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Modelo",
+      "activities": [
+        "Di qué hacer si faltan piezas de un color."
       ]
     }
   ]

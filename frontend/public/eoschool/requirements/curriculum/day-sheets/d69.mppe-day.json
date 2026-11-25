@@ -4,28 +4,91 @@
   "planDay": 69,
   "week": 14,
   "grade": "3er grado",
-  "title": "Día 69 · Feriado — Nochebuena",
-  "dayKind": "holiday",
-  "calendarDate": "2026-12-24",
-  "holidayName": "Nochebuena",
-  "holidayDate": "2026-12-24",
+  "title": "Día 69",
+  "dayKind": "teach",
+  "calendarDate": "2027-01-07",
+  "holidayName": null,
+  "holidayDate": null,
   "scheduledSections": [
-    "bib"
+    "bib",
+    "len",
+    "ide",
+    "mat",
+    "ia"
   ],
   "sections": [
     {
       "id": "bib",
-      "label": "Biblia · Feriado",
-      "objective": "Feriado nacional — Nochebuena",
-      "learning": "Lectura bíblica del día (feriado). Gén–Ester: Números 32, 33 · Job–Mal: Salmos 127, 128 · NT: Juan 21; Hechos 1",
+      "label": "Biblia",
+      "objective": "Lectura bíblica diaria (tres pistas)",
+      "learning": "Gén–Ester: Números 32, 33 · Job–Mal: Salmos 127, 128 · NT: Juan 21; Hechos 1",
       "canDo": "Al terminar puedes contar la idea del pasaje y aplicarla en una frase.",
-      "mode": "holiday",
+      "mode": "directo",
       "activityKind": "bible",
       "minutesEstimate": 10,
       "topicShort": "el tema del día",
       "activities": [
         "Lee la pista más corta en voz alta; subraya 1 verbo importante.",
         "Escribe 1 pregunta de comprensión y respóndela con el texto. Cierra con 1 frase de aplicación en familia."
+      ]
+    },
+    {
+      "id": "len",
+      "label": "Lenguaje",
+      "objective": "Participar en cine foros.",
+      "learning": "Actúa como espectador de películas y, posteriormente, en comentarios grupales acerca de los contenidos.",
+      "canDo": "Al terminar puedes leer y escribir con oraciones completas sobre el tema.",
+      "mode": "directo",
+      "activityKind": "default",
+      "minutesEstimate": 18,
+      "topicShort": "actúa como espectador de películas y, posteriormente, en comentarios grupales…",
+      "activities": [
+        "Lee un texto corto con un adulto; anota 3 ideas y escribe 4 oraciones con ellas.",
+        "Lista 5 palabras clave del texto y úsalas en 2 frases nuevas."
+      ]
+    },
+    {
+      "id": "ide",
+      "label": "Identidad",
+      "objective": "El mundo",
+      "learning": "En los grados 3–5 se usan mapas para localizar lugares y explicar cómo la geografía marca la vida de la gente.",
+      "canDo": "Al terminar puedes ubicar en un mapa 4 lugares del aprendizaje.",
+      "mode": "directo",
+      "activityKind": "mapPlaces",
+      "minutesEstimate": 18,
+      "topicShort": "en los grados 3–5 se usan mapas para localizar lugares…",
+      "activities": [
+        "Mapa de Venezuela; etiqueta 4 lugares del tema del día.",
+        "2 frases: «___ está al ___ de ___»."
+      ]
+    },
+    {
+      "id": "mat",
+      "label": "Matemáticas",
+      "objective": "Geometría",
+      "learning": "Diferencia círculo de una circunferencia.",
+      "canDo": "Al terminar puedes comparar círculo y circunferencia en objetos de la casa.",
+      "mode": "apalancado",
+      "activityKind": "geometryCircles",
+      "minutesEstimate": 20,
+      "topicShort": "diferencia círculo de una circunferencia",
+      "activities": [
+        "Busca 2 objetos (plato, aro, moneda); marca si ves círculo relleno o solo borde.",
+        "Tabla: objeto → círculo o circunferencia → por qué."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Inventario",
+      "learning": "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Inventario",
+      "activities": [
+        "Describe una pieza: tipo, color y cantidad. Tú lo dices; el agente solo lo anota."
       ]
     }
   ]

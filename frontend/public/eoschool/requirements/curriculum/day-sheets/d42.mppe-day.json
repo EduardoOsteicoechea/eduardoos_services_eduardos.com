@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 42",
   "dayKind": "teach",
-  "calendarDate": "2026-11-17",
+  "calendarDate": "2026-12-01",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "ide",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -64,16 +65,30 @@
     {
       "id": "mat",
       "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos.",
-      "canDo": "Al terminar puedes practicar el contenido de hoy con procedimiento escrito.",
+      "objective": "Área",
+      "learning": "Grade 3 entiende el área como el número de unidades cuadradas que cubren una figura, sin huecos ni solapes.",
+      "canDo": "Al terminar puedes clasificar figuras por lados y vértices y nombrarlas con precisión.",
       "mode": "directo",
-      "activityKind": "default",
+      "activityKind": "geometryShapes",
       "minutesEstimate": 18,
-      "topicShort": "las semejanzas y diferencias entre formas y cuerpos geométricos",
+      "topicShort": "grade 3 entiende el área como el número de unidades…",
       "activities": [
-        "Resuelve: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
-        "Explica en 2 oraciones qué estrategia usaste."
+        "Recorta o dibuja 6 figuras; ordena en tabla: nombre, número de lados, número de vértices.",
+        "Elige 2 figuras y explica en una oración qué las hace diferentes."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "Modelo",
+      "learning": "Di qué hacer si faltan piezas de un color.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "Modelo",
+      "activities": [
+        "Di qué hacer si faltan piezas de un color."
       ]
     }
   ]

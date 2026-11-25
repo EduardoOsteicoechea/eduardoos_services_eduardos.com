@@ -6,14 +6,15 @@
   "grade": "3er grado",
   "title": "Día 38",
   "dayKind": "teach",
-  "calendarDate": "2026-11-11",
+  "calendarDate": "2026-11-25",
   "holidayName": null,
   "holidayDate": null,
   "scheduledSections": [
     "bib",
     "len",
     "cie",
-    "mat"
+    "mat",
+    "ia"
   ],
   "sections": [
     {
@@ -49,31 +50,45 @@
     {
       "id": "cie",
       "label": "Ciencias Naturales",
-      "objective": "Salud integral — La alimentación en Venezuela",
-      "learning": "Valora la importancia de una alimentación saludable para el bienestar comunitario.",
-      "canDo": "Al terminar puedes clasificar alimentos en grupos y elegir una comida equilibrada.",
+      "objective": "Fuerzas e imanes",
+      "learning": "Grade 3 pregunta cómo un imán atrae o repele a otro sin tocarlo.",
+      "canDo": "Al terminar puedes observar, registrar y comparar con una tabla.",
       "mode": "directo",
-      "activityKind": "nutrition",
+      "activityKind": "observation",
       "minutesEstimate": 18,
-      "topicShort": "alimentación saludable y grupos de alimentos",
+      "topicShort": "grade 3 pregunta cómo un imán atrae o repele a…",
       "activities": [
-        "Dibuja o lista 8 alimentos de tu cocina; clasifica en 3 grupos (energía, construcción, protección).",
-        "Marca con ✓ una merienda saludable y explica en 2 frases."
+        "Observa 15 min algo de grade 3 pregunta cómo un imán atrae o repele a…; tabla con 3 filas de datos.",
+        "Compara 2 filas: similitud y diferencia."
       ]
     },
     {
       "id": "mat",
       "label": "Matemáticas",
-      "objective": "Geometría",
-      "learning": "Identifica las semejanzas y diferencias entre formas y cuerpos geométricos.",
-      "canDo": "Al terminar puedes practicar el contenido de hoy con procedimiento escrito.",
+      "objective": "Fracciones",
+      "learning": "Grade 3 entiende una fracción como partes iguales de un entero y la ubica en la recta.",
+      "canDo": "Al terminar puedes trazar rectas y puntos o clasificar figuras con vocabulario de geometría.",
       "mode": "directo",
-      "activityKind": "default",
+      "activityKind": "geometry",
       "minutesEstimate": 18,
-      "topicShort": "las semejanzas y diferencias entre formas y cuerpos geométricos",
+      "topicShort": "grade 3 entiende una fracción como partes iguales de un…",
       "activities": [
-        "Resuelve: 1250 + 340 = 5000 − 1278 = 8 × 125 = 96 ÷ 8 =. Si no aplica, haz 4 ítems cortos del cuaderno del día.",
-        "Explica en 2 oraciones qué estrategia usaste."
+        "En cuadrícula, traza 3 rectas y marca 5 puntos; etiqueta rectas paralelas o perpendiculares si las hay.",
+        "Escribe 2 oraciones: «Una recta es…» y «Un punto es…» con tus palabras del cuaderno."
+      ]
+    },
+    {
+      "id": "ia",
+      "label": "Inteligencia Artificial",
+      "objective": "La cerca",
+      "learning": "Di qué carpetas se pueden tocar. El agente no las inventa.",
+      "canDo": "Al terminar puedes decir la respuesta con tus palabras.",
+      "mode": "directo",
+      "activityKind": "ai",
+      "minutesEstimate": 15,
+      "topicShort": "La cerca",
+      "activities": [
+        "Di qué carpetas se pueden tocar. El agente no las inventa."
       ]
     }
   ]
