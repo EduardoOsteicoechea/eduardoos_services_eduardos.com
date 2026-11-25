@@ -16,13 +16,6 @@ const covered = learningsCoveredThroughDay(STANDARDS_PROGRESS_THROUGH_DAY);
 const tones = ["a", "b", "c", "d"] as const;
 const starSlots = [0, 1, 2, 3, 4];
 
-const fitHint: Record<keyof typeof FIT_LABEL, string> = {
-  directo: "El mismo saber, en ese grado.",
-  parcial: "Se parece, pero el grado o el alcance no coinciden.",
-  nacional: "El contenido es de Venezuela. La otra columna muestra el saber más cercano.",
-  anterior: "Ese saber está en un grado previo del otro programa.",
-};
-
 type RatedRow = Grade3CrosswalkRow & {
   tone: (typeof tones)[number];
   covered: boolean;
@@ -94,21 +87,6 @@ function starLabel(count: number, best: boolean) {
   </nav>
 
   <div class="standards-body">
-    <slot name="toolbar" />
-    <p class="hint">
-      Cada fila es un aprendizaje de 3.er grado del MPPE. Cinco estrellas es la formulación más precisa para 8–9 años; el borde marca la mejor de la fila. La marca de la derecha indica que ese aprendizaje ya está en el plan, hasta el día {STANDARDS_PROGRESS_THROUGH_DAY}.
-    </p>
-    <ul class="standards-legend">
-      {
-        (Object.keys(FIT_LABEL) as (keyof typeof FIT_LABEL)[]).map((fit) => (
-          <li>
-            <span class:list={["standards-fit", `standards-fit--${fit}`]}>{FIT_LABEL[fit]}</span>
-            <span>{fitHint[fit]}</span>
-          </li>
-        ))
-      }
-    </ul>
-
     <div class="standards-main">
       {
         panels.map((area) => (
@@ -206,24 +184,6 @@ function starLabel(count: number, best: boolean) {
     min-width: 0;
   }
 
-  .standards-legend {
-    display: flex;
-    flex-direction: column;
-    gap: var(--rail-gap);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-size: var(--font-size-sm);
-    color: var(--color-muted);
-  }
-
-  .standards-legend li {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--rail-gap);
-  }
-
   .standards-rail__input {
     position: absolute;
     width: 0.0625rem;
@@ -305,8 +265,8 @@ function starLabel(count: number, best: boolean) {
   }
 
   .standards-unit__title {
-    margin: 0;
-    padding: var(--rail-gap) var(--space-padding) 0;
+    margin: calc(var(--space-padding) * 2) 0 var(--space-padding);
+    padding: 0 var(--space-padding);
     font-size: var(--font-size-sm);
     font-weight: 650;
   }
@@ -402,20 +362,22 @@ function starLabel(count: number, best: boolean) {
     display: flex;
     gap: 0.125rem;
     margin-top: auto;
+    background: transparent;
   }
 
-  .standards-star {
+  .standards-card.product-dash__card .standards-star {
+    width: auto;
+    height: auto;
+    background: transparent;
+    border-radius: 0;
     font-size: var(--font-size-sm);
     color: color-mix(in srgb, var(--color-text) 28%, var(--color-bg));
   }
 
-  .standards-star--on {
+  .standards-card.product-dash__card .standards-star--on,
+  .standards-card--best.product-dash__card .standards-star--on {
     font-variation-settings: "FILL" 1;
-    color: var(--color-muted);
-  }
-
-  .standards-card--best .standards-star--on {
-    color: var(--color-text);
+    color: #eab308;
   }
 
   .standards-fit {

@@ -115,16 +115,6 @@ function weekForPlanDay(planDay: number): number {
       id="curriculum-view-standards"
       checked={standardsView}
     />
-    <div class="eoschool-curriculum__toolbar">
-      <div class="eoschool-curriculum__viewbar" role="radiogroup" aria-label="Vista del programa">
-        <label class="eoschool-curriculum__viewbtn" for="curriculum-view-plan">Programa</label>
-        <label class="eoschool-curriculum__viewbtn" for="curriculum-view-standards">
-          <span class="material-symbols-outlined" aria-hidden="true">view_column</span>
-          Estándares
-        </label>
-      </div>
-    </div>
-
     <div class="eoschool-curriculum__plan">
     <div class="eoschool-curriculum__weeks">
       {
@@ -498,17 +488,7 @@ function weekForPlanDay(planDay: number): number {
     </div>
 
     <div class="eoschool-curriculum__standards">
-      <Grade3StandardsCompare>
-        <div slot="toolbar" class="eoschool-curriculum__toolbar">
-          <div class="eoschool-curriculum__viewbar" role="radiogroup" aria-label="Vista del programa">
-            <label class="eoschool-curriculum__viewbtn" for="curriculum-view-plan">Programa</label>
-            <label class="eoschool-curriculum__viewbtn" for="curriculum-view-standards">
-              <span class="material-symbols-outlined" aria-hidden="true">view_column</span>
-              Estándares
-            </label>
-          </div>
-        </div>
-      </Grade3StandardsCompare>
+      <Grade3StandardsCompare />
     </div>
 
   </section>
@@ -675,57 +655,8 @@ function weekForPlanDay(planDay: number): number {
     padding-top: var(--space-padding);
   }
 
-  .eoschool-curriculum__toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--rail-gap);
-    min-height: var(--menu-button-size);
-  }
-
-  #curriculum-view-standards:checked ~ .eoschool-curriculum__toolbar {
-    display: none;
-  }
-
-  .eoschool-curriculum__viewbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--rail-gap);
-  }
-
-  .eoschool-curriculum__viewbtn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--rail-gap);
-    height: var(--control-height);
-    margin: 0;
-    padding: var(--control-padding-block) var(--control-padding-inline);
-    font-size: var(--font-size-sm);
-    color: var(--color-text);
-    background: transparent;
-    border: var(--border-width) solid var(--color-border);
-    border-radius: var(--border-radius);
-    cursor: pointer;
-  }
-
-  .eoschool-curriculum__viewbtn .material-symbols-outlined {
-    font-size: var(--icon-size);
-  }
-
-  #curriculum-view-plan:checked ~ .eoschool-curriculum__toolbar label[for="curriculum-view-plan"],
-  #curriculum-view-standards:checked ~ .eoschool-curriculum__standards label[for="curriculum-view-standards"],
-  #curriculum-view-plan:focus-visible ~ .eoschool-curriculum__toolbar label[for="curriculum-view-plan"],
-  #curriculum-view-standards:focus-visible ~ .eoschool-curriculum__standards label[for="curriculum-view-standards"] {
-    color: var(--color-bg);
-    background: var(--color-text);
-    border-color: var(--color-text);
-  }
-
-  @media (max-width: 47.999rem) {
-    .eoschool-curriculum__toolbar {
-      padding-right: calc(var(--menu-button-size) + var(--space-padding));
-    }
+  :global(html[data-page="eoschool-requirements-curriculum"] main) {
+    padding-left: 0;
   }
 
   .eoschool-curriculum__plan {
