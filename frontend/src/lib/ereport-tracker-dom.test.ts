@@ -232,6 +232,56 @@ describe("tracker checklist status", () => {
     expect(w.document.getElementById("history-modal")?.classList.contains("open")).toBe(false);
   });
 
+  it("keeps the open textarea when a branch save paints session marks", async () => {
+    const w = await boot();
+    w.postMessage(
+      {
+        target: "ereport-tracker",
+        type: "config",
+        uploadUrl: "",
+        csrf: "",
+        canDelete: true,
+        readOnly: false,
+        activeSessionId: "sess-1",
+        highlightSessionId: "",
+      },
+      "*",
+    );
+    await tick(40);
+    const view = w.document.querySelector(".inplace-incidencia .inplace-view");
+    click(view);
+    const field = w.document.querySelector(".inplace-incidencia textarea") as HTMLTextAreaElement;
+    expect(field).toBeTruthy();
+    field.value = "sigo escribiendo";
+    const card = field.closest(".item-card") as HTMLElement;
+    w.postMessage(
+      {
+        target: "ereport-tracker",
+        type: "patch-marks",
+        payload: {
+          sections: [
+            {
+              id: card.dataset.section,
+              groups: [
+                {
+                  id: card.dataset.group,
+                  items: [{ id: card.dataset.item, sessionMarks: [{ sessionId: "sess-1", at: "t" }] }],
+                },
+              ],
+            },
+          ],
+        },
+      },
+      "*",
+    );
+    await tick(40);
+    const still = w.document.querySelector(".inplace-incidencia textarea") as HTMLTextAreaElement;
+    expect(still?.value).toBe("sigo escribiendo");
+    expect(card.querySelector(".session-badge")?.textContent).toBe("Sesión");
+    expect(w.document.body.classList.contains("is-readonly")).toBe(false);
+    expect(all(w, '[data-act="add-item"]').length).toBeGreaterThan(0);
+  });
+
   it("badges the active session and locks the sheet when read-only", async () => {
     const w = await boot();
     w.postMessage(

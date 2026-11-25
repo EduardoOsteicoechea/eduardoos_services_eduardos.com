@@ -1446,6 +1446,40 @@ function renderSessionBadge(node) {
   return `<span class="session-badge" title="Editado en esta sesión">Sesión</span>`;
 }
 
+function ensureSessionBadge(host) {
+  if (!host || host.querySelector(":scope > .session-badge")) return;
+  const badge = document.createElement("span");
+  badge.className = "session-badge";
+  badge.title = "Editado en esta sesión";
+  badge.textContent = "Sesión";
+  const inplace = host.querySelector(":scope > .inplace");
+  if (inplace) host.insertBefore(badge, inplace);
+  else host.appendChild(badge);
+}
+
+/** Paint session badges onto the live sheet. A full render() would close the open textarea. */
+function paintSessionBadges() {
+  const esc = (value) => (window.CSS && CSS.escape ? CSS.escape(String(value)) : String(value).replace(/"/g, ""));
+  (state.sections || []).forEach((sec) => {
+    if (hasSessionMark(sec)) {
+      ensureSessionBadge(document.querySelector(`.section-block[data-section="${esc(sec.id)}"] .section-title-main`));
+    }
+    (sec.items || []).forEach((it) => {
+      if (!hasSessionMark(it)) return;
+      ensureSessionBadge(document.querySelector(`.item-card[data-item="${esc(it.id)}"] .item-top`));
+    });
+    (sec.groups || []).forEach((grp) => {
+      if (hasSessionMark(grp)) {
+        ensureSessionBadge(document.querySelector(`.group-block[data-group="${esc(grp.id)}"] .group-head-main`));
+      }
+      (grp.items || []).forEach((it) => {
+        if (!hasSessionMark(it)) return;
+        ensureSessionBadge(document.querySelector(`.item-card[data-item="${esc(it.id)}"] .item-top`));
+      });
+    });
+  });
+}
+
 function applyReadOnlyChrome() {
   document.body.classList.toggle("is-readonly", permissions.readOnly === true);
   document.querySelectorAll("#meta-panel input, #meta-panel textarea, #meta-panel select, #app input, #app textarea, #app select").forEach((el) => {
@@ -4550,7 +4584,7 @@ updateStatus();
       suppressCloudSave = true;
       try {
         applySessionMarks(d.payload || {});
-        render();
+        paintSessionBadges();
       } catch (e) {
         emit("error", { message: String(e && e.message ? e.message : e) });
       }
