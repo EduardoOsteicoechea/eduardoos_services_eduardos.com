@@ -1,6 +1,7 @@
 ---
 import { Fragment } from "astro/jsx-runtime";
 import EoschoolDashBack from "../../../components/EoschoolDashBack.astro";
+import Grade3StandardsCompare from "../../../components/Grade3StandardsCompare.astro";
 import Layout from "../../../layouts/Layout.astro";
 import { MPPE_40WEEK_CURRICULUM } from "../../../lib/eoschool-mppe-40week-curriculum";
 import {
@@ -18,6 +19,7 @@ import { DEFAULT_CURRENT_WEEK } from "../../../lib/eoschool-curriculum-week-coll
 
 const { meta, weeks } = MPPE_40WEEK_CURRICULUM;
 const curriculumMode = Astro.url.searchParams.get("mode") === "browse" ? "browse" : "study";
+const standardsView = Astro.url.searchParams.get("view") === "standards";
 const initialStudentKey = Astro.url.searchParams.get("studentKey")?.trim() || "";
 
 const bibleMeta = meta.bible;
@@ -100,8 +102,32 @@ function weekForPlanDay(planDay: number): number {
     data-curriculum-mode={curriculumMode}
     data-curriculum-student-key={initialStudentKey || undefined}
   >
-    <EoschoolDashBack />
+    <input
+      class="eoschool-curriculum__view-input"
+      type="radio"
+      name="curriculum-view"
+      id="curriculum-view-plan"
+      checked={!standardsView}
+    />
+    <input
+      class="eoschool-curriculum__view-input"
+      type="radio"
+      name="curriculum-view"
+      id="curriculum-view-standards"
+      checked={standardsView}
+    />
+    <div class="eoschool-curriculum__toolbar">
+      <EoschoolDashBack />
+      <div class="eoschool-curriculum__viewbar" role="radiogroup" aria-label="Vista del programa">
+        <label class="eoschool-curriculum__viewbtn" for="curriculum-view-plan">Programa</label>
+        <label class="eoschool-curriculum__viewbtn" for="curriculum-view-standards">
+          <span class="material-symbols-outlined" aria-hidden="true">view_column</span>
+          Estándares
+        </label>
+      </div>
+    </div>
 
+    <div class="eoschool-curriculum__plan">
     <div class="eoschool-curriculum__weeks">
       {
         weeks.map((weekPlan) => {
@@ -471,6 +497,11 @@ function weekForPlanDay(planDay: number): number {
         {meta.totalPlanDays === 200 ? " (Plan 40 semanas · 200 días escolares · 3er grado)." : "."}
       </p>
     </div>
+    </div>
+
+    <div class="eoschool-curriculum__standards">
+      <Grade3StandardsCompare />
+    </div>
 
   </section>
 
@@ -587,6 +618,10 @@ function weekForPlanDay(planDay: number): number {
   import { initCurriculumWeekCollapse } from "../../../lib/eoschool-curriculum-week-collapse";
 
   function bootCurriculumChrome() {
+    const standardsRadio = document.querySelector<HTMLInputElement>("#curriculum-view-standards");
+    if (standardsRadio && new URLSearchParams(location.search).get("view") === "standards") {
+      standardsRadio.checked = true;
+    }
     const root = document.querySelector<HTMLElement>("[data-curriculum-progress]");
     bindCurriculumTreatModal();
     const mode = root?.dataset.curriculumMode || "study";
@@ -616,6 +651,81 @@ function weekForPlanDay(planDay: number): number {
 </script>
 
 <style>
+  .eoschool-curriculum__view-input {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .eoschool-curriculum__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum__toolbar :global(.product-dash__back) {
+    margin-top: 0;
+  }
+
+  .eoschool-curriculum__viewbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum__viewbtn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--rail-gap);
+    height: var(--control-height);
+    margin: 0;
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    background: transparent;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+  }
+
+  .eoschool-curriculum__viewbtn .material-symbols-outlined {
+    font-size: var(--icon-size);
+  }
+
+  #curriculum-view-plan:checked ~ .eoschool-curriculum__toolbar label[for="curriculum-view-plan"],
+  #curriculum-view-standards:checked ~ .eoschool-curriculum__toolbar label[for="curriculum-view-standards"],
+  #curriculum-view-plan:focus-visible ~ .eoschool-curriculum__toolbar label[for="curriculum-view-plan"],
+  #curriculum-view-standards:focus-visible ~ .eoschool-curriculum__toolbar label[for="curriculum-view-standards"] {
+    color: var(--color-bg);
+    background: var(--color-text);
+    border-color: var(--color-text);
+  }
+
+  .eoschool-curriculum__plan {
+    display: contents;
+  }
+
+  .eoschool-curriculum__standards {
+    display: none;
+  }
+
+  #curriculum-view-standards:checked ~ .eoschool-curriculum__plan {
+    display: none;
+  }
+
+  #curriculum-view-standards:checked ~ .eoschool-curriculum__standards {
+    display: block;
+  }
+
+
   .eoschool-curriculum {
     min-width: 0;
     max-width: 100%;
