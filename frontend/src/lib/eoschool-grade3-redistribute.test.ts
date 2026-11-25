@@ -80,11 +80,14 @@ describe("grade 3 redistribute from day 38", () => {
 });
 
 describe("inteligencia artificial from day 38", () => {
-  it("starts on day 38 with the fence and then rotates questions", () => {
+  it("starts on day 38 with ten photos and then rotates questions", () => {
     expect(aiOnThisDay(37, "teach")).toBe(false);
     expect(aiOnThisDay(38, "holiday")).toBe(false);
     expect(aiOnThisDay(38, "teach")).toBe(true);
-    expect(aiGroupsForDay(38)[0].objective).toBe("La cerca");
+    expect(aiGroupsForDay(38)[0].objective).toBe("Diez fotos");
+    expect(aiGroupsForDay(38)[0].learnings[0]).toBe(
+      "Fotografías 10 piezas, la IA describe lo que se ve y marca repetidos, tú confirmas.",
+    );
     expect(aiGroupsForDay(39)[0].objective).toBe("Inventario");
     expect(aiGroupsForDay(40)[0].objective).toBe("Página");
     expect(aiGroupsForDay(43)[0].objective).toBe("Revisión");

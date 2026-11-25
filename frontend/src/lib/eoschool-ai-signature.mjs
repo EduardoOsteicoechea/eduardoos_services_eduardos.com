@@ -33,8 +33,8 @@ export function aiGroupsForDay(planDay) {
   if (planDay <= AI_FROM_PLAN_DAY) {
     return [
       {
-        objective: "La cerca",
-        learnings: ["Di qué carpetas se pueden tocar. El agente no las inventa."],
+        objective: "Diez fotos",
+        learnings: ["Fotografías 10 piezas, la IA describe lo que se ve y marca repetidos, tú confirmas."],
       },
     ];
   }
