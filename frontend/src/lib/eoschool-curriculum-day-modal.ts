@@ -466,8 +466,10 @@ export function initCurriculumDayModal(root: HTMLElement | null): void {
       return;
     }
 
-    const bubble = target instanceof Element ? target.closest<HTMLElement>("[data-curriculum-day-bubble]") : null;
-    const card = bubble?.closest<HTMLElement>("[data-curriculum-day]") ?? null;
+    const opener = target instanceof Element
+      ? target.closest<HTMLElement>("[data-curriculum-day-bubble], [data-curriculum-day-open]")
+      : null;
+    const card = opener?.closest<HTMLElement>("[data-curriculum-day]") ?? null;
     if (!card) return;
     if (mustLog) console.log("[curriculum-day-modal] open", { day: card.dataset.curriculumDay });
     openModal(card);

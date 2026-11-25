@@ -246,6 +246,14 @@ function weekForPlanDay(planDay: number): number {
                       ></span>
                       <span class="eoschool-curriculum__day-bubble__num">{bibleDay.dayInPlan}</span>
                     </button>
+                    <button
+                      class="eoschool-curriculum__day-open"
+                      type="button"
+                      data-curriculum-day-open
+                      aria-label={ariaDay}
+                    >
+                      <span class="material-symbols-outlined" aria-hidden="true">open_in_full</span>
+                    </button>
                     <div class="eoschool-curriculum__day-body">
                       {scheduled.map((sectionId) => {
                         const area = areaBySection[sectionId];
@@ -1129,8 +1137,8 @@ function weekForPlanDay(planDay: number): number {
     min-width: 0;
     align-items: stretch;
     overflow: visible;
-    padding-block: calc(var(--button-size) * 0.28125) 0;
-    padding-inline: calc(var(--button-size) * 0.28125);
+    padding-block: calc(var(--button-size) * 0.421875) 0;
+    padding-inline: calc(var(--button-size) * 0.421875);
   }
 
   .eoschool-curriculum__day-card {
@@ -1155,15 +1163,15 @@ function weekForPlanDay(planDay: number): number {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    width: calc(var(--button-size) * 0.5625);
-    height: calc(var(--button-size) * 0.5625);
+    width: calc(var(--button-size) * 0.84375);
+    height: calc(var(--button-size) * 0.84375);
     margin: 0;
     padding: 0;
     border: var(--border-width) solid var(--color-border);
     border-radius: 50%;
     background: var(--color-bg);
     color: var(--color-text);
-    font-size: var(--font-size-xs);
+    font-size: calc(var(--font-size-xs) * 1.5);
     font-weight: 650;
     line-height: 1;
     cursor: pointer;
@@ -1186,6 +1194,33 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__day-bubble--green {
     color: #f5f5f5;
+  }
+
+  .eoschool-curriculum__day-open {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--button-size) * 0.84375);
+    height: calc(var(--button-size) * 0.84375);
+    margin: 0;
+    padding: 0;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .eoschool-curriculum__day-open .material-symbols-outlined {
+    font-size: var(--font-size-md);
+    width: var(--font-size-md);
+    height: var(--font-size-md);
+    line-height: 1;
   }
 
   .eoschool-curriculum__day-card.product-dash__card {
