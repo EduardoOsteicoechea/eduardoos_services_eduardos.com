@@ -332,8 +332,8 @@ function openModal(card: HTMLElement): void {
   if (titleEl) {
     const base = planDay ? `Día ${planDay}` : `Día ${dayId.replace(/^d/, "")}`;
     if (dayKind === "holiday") {
-      const holidayTitle = card.querySelector(".eoschool-curriculum__day-title")?.textContent?.trim();
-      titleEl.textContent = holidayTitle || `${base} · Feriado`;
+      const holidayName = card.dataset.holidayName?.trim();
+      titleEl.textContent = holidayName ? `${base} · Feriado — ${holidayName}` : `${base} · Feriado`;
     } else if (dayKind === "exposition") {
       titleEl.textContent = `${base} · Exposiciones`;
     } else {
@@ -474,25 +474,10 @@ export function initCurriculumDayModal(root: HTMLElement | null): void {
       return;
     }
 
-    const card = target instanceof Element ? target.closest<HTMLElement>("[data-curriculum-day-trigger]") : null;
+    const bubble = target instanceof Element ? target.closest<HTMLElement>("[data-curriculum-day-bubble]") : null;
+    const card = bubble?.closest<HTMLElement>("[data-curriculum-day]") ?? null;
     if (!card) return;
     if (mustLog) console.log("[curriculum-day-modal] open", { day: card.dataset.curriculumDay });
-    openModal(card);
-  });
-
-  root.addEventListener("keydown", (ev) => {
-    if (ev.key !== "Enter" && ev.key !== " ") return;
-    const keyTarget = ev.target;
-    if (
-      keyTarget instanceof Element &&
-      (keyTarget.closest("[data-curriculum-subject-toggle]") ||
-        keyTarget.closest(".eoschool-curriculum__section-check"))
-    ) {
-      return;
-    }
-    const card = (ev.target as HTMLElement | null)?.closest<HTMLElement>("[data-curriculum-day-trigger]");
-    if (!card) return;
-    ev.preventDefault();
     openModal(card);
   });
 }

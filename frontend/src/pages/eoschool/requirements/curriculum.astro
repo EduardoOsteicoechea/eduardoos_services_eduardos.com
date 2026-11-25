@@ -206,11 +206,6 @@ function weekForPlanDay(planDay: number): number {
                 const isExpo = block.dayKind === "exposition";
                 const subjectsOpen = weekSubjectsOpen && !isExpo;
                 const isHoliday = block.dayKind === "holiday";
-                const dayTitleSuffix = isHoliday
-                  ? ` · Feriado — ${block.holidayName ?? "Feriado"}`
-                  : isExpo
-                    ? " · Exposiciones"
-                    : "";
                 const ariaDay = isHoliday
                   ? `Abrir día ${bibleDay.dayInPlan}, feriado ${block.holidayName ?? ""}`
                   : isExpo
@@ -232,11 +227,16 @@ function weekForPlanDay(planDay: number): number {
                     data-curriculum-scheduled={scheduled.join(",")}
                     data-curriculum-week={weekPlan.week}
                     data-curriculum-day-kind={block.dayKind ?? "teach"}
-                    data-curriculum-day-trigger
-                    tabindex="0"
-                    role="button"
-                    aria-label={ariaDay}
+                    data-holiday-name={isHoliday ? (block.holidayName ?? "Feriado") : undefined}
                   >
+                    <button
+                      class="eoschool-curriculum__day-bubble"
+                      type="button"
+                      data-curriculum-day-bubble
+                      aria-label={ariaDay}
+                    >
+                      {bibleDay.dayInPlan}
+                    </button>
                     <div
                       class="eoschool-curriculum__week-progress"
                       role="progressbar"
@@ -248,16 +248,6 @@ function weekForPlanDay(planDay: number): number {
                     >
                       <span class="eoschool-curriculum__week-progress__fill" data-curriculum-day-progress-fill></span>
                     </div>
-                    <header class="eoschool-curriculum__day-head">
-                      <h3 class="eoschool-curriculum__day-title">
-                        Día {bibleDay.dayInPlan}
-                        {dayTitleSuffix}
-                      </h3>
-                      <span class="eoschool-curriculum__day-open-hint" aria-hidden="true">
-                        <span class="material-symbols-outlined">open_in_full</span>
-                      </span>
-                    </header>
-
                     <div class="eoschool-curriculum__day-body">
                       {scheduled.map((sectionId) => {
                         const area = areaBySection[sectionId];
@@ -981,9 +971,12 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__day-card > .eoschool-curriculum__week-progress {
-    margin-block-start: calc(var(--space-padding) * -1);
-    margin-inline: calc(var(--space-padding) * -1);
-    margin-block-end: var(--space-padding);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    height: 0.1rem;
   }
 
   .eoschool-curriculum__week-layout {
@@ -1142,14 +1135,37 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__day-card {
-    cursor: pointer;
+    cursor: default;
     align-items: stretch;
     gap: 0;
     min-width: 0;
     min-height: 0;
     padding: var(--space-padding);
+    padding-top: calc(var(--button-size) + var(--rail-gap));
     display: flex;
     flex-direction: column;
+  }
+
+  .eoschool-curriculum__day-bubble {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-size);
+    height: var(--button-size);
+    margin: 0;
+    padding: 0;
+    border: var(--border-width) solid var(--color-text);
+    border-radius: 50%;
+    background: var(--color-text);
+    color: var(--color-bg);
+    font-size: var(--font-size-xs);
+    font-weight: 650;
+    line-height: 1;
+    cursor: pointer;
   }
 
   .eoschool-curriculum__day-card.product-dash__card {
@@ -1223,50 +1239,6 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__week.product-dash__card--done {
     border-color: transparent;
     background: transparent;
-  }
-
-  .eoschool-curriculum__day-head {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--rail-gap);
-    width: 100%;
-    padding-block-end: var(--rail-gap);
-    margin-block-end: var(--rail-gap);
-    border-block-end: var(--border-width) solid var(--color-border);
-    flex-shrink: 0;
-    min-height: 0;
-  }
-
-  .eoschool-curriculum__day-title {
-    margin: 0;
-    font-size: var(--font-size-sm);
-    font-weight: 650;
-    line-height: 1;
-    min-width: 0;
-    flex: 1;
-  }
-
-  .eoschool-curriculum__day-open-hint {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    color: var(--color-muted);
-    font-size: var(--font-size-sm);
-    line-height: 1;
-    height: 1em;
-  }
-
-  .eoschool-curriculum__day-card .eoschool-curriculum__day-open-hint .material-symbols-outlined {
-    font-size: 1em;
-    width: 1em;
-    height: 1em;
-    line-height: 1;
-    color: var(--color-text);
-    background: transparent;
-    border-radius: 0;
   }
 
   .eoschool-curriculum__subject-head {
@@ -1631,11 +1603,6 @@ function weekForPlanDay(planDay: number): number {
     margin: 0 0 var(--rail-gap) 0;
     font-size: var(--font-size-xs);
     color: var(--color-muted);
-  }
-
-  .eoschool-curriculum__day-card--expo .eoschool-curriculum__day-title,
-  .eoschool-curriculum__day-card--holiday .eoschool-curriculum__day-title {
-    font-weight: 600;
   }
 
   .eoschool-curriculum__learnings {
