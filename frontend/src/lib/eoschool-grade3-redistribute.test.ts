@@ -86,8 +86,8 @@ describe("inteligencia artificial from day 38", () => {
     expect(aiOnThisDay(38, "teach")).toBe(true);
     expect(aiGroupsForDay(38)[0].objective).toBe("Diez fotos");
     expect(aiGroupsForDay(38)[0].learnings).toEqual([
-      "10 fotos en la carpeta fotos.",
-      "La app las carga y arma el inventario.",
+      "Dejas 10 fotos en todays_homework.",
+      "El agente las pasa a assets si se ve la pieza.",
       "Tú confirmas color, forma, tacos y repetidos.",
     ]);
     expect(aiGroupsForDay(39)[0].objective).toBe("Inventario");

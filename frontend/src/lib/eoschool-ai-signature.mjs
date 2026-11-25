@@ -30,22 +30,24 @@ export function aiOnThisDay(planDay, dayKind) {
 }
 
 const DAY38_CARD = [
-  "10 fotos en la carpeta fotos.",
-  "La app las carga y arma el inventario.",
+  "Dejas 10 fotos en todays_homework.",
+  "El agente las pasa a assets si se ve la pieza.",
   "Tú confirmas color, forma, tacos y repetidos.",
 ];
 
 const DAY38_READING = [
-  "Fotografías 10 piezas y las guardas en la carpeta fotos.",
-  "La app carga esas fotos y muestra el inventario.",
+  "Fotografías 10 piezas y las dejas en todays_homework.",
+  "El agente mira cada foto. Si se ve una sola pieza, la mueve a assets. Si no, te pide que la refines.",
+  "La app carga assets y muestra el inventario.",
   "Cada foto tiene una ficha: color, forma y tacos. Tú la corriges y la confirmas.",
   "Un repetido es la misma forma y el mismo color. La app los marca. Tú dices si tiene razón.",
 ];
 
 const DAY38_TASKS = [
   "Elige 10 piezas y saca una foto de cada una.",
-  "Guarda las fotos en la carpeta fotos.",
-  "Abre la app del inventario. Ella carga las fotos de esa carpeta.",
+  "Deja las fotos en todays_homework.",
+  "El agente pasa a assets las que se ven bien.",
+  "Abre la app del inventario. Ella carga assets.",
   "Pide la ficha de cada foto: color, forma y tacos.",
   "Corrige y confirma en la app.",
   "Revisa los repetidos que muestra la app.",
@@ -65,7 +67,7 @@ export function aiSheetSection(planDay) {
       objective: "Diez fotos",
       learning: DAY38_READING.join(" · "),
       activities: DAY38_TASKS,
-      canDo: "Al terminar puedes mostrar 10 fotos en la carpeta, 10 fichas confirmadas en la app y los repetidos a la vista.",
+      canDo: "Al terminar puedes mostrar 10 fotos en assets, 10 fichas confirmadas en la app y los repetidos a la vista.",
     };
   }
   if (planDay === 39) {
