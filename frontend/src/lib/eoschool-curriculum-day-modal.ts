@@ -3,10 +3,6 @@ import { clonePdfBytes, downloadPdfBytes, renderHomescoolPdfPreview } from "./ho
 import type { CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
 import { AI_FROM_PLAN_DAY } from "./eoschool-ai-signature";
 import {
-  bindCurriculumMaterialsPanel,
-  loadCurriculumMaterialsPanel,
-} from "./eoschool-curriculum-materials";
-import {
   fetchMppeDaySheet,
   type MppeCurriculumDaySection,
   type MppeCurriculumDaySheet,
@@ -15,8 +11,6 @@ import { fetchMppeDayPdfPreview } from "./mppe-curriculum-pdf-preview";
 import { DAY38_PACKET_NAME, dayPacketHref } from "./eoschool-day38-packet";
 import { mustLog } from "./dev-log";
 import { renderCurriculumActivity } from "./eoschool-curriculum-activity";
-
-let materialsRoot: HTMLElement | null = null;
 
 let sheetCache: Map<string, MppeCurriculumDaySheet> = new Map();
 let activePdfBytes: Uint8Array | null = null;
@@ -402,10 +396,6 @@ function activateTab(
   });
   setModalSectionContent(modal, card, sectionId, sheet);
   renderCurriculumActivity(modal, card, sectionId);
-  const dayId = card.dataset.curriculumDay ?? "";
-  if (dayId) {
-    void loadCurriculumMaterialsPanel(modal, materialsRoot, dayId, sectionId);
-  }
 }
 
 export function bindCurriculumDayModalShell(modal: HTMLElement): void {
@@ -452,11 +442,9 @@ export function bindCurriculumDayModalShell(modal: HTMLElement): void {
 }
 
 export function initCurriculumDayModal(root: HTMLElement | null): void {
-  materialsRoot = root;
   const modal = document.querySelector<HTMLElement>("[data-curriculum-day-modal]");
   if (modal) {
     bindCurriculumDayModalShell(modal);
-    bindCurriculumMaterialsPanel(modal, root);
   }
 
   if (!root) return;

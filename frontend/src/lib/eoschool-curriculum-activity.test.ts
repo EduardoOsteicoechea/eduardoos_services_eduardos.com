@@ -38,6 +38,9 @@ describe("activity thumbnails", () => {
     expect(img?.getAttribute("src")).toContain("name=p0123456789abcdef.webp");
     expect(remove?.getAttribute("aria-label")).toBe("Borrar foto");
     expect(remove?.querySelector(".material-symbols-outlined")?.textContent).toBe("delete");
+    const score = modal.querySelector(".eoschool-curriculum-activity__score");
+    expect(score?.textContent).toContain("Puntaje");
+    expect(score?.querySelector("input[type='number']")).not.toBeNull();
   });
 });
 

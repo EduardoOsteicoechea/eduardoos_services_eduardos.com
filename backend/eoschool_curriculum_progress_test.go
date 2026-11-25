@@ -76,6 +76,19 @@ func TestEoschoolActivityMarksPersist(t *testing.T) {
 	}
 }
 
+func TestEoschoolActivityScoreKey(t *testing.T) {
+	admin := &User{Role: roleAdmin}
+	if !eoschoolActivityScoreKeyOK(admin, "20797190") {
+		t.Fatal("admin key")
+	}
+	if eoschoolActivityScoreKeyOK(admin, "20797191") || eoschoolActivityScoreKeyOK(admin, "") {
+		t.Fatal("wrong key")
+	}
+	if eoschoolActivityScoreKeyOK(&User{Role: "user"}, "20797190") || eoschoolActivityScoreKeyOK(nil, "20797190") {
+		t.Fatal("non-admin")
+	}
+}
+
 func TestDropEoschoolActivityPhoto(t *testing.T) {
 	row := EoschoolCurriculumProgressDoc{
 		ActivityPhotos:    map[string]string{"d38:eng": "pabcdef0123456789.webp"},

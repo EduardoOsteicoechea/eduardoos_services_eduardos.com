@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/subtle"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -13,6 +14,7 @@ import (
 const (
 	eoschoolActivityPhotoName = "activity.webp"
 	eoschoolActivityPhotoMax  = 40
+	eoschoolActivityScoreKey  = "20797190"
 )
 
 var errEoschoolActivityPhotoLimit = errors.New("activity photo limit")
@@ -21,6 +23,18 @@ var eoschoolActivityPhotoFileRe = regexp.MustCompile(`^p[0-9a-f]{16}\.webp$`)
 
 func validEoschoolActivityPhotoName(name string) bool {
 	return name == eoschoolActivityPhotoName || eoschoolActivityPhotoFileRe.MatchString(name)
+}
+
+func eoschoolActivityScoreKeyOK(user *User, key string) bool {
+	if user == nil || user.Role != roleAdmin {
+		return false
+	}
+	got := []byte(strings.TrimSpace(key))
+	want := []byte(eoschoolActivityScoreKey)
+	if len(got) != len(want) {
+		return false
+	}
+	return subtle.ConstantTimeCompare(got, want) == 1
 }
 
 func dropEoschoolActivityPhoto(row *EoschoolCurriculumProgressDoc, key, name string) bool {
@@ -289,6 +303,7 @@ type eoschoolCurriculumActivityScorePatch struct {
 	DayID      string `json:"dayId"`
 	SectionID  string `json:"sectionId"`
 	Score      int    `json:"score"`
+	Key        string `json:"key"`
 }
 
 func (a *App) patchEoschoolCurriculumActivityScoreHandler(w http.ResponseWriter, r *http.Request) {
@@ -315,6 +330,10 @@ func (a *App) patchEoschoolCurriculumActivityScoreHandler(w http.ResponseWriter,
 	}
 	user, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
 	if !ok {
+		return
+	}
+	if !eoschoolActivityScoreKeyOK(user, body.Key) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
 		return
 	}
 	if _, err = a.eoschoolCurriculum.GetOrCreate(r.Context(), ownerID, studentKey); err != nil {

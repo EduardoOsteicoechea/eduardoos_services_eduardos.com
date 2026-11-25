@@ -204,6 +204,7 @@ export async function patchCurriculumActivityScore(input: {
   dayId: string;
   sectionId: string;
   score: number;
+  key: string;
 }): Promise<CurriculumProgressPayload> {
   const { status, data, requestId } = await apiSend<CurriculumProgressPayload>(
     "/eoschool/curriculum/activities/score",
@@ -213,6 +214,11 @@ export async function patchCurriculumActivityScore(input: {
       body: JSON.stringify(input),
     },
   );
+  if (status === 403) {
+    const err = new Error("La clave no es válida.") as Error & { requestId?: string };
+    err.requestId = requestId;
+    throw err;
+  }
   if (status < 200 || status >= 300) {
     const err = new Error(data.message || "No se pudo guardar el puntaje.") as Error & { requestId?: string };
     err.requestId = requestId;

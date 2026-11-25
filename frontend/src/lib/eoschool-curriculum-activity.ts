@@ -117,8 +117,8 @@ export function renderCurriculumActivity(
 
   const scoreRow = document.createElement("div");
   scoreRow.className = "eoschool-curriculum-activity__score";
-  const scoreLabel = document.createElement("label");
-  scoreLabel.textContent = "Puntaje";
+  const scoreText = document.createElement("span");
+  scoreText.textContent = "Puntaje";
   const scoreInput = document.createElement("input");
   scoreInput.type = "number";
   scoreInput.min = "0";
@@ -129,8 +129,7 @@ export function renderCurriculumActivity(
   const save = document.createElement("button");
   save.type = "button";
   save.textContent = "Guardar puntaje";
-  scoreLabel.append(scoreInput);
-  scoreRow.append(scoreLabel, save);
+  scoreRow.append(scoreText, scoreInput, save);
 
   host.append(fileLabel);
   if (names.length) {
@@ -203,17 +202,78 @@ export function renderCurriculumActivity(
       showErrorModal({ message: "El puntaje va de 0 a 100." });
       return;
     }
-    if (mustLog) console.log("[curriculum.activity] score.save", { dayId, sectionId, score: next });
-    void patchCurriculumActivityScore({ studentKey, dayId, sectionId, score: next })
-      .then((data) => {
-        applyPayload(data, key);
-        renderCurriculumActivity(modal, card, sectionId);
-      })
-      .catch((err) => {
-        showErrorModal({
-          message: err instanceof Error ? err.message : "No se pudo guardar el puntaje.",
-          requestId: requestIdOf(err),
+    openScoreKeyDialog(modal, (keyValue) => {
+      if (mustLog) console.log("[curriculum.activity] score.save", { dayId, sectionId, score: next });
+      void patchCurriculumActivityScore({ studentKey, dayId, sectionId, score: next, key: keyValue })
+        .then((data) => {
+          applyPayload(data, key);
+          renderCurriculumActivity(modal, card, sectionId);
+        })
+        .catch((err) => {
+          showErrorModal({
+            message: err instanceof Error ? err.message : "No se pudo guardar el puntaje.",
+            requestId: requestIdOf(err),
+          });
         });
-      });
+    });
+  });
+}
+
+function openScoreKeyDialog(modal: HTMLElement, onConfirm: (keyValue: string) => void): void {
+  modal.querySelector("[data-curriculum-score-key]")?.remove();
+  const layer = document.createElement("div");
+  layer.className = "eoschool-curriculum-activity__key";
+  layer.dataset.curriculumScoreKey = "";
+  layer.setAttribute("role", "dialog");
+  layer.setAttribute("aria-modal", "true");
+  layer.setAttribute("aria-label", "Clave de administrador");
+
+  const box = document.createElement("div");
+  box.className = "eoschool-curriculum-activity__key-box";
+  const label = document.createElement("label");
+  label.className = "eoschool-curriculum-activity__key-label";
+  label.textContent = "Clave";
+  const input = document.createElement("input");
+  input.type = "password";
+  input.autocomplete = "off";
+  input.className = "eoschool-curriculum-activity__key-input";
+  input.setAttribute("aria-label", "Clave de administrador");
+  label.append(input);
+
+  const actions = document.createElement("div");
+  actions.className = "eoschool-curriculum-activity__key-actions";
+  const confirm = document.createElement("button");
+  confirm.type = "button";
+  confirm.textContent = "Confirmar";
+  const cancel = document.createElement("button");
+  cancel.type = "button";
+  cancel.textContent = "Cancelar";
+  actions.append(confirm, cancel);
+  box.append(label, actions);
+  layer.append(box);
+  modal.append(layer);
+  input.focus();
+
+  const close = () => layer.remove();
+  cancel.addEventListener("click", close);
+  layer.addEventListener("click", (ev) => {
+    if (ev.target === layer) close();
+  });
+  const submit = () => {
+    const keyValue = input.value.trim();
+    close();
+    if (!keyValue) {
+      showErrorModal({ message: "La clave no es válida." });
+      return;
+    }
+    onConfirm(keyValue);
+  };
+  confirm.addEventListener("click", submit);
+  input.addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter") {
+      ev.preventDefault();
+      submit();
+    }
+    if (ev.key === "Escape") close();
   });
 }
