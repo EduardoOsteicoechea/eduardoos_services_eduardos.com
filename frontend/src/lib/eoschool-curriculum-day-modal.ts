@@ -14,6 +14,7 @@ import {
 import { fetchMppeDayPdfPreview } from "./mppe-curriculum-pdf-preview";
 import { DAY38_PACKET_NAME, dayPacketHref } from "./eoschool-day38-packet";
 import { mustLog } from "./dev-log";
+import { renderCurriculumActivity } from "./eoschool-curriculum-activity";
 
 let materialsRoot: HTMLElement | null = null;
 
@@ -400,6 +401,7 @@ function activateTab(
     tab.classList.toggle("eoschool-curriculum-modal__tab--active", active);
   });
   setModalSectionContent(modal, card, sectionId, sheet);
+  renderCurriculumActivity(modal, card, sectionId);
   const dayId = card.dataset.curriculumDay ?? "";
   if (dayId) {
     void loadCurriculumMaterialsPanel(modal, materialsRoot, dayId, sectionId);

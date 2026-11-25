@@ -16,6 +16,8 @@ export type CurriculumStudent = {
 export type CurriculumProgressPayload = {
   student: CurriculumStudent;
   sectionsDone: string[];
+  activityScores?: Record<string, number>;
+  activityPhotos?: string[];
 };
 
 export type CurriculumStudentsPayload = {
@@ -148,6 +150,63 @@ export async function patchCurriculumSection(input: {
     throw err;
   }
   return data;
+}
+
+export async function uploadCurriculumActivityPhoto(input: {
+  studentKey: string;
+  dayId: string;
+  sectionId: string;
+  photo: File;
+}): Promise<CurriculumProgressPayload> {
+  const body = new FormData();
+  body.set("studentKey", input.studentKey);
+  body.set("dayId", input.dayId);
+  body.set("sectionId", input.sectionId);
+  body.set("photo", input.photo);
+  const { status, data, requestId } = await apiSend<CurriculumProgressPayload>(
+    "/eoschool/curriculum/activities/photo",
+    { method: "POST", body },
+    { timeoutMs: 120000 },
+  );
+  if (status < 200 || status >= 300) {
+    const err = new Error(data.message || "No se pudo subir la foto.") as Error & { requestId?: string };
+    err.requestId = requestId;
+    throw err;
+  }
+  return data;
+}
+
+export async function patchCurriculumActivityScore(input: {
+  studentKey: string;
+  dayId: string;
+  sectionId: string;
+  score: number;
+}): Promise<CurriculumProgressPayload> {
+  const { status, data, requestId } = await apiSend<CurriculumProgressPayload>(
+    "/eoschool/curriculum/activities/score",
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    },
+  );
+  if (status < 200 || status >= 300) {
+    const err = new Error(data.message || "No se pudo guardar el puntaje.") as Error & { requestId?: string };
+    err.requestId = requestId;
+    throw err;
+  }
+  return data;
+}
+
+export function curriculumActivityPhotoURL(
+  studentKey: string,
+  dayId: string,
+  sectionId: string,
+  download = false,
+): string {
+  const q = new URLSearchParams({ studentKey, dayId, sectionId });
+  if (download) q.set("download", "1");
+  return `/api/eoschool/curriculum/activities/photo?${q}`;
 }
 
 function base64ToBytes(b64: string): Uint8Array {

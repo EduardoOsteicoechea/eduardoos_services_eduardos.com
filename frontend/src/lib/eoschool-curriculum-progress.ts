@@ -9,6 +9,7 @@ import { daySectionsComplete, sectionProgressKey } from "./eoschool-curriculum-p
 import { openCurriculumTreatModal } from "./eoschool-curriculum-treat-modal";
 import { showErrorModal } from "./error-modal";
 import { mustLog } from "./dev-log";
+import { paintCurriculumSubjectScores, setActivityMarks } from "./eoschool-curriculum-activity";
 
 export { sectionProgressKey };
 
@@ -60,6 +61,8 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
     }
     paintDayProgress(card, finished, scheduled.length);
   });
+
+  paintCurriculumSubjectScores(root);
 
   root.querySelectorAll<HTMLElement>("[data-curriculum-week]").forEach((week) => {
     const dayCards = daysInWeek(week);
@@ -205,6 +208,7 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
       studentKey = loaded.data.student.studentKey;
       root.dataset.curriculumStudentKey = studentKey;
       loaded.data.sectionsDone.forEach((key) => done.add(key));
+      setActivityMarks(loaded.data.activityScores, loaded.data.activityPhotos);
       setStudentBanner(root, loaded.data.student, "remote");
       if (mustLog) {
         console.log("[curriculum.progress] loaded", {
@@ -273,6 +277,7 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
       });
       done.clear();
       data.sectionsDone.forEach((k) => done.add(k));
+      setActivityMarks(data.activityScores, data.activityPhotos);
       setStudentBanner(root, data.student, "remote");
       applyProgress(root, done);
     } catch (err) {

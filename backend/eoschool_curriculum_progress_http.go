@@ -4,12 +4,33 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"sort"
 	"strings"
 )
 
 type eoschoolCurriculumProgressResponse struct {
-	Student      EoschoolCurriculumStudent `json:"student"`
-	SectionsDone []string                  `json:"sectionsDone"`
+	Student        EoschoolCurriculumStudent `json:"student"`
+	SectionsDone   []string                  `json:"sectionsDone"`
+	ActivityScores map[string]int            `json:"activityScores"`
+	ActivityPhotos []string                  `json:"activityPhotos"`
+}
+
+func curriculumProgressJSON(doc EoschoolCurriculumProgressDoc) eoschoolCurriculumProgressResponse {
+	scores := doc.ActivityScores
+	if scores == nil {
+		scores = map[string]int{}
+	}
+	photos := make([]string, 0, len(doc.ActivityPhotos))
+	for key := range doc.ActivityPhotos {
+		photos = append(photos, key)
+	}
+	sort.Strings(photos)
+	return eoschoolCurriculumProgressResponse{
+		Student:        doc.studentView(),
+		SectionsDone:   doc.SectionsDone,
+		ActivityScores: scores,
+		ActivityPhotos: photos,
+	}
 }
 
 type eoschoolCurriculumSectionPatch struct {
@@ -32,10 +53,7 @@ func (a *App) getEoschoolCurriculumProgressHandler(w http.ResponseWriter, r *htt
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	writeJSON(w, http.StatusOK, eoschoolCurriculumProgressResponse{
-		Student:      doc.studentView(),
-		SectionsDone: doc.SectionsDone,
-	})
+	writeJSON(w, http.StatusOK, curriculumProgressJSON(doc))
 }
 
 func (a *App) listEoschoolCurriculumStudentsHandler(w http.ResponseWriter, r *http.Request) {
@@ -82,8 +100,5 @@ func (a *App) patchEoschoolCurriculumSectionHandler(w http.ResponseWriter, r *ht
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
-	writeJSON(w, http.StatusOK, eoschoolCurriculumProgressResponse{
-		Student:      doc.studentView(),
-		SectionsDone: doc.SectionsDone,
-	})
+	writeJSON(w, http.StatusOK, curriculumProgressJSON(doc))
 }

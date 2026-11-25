@@ -1,0 +1,187 @@
+package main
+
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+	"strings"
+)
+
+const eoschoolActivityPhotoName = "activity.webp"
+
+func prepareEoschoolActivityPhoto(data []byte) ([]byte, error) {
+	if int64(len(data)) > eoschoolCurriculumStudentMaxPhoto {
+		return nil, errAvatarTooLarge
+	}
+	kind, err := detectHomescoolProgressImage(data)
+	if err != nil {
+		return nil, err
+	}
+	out, err := homescoolProgressToWebp(data, kind.mime)
+	if err != nil {
+		return nil, errAvatarInvalid
+	}
+	return out, nil
+}
+
+func (a *App) postEoschoolCurriculumActivityPhotoHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.validOrigin(r) || !a.validCSRF(r) {
+		a.writeSafeError(w, r, http.StatusForbidden, "csrf_invalid")
+		return
+	}
+	r.Body = http.MaxBytesReader(w, r.Body, eoschoolCurriculumStudentMaxPhoto+1<<20)
+	if err := r.ParseMultipartForm(eoschoolCurriculumStudentMaxPhoto + 1<<20); err != nil {
+		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
+		return
+	}
+	studentKey := normalizeEoschoolCurriculumStudentKey(r.FormValue("studentKey"))
+	dayID := strings.TrimSpace(r.FormValue("dayId"))
+	sectionID := strings.TrimSpace(r.FormValue("sectionId"))
+	if !validateEoschoolCurriculumSectionToggle(dayID, sectionID) {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	user, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	file, header, err := r.FormFile("photo")
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	defer file.Close()
+	if header != nil && strings.Contains(header.Filename, "..") {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	data, err := io.ReadAll(io.LimitReader(file, eoschoolCurriculumStudentMaxPhoto+1))
+	if err != nil || int64(len(data)) > eoschoolCurriculumStudentMaxPhoto {
+		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
+		return
+	}
+	prepared, prepErr := prepareEoschoolActivityPhoto(data)
+	if prepErr != nil {
+		status, code := mapEoschoolStudentPhotoErr(prepErr)
+		a.writeSafeError(w, r, status, code)
+		return
+	}
+	if err = a.curriculumMaterialsFS.put(ownerID, studentKey, dayID, sectionID, eoschoolActivityPhotoName, prepared); err != nil {
+		a.mustLogf(r, "eoschool.activity.photo.put_err", "err", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	key := eoschoolCurriculumSectionKey(dayID, sectionID)
+	if _, err = a.eoschoolCurriculum.GetOrCreate(r.Context(), ownerID, studentKey); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	doc, err := a.eoschoolCurriculum.UpdateStudent(r.Context(), ownerID, studentKey, func(row *EoschoolCurriculumProgressDoc) error {
+		if row.ActivityPhotos == nil {
+			row.ActivityPhotos = map[string]string{}
+		}
+		row.ActivityPhotos[key] = eoschoolActivityPhotoName
+		return nil
+	})
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.auditEvent(r, "eoschool_curriculum_activity_photo", "ok", user.ID)
+	writeJSON(w, http.StatusOK, curriculumProgressJSON(doc))
+}
+
+func (a *App) getEoschoolCurriculumActivityPhotoHandler(w http.ResponseWriter, r *http.Request) {
+	studentKey := normalizeEoschoolCurriculumStudentKey(r.URL.Query().Get("studentKey"))
+	dayID := strings.TrimSpace(r.URL.Query().Get("dayId"))
+	sectionID := strings.TrimSpace(r.URL.Query().Get("sectionId"))
+	if !validateEoschoolCurriculumSectionToggle(dayID, sectionID) {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	_, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	doc, found, err := a.eoschoolCurriculum.Get(r.Context(), ownerID, studentKey)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	key := eoschoolCurriculumSectionKey(dayID, sectionID)
+	if !found || doc.ActivityPhotos[key] == "" {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	f, info, err := a.curriculumMaterialsFS.open(ownerID, studentKey, dayID, sectionID, eoschoolActivityPhotoName)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	defer f.Close()
+	w.Header().Set("Content-Type", "image/webp")
+	w.Header().Set("Cache-Control", "private, no-store")
+	if r.URL.Query().Get("download") == "1" {
+		w.Header().Set("Content-Disposition", fmt.Sprintf(`attachment; filename="%s-%s.webp"`, dayID, sectionID))
+	}
+	http.ServeContent(w, r, info.Name(), info.ModTime(), f)
+}
+
+type eoschoolCurriculumActivityScorePatch struct {
+	StudentKey string `json:"studentKey"`
+	DayID      string `json:"dayId"`
+	SectionID  string `json:"sectionId"`
+	Score      int    `json:"score"`
+}
+
+func (a *App) patchEoschoolCurriculumActivityScoreHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.validOrigin(r) || !a.validCSRF(r) {
+		a.writeSafeError(w, r, http.StatusForbidden, "csrf_invalid")
+		return
+	}
+	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 8192))
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	var body eoschoolCurriculumActivityScorePatch
+	if err = json.Unmarshal(raw, &body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	studentKey := normalizeEoschoolCurriculumStudentKey(body.StudentKey)
+	dayID := strings.TrimSpace(body.DayID)
+	sectionID := strings.TrimSpace(body.SectionID)
+	if !validateEoschoolCurriculumSectionToggle(dayID, sectionID) || body.Score < 0 || body.Score > 100 {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	user, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	if _, err = a.eoschoolCurriculum.GetOrCreate(r.Context(), ownerID, studentKey); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	key := eoschoolCurriculumSectionKey(dayID, sectionID)
+	doc, err := a.eoschoolCurriculum.UpdateStudent(r.Context(), ownerID, studentKey, func(row *EoschoolCurriculumProgressDoc) error {
+		if row.ActivityScores == nil {
+			row.ActivityScores = map[string]int{}
+		}
+		row.ActivityScores[key] = body.Score
+		return nil
+	})
+	if err != nil {
+		if errors.Is(err, errEoschoolCurriculumStudentNotFound) {
+			a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+			return
+		}
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.auditEvent(r, "eoschool_curriculum_activity_score", "ok", user.ID)
+	writeJSON(w, http.StatusOK, curriculumProgressJSON(doc))
+}
