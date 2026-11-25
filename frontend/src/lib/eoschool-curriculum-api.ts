@@ -215,8 +215,9 @@ export async function patchCurriculumActivityScore(input: {
     },
   );
   if (status === 403) {
-    const err = new Error("La clave no es válida.") as Error & { requestId?: string };
+    const err = new Error("La clave no es válida.") as Error & { requestId?: string; keyRejected?: boolean };
     err.requestId = requestId;
+    err.keyRejected = true;
     throw err;
   }
   if (status < 200 || status >= 300) {

@@ -124,6 +124,7 @@ export function renderCurriculumActivity(
   scoreInput.min = "0";
   scoreInput.max = "100";
   scoreInput.inputMode = "numeric";
+  scoreInput.autocomplete = "off";
   scoreInput.setAttribute("aria-label", "Puntaje de 0 a 100");
   if (score != null) scoreInput.value = String(score);
   const save = document.createElement("button");
@@ -202,24 +203,33 @@ export function renderCurriculumActivity(
       showErrorModal({ message: "El puntaje va de 0 a 100." });
       return;
     }
-    openScoreKeyDialog(modal, (keyValue) => {
+    openScoreKeyDialog(modal, async (keyValue) => {
       if (mustLog) console.log("[curriculum.activity] score.save", { dayId, sectionId, score: next });
-      void patchCurriculumActivityScore({ studentKey, dayId, sectionId, score: next, key: keyValue })
-        .then((data) => {
-          applyPayload(data, key);
-          renderCurriculumActivity(modal, card, sectionId);
-        })
-        .catch((err) => {
-          showErrorModal({
-            message: err instanceof Error ? err.message : "No se pudo guardar el puntaje.",
-            requestId: requestIdOf(err),
-          });
+      try {
+        const data = await patchCurriculumActivityScore({ studentKey, dayId, sectionId, score: next, key: keyValue });
+        applyPayload(data, key);
+        renderCurriculumActivity(modal, card, sectionId);
+        return "saved";
+      } catch (err) {
+        if (isScoreKeyRejection(err)) return "key";
+        showErrorModal({
+          message: err instanceof Error ? err.message : "No se pudo guardar el puntaje.",
+          requestId: requestIdOf(err),
         });
+        return "failed";
+      }
     });
   });
 }
 
-function openScoreKeyDialog(modal: HTMLElement, onConfirm: (keyValue: string) => void): void {
+function isScoreKeyRejection(err: unknown): boolean {
+  return Boolean(err && typeof err === "object" && "keyRejected" in err && (err as { keyRejected?: boolean }).keyRejected);
+}
+
+function openScoreKeyDialog(
+  modal: HTMLElement,
+  onConfirm: (keyValue: string) => Promise<"saved" | "key" | "failed">,
+): void {
   modal.querySelector("[data-curriculum-score-key]")?.remove();
   const layer = document.createElement("div");
   layer.className = "eoschool-curriculum-activity__key";
@@ -234,8 +244,12 @@ function openScoreKeyDialog(modal: HTMLElement, onConfirm: (keyValue: string) =>
   label.className = "eoschool-curriculum-activity__key-label";
   label.textContent = "Clave";
   const input = document.createElement("input");
-  input.type = "password";
+  input.type = "text";
   input.autocomplete = "off";
+  input.spellcheck = false;
+  input.setAttribute("autocapitalize", "off");
+  input.setAttribute("data-1p-ignore", "true");
+  input.setAttribute("data-lpignore", "true");
   input.className = "eoschool-curriculum-activity__key-input";
   input.setAttribute("aria-label", "Clave de administrador");
   label.append(input);
@@ -259,14 +273,26 @@ function openScoreKeyDialog(modal: HTMLElement, onConfirm: (keyValue: string) =>
   layer.addEventListener("click", (ev) => {
     if (ev.target === layer) close();
   });
+  const rejectKey = () => {
+    alert("La clave no es válida.");
+    input.focus();
+    input.select();
+  };
   const submit = () => {
     const keyValue = input.value.trim();
-    close();
     if (!keyValue) {
-      showErrorModal({ message: "La clave no es válida." });
+      rejectKey();
       return;
     }
-    onConfirm(keyValue);
+    confirm.disabled = true;
+    void onConfirm(keyValue).then((result) => {
+      if (result === "saved" || result === "failed") {
+        close();
+        return;
+      }
+      confirm.disabled = false;
+      rejectKey();
+    });
   };
   confirm.addEventListener("click", submit);
   input.addEventListener("keydown", (ev) => {
