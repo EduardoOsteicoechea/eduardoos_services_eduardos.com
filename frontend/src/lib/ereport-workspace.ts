@@ -74,14 +74,17 @@ export function siteIsDark(root: HTMLElement = document.documentElement): boolea
 export function trackerConfigMessage(
   uploadUrl: string,
   csrf: string,
-  opts?: { canDelete?: boolean },
+  opts?: { canDelete?: boolean; readOnly?: boolean; activeSessionId?: string; highlightSessionId?: string },
 ): Record<string, unknown> {
   return {
     target: "ereport-tracker",
     type: "config",
     uploadUrl,
     csrf,
-    canDelete: opts?.canDelete !== false,
+    canDelete: opts?.canDelete !== false && opts?.readOnly !== true,
+    readOnly: opts?.readOnly === true,
+    activeSessionId: opts?.activeSessionId || "",
+    highlightSessionId: opts?.highlightSessionId || "",
   };
 }
 
@@ -147,6 +150,9 @@ export function startTrackerHost(
     autoSaveMs?: number;
     /** Owners default true; invite guests must pass false. */
     canDelete?: boolean;
+    readOnly?: boolean;
+    activeSessionId?: string;
+    highlightSessionId?: string;
   },
 ): TrackerHost {
   let timer = 0;
@@ -193,7 +199,12 @@ export function startTrackerHost(
           send({ target: "ereport-tracker", type: "theme", dark: siteIsDark() });
           send({ target: "ereport-tracker", type: "text-scale", scale: resolveUiScale() });
           // Permissions before load so the first render hides guest delete controls.
-          send(trackerConfigMessage(opts.uploadUrl, opts.csrf, { canDelete }));
+          send(trackerConfigMessage(opts.uploadUrl, opts.csrf, {
+            canDelete,
+            readOnly: opts.readOnly,
+            activeSessionId: opts.activeSessionId,
+            highlightSessionId: opts.highlightSessionId,
+          }));
           if (opts.payload) {
             send(trackerLoadMessage(opts.payload));
           }

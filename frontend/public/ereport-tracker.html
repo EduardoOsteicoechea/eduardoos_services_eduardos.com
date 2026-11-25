@@ -1045,6 +1045,20 @@ body:not(.theme-dark) .item-card.is-no_aplica {
 }
 .btn-status-crit .material-icons,
 .btn-status-crit .btn-ico { font-size: 0.95rem; }
+.session-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.375rem;
+  border-radius: var(--radius);
+  border: 0.0625rem solid currentColor;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+body.is-readonly #app button[data-act]:not([data-act="item-tab"]),
+body.is-readonly #meta-panel button[data-act] {
+  display: none;
+}
 .btn-status .material-icons,
 .btn-status .btn-ico {
   font-size: 1.15rem;
@@ -1404,8 +1418,8 @@ const EMBEDDED_DATA = JSON.parse(document.getElementById("embedded-json").textCo
 
 let state = normalizeState(structuredClone(EMBEDDED_DATA));
 let modalCtx = { images: [], index: 0 };
-/** Invite guests set canDelete=false via host config; owners keep delete. */
-const permissions = { canDelete: true };
+/** Invite guests set canDelete=false via host config; owners keep delete. Branch viewers set readOnly. */
+const permissions = { canDelete: true, readOnly: false, activeSessionId: "", highlightSessionId: "" };
 const collapseState = {
   sections: new Set(),
   groups: new Set(),
@@ -1413,7 +1427,30 @@ const collapseState = {
 };
 
 function allowDelete() {
-  return permissions.canDelete !== false;
+  return permissions.canDelete !== false && permissions.readOnly !== true;
+}
+
+function badgeSessionId() {
+  if (permissions.highlightSessionId) return permissions.highlightSessionId;
+  return permissions.activeSessionId || "";
+}
+
+function hasSessionMark(node) {
+  const id = badgeSessionId();
+  if (!id || !node || !Array.isArray(node.sessionMarks)) return false;
+  return node.sessionMarks.some((mark) => mark && mark.sessionId === id);
+}
+
+function renderSessionBadge(node) {
+  if (!hasSessionMark(node)) return "";
+  return `<span class="session-badge" title="Editado en esta sesión">Sesión</span>`;
+}
+
+function applyReadOnlyChrome() {
+  document.body.classList.toggle("is-readonly", permissions.readOnly === true);
+  document.querySelectorAll("#meta-panel input, #meta-panel textarea, #meta-panel select, #app input, #app textarea, #app select").forEach((el) => {
+    el.disabled = permissions.readOnly === true;
+  });
 }
 
 function syncCollapseToState() {
@@ -1619,6 +1656,7 @@ function normalizeItem(it, opts) {
   const sevSol = parseSeverity(it.severidadSolucion);
   if (sevInc !== undefined) item.severidadIncidencia = sevInc;
   if (sevSol !== undefined) item.severidadSolucion = sevSol;
+  if (Array.isArray(it.sessionMarks)) item.sessionMarks = it.sessionMarks;
   item.status = effectiveStatus(item);
   return item;
 }
@@ -2886,6 +2924,7 @@ function renderItem(sec, grp, item, itemIdx, itemCount) {
     <div class="item-top">
       <button type="button" class="collapse-toggle" data-collapse="items" data-id="${escapeAttr(item.id)}" title="Colapsar/expandir incidencia" aria-expanded="${collapsed ? "false" : "true"}">${collapseChevron(collapsed)}</button>
       <span class="item-status-badge ${badgeClass}" title="${escapeAttr(statusBadgeTitle(eff))}" aria-label="${escapeAttr(statusBadgeTitle(eff))}">${mi(statusBadgeIcon(eff))}</span>
+      ${renderSessionBadge(item)}
       ${renderInplace("input", "inplace-nombre", item.nombre || "", "Nombre corto de la incidencia")}
       ${renderMoveButtons("move-item", idx > 0, idx < count - 1, "Subir incidencia", "Bajar incidencia")}
       ${allowDelete() ? `<button type="button" class="danger" data-act="remove" title="Eliminar incidencia">${mi("delete")}</button>` : ""}
@@ -3291,6 +3330,7 @@ function render() {
         <div class="section-title-main">
           <button type="button" class="collapse-toggle" data-collapse="sections" data-id="${escapeAttr(sec.id)}" title="Colapsar/expandir sección" aria-expanded="${secCollapsed ? "false" : "true"}">${collapseChevron(secCollapsed)}</button>
           <button type="button" class="concept-btn" data-act="product-history" data-kind="section" title="Product history / concept" aria-label="Product history">${mi("lightbulb")}</button>
+          ${renderSessionBadge(sec)}
           ${renderInplace("input", "inplace-section-title", sec.title || "", "Main section name")}
         </div>
         <div class="section-actions">
@@ -3329,6 +3369,7 @@ function render() {
             <div class="group-head-main">
               <button type="button" class="collapse-toggle" data-collapse="groups" data-id="${escapeAttr(grp.id)}" title="Colapsar/expandir subartículo" aria-expanded="${grpCollapsed ? "false" : "true"}">${collapseChevron(grpCollapsed)}</button>
               <button type="button" class="concept-btn" data-act="product-history" data-kind="group" title="Product history / concept" aria-label="Product history">${mi("lightbulb")}</button>
+              ${renderSessionBadge(grp)}
               ${renderInplace("input", "inplace-title", grp.title || "", "Nombre del subartículo / feature")}
             </div>
             <div class="group-actions">
@@ -3549,6 +3590,7 @@ function render() {
   renderNavRail();
   updateIssueSearchMeta(visibleIssues, totalIssues);
   updateStatus();
+  applyReadOnlyChrome();
   syncStickyOffsets();
   const scroller = mainScrollEl();
   if (pendingFocusItemId) {
@@ -4363,6 +4405,7 @@ updateStatus();
 (function () {
   var autoSaveEnabled = false;
   var cloudSaveTimer = 0;
+  var suppressCloudSave = false;
 
   function emit(type, extra) {
     if (window.parent && window.parent !== window) {
@@ -4397,7 +4440,38 @@ updateStatus();
     return payload;
   }
 
+  function copySessionMarks(target, source) {
+    if (!target || !source || !Array.isArray(source.sessionMarks) || !source.sessionMarks.length) return;
+    target.sessionMarks = source.sessionMarks;
+  }
+
+  function applySessionMarks(payload) {
+    var incoming = payload || {};
+    var bySec = {};
+    var byGrp = {};
+    var byItem = {};
+    (incoming.sections || []).forEach(function (sec) {
+      if (!sec) return;
+      if (sec.id) bySec[sec.id] = sec;
+      (sec.items || []).forEach(function (it) { if (it && it.id) byItem[it.id] = it; });
+      (sec.groups || []).forEach(function (grp) {
+        if (!grp) return;
+        if (grp.id) byGrp[grp.id] = grp;
+        (grp.items || []).forEach(function (it) { if (it && it.id) byItem[it.id] = it; });
+      });
+    });
+    (state.sections || []).forEach(function (sec) {
+      if (bySec[sec.id]) copySessionMarks(sec, bySec[sec.id]);
+      (sec.items || []).forEach(function (it) { if (byItem[it.id]) copySessionMarks(it, byItem[it.id]); });
+      (sec.groups || []).forEach(function (grp) {
+        if (byGrp[grp.id]) copySessionMarks(grp, byGrp[grp.id]);
+        (grp.items || []).forEach(function (it) { if (byItem[it.id]) copySessionMarks(it, byItem[it.id]); });
+      });
+    });
+  }
+
   function scheduleCloudSave() {
+    if (suppressCloudSave || permissions.readOnly) return;
     if (!autoSaveEnabled) return;
     if (!window.parent || window.parent === window) return;
     clearTimeout(cloudSaveTimer);
@@ -4420,6 +4494,7 @@ updateStatus();
 
   var origSaveAll = saveAll;
   saveAll = async function () {
+    if (permissions.readOnly) return;
     try { collectFromDom(); } catch (e) {}
     emit("cloud-save", { payload: sanitizePayloadForSave(state) });
     return origSaveAll.apply(this, arguments);
@@ -4471,15 +4546,35 @@ updateStatus();
     if (d.type === "text-scale") {
       applySiteTextScale(Number(d.scale) || 1);
     }
+    if (d.type === "patch-marks") {
+      suppressCloudSave = true;
+      try {
+        applySessionMarks(d.payload || {});
+        render();
+      } catch (e) {
+        emit("error", { message: String(e && e.message ? e.message : e) });
+      }
+      suppressCloudSave = false;
+    }
     if (d.type === "config") {
       imageUpload.url = String(d.uploadUrl || "");
       imageUpload.csrf = String(d.csrf || "");
-      var nextCanDelete = d.canDelete !== false;
-      if (permissions.canDelete !== nextCanDelete) {
-        permissions.canDelete = nextCanDelete;
+      var nextCanDelete = d.canDelete !== false && d.readOnly !== true;
+      var nextReadOnly = d.readOnly === true;
+      var nextActive = String(d.activeSessionId || "");
+      var nextHighlight = String(d.highlightSessionId || "");
+      var changed = permissions.canDelete !== nextCanDelete
+        || permissions.readOnly !== nextReadOnly
+        || permissions.activeSessionId !== nextActive
+        || permissions.highlightSessionId !== nextHighlight;
+      permissions.canDelete = nextCanDelete;
+      permissions.readOnly = nextReadOnly;
+      permissions.activeSessionId = nextActive;
+      permissions.highlightSessionId = nextHighlight;
+      if (changed) {
+        suppressCloudSave = true;
         try { render(); } catch (e) {}
-      } else {
-        permissions.canDelete = nextCanDelete;
+        suppressCloudSave = false;
       }
     }
     if (d.type === "command" && d.command) {

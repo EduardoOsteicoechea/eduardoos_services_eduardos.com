@@ -55,7 +55,7 @@ export function workspaceHref(
   orgId: string,
   reportId: string,
   ownerSafe = "",
-  opts?: { shared?: boolean; itemId?: string },
+  opts?: { shared?: boolean; itemId?: string; branchUser?: string },
 ): string {
   const q = new URLSearchParams({ org: orgId, report: reportId });
   if (ownerSafe) {
@@ -67,6 +67,10 @@ export function workspaceHref(
   const itemId = (opts?.itemId || "").trim();
   if (itemId) {
     q.set("item", itemId);
+  }
+  const branchUser = (opts?.branchUser || "").trim();
+  if (branchUser) {
+    q.set("branchUser", branchUser);
   }
   return `/ereport/workspace?${q.toString()}`;
 }

@@ -239,6 +239,80 @@ export function fetchSharedReport(orgId: string, reportId: string) {
   }>(`/ereport/shared/orgs/${orgId}/reports/${reportId}`);
 }
 
+export type EreportBranchCard = {
+  creatorUserId: string;
+  creatorLabel?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  forkedFromUpdatedAt?: string;
+  activeSessionId?: string;
+  activeSessionStartedAt?: string;
+  canEdit?: boolean;
+};
+
+export type EreportBranchSession = {
+  id: string;
+  startedAt: string;
+  endedAt?: string;
+  durationMs?: number;
+  deletedIds?: string[];
+  metaChanged?: boolean;
+};
+
+export type EreportBranchView = {
+  branch?: EreportBranchCard;
+  payload?: EreportPayload;
+  sessions?: EreportBranchSession[];
+  canEdit?: boolean;
+  created?: boolean;
+};
+
+export function reportBranchRoot(shared: boolean, orgId: string, reportId: string): string {
+  const prefix = shared ? `/ereport/shared/orgs/${orgId}/reports/${reportId}` : `/ereport/orgs/${orgId}/reports/${reportId}`;
+  return `${prefix}/branches`;
+}
+
+export function listReportBranches(shared: boolean, orgId: string, reportId: string) {
+  return apiRequest<{ items?: EreportBranchCard[] }>(reportBranchRoot(shared, orgId, reportId));
+}
+
+export function createReportBranch(shared: boolean, orgId: string, reportId: string) {
+  return postJSON<EreportBranchView>(reportBranchRoot(shared, orgId, reportId), {});
+}
+
+export function fetchReportBranch(shared: boolean, orgId: string, reportId: string, userId: string) {
+  return apiRequest<EreportBranchView>(`${reportBranchRoot(shared, orgId, reportId)}/${encodeURIComponent(userId)}`);
+}
+
+export function saveReportBranch(
+  shared: boolean,
+  orgId: string,
+  reportId: string,
+  userId: string,
+  body: { payload?: EreportPayload },
+) {
+  return putJSON<EreportBranchView>(`${reportBranchRoot(shared, orgId, reportId)}/${encodeURIComponent(userId)}`, body, {
+    timeoutMs: EREPORT_API_TIMEOUT_MS,
+  });
+}
+
+export function startBranchSession(shared: boolean, orgId: string, reportId: string, userId: string) {
+  return postJSON<EreportBranchView>(`${reportBranchRoot(shared, orgId, reportId)}/${encodeURIComponent(userId)}/sessions`, {});
+}
+
+export function stopBranchSession(
+  shared: boolean,
+  orgId: string,
+  reportId: string,
+  userId: string,
+  sessionId: string,
+) {
+  return postJSON<EreportBranchView>(
+    `${reportBranchRoot(shared, orgId, reportId)}/${encodeURIComponent(userId)}/sessions/${encodeURIComponent(sessionId)}/stop`,
+    {},
+  );
+}
+
 export function saveSharedReport(orgId: string, reportId: string, body: { tema?: string; payload?: EreportPayload }) {
   return putJSON<{ meta?: EreportMeta }>(`/ereport/shared/orgs/${orgId}/reports/${reportId}`, body, {
     timeoutMs: EREPORT_API_TIMEOUT_MS,

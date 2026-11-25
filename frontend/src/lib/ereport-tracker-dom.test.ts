@@ -231,6 +231,79 @@ describe("tracker checklist status", () => {
     click(w.document.getElementById("history-save"));
     expect(w.document.getElementById("history-modal")?.classList.contains("open")).toBe(false);
   });
+
+  it("badges the active session and locks the sheet when read-only", async () => {
+    const w = await boot();
+    w.postMessage(
+      {
+        target: "ereport-tracker",
+        type: "load",
+        payload: {
+          reportName: "Rama",
+          sections: [
+            {
+              id: "sec-1",
+              title: "Sec",
+              kind: "funcionalidades",
+              sessionMarks: [{ sessionId: "sess-1", at: "t" }],
+              groups: [
+                {
+                  id: "grp-1",
+                  title: "Grupo",
+                  items: [
+                    {
+                      id: "item-1",
+                      nombre: "N",
+                      incidencia: "editada",
+                      sessionMarks: [{ sessionId: "sess-1", at: "t" }],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      },
+      "*",
+    );
+    await tick(40);
+    w.postMessage(
+      {
+        target: "ereport-tracker",
+        type: "config",
+        uploadUrl: "",
+        csrf: "",
+        canDelete: true,
+        readOnly: false,
+        activeSessionId: "sess-1",
+        highlightSessionId: "",
+      },
+      "*",
+    );
+    await tick(40);
+    expect(all(w, ".session-badge").length).toBeGreaterThan(0);
+    const search = w.document.getElementById("issue-search") as HTMLInputElement;
+    expect(search.disabled).toBe(false);
+    w.postMessage(
+      {
+        target: "ereport-tracker",
+        type: "config",
+        uploadUrl: "",
+        csrf: "",
+        canDelete: false,
+        readOnly: true,
+        activeSessionId: "sess-1",
+        highlightSessionId: "",
+      },
+      "*",
+    );
+    await tick(40);
+    expect(w.document.body.classList.contains("is-readonly")).toBe(true);
+    const orgName = w.document.getElementById("org-name") as HTMLInputElement;
+    expect(orgName.disabled).toBe(true);
+    expect(search.disabled).toBe(false);
+    expect(all(w, '[data-act="del-section"]').length).toBe(0);
+  });
 });
 
 describe("tracker host commands", () => {

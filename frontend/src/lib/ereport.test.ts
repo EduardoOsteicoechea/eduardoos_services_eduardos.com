@@ -177,13 +177,19 @@ describe("tracker host bridge", () => {
       uploadUrl: "/api/ereport/orgs/o/reports/r/images",
       csrf: "csrf",
       canDelete: true,
+      readOnly: false,
+      activeSessionId: "",
+      highlightSessionId: "",
     });
-    expect(trackerConfigMessage("/api/x", "c", { canDelete: false })).toEqual({
+    expect(trackerConfigMessage("/api/x", "c", { canDelete: false, readOnly: true, activeSessionId: "s1" })).toEqual({
       target: "ereport-tracker",
       type: "config",
       uploadUrl: "/api/x",
       csrf: "c",
       canDelete: false,
+      readOnly: true,
+      activeSessionId: "s1",
+      highlightSessionId: "",
     });
     expect(usesFilesystemImageRef({ id: "img-1", url: "/api/ereport/orgs/o/reports/r/images/img-1" })).toBe(true);
     expect(usesFilesystemImageRef({ dataUrl: "data:image/png;base64,aaa" })).toBe(false);
@@ -382,6 +388,14 @@ describe("eReport workspace chrome", () => {
       conf.indexOf('location ~ "^/ereport/(?!workspace/|invite/)'),
     );
     expect(conf).not.toContain("location /media/");
+  });
+
+  it("saves a personal branch without writing main", () => {
+    const src = readFileSync(join(here, "../pages/ereport/workspace.astro"), "utf8");
+    expect(src).toContain("saveReportBranch");
+    expect(src).toContain("if (branchUserId) return persistBranch");
+    expect(src).toContain('data-open-modal="branches"');
+    expect(src).toContain("if (saveTarget !== \"cloud\" || disposed || branchUserId) return");
   });
 
   it("cache-busts the tracker canvas from one shared constant", () => {

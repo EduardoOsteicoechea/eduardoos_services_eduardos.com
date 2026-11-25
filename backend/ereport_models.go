@@ -9,10 +9,10 @@ import (
 )
 
 const (
-	inviteScopeOrg    = "org"
-	inviteScopeReport = "report"
-	maxHistorySnapshots = 50
-	otpEreportInvite  = "ereport_invite"
+	inviteScopeOrg          = "org"
+	inviteScopeReport       = "report"
+	maxHistorySnapshots     = 50
+	otpEreportInvite        = "ereport_invite"
 	productEreport          = "ereport"
 	productEreportConnector = "ereport-connector"
 	productScrib            = "scrib"
@@ -21,13 +21,13 @@ const (
 	productArticles         = "articles"
 	productHomescool        = "homescool"
 	productAPI              = "api"
-	apiKeyPrefix      = "eos_live_"
-	apiKeyRatePerMin  = 60
-	defaultMaxImageBytes   = 8 << 20
-	defaultMaxImageEdge    = 8192
-	defaultMaxPayloadBytes = 8 << 20
-	maxImagesPerReport     = 80
-	inviteCookieTTL        = 30 * 24 * time.Hour
+	apiKeyPrefix            = "eos_live_"
+	apiKeyRatePerMin        = 60
+	defaultMaxImageBytes    = 8 << 20
+	defaultMaxImageEdge     = 8192
+	defaultMaxPayloadBytes  = 8 << 20
+	maxImagesPerReport      = 80
+	inviteCookieTTL         = 30 * 24 * time.Hour
 )
 
 const (
@@ -496,6 +496,30 @@ func resolveActiveWebsiteRegistration(r *http.Request, list []websiteRegistratio
 		}
 	}
 	return list[0]
+}
+
+// ereportBranchMeta is one personal fork of a report. The file lives under the
+// report owner; CreatorUserID is the only user who may write it.
+type ereportBranchMeta struct {
+	CreatorUserID       string `json:"creatorUserId"`
+	CreatorLabel        string `json:"creatorLabel,omitempty"`
+	CreatedAt           string `json:"createdAt"`
+	UpdatedAt           string `json:"updatedAt"`
+	ForkedFromUpdatedAt string `json:"forkedFromUpdatedAt,omitempty"`
+	ActiveSessionID     string `json:"activeSessionId,omitempty"`
+}
+
+type ereportBranchSession struct {
+	ID          string   `json:"id"`
+	StartedAt   string   `json:"startedAt"`
+	EndedAt     string   `json:"endedAt,omitempty"`
+	DurationMs  int64    `json:"durationMs"`
+	DeletedIDs  []string `json:"deletedIds,omitempty"`
+	MetaChanged bool     `json:"metaChanged,omitempty"`
+}
+
+type ereportBranchSessionFile struct {
+	Sessions []ereportBranchSession `json:"sessions"`
 }
 
 func ereportTodayDate() string {

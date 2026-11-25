@@ -769,6 +769,136 @@ func (fs *ereportFS) findImage(ownerUserID, orgID, reportID, imageID string) (st
 	return "", "", errEreportNotFound
 }
 
+func (fs *ereportFS) branchRoot(ownerUserID, orgID, reportID string) (string, error) {
+	dir, err := fs.reportDir(ownerUserID, orgID, reportID)
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(dir, "branches"), nil
+}
+
+func (fs *ereportFS) branchDir(ownerUserID, orgID, reportID, creatorUserID string) (string, error) {
+	if !validEreportID(creatorUserID) {
+		return "", errEreportPath
+	}
+	root, err := fs.branchRoot(ownerUserID, orgID, reportID)
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(root, creatorUserID), nil
+}
+
+func (fs *ereportFS) loadBranchMeta(ownerUserID, orgID, reportID, creatorUserID string) (ereportBranchMeta, error) {
+	var meta ereportBranchMeta
+	dir, err := fs.branchDir(ownerUserID, orgID, reportID, creatorUserID)
+	if err != nil {
+		return meta, err
+	}
+	if err := fs.readJSON(filepath.Join(dir, "meta.json"), &meta); err != nil {
+		return meta, err
+	}
+	if meta.CreatorUserID == "" {
+		meta.CreatorUserID = creatorUserID
+	}
+	if meta.CreatorUserID != creatorUserID {
+		return ereportBranchMeta{}, errEreportNotFound
+	}
+	return meta, nil
+}
+
+func (fs *ereportFS) saveBranchMeta(ownerUserID, orgID, reportID string, meta ereportBranchMeta) error {
+	dir, err := fs.branchDir(ownerUserID, orgID, reportID, meta.CreatorUserID)
+	if err != nil {
+		return err
+	}
+	return fs.writeJSON(filepath.Join(dir, "meta.json"), meta)
+}
+
+func (fs *ereportFS) loadBranchPayload(ownerUserID, orgID, reportID, creatorUserID string) (map[string]any, error) {
+	dir, err := fs.branchDir(ownerUserID, orgID, reportID, creatorUserID)
+	if err != nil {
+		return nil, err
+	}
+	var payload map[string]any
+	if err := fs.readJSON(filepath.Join(dir, "report.ereport"), &payload); err != nil {
+		if errors.Is(err, errEreportNotFound) {
+			return map[string]any{}, nil
+		}
+		return nil, err
+	}
+	if payload == nil {
+		payload = map[string]any{}
+	}
+	return payload, nil
+}
+
+func (fs *ereportFS) saveBranchPayload(ownerUserID, orgID, reportID, creatorUserID string, payload map[string]any) error {
+	dir, err := fs.branchDir(ownerUserID, orgID, reportID, creatorUserID)
+	if err != nil {
+		return err
+	}
+	if payload == nil {
+		payload = map[string]any{}
+	}
+	return fs.writeJSON(filepath.Join(dir, "report.ereport"), payload)
+}
+
+func (fs *ereportFS) loadBranchSessions(ownerUserID, orgID, reportID, creatorUserID string) (ereportBranchSessionFile, error) {
+	var file ereportBranchSessionFile
+	dir, err := fs.branchDir(ownerUserID, orgID, reportID, creatorUserID)
+	if err != nil {
+		return file, err
+	}
+	if err := fs.readJSON(filepath.Join(dir, "sessions.json"), &file); err != nil {
+		if errors.Is(err, errEreportNotFound) {
+			file.Sessions = []ereportBranchSession{}
+			return file, nil
+		}
+		return file, err
+	}
+	if file.Sessions == nil {
+		file.Sessions = []ereportBranchSession{}
+	}
+	return file, nil
+}
+
+func (fs *ereportFS) saveBranchSessions(ownerUserID, orgID, reportID, creatorUserID string, file ereportBranchSessionFile) error {
+	dir, err := fs.branchDir(ownerUserID, orgID, reportID, creatorUserID)
+	if err != nil {
+		return err
+	}
+	if file.Sessions == nil {
+		file.Sessions = []ereportBranchSession{}
+	}
+	return fs.writeJSON(filepath.Join(dir, "sessions.json"), file)
+}
+
+func (fs *ereportFS) listBranchMetas(ownerUserID, orgID, reportID string) ([]ereportBranchMeta, error) {
+	root, err := fs.branchRoot(ownerUserID, orgID, reportID)
+	if err != nil {
+		return nil, err
+	}
+	entries, err := os.ReadDir(root)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return []ereportBranchMeta{}, nil
+		}
+		return nil, err
+	}
+	out := make([]ereportBranchMeta, 0, len(entries))
+	for _, entry := range entries {
+		if !entry.IsDir() || !validEreportID(entry.Name()) {
+			continue
+		}
+		meta, loadErr := fs.loadBranchMeta(ownerUserID, orgID, reportID, entry.Name())
+		if loadErr != nil {
+			continue
+		}
+		out = append(out, meta)
+	}
+	return out, nil
+}
+
 func (fs *ereportFS) countImages(ownerUserID, orgID, reportID string) int {
 	dir, err := fs.reportDir(ownerUserID, orgID, reportID)
 	if err != nil {

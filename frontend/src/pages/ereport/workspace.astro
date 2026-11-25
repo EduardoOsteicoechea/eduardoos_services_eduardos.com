@@ -41,6 +41,12 @@ import Layout from "../../layouts/Layout.astro";
       </span>
       History
     </button>
+    <button class="dhs-action" type="button" data-open-modal="branches" data-branch-open title="Abrir una rama de edición por usuario" aria-label="Ramas">
+      <span class="icon-btn" aria-hidden="true">
+        <span class="material-symbols-outlined" aria-hidden="true">account_tree</span>
+      </span>
+      Ramas
+    </button>
     <button class="dhs-action" type="button" data-open-modal="share" data-owner-only title="eReport workspace" aria-label="Compartir con usuarios">
       <span class="icon-btn" aria-hidden="true">
         <span class="material-symbols-outlined" aria-hidden="true">share</span>
@@ -57,6 +63,7 @@ import Layout from "../../layouts/Layout.astro";
 
   <section class="ereport-workspace" data-ereport-workspace>
     <p class="status" data-banner>Loading session…</p>
+    <p class="status" data-branch-status hidden></p>
     <p class="panel ereport-signin-card" data-guest-fallback hidden>
       Sign in to open this report.
       <a class="btn btn--primary" href="/session" data-route>Log in</a>
@@ -140,6 +147,24 @@ import Layout from "../../layouts/Layout.astro";
         </div>
       </div>
     </div>
+    <div class="ereport-modal" data-modal="branches" hidden>
+      <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ereport-branches-title">
+        <h2 id="ereport-branches-title">Ramas</h2>
+        <p class="hint">Tu rama congela main la primera vez y solo vos la editás. Quien ya tiene acceso al reporte la ve en solo lectura. Main no recibe estos cambios.</p>
+        <div class="ereport-modal-actions">
+          <button class="btn btn--primary" type="button" data-branch-own>Abrir mi rama</button>
+          <button class="btn" type="button" data-branch-main>Volver a main</button>
+          <button class="btn" type="button" data-branch-session-start hidden>Iniciar sesión</button>
+          <button class="btn" type="button" data-branch-session-stop hidden>Detener sesión</button>
+        </div>
+        <ul class="ereport-list" data-branch-list></ul>
+        <ul class="ereport-list" data-branch-sessions></ul>
+        <p class="ereport-hub__error" data-branch-error hidden></p>
+        <div class="ereport-modal-actions">
+          <button class="btn" type="button" data-close-modal>Cerrar</button>
+        </div>
+      </div>
+    </div>
     <div class="ereport-modal" data-modal="ids" hidden>
       <div class="panel ereport-ids-panel" role="dialog" aria-modal="true" aria-labelledby="ereport-ids-title">
         <h2 id="ereport-ids-title">IDs del reporte</h2>
@@ -185,24 +210,33 @@ import Layout from "../../layouts/Layout.astro";
   import { clearAgentRoutePayload, getCsrf, setAgentRoutePayload } from "../../lib/api";
   import { replaceClientUrl } from "../../lib/router";
   import {
+    createReportBranch,
     createReportHistory,
     createReportInvite,
     downloadEreportSnapshot,
     fetchEreportOrgs,
     fetchEreportOrg,
     fetchOrgReport,
+    fetchReportBranch,
     fetchReportHistorySnapshot,
     fetchSharedReport,
+    listReportBranches,
     listReportHistory,
     ownerImageUploadPath,
     refreshCsrf,
     rememberedCsrf,
     restoreReportHistory,
     saveOrgReport,
+    saveReportBranch,
     saveSharedReport,
+    startBranchSession,
+    stopBranchSession,
     createEreportSavePump,
     sharedImageUploadPath,
     updateEreportOrgs,
+    type EreportBranchCard,
+    type EreportBranchSession,
+    type EreportBranchView,
     type EreportHistoryCard,
     type EreportPayload,
     type RecentReportCard,
@@ -248,6 +282,17 @@ import Layout from "../../layouts/Layout.astro";
     const pendingCmds: TrackerCommand[] = [];
     const invited = new Set<string>();
     const disposers: Array<() => void> = [];
+    let meId = "";
+    let branchUserId = "";
+    let branchCanEdit = false;
+    let branchLabel = "";
+    let branchUpdatedAt = "";
+    let activeSessionId = "";
+    let activeSessionStartedAt = "";
+    let highlightSessionId = "";
+    let branchClock = 0;
+    let branchPoll = 0;
+    const requestedBranch = params.get("branchUser")?.trim() || "";
 
     const publishAgentPayload = (next: EreportPayload | null) => {
       if (!next) {
@@ -296,6 +341,7 @@ import Layout from "../../layouts/Layout.astro";
     const dispose = () => {
       if (disposed) return;
       disposed = true;
+      stopBranchClocks();
       closeModals();
       clearAgentRoutePayload();
       clearLocalEreportFile();
@@ -323,6 +369,109 @@ import Layout from "../../layouts/Layout.astro";
     const cloudSavePump = createEreportSavePump((body) =>
       isShared ? saveSharedReport(orgId, reportId, body) : saveOrgReport(orgId, reportId, body),
     );
+
+    const branchSavePump = createEreportSavePump(async (body) => {
+      const res = await saveReportBranch(isShared, orgId, reportId, branchUserId, body);
+      if (res.status < 300 && res.data.payload && host) {
+        host.post({ target: "ereport-tracker", type: "patch-marks", payload: res.data.payload });
+      }
+      return res;
+    });
+
+    const stopBranchClocks = () => {
+      if (branchClock) window.clearInterval(branchClock);
+      if (branchPoll) window.clearInterval(branchPoll);
+      branchClock = 0;
+      branchPoll = 0;
+    };
+
+    const formatClock = (totalSec: number) => {
+      const sec = Math.max(0, totalSec);
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      const s = sec % 60;
+      const pad = (n: number) => String(n).padStart(2, "0");
+      return `${pad(h)}:${pad(m)}:${pad(s)}`;
+    };
+
+    const formatSessionClock = (startedAt: string) => {
+      const t = Date.parse(startedAt);
+      if (!Number.isFinite(t)) return "00:00:00";
+      return formatClock(Math.floor((Date.now() - t) / 1000));
+    };
+
+    const paintBranchStatus = () => {
+      const el = root.querySelector("[data-branch-status]");
+      if (!(el instanceof HTMLElement)) return;
+      if (!branchUserId) {
+        el.hidden = true;
+        el.textContent = "";
+        return;
+      }
+      el.hidden = false;
+      const who = branchCanEdit ? "Tu rama" : `Rama de ${branchLabel || "otro usuario"}`;
+      const mode = branchCanEdit ? "editable" : "solo lectura";
+      const clock = activeSessionId && activeSessionStartedAt ? ` · sesión ${formatSessionClock(activeSessionStartedAt)}` : "";
+      el.textContent = `${who} (${mode})${clock}`;
+    };
+
+    const syncBranchClocks = () => {
+      stopBranchClocks();
+      if (!branchUserId) {
+        paintBranchStatus();
+        return;
+      }
+      if (activeSessionId && activeSessionStartedAt) {
+        branchClock = window.setInterval(() => paintBranchStatus(), 1000);
+      }
+      if (!branchCanEdit) {
+        branchPoll = window.setInterval(() => {
+          void refreshBranchView(false);
+        }, 15000);
+      }
+      paintBranchStatus();
+    };
+
+    const syncBranchButton = () => {
+      document.querySelectorAll("[data-branch-open]").forEach((node) => {
+        if (!(node instanceof HTMLButtonElement)) return;
+        const local = saveTarget === "local";
+        node.disabled = local;
+        node.title = local ? "Disponible en reportes de la nube" : "Abrir una rama de edición por usuario";
+      });
+    };
+
+    const writeWorkspaceUrl = () => {
+      const href = workspaceHref(orgId, reportId, ownerSafe, {
+        shared: isShared,
+        itemId: focusItemId,
+        branchUser: branchUserId,
+      });
+      if (href && window.location.pathname + window.location.search !== href) {
+        replaceClientUrl(href);
+      }
+    };
+
+    const trackerUploadUrl = () =>
+      orgId && reportId ? (isShared ? sharedImageUploadPath(orgId, reportId) : ownerImageUploadPath(orgId, reportId)) : "";
+
+    const pushConfig = () => {
+      if (disposed || !host) return;
+      const uploadUrl = trackerUploadUrl();
+      const readOnly = Boolean(branchUserId) && !branchCanEdit;
+      const canDelete = !readOnly && (branchUserId ? true : !isShared || canEditShared);
+      void getCsrf(true).then((token) => {
+        if (disposed || !host) return;
+        host.post(
+          trackerConfigMessage(uploadUrl, token || rememberedCsrf(), {
+            canDelete,
+            readOnly,
+            activeSessionId,
+            highlightSessionId,
+          }),
+        );
+      });
+    };
 
     const persistCloud = async (next: EreportPayload, opts: { silent?: boolean } = {}) => {
       if (disposed || !orgId || !reportId) return false;
@@ -371,10 +520,36 @@ import Layout from "../../layouts/Layout.astro";
       }
     };
 
+    const persistBranch = async (next: EreportPayload, opts: { silent?: boolean } = {}) => {
+      if (disposed || !orgId || !reportId || !branchUserId || !branchCanEdit) return false;
+      payload = next;
+      publishAgentPayload(next);
+      const res = await branchSavePump.enqueueAndWait({ payload: next });
+      if (disposed || !res) return false;
+      if (res.status < 300 && res.data.branch?.updatedAt) branchUpdatedAt = res.data.branch.updatedAt;
+      if (opts.silent) {
+        const message = genericMessage(copy, res.status, res.data, "Autosaved.");
+        if (message.kind === "err") {
+          if (res.status !== 0) setBanner(root, message.text, "err");
+          return false;
+        }
+        paintBranchStatus();
+        return true;
+      }
+      const message = reportFailure(copy, res.status, res.data, "Autosaved.");
+      if (message.kind === "err") {
+        setBanner(root, message.text, message.kind);
+        return false;
+      }
+      paintBranchStatus();
+      return true;
+    };
+
     const persist = async (next: EreportPayload, opts: { silent?: boolean } = {}) => {
       if (saveTarget === "local") {
         return persistLocal(next);
       }
+      if (branchUserId) return persistBranch(next, opts);
       return persistCloud(next, opts);
     };
 
@@ -388,14 +563,8 @@ import Layout from "../../layouts/Layout.astro";
             ? sharedImageUploadPath(orgId, reportId)
             : ownerImageUploadPath(orgId, reportId)
           : "";
-      const canDelete = !isShared || canEditShared;
-      const pushConfig = () => {
-        // Force remint so need-config after 403 cannot reuse a stale in-memory token.
-        void getCsrf(true).then((token) => {
-          if (disposed || !host) return;
-          host.post(trackerConfigMessage(uploadUrl, token || rememberedCsrf(), { canDelete }));
-        });
-      };
+      const readOnly = Boolean(branchUserId) && !branchCanEdit;
+      const canDelete = !readOnly && (branchUserId ? true : !isShared || canEditShared);
       host?.destroy();
       host = startTrackerHost(iframe, {
         origin: window.location.origin,
@@ -403,8 +572,16 @@ import Layout from "../../layouts/Layout.astro";
         csrf: rememberedCsrf(),
         payload: nextPayload,
         canDelete,
+        readOnly,
+        activeSessionId,
+        highlightSessionId,
         handlers: {
           onCloudSave: (next) => {
+            if (branchUserId) {
+              if (!branchCanEdit) return;
+              void persist(next as EreportPayload, { silent: true });
+              return;
+            }
             if (isShared && !canEditShared) return;
             void persist(next as EreportPayload, { silent: true });
           },
@@ -425,6 +602,152 @@ import Layout from "../../layouts/Layout.astro";
       pushConfig();
       for (const command of pendingCmds.splice(0)) {
         host.post(trackerCommandMessage(command));
+      }
+    };
+
+    const syncBranchSessionButtons = () => {
+      const own = Boolean(branchUserId) && branchCanEdit;
+      document.querySelectorAll("[data-branch-session-start]").forEach((node) => {
+        if (node instanceof HTMLElement) node.hidden = !own || Boolean(activeSessionId);
+      });
+      document.querySelectorAll("[data-branch-session-stop]").forEach((node) => {
+        if (node instanceof HTMLElement) node.hidden = !own || !activeSessionId;
+      });
+    };
+
+    const leaveBranch = () => {
+      branchUserId = "";
+      branchCanEdit = false;
+      branchLabel = "";
+      branchUpdatedAt = "";
+      activeSessionId = "";
+      activeSessionStartedAt = "";
+      highlightSessionId = "";
+      stopBranchClocks();
+      paintBranchStatus();
+      syncBranchSessionButtons();
+    };
+
+    const applyBranchState = (view: EreportBranchView) => {
+      const card: EreportBranchCard | undefined = view.branch;
+      branchUserId = card?.creatorUserId || branchUserId;
+      branchCanEdit = view.canEdit === true;
+      branchLabel = card?.creatorLabel || branchLabel;
+      branchUpdatedAt = card?.updatedAt || "";
+      activeSessionId = card?.activeSessionId || "";
+      activeSessionStartedAt = card?.activeSessionStartedAt || "";
+      if (view.payload) payload = view.payload;
+      syncBranchClocks();
+      syncBranchSessionButtons();
+    };
+
+    const refreshBranchView = async (reloadTracker: boolean) => {
+      if (disposed || !branchUserId || !orgId || !reportId) return;
+      const res = await fetchReportBranch(isShared, orgId, reportId, branchUserId);
+      if (disposed || res.status !== 200 || !res.data.payload) return;
+      const changed = (res.data.branch?.updatedAt || "") !== branchUpdatedAt;
+      applyBranchState(res.data);
+      if ((reloadTracker || (changed && !branchCanEdit)) && host) {
+        host.post(trackerLoadMessage(res.data.payload));
+        pushConfig();
+      }
+    };
+
+    const showBranch = async (userId: string, opts: { create?: boolean } = {}) => {
+      if (disposed || saveTarget !== "cloud" || !orgId || !reportId) return false;
+      const creating = opts.create === true || userId === "me" || (meId !== "" && userId === meId);
+      const res = creating
+        ? await createReportBranch(isShared, orgId, reportId)
+        : await fetchReportBranch(isShared, orgId, reportId, userId);
+      if (disposed) return false;
+      if (res.status >= 300 || !res.data.payload) {
+        setBanner(root, res.data.message || "No se pudo abrir la rama.", "err");
+        return false;
+      }
+      highlightSessionId = "";
+      applyBranchState(res.data);
+      writeWorkspaceUrl();
+      attachHost(res.data.payload);
+      setBanner(root, branchCanEdit ? "Editando tu rama." : "Rama en solo lectura.", "ok");
+      return true;
+    };
+
+    const showMain = async () => {
+      if (disposed || !orgId || !reportId) return;
+      leaveBranch();
+      const res = isShared ? await fetchSharedReport(orgId, reportId) : await fetchOrgReport(orgId, reportId);
+      if (disposed) return;
+      if (res.status !== 200 || !res.data.payload) {
+        setBanner(root, res.data.message || "Report not found.", "err");
+        return;
+      }
+      payload = res.data.payload;
+      writeWorkspaceUrl();
+      attachHost(payload);
+      setBanner(root, isShared ? "Editing shared report." : "Editing on the VPS filesystem.", "ok");
+    };
+
+    const paintBranchList = async () => {
+      const list = document.querySelector("[data-branch-list]");
+      const sessionsEl = document.querySelector("[data-branch-sessions]");
+      const err = document.querySelector("[data-branch-error]");
+      if (!(list instanceof HTMLElement)) return;
+      list.replaceChildren();
+      if (sessionsEl instanceof HTMLElement) sessionsEl.replaceChildren();
+      syncBranchSessionButtons();
+      if (saveTarget !== "cloud" || !orgId || !reportId) {
+        if (err instanceof HTMLElement) {
+          err.hidden = false;
+          err.textContent = "Disponible en reportes de la nube.";
+        }
+        return;
+      }
+      if (err instanceof HTMLElement) err.hidden = true;
+      const res = await listReportBranches(isShared, orgId, reportId);
+      if (disposed) return;
+      if (res.status !== 200) {
+        if (err instanceof HTMLElement) {
+          err.hidden = false;
+          err.textContent = res.data.message || "No se pudieron cargar las ramas.";
+        }
+        return;
+      }
+      const items = res.data.items || [];
+      if (!items.length) {
+        const empty = document.createElement("li");
+        empty.textContent = "Todavía no hay ramas. Abrí la tuya para congelar main.";
+        list.append(empty);
+      }
+      for (const item of items) {
+        const li = document.createElement("li");
+        const label = item.creatorUserId === meId ? "Tu rama" : item.creatorLabel || item.creatorUserId;
+        li.textContent = `${label} · ${item.updatedAt || item.createdAt || ""}`;
+        const open = document.createElement("button");
+        open.type = "button";
+        open.className = "btn";
+        open.textContent = item.canEdit ? "Abrir" : "Ver";
+        open.dataset.branchOpenUser = item.creatorUserId;
+        li.append(open);
+        list.append(li);
+      }
+      if (!(sessionsEl instanceof HTMLElement) || !branchUserId || !branchCanEdit) return;
+      const view = await fetchReportBranch(isShared, orgId, reportId, branchUserId);
+      if (disposed || view.status !== 200) return;
+      for (const sess of (view.data.sessions || []) as EreportBranchSession[]) {
+        const li = document.createElement("li");
+        const running = sess.id === activeSessionId;
+        const clock =
+          running && sess.startedAt
+            ? formatSessionClock(sess.startedAt)
+            : formatClock(Math.floor((sess.durationMs || 0) / 1000));
+        li.textContent = `${running ? "Activa" : "Detenida"} · ${clock}`;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn";
+        btn.textContent = highlightSessionId === sess.id ? "Ocultar marca" : "Ver marca";
+        btn.dataset.branchHighlight = sess.id;
+        li.append(btn);
+        sessionsEl.append(li);
       }
     };
 
@@ -632,11 +955,15 @@ import Layout from "../../layouts/Layout.astro";
         }
         void paintHistoryList();
       }
+      if (name === "branches") {
+        void paintBranchList();
+      }
     };
 
     const loadCloudReport = async (nextOrg: string, nextReport: string) => {
       if (disposed || !nextOrg || !nextReport) return;
       clearLocalEreportFile();
+      leaveBranch();
       saveTarget = "cloud";
       orgId = nextOrg;
       reportId = nextReport;
@@ -662,17 +989,20 @@ import Layout from "../../layouts/Layout.astro";
       }
       setBanner(root, "Editing on the VPS filesystem.", "ok");
       attachHost(payload);
+      syncBranchButton();
       closeModals();
     };
 
     const loadLocalPayload = (next: EreportPayload) => {
       /* Caller already bound the File System Access handle via openLocalEreportFile. */
+      leaveBranch();
       saveTarget = "local";
       payload = next;
       tema = String(next.reportName || next.appTitle || tema || "Sin tema").trim() || tema;
       fillIdsFields();
       setBanner(root, "Editing local .ereport (autosave to device).", "ok");
       attachHost(next);
+      syncBranchButton();
       closeModals();
     };
 
@@ -721,7 +1051,7 @@ import Layout from "../../layouts/Layout.astro";
       const detail = (ev as CustomEvent<{ orgId?: string; reportId?: string }>).detail;
       if (!detail?.orgId || !detail?.reportId) return;
       if (detail.orgId !== orgId || detail.reportId !== reportId) return;
-      if (saveTarget !== "cloud" || disposed) return;
+      if (saveTarget !== "cloud" || disposed || branchUserId) return;
       void (async () => {
         const res = isShared ? await fetchSharedReport(orgId, reportId) : await fetchOrgReport(orgId, reportId);
         if (disposed || res.status !== 200 || !res.data.payload) return;
@@ -772,7 +1102,19 @@ import Layout from "../../layouts/Layout.astro";
         ...res.data.payload,
         reportName: String(res.data.payload.reportName || res.data.meta.tema || "").trim() || res.data.meta.tema,
       };
+      meId = me.id || "";
       fillIdsFields();
+      syncBranchButton();
+      if (requestedBranch) {
+        const opened = await showBranch(requestedBranch, {
+          create: requestedBranch === "me" || requestedBranch === meId,
+        });
+        if (!opened) {
+          setBanner(root, isShared ? "Editing shared report." : "Editing on the VPS filesystem.", "ok");
+          attachHost(payload);
+        }
+        return;
+      }
       setBanner(root, isShared ? "Editing shared report." : "Editing on the VPS filesystem.", "ok");
       attachHost(payload);
     });
@@ -808,8 +1150,69 @@ import Layout from "../../layouts/Layout.astro";
         void loadCloudReport(cloudPick.dataset.openCloudOrg, cloudPick.dataset.openCloudReport);
         return;
       }
+      if (node.closest("[data-branch-own]")) {
+        void showBranch(meId || "me", { create: true }).then((ok) => {
+          if (ok) closeModals();
+        });
+        return;
+      }
+      if (node.closest("[data-branch-main]")) {
+        void showMain().then(() => closeModals());
+        return;
+      }
+      if (node.closest("[data-branch-session-start]")) {
+        if (!branchUserId || !branchCanEdit) return;
+        void startBranchSession(isShared, orgId, reportId, branchUserId).then((res) => {
+          if (res.status >= 300) {
+            setBanner(root, res.data.message || "No se pudo iniciar la sesión.", "err");
+            return;
+          }
+          applyBranchState(res.data);
+          pushConfig();
+          void paintBranchList();
+        });
+        return;
+      }
+      if (node.closest("[data-branch-session-stop]")) {
+        if (!branchUserId || !activeSessionId || !branchCanEdit) return;
+        void stopBranchSession(isShared, orgId, reportId, branchUserId, activeSessionId).then((res) => {
+          if (res.status >= 300) {
+            setBanner(root, res.data.message || "No se pudo detener la sesión.", "err");
+            return;
+          }
+          highlightSessionId = "";
+          applyBranchState(res.data);
+          pushConfig();
+          void paintBranchList();
+        });
+        return;
+      }
+      const branchUserBtn = node.closest("[data-branch-open-user]");
+      if (branchUserBtn instanceof HTMLElement && branchUserBtn.dataset.branchOpenUser) {
+        void showBranch(branchUserBtn.dataset.branchOpenUser).then((ok) => {
+          if (ok) closeModals();
+        });
+        return;
+      }
+      const highlightBtn = node.closest("[data-branch-highlight]");
+      if (highlightBtn instanceof HTMLElement && highlightBtn.dataset.branchHighlight) {
+        const id = highlightBtn.dataset.branchHighlight;
+        highlightSessionId = highlightSessionId === id ? "" : id;
+        pushConfig();
+        void paintBranchList();
+        return;
+      }
       if (node.closest("[data-workspace-save]")) {
-        if (!host || (isShared && !canEditShared)) return;
+        if (!host) return;
+        if (branchUserId) {
+          if (!branchCanEdit) return;
+          void host.collect(60000).then(async (next) => {
+            const ok = await persist(next as EreportPayload);
+            if (ok) setBanner(root, "Rama guardada.", "ok");
+          });
+          return;
+        }
+        if (isShared && !canEditShared) return;
         void host.collect(60000).then(async (next) => {
           const ok = await persist(next as EreportPayload);
           if (!ok || isShared || !orgId || !reportId) {
@@ -830,6 +1233,10 @@ import Layout from "../../layouts/Layout.astro";
         return;
       }
       if (node.closest("[data-history-save]")) {
+        if (branchUserId) {
+          setBanner(root, "El historial es de main. Volvé a main para guardar un snapshot.", "err");
+          return;
+        }
         if (isShared || !orgId || !reportId || !host) {
           if (isShared) setBanner(root, "Only the owner can save snapshots.", "err");
           return;
@@ -856,6 +1263,10 @@ import Layout from "../../layouts/Layout.astro";
       }
       const restoreBtn = node.closest("[data-history-restore]");
       if (restoreBtn instanceof HTMLElement && restoreBtn.dataset.historyRestore && orgId && reportId) {
+        if (branchUserId) {
+          setBanner(root, "El historial restaura main. Volvé a main para restaurar.", "err");
+          return;
+        }
         void restoreReportHistory(orgId, reportId, restoreBtn.dataset.historyRestore).then((res) => {
           if (res.status !== 200 || !res.data.payload) {
             setBanner(root, res.data.message || "Could not restore.", "err");
