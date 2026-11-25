@@ -19,6 +19,7 @@ import { DEFAULT_CURRENT_WEEK } from "../../../lib/eoschool-curriculum-week-coll
 const { meta, weeks } = MPPE_40WEEK_CURRICULUM;
 const curriculumMode = Astro.url.searchParams.get("mode") === "browse" ? "browse" : "study";
 const standardsView = Astro.url.searchParams.get("view") === "standards";
+const gapsView = Astro.url.searchParams.get("view") === "gaps";
 const initialStudentKey = Astro.url.searchParams.get("studentKey")?.trim() || "";
 
 const bibleMeta = meta.bible;
@@ -106,7 +107,7 @@ function weekForPlanDay(planDay: number): number {
       type="radio"
       name="curriculum-view"
       id="curriculum-view-plan"
-      checked={!standardsView}
+      checked={!standardsView && !gapsView}
     />
     <input
       class="eoschool-curriculum__view-input"
@@ -114,6 +115,13 @@ function weekForPlanDay(planDay: number): number {
       name="curriculum-view"
       id="curriculum-view-standards"
       checked={standardsView}
+    />
+    <input
+      class="eoschool-curriculum__view-input"
+      type="radio"
+      name="curriculum-view"
+      id="curriculum-view-gaps"
+      checked={gapsView}
     />
     <div class="eoschool-curriculum__plan">
     <div class="eoschool-curriculum__weeks">
@@ -491,6 +499,10 @@ function weekForPlanDay(planDay: number): number {
       <Grade3StandardsCompare />
     </div>
 
+    <div class="eoschool-curriculum__gaps">
+      <Grade3StandardsCompare mode="gaps" />
+    </div>
+
   </section>
 
   <div class="eoschool-curriculum-modal" data-curriculum-day-modal hidden>
@@ -663,15 +675,18 @@ function weekForPlanDay(planDay: number): number {
     display: contents;
   }
 
-  .eoschool-curriculum__standards {
+  .eoschool-curriculum__standards,
+  .eoschool-curriculum__gaps {
     display: none;
   }
 
-  #curriculum-view-standards:checked ~ .eoschool-curriculum__plan {
+  #curriculum-view-standards:checked ~ .eoschool-curriculum__plan,
+  #curriculum-view-gaps:checked ~ .eoschool-curriculum__plan {
     display: none;
   }
 
-  #curriculum-view-standards:checked ~ .eoschool-curriculum__standards {
+  #curriculum-view-standards:checked ~ .eoschool-curriculum__standards,
+  #curriculum-view-gaps:checked ~ .eoschool-curriculum__gaps {
     display: block;
   }
 

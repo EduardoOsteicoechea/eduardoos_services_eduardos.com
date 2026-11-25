@@ -4,6 +4,7 @@ import {
   GRADE3_STANDARDS_CROSSWALK,
   type Grade3CrosswalkRow,
 } from "../lib/eoschool-grade3-standards-crosswalk";
+import { GRADE3_PROGRAM_GAPS } from "../lib/eoschool-grade3-gaps";
 import {
   STANDARDS_PROGRESS_THROUGH_DAY,
   foreignStars,
@@ -11,7 +12,15 @@ import {
   venezuelaStars,
 } from "../lib/eoschool-grade3-standards-score";
 
-const { areas } = GRADE3_STANDARDS_CROSSWALK;
+interface Props {
+  mode?: "compare" | "gaps";
+}
+
+const { mode = "compare" } = Astro.props;
+const gaps = mode === "gaps";
+const viewName = gaps ? "gaps-area" : "standards-area";
+const viewId = gaps ? "gaps" : "standards";
+const { areas } = gaps ? GRADE3_PROGRAM_GAPS : GRADE3_STANDARDS_CROSSWALK;
 const covered = learningsCoveredThroughDay(STANDARDS_PROGRESS_THROUGH_DAY);
 const tones = ["a", "b", "c", "d"] as const;
 const starSlots = [0, 1, 2, 3, 4];
@@ -39,7 +48,7 @@ function groupsOf(rows: RatedRow[]) {
 
 const panels = areas.map((area) => {
   const rows: RatedRow[] = area.rows.map((row, index) => {
-    const vzlaStars = venezuelaStars(row.us, row.uk);
+    const vzlaStars = gaps ? 0 : venezuelaStars(row.us, row.uk);
     const usStars = foreignStars(row.us);
     const ukStars = foreignStars(row.uk);
     const best = Math.max(vzlaStars, usStars, ukStars);
@@ -50,7 +59,7 @@ const panels = areas.map((area) => {
       vzlaStars,
       usStars,
       ukStars,
-      bestVzla: vzlaStars === best,
+      bestVzla: !gaps && vzlaStars === best,
       bestUs: usStars === best,
       bestUk: ukStars === best,
     };
@@ -69,8 +78,9 @@ function starLabel(count: number, best: boolean) {
       <input
         class="standards-rail__input"
         type="radio"
-        name="standards-area"
-        id={`standards-${area.id}`}
+        name={viewName}
+        id={`${viewId}-${area.id}`}
+        data-area={area.id}
         checked={index === 0}
       />
     ))
@@ -78,7 +88,7 @@ function starLabel(count: number, best: boolean) {
   <nav class="standards-rail" aria-label="Materias">
     {
       panels.map((area) => (
-        <label class="standards-rail__btn" for={`standards-${area.id}`} title={area.title}>
+        <label class="standards-rail__btn" for={`${viewId}-${area.id}`} data-area={area.id} title={area.title}>
           <span class="material-symbols-outlined" aria-hidden="true">{area.icon}</span>
           <span class="page-title-sr">{area.title}</span>
         </label>
@@ -90,8 +100,8 @@ function starLabel(count: number, best: boolean) {
     <div class="standards-main">
       {
         panels.map((area) => (
-          <section class="standards-panel" data-area={area.id} aria-labelledby={`standards-heading-${area.id}`}>
-            <h2 class="product-dash__section-title" id={`standards-heading-${area.id}`}>{area.title}</h2>
+          <section class="standards-panel" data-area={area.id} aria-labelledby={`${viewId}-heading-${area.id}`}>
+            <h2 class="product-dash__section-title" id={`${viewId}-heading-${area.id}`}>{area.title}</h2>
             {
               area.groups.map((group) => (
                 <section class="standards-unit">
@@ -133,10 +143,16 @@ function starLabel(count: number, best: boolean) {
                           </article>
                         </div>
                         <p class="standards-row__mark">
-                          {row.covered ? (
+                          {!gaps && row.covered ? (
                             <span class="material-symbols-outlined" aria-hidden="true">check</span>
                           ) : null}
-                          <span class="page-title-sr">{row.covered ? `Visto hasta el día ${STANDARDS_PROGRESS_THROUGH_DAY}` : "Todavía no está en el plan"}</span>
+                          <span class="page-title-sr">
+                            {gaps
+                              ? "No está en el programa de Venezuela"
+                              : row.covered
+                                ? `Visto hasta el día ${STANDARDS_PROGRESS_THROUGH_DAY}`
+                                : "Todavía no está en el plan"}
+                          </span>
                         </p>
                       </div>
                     ))
@@ -149,6 +165,7 @@ function starLabel(count: number, best: boolean) {
       }
     </div>
 
+    {!gaps && (
     <footer class="standards-sources">
       <h2 class="product-dash__section-title">Fuentes</h2>
       <ul>
@@ -166,6 +183,7 @@ function starLabel(count: number, best: boolean) {
         }
       </ul>
     </footer>
+    )}
   </div>
 </div>
 
@@ -226,14 +244,14 @@ function starLabel(count: number, best: boolean) {
     font-size: var(--icon-size);
   }
 
-  #standards-len:checked ~ .standards-rail label[for="standards-len"],
-  #standards-mat:checked ~ .standards-rail label[for="standards-mat"],
-  #standards-cie:checked ~ .standards-rail label[for="standards-cie"],
-  #standards-ide:checked ~ .standards-rail label[for="standards-ide"],
-  #standards-len:focus-visible ~ .standards-rail label[for="standards-len"],
-  #standards-mat:focus-visible ~ .standards-rail label[for="standards-mat"],
-  #standards-cie:focus-visible ~ .standards-rail label[for="standards-cie"],
-  #standards-ide:focus-visible ~ .standards-rail label[for="standards-ide"] {
+  .standards-rail__input[data-area="len"]:checked ~ .standards-rail label[data-area="len"],
+  .standards-rail__input[data-area="mat"]:checked ~ .standards-rail label[data-area="mat"],
+  .standards-rail__input[data-area="cie"]:checked ~ .standards-rail label[data-area="cie"],
+  .standards-rail__input[data-area="ide"]:checked ~ .standards-rail label[data-area="ide"],
+  .standards-rail__input[data-area="len"]:focus-visible ~ .standards-rail label[data-area="len"],
+  .standards-rail__input[data-area="mat"]:focus-visible ~ .standards-rail label[data-area="mat"],
+  .standards-rail__input[data-area="cie"]:focus-visible ~ .standards-rail label[data-area="cie"],
+  .standards-rail__input[data-area="ide"]:focus-visible ~ .standards-rail label[data-area="ide"] {
     color: var(--color-bg);
     background: var(--color-text);
     border-color: var(--color-text);
@@ -252,10 +270,10 @@ function starLabel(count: number, best: boolean) {
     gap: var(--space-padding);
   }
 
-  #standards-len:checked ~ .standards-body .standards-panel[data-area="len"],
-  #standards-mat:checked ~ .standards-body .standards-panel[data-area="mat"],
-  #standards-cie:checked ~ .standards-body .standards-panel[data-area="cie"],
-  #standards-ide:checked ~ .standards-body .standards-panel[data-area="ide"] {
+  .standards-rail__input[data-area="len"]:checked ~ .standards-body .standards-panel[data-area="len"],
+  .standards-rail__input[data-area="mat"]:checked ~ .standards-body .standards-panel[data-area="mat"],
+  .standards-rail__input[data-area="cie"]:checked ~ .standards-body .standards-panel[data-area="cie"],
+  .standards-rail__input[data-area="ide"]:checked ~ .standards-body .standards-panel[data-area="ide"] {
     display: flex;
   }
 
