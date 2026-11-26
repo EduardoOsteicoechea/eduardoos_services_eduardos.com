@@ -541,7 +541,7 @@ function weekForPlanDay(planDay: number): number {
         aria-labelledby="curriculum-day-modal-title"
       >
         <div class="eoschool-curriculum-modal__rows">
-          <section class="eoschool-curriculum-modal__row" aria-label="Áreas del día">
+          <section class="eoschool-curriculum-modal__row eoschool-curriculum-modal__row--plain" aria-label="Áreas del día">
             <div class="eoschool-curriculum-modal__tabs" role="tablist" aria-label="Áreas del día">
               <button type="button" class="eoschool-curriculum-modal__tab" data-curriculum-modal-tab="bib" role="tab" aria-label="Biblia" title="Biblia">
                 <span class="material-symbols-outlined" aria-hidden="true">menu_book</span>
@@ -577,11 +577,10 @@ function weekForPlanDay(planDay: number): number {
             <div data-curriculum-modal-aprendizajes></div>
           </section>
 
-          <section class="eoschool-curriculum-modal__row" aria-label="PDF del día">
+          <section class="eoschool-curriculum-modal__row eoschool-curriculum-modal__row--plain" aria-label="PDF del día">
             <div class="eoschool-curriculum-modal__panel-actions">
-              <button type="button" class="eoschool-curriculum-modal__print" data-curriculum-day-print hidden>
-                <span class="material-symbols-outlined" aria-hidden="true">print</span>
-                Imprimir
+              <button type="button" class="eoschool-curriculum-modal__download" data-curriculum-modal-preview disabled>
+                Previsualizar
               </button>
               <button type="button" class="eoschool-curriculum-modal__download" data-curriculum-modal-download disabled>
                 Descargar PDF
@@ -599,13 +598,13 @@ function weekForPlanDay(planDay: number): number {
           </section>
 
           <section
-            class="eoschool-curriculum-modal__row eoschool-curriculum-activity"
+            class="eoschool-curriculum-modal__row eoschool-curriculum-modal__row--evidence eoschool-curriculum-activity"
             data-curriculum-activity
             data-curriculum-evidence
             hidden
           ></section>
 
-          <section class="eoschool-curriculum-modal__row" data-curriculum-score aria-label="Calificar" hidden></section>
+          <section class="eoschool-curriculum-modal__row eoschool-curriculum-modal__row--score" data-curriculum-score aria-label="Calificar" hidden></section>
         </div>
       </div>
     </div>
@@ -1825,7 +1824,7 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum-modal__day {
     position: absolute;
     top: 0;
-    left: var(--space-padding);
+    left: 0;
     z-index: 2;
     transform: translateY(-50%);
     display: flex;
@@ -1911,6 +1910,17 @@ function weekForPlanDay(planDay: number): number {
     background: var(--color-bg);
   }
 
+  .eoschool-curriculum-modal__row--plain {
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .eoschool-curriculum-modal__row--evidence,
+  .eoschool-curriculum-modal__row--score {
+    align-items: center;
+  }
+
   .eoschool-curriculum-modal__row-title {
     margin: 0;
     font-size: var(--font-size-md);
@@ -1988,28 +1998,34 @@ function weekForPlanDay(planDay: number): number {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    align-self: center;
     gap: var(--rail-gap);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
   }
 
   .eoschool-curriculum-activity input[type="number"] {
-    flex: 1;
-    min-width: 0;
-    width: auto;
+    flex: 0 0 auto;
+    width: calc(var(--button-size) * 3);
     height: var(--control-height);
+    min-height: var(--control-height);
+    max-height: var(--control-height);
     padding: var(--control-padding-block) var(--control-padding-inline);
     font-size: var(--font-size-md);
+    line-height: 1;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     background: var(--color-surface);
     color: var(--color-text);
   }
 
-  .eoschool-curriculum-activity__grade {
+  .eoschool-curriculum-activity__grade,
+  .eoschool-curriculum-activity__why-open {
     flex-shrink: 0;
     height: var(--control-height);
     padding: var(--control-padding-block) var(--control-padding-inline);
     font-size: var(--font-size-md);
+    font-family: inherit;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     background: var(--color-button-bg);
@@ -2033,28 +2049,16 @@ function weekForPlanDay(planDay: number): number {
     gap: var(--rail-gap);
   }
 
-  .eoschool-curriculum-modal__print,
   .eoschool-curriculum-modal__download {
     height: var(--control-height);
     padding: var(--control-padding-block) var(--control-padding-inline);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
+    font-family: inherit;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     background: var(--color-button-bg);
     color: var(--color-button-fg);
     cursor: pointer;
-  }
-
-  .eoschool-curriculum-modal__print {
-    display: flex;
-    align-items: center;
-    gap: var(--rail-gap);
-  }
-
-  .eoschool-curriculum-modal__print .material-symbols-outlined {
-    font-size: var(--icon-size);
-    width: var(--icon-size);
-    height: var(--icon-size);
   }
 
   .eoschool-curriculum-modal__print-frame {
@@ -2598,9 +2602,10 @@ function weekForPlanDay(planDay: number): number {
     display: inline-flex;
     flex-wrap: wrap;
     align-items: center;
-    align-self: flex-start;
+    justify-content: center;
+    align-self: center;
     gap: var(--rail-gap);
-    height: auto;
+    height: var(--control-height);
     min-height: var(--control-height);
     padding: var(--control-padding-block) var(--control-padding-inline);
     border: var(--border-width) solid var(--color-border);
@@ -2608,7 +2613,18 @@ function weekForPlanDay(planDay: number): number {
     background: var(--color-button-bg);
     color: var(--color-button-fg);
     font-size: var(--font-size-md);
+    font-family: inherit;
     cursor: pointer;
+  }
+
+  .eoschool-curriculum-activity__file:has(.eoschool-curriculum-activity__progress:not([hidden])) {
+    height: auto;
+  }
+
+  @media (max-width: 47.999rem) {
+    .eoschool-curriculum-activity__file {
+      align-self: stretch;
+    }
   }
 
   .eoschool-curriculum-activity__file .material-symbols-outlined {
@@ -2704,9 +2720,11 @@ function weekForPlanDay(planDay: number): number {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    align-self: center;
+    gap: var(--rail-gap);
     margin: 0;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
   }
 
   .eoschool-curriculum-activity__key {
@@ -2764,11 +2782,12 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum-activity__why-open {
     height: var(--control-height);
     padding: var(--control-padding-block) var(--control-padding-inline);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
+    font-family: inherit;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
-    background: transparent;
-    color: var(--color-text);
+    background: var(--color-button-bg);
+    color: var(--color-button-fg);
     cursor: pointer;
   }
 

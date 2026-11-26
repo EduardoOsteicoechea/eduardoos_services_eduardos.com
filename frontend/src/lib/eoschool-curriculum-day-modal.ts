@@ -17,28 +17,38 @@ let activePdfBytes: Uint8Array | null = null;
 let activePdfName = "dia-mppe.pdf";
 let pdfPreviewSeq = 0;
 
+function pdfActionButtons(modal: HTMLElement): HTMLButtonElement[] {
+  return [
+    modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-preview]"),
+    modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-download]"),
+  ].filter((btn): btn is HTMLButtonElement => btn instanceof HTMLButtonElement);
+}
+
+function setPdfActionsEnabled(modal: HTMLElement, enabled: boolean): void {
+  for (const btn of pdfActionButtons(modal)) btn.disabled = !enabled;
+}
+
+function openPdfPreview(bytes: Uint8Array): void {
+  const copy = new Uint8Array(bytes.byteLength);
+  copy.set(bytes);
+  const url = URL.createObjectURL(new Blob([copy], { type: "application/pdf" }));
+  const opened = window.open(url, "_blank", "noopener");
+  window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+  if (!opened) showErrorModal({ message: "No se pudo abrir la vista previa del PDF." });
+}
+
 function setPdfPanelLoading(modal: HTMLElement, loading: boolean): void {
   const loader = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf-loading]");
-  const downloadBtn = modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-download]");
   const host = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf]");
   if (loader) loader.hidden = !loading;
   if (host) host.toggleAttribute("data-pdf-loading", loading);
-  if (downloadBtn && loading) downloadBtn.disabled = true;
+  if (loading) setPdfActionsEnabled(modal, false);
 }
 
 function parsePlanDay(card: HTMLElement): number {
   const raw = card.dataset.planDay;
   const n = raw ? Number.parseInt(raw, 10) : Number.NaN;
   return Number.isFinite(n) ? n : 0;
-}
-
-function syncPrintButton(modal: HTMLElement, planDay: number): void {
-  const btn = modal.querySelector<HTMLButtonElement>("[data-curriculum-day-print]");
-  if (!btn) return;
-  const href = dayPacketHref(planDay);
-  btn.hidden = href == null;
-  if (href) btn.dataset.packetHref = href;
-  else delete btn.dataset.packetHref;
 }
 
 async function showPackedDayPdf(
@@ -49,7 +59,6 @@ async function showPackedDayPdf(
 ): Promise<boolean> {
   const host = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf]");
   const empty = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf-empty]");
-  const downloadBtn = modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-download]");
   if (!host) return false;
 
   let response: Response;
@@ -72,7 +81,7 @@ async function showPackedDayPdf(
       empty.hidden = false;
       empty.textContent = "No se pudo abrir el PDF de las clases de este día.";
     }
-    if (downloadBtn) downloadBtn.disabled = true;
+    setPdfActionsEnabled(modal, false);
     return false;
   }
 
@@ -85,7 +94,7 @@ async function showPackedDayPdf(
   if (empty) empty.hidden = true;
   if (isStale()) return true;
   setPdfPanelLoading(modal, false);
-  if (downloadBtn) downloadBtn.disabled = !activePdfBytes?.byteLength;
+  setPdfActionsEnabled(modal, Boolean(activePdfBytes?.byteLength));
   if (mustLog) console.log("[curriculum-day-modal] packet ready", { href, bytes: bytes.byteLength, seq });
   return true;
 }
@@ -168,7 +177,6 @@ function setModalSectionContent(
 async function showDayPdf(modal: HTMLElement, sheet: MppeCurriculumDaySheet | null): Promise<void> {
   const host = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf]");
   const empty = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf-empty]");
-  const downloadBtn = modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-download]");
   if (!host) return;
 
   const seq = ++pdfPreviewSeq;
@@ -183,7 +191,7 @@ async function showDayPdf(modal: HTMLElement, sheet: MppeCurriculumDaySheet | nu
       empty.hidden = false;
       empty.textContent = "Hoja del día en preparación.";
     }
-    if (downloadBtn) downloadBtn.disabled = true;
+    setPdfActionsEnabled(modal, false);
     return;
   }
   if (empty) empty.hidden = true;
@@ -209,7 +217,7 @@ async function showDayPdf(modal: HTMLElement, sheet: MppeCurriculumDaySheet | nu
       empty.textContent =
         "No se pudo generar el PDF (5 materias en una hoja). Inicia sesión con acceso Homescool para la vista previa.";
     }
-    if (downloadBtn) downloadBtn.disabled = true;
+    setPdfActionsEnabled(modal, false);
     return;
   }
 
@@ -217,13 +225,12 @@ async function showDayPdf(modal: HTMLElement, sheet: MppeCurriculumDaySheet | nu
   activePdfName = `dia-${sheet.planDay}-mppe.pdf`;
   if (isStale()) return;
   setPdfPanelLoading(modal, false);
-  if (downloadBtn) downloadBtn.disabled = !activePdfBytes?.byteLength;
+  setPdfActionsEnabled(modal, Boolean(activePdfBytes?.byteLength));
 }
 
 function closeModal(modal: HTMLElement): void {
   pdfPreviewSeq += 1;
   setPdfPanelLoading(modal, false);
-  syncPrintButton(modal, 0);
   modal.hidden = true;
   document.body.classList.remove("eoschool-curriculum-modal-open");
   const host = modal.querySelector<HTMLElement>("[data-curriculum-modal-pdf]");
@@ -236,7 +243,6 @@ function openModal(card: HTMLElement): void {
   if (!modal) return;
 
   const planDay = parsePlanDay(card);
-  syncPrintButton(modal, planDay);
   const dayId = card.dataset.curriculumDay ?? "";
   const titleEl = modal.querySelector<HTMLElement>("[data-curriculum-modal-title]");
   const scheduledRaw = card.dataset.curriculumScheduled?.split(",").map((s) => s.trim()) ?? [];
@@ -334,21 +340,14 @@ export function bindCurriculumDayModalShell(modal: HTMLElement): void {
     downloadPdfBytes(clonePdfBytes(activePdfBytes), activePdfName);
   });
 
-  modal.querySelector<HTMLButtonElement>("[data-curriculum-day-print]")?.addEventListener("click", (ev) => {
+  modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-preview]")?.addEventListener("click", (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
     const btn = ev.currentTarget;
-    if (!(btn instanceof HTMLButtonElement) || btn.hidden) return;
-    const href = btn.dataset.packetHref;
-    if (!href) return;
-    const frame = modal.querySelector<HTMLIFrameElement>("[data-curriculum-day-print-frame]");
-    if (!frame) return;
-    if (mustLog) console.log("[curriculum-day-modal] print packet", { href });
-    frame.onload = () => {
-      frame.contentWindow?.focus();
-      frame.contentWindow?.print();
-    };
-    frame.src = `${href}?print=${Date.now()}`;
+    if (btn instanceof HTMLButtonElement && btn.disabled) return;
+    if (!activePdfBytes?.byteLength) return;
+    if (mustLog) console.log("[curriculum-day-modal] preview", { name: activePdfName });
+    openPdfPreview(activePdfBytes);
   });
 
   modal.addEventListener("click", (ev) => {
