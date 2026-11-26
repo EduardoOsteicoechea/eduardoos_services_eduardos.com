@@ -28,6 +28,7 @@ export default defineConfig({
         !page.includes("/documents/pamphlet") &&
         !page.includes("/evoice") &&
         !page.includes("/eeyes") &&
+        !page.includes("/ebim") &&
         !page.includes("/emusic") &&
         !page.includes("/eapi") &&
         !page.includes("/eoproject") &&

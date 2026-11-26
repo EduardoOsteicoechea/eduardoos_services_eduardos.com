@@ -27,6 +27,7 @@ describe("productVisibility", () => {
     expect(isAdminOnlyPath("/dashboard/latin/calvins-institutes")).toBe(true);
     expect(isAdminOnlyPath("/ereport")).toBe(false);
     expect(isAdminOnlyPath("/portfolio/ereport")).toBe(false);
+    expect(isAdminOnlyPath("/ebim")).toBe(true);
     expect(isAdminOnlyPath("/cv")).toBe(false);
   });
 });

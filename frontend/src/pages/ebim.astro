@@ -1,0 +1,197 @@
+---
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import Layout from "../layouts/Layout.astro";
+import { loadEbimDocs, type EbimDoc } from "../lib/ebimVault";
+
+const docs = loadEbimDocs(
+  join(dirname(fileURLToPath(import.meta.url)), "../../../iso19650_study_vault"),
+);
+
+type Group = { id: string; label: string; items: EbimDoc[]; refs: EbimDoc[] };
+const groups: Group[] = [];
+for (const doc of docs) {
+  let group = groups.find((item) => item.id === doc.group);
+  if (!group) {
+    group = { id: doc.group, label: doc.groupLabel, items: [], refs: [] };
+    groups.push(group);
+  }
+  if (doc.subgroup) group.refs.push(doc);
+  else group.items.push(doc);
+}
+---
+
+<Layout
+  title="eBim"
+  description="Admin study reader for the ISO 19650 series and the openBIM notes kept with this site."
+  robots="noindex,nofollow"
+>
+  <p class="status" data-ebim-status>Checking session…</p>
+
+  <div class="ebim" data-ebim hidden>
+    <aside class="ebim-nav" data-ebim-nav>
+      <button
+        class="ebim-nav__collapse icon-btn"
+        type="button"
+        data-ebim-collapse
+        aria-expanded="true"
+        aria-controls="ebim-toc"
+        aria-label="Collapse study navigation"
+        title="Collapse study navigation"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true" data-ebim-collapse-icon>left_panel_close</span>
+      </button>
+      <nav id="ebim-toc" aria-label="Study order">
+        {
+          groups.map((group) => (
+            <details class="ebim-nav__group" open>
+              <summary>{group.label}</summary>
+              <div class="ebim-nav__items">
+                {group.items.map((doc) => (
+                  <button type="button" data-ebim-open={doc.id}>
+                    {doc.label}
+                  </button>
+                ))}
+                {group.refs.length > 0 ? (
+                  <details class="ebim-nav__group">
+                    <summary>{group.refs[0]?.subgroup}</summary>
+                    <div class="ebim-nav__items">
+                      {group.refs.map((doc) => (
+                        <button type="button" data-ebim-open={doc.id}>
+                          {doc.label}
+                        </button>
+                      ))}
+                    </div>
+                  </details>
+                ) : null}
+              </div>
+            </details>
+          ))
+        }
+      </nav>
+    </aside>
+
+    <div class="ebim-read">
+      <div class="ebim-pager">
+        <button type="button" data-ebim-prev>Previous</button>
+        <p class="ebim-pager__label" data-ebim-label></p>
+        <button type="button" data-ebim-next>Next</button>
+      </div>
+      {
+        docs.map((doc) => (
+          <section id={`ebim-${doc.id}`} data-ebim-section={doc.id} hidden>
+            <div class="ebim-doc" set:html={doc.html} />
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { getMe } from "../lib/api";
+  import { mustLog } from "../lib/dev-log";
+  import { go } from "../lib/router";
+
+  const status = document.querySelector("[data-ebim-status]");
+  const root = document.querySelector("[data-ebim]");
+
+  const fail = (message: string) => {
+    if (status instanceof HTMLElement) {
+      status.textContent = message;
+      status.className = "status err";
+    }
+  };
+
+  if (root instanceof HTMLElement) {
+    const sections = [...root.querySelectorAll<HTMLElement>("[data-ebim-section]")];
+    const openers = [...root.querySelectorAll<HTMLButtonElement>("[data-ebim-open]")];
+    const prev = root.querySelector("[data-ebim-prev]");
+    const next = root.querySelector("[data-ebim-next]");
+    const label = root.querySelector("[data-ebim-label]");
+    const collapse = root.querySelector("[data-ebim-collapse]");
+    const toc = root.querySelector("#ebim-toc");
+    const collapseIcon = root.querySelector("[data-ebim-collapse-icon]");
+    let index = 0;
+
+    const show = (nextIndex: number) => {
+      index = Math.min(Math.max(nextIndex, 0), sections.length - 1);
+      const id = sections[index]?.getAttribute("data-ebim-section") || "";
+      for (const section of sections) {
+        section.hidden = section.getAttribute("data-ebim-section") !== id;
+      }
+      for (const button of openers) {
+        const current = button.getAttribute("data-ebim-open") === id;
+        if (current) button.setAttribute("aria-current", "page");
+        else button.removeAttribute("aria-current");
+        if (current) {
+          const group = button.closest("details");
+          if (group) group.open = true;
+          const parent = group?.parentElement?.closest("details");
+          if (parent) parent.open = true;
+        }
+      }
+      const opener = openers.find((button) => button.getAttribute("data-ebim-open") === id);
+      if (label instanceof HTMLElement) {
+        const group = opener?.closest("details")?.querySelector("summary")?.textContent?.trim() || "";
+        label.textContent = group && opener ? `${group} · ${opener.textContent?.trim() || ""}` : "";
+      }
+      if (prev instanceof HTMLButtonElement) prev.disabled = index === 0;
+      if (next instanceof HTMLButtonElement) next.disabled = index === sections.length - 1;
+      if (mustLog) console.log("ebim.section", { id, index });
+    };
+
+    root.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const opener = target.closest("[data-ebim-open]");
+      if (opener instanceof HTMLButtonElement && root.contains(opener)) {
+        const id = opener.getAttribute("data-ebim-open");
+        const found = sections.findIndex((section) => section.getAttribute("data-ebim-section") === id);
+        if (found >= 0) show(found);
+        return;
+      }
+      const jump = target.closest("[data-ebim-jump]");
+      if (jump instanceof HTMLAnchorElement && root.contains(jump)) {
+        event.preventDefault();
+        const id = jump.getAttribute("data-ebim-jump");
+        const found = sections.findIndex((section) => section.getAttribute("data-ebim-section") === id);
+        if (found >= 0) show(found);
+      }
+    });
+
+    prev?.addEventListener("click", () => show(index - 1));
+    next?.addEventListener("click", () => show(index + 1));
+    collapse?.addEventListener("click", () => {
+      const expanded = collapse.getAttribute("aria-expanded") !== "false";
+      const nextExpanded = !expanded;
+      collapse.setAttribute("aria-expanded", nextExpanded ? "true" : "false");
+      collapse.setAttribute(
+        "aria-label",
+        nextExpanded ? "Collapse study navigation" : "Expand study navigation",
+      );
+      collapse.setAttribute("title", nextExpanded ? "Collapse study navigation" : "Expand study navigation");
+      if (toc instanceof HTMLElement) toc.hidden = !nextExpanded;
+      if (collapseIcon instanceof HTMLElement) {
+        collapseIcon.textContent = nextExpanded ? "left_panel_close" : "left_panel_open";
+      }
+      root.classList.toggle("ebim--nav-closed", !nextExpanded);
+    });
+
+    const start = async () => {
+      const me = await getMe();
+      const isAdmin = me.status === 200 && String(me.data.role || "").trim().toLowerCase() === "admin";
+      if (mustLog) console.log("ebim.session", { status: me.status, isAdmin, requestId: me.requestId });
+      if (!isAdmin) {
+        fail("This page is available to administrators only.");
+        go("/404");
+        return;
+      }
+      if (status instanceof HTMLElement) status.hidden = true;
+      root.hidden = false;
+      show(0);
+    };
+
+    void start();
+  }
+</script>

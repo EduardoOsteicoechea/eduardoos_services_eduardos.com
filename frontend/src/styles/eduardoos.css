@@ -1229,3 +1229,196 @@ pre.panel{
 .product-dash > *:nth-child(3){
   animation-delay: 80ms;
 }
+
+.ebim{
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  align-items: stretch;
+}
+
+.ebim-nav{
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding: var(--space-padding);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+}
+
+.ebim-nav__collapse{
+  align-self: flex-end;
+}
+
+.ebim-nav nav{
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  max-height: 24rem;
+  overflow-y: auto;
+}
+
+.ebim-nav__group{
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+.ebim-nav summary{
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.ebim-nav__items{
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  padding-inline-start: var(--space-padding);
+}
+
+.ebim-nav__items button{
+  padding: var(--rail-gap);
+  border: 0;
+  border-radius: var(--border-radius);
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  text-align: left;
+}
+
+.ebim-nav__items button[aria-current="page"]{
+  color: var(--color-accent);
+}
+
+.ebim-nav__items button:focus-visible,
+.ebim-nav summary:focus-visible,
+.ebim-pager button:focus-visible{
+  outline: var(--border-width) solid var(--color-accent);
+  outline-offset: var(--border-width);
+}
+
+.ebim--nav-closed .ebim-nav{
+  width: auto;
+  padding: var(--rail-gap);
+}
+
+.ebim-read{
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  min-width: 0;
+  flex: 1;
+}
+
+.ebim-pager{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rail-gap);
+  align-items: center;
+}
+
+.ebim-pager button{
+  height: var(--control-height);
+  padding: var(--control-padding-block) var(--control-padding-inline);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-size-md);
+}
+
+.ebim-pager button:disabled{
+  opacity: 0.45;
+}
+
+.ebim-pager__label{
+  margin: 0;
+  flex: 1;
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+.ebim-doc{
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  font-size: var(--font-size-sm);
+}
+
+.ebim-doc h2,
+.ebim-doc h3,
+.ebim-doc h4,
+.ebim-doc h5,
+.ebim-doc h6,
+.ebim-doc p,
+.ebim-doc ul,
+.ebim-doc ol{
+  margin: 0;
+}
+
+.ebim-doc h2{
+  font-size: var(--font-size-lg);
+}
+
+.ebim-doc h3,
+.ebim-doc h4,
+.ebim-doc h5,
+.ebim-doc h6{
+  font-size: var(--font-size-md);
+}
+
+.ebim-doc a{
+  color: var(--color-link);
+}
+
+.ebim-doc ul,
+.ebim-doc ol{
+  padding-inline-start: var(--space-padding);
+}
+
+.ebim-table{
+  overflow-x: auto;
+}
+
+.ebim-doc table{
+  border-collapse: collapse;
+  font-size: var(--font-size-xs);
+}
+
+.ebim-doc th,
+.ebim-doc td{
+  border: var(--border-width) solid var(--color-border);
+  padding: var(--rail-gap);
+  text-align: left;
+  vertical-align: top;
+}
+
+.ebim-code{
+  margin: 0;
+  padding: var(--space-padding);
+  overflow-x: auto;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-bg);
+  font-size: var(--font-size-xs);
+  white-space: pre-wrap;
+}
+
+@media (min-width: 48rem){
+  .ebim{
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .ebim-nav{
+    position: sticky;
+    top: var(--mobile-header-height);
+    width: 18rem;
+  }
+
+  .ebim-nav nav{
+    max-height: 36rem;
+  }
+}
+

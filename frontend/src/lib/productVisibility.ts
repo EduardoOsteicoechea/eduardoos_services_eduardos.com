@@ -25,6 +25,7 @@ const ADMIN_ONLY_PATH_PREFIXES = [
   "/evoice",
   "/emusic",
   "/eeyes",
+  "/ebim",
   "/publisher",
   "/dashboard/latin",
 ] as const;

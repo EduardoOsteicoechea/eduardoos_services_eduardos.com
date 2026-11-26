@@ -86,6 +86,7 @@ const privateByDefault =
   path.startsWith("/eapi") ||
   path.startsWith("/eoproject") ||
   path.startsWith("/eeyes") ||
+  path.startsWith("/ebim") ||
   path.startsWith("/publisher") ||
   path.startsWith("/payments");
 /** Fixed contact footer on home + product dashboards (not workspaces / session / admin / editor / eMusic). */
@@ -96,6 +97,7 @@ const showSiteFooter =
   !path.startsWith("/documents/pamphlet") &&
   !path.startsWith("/emusic") &&
   !path.startsWith("/eapi") &&
+  !path.startsWith("/ebim") &&
   path !== "/eoschool/requirements/curriculum" &&
   htmlPage !== "pamphlet";
 const robots = robotsProp ?? (privateByDefault ? "noindex,nofollow" : "index,follow");
@@ -509,6 +511,10 @@ const jsonLdString =
             <a href="/eeyes" data-route data-service="eeyes" data-admin-only hidden class="sidebar-nav--locked" aria-disabled="true" tabindex="-1" title="Subscription required" aria-current={path === "/eeyes" || path.startsWith("/eeyes/") ? "page" : undefined}>
               <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
               eEyes
+            </a>
+            <a href="/ebim" data-route data-admin-only hidden aria-current={path === "/ebim" || path.startsWith("/ebim/") ? "page" : undefined}>
+              <span class="material-symbols-outlined" aria-hidden="true">account_tree</span>
+              eBim
             </a>
             <button
               type="button"
