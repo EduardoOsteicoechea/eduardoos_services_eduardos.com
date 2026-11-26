@@ -47,7 +47,7 @@ describe("activity thumbnails", () => {
     expect(ask).toHaveBeenCalledWith("¿Borrar esta foto?");
     ask.mockRestore();
     const score = modal.querySelector(".eoschool-curriculum-activity__score");
-    expect(score?.textContent).toContain("Puntaje");
+    expect(score?.textContent).toContain("Calificar");
     expect(score?.querySelector("input[type='number']")).not.toBeNull();
   });
 });

@@ -97,16 +97,24 @@ export function renderCurriculumActivity(
   card: HTMLElement,
   sectionId: CurriculumPlanSectionId,
 ): void {
-  const host = modal.querySelector<HTMLElement>("[data-curriculum-activity]");
+  const host = modal.querySelector<HTMLElement>("[data-curriculum-evidence]")
+    ?? modal.querySelector<HTMLElement>("[data-curriculum-activity]");
+  const scoreHost = modal.querySelector<HTMLElement>("[data-curriculum-score]");
   if (!host) return;
   const planDay = Number(card.dataset.planDay || "0");
   const dayId = card.dataset.curriculumDay || "";
   host.replaceChildren();
-  if (!dayId || !Number.isFinite(planDay) || planDay < ACTIVITY_FROM_PLAN_DAY) {
+  if (scoreHost && scoreHost !== host) scoreHost.replaceChildren();
+  const hidePanels = () => {
     host.hidden = true;
+    if (scoreHost) scoreHost.hidden = true;
+  };
+  if (!dayId || !Number.isFinite(planDay) || planDay < ACTIVITY_FROM_PLAN_DAY) {
+    hidePanels();
     return;
   }
   host.hidden = false;
+  if (scoreHost) scoreHost.hidden = false;
   const key = sectionProgressKey(dayId, sectionId);
   const score = scores.get(key);
   const names = activityPhotoNames(key);
@@ -115,8 +123,15 @@ export function renderCurriculumActivity(
 
   const fileLabel = document.createElement("label");
   fileLabel.className = "eoschool-curriculum-activity__file";
+  const uploadIcon = document.createElement("span");
+  uploadIcon.className = "material-symbols-outlined";
+  uploadIcon.setAttribute("aria-hidden", "true");
+  uploadIcon.textContent = "upload";
+  const uploadText = document.createElement("span");
+  uploadText.textContent = "Evidencias";
   const fileInput = document.createElement("input");
   fileInput.type = "file";
+  fileInput.className = "eoschool-curriculum-activity__file-input";
   fileInput.accept = "image/jpeg,image/png,image/webp";
   fileInput.multiple = true;
   fileInput.setAttribute("aria-label", "Fotos de la tarea");
@@ -129,12 +144,10 @@ export function renderCurriculumActivity(
   const progressLabel = document.createElement("span");
   progressLabel.className = "eoschool-curriculum-activity__progress-label";
   progressLabel.hidden = true;
-  fileLabel.append(fileInput, progress, progressLabel);
+  fileLabel.append(uploadIcon, uploadText, fileInput, progress, progressLabel);
 
   const scoreRow = document.createElement("div");
   scoreRow.className = "eoschool-curriculum-activity__score";
-  const scoreText = document.createElement("span");
-  scoreText.textContent = "Puntaje";
   const scoreInput = document.createElement("input");
   scoreInput.type = "number";
   scoreInput.min = "0";
@@ -145,8 +158,9 @@ export function renderCurriculumActivity(
   if (score != null) scoreInput.value = String(score);
   const save = document.createElement("button");
   save.type = "button";
-  save.textContent = "Guardar puntaje";
-  scoreRow.append(scoreText, scoreInput, save);
+  save.className = "eoschool-curriculum-activity__grade";
+  save.textContent = "Calificar";
+  scoreRow.append(scoreInput, save);
   if (score != null) {
     const why = document.createElement("button");
     why.type = "button";
@@ -161,6 +175,7 @@ export function renderCurriculumActivity(
   }
 
   host.append(fileLabel);
+  const scoreTarget = scoreHost && scoreHost !== host ? scoreHost : host;
   if (names.length) {
     const gallery = document.createElement("div");
     gallery.className = "eoschool-curriculum-activity__photos";
@@ -202,7 +217,7 @@ export function renderCurriculumActivity(
     }
     host.append(gallery);
   }
-  host.append(scoreRow);
+  scoreTarget.append(scoreRow);
 
   fileInput.addEventListener("change", () => {
     const files = [...(fileInput.files || [])];

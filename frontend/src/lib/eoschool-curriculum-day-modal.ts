@@ -1,5 +1,5 @@
 import { showErrorModal } from "./error-modal";
-import { clonePdfBytes, downloadPdfBytes, renderHomescoolPdfPreview } from "./homescool-pdf-preview";
+import { clonePdfBytes, downloadPdfBytes } from "./homescool-pdf-preview";
 import type { CurriculumPlanSectionId } from "./eoschool-curriculum-plan-classes";
 import { AI_FROM_PLAN_DAY } from "./eoschool-ai-signature";
 import {
@@ -83,28 +83,10 @@ async function showPackedDayPdf(
   activePdfBytes = clonePdfBytes(bytes);
   activePdfName = dayPacketName(href);
   if (empty) empty.hidden = true;
-  try {
-    await renderHomescoolPdfPreview(host, bytes, {
-      fitWidth: true,
-      containWidth: true,
-      pageWidthMm: 279.4,
-      pageHeightMm: 215.9,
-      isStale,
-    });
-  } catch (err: unknown) {
-    if (!isStale()) {
-      setPdfPanelLoading(modal, false);
-      showErrorModal({
-        message: err instanceof Error ? err.message : "No se pudo mostrar la vista previa del PDF.",
-      });
-    }
-    if (!isStale() && activePdfBytes?.byteLength && downloadBtn) downloadBtn.disabled = false;
-    return false;
-  }
   if (isStale()) return true;
   setPdfPanelLoading(modal, false);
   if (downloadBtn) downloadBtn.disabled = !activePdfBytes?.byteLength;
-  if (mustLog) console.log("[curriculum-day-modal] packet preview", { href, bytes: bytes.byteLength, seq });
+  if (mustLog) console.log("[curriculum-day-modal] packet ready", { href, bytes: bytes.byteLength, seq });
   return true;
 }
 
@@ -126,82 +108,34 @@ function splitLearnings(learning: string): string[] {
   return parts.length ? parts : learning.trim() ? [learning.trim()] : [];
 }
 
-function renderSectionContent(target: HTMLElement, section: MppeCurriculumDaySection | undefined): void {
+function paintCopy(target: HTMLElement, text: string, empty: string): void {
   target.replaceChildren();
-  if (!section) return;
+  const p = document.createElement("p");
+  p.className = "eoschool-curriculum-modal__copy";
+  p.textContent = text || empty;
+  target.append(p);
+}
 
-  const root = document.createElement("div");
-  root.className = "mppe-day-sheet";
+function paintTema(target: HTMLElement, section: MppeCurriculumDaySection | undefined): void {
+  const text = section?.topicShort?.trim() || section?.objective?.trim() || "";
+  paintCopy(target, text, "Sin tema para esta área.");
+}
 
-  const area = document.createElement("p");
-  area.className = "mppe-day-sheet__area";
-  area.textContent = section.label;
-  root.append(area);
-
-  if (section.objective?.trim()) {
-    const objBlock = document.createElement("div");
-    objBlock.className = "mppe-day-sheet__block";
-    const objLabel = document.createElement("p");
-    objLabel.className = "mppe-day-sheet__label";
-    objLabel.textContent = "Objetivo:";
-    const objBody = document.createElement("p");
-    objBody.className = "mppe-day-sheet__text";
-    objBody.textContent = section.objective;
-    objBlock.append(objLabel, objBody);
-    root.append(objBlock);
+function paintAprendizajes(target: HTMLElement, section: MppeCurriculumDaySection | undefined): void {
+  target.replaceChildren();
+  const items = section ? splitLearnings(section.learning) : [];
+  if (!items.length) {
+    paintCopy(target, "", "Sin aprendizajes para esta área.");
+    return;
   }
-
-  const learnItems = splitLearnings(section.learning);
-  if (learnItems.length) {
-    const learnBlock = document.createElement("div");
-    learnBlock.className = "mppe-day-sheet__block";
-    const learnLabel = document.createElement("p");
-    learnLabel.className = "mppe-day-sheet__label";
-    learnLabel.textContent = "Aprendizajes:";
-    const ul = document.createElement("ul");
-    ul.className = "mppe-day-sheet__list";
-    for (const item of learnItems) {
-      const li = document.createElement("li");
-      li.textContent = item;
-      ul.append(li);
-    }
-    learnBlock.append(learnLabel, ul);
-    root.append(learnBlock);
+  const ul = document.createElement("ul");
+  ul.className = "eoschool-curriculum-modal__list";
+  for (const item of items) {
+    const li = document.createElement("li");
+    li.textContent = item;
+    ul.append(li);
   }
-
-  const canDo = section.canDo?.trim();
-  if (canDo) {
-    const metaBlock = document.createElement("div");
-    metaBlock.className = "mppe-day-sheet__block";
-    const metaLabel = document.createElement("p");
-    metaLabel.className = "mppe-day-sheet__label";
-    metaLabel.textContent = "Meta del día:";
-    const metaBody = document.createElement("p");
-    metaBody.className = "mppe-day-sheet__text";
-    metaBody.textContent = canDo;
-    metaBlock.append(metaLabel, metaBody);
-    root.append(metaBlock);
-  }
-
-  const acts = (section.activities ?? []).map((a) => a.trim()).filter(Boolean);
-  if (acts.length) {
-    const actBlock = document.createElement("div");
-    actBlock.className = "mppe-day-sheet__block";
-    const actLabel = document.createElement("p");
-    actLabel.className = "mppe-day-sheet__label";
-    actLabel.textContent = "Actividad sugerida:";
-    const ul = document.createElement("ul");
-    ul.className = "mppe-day-sheet__list";
-    for (const act of acts) {
-      const li = document.createElement("li");
-      li.textContent = act;
-      ul.append(li);
-    }
-    actBlock.append(actLabel, ul);
-    root.append(actBlock);
-  }
-
-  target.append(root);
+  target.append(ul);
 }
 
 function setModalSectionContent(
@@ -210,22 +144,25 @@ function setModalSectionContent(
   sectionId: CurriculumPlanSectionId,
   sheet: MppeCurriculumDaySheet | null,
 ): void {
-  const target = modal.querySelector<HTMLElement>("[data-curriculum-modal-section-content]");
-  if (!target) return;
+  const tema = modal.querySelector<HTMLElement>("[data-curriculum-modal-tema]");
+  const learn = modal.querySelector<HTMLElement>("[data-curriculum-modal-aprendizajes]");
+  if (!tema || !learn) return;
   const fromSheet = sheet?.sections.find((s) => s.id === sectionId);
   if (fromSheet) {
-    renderSectionContent(target, fromSheet);
+    paintTema(tema, fromSheet);
+    paintAprendizajes(learn, fromSheet);
     return;
   }
   const source = card.querySelector<HTMLElement>(`[data-curriculum-section="${sectionId}"]`);
-  if (source) {
-    const clone =
-      source.querySelector(".eoschool-curriculum__subject-detail") ??
-      source.querySelector(".eoschool-curriculum__subject-body");
-    if (clone) target.replaceChildren(clone.cloneNode(true));
-  } else {
-    target.textContent = "";
+  const objective = source?.querySelector(".eoschool-curriculum__objective");
+  const learnings = source?.querySelector(".eoschool-curriculum__learnings");
+  const objectiveText = objective?.textContent?.replace(/^\s*Objetivo\s*/i, "").trim() || "";
+  paintCopy(tema, objectiveText, "Sin tema para esta área.");
+  if (learnings) {
+    learn.replaceChildren(learnings.cloneNode(true));
+    return;
   }
+  paintAprendizajes(learn, undefined);
 }
 
 async function showDayPdf(modal: HTMLElement, sheet: MppeCurriculumDaySheet | null): Promise<void> {
@@ -278,28 +215,6 @@ async function showDayPdf(modal: HTMLElement, sheet: MppeCurriculumDaySheet | nu
 
   activePdfBytes = clonePdfBytes(preview.pdfBytes);
   activePdfName = `dia-${sheet.planDay}-mppe.pdf`;
-
-  try {
-    await renderHomescoolPdfPreview(host, preview.pdfBytes, {
-      fitWidth: true,
-      containWidth: true,
-      pageWidthMm: preview.pageWidthMm,
-      pageHeightMm: preview.pageHeightMm,
-      isStale,
-    });
-  } catch (err: unknown) {
-    if (!isStale()) {
-      setPdfPanelLoading(modal, false);
-      showErrorModal({
-        message: err instanceof Error ? err.message : "No se pudo mostrar la vista previa del PDF.",
-      });
-    }
-    if (!isStale() && activePdfBytes?.byteLength) {
-      if (downloadBtn) downloadBtn.disabled = false;
-    }
-    return;
-  }
-
   if (isStale()) return;
   setPdfPanelLoading(modal, false);
   if (downloadBtn) downloadBtn.disabled = !activePdfBytes?.byteLength;
@@ -323,19 +238,21 @@ function openModal(card: HTMLElement): void {
   const planDay = parsePlanDay(card);
   syncPrintButton(modal, planDay);
   const dayId = card.dataset.curriculumDay ?? "";
-  const titleEl = modal.querySelector("[data-curriculum-modal-title]");
+  const titleEl = modal.querySelector<HTMLElement>("[data-curriculum-modal-title]");
   const scheduledRaw = card.dataset.curriculumScheduled?.split(",").map((s) => s.trim()) ?? [];
   const dayKind = card.dataset.curriculumDayKind ?? "teach";
   if (titleEl) {
-    const base = planDay ? `Día ${planDay}` : `Día ${dayId.replace(/^d/, "")}`;
+    const dayNumber = planDay ? String(planDay) : dayId.replace(/^d/, "");
+    const base = `Día ${dayNumber}`;
+    let label = base;
     if (dayKind === "holiday") {
       const holidayName = card.dataset.holidayName?.trim();
-      titleEl.textContent = holidayName ? `${base} · Feriado — ${holidayName}` : `${base} · Feriado`;
+      label = holidayName ? `${base} · Feriado — ${holidayName}` : `${base} · Feriado`;
     } else if (dayKind === "exposition") {
-      titleEl.textContent = `${base} · Exposiciones`;
-    } else {
-      titleEl.textContent = base;
+      label = `${base} · Exposiciones`;
     }
+    titleEl.textContent = dayNumber || "—";
+    titleEl.setAttribute("aria-label", label);
   }
 
   modal.hidden = false;
