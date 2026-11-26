@@ -10,12 +10,13 @@ import {
 import { fetchMppeDayPdfPreview } from "./mppe-curriculum-pdf-preview";
 import { dayPacketHref, dayPacketName } from "./eoschool-day38-packet";
 import { mustLog } from "./dev-log";
-import { renderCurriculumActivity } from "./eoschool-curriculum-activity";
+import { renderCurriculumActivity, printCardEvaluations } from "./eoschool-curriculum-activity";
 
 let sheetCache: Map<string, MppeCurriculumDaySheet> = new Map();
 let activePdfBytes: Uint8Array | null = null;
 let activePdfName = "dia-mppe.pdf";
 let pdfPreviewSeq = 0;
+let openDayCard: HTMLElement | null = null;
 
 function pdfActionButtons(modal: HTMLElement): HTMLButtonElement[] {
   return [
@@ -262,6 +263,7 @@ function openModal(card: HTMLElement): void {
   }
 
   modal.hidden = false;
+  openDayCard = card;
   document.body.classList.add("eoschool-curriculum-modal-open");
 
   const tabs = modal.querySelectorAll<HTMLButtonElement>("[data-curriculum-modal-tab]");
@@ -348,6 +350,13 @@ export function bindCurriculumDayModalShell(modal: HTMLElement): void {
     if (!activePdfBytes?.byteLength) return;
     if (mustLog) console.log("[curriculum-day-modal] preview", { name: activePdfName });
     openPdfPreview(activePdfBytes);
+  });
+
+  modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-print-evals]")?.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    if (!openDayCard) return;
+    printCardEvaluations(openDayCard);
   });
 
   modal.addEventListener("click", (ev) => {

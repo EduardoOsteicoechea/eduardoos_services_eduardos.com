@@ -597,6 +597,9 @@ function weekForPlanDay(planDay: number): number {
               <button type="button" class="eoschool-curriculum-modal__download" data-curriculum-modal-download disabled>
                 Descargar PDF
               </button>
+              <button type="button" class="eoschool-curriculum-modal__download" data-curriculum-modal-print-evals>
+                Imprimir evaluaciones
+              </button>
             </div>
             <p class="eoschool-curriculum-modal__pdf-empty" data-curriculum-modal-pdf-empty hidden>
               Clase en preparación para este día.
@@ -1736,6 +1739,7 @@ function weekForPlanDay(planDay: number): number {
     font-weight: 650;
     line-height: 1.2;
     color: var(--color-text);
+    cursor: pointer;
   }
 
   .eoschool-curriculum__subject-num {
@@ -3141,6 +3145,17 @@ function weekForPlanDay(planDay: number): number {
     align-items: center;
     justify-content: space-between;
     gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum-activity__reason-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum-activity__reason--viewport {
+    position: fixed;
+    z-index: calc(var(--z-modal) + 1);
   }
 
   .eoschool-curriculum-activity__reason-title {

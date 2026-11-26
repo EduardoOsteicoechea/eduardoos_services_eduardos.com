@@ -78,11 +78,37 @@ export function paintCurriculumSubjectScores(root: HTMLElement): void {
       span.hidden = true;
       span.textContent = "";
       span.removeAttribute("aria-label");
+      span.removeAttribute("title");
+      span.removeAttribute("role");
+      span.removeAttribute("tabindex");
+      span.onclick = null;
+      span.onkeydown = null;
       return;
     }
+    const label =
+      sectionEl.querySelector(".eoschool-curriculum__subject-icon")?.getAttribute("title")?.trim() || sectionId;
+    const key = sectionProgressKey(dayId, sectionId);
     span.hidden = false;
     span.textContent = String(score);
-    span.setAttribute("aria-label", `Puntaje ${score}`);
+    span.title = "Ver evaluación";
+    span.tabIndex = 0;
+    span.setAttribute("role", "button");
+    span.setAttribute("aria-label", `Ver evaluación. Puntaje ${score}`);
+    span.onclick = (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      openScoreReasonDialog(document.body, {
+        label,
+        score,
+        note: scoreNotes.get(key) || "",
+        record: scoreRecords.get(key),
+      }, scoreFacts, true);
+    };
+    span.onkeydown = (ev) => {
+      if (ev.key !== "Enter" && ev.key !== " ") return;
+      ev.preventDefault();
+      span.click();
+    };
   });
   paintCurriculumSubjectPhotos(root);
 }
@@ -332,7 +358,15 @@ export function renderCurriculumActivity(
     why.textContent = "Por qué";
     why.setAttribute("aria-label", "Ver por qué este puntaje");
     why.addEventListener("click", () => {
-      openScoreReasonDialog(modal, scoreNotes.get(key) || "", scoreRecords.get(key), scoreFacts);
+      const label =
+        card.querySelector(`[data-curriculum-section="${sectionId}"] .eoschool-curriculum__subject-icon`)?.getAttribute("title")?.trim()
+        || sectionId;
+      openScoreReasonDialog(modal, {
+        label,
+        score,
+        note: scoreNotes.get(key) || "",
+        record: scoreRecords.get(key),
+      }, scoreFacts, false);
     });
     scoreRow.append(why);
   }
@@ -454,15 +488,130 @@ function arithItems(items: CurriculumActivityItem[]): CurriculumActivityItem[] {
     .sort((a, b) => (a.page || 0) - (b.page || 0) || (a.row || 0) - (b.row || 0) || (a.col || 0) - (b.col || 0));
 }
 
+type EvalBlock = {
+  label: string;
+  score: number | null;
+  note: string;
+  record?: CurriculumActivityRecord;
+};
+
+const SECTION_PRINT_LABEL: Record<string, string> = {
+  bib: "Biblia",
+  ide: "Identidad",
+  len: "Lenguaje",
+  mat: "Matemáticas",
+  cie: "Ciencias",
+  eng: "Inglés",
+  ia: "Inteligencia artificial",
+};
+
+function escapePrint(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function itemPrintRows(item: CurriculumActivityItem): { ask: string; wrote: string; fix: string } {
+  if (item.kind === "mult" || item.kind === "div") {
+    const op = item.kind === "div" ? "÷" : "×";
+    return {
+      ask: `${item.a ?? ""} ${op} ${item.b ?? ""}`.trim(),
+      wrote: item.given == null ? "Sin número" : String(item.given),
+      fix: item.correct === false && item.expected != null ? String(item.expected) : "",
+    };
+  }
+  return {
+    ask: item.prompt?.trim() || "",
+    wrote: item.answer?.trim() || "",
+    fix: item.rewrite?.trim() || "",
+  };
+}
+
+export function evaluationPrintDocument(title: string, blocks: EvalBlock[]): string {
+  const sections = blocks.map((block) => {
+    const head = `${block.label}${block.score == null ? "" : ` · ${block.score}`}`;
+    const summary = block.record?.summary?.trim() || block.note.trim();
+    const rows = (block.record?.items || [])
+      .map((item) => itemPrintRows(item))
+      .filter((row) => row.ask || row.wrote || row.fix);
+    const questions = rows.length
+      ? rows.map((row, index) => `
+        <article>
+          <h3>${index + 1}. ${escapePrint(row.ask || "Pregunta")}</h3>
+          <p><strong>Respuesta.</strong> ${escapePrint(row.wrote || "Sin respuesta.")}</p>
+          ${row.fix ? `<p><strong>Corrección.</strong> ${escapePrint(row.fix)}</p>` : ""}
+        </article>`).join("")
+      : `<p>${escapePrint(summary || "Esta materia no tiene preguntas anotadas.")}</p>`;
+    const lead = rows.length && summary ? `<p>${escapePrint(summary)}</p>` : "";
+    return `<section><h2>${escapePrint(head)}</h2>${lead}${questions}</section>`;
+  }).join("");
+  const body = sections || "<p>Este día no tiene evaluaciones.</p>";
+  return `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>${escapePrint(title)}</title>
+    <style>
+      @page { size: letter; margin: 1.5rem; }
+      body { margin: 0; font-family: sans-serif; font-size: 0.875rem; line-height: 1.4; color: #121212; }
+      h1 { font-size: 1.25rem; margin: 0 0 1rem; }
+      h2 { font-size: 1rem; margin: 1rem 0 0.5rem; }
+      h3 { font-size: 0.875rem; margin: 0.75rem 0 0.25rem; }
+      p { margin: 0 0 0.25rem; }
+      section { break-inside: avoid; margin-bottom: 1rem; }
+    </style></head><body><h1>${escapePrint(title)}</h1>${body}</body></html>`;
+}
+
+function printEvaluationDocument(title: string, blocks: EvalBlock[]): void {
+  const html = evaluationPrintDocument(title, blocks);
+  let frame = document.querySelector<HTMLIFrameElement>("[data-curriculum-day-print-frame]");
+  if (!frame) {
+    frame = document.createElement("iframe");
+    frame.dataset.curriculumDayPrintFrame = "";
+    frame.setAttribute("title", "Impresión de la evaluación");
+    frame.className = "eoschool-curriculum-modal__print-frame";
+    document.body.append(frame);
+  }
+  const doc = frame.contentDocument;
+  const win = frame.contentWindow;
+  if (!doc || !win) return;
+  doc.open();
+  doc.write(html);
+  doc.close();
+  win.focus();
+  window.setTimeout(() => win.print(), 40);
+}
+
+export function printCardEvaluations(card: HTMLElement): void {
+  const dayId = card.dataset.curriculumDay || "";
+  const dayNumber = card.dataset.planDay || dayId.replace(/^d/, "");
+  const blocks: EvalBlock[] = [];
+  card.querySelectorAll<HTMLElement>("[data-curriculum-section]").forEach((sectionEl) => {
+    const sectionId = sectionEl.dataset.curriculumSection || "";
+    if (!dayId || !sectionId) return;
+    const key = sectionProgressKey(dayId, sectionId as CurriculumPlanSectionId);
+    const score = scores.get(key);
+    const record = scoreRecords.get(key);
+    const note = scoreNotes.get(key) || "";
+    if (score == null && !record && !note) return;
+    const label =
+      sectionEl.querySelector(".eoschool-curriculum__subject-icon")?.getAttribute("title")?.trim()
+      || SECTION_PRINT_LABEL[sectionId]
+      || sectionId;
+    blocks.push({ label, score: score ?? null, note, record });
+  });
+  printEvaluationDocument(`Evaluaciones · Día ${dayNumber}`, blocks);
+}
+
 function openScoreReasonDialog(
-  modal: HTMLElement,
-  note: string,
-  record: CurriculumActivityRecord | undefined,
+  host: HTMLElement,
+  block: EvalBlock,
   facts: CurriculumActivityFact[],
+  viewport: boolean,
 ): void {
-  modal.querySelector("[data-curriculum-score-reason]")?.remove();
+  host.querySelector("[data-curriculum-score-reason]")?.remove();
   const layer = document.createElement("div");
-  layer.className = "eoschool-curriculum-activity__reason";
+  layer.className = viewport
+    ? "eoschool-curriculum-activity__reason eoschool-curriculum-activity__reason--viewport"
+    : "eoschool-curriculum-activity__reason";
   layer.dataset.curriculumScoreReason = "";
   layer.setAttribute("role", "dialog");
   layer.setAttribute("aria-modal", "true");
@@ -476,6 +625,17 @@ function openScoreReasonDialog(
   title.className = "eoschool-curriculum-activity__reason-title";
   title.id = "curriculum-score-reason-title";
   title.textContent = "Por qué este puntaje";
+  const actions = document.createElement("div");
+  actions.className = "eoschool-curriculum-activity__reason-actions";
+  const printBtn = document.createElement("button");
+  printBtn.type = "button";
+  printBtn.className = "eoschool-curriculum-activity__why-open";
+  printBtn.dataset.curriculumScorePrint = "";
+  printBtn.textContent = "Imprimir";
+  printBtn.addEventListener("click", () => {
+    const scoreBit = block.score == null ? "" : ` · ${block.score}`;
+    printEvaluationDocument(`Evaluación · ${block.label}${scoreBit}`, [block]);
+  });
   const closeBtn = document.createElement("button");
   closeBtn.type = "button";
   closeBtn.className = "icon-btn eoschool-curriculum-activity__reason-close";
@@ -485,22 +645,23 @@ function openScoreReasonDialog(
   icon.setAttribute("aria-hidden", "true");
   icon.textContent = "close";
   closeBtn.append(icon);
-  top.append(title, closeBtn);
+  actions.append(printBtn, closeBtn);
+  top.append(title, actions);
 
   const body = document.createElement("div");
   body.className = "eoschool-curriculum-activity__reason-body";
   const summary = document.createElement("p");
   summary.dataset.curriculumScoreReasonText = "";
-  summary.textContent = record?.summary?.trim() || note || "Este puntaje no tiene justificación escrita.";
+  summary.textContent = block.record?.summary?.trim() || block.note || "Este puntaje no tiene justificación escrita.";
   body.append(summary);
-  const rewrite = record?.rewrite?.trim() || "";
+  const rewrite = block.record?.rewrite?.trim() || "";
   if (rewrite) {
     const line = document.createElement("p");
     line.dataset.curriculumScoreRewrite = "";
     line.textContent = rewrite;
     body.append(line);
   }
-  const items = record?.items || [];
+  const items = block.record?.items || [];
   const arith = arithItems(items);
   if (arith.length) {
     const grid = document.createElement("div");
@@ -528,21 +689,21 @@ function openScoreReasonDialog(
   }
   for (const item of items) {
     if (item.kind === "mult" || item.kind === "div") continue;
-    const block = document.createElement("article");
-    block.className = "eoschool-curriculum-activity__answer";
-    block.dataset.curriculumScoreAnswer = "";
+    const answer = document.createElement("article");
+    answer.className = "eoschool-curriculum-activity__answer";
+    answer.dataset.curriculumScoreAnswer = "";
     if (item.prompt) {
       const prompt = document.createElement("p");
       prompt.textContent = item.prompt;
-      block.append(prompt);
+      answer.append(prompt);
     }
     const written = item.rewrite?.trim() || item.answer?.trim() || "";
     if (written) {
       const line = document.createElement("p");
       line.textContent = written;
-      block.append(line);
+      answer.append(line);
     }
-    if (block.childElementCount) body.append(block);
+    if (answer.childElementCount) body.append(answer);
   }
   const misses = facts.filter((fact) => fact.misses > 0 && fact.label);
   if (misses.length) {
@@ -553,7 +714,7 @@ function openScoreReasonDialog(
   }
   box.append(top, body);
   layer.append(box);
-  modal.append(layer);
+  host.append(layer);
   closeBtn.focus();
 
   const close = () => layer.remove();

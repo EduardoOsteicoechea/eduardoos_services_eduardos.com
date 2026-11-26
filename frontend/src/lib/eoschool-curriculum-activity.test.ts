@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import {
   activityPhotoNames,
   activityTaskCopy,
+  evaluationPrintDocument,
   paintCurriculumSubjectScores,
   renderCurriculumActivity,
   setActivityMarks,
@@ -105,7 +106,25 @@ describe("score reason", () => {
     expect(cells[0]?.textContent).toContain("Esperado 56");
     expect(cells[1]?.textContent).toContain("3 × 4");
     expect(cells[1]?.textContent).not.toContain("Esperado");
+    expect(modal.querySelector("[data-curriculum-score-print]")?.textContent).toBe("Imprimir");
     expect(modal.querySelector("[data-curriculum-score-reinforce]")?.textContent).toBe("A reforzar: 7 × 8");
+    const printed = evaluationPrintDocument("Evaluación · Matemáticas · 70", [{
+      label: "Matemáticas",
+      score: 70,
+      note: "Falló 7 × 8.",
+      record: {
+        summary: "Falló 7 × 8.",
+        kind: "multiplication",
+        items: [
+          { kind: "mult", a: 7, b: 8, given: 54, expected: 56, correct: false },
+        ],
+      },
+    }]);
+    expect(printed).toContain("7 × 8");
+    expect(printed).toContain("Respuesta.");
+    expect(printed).toContain("54");
+    expect(printed).toContain("Corrección.");
+    expect(printed).toContain("56");
   });
 });
 
@@ -118,7 +137,12 @@ describe("paintCurriculumSubjectScores", () => {
     const span = root.querySelector<HTMLElement>("[data-curriculum-subject-score]")!;
     expect(span.hidden).toBe(false);
     expect(span.textContent).toBe("80");
-    expect(span.getAttribute("aria-label")).toBe("Puntaje 80");
+    expect(span.title).toBe("Ver evaluación");
+    expect(span.getAttribute("aria-label")).toBe("Ver evaluación. Puntaje 80");
+    span.click();
+    const reason = document.body.querySelector("[data-curriculum-score-reason]");
+    expect(reason?.querySelector("[data-curriculum-score-print]")?.textContent).toBe("Imprimir");
+    reason?.remove();
   });
 
   it("paints one green point per photo and opens it with prev and next", () => {
