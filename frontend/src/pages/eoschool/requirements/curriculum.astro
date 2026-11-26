@@ -1258,7 +1258,7 @@ function weekForPlanDay(planDay: number): number {
     top: 0;
     left: 0;
     right: 0;
-    height: 0.25rem;
+    height: 0.125rem;
     overflow: hidden;
     background: color-mix(in srgb, #16a34a 22%, var(--color-border));
     pointer-events: none;
@@ -1278,14 +1278,13 @@ function weekForPlanDay(planDay: number): number {
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
-    overflow: hidden;
-    width: calc(var(--button-size) * 0.84375 - (var(--border-width) * 2));
-    height: calc(var(--button-size) * 0.84375 - (var(--border-width) * 2));
+    width: auto;
+    height: auto;
     margin: 0;
     padding: 0;
-    border: var(--border-width) solid var(--color-border);
-    border-radius: 50%;
-    background: var(--color-bg);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     color: var(--color-text);
     font-size: calc(var(--font-size-xs) * 1.125);
     font-weight: 650;
