@@ -28,7 +28,7 @@ import Layout from "../../layouts/Layout.astro";
       <h2 class="product-dash__card-title">Salidas pedagógicas o educativas</h2>
       <p class="product-dash__card-desc">
         La misma planilla: fecha, semestre, lugar, objetivo, materia y qué se aprendió.
-        En 3.er grado no hay un número mínimo de salidas. La planilla sí tiene que existir.
+        Cada fila lleva los dibujos y las fotos de esa salida.
       </p>
       <label>
         Estudiante
@@ -51,15 +51,95 @@ import Layout from "../../layouts/Layout.astro";
 
 <script>
   import {
+    deleteOutingImage,
     fetchCurriculumProgress,
     fetchCurriculumStudents,
+    outingImageURL,
     putCurriculumOutings,
+    uploadOutingImage,
     type CurriculumOuting,
     type CurriculumStudent,
   } from "../../lib/eoschool-curriculum-api";
   import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
 
   type Row = CurriculumOuting;
+  type PendingFiles = { drawings: File[]; photos: File[] };
+
+  function fileBin(): PendingFiles {
+    return { drawings: [], photos: [] };
+  }
+
+  function thumb(src: string, label: string, onRemove: () => void): HTMLElement {
+    const wrap = document.createElement("div");
+    wrap.className = "eoschool-salidas__thumb";
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = label;
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "button";
+    remove.textContent = "Quitar";
+    remove.addEventListener("click", () => {
+      wrap.remove();
+      onRemove();
+    });
+    wrap.append(img, remove);
+    return wrap;
+  }
+
+  function imageField(
+    card: HTMLElement,
+    label: string,
+    kind: "drawing" | "photo",
+    names: string[],
+    studentKey: string,
+    outingId: string,
+  ): void {
+    const block = document.createElement("div");
+    block.className = "eoschool-salidas__images";
+    const caption = document.createElement("p");
+    caption.textContent = label;
+    const strip = document.createElement("div");
+    strip.className = "eoschool-salidas__strip";
+    const input = document.createElement("input");
+    input.type = "file";
+    input.name = kind;
+    input.accept = "image/*";
+    input.multiple = true;
+    const pending = (card as HTMLElement & { pendingFiles?: PendingFiles }).pendingFiles ?? fileBin();
+    (card as HTMLElement & { pendingFiles?: PendingFiles }).pendingFiles = pending;
+    for (const name of names) {
+      strip.append(
+        thumb(outingImageURL(studentKey, outingId, kind, name), label, () => {
+          void deleteOutingImage({ studentKey, outingId, kind, name })
+            .then(() => strip.querySelector(`[data-name="${name}"]`)?.remove())
+            .catch((err: unknown) => {
+              const requestId = err && typeof err === "object" && "requestId" in err ? String((err as { requestId?: string }).requestId ?? "") : "";
+              apiFail(err instanceof Error ? err.message : "No se pudo quitar la imagen.", { requestId });
+            });
+        }),
+      );
+      strip.lastElementChild?.setAttribute("data-name", name);
+    }
+    input.addEventListener("change", () => {
+      const files = Array.from(input.files ?? []);
+      pending[kind === "drawing" ? "drawings" : "photos"].push(...files);
+      for (const file of files) {
+        const url = URL.createObjectURL(file);
+        strip.append(
+          thumb(url, file.name, () => {
+            const list = pending[kind === "drawing" ? "drawings" : "photos"];
+            const index = list.indexOf(file);
+            if (index >= 0) list.splice(index, 1);
+            URL.revokeObjectURL(url);
+          }),
+        );
+      }
+      input.value = "";
+    });
+    block.append(caption, input, strip);
+    card.append(block);
+  }
 
   function field(label: string, name: string, value: string): HTMLLabelElement {
     const wrap = document.createElement("label");
@@ -88,9 +168,11 @@ import Layout from "../../layouts/Layout.astro";
     return wrap;
   }
 
-  function renderRow(host: HTMLElement, row: Partial<Row>) {
+  function renderRow(host: HTMLElement, row: Partial<Row>, studentKey: string) {
     const card = document.createElement("div");
     card.className = "eoschool-salidas__row";
+    if (row.id) card.dataset.outingId = row.id;
+    (card as HTMLElement & { pendingFiles?: PendingFiles }).pendingFiles = fileBin();
     card.append(
       field("Fecha", "date", row.date ?? ""),
       field("Semestre", "semester", String(row.semester ?? 1)),
@@ -99,6 +181,8 @@ import Layout from "../../layouts/Layout.astro";
       field("Asignatura relacionada", "subject", row.subject ?? ""),
       field("Evaluación o aspectos significativos", "notes", row.notes ?? ""),
     );
+    imageField(card, "Dibujos", "drawing", row.drawings ?? [], studentKey, row.id ?? "");
+    imageField(card, "Fotos", "photo", row.photos ?? [], studentKey, row.id ?? "");
     const remove = document.createElement("button");
     remove.type = "button";
     remove.className = "button";
@@ -121,6 +205,7 @@ import Layout from "../../layouts/Layout.astro";
       if (!date && !place && !objective && !subject && !notes) continue;
       if (!date || !place || !objective || !subject || !notes) return { ok: false };
       rows.push({
+        id: card.dataset.outingId,
         date,
         semester: Number(value("semester")) || 1,
         place,
@@ -178,8 +263,8 @@ import Layout from "../../layouts/Layout.astro";
       if (meta) meta.textContent = `${student.displayName}. Grado: ${student.grade}.`;
       year.value = loaded.data.outingYear || "";
       const saved = loaded.data.outings ?? [];
-      if (saved.length === 0) renderRow(rows, {});
-      for (const row of saved) renderRow(rows, row);
+      if (saved.length === 0) renderRow(rows, {}, select.value);
+      for (const row of saved) renderRow(rows, row, select.value);
       if (statusEl) statusEl.textContent = saved.length === 0 ? "Todavía no hay filas guardadas." : `${saved.length} filas en eoschool.`;
     }
 
@@ -188,15 +273,33 @@ import Layout from "../../layouts/Layout.astro";
         apiFail(err instanceof Error ? err.message : "No se pudo abrir la planilla.");
       });
     });
-    root?.querySelector("[data-add]")?.addEventListener("click", () => renderRow(rows, {}));
+    root?.querySelector("[data-add]")?.addEventListener("click", () => renderRow(rows, {}, select.value));
     root?.querySelector("[data-save]")?.addEventListener("click", () => {
+      const cards = Array.from(rows.querySelectorAll<HTMLElement>(".eoschool-salidas__row"));
       const parsed = readRows(rows);
       if (!parsed.ok) {
         apiFail("Cada fila necesita fecha, lugar, objetivo, materia y qué se aprendió.");
         return;
       }
+      const filled = cards.filter((card) => {
+        const value = (name: string) =>
+          (card.querySelector<HTMLInputElement | HTMLSelectElement>(`[name="${name}"]`)?.value ?? "").trim();
+        return Boolean(value("date") || value("place") || value("objective") || value("subject") || value("notes"));
+      });
       void putCurriculumOutings({ studentKey: select.value, year: year.value.trim(), outings: parsed.rows })
-        .then(async () => {
+        .then(async (saved) => {
+          const stored = saved.outings ?? [];
+          for (let i = 0; i < filled.length; i++) {
+            const outingId = stored[i]?.id;
+            const bin = (filled[i] as HTMLElement & { pendingFiles?: PendingFiles }).pendingFiles;
+            if (!outingId || !bin) continue;
+            for (const file of bin.drawings) {
+              await uploadOutingImage({ studentKey: select.value, outingId, kind: "drawing", photo: file });
+            }
+            for (const file of bin.photos) {
+              await uploadOutingImage({ studentKey: select.value, outingId, kind: "photo", photo: file });
+            }
+          }
           if (statusEl) statusEl.textContent = "Planilla guardada en eoschool.";
           await load();
         })
@@ -222,6 +325,33 @@ import Layout from "../../layouts/Layout.astro";
   .eoschool-salidas__row {
     padding: var(--space-padding);
     border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+
+  .eoschool-salidas__images,
+  .eoschool-salidas__strip {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    min-width: 0;
+  }
+
+  .eoschool-salidas__strip {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .eoschool-salidas__thumb {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    width: 4rem;
+  }
+
+  .eoschool-salidas__thumb img {
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
     border-radius: var(--border-radius);
   }
 

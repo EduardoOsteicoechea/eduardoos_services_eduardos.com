@@ -10,6 +10,8 @@ export type CurriculumOuting = {
   objective: string;
   subject: string;
   notes: string;
+  drawings?: string[];
+  photos?: string[];
 };
 
 export type CurriculumStudent = {
@@ -210,6 +212,59 @@ export async function putCurriculumOutings(input: {
     throw err;
   }
   return data;
+}
+
+export async function uploadOutingImage(input: {
+  studentKey: string;
+  outingId: string;
+  kind: "drawing" | "photo";
+  photo: File;
+}): Promise<CurriculumProgressPayload> {
+  const { status, data, requestId } = await uploadFileWithProgress<CurriculumProgressPayload>(
+    "/eoschool/curriculum/outings/image",
+    input.photo,
+    {
+      field: "photo",
+      fields: {
+        studentKey: input.studentKey,
+        outingId: input.outingId,
+        kind: input.kind,
+      },
+    },
+  );
+  if (status < 200 || status >= 300) {
+    const err = new Error(data.message || "No se pudo subir la imagen.") as Error & { requestId?: string };
+    err.requestId = requestId;
+    throw err;
+  }
+  return data;
+}
+
+export async function deleteOutingImage(input: {
+  studentKey: string;
+  outingId: string;
+  kind: "drawing" | "photo";
+  name: string;
+}): Promise<CurriculumProgressPayload> {
+  const { status, data, requestId } = await apiSend<CurriculumProgressPayload>(
+    "/eoschool/curriculum/outings/image",
+    {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    },
+  );
+  if (status < 200 || status >= 300) {
+    const err = new Error(data.message || "No se pudo quitar la imagen.") as Error & { requestId?: string };
+    err.requestId = requestId;
+    throw err;
+  }
+  return data;
+}
+
+export function outingImageURL(studentKey: string, outingId: string, kind: "drawing" | "photo", name: string): string {
+  const q = new URLSearchParams({ studentKey, outingId, kind, name });
+  return `/api/eoschool/curriculum/outings/image?${q}`;
 }
 
 export async function uploadCurriculumActivityPhoto(input: {

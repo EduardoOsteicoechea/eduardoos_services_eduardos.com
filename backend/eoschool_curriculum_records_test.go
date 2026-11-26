@@ -35,3 +35,18 @@ func TestSanitizeEoschoolOutings(t *testing.T) {
 		t.Fatal("slash date must be rejected")
 	}
 }
+
+func TestKeepEoschoolOutingImages(t *testing.T) {
+	existing := []EoschoolOuting{{
+		ID: "abc12345", Drawings: []string{"p0123456789abcdef.webp"}, Photos: []string{"pabcdef0123456789.webp"},
+	}}
+	next := []EoschoolOuting{{ID: "abc12345", Place: "Parque"}}
+	kept, removed := keepEoschoolOutingImages(existing, next)
+	if len(removed) != 0 || len(kept[0].Drawings) != 1 || len(kept[0].Photos) != 1 {
+		t.Fatalf("kept %#v removed %#v", kept, removed)
+	}
+	_, removed = keepEoschoolOutingImages(existing, nil)
+	if len(removed) != 1 {
+		t.Fatalf("removed %#v", removed)
+	}
+}

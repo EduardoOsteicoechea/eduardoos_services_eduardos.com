@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 	"net/url"
@@ -21,15 +22,19 @@ type EoschoolSemesterWork struct {
 	DriveURL string `json:"driveUrl" bson:"drive_url"`
 }
 
+const eoschoolOutingImageMax = 8
+
 // EoschoolOuting is one row of the Olive Trees outing log.
 type EoschoolOuting struct {
-	ID        string `json:"id" bson:"id"`
-	Date      string `json:"date" bson:"date"`
-	Semester  int    `json:"semester" bson:"semester"`
-	Place     string `json:"place" bson:"place"`
-	Objective string `json:"objective" bson:"objective"`
-	Subject   string `json:"subject" bson:"subject"`
-	Notes     string `json:"notes" bson:"notes"`
+	ID        string   `json:"id" bson:"id"`
+	Date      string   `json:"date" bson:"date"`
+	Semester  int      `json:"semester" bson:"semester"`
+	Place     string   `json:"place" bson:"place"`
+	Objective string   `json:"objective" bson:"objective"`
+	Subject   string   `json:"subject" bson:"subject"`
+	Notes     string   `json:"notes" bson:"notes"`
+	Drawings  []string `json:"drawings" bson:"drawings,omitempty"`
+	Photos    []string `json:"photos" bson:"photos,omitempty"`
 }
 
 func clipEoschoolRecordText(raw string) string {
@@ -194,7 +199,7 @@ func (a *App) putEoschoolOutingsHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	studentKey := normalizeEoschoolCurriculumStudentKey(body.StudentKey)
-	_, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	user, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
 	if !ok {
 		return
 	}
@@ -202,6 +207,12 @@ func (a *App) putEoschoolOutingsHandler(w http.ResponseWriter, r *http.Request) 
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	current, _, err := a.eoschoolCurriculum.Get(r.Context(), ownerID, studentKey)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	outings, removed := keepEoschoolOutingImages(current.Outings, outings)
 	doc, err := a.eoschoolCurriculum.UpdateStudent(r.Context(), ownerID, studentKey, func(row *EoschoolCurriculumProgressDoc) error {
 		row.OutingYear = year
 		row.Outings = outings
@@ -211,5 +222,281 @@ func (a *App) putEoschoolOutingsHandler(w http.ResponseWriter, r *http.Request) 
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
 		return
 	}
+	for _, row := range removed {
+		a.deleteEoschoolOutingFiles(ownerID, studentKey, row)
+	}
+	a.auditEvent(r, "eoschool_curriculum_outings", "ok", user.ID)
 	writeJSON(w, http.StatusOK, curriculumProgressJSON(doc))
+}
+
+func validEoschoolOutingID(id string) bool {
+	if len(id) < 8 || len(id) > 40 {
+		return false
+	}
+	for _, c := range id {
+		if (c < '0' || c > '9') && (c < 'a' || c > 'f') {
+			return false
+		}
+	}
+	return true
+}
+
+func validEoschoolOutingKind(kind string) bool {
+	return kind == "drawing" || kind == "photo"
+}
+
+func keepEoschoolOutingImages(existing, next []EoschoolOuting) ([]EoschoolOuting, []EoschoolOuting) {
+	byID := map[string]EoschoolOuting{}
+	for _, row := range existing {
+		byID[row.ID] = row
+	}
+	kept := map[string]bool{}
+	for i := range next {
+		prev, ok := byID[next[i].ID]
+		if !ok {
+			next[i].Drawings = nil
+			next[i].Photos = nil
+			continue
+		}
+		kept[next[i].ID] = true
+		next[i].Drawings = append([]string{}, prev.Drawings...)
+		next[i].Photos = append([]string{}, prev.Photos...)
+	}
+	var removed []EoschoolOuting
+	for _, row := range existing {
+		if !kept[row.ID] {
+			removed = append(removed, row)
+		}
+	}
+	return next, removed
+}
+
+func eoschoolOutingByID(rows []EoschoolOuting, id string) (EoschoolOuting, bool) {
+	for _, row := range rows {
+		if row.ID == id {
+			return row, true
+		}
+	}
+	return EoschoolOuting{}, false
+}
+
+func (a *App) deleteEoschoolOutingFiles(ownerID, studentKey string, row EoschoolOuting) {
+	names := append(append([]string{}, row.Drawings...), row.Photos...)
+	for _, name := range names {
+		if !validEoschoolActivityPhotoName(name) {
+			continue
+		}
+		_ = a.curriculumMaterialsFS.delete(ownerID, studentKey, "outings", row.ID, name)
+	}
+}
+
+func outingImageSlot(row *EoschoolOuting, kind string) *[]string {
+	if kind == "drawing" {
+		return &row.Drawings
+	}
+	return &row.Photos
+}
+
+func (a *App) postEoschoolOutingImageHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.validOrigin(r) || !a.validCSRF(r) {
+		a.writeSafeError(w, r, http.StatusForbidden, "csrf_invalid")
+		return
+	}
+	r.Body = http.MaxBytesReader(w, r.Body, eoschoolCurriculumStudentMaxPhoto+1<<20)
+	if err := r.ParseMultipartForm(eoschoolCurriculumStudentMaxPhoto + 1<<20); err != nil {
+		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
+		return
+	}
+	studentKey := normalizeEoschoolCurriculumStudentKey(r.FormValue("studentKey"))
+	outingID := strings.TrimSpace(r.FormValue("outingId"))
+	kind := strings.TrimSpace(r.FormValue("kind"))
+	if !validEoschoolOutingID(outingID) || !validEoschoolOutingKind(kind) {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	user, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	file, header, err := r.FormFile("photo")
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	defer file.Close()
+	if header != nil && strings.Contains(header.Filename, "..") {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	data, err := io.ReadAll(io.LimitReader(file, eoschoolCurriculumStudentMaxPhoto+1))
+	if err != nil || int64(len(data)) > eoschoolCurriculumStudentMaxPhoto {
+		a.writeSafeError(w, r, http.StatusRequestEntityTooLarge, "payload_too_large")
+		return
+	}
+	prepared, prepErr := prepareEoschoolActivityPhoto(data)
+	if prepErr != nil {
+		status, code := mapEoschoolStudentPhotoErr(prepErr)
+		a.writeSafeError(w, r, status, code)
+		return
+	}
+	current, found, err := a.eoschoolCurriculum.Get(r.Context(), ownerID, studentKey)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	row, rowOK := eoschoolOutingByID(current.Outings, outingID)
+	if !found || !rowOK {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	slot := outingImageSlot(&row, kind)
+	if len(*slot) >= eoschoolOutingImageMax {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	name := "p" + randomID(8) + ".webp"
+	if err = a.curriculumMaterialsFS.put(ownerID, studentKey, "outings", outingID, name, prepared); err != nil {
+		a.mustLogf(r, "eoschool.outing.image.put_err", "err", err.Error())
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	doc, err := a.eoschoolCurriculum.UpdateStudent(r.Context(), ownerID, studentKey, func(stored *EoschoolCurriculumProgressDoc) error {
+		for i := range stored.Outings {
+			if stored.Outings[i].ID != outingID {
+				continue
+			}
+			list := outingImageSlot(&stored.Outings[i], kind)
+			if len(*list) >= eoschoolOutingImageMax {
+				return errEoschoolActivityPhotoLimit
+			}
+			*list = append(*list, name)
+			return nil
+		}
+		return errEoschoolCurriculumStudentNotFound
+	})
+	if err != nil {
+		_ = a.curriculumMaterialsFS.delete(ownerID, studentKey, "outings", outingID, name)
+		if errors.Is(err, errEoschoolActivityPhotoLimit) {
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+			return
+		}
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.auditEvent(r, "eoschool_curriculum_outing_image", "ok", user.ID)
+	writeJSON(w, http.StatusOK, curriculumProgressJSON(doc))
+}
+
+func (a *App) deleteEoschoolOutingImageHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.validOrigin(r) || !a.validCSRF(r) {
+		a.writeSafeError(w, r, http.StatusForbidden, "csrf_invalid")
+		return
+	}
+	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 8192))
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	var body struct {
+		StudentKey string `json:"studentKey"`
+		OutingID   string `json:"outingId"`
+		Kind       string `json:"kind"`
+		Name       string `json:"name"`
+	}
+	if err = json.Unmarshal(raw, &body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	studentKey := normalizeEoschoolCurriculumStudentKey(body.StudentKey)
+	outingID := strings.TrimSpace(body.OutingID)
+	name := strings.TrimSpace(body.Name)
+	kind := strings.TrimSpace(body.Kind)
+	if !validEoschoolOutingID(outingID) || !validEoschoolOutingKind(kind) || !validEoschoolActivityPhotoName(name) {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	user, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	doc, err := a.eoschoolCurriculum.UpdateStudent(r.Context(), ownerID, studentKey, func(stored *EoschoolCurriculumProgressDoc) error {
+		for i := range stored.Outings {
+			if stored.Outings[i].ID != outingID {
+				continue
+			}
+			list := outingImageSlot(&stored.Outings[i], kind)
+			next := make([]string, 0, len(*list))
+			foundName := false
+			for _, item := range *list {
+				if item == name {
+					foundName = true
+					continue
+				}
+				next = append(next, item)
+			}
+			if !foundName {
+				return errEoschoolCurriculumStudentNotFound
+			}
+			*list = next
+			return nil
+		}
+		return errEoschoolCurriculumStudentNotFound
+	})
+	if errors.Is(err, errEoschoolCurriculumStudentNotFound) {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	_ = a.curriculumMaterialsFS.delete(ownerID, studentKey, "outings", outingID, name)
+	a.auditEvent(r, "eoschool_curriculum_outing_image_delete", "ok", user.ID)
+	writeJSON(w, http.StatusOK, curriculumProgressJSON(doc))
+}
+
+func (a *App) getEoschoolOutingImageHandler(w http.ResponseWriter, r *http.Request) {
+	studentKey := normalizeEoschoolCurriculumStudentKey(r.URL.Query().Get("studentKey"))
+	outingID := strings.TrimSpace(r.URL.Query().Get("outingId"))
+	kind := strings.TrimSpace(r.URL.Query().Get("kind"))
+	name := strings.TrimSpace(r.URL.Query().Get("name"))
+	if !validEoschoolOutingID(outingID) || !validEoschoolOutingKind(kind) || !validEoschoolActivityPhotoName(name) {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	_, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	doc, found, err := a.eoschoolCurriculum.Get(r.Context(), ownerID, studentKey)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	row, rowOK := eoschoolOutingByID(doc.Outings, outingID)
+	if !found || !rowOK {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	slot := outingImageSlot(&row, kind)
+	allowed := false
+	for _, item := range *slot {
+		if item == name {
+			allowed = true
+			break
+		}
+	}
+	if !allowed {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	f, info, err := a.curriculumMaterialsFS.open(ownerID, studentKey, "outings", outingID, name)
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+		return
+	}
+	defer f.Close()
+	w.Header().Set("Content-Type", "image/webp")
+	w.Header().Set("Cache-Control", "private, no-store")
+	http.ServeContent(w, r, info.Name(), info.ModTime(), f)
 }
