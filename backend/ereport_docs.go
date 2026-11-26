@@ -28,8 +28,8 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 			"homescool": "https://github.com/EduardoOsteicoechea/eduardoos-eoschool-connector — clone as .eoschool/ sidecar. Mirror: https://eduardoos.com/skills/eoschool/",
 			"epam":      "https://github.com/EduardoOsteicoechea/epam — clone as .epam/ sidecar. Mirror: https://eduardoos.com/skills/epam/",
 		},
-		"skill": "https://github.com/EduardoOsteicoechea/eduardoos-ereport-connector — clone as .ereport/. Homescool: eduardoos-eoschool-connector as .eoschool/. EPAM: https://github.com/EduardoOsteicoechea/epam as .epam/.",
-		"agentGuidance": "1) Require EDUARDOOS_API_KEY. 2) ALWAYS GET /api/v1/docs first. 3a) eReport: access → orgs → reports → GET → POST append/replace, or use granular section/group/item POST/PATCH for the web connector. Upload/download issue images via POST/GET /api/v1/ereport/orgs/{orgId}/reports/{reportId}/images[/{imageId}] (API key; never cookie paths without a session). For a **site** connector, point EDUARDOOS_ORG_ID/EDUARDOOS_REPORT_ID at one of the owner's website_registration reports (hub purpose; many allowed per owner); the site UI Connector locks to the active host-matched binding while the API still allows all owned reports. 3b) Homescool materials: access → list → POST with confirmOverwrite. 3c) EPAM: access → POST /api/v1/epam/epams with the pamphlet/.epam document (auto-publishes to /articles when the key owner is the public articles publisher). PUT requires confirmOverwrite:true. 4) Always print viewUrl and articleUrl after write. 5) Never invent endpoints — use this catalog. 6) Web embed: https://eduardoos.com/ereport/embed.js → mount({ orgId, reportId, menuSelector }) (session + subscription; no API key). 7) eduardoos.com shell: Connector menu + header bug_report open the quick issue modal when websiteRegistration (active host match) is set on cookie GET /api/ereport/access.",
+		"skill":         "https://github.com/EduardoOsteicoechea/eduardoos-ereport-connector — clone as .ereport/. Homescool: eduardoos-eoschool-connector as .eoschool/. EPAM: https://github.com/EduardoOsteicoechea/epam as .epam/.",
+		"agentGuidance": "1) Require EDUARDOOS_API_KEY. 2) ALWAYS GET /api/v1/docs first. 3a) eReport: access → orgs → reports → GET → POST append/replace, or use granular section/group/item POST/PATCH for the web connector. Upload/download issue images via POST/GET /api/v1/ereport/orgs/{orgId}/reports/{reportId}/images[/{imageId}] (API key; never cookie paths without a session). For a **site** connector, point EDUARDOOS_ORG_ID/EDUARDOOS_REPORT_ID at one of the owner's website_registration reports (hub purpose; many allowed per owner); the site UI Connector locks to the active host-matched binding while the API still allows all owned reports. 3b) Homescool materials: access → list → POST with confirmOverwrite. eSchool student data (api + homescool): GET /api/v1/homescool/students, GET /api/v1/homescool/progress?studentKey=, GET/POST /api/v1/homescool/activities/photo, PUT /api/v1/homescool/activities/record, PATCH /api/v1/homescool/progress/sections. Data is the key owner's (or a student assigned to that user as tutor). Download each activity photo, grade it, and PUT the record so Por qué can render it. 3c) EPAM: access → POST /api/v1/epam/epams with the pamphlet/.epam document (auto-publishes to /articles when the key owner is the public articles publisher). PUT requires confirmOverwrite:true. 4) Always print viewUrl and articleUrl after write. 5) Never invent endpoints — use this catalog. 6) Web embed: https://eduardoos.com/ereport/embed.js → mount({ orgId, reportId, menuSelector }) (session + subscription; no API key). 7) eduardoos.com shell: Connector menu + header bug_report open the quick issue modal when websiteRegistration (active host match) is set on cookie GET /api/ereport/access.",
 		"routes": []map[string]any{
 			{"method": http.MethodGet, "path": "/api/v1/docs", "auth": "none", "summary": "This catalog (public). Fetch first."},
 			{"method": http.MethodGet, "path": "/api/v1/ereport/access", "auth": "api_key", "summary": "eReport — check API access.", "requirements": "api + ereport (or admin)."},
@@ -55,6 +55,12 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 			{"method": http.MethodGet, "path": "/api/v1/homescool/materials/{materialId}", "auth": "api_key", "summary": "Homescool — get one material meta + viewUrl."},
 			{"method": http.MethodPost, "path": "/api/v1/homescool/materials", "auth": "api_key", "summary": "Homescool — upsert .eoschool JSON (METHOD_V1; confirmOverwrite required).", "body": `{"confirmOverwrite":true,"material":{"format":"eoschool","version":1,"cycle":1,"week":1,"day":1,"level":6,"subject":"mat","title":"…","lesson":{…},"quiz":{…}}}`},
 			{"method": http.MethodDelete, "path": "/api/v1/homescool/materials/{materialId}", "auth": "api_key", "summary": "Homescool — delete one owned material (meta + document file)."},
+			{"method": http.MethodGet, "path": "/api/v1/homescool/students", "auth": "api_key", "summary": "eSchool — list students owned by the key user, plus tutor assignments.", "requirements": "api + homescool (or admin)."},
+			{"method": http.MethodGet, "path": "/api/v1/homescool/progress", "auth": "api_key", "summary": "eSchool — download one student's progress, scores, activityRecords, activityFacts, and photo names.", "requirements": "query studentKey. Owner-scoped."},
+			{"method": http.MethodPatch, "path": "/api/v1/homescool/progress/sections", "auth": "api_key", "summary": "eSchool — mark a day section done or not.", "body": `{"studentKey":"elias-osteicoechea","dayId":"d38","sectionId":"mat","completed":true}`},
+			{"method": http.MethodGet, "path": "/api/v1/homescool/activities/photo", "auth": "api_key", "summary": "eSchool — download one task photo (image/webp).", "requirements": "query studentKey, dayId, sectionId, optional name."},
+			{"method": http.MethodPost, "path": "/api/v1/homescool/activities/photo", "auth": "api_key", "summary": "eSchool — upload one task photo. Returns the updated progress.", "body": "multipart/form-data; photo=<jpeg|png|webp>; fields studentKey, dayId, sectionId"},
+			{"method": http.MethodPut, "path": "/api/v1/homescool/activities/record", "auth": "api_key", "summary": "eSchool — upload the normalized reading (summary, rewrite, multiplication cells) and optional score. No UI grade password.", "body": `{"studentKey":"elias-osteicoechea","dayId":"d38","sectionId":"mat","score":70,"record":{"summary":"Falló 7 × 8.","rewrite":"Escribió 54.","kind":"multiplication","items":[{"kind":"mult","page":1,"row":0,"col":0,"a":7,"b":8,"given":54,"expected":56,"correct":false}]}}`},
 			{"method": http.MethodGet, "path": "/api/v1/epam/access", "auth": "api_key", "summary": "EPAM — check API access.", "requirements": "api + epam (or admin). Legacy pamphlet entitlement accepted."},
 			{"method": http.MethodGet, "path": "/api/v1/epam/epams", "auth": "api_key", "summary": "EPAM — list owned documents (meta + viewUrl + articleUrl)."},
 			{"method": http.MethodGet, "path": "/api/v1/epam/epams/{id}", "auth": "api_key", "summary": "EPAM — read meta + document + viewUrl + articleUrl."},
@@ -78,9 +84,9 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 		"payloadSchema": map[string]any{
 			"description": "See payloadSchema.ereport and payloadSchema.homescool. Prefer product-specific blocks.",
 			"ereport": map[string]any{
-				"description":         "Portable Issue Tracker / .ereport JSON under media/ereport/<owner>/.",
-				"writeSemantics":      "POST mode append (default) or replace; both need confirmOverwrite:true. Granular section/group/item POST/PATCH mutate one node without append/replace.",
-				"postBody":            `{"confirmOverwrite":true,"mode":"append","tema":"optional","payload":{}}`,
+				"description":            "Portable Issue Tracker / .ereport JSON under media/ereport/<owner>/.",
+				"writeSemantics":         "POST mode append (default) or replace; both need confirmOverwrite:true. Granular section/group/item POST/PATCH mutate one node without append/replace.",
+				"postBody":               `{"confirmOverwrite":true,"mode":"append","tema":"optional","payload":{}}`,
 				"postBodyReplaceExample": `{"confirmOverwrite":true,"mode":"replace","tema":"Model Checker 1.1","payload":{"appTitle":"Issue Tracker","orgName":"…","reportName":"…","reportDate":"YYYY-MM-DD","reportNumber":"…","theme":"dark","validationCriteria":[],"sections":[]}}`,
 				"websiteRegistration": map[string]any{
 					"purposeValues": []string{"website_registration", "other"},
@@ -94,16 +100,16 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 					"metaFields":    "meta.json purpose + connectorSectionId + connectorGroupId + connectorHosts (normalized on load).",
 				},
 				"webConnector": map[string]any{
-					"embedScript": "https://eduardoos.com/ereport/embed.js",
-					"embedTheme":  "https://eduardoos.com/ereport/embed-theme.css",
+					"embedScript":       "https://eduardoos.com/ereport/embed.js",
+					"embedTheme":        "https://eduardoos.com/ereport/embed-theme.css",
 					"quickIssuePath":    "/ereport/embed-issue",
 					"advancedModalPath": "/ereport/web-connector",
 					"configModalPath":   "/ereport/connector-config",
 					"features": []map[string]any{
 						{
-							"id":          "quick_issue_modal",
-							"summary":     "eduardoos.com shell Connector/bug_report: compact modal locked to website_registration (session cookie). Host Mode W uses /ereport/embed-issue instead.",
-							"issueParse":  "Text until the first '.' is nombre; remainder is incidencia. No period → whole string is both.",
+							"id":           "quick_issue_modal",
+							"summary":      "eduardoos.com shell Connector/bug_report: compact modal locked to website_registration (session cookie). Host Mode W uses /ereport/embed-issue instead.",
+							"issueParse":   "Text until the first '.' is nombre; remainder is incidencia. No period → whole string is both.",
 							"expressDates": "Create item sets fechaIncidencia (today UTC YYYY-MM-DD if empty) and bumps payload.reportDate + meta.reportDate to that day.",
 						},
 						{
@@ -154,19 +160,19 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 				"sectionFields": map[string]string{
 					"id": "section id", "title": "title", "kind": "funcionalidades|subarticulos",
 					"productHistory": "free-text product / concept history for the section",
-					"items": "open issues", "groups": "subsections",
+					"items":          "open issues", "groups": "subsections",
 				},
 				"groupFields": map[string]string{
 					"id": "group id", "title": "title",
 					"productHistory": "free-text product / concept history for the group",
-					"items": "issues",
+					"items":          "issues",
 				},
 				"itemFields": map[string]string{
 					"id": "item id", "nombre": "name", "status": "aprobado|reprobado|no_aplica|empty",
 					"incidencia": "issue text", "solucion": "resolution", "checklist": "{id,label,checked}[]",
 					"severidadIncidencia": "optional int 1–5 (issue severity; omit when unset; PATCH null/0 clears)",
 					"severidadSolucion":   "optional int 1–5 (fix severity; omit when unset; PATCH null/0 clears)",
-					"imagesIncidencia": "image refs [{id,url,mime,name?}]", "imagesSolucion": "same shape", "images": "alias of imagesSolucion",
+					"imagesIncidencia":    "image refs [{id,url,mime,name?}]", "imagesSolucion": "same shape", "images": "alias of imagesSolucion",
 				},
 				"images": map[string]any{
 					"upload":   "POST multipart field `file` (png|jpeg|webp) → {id,url,mime,name}. url is /api/v1/ereport/orgs/{orgId}/reports/{reportId}/images/{id}.",
@@ -194,6 +200,13 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 				"viewUrlTemplate": "{BASE}/homescool/material?id={materialId}",
 				"connector":       "https://github.com/EduardoOsteicoechea/eduardoos-eoschool-connector — clone as .eoschool/",
 				"methodDoc":       "/skills/eoschool/METHOD_V1.md",
+				"studentData": map[string]any{
+					"notes":        "Bearer key with api + homescool. Rows belong to the key owner. A tutor assignment reads and writes the owning family's student. Do not send another user's id.",
+					"download":     "GET /api/v1/homescool/students then GET /api/v1/homescool/progress?studentKey= then GET /api/v1/homescool/activities/photo for each activityPhotoFiles name.",
+					"uploadPhoto":  "POST multipart field photo plus studentKey, dayId, sectionId.",
+					"uploadRecord": `PUT JSON {"studentKey","dayId","sectionId","score":0-100 optional,"record":{"summary","rewrite","kind":"prose|multiplication|mixed","items":[{"kind":"text|mult|div","prompt","answer","rewrite","page":1-3,"row":0-7,"col":0-3,"a":1-99,"b":1-99,"given","expected","correct"}]}}. mult expected must be a*b. div must divide evenly.`,
+					"section":      `PATCH {"studentKey","dayId","sectionId","completed":true}`,
+				},
 				"sessionCurriculumProgress": map[string]any{
 					"notes": "Browser cookie session + Homescool entitlement (not API key). Default student Elías Osteicoechea (elias-osteicoechea).",
 					"routes": []map[string]any{
@@ -205,12 +218,12 @@ func (a *App) v1DocsHandler(w http.ResponseWriter, r *http.Request) {
 				},
 			},
 			"epam": map[string]any{
-				"description":    "Pamphlet / EPAM JSON documents (same shape as the EPAM editor and .epam files).",
-				"writeSemantics": "POST creates (auto-publish). PUT replaces with confirmOverwrite:true (auto-publish). No separate publish step.",
-				"postBody":       `{"document":{"type":"pamphlet_single_sheet","id":"…","header":{…},"footer":{…},"column_1":[],…}}`,
-				"postBodyRoot":   "You may also POST the pamphlet object at the root (with type pamphlet_single_sheet|pamphlet_structured_images).",
-				"putBody":        `{"confirmOverwrite":true,"document":{…}}`,
-				"viewUrlTemplate":   "{BASE}/documents/pamphlet/open#{epamId}",
+				"description":        "Pamphlet / EPAM JSON documents (same shape as the EPAM editor and .epam files).",
+				"writeSemantics":     "POST creates (auto-publish). PUT replaces with confirmOverwrite:true (auto-publish). No separate publish step.",
+				"postBody":           `{"document":{"type":"pamphlet_single_sheet","id":"…","header":{…},"footer":{…},"column_1":[],…}}`,
+				"postBodyRoot":       "You may also POST the pamphlet object at the root (with type pamphlet_single_sheet|pamphlet_structured_images).",
+				"putBody":            `{"confirmOverwrite":true,"document":{…}}`,
+				"viewUrlTemplate":    "{BASE}/documents/pamphlet/open#{epamId}",
 				"articleUrlTemplate": "{BASE}/articles/read?id={epamId}",
 				"connector":          "https://github.com/EduardoOsteicoechea/epam — clone as .epam/",
 				"productId":          productEpam,
