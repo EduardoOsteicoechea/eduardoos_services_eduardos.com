@@ -57,6 +57,16 @@ export function aiGroupsForDay(planDay) {
   if (planDay <= AI_FROM_PLAN_DAY) {
     return [{ objective: "Diez fotos", learnings: DAY38_CARD }];
   }
+  if (planDay === 39) {
+    return [{
+      objective: "Planos",
+      learnings: [
+        "Eliges 2 fotos de imagenes/completo.",
+        "Creas planos y copias tú esas fotos.",
+        "Pides planta.svg y cuatro fachadas hasta que se parezcan.",
+      ],
+    }];
+  }
   const focus = ROTATION[(planDay - (AI_FROM_PLAN_DAY + 1)) % ROTATION.length];
   return [{ objective: focus.objective, learnings: [focus.learning] }];
 }
@@ -72,19 +82,20 @@ export function aiSheetSection(planDay) {
   }
   if (planDay === 39) {
     return {
-      objective: "Inventario",
+      objective: "Planos de dos legos",
       learning:
-        "Miras una pieza. · Dices el tipo, el color y cuántas hay. · El agente escribe solo lo que tú dices. · Si cambia una palabra, tú la corriges.",
+        "Eliges 2 fotos de legos armados en imagenes/completo. · Creas tú la carpeta planos y copias tú las fotos. · Pides planta.svg y cuatro fachadas hasta que se parezcan a la foto.",
       activities: [
-        "¿Qué pieza elegiste?",
-        "¿De qué tipo es?",
-        "¿De qué color es?",
-        "¿Cuántas hay?",
-        "¿El agente escribió exactamente lo que dijiste?",
-        "Si cambió una palabra, ¿cuál corriges?",
-        "Escribe la ficha en una sola línea: tipo, color y cantidad.",
+        "Elige 2 fotos de legos armados en imagenes/completo.",
+        "Crea tú la carpeta planos. El agente no la crea.",
+        "Copia tú esas 2 fotos dentro de planos.",
+        "Pide la planta: la vista desde arriba.",
+        "Pide fachada-frente, fachada-atras, fachada-izquierda y fachada-derecha.",
+        "Cada lego queda en una carpeta con el nombre de su foto.",
+        "Dentro van la foto, planta.svg y las cuatro fachadas.",
+        "Si un plano no se parece a la foto, pide ese plano otra vez.",
       ],
-      canDo: "Al terminar puedes dictar una ficha: tipo, color y cantidad.",
+      canDo: "Al terminar puedes mostrar dos carpetas, cada una con la foto, la planta y las cuatro fachadas.",
     };
   }
   if (planDay === 40) {

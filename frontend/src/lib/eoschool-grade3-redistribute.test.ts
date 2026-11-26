@@ -90,7 +90,7 @@ describe("inteligencia artificial from day 38", () => {
       "El agente las pasa a assets si se ve la pieza.",
       "Tú confirmas color, forma, tacos y repetidos.",
     ]);
-    expect(aiGroupsForDay(39)[0].objective).toBe("Inventario");
+    expect(aiGroupsForDay(39)[0].objective).toBe("Planos");
     expect(aiGroupsForDay(40)[0].objective).toBe("Página");
     expect(aiGroupsForDay(43)[0].objective).toBe("Revisión");
     expect(aiGroupsForDay(44)[0].objective).toBe("Inventario");

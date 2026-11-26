@@ -14,27 +14,28 @@
     {
       "id": "bib",
       "label": "Biblia",
-      "objective": "Tres pistas",
-      "learning": "Éxodo 34: Moisés sube solo al Sinaí con dos tablas nuevas. El Señor se proclama compasivo y clemente. Al bajar, la cara de Moisés brilla y se cubre con un velo. · Éxodo 35: el sábado es reposo. La ofrenda del santuario es de corazón dispuesto. Bezaleel y Aholiab reciben habilidad para el trabajo. · Salmo 53: el necio dice que no hay Dios. · Salmo 54: David pide que Dios lo defienda. · Lucas 6 y 7: el centurión pide que Jesús diga la palabra. En Naín, Jesús devuelve el hijo a su madre. Juan pregunta si Jesús es el que ha de venir. En casa de Simón se le perdona a la mujer.",
-      "canDo": "Al terminar puedes marcar un versículo de cada pista y decir qué pasó.",
+      "objective": "Preguntas de las tres lecturas",
+      "learning": "Éxodo 34 y 35, Salmos 53 y 54, Lucas 6 y 7. Una hoja. A la izquierda y a la derecha hay preguntas. No hay resumen: se responde con la lectura.",
+      "canDo": "Al terminar puedes responder una pregunta de cada lectura.",
       "mode": "directo",
       "activityKind": "bible",
       "minutesEstimate": 15,
       "topicShort": "Éxodo 34 y 35, Salmos 53 y 54, Lucas 6 y 7",
       "activities": [
-        "Lee en silencio. Si el capítulo es largo, quédate con 8 a 12 versículos y marca uno.",
-        "De cada pista, escribe la cita y la idea con tus palabras.",
         "¿Quién sube solo al monte con dos tablas nuevas?",
         "¿Qué le pasa a la cara de Moisés al bajar?",
-        "¿El sábado es el día de encender fuego o de reposo?",
+        "¿Cuándo se quita Moisés el velo?",
+        "¿El sábado es día de encender fuego o día de reposo?",
         "¿La ofrenda del santuario es obligada o de corazón dispuesto?",
+        "¿Quiénes reciben habilidad para el trabajo?",
         "¿Quién dice «no hay Dios»: el necio o David?",
         "En el salmo 54, ¿quién sostiene la vida del que ora?",
-        "¿Qué le pide el centurión a Jesús: que entre o que diga la palabra?",
+        "Según Lucas 6, ¿hay que amar solo al amigo o también al enemigo?",
+        "¿Qué casa queda en pie: la de arena o la de roca?",
+        "¿Qué le pide el centurión: que Jesús entre o que diga la palabra?",
         "¿A quién le devuelve Jesús el hijo en Naín?",
         "¿Desde dónde pregunta Juan si Jesús es el que ha de venir?",
-        "En casa de Simón, ¿qué se le perdona a la mujer?",
-        "Escribe una frase de aplicación para tu casa."
+        "En casa de Simón, ¿qué se le perdona a la mujer?"
       ]
     },
     {
@@ -103,26 +104,25 @@
     {
       "id": "mat",
       "label": "Matemáticas",
-      "objective": "División, formas y cuerpos",
-      "learning": "367 + 428. 10000 − 4567. 12 × 9. 72 ÷ 6. Muestra el procedimiento. · Una forma es plana: la dibujas y no ocupa espacio. Un cuerpo sí ocupa espacio. · El círculo es forma y la esfera es cuerpo. El cuadrado es forma y el cubo es cuerpo. El triángulo es forma y el cono es cuerpo. · La tapa del cilindro se parece al círculo. No puedes llenar de agua un círculo dibujado. Sí puedes sostener un cubo.",
-      "canDo": "Al terminar puedes resolver las cuatro cuentas y distinguir una forma de un cuerpo.",
+      "objective": "Formas, cuerpos y la tabla",
+      "learning": "Hoja 1: preguntas de formas y cuerpos. Hoja 2: la tabla, con multiplicaciones y divisiones. · El círculo es forma y la esfera es cuerpo. El cuadrado es forma y el cubo es cuerpo. El triángulo es forma y el cono es cuerpo.",
+      "canDo": "Al terminar puedes distinguir una forma de un cuerpo y usar la tabla.",
       "mode": "directo",
       "activityKind": "operations",
       "minutesEstimate": 20,
-      "topicShort": "cuentas y cuerpos",
+      "topicShort": "formas, cuerpos y tabla",
       "activities": [
-        "367 + 428. Escribe el resultado y cómo lo pensaste.",
-        "10000 − 4567. ¿El resultado es mayor o menor que 5000?",
-        "12 × 9. ¿Es una suma repetida de qué número?",
-        "72 ÷ 6. Seis por qué número es 72?",
         "El círculo es forma o cuerpo. La esfera es forma o cuerpo.",
         "El cuadrado es forma o cuerpo. El cubo es forma o cuerpo.",
-        "Escribe una semejanza entre el cuadrado y una cara del cubo.",
+        "El triángulo es forma o cuerpo. El cono es forma o cuerpo.",
         "¿Puedes llenar de agua un círculo dibujado?",
         "¿Puedes sostener un cubo?",
+        "Escribe una semejanza entre el cuadrado y una cara del cubo.",
+        "La tapa del cilindro se parece a qué forma.",
+        "La caja de zapatos es un cuerpo. Su cara de enfrente, dibujada sola, es una forma.",
+        "¿Qué tiene caras: el triángulo o la pirámide?",
         "Nombra dos formas planas y dos cuerpos.",
-        "La caja de zapatos es un cuerpo. Su cara de enfrente, dibujada sola, es una forma. Escribe los dos nombres.",
-        "Cierra con una frase: una forma y un cuerpo no son lo mismo porque…"
+        "En la hoja 2, resuelve la tabla, las multiplicaciones y las divisiones."
       ]
     },
     {
@@ -160,21 +160,22 @@
     {
       "id": "ia",
       "label": "Inteligencia Artificial",
-      "objective": "Inventario",
-      "learning": "Miras una pieza. · Dices el tipo, el color y cuántas hay. · El agente escribe solo lo que tú dices. · Si cambia una palabra, tú la corriges.",
-      "canDo": "Al terminar puedes dictar una ficha: tipo, color y cantidad.",
+      "objective": "Planos de dos legos",
+      "learning": "Eliges 2 fotos de imagenes/completo. Creas tú la carpeta planos y copias tú las fotos. Pides planta.svg y cuatro fachadas hasta que se parezcan a la foto.",
+      "canDo": "Al terminar puedes mostrar dos carpetas, cada una con la foto, la planta y las cuatro fachadas.",
       "mode": "directo",
       "activityKind": "ai",
       "minutesEstimate": 15,
-      "topicShort": "Inventario",
+      "topicShort": "Planos SVG",
       "activities": [
-        "¿Qué pieza elegiste?",
-        "¿De qué tipo es?",
-        "¿De qué color es?",
-        "¿Cuántas hay?",
-        "¿El agente escribió exactamente lo que dijiste?",
-        "Si cambió una palabra, ¿cuál corriges?",
-        "Escribe la ficha en una sola línea: tipo, color y cantidad."
+        "Elige 2 fotos de legos armados en imagenes/completo.",
+        "Crea tú la carpeta planos. El agente no la crea.",
+        "Copia tú esas 2 fotos dentro de planos.",
+        "Pide la planta: la vista desde arriba.",
+        "Pide fachada-frente, fachada-atras, fachada-izquierda y fachada-derecha.",
+        "Cada lego queda en una carpeta con el nombre de su foto.",
+        "Dentro van la foto, planta.svg y las cuatro fachadas.",
+        "Si un plano no se parece a la foto, pide ese plano otra vez."
       ]
     }
   ]
