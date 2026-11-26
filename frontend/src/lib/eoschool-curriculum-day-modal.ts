@@ -8,7 +8,7 @@ import {
   type MppeCurriculumDaySheet,
 } from "./mppe-curriculum-day-sheet";
 import { fetchMppeDayPdfPreview } from "./mppe-curriculum-pdf-preview";
-import { DAY38_PACKET_NAME, dayPacketHref } from "./eoschool-day38-packet";
+import { dayPacketHref, dayPacketName } from "./eoschool-day38-packet";
 import { mustLog } from "./dev-log";
 import { renderCurriculumActivity } from "./eoschool-curriculum-activity";
 
@@ -81,7 +81,7 @@ async function showPackedDayPdf(
   if (!bytes.byteLength) return false;
 
   activePdfBytes = clonePdfBytes(bytes);
-  activePdfName = DAY38_PACKET_NAME;
+  activePdfName = dayPacketName(href);
   if (empty) empty.hidden = true;
   try {
     await renderHomescoolPdfPreview(host, bytes, {

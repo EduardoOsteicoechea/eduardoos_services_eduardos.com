@@ -1,12 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { DAY38_PACKET_HREF, DAY38_PLAN_DAY, dayPacketHref } from "./eoschool-day38-packet";
+import {
+  DAY38_PACKET_HREF,
+  DAY38_PLAN_DAY,
+  DAY39_PACKET_HREF,
+  DAY39_PACKET_NAME,
+  dayPacketHref,
+  dayPacketName,
+} from "./eoschool-day38-packet";
 
-describe("day 38 class packet", () => {
-  it("opens the printed packet only on plan day 38", () => {
+describe("printed class packets", () => {
+  it("opens the printed packet on plan days 38 and 39", () => {
     expect(DAY38_PLAN_DAY).toBe(38);
     expect(dayPacketHref(38)).toBe(DAY38_PACKET_HREF);
+    expect(dayPacketHref(39)).toBe(DAY39_PACKET_HREF);
+    expect(dayPacketName(DAY39_PACKET_HREF)).toBe(DAY39_PACKET_NAME);
     expect(dayPacketHref(37)).toBeNull();
-    expect(dayPacketHref(39)).toBeNull();
+    expect(dayPacketHref(40)).toBeNull();
     expect(dayPacketHref(0)).toBeNull();
   });
 });
