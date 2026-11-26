@@ -1768,6 +1768,7 @@ function weekForPlanDay(planDay: number): number {
     .eoschool-curriculum__week-days {
       grid-template-columns: minmax(0, 1fr);
       overflow-x: visible;
+      gap: calc(var(--space-padding) + 1rem);
     }
 
     .eoschool-curriculum .lede {
@@ -2627,7 +2628,16 @@ function weekForPlanDay(planDay: number): number {
     }
   }
 
-  .eoschool-curriculum-activity input[type="number"],
+  .eoschool-curriculum-activity__score {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum-activity__score input[type="number"],
   .eoschool-curriculum-activity__grade {
     box-sizing: border-box;
     height: var(--control-height);
@@ -2637,6 +2647,15 @@ function weekForPlanDay(planDay: number): number {
     font-size: var(--font-size-md);
     font-family: inherit;
     line-height: 1;
+  }
+
+  .eoschool-curriculum-activity__score input[type="number"] {
+    flex: 0 0 auto;
+    width: calc(var(--button-size) * 3);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+    color: var(--color-text);
   }
 
   .eoschool-curriculum-activity__grade {
