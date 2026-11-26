@@ -6,6 +6,8 @@
 export const PUBLIC_PRODUCTS = [
   "ereport",
   "api",
+  "homescool",
+  "ebim",
 ] as const;
 
 export type PublicProductId = (typeof PUBLIC_PRODUCTS)[number];
@@ -16,15 +18,11 @@ const PUBLIC_SET = new Set<string>(PUBLIC_PRODUCTS);
 const ADMIN_ONLY_PATH_PREFIXES = [
   "/articles",
   "/scrib",
-  "/eoschool",
-  "/homescool",
-  "/homeschool",
   "/documents/pamphlet",
   "/eoproject",
   "/evoice",
   "/emusic",
   "/eeyes",
-  "/ebim",
   "/publisher",
   "/dashboard/latin",
 ] as const;

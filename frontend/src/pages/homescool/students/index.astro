@@ -34,7 +34,7 @@ import Layout from "../../../layouts/Layout.astro";
       banner.hidden = false;
       banner.textContent = "Loading…";
     }
-    const result = await requireService("homescool", { requireSubscription: true, adminOnly: true });
+    const result = await requireService("homescool", { requireSubscription: true });
     if (!result.sessionOk || !result.access.allowed) {
       if (banner instanceof HTMLElement) {
         banner.textContent = result.sessionOk ? "Teacher subscription required." : "Sign in required.";

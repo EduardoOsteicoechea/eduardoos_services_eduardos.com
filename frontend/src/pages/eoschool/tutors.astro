@@ -57,7 +57,7 @@ import Layout from "../../layouts/Layout.astro";
       banner.textContent = "Cargando…";
     }
 
-    const access = await requireService("homescool", { requireSubscription: true, adminOnly: true });
+    const access = await requireService("homescool", { requireSubscription: true });
     await refreshAuthSession();
     if (!access.sessionOk || !access.access.allowed || !isPlatformAdmin()) {
       if (banner instanceof HTMLElement) {

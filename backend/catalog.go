@@ -25,7 +25,7 @@ type serviceInfo struct {
 var serviceCatalog = []serviceInfo{
 	{ID: "epam", Label: "EPAM", Description: "Cloud EPAM editor, .epam documents, and print export.", MonthlyUSD: 1, Visibility: visibilityAdmin},
 	{ID: productArticles, Label: "Articles", Description: "Eligible pamphlets appear in the admin Articles queue; the site admin controls public visibility.", MonthlyUSD: 1, Visibility: visibilityAdmin},
-	{ID: "homescool", Label: "Homescool", Description: "Homescool learning surface.", MonthlyUSD: 1, Visibility: visibilityAdmin},
+	{ID: "homescool", Label: "eSchool", Description: "Homescool learning surface.", MonthlyUSD: 1, Visibility: visibilityPublic},
 	{ID: "scrib", Label: "Scrib", Description: "Layered US Letter manuscript sheets with cloud books.", MonthlyUSD: 1, Visibility: visibilityAdmin},
 	{ID: "ereport", Label: "eReport", Description: "Issue tracker reports with cloud storage and sharing.", MonthlyUSD: 1, Visibility: visibilityPublic},
 	{ID: productEreportConnector, Label: "eReport Connector", Description: "Use the eReport site connector (website registration binding, quick issue modal, and embed).", MonthlyUSD: 1, Visibility: visibilityAdmin},
@@ -33,6 +33,7 @@ var serviceCatalog = []serviceInfo{
 	{ID: "emusic", Label: "eMusic", Description: "Curated music library with section playlists.", MonthlyUSD: 1, Visibility: visibilityAdmin},
 	{ID: "eoproject", Label: "eoProject", Description: "Construction project stages, photos, and IFC versions.", MonthlyUSD: 1, Visibility: visibilityAdmin},
 	{ID: productEeyes, Label: "eEyes", Description: "Pair Android/Desktop shells, plan human capture tasks, and review completions.", MonthlyUSD: 1, Visibility: visibilityAdmin},
+	{ID: "ebim", Label: "eBim", Description: "ISO 19650 and openBIM reading, from fundamentals to particulars.", MonthlyUSD: 1, Visibility: visibilityPublic},
 	{ID: "api", Label: "eApi", Description: "Create API keys and call product APIs from external apps.", MonthlyUSD: 3, Visibility: visibilityPublic},
 }
 
@@ -63,7 +64,7 @@ func restoreProfileCatalogVisibility() {
 	for i := range serviceCatalog {
 		id := serviceCatalog[i].ID
 		switch id {
-		case "ereport", "api":
+		case "ereport", "api", "homescool", "ebim":
 			serviceCatalog[i].Visibility = visibilityPublic
 		default:
 			serviceCatalog[i].Visibility = visibilityAdmin

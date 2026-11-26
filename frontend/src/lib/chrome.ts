@@ -538,19 +538,20 @@ function setServiceNavHidden(node: HTMLElement): void {
   node.setAttribute("title", "Subscription required");
 }
 
-/** Service ids the signed-in user may open. Private ones stay hidden until listed here. */
+/** Menu links that follow a subscription. Retired products stay out of the menu. */
+const MENU_SUBSCRIPTION_SERVICES = new Set(["ereport", "api", "homescool", "ebim"]);
+
+/** Service ids the signed-in user may open from the subscription menu. */
 const menuEntitledServices = new Set<string>();
+
+function isMenuSubscriptionService(id: string): boolean {
+  return MENU_SUBSCRIPTION_SERVICES.has(id);
+}
 
 function serviceIdForPath(pathname: string): string | null {
   const path = pathname.replace(/\/+$/, "") || "/";
   if (path.startsWith("/eoschool") || path.startsWith("/homescool") || path.startsWith("/homeschool")) return "homescool";
-  if (path.startsWith("/emusic")) return "emusic";
-  if (path.startsWith("/eoproject")) return "eoproject";
-  if (path.startsWith("/scrib") || path.includes("calvins-institutes")) return "scrib";
-  if (path.startsWith("/evoice")) return "evoice";
-  if (path.startsWith("/eeyes")) return "eeyes";
-  if (path.startsWith("/documents/pamphlet")) return "epam";
-  if (path.startsWith("/articles")) return "articles";
+  if (path.startsWith("/ebim")) return "ebim";
   if (path.startsWith("/ereport")) return "ereport";
   if (path.startsWith("/eapi") || path === "/api-docs") return "api";
   return null;
@@ -574,7 +575,11 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
       // Connector buttons are gated separately (website registration binding).
       if (isEreportConnectorNode(node)) continue;
       const id = (node.getAttribute("data-service") || "").trim().toLowerCase();
-      if (id) menuEntitledServices.add(id);
+      if (!isMenuSubscriptionService(id)) {
+        setServiceNavHidden(node);
+        continue;
+      }
+      menuEntitledServices.add(id);
       setServiceNavLocked(node, false);
     }
     sessionLog("chrome.refreshAuth.services", { mode: "admin", count: nodes.length });
@@ -584,7 +589,7 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
     for (const node of nodes) {
       if (isEreportConnectorNode(node)) continue;
       const id = (node.getAttribute("data-service") || "").trim().toLowerCase();
-      if (isAdminOnlyProduct(id)) {
+      if (!isMenuSubscriptionService(id) || isAdminOnlyProduct(id)) {
         setServiceNavHidden(node);
         continue;
       }
@@ -597,7 +602,7 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
     ...new Set(
       nodes
         .map((node) => (node.getAttribute("data-service") || "").trim().toLowerCase())
-        .filter((id) => id && id !== "ereport-connector"),
+        .filter((id) => isMenuSubscriptionService(id)),
     ),
   ];
   const allowed = new Map<string, boolean>();
@@ -617,6 +622,10 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
   for (const node of nodes) {
     if (isEreportConnectorNode(node)) continue;
     const id = (node.getAttribute("data-service") || "").trim().toLowerCase();
+    if (!isMenuSubscriptionService(id)) {
+      setServiceNavHidden(node);
+      continue;
+    }
     const unlocked = Boolean(allowed.get(id));
     if (!isPublicProduct(id)) {
       if (unlocked) setServiceNavLocked(node, false);

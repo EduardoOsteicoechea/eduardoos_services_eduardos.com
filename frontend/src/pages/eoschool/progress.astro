@@ -131,7 +131,7 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
       banner.textContent = "Cargando…";
     }
 
-    const access = await requireService("homescool", { requireSubscription: true, adminOnly: true });
+    const access = await requireService("homescool", { requireSubscription: true });
     if (!access.sessionOk || !access.access.allowed) {
       if (banner instanceof HTMLElement) {
         banner.textContent = access.sessionOk

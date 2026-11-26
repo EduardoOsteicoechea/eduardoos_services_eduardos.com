@@ -65,7 +65,7 @@ import Layout from "../../layouts/Layout.astro";
     const select = root?.querySelector<HTMLSelectElement>("[data-student-select]");
     const statusEl = root?.querySelector("[data-status]");
     if (banner instanceof HTMLElement) banner.textContent = "Cargando…";
-    const result = await requireService("homescool", { requireSubscription: true, adminOnly: true });
+    const result = await requireService("homescool", { requireSubscription: true });
     if (!result.sessionOk || !result.access.allowed) {
       if (banner instanceof HTMLElement) {
         banner.textContent = result.sessionOk ? "Necesitas suscripción Homescool." : "Inicia sesión para continuar.";

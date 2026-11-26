@@ -1365,12 +1365,12 @@ import "../../styles/homescool-workspace.css";
     const me = await getMe();
     log("boot.me", { status: me.status, requestId: me.requestId });
 
-    const teacher = await requireService("homescool", { requireSubscription: true, adminOnly: true });
+    const teacher = await requireService("homescool", { requireSubscription: true });
     if (seq !== bootSeq) return;
     log("gate.teacher", { sessionOk: teacher.sessionOk, allowed: teacher.access.allowed });
     let allowed = teacher.sessionOk && teacher.access.allowed;
     if (!allowed) {
-      const guest = await requireService("homescool", { requireSubscription: false, adminOnly: true });
+      const guest = await requireService("homescool", { requireSubscription: false });
       if (seq !== bootSeq) return;
       log("gate.guest", { sessionOk: guest.sessionOk, allowed: guest.access.allowed });
       allowed = Boolean(guest.sessionOk && guest.access.allowed);

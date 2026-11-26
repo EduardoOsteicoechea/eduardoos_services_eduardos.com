@@ -28,6 +28,7 @@ const SERVICE_ICONS: Record<string, string> = {
   emusic: "library_music",
   eoproject: "architecture",
   eeyes: "visibility",
+  ebim: "account_tree",
   api: "key",
 };
 
@@ -46,6 +47,20 @@ export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
     description: "Create API keys and call product APIs from external apps.",
     monthlyUsd: 3,
     icon: "key",
+  },
+  {
+    id: "homescool",
+    label: "eSchool",
+    description: "Homescool learning surface.",
+    monthlyUsd: 1,
+    icon: "school",
+  },
+  {
+    id: "ebim",
+    label: "eBim",
+    description: "ISO 19650 and openBIM reading, from fundamentals to particulars.",
+    monthlyUsd: 1,
+    icon: "account_tree",
   },
 ];
 
@@ -73,6 +88,8 @@ export const SUBSCRIPTION_SERVICE_DETAILS: Record<string, string> = {
     "eEyes pairs Android and Desktop shells with your account using three consecutive codes. Plan human capture tasks with photo and audio evidence, review completions in the hub, and revoke device access instantly.",
   api:
     "API access lets you create eos_live_… keys and call product endpoints from external apps and Cursor connectors (EPAM, eReport, Homescool, and related routes). Keys stay owner-scoped; admin tools manage key lifecycle.",
+  ebim:
+    "eBim is the ISO 19650 and openBIM reading. Move from fundamentals to particulars, with the topic list and the study pages on eduardoos.com.",
 };
 
 export function subscriptionServiceDetails(service: SubscriptionService): string {

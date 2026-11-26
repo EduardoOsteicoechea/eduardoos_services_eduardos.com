@@ -38,12 +38,12 @@ func TestSubscriptionsCatalogPublic(t *testing.T) {
 		id, _ := row["id"].(string)
 		ids[id] = true
 	}
-	for _, want := range []string{"ereport", "api"} {
+	for _, want := range []string{"ereport", "api", "homescool", "ebim"} {
 		if !ids[want] {
 			t.Fatalf("missing public catalog id %s in %#v", want, ids)
 		}
 	}
-	for _, hidden := range []string{"epam", "pamphlet", "articles", "homescool", "scrib", "evoice", "emusic", "eeyes", "eoproject", "ereport-connector"} {
+	for _, hidden := range []string{"epam", "pamphlet", "articles", "scrib", "evoice", "emusic", "eeyes", "eoproject", "ereport-connector"} {
 		if ids[hidden] {
 			t.Fatalf("admin-only product %s must not appear in public catalog", hidden)
 		}
@@ -197,7 +197,7 @@ func TestKnownCatalogHelpers(t *testing.T) {
 	if !productAdminOnly("epam") || !productAdminOnly("pamphlet") || !productAdminOnly("scrib") {
 		t.Fatal("expected admin-only products")
 	}
-	if productAdminOnly("ereport") || productAdminOnly("api") {
+	if productAdminOnly("ereport") || productAdminOnly("api") || productAdminOnly("homescool") || productAdminOnly("ebim") {
 		t.Fatal("public products must not be admin-only")
 	}
 	if !productAdminOnly("eoproject") || !productAdminOnly("ereport-connector") {
@@ -206,7 +206,7 @@ func TestKnownCatalogHelpers(t *testing.T) {
 	if payableService("epam") {
 		t.Fatal("admin-only products must not be payable")
 	}
-	if !payableService("ereport") {
-		t.Fatal("ereport must remain payable")
+	if !payableService("ereport") || !payableService("homescool") || !payableService("ebim") {
+		t.Fatal("ereport, eSchool, and eBim must remain payable")
 	}
 }

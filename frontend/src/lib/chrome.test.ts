@@ -39,6 +39,8 @@ function mountChrome(options: { guestVisible?: boolean } = {}): void {
       <a href="/scrib" data-service="scrib" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1">Scrib</a>
       <a href="/evoice" data-service="evoice" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1">eVoice</a>
       <a href="/ereport" data-service="ereport" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1">eReport</a>
+      <a href="/eoschool" data-service="homescool" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1">eSchool</a>
+      <a href="/ebim" data-service="ebim" class="sidebar-nav--locked" aria-disabled="true" tabindex="-1">eBim</a>
       <a href="/dashboard/latin/calvins-institutes" data-authed-only data-full-nav ${authedHidden}>Institutes</a>
       <a href="/admin/users" data-admin-only hidden>Users</a>
     </aside>
@@ -105,9 +107,11 @@ describe("main-menu session chrome", () => {
     await refreshAuthChrome();
     const scrib = document.querySelector('[data-service="scrib"]') as HTMLElement;
     const ereport = document.querySelector('[data-service="ereport"]') as HTMLElement;
-    expect(scrib.hidden).toBe(false);
+    const school = document.querySelector('[data-service="homescool"]') as HTMLElement;
+    expect(scrib.hidden).toBe(true);
     expect(ereport.hidden).toBe(false);
-    expect(scrib.classList.contains("sidebar-nav--locked")).toBe(false);
+    expect(school.hidden).toBe(false);
+    expect(school.classList.contains("sidebar-nav--locked")).toBe(false);
     expect(ereport.getAttribute("aria-disabled")).toBeNull();
     expect(checkServiceAccess).not.toHaveBeenCalled();
   });
@@ -170,41 +174,50 @@ describe("main-menu session chrome", () => {
     expect(go).not.toHaveBeenCalledWith("/");
   });
 
-  it("shows a private service when the member is subscribed to it", async () => {
+  it("unlocks eSchool and eBim when the member is subscribed and keeps retired services hidden", async () => {
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
       requestId: "rid-sub",
       data: { id: "member-sub", role: "user" },
     });
     vi.mocked(checkServiceAccess).mockImplementation(async (serviceId: string) => ({
-      allowed: serviceId === "evoice",
+      allowed: serviceId === "homescool" || serviceId === "ebim" || serviceId === "evoice",
       isAdmin: false,
-      hasEntitlement: serviceId === "evoice",
+      hasEntitlement: serviceId === "homescool" || serviceId === "ebim" || serviceId === "evoice",
       isHomescoolStudent: false,
     }));
     await refreshAuthChrome();
+    const school = document.querySelector('[data-service="homescool"]') as HTMLElement;
+    const ebim = document.querySelector('[data-service="ebim"]') as HTMLElement;
     const evoice = document.querySelector('[data-service="evoice"]') as HTMLElement;
     const scrib = document.querySelector('[data-service="scrib"]') as HTMLElement;
-    expect(evoice.hidden).toBe(false);
-    expect(evoice.classList.contains("sidebar-nav--locked")).toBe(false);
+    expect(school.hidden).toBe(false);
+    expect(school.classList.contains("sidebar-nav--locked")).toBe(false);
+    expect(ebim.hidden).toBe(false);
+    expect(ebim.classList.contains("sidebar-nav--locked")).toBe(false);
+    expect(evoice.hidden).toBe(true);
     expect(scrib.hidden).toBe(true);
   });
 
-  it("keeps a subscriber on the service they pay for", async () => {
-    window.history.pushState({}, "", "/evoice");
+  it("keeps a subscriber on eSchool and still blocks a retired service", async () => {
+    window.history.pushState({}, "", "/eoschool");
     vi.mocked(getMe).mockResolvedValue({
       status: 200,
       requestId: "rid-sub-route",
       data: { id: "member-sub-2", role: "user" },
     });
     vi.mocked(checkServiceAccess).mockImplementation(async (serviceId: string) => ({
-      allowed: serviceId === "evoice",
+      allowed: serviceId === "homescool",
       isAdmin: false,
-      hasEntitlement: serviceId === "evoice",
+      hasEntitlement: serviceId === "homescool",
       isHomescoolStudent: false,
     }));
     await refreshAuthChrome();
     expect(go).not.toHaveBeenCalledWith("/404");
+
+    window.history.pushState({}, "", "/evoice");
+    await refreshAuthChrome();
+    expect(go).toHaveBeenCalledWith("/404");
   });
 
   it("redirects plain members away from admin-only eEyes", async () => {
@@ -231,8 +244,9 @@ describe("main-menu session chrome", () => {
       data: { id: "admin-2", role: "Admin" },
     });
     await refreshAuthChrome();
-    const scrib = document.querySelector('[data-service="scrib"]') as HTMLElement;
-    expect(scrib.classList.contains("sidebar-nav--locked")).toBe(false);
+    const school = document.querySelector('[data-service="homescool"]') as HTMLElement;
+    expect(school.classList.contains("sidebar-nav--locked")).toBe(false);
+    expect((document.querySelector('[data-service="scrib"]') as HTMLElement).hidden).toBe(true);
     expect(checkServiceAccess).not.toHaveBeenCalled();
   });
 

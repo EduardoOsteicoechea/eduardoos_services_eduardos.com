@@ -16,7 +16,7 @@ for (const screen of screens) {
 
 <Layout
   title="eBim"
-  description="Admin reading on ISO 19650 and openBIM, from fundamentals to particulars."
+  description="ISO 19650 and openBIM reading, from fundamentals to particulars."
   robots="noindex,nofollow"
 >
   <p class="status" data-ebim-status>Checking the session…</p>
@@ -70,8 +70,8 @@ for (const screen of screens) {
 </Layout>
 
 <script>
-  import { getMe } from "../lib/api";
   import { mustLog } from "../lib/dev-log";
+  import { requireService } from "../lib/productGate";
   import { go } from "../lib/router";
 
   const status = document.querySelector("[data-ebim-status]");
@@ -145,11 +145,11 @@ for (const screen of screens) {
     });
 
     const start = async () => {
-      const me = await getMe();
-      const isAdmin = me.status === 200 && String(me.data.role || "").trim().toLowerCase() === "admin";
-      if (mustLog) console.log("ebim.session", { status: me.status, isAdmin, requestId: me.requestId });
-      if (!isAdmin) {
-        fail("This page is available only to administrators.");
+      const result = await requireService("ebim", { requireSubscription: true });
+      const allowed = result.sessionOk && (result.access.isAdmin || result.access.hasEntitlement);
+      if (mustLog) console.log("ebim.session", { allowed, isAdmin: result.access.isAdmin });
+      if (!allowed) {
+        fail("Subscription required.");
         go("/404");
         return;
       }

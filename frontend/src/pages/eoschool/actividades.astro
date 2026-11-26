@@ -95,7 +95,7 @@ import Layout from "../../layouts/Layout.astro";
     const gate = root.querySelector("[data-gate]");
     const authed = root.querySelector("[data-authed]");
     const form = root.querySelector("[data-form]");
-    const result = await requireService("homescool", { requireSubscription: true, adminOnly: true });
+    const result = await requireService("homescool", { requireSubscription: true });
     if (!result.sessionOk || !result.access.allowed) {
       if (banner instanceof HTMLElement) banner.textContent = "Inicia sesión con Homescool para continuar.";
       setHidden(gate, false);

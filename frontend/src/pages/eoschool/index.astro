@@ -242,7 +242,7 @@ const registry = [
       banner.textContent = "Cargando…";
     }
 
-    const result = await requireService("homescool", { requireSubscription: true, adminOnly: true });
+    const result = await requireService("homescool", { requireSubscription: true });
     await refreshAuthSession();
     if (!result.sessionOk || !result.access.allowed) {
       if (banner instanceof HTMLElement) {

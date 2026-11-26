@@ -228,7 +228,7 @@ import Layout from "../../layouts/Layout.astro";
     const rows = root?.querySelector<HTMLElement>("[data-rows]");
     const statusEl = root?.querySelector("[data-status]");
     if (banner instanceof HTMLElement) banner.textContent = "Cargando…";
-    const access = await requireService("homescool", { requireSubscription: true, adminOnly: true });
+    const access = await requireService("homescool", { requireSubscription: true });
     if (!access.sessionOk || !access.access.allowed) {
       if (banner instanceof HTMLElement) {
         banner.textContent = access.sessionOk ? "Necesitas suscripción Homescool." : "Inicia sesión para continuar.";
