@@ -97,15 +97,16 @@ function paintCurriculumSubjectPhotos(root: HTMLElement): void {
     const sectionId = sectionEl.dataset.curriculumSection as CurriculumPlanSectionId | undefined;
     host.replaceChildren();
     if (!dayId || !sectionId) {
-      host.hidden = true;
+      host.setAttribute("aria-hidden", "true");
       return;
     }
     const key = sectionProgressKey(dayId, sectionId);
     const names = activityPhotoNames(key);
     if (!names.length) {
-      host.hidden = true;
+      host.setAttribute("aria-hidden", "true");
       return;
     }
+    host.removeAttribute("aria-hidden");
     const label = sectionEl.querySelector(".eoschool-curriculum__subject-icon")?.getAttribute("title") || "Foto";
     const rev = photoRev.get(key);
     const urls = names.map((name) => {
@@ -132,7 +133,6 @@ function paintCurriculumSubjectPhotos(root: HTMLElement): void {
       });
       host.append(button);
     });
-    host.hidden = false;
   });
 }
 
@@ -171,13 +171,38 @@ function stepCurriculumPhoto(modal: HTMLElement, delta: number): void {
   showCurriculumPhoto(modal);
 }
 
+function curriculumPhotoDialog(modal: HTMLElement): HTMLElement {
+  return modal.querySelector<HTMLElement>(".eoschool-curriculum-photos__dialog") ?? modal;
+}
+
+function syncCurriculumPhotoFullscreen(modal: HTMLElement): void {
+  const button = modal.querySelector<HTMLButtonElement>("[data-curriculum-photo-full]");
+  const icon = button?.querySelector<HTMLElement>(".material-symbols-outlined");
+  const on = document.fullscreenElement === curriculumPhotoDialog(modal);
+  if (icon) icon.textContent = on ? "fullscreen_exit" : "fullscreen";
+  if (button) button.setAttribute("aria-label", on ? "Salir de pantalla completa" : "Pantalla completa");
+}
+
+function toggleCurriculumPhotoFullscreen(modal: HTMLElement): void {
+  const dialog = curriculumPhotoDialog(modal);
+  if (document.fullscreenElement === dialog) {
+    void document.exitFullscreen?.();
+    return;
+  }
+  void dialog.requestFullscreen?.();
+}
+
 function closeCurriculumPhotoViewer(modal: HTMLElement): void {
+  if (document.fullscreenElement === curriculumPhotoDialog(modal)) {
+    void document.exitFullscreen?.();
+  }
   modal.hidden = true;
   const img = modal.querySelector<HTMLImageElement>("[data-curriculum-photo-img]");
   if (img) {
     img.removeAttribute("src");
     img.alt = "";
   }
+  syncCurriculumPhotoFullscreen(modal);
 }
 
 function bindCurriculumPhotoViewer(modal: HTMLElement): void {
@@ -192,7 +217,9 @@ function bindCurriculumPhotoViewer(modal: HTMLElement): void {
     }
     if (target.closest("[data-curriculum-photo-prev]")) stepCurriculumPhoto(modal, -1);
     if (target.closest("[data-curriculum-photo-next]")) stepCurriculumPhoto(modal, 1);
+    if (target.closest("[data-curriculum-photo-full]")) toggleCurriculumPhotoFullscreen(modal);
   });
+  document.addEventListener("fullscreenchange", () => syncCurriculumPhotoFullscreen(modal));
   document.addEventListener("keydown", (ev) => {
     if (modal.hidden) return;
     if (ev.key === "Escape") closeCurriculumPhotoViewer(modal);

@@ -124,10 +124,13 @@ describe("paintCurriculumSubjectScores", () => {
   it("paints one green point per photo and opens it with prev and next", () => {
     document.body.innerHTML = `
       <div data-curriculum-photo-modal hidden>
-        <button type="button" data-curriculum-photo-close>Cerrar</button>
-        <button type="button" data-curriculum-photo-prev>Anterior</button>
-        <button type="button" data-curriculum-photo-next>Siguiente</button>
-        <img data-curriculum-photo-img alt="" />
+        <div class="eoschool-curriculum-photos__dialog">
+          <button type="button" data-curriculum-photo-close>Cerrar</button>
+          <button type="button" data-curriculum-photo-full><span class="material-symbols-outlined">fullscreen</span></button>
+          <button type="button" data-curriculum-photo-prev>Anterior</button>
+          <button type="button" data-curriculum-photo-next>Siguiente</button>
+          <img data-curriculum-photo-img alt="" />
+        </div>
       </div>
       <article data-curriculum-day="d39">
         <div data-curriculum-section="len">
@@ -153,17 +156,26 @@ describe("paintCurriculumSubjectScores", () => {
     expect(img.alt).toBe("Foto 1 de 2");
     modal.querySelector<HTMLButtonElement>("[data-curriculum-photo-prev]")?.click();
     expect(img.src).toContain("dos.webp");
+    const dialog = modal.querySelector<HTMLElement>(".eoschool-curriculum-photos__dialog")!;
+    const entered: string[] = [];
+    dialog.requestFullscreen = () => {
+      entered.push("in");
+      return Promise.resolve();
+    };
+    modal.querySelector<HTMLButtonElement>("[data-curriculum-photo-full]")?.click();
+    expect(entered).toEqual(["in"]);
     modal.querySelector<HTMLButtonElement>("[data-curriculum-photo-close]")?.click();
     expect(modal.hidden).toBe(true);
   });
 
-  it("hides the photo column when the subject has no images", () => {
+  it("keeps the photo column when the subject has no images", () => {
     const root = document.createElement("div");
     root.innerHTML = `<article data-curriculum-day="d39"><div data-curriculum-section="bib"><span data-curriculum-subject-score hidden></span><div data-curriculum-subject-photos></div></div></article>`;
     setActivityMarks({}, undefined, {});
     paintCurriculumSubjectScores(root);
     const host = root.querySelector<HTMLElement>("[data-curriculum-subject-photos]")!;
-    expect(host.hidden).toBe(true);
+    expect(host.hidden).toBe(false);
+    expect(host.getAttribute("aria-hidden")).toBe("true");
     expect(host.childElementCount).toBe(0);
   });
 });
