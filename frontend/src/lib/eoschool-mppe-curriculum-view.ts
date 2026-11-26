@@ -52,50 +52,84 @@ function mergeRefs(a: CurriculumLearningRef[], b: CurriculumLearningRef[]): Curr
 }
 
 const BOOK_SHORT: Record<string, string> = {
-  Génesis: "Gén",
-  Éxodo: "Éx",
-  Levítico: "Lv",
-  Números: "Nm",
-  Deuteronomio: "Dt",
-  Josué: "Jos",
-  Jueces: "Jue",
-  Rut: "Rt",
-  "1 Samuel": "1S",
-  "2 Samuel": "2S",
-  "1 Reyes": "1R",
-  "2 Reyes": "2R",
-  "1 Crónicas": "1Cr",
-  "2 Crónicas": "2Cr",
-  Esdras: "Esd",
-  Nehemías: "Ne",
-  Ester: "Est",
+  Génesis: "Gén.",
+  Éxodo: "Ex.",
+  Levítico: "Lev.",
+  Números: "Núm.",
+  Deuteronomio: "Deut.",
+  Josué: "Jos.",
+  Jueces: "Jue.",
+  Rut: "Rut",
+  "1 Samuel": "1 Sam.",
+  "2 Samuel": "2 Sam.",
+  "1 Reyes": "1 Rey.",
+  "2 Reyes": "2 Rey.",
+  "1 Crónicas": "1 Crón.",
+  "2 Crónicas": "2 Crón.",
+  Esdras: "Esd.",
+  Nehemías: "Neh.",
+  Ester: "Est.",
   Job: "Job",
-  Salmos: "Sal",
-  Proverbios: "Pr",
-  Eclesiastés: "Ecl",
-  Cantares: "Cnt",
-  Isaías: "Is",
-  Jeremías: "Jer",
-  Lamentaciones: "Lm",
-  Ezequiel: "Ez",
-  Daniel: "Dn",
-  Mateo: "Mt",
-  Marcos: "Mc",
-  Lucas: "Lc",
-  Juan: "Jn",
-  Hechos: "Hch",
-  Romanos: "Ro",
-  "1 Corintios": "1Co",
-  "2 Corintios": "2Co",
+  Salmos: "Sal.",
+  Proverbios: "Prov.",
+  Eclesiastés: "Ecl.",
+  Cantares: "Cant.",
+  Isaías: "Is.",
+  Jeremías: "Jer.",
+  Lamentaciones: "Lam.",
+  Ezequiel: "Ez.",
+  Daniel: "Dan.",
+  Oseas: "Os.",
+  Joel: "Joel",
+  Amós: "Am.",
+  Abdías: "Abd.",
+  Jonás: "Jon.",
+  Miqueas: "Miq.",
+  Nahúm: "Nah.",
+  Habacuc: "Hab.",
+  Sofonías: "Sof.",
+  Hageo: "Hag.",
+  Zacarías: "Zac.",
+  Malaquías: "Mal.",
+  Mateo: "Mt.",
+  Marcos: "Mar.",
+  Lucas: "Luc.",
+  Juan: "Jn.",
+  Hechos: "Hch.",
+  Romanos: "Rom.",
+  "1 Corintios": "1 Cor.",
+  "2 Corintios": "2 Cor.",
+  Gálatas: "Gál.",
+  Efesios: "Ef.",
+  Filipenses: "Fil.",
+  Colosenses: "Col.",
+  "1 Tesalonicenses": "1 Tes.",
+  "2 Tesalonicenses": "2 Tes.",
+  "1 Timoteo": "1 Tim.",
+  "2 Timoteo": "2 Tim.",
+  Tito: "Tit.",
+  Filemón: "Flm.",
+  Hebreos: "Heb.",
+  Santiago: "Sant.",
+  "1 Pedro": "1 Pe.",
+  "2 Pedro": "2 Pe.",
+  "1 Juan": "1 Jn.",
+  "2 Juan": "2 Jn.",
+  "3 Juan": "3 Jn.",
+  Judas: "Jud.",
+  Apocalipsis: "Ap.",
 };
 
+function shortBook(book: string): string {
+  return BOOK_SHORT[book] ?? book;
+}
+
 function shortRef(ref: BibleChapterRef): string {
-  const book = BOOK_SHORT[ref.book] ?? ref.book;
-  return `${book} ${ref.chapter}`;
+  return `${shortBook(ref.book)} ${ref.chapter}`;
 }
 
 function formatChapterRef(ref: BibleChapterRef): string {
-  return `${ref.book} ${ref.chapter}`;
+  return shortRef(ref);
 }
 
 function formatChapterList(refs: BibleChapterRef[]): string {
@@ -104,7 +138,7 @@ function formatChapterList(refs: BibleChapterRef[]): string {
   const first = refs[0];
   const last = refs[refs.length - 1];
   if (first.book === last.book) {
-    return `${first.book} ${first.chapter}–${last.chapter}`;
+    return `${shortBook(first.book)} ${first.chapter}–${last.chapter}`;
   }
   return refs.map(formatChapterRef).join(", ");
 }

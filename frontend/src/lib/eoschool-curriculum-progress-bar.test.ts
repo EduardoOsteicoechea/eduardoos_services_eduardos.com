@@ -38,18 +38,17 @@ describe("paintWeekProgress", () => {
     );
   });
 
-  it("fills the day bubble as subjects are checked", () => {
+  it("fills the day strip as subjects are checked", () => {
     const card = document.createElement("article");
     card.dataset.planDay = "38";
-    card.innerHTML = `<button class="eoschool-curriculum__day-bubble" data-curriculum-day-bubble><span data-curriculum-day-bubble-fill role="progressbar"></span></button>`;
+    card.innerHTML = `<div data-curriculum-day-progress role="progressbar"><span data-curriculum-day-progress-fill></span></div>`;
     paintDayProgress(card, 3, 6);
-    const fill = card.querySelector<HTMLElement>("[data-curriculum-day-bubble-fill]")!;
-    expect(fill.style.height).toBe("50%");
-    expect(card.querySelector<HTMLElement>(".eoschool-curriculum__day-bubble")?.style.getPropertyValue("--day-progress")).toBe("0.5");
-    expect(fill.getAttribute("aria-valuenow")).toBe("50");
-    expect(fill.getAttribute("aria-label")).toBe("Progreso del día 38: 3 de 6");
-    expect(card.querySelector(".eoschool-curriculum__day-bubble")?.classList.contains("eoschool-curriculum__day-bubble--green")).toBe(true);
-    paintDayProgress(card, 1, 6);
-    expect(card.querySelector(".eoschool-curriculum__day-bubble")?.classList.contains("eoschool-curriculum__day-bubble--green")).toBe(false);
+    const fill = card.querySelector<HTMLElement>("[data-curriculum-day-progress-fill]")!;
+    const bar = card.querySelector<HTMLElement>("[data-curriculum-day-progress]")!;
+    expect(fill.style.transform).toBe("scaleX(0.5)");
+    expect(bar.getAttribute("aria-valuenow")).toBe("50");
+    expect(bar.getAttribute("aria-label")).toBe("Progreso del día 38: 3 de 6");
+    paintDayProgress(card, 0, 6);
+    expect(fill.style.transform).toBe("scaleX(0)");
   });
 });

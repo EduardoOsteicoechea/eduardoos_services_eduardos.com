@@ -114,15 +114,14 @@ export function paintSubjectProgress(section: HTMLElement, checked: boolean): vo
 
 export function paintDayProgress(card: HTMLElement, finished: number, total: number): void {
   const day = card.dataset.planDay || card.dataset.curriculumDay || "";
-  const ratio = total > 0 ? Math.min(1, finished / total) : 0;
-  const fill = card.querySelector<HTMLElement>("[data-curriculum-day-bubble-fill]");
-  if (!fill) return;
-  fill.style.height = `${Math.round(ratio * 100)}%`;
-  fill.setAttribute("aria-valuenow", String(Math.round(ratio * 100)));
-  fill.setAttribute("aria-label", `Progreso del día ${day}: ${finished} de ${total}`);
-  const bubble = fill.closest<HTMLElement>(".eoschool-curriculum__day-bubble");
-  bubble?.style.setProperty("--day-progress", String(ratio));
-  bubble?.classList.toggle("eoschool-curriculum__day-bubble--green", ratio >= 0.5);
+  paintProgressBar(
+    card,
+    "[data-curriculum-day-progress]",
+    "[data-curriculum-day-progress-fill]",
+    finished,
+    total,
+    `Progreso del día ${day}: ${finished} de ${total}`,
+  );
 }
 
 function paintProgressBar(
