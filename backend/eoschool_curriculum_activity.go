@@ -8,8 +8,23 @@ import (
 	"io"
 	"net/http"
 	"regexp"
+	"sort"
+	"strconv"
 	"strings"
 )
+
+const (
+	eoschoolActivityRecordMaxItems = 96
+	eoschoolActivitySummaryMax     = 500
+	eoschoolActivityRewriteMax     = 4000
+	eoschoolActivityPromptMax      = 300
+	eoschoolActivityAnswerMax      = 800
+	eoschoolActivityItemRewriteMax = 800
+	eoschoolActivityNoteMax        = 160
+	eoschoolActivityRecordMaxBody  = 1 << 18
+)
+
+var errEoschoolActivityRecord = errors.New("activity record")
 
 const (
 	eoschoolActivityPhotoName = "activity.webp"
@@ -43,6 +58,182 @@ func applyEoschoolActivityScore(row *EoschoolCurriculumProgressDoc, key string, 
 	}
 	row.ActivityScores[key] = score
 	delete(row.ActivityScoreNotes, key)
+}
+
+func clipEoschoolText(s string, max int) string {
+	s = strings.TrimSpace(s)
+	runes := []rune(s)
+	if len(runes) > max {
+		return string(runes[:max])
+	}
+	return s
+}
+
+func normalizeEoschoolActivityItem(item EoschoolActivityItem) (EoschoolActivityItem, error) {
+	item.Kind = strings.ToLower(strings.TrimSpace(item.Kind))
+	item.Prompt = clipEoschoolText(item.Prompt, eoschoolActivityPromptMax)
+	item.Answer = clipEoschoolText(item.Answer, eoschoolActivityAnswerMax)
+	item.Rewrite = clipEoschoolText(item.Rewrite, eoschoolActivityItemRewriteMax)
+	item.Note = clipEoschoolText(item.Note, eoschoolActivityNoteMax)
+	switch item.Kind {
+	case "text":
+		item.Page, item.Row, item.Col = 0, 0, 0
+		item.A, item.B, item.Expected = 0, 0, 0
+		item.Given = nil
+		item.Correct = nil
+		if item.Prompt == "" && item.Answer == "" && item.Rewrite == "" {
+			return item, errEoschoolActivityRecord
+		}
+		return item, nil
+	case "mult", "div":
+		if item.Page < 1 || item.Page > 3 || item.Row < 0 || item.Row > 7 || item.Col < 0 || item.Col > 3 {
+			return item, errEoschoolActivityRecord
+		}
+		if item.A < 1 || item.A > 99 || item.B < 1 || item.B > 99 {
+			return item, errEoschoolActivityRecord
+		}
+		expected := item.A * item.B
+		if item.Kind == "div" {
+			if item.A%item.B != 0 {
+				return item, errEoschoolActivityRecord
+			}
+			expected = item.A / item.B
+		}
+		if item.Expected != 0 && item.Expected != expected {
+			return item, errEoschoolActivityRecord
+		}
+		item.Expected = expected
+		if item.Given != nil && (*item.Given < 0 || *item.Given > 99999) {
+			return item, errEoschoolActivityRecord
+		}
+		if item.Correct == nil {
+			ok := item.Given != nil && *item.Given == expected
+			item.Correct = &ok
+		}
+		return item, nil
+	default:
+		return item, errEoschoolActivityRecord
+	}
+}
+
+func normalizeEoschoolActivityRecord(rec EoschoolActivityRecord) (EoschoolActivityRecord, error) {
+	rec.Summary = clipEoschoolText(rec.Summary, eoschoolActivitySummaryMax)
+	rec.Rewrite = clipEoschoolText(rec.Rewrite, eoschoolActivityRewriteMax)
+	rec.Kind = strings.ToLower(strings.TrimSpace(rec.Kind))
+	if rec.Summary == "" {
+		return rec, errEoschoolActivityRecord
+	}
+	switch rec.Kind {
+	case "prose", "multiplication", "mixed":
+	default:
+		return rec, errEoschoolActivityRecord
+	}
+	if len(rec.Items) > eoschoolActivityRecordMaxItems {
+		return rec, errEoschoolActivityRecord
+	}
+	if rec.Items == nil {
+		rec.Items = []EoschoolActivityItem{}
+	}
+	for i := range rec.Items {
+		item, err := normalizeEoschoolActivityItem(rec.Items[i])
+		if err != nil {
+			return rec, err
+		}
+		rec.Items[i] = item
+	}
+	return rec, nil
+}
+
+func applyEoschoolActivityRecord(row *EoschoolCurriculumProgressDoc, key string, record EoschoolActivityRecord, score *int) {
+	if score != nil {
+		applyEoschoolActivityScore(row, key, *score)
+	}
+	if row.ActivityRecords == nil {
+		row.ActivityRecords = map[string]EoschoolActivityRecord{}
+	}
+	row.ActivityRecords[key] = record
+	if row.ActivityScoreNotes == nil {
+		row.ActivityScoreNotes = map[string]string{}
+	}
+	if record.Summary == "" {
+		delete(row.ActivityScoreNotes, key)
+		return
+	}
+	row.ActivityScoreNotes[key] = record.Summary
+}
+
+func eoschoolActivityFactLabel(item EoschoolActivityItem) string {
+	op := "×"
+	if item.Kind == "div" {
+		op = "÷"
+	}
+	return strconv.Itoa(item.A) + " " + op + " " + strconv.Itoa(item.B)
+}
+
+func eoschoolActivityFacts(records map[string]EoschoolActivityRecord) []EoschoolActivityFact {
+	type acc struct {
+		fact EoschoolActivityFact
+		sum  int
+	}
+	by := map[string]*acc{}
+	for _, rec := range records {
+		for _, item := range rec.Items {
+			if item.Kind != "mult" && item.Kind != "div" {
+				continue
+			}
+			key := item.Kind + ":" + strconv.Itoa(item.A) + "x" + strconv.Itoa(item.B)
+			slot := by[key]
+			if slot == nil {
+				slot = &acc{fact: EoschoolActivityFact{
+					Key: key, Kind: item.Kind, A: item.A, B: item.B,
+					Label: eoschoolActivityFactLabel(item),
+				}}
+				by[key] = slot
+			}
+			slot.fact.Attempts++
+			hit := 0
+			if item.Correct != nil && *item.Correct {
+				hit = 1
+			}
+			slot.sum += hit
+			if hit == 0 {
+				slot.fact.Misses++
+			}
+		}
+	}
+	out := make([]EoschoolActivityFact, 0, len(by))
+	for _, slot := range by {
+		if slot.fact.Attempts > 0 {
+			slot.fact.Avg = float64(slot.sum) / float64(slot.fact.Attempts)
+		}
+		out = append(out, slot.fact)
+	}
+	sort.Slice(out, func(i, j int) bool {
+		if out[i].Misses != out[j].Misses {
+			return out[i].Misses > out[j].Misses
+		}
+		if out[i].Avg != out[j].Avg {
+			return out[i].Avg < out[j].Avg
+		}
+		return out[i].Label < out[j].Label
+	})
+	return out
+}
+
+func eoschoolActivityRecordsView(doc EoschoolCurriculumProgressDoc) (map[string]EoschoolActivityRecord, []EoschoolActivityFact) {
+	records := map[string]EoschoolActivityRecord{}
+	for key, rec := range doc.ActivityRecords {
+		rec.Summary = clipEoschoolText(rec.Summary, eoschoolActivitySummaryMax)
+		rec.Rewrite = clipEoschoolText(rec.Rewrite, eoschoolActivityRewriteMax)
+		if rec.Summary == "" {
+			continue
+		}
+		if rec.Items == nil {
+			rec.Items = []EoschoolActivityItem{}
+		}
+		records[key] = rec
+	}
+	return records, eoschoolActivityFacts(records)
 }
 
 func dropEoschoolActivityPhoto(row *EoschoolCurriculumProgressDoc, key, name string) bool {
@@ -362,5 +553,75 @@ func (a *App) patchEoschoolCurriculumActivityScoreHandler(w http.ResponseWriter,
 		return
 	}
 	a.auditEvent(r, "eoschool_curriculum_activity_score", "ok", user.ID)
+	writeJSON(w, http.StatusOK, curriculumProgressJSON(doc))
+}
+
+type eoschoolCurriculumActivityRecordPut struct {
+	StudentKey string                 `json:"studentKey"`
+	DayID      string                 `json:"dayId"`
+	SectionID  string                 `json:"sectionId"`
+	Key        string                 `json:"key"`
+	Score      *int                   `json:"score"`
+	Record     EoschoolActivityRecord `json:"record"`
+}
+
+func (a *App) putEoschoolCurriculumActivityRecordHandler(w http.ResponseWriter, r *http.Request) {
+	if !a.validOrigin(r) || !a.validCSRF(r) {
+		a.writeSafeError(w, r, http.StatusForbidden, "csrf_invalid")
+		return
+	}
+	raw, err := io.ReadAll(http.MaxBytesReader(w, r.Body, eoschoolActivityRecordMaxBody))
+	if err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	var body eoschoolCurriculumActivityRecordPut
+	if err = json.Unmarshal(raw, &body); err != nil {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	studentKey := normalizeEoschoolCurriculumStudentKey(body.StudentKey)
+	dayID := strings.TrimSpace(body.DayID)
+	sectionID := strings.TrimSpace(body.SectionID)
+	if !validateEoschoolCurriculumSectionToggle(dayID, sectionID) {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	if body.Score != nil && (*body.Score < 0 || *body.Score > 100) {
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	record, normErr := normalizeEoschoolActivityRecord(body.Record)
+	if normErr != nil {
+		a.mustLogf(r, "eoschool.activity.record.invalid", "day", dayID, "section", sectionID)
+		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
+		return
+	}
+	user, ownerID, ok := a.requireEoschoolCurriculumOwner(w, r, studentKey)
+	if !ok {
+		return
+	}
+	if !eoschoolActivityScoreKeyOK(user, body.Key) {
+		a.writeSafeError(w, r, http.StatusForbidden, "forbidden")
+		return
+	}
+	if _, err = a.eoschoolCurriculum.GetOrCreate(r.Context(), ownerID, studentKey); err != nil {
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	key := eoschoolCurriculumSectionKey(dayID, sectionID)
+	doc, err := a.eoschoolCurriculum.UpdateStudent(r.Context(), ownerID, studentKey, func(row *EoschoolCurriculumProgressDoc) error {
+		applyEoschoolActivityRecord(row, key, record, body.Score)
+		return nil
+	})
+	if err != nil {
+		if errors.Is(err, errEoschoolCurriculumStudentNotFound) {
+			a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+			return
+		}
+		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")
+		return
+	}
+	a.auditEvent(r, "eoschool_curriculum_activity_record", "ok", user.ID)
 	writeJSON(w, http.StatusOK, curriculumProgressJSON(doc))
 }

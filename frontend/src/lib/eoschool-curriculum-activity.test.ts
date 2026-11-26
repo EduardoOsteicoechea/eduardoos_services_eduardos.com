@@ -69,6 +69,44 @@ describe("score reason", () => {
     const text = modal.querySelector("[data-curriculum-score-reason-text]");
     expect(text?.textContent).toBe("El grupo del queso es lácteos.");
   });
+
+  it("rewrites a photographed multiplication as cells", () => {
+    const modal = document.createElement("div");
+    modal.innerHTML = `<div data-curriculum-activity hidden></div>`;
+    const card = document.createElement("article");
+    card.dataset.planDay = "38";
+    card.dataset.curriculumDay = "d38";
+    setActivityMarks(
+      { "d38:mat": 70 },
+      [],
+      undefined,
+      { "d38:mat": "Falló 7 × 8." },
+      {
+        "d38:mat": {
+          summary: "Falló 7 × 8.",
+          rewrite: "Escribió 54.",
+          kind: "multiplication",
+          items: [
+            { kind: "mult", page: 1, row: 0, col: 1, a: 3, b: 4, given: 12, expected: 12, correct: true },
+            { kind: "mult", page: 1, row: 0, col: 0, a: 7, b: 8, given: 54, expected: 56, correct: false },
+          ],
+        },
+      },
+      [{ key: "mult:7x8", kind: "mult", a: 7, b: 8, label: "7 × 8", attempts: 1, misses: 1, avg: 0 }],
+    );
+    renderCurriculumActivity(modal, card, "mat");
+    modal.querySelector<HTMLButtonElement>("[data-curriculum-score-why]")?.click();
+    expect(modal.querySelector("[data-curriculum-score-reason-text]")?.textContent).toBe("Falló 7 × 8.");
+    expect(modal.querySelector("[data-curriculum-score-rewrite]")?.textContent).toBe("Escribió 54.");
+    const cells = [...modal.querySelectorAll("[data-curriculum-score-cell]")];
+    expect(cells).toHaveLength(2);
+    expect(cells[0]?.textContent).toContain("7 × 8");
+    expect(cells[0]?.textContent).toContain("54");
+    expect(cells[0]?.textContent).toContain("Esperado 56");
+    expect(cells[1]?.textContent).toContain("3 × 4");
+    expect(cells[1]?.textContent).not.toContain("Esperado");
+    expect(modal.querySelector("[data-curriculum-score-reinforce]")?.textContent).toBe("A reforzar: 7 × 8");
+  });
 });
 
 describe("paintCurriculumSubjectScores", () => {

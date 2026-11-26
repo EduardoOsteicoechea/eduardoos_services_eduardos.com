@@ -2846,9 +2846,11 @@ function weekForPlanDay(planDay: number): number {
     display: flex;
     flex-direction: column;
     gap: var(--rail-gap);
-    width: min(24rem, 100%);
+    width: min(36rem, 100%);
     max-height: calc(100% - 2rem);
+    min-height: 0;
     padding: var(--space-padding);
+    overflow: hidden;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     background: var(--color-bg);
@@ -2874,12 +2876,46 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum-activity__reason-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
     margin: 0;
+    min-height: 0;
+    overflow-x: hidden;
     overflow-y: auto;
     font-size: var(--font-size-sm);
     line-height: 1.45;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+  }
+
+  .eoschool-curriculum-activity__reason-body p {
+    margin: 0;
+  }
+
+  .eoschool-curriculum-activity__cells {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum-activity__cell,
+  .eoschool-curriculum-activity__answer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    padding: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+  }
+
+  .eoschool-curriculum-activity__cell-factors {
+    font-size: var(--font-size-md);
+  }
+
+  .eoschool-curriculum-activity__cell--miss {
+    border-color: var(--color-err);
   }
 
   @media (max-width: 47.999rem) {

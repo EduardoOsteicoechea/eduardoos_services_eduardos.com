@@ -44,26 +44,65 @@ type EoschoolCurriculumStudent struct {
 }
 
 type EoschoolCurriculumProgressDoc struct {
-	ID                 string                 `json:"id" bson:"id"`
-	OwnerUserID        string                 `json:"ownerUserId" bson:"owner_user_id"`
-	StudentKey         string                 `json:"studentKey" bson:"student_key"`
-	FirstName          string                 `json:"firstName" bson:"first_name"`
-	LastName           string                 `json:"lastName" bson:"last_name"`
-	DisplayName        string                 `json:"displayName" bson:"display_name"`
-	Age                int                    `json:"age" bson:"age"`
-	Grade              string                 `json:"grade" bson:"grade"`
-	PhotoStorageName   string                 `json:"photoStorageName,omitempty" bson:"photo_storage_name,omitempty"`
-	PhotoContentType   string                 `json:"photoContentType,omitempty" bson:"photo_content_type,omitempty"`
-	SectionsDone       []string               `json:"sectionsDone" bson:"sections_done"`
-	ActivityScores     map[string]int         `json:"activityScores,omitempty" bson:"activity_scores,omitempty"`
-	ActivityScoreNotes map[string]string      `json:"activityScoreNotes,omitempty" bson:"activity_score_notes,omitempty"`
-	ActivityPhotos     map[string]string      `json:"-" bson:"activity_photos,omitempty"`
-	ActivityPhotoList  map[string][]string    `json:"-" bson:"activity_photo_list,omitempty"`
-	SemesterWorks      []EoschoolSemesterWork `json:"semesterWorks,omitempty" bson:"semester_works,omitempty"`
-	OutingYear         string                 `json:"outingYear,omitempty" bson:"outing_year,omitempty"`
-	Outings            []EoschoolOuting       `json:"outings,omitempty" bson:"outings,omitempty"`
-	CreatedAt          time.Time              `json:"createdAt" bson:"created_at"`
-	UpdatedAt          time.Time              `json:"updatedAt" bson:"updated_at"`
+	ID                 string                            `json:"id" bson:"id"`
+	OwnerUserID        string                            `json:"ownerUserId" bson:"owner_user_id"`
+	StudentKey         string                            `json:"studentKey" bson:"student_key"`
+	FirstName          string                            `json:"firstName" bson:"first_name"`
+	LastName           string                            `json:"lastName" bson:"last_name"`
+	DisplayName        string                            `json:"displayName" bson:"display_name"`
+	Age                int                               `json:"age" bson:"age"`
+	Grade              string                            `json:"grade" bson:"grade"`
+	PhotoStorageName   string                            `json:"photoStorageName,omitempty" bson:"photo_storage_name,omitempty"`
+	PhotoContentType   string                            `json:"photoContentType,omitempty" bson:"photo_content_type,omitempty"`
+	SectionsDone       []string                          `json:"sectionsDone" bson:"sections_done"`
+	ActivityScores     map[string]int                    `json:"activityScores,omitempty" bson:"activity_scores,omitempty"`
+	ActivityScoreNotes map[string]string                 `json:"activityScoreNotes,omitempty" bson:"activity_score_notes,omitempty"`
+	ActivityRecords    map[string]EoschoolActivityRecord `json:"activityRecords,omitempty" bson:"activity_records,omitempty"`
+	ActivityPhotos     map[string]string                 `json:"-" bson:"activity_photos,omitempty"`
+	ActivityPhotoList  map[string][]string               `json:"-" bson:"activity_photo_list,omitempty"`
+	SemesterWorks      []EoschoolSemesterWork            `json:"semesterWorks,omitempty" bson:"semester_works,omitempty"`
+	OutingYear         string                            `json:"outingYear,omitempty" bson:"outing_year,omitempty"`
+	Outings            []EoschoolOuting                  `json:"outings,omitempty" bson:"outings,omitempty"`
+	CreatedAt          time.Time                         `json:"createdAt" bson:"created_at"`
+	UpdatedAt          time.Time                         `json:"updatedAt" bson:"updated_at"`
+}
+
+// EoschoolActivityItem is one normalized answer. Photos stay as evidence;
+// this struct is what analytics reads. mult/div items mirror an arithpack cell.
+type EoschoolActivityItem struct {
+	Kind     string `json:"kind" bson:"kind"`
+	Prompt   string `json:"prompt,omitempty" bson:"prompt,omitempty"`
+	Answer   string `json:"answer,omitempty" bson:"answer,omitempty"`
+	Rewrite  string `json:"rewrite,omitempty" bson:"rewrite,omitempty"`
+	Page     int    `json:"page,omitempty" bson:"page,omitempty"`
+	Row      int    `json:"row,omitempty" bson:"row,omitempty"`
+	Col      int    `json:"col,omitempty" bson:"col,omitempty"`
+	A        int    `json:"a,omitempty" bson:"a,omitempty"`
+	B        int    `json:"b,omitempty" bson:"b,omitempty"`
+	Given    *int   `json:"given,omitempty" bson:"given,omitempty"`
+	Expected int    `json:"expected,omitempty" bson:"expected,omitempty"`
+	Correct  *bool  `json:"correct,omitempty" bson:"correct,omitempty"`
+	Note     string `json:"note,omitempty" bson:"note,omitempty"`
+}
+
+// EoschoolActivityRecord is the graded reading of one day+section.
+type EoschoolActivityRecord struct {
+	Summary string                 `json:"summary" bson:"summary"`
+	Rewrite string                 `json:"rewrite,omitempty" bson:"rewrite,omitempty"`
+	Kind    string                 `json:"kind" bson:"kind"`
+	Items   []EoschoolActivityItem `json:"items" bson:"items"`
+}
+
+// EoschoolActivityFact rolls multiplication and division items across days.
+type EoschoolActivityFact struct {
+	Key      string  `json:"key"`
+	Kind     string  `json:"kind"`
+	A        int     `json:"a,omitempty"`
+	B        int     `json:"b,omitempty"`
+	Label    string  `json:"label"`
+	Attempts int     `json:"attempts"`
+	Misses   int     `json:"misses"`
+	Avg      float64 `json:"avg"`
 }
 
 func eoschoolCurriculumSectionKey(dayID, sectionID string) string {

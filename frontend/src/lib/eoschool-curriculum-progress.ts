@@ -212,6 +212,8 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
         loaded.data.activityPhotos,
         loaded.data.activityPhotoFiles,
         loaded.data.activityScoreNotes,
+        loaded.data.activityRecords,
+        loaded.data.activityFacts,
       );
       setStudentBanner(root, loaded.data.student, "remote");
       if (mustLog) {
@@ -281,7 +283,14 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
       });
       done.clear();
       data.sectionsDone.forEach((k) => done.add(k));
-      setActivityMarks(data.activityScores, data.activityPhotos, data.activityPhotoFiles, data.activityScoreNotes);
+      setActivityMarks(
+        data.activityScores,
+        data.activityPhotos,
+        data.activityPhotoFiles,
+        data.activityScoreNotes,
+        data.activityRecords,
+        data.activityFacts,
+      );
       setStudentBanner(root, data.student, "remote");
       applyProgress(root, done);
     } catch (err) {

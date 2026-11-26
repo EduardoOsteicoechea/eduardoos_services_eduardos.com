@@ -163,3 +163,113 @@ func TestSlugifyEoschoolCurriculumStudentKey(t *testing.T) {
 		t.Fatalf("got %q", got)
 	}
 }
+
+func TestNormalizeEoschoolActivityRecord(t *testing.T) {
+	given := 54
+	miss := false
+	rec, err := normalizeEoschoolActivityRecord(EoschoolActivityRecord{
+		Summary: "  7 de 10.  ",
+		Rewrite: "Escribió 54.",
+		Kind:    "multiplication",
+		Items: []EoschoolActivityItem{{
+			Kind: "mult", Page: 1, Row: 0, Col: 0, A: 7, B: 8, Given: &given, Expected: 56, Correct: &miss,
+		}},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if rec.Summary != "7 de 10." || rec.Items[0].Expected != 56 || rec.Items[0].Correct == nil || *rec.Items[0].Correct {
+		t.Fatalf("record %#v", rec)
+	}
+	bad := rec
+	bad.Items[0].Expected = 55
+	if _, err = normalizeEoschoolActivityRecord(bad); err == nil {
+		t.Fatal("expected mismatch")
+	}
+	divGiven := 4
+	div, err := normalizeEoschoolActivityRecord(EoschoolActivityRecord{
+		Summary: "División exacta.",
+		Kind:    "prose",
+		Items: []EoschoolActivityItem{{
+			Kind: "div", Page: 1, A: 12, B: 3, Given: &divGiven,
+		}},
+	})
+	if err != nil || div.Items[0].Expected != 4 || div.Items[0].Correct == nil || !*div.Items[0].Correct {
+		t.Fatalf("div %#v %v", div, err)
+	}
+	if _, err = normalizeEoschoolActivityRecord(EoschoolActivityRecord{
+		Summary: "Resto.",
+		Kind:    "multiplication",
+		Items:   []EoschoolActivityItem{{Kind: "div", Page: 1, A: 7, B: 2, Expected: 3}},
+	}); err == nil {
+		t.Fatal("uneven division")
+	}
+	text, err := normalizeEoschoolActivityRecord(EoschoolActivityRecord{
+		Summary: "Leyó el pasaje.",
+		Kind:    "prose",
+		Items:   []EoschoolActivityItem{{Kind: "text", Prompt: "Idea", Answer: "El becerro", A: 4}},
+	})
+	if err != nil || text.Items[0].A != 0 || text.Items[0].Answer != "El becerro" {
+		t.Fatalf("text %#v %v", text, err)
+	}
+	tooMany := EoschoolActivityRecord{Summary: "Muchas.", Kind: "prose"}
+	for i := 0; i < eoschoolActivityRecordMaxItems+1; i++ {
+		tooMany.Items = append(tooMany.Items, EoschoolActivityItem{Kind: "text", Answer: "x"})
+	}
+	if _, err = normalizeEoschoolActivityRecord(tooMany); err == nil {
+		t.Fatal("item cap")
+	}
+}
+
+func TestEoschoolActivityRecordSurvivesRescore(t *testing.T) {
+	store := newMemoryEoschoolCurriculumProgressStore()
+	ctx := context.Background()
+	owner := "user-1"
+	if _, err := store.GetOrCreate(ctx, owner, eoschoolCurriculumDefaultStudentKey); err != nil {
+		t.Fatal(err)
+	}
+	given := 54
+	miss := false
+	hitGiven := 12
+	hit := true
+	rec, err := normalizeEoschoolActivityRecord(EoschoolActivityRecord{
+		Summary: "Falló 7 × 8.",
+		Rewrite: "Escribió 54.",
+		Kind:    "multiplication",
+		Items: []EoschoolActivityItem{
+			{Kind: "mult", Page: 1, Row: 0, Col: 0, A: 7, B: 8, Given: &given, Expected: 56, Correct: &miss},
+			{Kind: "mult", Page: 1, Row: 0, Col: 1, A: 3, B: 4, Given: &hitGiven, Expected: 12, Correct: &hit},
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	score := 70
+	doc, err := store.UpdateStudent(ctx, owner, eoschoolCurriculumDefaultStudentKey, func(row *EoschoolCurriculumProgressDoc) error {
+		applyEoschoolActivityRecord(row, "d38:mat", rec, &score)
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	view := curriculumProgressJSON(doc)
+	if view.ActivityScores["d38:mat"] != 70 || view.ActivityScoreNotes["d38:mat"] != "Falló 7 × 8." {
+		t.Fatalf("score/note %#v %#v", view.ActivityScores, view.ActivityScoreNotes)
+	}
+	if len(view.ActivityFacts) != 2 || view.ActivityFacts[0].Label != "7 × 8" || view.ActivityFacts[0].Misses != 1 {
+		t.Fatalf("facts %#v", view.ActivityFacts)
+	}
+	if view.ActivityFacts[1].Misses != 0 || view.ActivityFacts[1].Label != "3 × 4" {
+		t.Fatalf("hit %#v", view.ActivityFacts[1])
+	}
+	applyEoschoolActivityScore(&doc, "d38:mat", 40)
+	if doc.ActivityScores["d38:mat"] != 40 {
+		t.Fatal(doc.ActivityScores["d38:mat"])
+	}
+	if _, ok := doc.ActivityScoreNotes["d38:mat"]; ok {
+		t.Fatal("manual rescore should clear the note")
+	}
+	if doc.ActivityRecords["d38:mat"].Items[0].A != 7 {
+		t.Fatal("manual rescore wiped the record")
+	}
+}

@@ -9,15 +9,17 @@ import (
 )
 
 type eoschoolCurriculumProgressResponse struct {
-	Student            EoschoolCurriculumStudent `json:"student"`
-	SectionsDone       []string                  `json:"sectionsDone"`
-	ActivityScores     map[string]int            `json:"activityScores"`
-	ActivityScoreNotes map[string]string         `json:"activityScoreNotes"`
-	ActivityPhotos     []string                  `json:"activityPhotos"`
-	ActivityPhotoFiles map[string][]string       `json:"activityPhotoFiles"`
-	SemesterWorks      []EoschoolSemesterWork    `json:"semesterWorks"`
-	OutingYear         string                    `json:"outingYear"`
-	Outings            []EoschoolOuting          `json:"outings"`
+	Student            EoschoolCurriculumStudent         `json:"student"`
+	SectionsDone       []string                          `json:"sectionsDone"`
+	ActivityScores     map[string]int                    `json:"activityScores"`
+	ActivityScoreNotes map[string]string                 `json:"activityScoreNotes"`
+	ActivityRecords    map[string]EoschoolActivityRecord `json:"activityRecords"`
+	ActivityFacts      []EoschoolActivityFact            `json:"activityFacts"`
+	ActivityPhotos     []string                          `json:"activityPhotos"`
+	ActivityPhotoFiles map[string][]string               `json:"activityPhotoFiles"`
+	SemesterWorks      []EoschoolSemesterWork            `json:"semesterWorks"`
+	OutingYear         string                            `json:"outingYear"`
+	Outings            []EoschoolOuting                  `json:"outings"`
 }
 
 func curriculumProgressJSON(doc EoschoolCurriculumProgressDoc) eoschoolCurriculumProgressResponse {
@@ -32,6 +34,10 @@ func curriculumProgressJSON(doc EoschoolCurriculumProgressDoc) eoschoolCurriculu
 			continue
 		}
 		notes[key] = text
+	}
+	records, facts := eoschoolActivityRecordsView(doc)
+	if facts == nil {
+		facts = []EoschoolActivityFact{}
 	}
 	files := map[string][]string{}
 	for key, names := range doc.ActivityPhotoList {
@@ -69,6 +75,8 @@ func curriculumProgressJSON(doc EoschoolCurriculumProgressDoc) eoschoolCurriculu
 		SectionsDone:       doc.SectionsDone,
 		ActivityScores:     scores,
 		ActivityScoreNotes: notes,
+		ActivityRecords:    records,
+		ActivityFacts:      facts,
 		ActivityPhotos:     photos,
 		ActivityPhotoFiles: files,
 		SemesterWorks:      works,

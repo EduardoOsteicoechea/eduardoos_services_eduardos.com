@@ -474,6 +474,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("DELETE /api/eoschool/curriculum/activities/photo", a.deleteEoschoolCurriculumActivityPhotoHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/activities/photo", a.getEoschoolCurriculumActivityPhotoHandler)
 	mux.HandleFunc("PATCH /api/eoschool/curriculum/activities/score", a.patchEoschoolCurriculumActivityScoreHandler)
+	mux.HandleFunc("PUT /api/eoschool/curriculum/activities/record", a.putEoschoolCurriculumActivityRecordHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/materials", a.listEoschoolCurriculumMaterialsHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/materials", a.postEoschoolCurriculumMaterialHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/materials/url", a.postEoschoolCurriculumMaterialURLHandler)

@@ -25,11 +25,47 @@ export type CurriculumStudent = {
   hasPhoto?: boolean;
 };
 
+export type CurriculumActivityItem = {
+  kind: string;
+  prompt?: string;
+  answer?: string;
+  rewrite?: string;
+  page?: number;
+  row?: number;
+  col?: number;
+  a?: number;
+  b?: number;
+  given?: number;
+  expected?: number;
+  correct?: boolean;
+  note?: string;
+};
+
+export type CurriculumActivityRecord = {
+  summary: string;
+  rewrite?: string;
+  kind: string;
+  items?: CurriculumActivityItem[];
+};
+
+export type CurriculumActivityFact = {
+  key: string;
+  kind: string;
+  a?: number;
+  b?: number;
+  label: string;
+  attempts: number;
+  misses: number;
+  avg: number;
+};
+
 export type CurriculumProgressPayload = {
   student: CurriculumStudent;
   sectionsDone: string[];
   activityScores?: Record<string, number>;
   activityScoreNotes?: Record<string, string>;
+  activityRecords?: Record<string, CurriculumActivityRecord>;
+  activityFacts?: CurriculumActivityFact[];
   activityPhotos?: string[];
   activityPhotoFiles?: Record<string, string[]>;
   semesterWorks?: { semester: number; driveUrl: string }[];
@@ -311,6 +347,36 @@ export async function deleteCurriculumActivityPhoto(input: {
   );
   if (status < 200 || status >= 300) {
     const err = new Error(data.message || "No se pudo borrar la foto.") as Error & { requestId?: string };
+    err.requestId = requestId;
+    throw err;
+  }
+  return data;
+}
+
+export async function putCurriculumActivityRecord(input: {
+  studentKey: string;
+  dayId: string;
+  sectionId: string;
+  key: string;
+  record: CurriculumActivityRecord;
+  score?: number;
+}): Promise<CurriculumProgressPayload> {
+  const { status, data, requestId } = await apiSend<CurriculumProgressPayload>(
+    "/eoschool/curriculum/activities/record",
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    },
+  );
+  if (status === 403) {
+    const err = new Error("La clave no es válida.") as Error & { requestId?: string; keyRejected?: boolean };
+    err.requestId = requestId;
+    err.keyRejected = true;
+    throw err;
+  }
+  if (status < 200 || status >= 300) {
+    const err = new Error(data.message || "No se pudo guardar la lectura.") as Error & { requestId?: string };
     err.requestId = requestId;
     throw err;
   }
