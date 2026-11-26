@@ -150,23 +150,24 @@
       "id": "ia",
       "label": "Inteligencia Artificial",
       "objective": "Plano de una pieza",
-      "learning": "Eliges 2 fotos de las que ya están. Cada una es una pieza sola, sin armar. Creas tú la carpeta planos y copias tú esas dos. Pides un plano por vez: planta, fachada frontal, fachada posterior, lateral derecha y lateral izquierda. Luego la segunda pieza.",
-      "canDo": "Al terminar puedes mostrar dos carpetas, cada una con la foto, la planta y las cuatro fachadas.",
+      "learning": "Hoy le pides al agente el dibujo de una pieza de lego, un lado cada vez. · En completo ya están las fotos. Cada foto es una sola pieza, sin armar. · Elige dos. Crea tú la carpeta planos y copia tú esas dos fotos. El agente no hace eso. · Un plano es la pieza mirada desde un solo lado. · Primero la planta, desde arriba. Luego, de uno en uno, el frente, atrás, el lado derecho y el lado izquierdo. · Cuando la primera tenga esos cinco dibujos, repites el orden con la segunda. · Si un dibujo no se parece a la foto, pides otra vez ese mismo.",
+      "canDo": "Al terminar puedes mostrar dos carpetas, cada una con la foto y los cinco dibujos.",
       "mode": "directo",
       "activityKind": "ai",
       "minutesEstimate": 15,
-      "topicShort": "Planos SVG",
+      "topicShort": "Plano de una pieza",
       "activities": [
-        "Elige 2 fotos de las que ya están. Una pieza sola en cada foto.",
+        "Mira las fotos de completo. Cada una es una sola pieza.",
+        "Elige dos fotos. Solo dos.",
         "Crea tú la carpeta planos. El agente no la crea.",
-        "Copia tú esas 2 fotos dentro de planos.",
-        "Pide solo la planta de la primera pieza.",
-        "Pide solo la fachada frontal.",
-        "Pide solo la fachada posterior.",
-        "Pide solo la fachada lateral derecha.",
-        "Pide solo la fachada lateral izquierda.",
+        "Copia tú esas dos fotos dentro de planos.",
+        "Pide la planta: la pieza mirada desde arriba.",
+        "Pide el frente. Espera el dibujo.",
+        "Pide atrás. Espera el dibujo.",
+        "Pide el lado derecho. Espera el dibujo.",
+        "Pide el lado izquierdo. Espera el dibujo.",
         "Repite ese orden con la segunda pieza.",
-        "Si un plano no se parece a la foto, pide ese mismo otra vez."
+        "Si un dibujo no se parece a la foto, pide otra vez ese mismo."
       ]
     }
   ]
