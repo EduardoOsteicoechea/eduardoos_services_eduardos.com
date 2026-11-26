@@ -47,3 +47,64 @@ export function sectionDone(dayId: string, sectionId: CurriculumPlanSectionId, s
   const done = sectionsDone instanceof Set ? sectionsDone : new Set(sectionsDone);
   return done.has(sectionProgressKey(dayId, sectionId));
 }
+
+export type SubjectProgressTone = "green" | "yellow" | "red";
+
+export type SubjectProgress = {
+  value: number;
+  tone: SubjectProgressTone;
+  scored: boolean;
+};
+
+/** Completion is 100 or 0. A saved score (0–100) replaces that value for the subject. */
+export function subjectProgressValue(done: boolean, score: number | null | undefined): SubjectProgress {
+  if (typeof score === "number" && Number.isFinite(score) && score >= 0 && score <= 100) {
+    const tone: SubjectProgressTone = score >= 80 ? "green" : score >= 50 ? "yellow" : "red";
+    return { value: score, tone, scored: true };
+  }
+  return { value: done ? 100 : 0, tone: done ? "green" : "red", scored: false };
+}
+
+export type SubjectProgressItem = { done: boolean; score?: number | null };
+
+export type ProgressRollup = {
+  scheduled: number;
+  completed: number;
+  scoredCount: number;
+  averageScore: number | null;
+  percent: number;
+};
+
+export function rollupSubjectProgress(items: SubjectProgressItem[]): ProgressRollup {
+  let completed = 0;
+  let scoredCount = 0;
+  let scoreSum = 0;
+  let valueSum = 0;
+  for (const item of items) {
+    if (item.done) completed += 1;
+    const measured = subjectProgressValue(item.done, item.score);
+    valueSum += measured.value;
+    if (measured.scored && typeof item.score === "number") {
+      scoredCount += 1;
+      scoreSum += item.score;
+    }
+  }
+  const scheduled = items.length;
+  return {
+    scheduled,
+    completed,
+    scoredCount,
+    averageScore: scoredCount > 0 ? Math.round(scoreSum / scoredCount) : null,
+    percent: scheduled > 0 ? Math.round(valueSum / scheduled) : 0,
+  };
+}
+
+export function formatProgressSummary(rollup: ProgressRollup): string {
+  const materias = rollup.completed === 1 ? "materia completada" : "materias completadas";
+  const base = `Avance ${rollup.percent}% · ${rollup.completed} ${materias} de ${rollup.scheduled}`;
+  if (rollup.scoredCount > 0 && rollup.averageScore != null) {
+    const label = rollup.scoredCount === 1 ? "materia con puntaje" : "materias con puntaje";
+    return `${base} · promedio ${rollup.averageScore} en ${rollup.scoredCount} ${label}`;
+  }
+  return `${base} · sin puntajes`;
+}

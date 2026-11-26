@@ -1,7 +1,35 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 
-const cards = [
+const primary = [
+  {
+    href: "/eoschool/requirements/curriculum?mode=study",
+    title: "Clases (estudio)",
+    desc: "Programa con checks por niño y espacio de estudio.",
+    icon: "school",
+    tone: "study",
+  },
+  {
+    href: "/eoschool/progress",
+    title: "Progreso",
+    desc: "Materias completadas en clase y puntaje en las que tienen score.",
+    icon: "monitoring",
+  },
+  {
+    href: "/eoschool/portfolio",
+    title: "Portafolio",
+    desc: "Vista previa PDF con temas y fotos de demostración.",
+    icon: "folder_special",
+  },
+  {
+    href: "/eoschool/proyecto-semestral",
+    title: "Proyecto semestral",
+    desc: "Trabajo del semestre escolar.",
+    icon: "assignment",
+  },
+];
+
+const standards = [
   {
     href: "/eoschool/requirements/curriculum?mode=browse&view=standards",
     title: "Estándares 3.er grado",
@@ -14,12 +42,9 @@ const cards = [
     desc: "Lo que el programa de Venezuela no pide y sí piden Estados Unidos e Inglaterra.",
     icon: "difference",
   },
-  {
-    href: "/eoschool/requirements/curriculum?mode=study",
-    title: "Clases (estudio)",
-    desc: "Programa con checks por niño y espacio de estudio.",
-    icon: "school",
-  },
+];
+
+const registry = [
   {
     href: "/eoschool/students/register",
     title: "Registrar estudiante",
@@ -33,24 +58,6 @@ const cards = [
     icon: "group",
   },
   {
-    href: "/eoschool/progress",
-    title: "Progreso",
-    desc: "Semáforo verde / amarillo / rojo por día y materia.",
-    icon: "monitoring",
-  },
-  {
-    href: "/eoschool/actividades",
-    title: "Pack de actividades",
-    desc: "Fotos de la tarea, calificación por celda y multiplicaciones a enfatizar.",
-    icon: "calculate",
-  },
-  {
-    href: "/eoschool/portfolio",
-    title: "Portafolio",
-    desc: "Vista previa PDF con temas y fotos de demostración.",
-    icon: "folder_special",
-  },
-  {
     href: "/eoschool/program/print",
     title: "Imprimir programa",
     desc: "PDF estructurado de las 40 semanas completas.",
@@ -61,7 +68,7 @@ const cards = [
 
 <Layout
   title="Homeschool"
-  description="Dashboard del currículo MPPE: programa, niños, progreso y PDFs."
+  description="Dashboard del currículo MPPE: clases, progreso, portafolio y proyecto semestral."
   page="eoschool-hub"
   robots="noindex,nofollow"
 >
@@ -71,21 +78,45 @@ const cards = [
       <p class="hint">Necesitas sesión y suscripción Homescool.</p>
       <a class="button" href="/session" data-route>Sign in</a>
     </div>
-    <div class="product-dash__grid" data-authed hidden>
-      {
-        cards.map((card) => (
-          <a class="product-dash__card" href={card.href} data-route>
-            <span class="material-symbols-outlined" aria-hidden="true">{card.icon}</span>
-            <span class="product-dash__card-title">{card.title}</span>
-            <span class="product-dash__card-desc">{card.desc}</span>
-          </a>
-        ))
-      }
-      <a class="product-dash__card" href="/eoschool/tutors" data-route data-admin-tutors hidden>
-        <span class="material-symbols-outlined" aria-hidden="true">supervisor_account</span>
-        <span class="product-dash__card-title">Gestionar tutores</span>
-        <span class="product-dash__card-desc">Asigna estudiantes a tutores con acceso Homeschool.</span>
-      </a>
+    <div class="eoschool-hub__rows" data-authed hidden>
+      <div class="product-dash__grid">
+        {
+          primary.map((card) => (
+            <a class:list={["product-dash__card", card.tone && `product-dash__card--${card.tone}`]} href={card.href} data-route>
+              <span class="material-symbols-outlined" aria-hidden="true">{card.icon}</span>
+              <span class="product-dash__card-title">{card.title}</span>
+              <span class="product-dash__card-desc">{card.desc}</span>
+            </a>
+          ))
+        }
+      </div>
+      <div class="product-dash__grid">
+        {
+          standards.map((card) => (
+            <a class="product-dash__card" href={card.href} data-route>
+              <span class="material-symbols-outlined" aria-hidden="true">{card.icon}</span>
+              <span class="product-dash__card-title">{card.title}</span>
+              <span class="product-dash__card-desc">{card.desc}</span>
+            </a>
+          ))
+        }
+      </div>
+      <div class="product-dash__grid">
+        {
+          registry.map((card) => (
+            <a class="product-dash__card" href={card.href} data-route>
+              <span class="material-symbols-outlined" aria-hidden="true">{card.icon}</span>
+              <span class="product-dash__card-title">{card.title}</span>
+              <span class="product-dash__card-desc">{card.desc}</span>
+            </a>
+          ))
+        }
+        <a class="product-dash__card" href="/eoschool/tutors" data-route data-admin-tutors hidden>
+          <span class="material-symbols-outlined" aria-hidden="true">supervisor_account</span>
+          <span class="product-dash__card-title">Gestionar tutores</span>
+          <span class="product-dash__card-desc">Asigna estudiantes a tutores con acceso Homeschool.</span>
+        </a>
+      </div>
     </div>
   </section>
 </Layout>
@@ -125,8 +156,34 @@ const cards = [
 </script>
 
 <style>
+  .eoschool-hub__rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    min-width: 0;
+  }
+
   a.product-dash__card {
     text-decoration: none;
     color: inherit;
+  }
+
+  a.product-dash__card--study {
+    background: #d8f3dc;
+    color: #14281a;
+    border-color: #b7e4c7;
+  }
+
+  a.product-dash__card--study .material-symbols-outlined {
+    color: #1b4332;
+  }
+
+  a.product-dash__card--study .product-dash__card-desc {
+    color: #2d4a38;
+  }
+
+  a.product-dash__card--study:hover,
+  a.product-dash__card--study:focus-visible {
+    border-color: #1b4332;
   }
 </style>

@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { dayTrafficStatus, sectionDone } from "./eoschool-curriculum-progress-status";
+import {
+  dayTrafficStatus,
+  formatProgressSummary,
+  rollupSubjectProgress,
+  sectionDone,
+  subjectProgressValue,
+} from "./eoschool-curriculum-progress-status";
 
 describe("dayTrafficStatus", () => {
   it("red when none done", () => {
@@ -60,5 +66,44 @@ describe("dayTrafficStatus", () => {
   it("sectionDone checks key", () => {
     expect(sectionDone("d2", "cie", ["d2:cie"])).toBe(true);
     expect(sectionDone("d2", "mat", ["d2:cie"])).toBe(false);
+  });
+});
+
+describe("subject progress", () => {
+  it("uses class completion when the subject has no score", () => {
+    expect(subjectProgressValue(true, null)).toEqual({ value: 100, tone: "green", scored: false });
+    expect(subjectProgressValue(false, undefined)).toEqual({ value: 0, tone: "red", scored: false });
+  });
+
+  it("uses the score when the subject has one", () => {
+    expect(subjectProgressValue(true, 90)).toMatchObject({ value: 90, tone: "green", scored: true });
+    expect(subjectProgressValue(false, 60).tone).toBe("yellow");
+    expect(subjectProgressValue(true, 49).tone).toBe("red");
+    expect(subjectProgressValue(false, 0)).toMatchObject({ value: 0, tone: "red", scored: true });
+    expect(subjectProgressValue(true, 101).scored).toBe(false);
+  });
+
+  it("rolls up completed subjects and scored subjects", () => {
+    const rollup = rollupSubjectProgress([
+      { done: true, score: null },
+      { done: false, score: null },
+      { done: true, score: 80 },
+      { done: false, score: 60 },
+    ]);
+    expect(rollup).toMatchObject({
+      scheduled: 4,
+      completed: 2,
+      scoredCount: 2,
+      averageScore: 70,
+      percent: 60,
+    });
+    expect(formatProgressSummary(rollup)).toBe(
+      "Avance 60% · 2 materias completadas de 4 · promedio 70 en 2 materias con puntaje",
+    );
+  });
+
+  it("omits the score average when nothing is scored", () => {
+    const rollup = rollupSubjectProgress([{ done: true }, { done: false }]);
+    expect(formatProgressSummary(rollup)).toBe("Avance 50% · 1 materia completada de 2 · sin puntajes");
   });
 });

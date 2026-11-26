@@ -2,8 +2,9 @@
 import { Fragment } from "astro/jsx-runtime";
 import EoschoolDashBack from "../../components/EoschoolDashBack.astro";
 import Layout from "../../layouts/Layout.astro";
-import { MPPE_40WEEK_CURRICULUM } from "../../lib/eoschool-mppe-40week-curriculum";
 import { CURRICULUM_SECTION_IDS } from "../../lib/eoschool-curriculum-plan-classes";
+import { MPPE_40WEEK_CURRICULUM } from "../../lib/eoschool-mppe-40week-curriculum";
+import { scheduledSectionsForBlock } from "../../lib/eoschool-mppe-curriculum-view";
 
 const sectionLabels: Record<string, string> = {
   bib: "Bib",
@@ -17,22 +18,22 @@ const sectionLabels: Record<string, string> = {
 
 const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
   week.blocks
-    .flatMap((block) =>
-      (block.bible?.days ?? []).map((d) => ({
+    .flatMap((block) => {
+      const scheduled = scheduledSectionsForBlock(block, week.week);
+      return (block.bible?.days ?? []).map((d) => ({
         week: week.week,
         planDay: d.dayInPlan,
         dayId: `d${d.dayInPlan}`,
-        english: week.week >= 8 && block.dayKind !== "holiday",
-        ia: d.dayInPlan >= 38 && block.dayKind !== "holiday",
-      })),
-    )
+        scheduled,
+      }));
+    })
     .sort((a, b) => a.planDay - b.planDay),
 );
 ---
 
 <Layout
   title="Progreso MPPE"
-  description="Semáforo de avance por día y materia del currículo MPPE."
+  description="Avance por materias completadas en clase y por puntaje en las que tienen score."
   page="eoschool-progress"
   robots="noindex,nofollow"
 >
@@ -58,6 +59,10 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
           <select data-student-select></select>
         </label>
         <p class="eoschool-progress__meta" data-student-meta></p>
+        <p class="eoschool-progress__summary" data-progress-summary></p>
+        <p class="hint">
+          Cada materia de la clase cuenta. Sin puntaje, verde es completa y rojo es pendiente. Con puntaje, esa materia vale el score: verde desde 80, amarillo desde 50 y rojo por debajo.
+        </p>
       </div>
 
       <div class="eoschool-progress-table-wrap">
@@ -77,8 +82,8 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
                   <td>{day.planDay}</td>
                   {CURRICULUM_SECTION_IDS.map((sid) => (
                     <td>
-                      {(sid === "eng" && !day.english) || (sid === "ia" && !day.ia) ? (
-                        <span class="eoschool-progress__na" aria-label={sid === "ia" ? "Sin inteligencia artificial" : "Sin inglés"}>—</span>
+                      {!day.scheduled.includes(sid) ? (
+                        <span class="eoschool-progress__na" aria-label={`Sin ${sectionLabels[sid]}`}>—</span>
                       ) : (
                         <span
                           class="eoschool-dot"
@@ -105,7 +110,12 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
     fetchCurriculumStudents,
     type CurriculumStudent,
   } from "../../lib/eoschool-curriculum-api";
-  import { sectionDone } from "../../lib/eoschool-curriculum-progress-status";
+  import {
+    formatProgressSummary,
+    rollupSubjectProgress,
+    sectionProgressKey,
+    subjectProgressValue,
+  } from "../../lib/eoschool-curriculum-progress-status";
   import type { CurriculumPlanSectionId } from "../../lib/eoschool-curriculum-plan-classes";
   import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
 
@@ -179,14 +189,34 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
       return;
     }
     const done = new Set(loaded.data.sectionsDone);
+    const scores = loaded.data.activityScores ?? {};
+    const items: { done: boolean; score: number | null }[] = [];
     root?.querySelectorAll<HTMLElement>("[data-day-row]").forEach((row) => {
       const dayId = row.dataset.dayRow || "";
       row.querySelectorAll<HTMLElement>("[data-section-dot]").forEach((dot) => {
         const sid = dot.dataset.section as CurriculumPlanSectionId;
-        const ok = sectionDone(dayId, sid, done);
-        dot.className = `eoschool-dot eoschool-dot--${ok ? "green" : "red"}`;
+        const key = sectionProgressKey(dayId, sid);
+        const complete = done.has(key);
+        const raw = scores[key];
+        const score = typeof raw === "number" ? raw : null;
+        const measured = subjectProgressValue(complete, score);
+        items.push({ done: complete, score });
+        const label = dot.getAttribute("aria-label")?.split(" · ")[0] || sid;
+        if (measured.scored && score != null) {
+          dot.className = `eoschool-score eoschool-score--${measured.tone}`;
+          dot.textContent = String(score);
+          dot.setAttribute("aria-label", `${label} · puntaje ${score}`);
+        } else {
+          dot.className = `eoschool-dot eoschool-dot--${measured.tone}`;
+          dot.textContent = "";
+          dot.setAttribute("aria-label", `${label} · ${complete ? "completa" : "pendiente"}`);
+        }
       });
     });
+    const summary = root?.querySelector("[data-progress-summary]");
+    if (summary instanceof HTMLElement) {
+      summary.textContent = formatProgressSummary(rollupSubjectProgress(items));
+    }
   }
 </script>
 
@@ -228,10 +258,16 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
     border-radius: var(--border-radius);
   }
 
-  .eoschool-progress__meta {
+  .eoschool-progress__meta,
+  .eoschool-progress__summary {
     margin: 0;
     font-size: var(--font-size-sm);
     color: var(--color-muted);
+  }
+
+  .eoschool-progress__summary {
+    color: var(--color-text);
+    font-weight: 650;
   }
 
   .eoschool-progress-table-wrap {
@@ -275,8 +311,38 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
     background: #22c55e;
   }
 
+  .eoschool-dot--yellow {
+    background: #facc15;
+  }
+
   .eoschool-dot--red {
     background: var(--color-err);
+  }
+
+  .eoschool-score {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.75rem;
+    min-height: 1.25rem;
+    padding: 0 0.25rem;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-xs);
+    font-weight: 650;
+    color: #14281a;
+  }
+
+  .eoschool-score--green {
+    background: #86efac;
+  }
+
+  .eoschool-score--yellow {
+    background: #fde68a;
+  }
+
+  .eoschool-score--red {
+    background: #fecaca;
+    color: #450a0a;
   }
 
   .eoschool-progress__na {
