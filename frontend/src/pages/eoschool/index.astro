@@ -77,6 +77,7 @@ const registry = [
   description="Dashboard del currículo MPPE: clases, progreso, portafolio y proyecto semestral."
   page="eoschool-hub"
   robots="noindex,nofollow"
+  showPageTitle={false}
 >
   <section class="product-dash page-span-all" data-eoschool-hub>
     <p class="status" data-banner>Cargando…</p>
@@ -85,80 +86,7 @@ const registry = [
       <a class="button" href="/session" data-route>Sign in</a>
     </div>
     <div class="eoschool-hub__rows" data-authed hidden>
-      <article class="product-dash__card eoschool-instructivo">
-        <h2 class="product-dash__card-title">Dos trabajos semestrales</h2>
-        <section data-pending-block>
-          <h3>Obligatorio, y lo que falta en eoschool</h3>
-          <label>
-            Estudiante
-            <select data-pending-student></select>
-          </label>
-          <ul data-pending-list>
-            <li>Cargando lo que ya está en eoschool…</li>
-          </ul>
-          <p>
-            Cada materia queda en <u>Pendiente</u> hasta tener <u>5 fotos</u> en clase.
-            Cinco materias por 5 fotos arman el PDF de unas 26 páginas.
-          </p>
-        </section>
-
-        <section>
-          <h3>El trabajo semestral es el PDF. El portafolio es la carpeta.</h3>
-          <p>
-            El trabajo de cada semestre es <u>un PDF de unas 26 páginas, tope de 30</u>.
-            Se sube a Drive y en la intranet va <u>solo el enlace</u>.
-            <u>Dos PDF en el año, uno por semestre.</u> <u>Con uno solo el año no se aprueba.</u>
-          </p>
-          <p>
-            El portafolio es otra cosa: la carpeta en casa, con el plan, las cédulas, la partida,
-            la lista de libros, la planilla de salidas, ejemplos y ensayos. Los dos PDF van dentro de esa carpeta.
-          </p>
-        </section>
-
-        <section>
-          <h3>Qué es «otro currículo»</h3>
-          <p>
-            Olive Trees llama así a un plan distinto de las guías de La Vid.
-            <u>Este programa de eoschool es el MPPE, así que es ese caso.</u>
-            El PDF se arma con los mejores trabajos ya hechos en clase, no con una lista aparte.
-            En Ciencias, el segundo semestre incluye un proyecto del grado.
-          </p>
-          <p>
-            La lista de La Vid para 3.er grado (línea de tiempo de Lucas, tablas, Constantino, fuerza, Hechos, fracciones, polígonos, identidad, sistemas del cuerpo) es obligatoria solo si la familia sigue las guías de La Vid.
-            <u>En este programa esa lista no es una tarea extra.</u>
-            Clase ya cubre Lucas, Hechos, polígonos y la fuerza, pero no pide esos productos tal como los escribe La Vid.
-          </p>
-          <p>
-            El formato sí aplica en 3.er grado: <u>escrito a mano y con fotos, no en computadora</u>,
-            <u>grafito más oscuro</u>, <u>una imagen por página</u>.
-            Si <u>más del 40% no se lee</u>, lo devuelven.
-          </p>
-        </section>
-
-        <section>
-          <h3>Salidas y horas</h3>
-          <p>
-            El número de aquí es de <u>salidas</u>, no de páginas del PDF.
-            En 3.er grado la planilla es necesaria y <u>no hay un mínimo de salidas</u>.
-            El mínimo de páginas es el del PDF: unas 26, tope 30.
-          </p>
-          <p>
-            Preescolar, prekínder y kínder sí tienen un mínimo de salidas, y solo ellos:
-            preescolar 2 en el 2.º semestre, prekínder 2 en el 1.er semestre, kínder 3 en el 2.º semestre, con dibujos.
-          </p>
-          <p>
-            La planilla de horas por mes está marcada como opcional en la lista del portafolio.
-            Esa hoja sí escribe los mínimos: kínder 172 días × 2 horas, primaria 172 días × 4 horas, secundaria 120 días.
-            eoschool guarda las clases hechas, no las horas de cada mes, así que no arma esa planilla.
-          </p>
-        </section>
-
-        <section>
-          <h3>Fechas del calendario norte regular</h3>
-          <p>1.er semestre: <u>1 de diciembre al 10 de febrero</u>. 2.º semestre: <u>1 de abril al 20 de junio</u>. Cierre: <u>10 de julio</u>.</p>
-          <p>Después del cierre el sistema no reabre y <u>el grado se pierde</u>. La boleta se carga <u>al menos dos veces</u> y queda atada al informe del tutor.</p>
-        </section>
-      </article>
+      <div class="eoschool-hub__main">
       <div class="product-dash__grid">
         {
           primary.map((card) => (
@@ -197,6 +125,83 @@ const registry = [
           <span class="product-dash__card-desc">Asigna estudiantes a tutores con acceso Homeschool.</span>
         </a>
       </div>
+      </div>
+      <aside class="eoschool-hub__side" aria-label="Pendientes">
+        <article class="product-dash__card eoschool-instructivo">
+          <h2 class="product-dash__card-title">Dos trabajos semestrales</h2>
+          <section data-pending-block>
+            <h3>Obligatorio, y lo que falta en eoschool</h3>
+            <label>
+              Estudiante
+              <select data-pending-student></select>
+            </label>
+            <ul data-pending-list>
+              <li>Cargando lo que ya está en eoschool…</li>
+            </ul>
+            <p>
+              Cada materia queda en <u>Pendiente</u> hasta tener <u>5 fotos</u> en clase.
+              Cinco materias por 5 fotos arman el PDF de unas 26 páginas.
+            </p>
+          </section>
+
+          <section>
+            <h3>El trabajo semestral es el PDF. El portafolio es la carpeta.</h3>
+            <p>
+              El trabajo de cada semestre es <u>un PDF de unas 26 páginas, tope de 30</u>.
+              Se sube a Drive y en la intranet va <u>solo el enlace</u>.
+              <u>Dos PDF en el año, uno por semestre.</u> <u>Con uno solo el año no se aprueba.</u>
+            </p>
+            <p>
+              El portafolio es otra cosa: la carpeta en casa, con el plan, las cédulas, la partida,
+              la lista de libros, la planilla de salidas, ejemplos y ensayos. Los dos PDF van dentro de esa carpeta.
+            </p>
+          </section>
+
+          <section>
+            <h3>Qué es «otro currículo»</h3>
+            <p>
+              Olive Trees llama así a un plan distinto de las guías de La Vid.
+              <u>Este programa de eoschool es el MPPE, así que es ese caso.</u>
+              El PDF se arma con los mejores trabajos ya hechos en clase, no con una lista aparte.
+              En Ciencias, el segundo semestre incluye un proyecto del grado.
+            </p>
+            <p>
+              La lista de La Vid para 3.er grado (línea de tiempo de Lucas, tablas, Constantino, fuerza, Hechos, fracciones, polígonos, identidad, sistemas del cuerpo) es obligatoria solo si la familia sigue las guías de La Vid.
+              <u>En este programa esa lista no es una tarea extra.</u>
+              Clase ya cubre Lucas, Hechos, polígonos y la fuerza, pero no pide esos productos tal como los escribe La Vid.
+            </p>
+            <p>
+              El formato sí aplica en 3.er grado: <u>escrito a mano y con fotos, no en computadora</u>,
+              <u>grafito más oscuro</u>, <u>una imagen por página</u>.
+              Si <u>más del 40% no se lee</u>, lo devuelven.
+            </p>
+          </section>
+
+          <section>
+            <h3>Salidas y horas</h3>
+            <p>
+              El número de aquí es de <u>salidas</u>, no de páginas del PDF.
+              En 3.er grado la planilla es necesaria y <u>no hay un mínimo de salidas</u>.
+              El mínimo de páginas es el del PDF: unas 26, tope 30.
+            </p>
+            <p>
+              Preescolar, prekínder y kínder sí tienen un mínimo de salidas, y solo ellos:
+              preescolar 2 en el 2.º semestre, prekínder 2 en el 1.er semestre, kínder 3 en el 2.º semestre, con dibujos.
+            </p>
+            <p>
+              La planilla de horas por mes está marcada como opcional en la lista del portafolio.
+              Esa hoja sí escribe los mínimos: kínder 172 días × 2 horas, primaria 172 días × 4 horas, secundaria 120 días.
+              eoschool guarda las clases hechas, no las horas de cada mes, así que no arma esa planilla.
+            </p>
+          </section>
+
+          <section>
+            <h3>Fechas del calendario norte regular</h3>
+            <p>1.er semestre: <u>1 de diciembre al 10 de febrero</u>. 2.º semestre: <u>1 de abril al 20 de junio</u>. Cierre: <u>10 de julio</u>.</p>
+            <p>Después del cierre el sistema no reabre y <u>el grado se pierde</u>. La boleta se carga <u>al menos dos veces</u> y queda atada al informe del tutor.</p>
+          </section>
+        </article>
+      </aside>
     </div>
   </section>
 </Layout>
@@ -289,6 +294,51 @@ const registry = [
     flex-direction: column;
     gap: var(--space-padding);
     min-width: 0;
+  }
+
+  .eoschool-hub__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .eoschool-hub__side {
+    min-width: 0;
+  }
+
+  .eoschool-hub__side label {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--rail-gap);
+    font-size: var(--font-size-sm);
+  }
+
+  .eoschool-hub__side select {
+    align-self: stretch;
+    min-width: 0;
+    height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-md);
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+
+  @media (min-width: 48rem) {
+    .eoschool-hub__rows {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .eoschool-hub__side {
+      flex: 0 0 22rem;
+      width: 22rem;
+      order: -1;
+    }
   }
 
   a.product-dash__card {
