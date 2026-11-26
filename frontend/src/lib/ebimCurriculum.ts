@@ -21,26 +21,26 @@ const screens: Draft[] = [
     id: "vigencia",
     group: "base",
     groupLabel: "Base",
-    nav: "Qué está vigente",
-    markdown: `## Qué es la serie y qué edición puedes usar hoy
+    nav: "What is current",
+    markdown: `## What the series is, and which edition you can use today
 
-ISO 19650 es la serie internacional para gestionar la información de un activo construido con BIM. No es un programa, ni un formato de archivo, ni un nivel de detalle. La parte 1 fija el vocabulario. Las partes 2 y 3 convierten ese vocabulario en un proceso: una para proyectar y construir, otra para usar el activo. La parte 4 dice cómo se decide si un intercambio vale. La parte 5 dice cómo tratar la información sensible. La parte 6, de 2025, trata salud y seguridad y no forma parte de este estudio.
+ISO 19650 is the international series for managing information about a built asset with BIM. It is not a piece of software, a file format, or a level of detail. Part 1 fixes the vocabulary. Parts 2 and 3 turn that vocabulary into a process: one for design and construction, one for using the asset. Part 4 says how an exchange is judged. Part 5 says how to treat sensitive information. Part 6, from 2025, covers health and safety and is outside this study.
 
-El texto que debes estudiar es el publicado, no el borrador. A 26 de noviembre de 2026 el catálogo de ISO decía lo siguiente.
+Study the published text, not the draft. On 26 November 2026 the ISO catalogue said the following.
 
-| Documento | Edición publicada | Estado en el catálogo | Qué viene después |
+| Document | Published edition | Catalogue status | What comes next |
 | --- | --- | --- | --- |
-| ISO 19650-1:2018 | 1, 34 páginas, diciembre de 2018 | 90.92, en revisión, y a la vez confirmada en 2024 | ISO/DIS 19650-1, edición 2, etapa 40.93 el 18 de agosto de 2026 |
-| ISO 19650-2:2018 | 1, 26 páginas, diciembre de 2018 | 90.92, en revisión, confirmada en 2024 | ISO/DIS 19650-2, etapa 40.93. El catálogo dice que sustituirá a la parte 2 y también a la parte 3 |
-| ISO 19650-3:2020 | 1, 30 páginas, julio de 2020 | 90.92, en revisión, confirmada en 2024 | El mismo borrador anterior, y además ISO/DIS 19650-3, etapa 40.93 el 16 de septiembre de 2026 |
-| ISO 19650-4:2022 | 1, 12 páginas, agosto de 2022 | 60.60, publicada | No había revisión ni enmienda en la ficha |
-| ISO 19650-5:2020 | 1, 28 páginas, junio de 2020 | 90.93, confirmada el 24 de octubre de 2025 | No había borrador de sustitución |
+| ISO 19650-1:2018 | Edition 1, 34 pages, December 2018 | 90.92, under revision, and also confirmed in 2024 | ISO/DIS 19650-1, edition 2, stage 40.93 on 18 August 2026 |
+| ISO 19650-2:2018 | Edition 1, 26 pages, December 2018 | 90.92, under revision, confirmed in 2024 | ISO/DIS 19650-2, stage 40.93. The catalogue says it will replace Part 2 and also Part 3 |
+| ISO 19650-3:2020 | Edition 1, 30 pages, July 2020 | 90.92, under revision, confirmed in 2024 | The same draft as above, and also ISO/DIS 19650-3, stage 40.93 on 16 September 2026 |
+| ISO 19650-4:2022 | Edition 1, 12 pages, August 2022 | 60.60, published | The record showed no revision and no amendment |
+| ISO 19650-5:2020 | Edition 1, 28 pages, June 2020 | 90.93, confirmed on 24 October 2025 | No replacement draft |
 
-Hay una contradicción que conviene recordar. El borrador ISO/DIS 19650-2 se titula proceso de gestión de la información y su ficha dice que reemplazará la entrega y la operación. Su resumen público, en cambio, sigue hablando solo de la fase de entrega. El borrador ISO/DIS 19650-3 se titula implementación de ese proceso y dice que da directrices conforme a la parte 2. Ninguno de los dos se leyó entero: están de pago y no están publicados. Hasta que salgan, la autoridad es 19650-2:2018 y 19650-3:2020.
+Keep one contradiction in mind. The draft ISO/DIS 19650-2 is titled as an information management process, and its record says it will replace both delivery and operation. Its public abstract still describes only the delivery phase. The draft ISO/DIS 19650-3 is titled as implementation of that process and says it gives guidance in accordance with Part 2. Neither draft was read in full: both are paid and unpublished. Until they are published, the authority is 19650-2:2018 and 19650-3:2020.
 
-En el Reino Unido la serie se aplica con el IMI Framework, antes llamado UK BIM Framework, mantenido por nima y BSI. Las guías son comentarios abiertos. No sustituyen a la norma. El anexo nacional británico precisa nombres y códigos; es una precisión local, no el texto internacional.
+In the United Kingdom the series is applied through the IMI Framework, formerly the UK BIM Framework, maintained by nima and BSI. The guidance documents are open commentary. They do not replace the standard. The UK national annex pins down names and codes; that is a local precision, not the international text.
 
-## Fuentes
+## Sources
 
 - [ISO 19650-1:2018](https://www.iso.org/standard/68078.html)
 - [ISO/DIS 19650-1](https://www.iso.org/standard/89703.html)
@@ -50,408 +50,408 @@ En el Reino Unido la serie se aplica con el IMI Framework, antes llamado UK BIM 
 - [ISO/DIS 19650-3](https://www.iso.org/standard/90358.html)
 - [ISO 19650-4:2022](https://www.iso.org/standard/78246.html)
 - [ISO 19650-5:2020](https://www.iso.org/standard/74206.html)
-- [ISO 19650-6:2025, fuera de este estudio](https://www.iso.org/standard/82705.html)
-- [IMI Framework, antes UK BIM Framework](https://wearenima.im/uk-bim-framework/)
+- [ISO 19650-6:2025, outside this study](https://www.iso.org/standard/82705.html)
+- [IMI Framework, formerly the UK BIM Framework](https://wearenima.im/uk-bim-framework/)
 `,
   },
   {
     id: "personas",
     group: "base",
     groupLabel: "Base",
-    nav: "Quién hace qué",
-    markdown: `## Las personas, antes que los documentos
+    nav: "Who does what",
+    markdown: `## The people, before the documents
 
-El sistema nombra funciones, no cargos de una empresa. La misma organización puede ocupar más de una.
+The system names functions, not job titles in a company. The same organization can hold more than one.
 
-La appointing party es quien encarga y recibe la información. En una obra suele ser el cliente, pero la palabra no se agota en cliente, propietario o empleador. La lead appointed party coordina la información dentro de su equipo y entre ese equipo y quien encargó. La appointed party produce información sobre trabajos, bienes o servicios. Un delivery team es la lead appointed party más sus task teams. Un task team produce un paquete definido de información.
+The appointing party is the party that commissions and receives the information. On a project that is often the client, but the word is not exhausted by client, owner, or employer. The lead appointed party coordinates information inside its team and between that team and the party that commissioned the work. An appointed party produces information about works, goods, or services. A delivery team is the lead appointed party plus its task teams. A task team produces a defined package of information.
 
-Un hospital puede tener a la vez un equipo de diseño y un equipo de obra. Cada uno tiene su propia lead appointed party y su propio delivery team. El fabricante de estructura es appointed party del contratista. Sus delineantes son un task team.
+A hospital can have a design team and a construction team at the same time. Each has its own lead appointed party and its own delivery team. The structural fabricator is an appointed party of the contractor. Its drafters are a task team.
 
-Appointment es el acuerdo por el que se gestiona o produce información. En el Reino Unido suele ser un contrato. Quien encarga redacta el information protocol del proyecto, lo incluye en cada appointment y exige que baje a los subencargos. El protocolo fija derechos y obligaciones. No es una nota explicativa. Las plantillas británicas valen para derecho inglés y no son asesoramiento legal.
+An appointment is the agreement under which information is managed or produced. In the United Kingdom it is usually a contract. The appointing party writes the project's information protocol, includes it in every appointment, and requires it to flow down into sub-appointments. The protocol fixes rights and obligations. It is not an explanatory note. The British templates are written for English law and are not legal advice.
 
-La función de gestión de la información puede hacerla la propia appointing party, delegarla en una lead appointed party o encargarla a un tercero. La guía A de febrero de 2021 separa esa función de los recursos que hay que producir. Un recurso no tiene por qué ser un documento suelto: puede vivir en un sistema, o ir unido a otro contenido. Lo que importa es que el contenido exista y que no se promueva a contractual, ni se baje de contractual, por error.
+The information management function may be carried out by the appointing party itself, delegated to a lead appointed party, or commissioned from a third party. Guidance A of February 2021 separates that function from the resources that have to be produced. A resource does not have to be a standalone document: it can live in a system, or travel with other content. What matters is that the content exists, and that it is not promoted to contractual, or demoted from contractual, by mistake.
 
-## Fuentes
+## Sources
 
-- [Guía 1, Conceptos, 2.ª edición, julio de 2019](https://imiframework.org/wp-content/uploads/2019/10/Information-Management-according-to-BS-EN-ISO-19650_-Guidance-Part-1_Concepts_2ndEdition.pdf)
-- [Guía A, función y recursos, edición 2, febrero de 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-A_The-information-management-function-and-resources_Edition-2.pdf)
-- [Guía del information protocol, edición 3, noviembre de 2021](https://www.ukbimframework.org/wp-content/uploads/2022/08/Information_protocols_supporting_the_delivery_phase_BS_EN_ISO_19650-2_and_the_operational_phase_BS_EN_ISO_19650-3_of_assets-Guidance_Edition-3.pdf)
-- [Plantilla de protocolo para la entrega](https://www.ukbimframework.org/wp-content/uploads/2021/11/Information-Protocol-Template-to-support-BS-EN-ISO-19650-2.pdf)
-- [Plantilla de protocolo para la operación](https://www.ukbimframework.org/wp-content/uploads/2021/11/Information-Protocol-Template-to-support-BS-EN-ISO-19650-3.pdf)
+- [Guidance 1, Concepts, 2nd edition, July 2019](https://imiframework.org/wp-content/uploads/2019/10/Information-Management-according-to-BS-EN-ISO-19650_-Guidance-Part-1_Concepts_2ndEdition.pdf)
+- [Guidance A, the function and resources, edition 2, February 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-A_The-information-management-function-and-resources_Edition-2.pdf)
+- [Information protocol guidance, edition 3, November 2021](https://www.ukbimframework.org/wp-content/uploads/2022/08/Information_protocols_supporting_the_delivery_phase_BS_EN_ISO_19650-2_and_the_operational_phase_BS_EN_ISO_19650-3_of_assets-Guidance_Edition-3.pdf)
+- [Protocol template for delivery](https://www.ukbimframework.org/wp-content/uploads/2021/11/Information-Protocol-Template-to-support-BS-EN-ISO-19650-2.pdf)
+- [Protocol template for operation](https://www.ukbimframework.org/wp-content/uploads/2021/11/Information-Protocol-Template-to-support-BS-EN-ISO-19650-3.pdf)
 `,
   },
   {
     id: "requisitos",
     group: "base",
     groupLabel: "Base",
-    nav: "Qué se pide",
-    markdown: `## De la necesidad de la organización al encargo
+    nav: "What is required",
+    markdown: `## From the organization's need to the appointment
 
-Quien encarga tiene que saber qué información necesita para sus objetivos. La guía D, que cita la cláusula 5 de ISO 19650-1, ordena así los requisitos. No es una cadena única.
+The appointing party has to know what information it needs for its objectives. Guidance D, citing clause 5 of ISO 19650-1, orders the requirements as follows. It is not a single chain.
 
-Los organizational information requirements, OIR, son el punto de partida. Están en la cláusula 5.2 de la parte 1 y en la 5.1.2 de la parte 3. Dicen la información de alto nivel que la organización necesita en toda su cartera y en sus funciones. Se redactan como actividad del negocio, no de un proyecto.
+Organizational information requirements, OIR, are the starting point. They sit in clause 5.2 of Part 1 and in clause 5.1.2 of Part 3. They state the high-level information the organization needs across its portfolio and its functions. They are written as a business activity, not as a project activity.
 
-De los OIR salen, en paralelo, dos cosas distintas.
+From the OIR, two different things come out in parallel.
 
-Los asset information requirements, AIR, están en la cláusula 5.3 de la parte 1 y en la 5.1.4 de la parte 3. Bajan esa necesidad a un activo concreto: energía, mantenimiento, cumplimiento, usuarios. Los prepara quien encarga, con el equipo de activos si existe, y tienen que existir antes del encargo relacionado. No son un entregable de obra. Son el origen de los requisitos de intercambio de la operación.
+Asset information requirements, AIR, sit in clause 5.3 of Part 1 and in clause 5.1.4 of Part 3. They bring that need down to a particular asset: energy, maintenance, compliance, users. The appointing party prepares them, with the asset team if there is one, and they have to exist before the related appointment. They are not a construction deliverable. They are the origin of the exchange requirements used in operation.
 
-Los project information requirements, PIR, están en la cláusula 5.4 de la parte 1 y en la 5.1.2 de la parte 2. Hay un solo juego por proyecto. Sirven para las decisiones clave de ese proyecto: si sigue, si cabe en el presupuesto, si se puede abrir en la fecha prevista. Se anclan al plan de trabajo. La cláusula 5.1.3 pide hitos de entrega de información, definidos respecto de esas decisiones, por ejemplo unas semanas antes.
+Project information requirements, PIR, sit in clause 5.4 of Part 1 and in clause 5.1.2 of Part 2. There is one set per project. They serve the key decisions of that project: whether it continues, whether it fits the budget, whether it can open on the planned date. They are anchored to the plan of work. Clause 5.1.3 asks for information delivery milestones, defined against those decisions, for example a number of weeks beforehand.
 
-Los exchange information requirements, EIR, son de un appointment, no del proyecto entero. La cláusula 5.5 de la parte 1 los introduce. En obra los fija la cláusula 5.2.1. En operación, la 5.2.2. Dicen qué información se entrega en cada intercambio, con qué nivel de necesidad y para qué decisión. La lead appointed party puede añadir los suyos al encargar a otros, cláusula 5.4.3, sin pedir de más a quien no es el mejor situado para producirlos.
+Exchange information requirements, EIR, belong to an appointment, not to the whole project. Clause 5.5 of Part 1 introduces them. On a project they are set by clause 5.2.1. In operation, by clause 5.2.2. They say what information is delivered at each exchange, at what level of information need, and for which decision. The lead appointed party may add its own when appointing others, clause 5.4.3, without asking more of a party that is not the best placed to produce it.
 
-Un ejemplo cierra la cadena. El OIR de una universidad incluye informar el consumo anual de energía. El AIR de un edificio docente pide ese consumo medido por planta. El PIR de una reforma pide, al acabar el anteproyecto, la información para decidir si el coste cabe. El EIR del ingeniero mecánico nombra los contenedores, el nivel de necesidad y las fechas que permiten esas tres cosas.
+One example closes the chain. A university's OIR includes reporting annual energy use. The AIR for a teaching building asks for that use measured by floor. The PIR for a refurbishment asks, at the end of concept design, for the information needed to decide whether the cost fits. The mechanical engineer's EIR names the containers, the level of information need, and the dates that make those three things possible.
 
-La guía D separa, además, el propósito de la información y el detalle: contenido, forma y formato. Un requisito puede nombrar solo el resumen, por ejemplo una estrategia de incendio, y dejar el resto al equipo. Otro puede fijar también el desglose, el plano y el PDF. Lo constante es que cada requisito se pueda seguir hasta un propósito. Pedir sin propósito es desperdicio.
+Guidance D also separates the purpose of the information from the detail: content, form, and format. One requirement may name only the summary, for example a fire strategy, and leave the rest to the team. Another may also fix the breakdown, the drawing, and the PDF. What stays constant is that each requirement can be traced to a purpose. Asking without a purpose is waste.
 
-El project information model, PIM, es el conjunto de contenedores de la entrega. El asset information model, AIM, es el conjunto que se usa cuando el activo está en servicio. No son un único modelo 3D. Existen a nivel de activo, de proyecto y de equipo de entrega.
+The project information model, PIM, is the set of containers for delivery. The asset information model, AIM, is the set used while the asset is in service. They are not a single 3D model. They exist at asset level, project level, and delivery-team level.
 
-## Fuentes
+## Sources
 
-- [Guía D, requisitos de información, edición 2, febrero de 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-D_Developing-information-requirements_Edition-2.pdf)
-- [Guía 1, secciones 5.2 y 6](https://imiframework.org/wp-content/uploads/2019/10/Information-Management-according-to-BS-EN-ISO-19650_-Guidance-Part-1_Concepts_2ndEdition.pdf)
-- [Tabla de recursos de la guía A](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-A_The-information-management-function-and-resources_Edition-2.pdf)
+- [Guidance D, information requirements, edition 2, February 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-D_Developing-information-requirements_Edition-2.pdf)
+- [Guidance 1, sections 5.2 and 6](https://imiframework.org/wp-content/uploads/2019/10/Information-Management-according-to-BS-EN-ISO-19650_-Guidance-Part-1_Concepts_2ndEdition.pdf)
+- [Resource table in Guidance A](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-A_The-information-management-function-and-resources_Edition-2.pdf)
 `,
   },
   {
     id: "cde",
     group: "base",
     groupLabel: "Base",
-    nav: "Contenedor y CDE",
-    markdown: `## La unidad de información y sus estados
+    nav: "Container and CDE",
+    markdown: `## The unit of information and its states
 
-Un information container, cláusula 3.3.12 de ISO 19650-1 según la guía de conceptos, es una unidad con nombre e identificador único: un modelo, un plano, un presupuesto, una especificación. El information model es el conjunto de esos contenedores. Federar es juntarlos para un fin, por ejemplo coordinar, sin que dejen de tener cada uno su autor.
+An information container, clause 3.3.12 of ISO 19650-1 as cited by the concepts guidance, is a named unit with a unique identifier: a model, a drawing, a cost plan, a specification. The information model is the set of those containers. To federate is to bring them together for a purpose, for example coordination, without each one ceasing to have its own author.
 
-Se parten para que varias appointed parties trabajen a la vez sin pisarse. La federation strategy, cláusula 10.4, explica por qué se parte el modelo. La information container breakdown structure es el detalle de esas unidades. La primera puede fijarla quien encarga, si tiene una regla de proyecto, y se comunica en los métodos de producción. La segunda la acuerda la lead appointed party con su equipo. Valen para todo tipo de contenedor, no solo para la geometría.
+They are broken down so that several appointed parties can work at the same time without overwriting one another. The federation strategy, clause 10.4, explains why the model is broken down. The information container breakdown structure is the detail of those units. The appointing party may set the first, if it has a project rule, and it is communicated in the production methods. The lead appointed party agrees the second with its team. Both apply to every kind of container, not only to geometry.
 
-El common data environment no es una marca de software. Es el flujo de estados, más la solución que lo sostiene. La figura 10 de ISO 19650-1, explicada en la cláusula 12 y en la guía C de septiembre de 2020, junta cuatro ideas.
+The common data environment is not a software brand. It is the state workflow, plus the solution that supports it. Figure 10 of ISO 19650-1, explained in clause 12 and in Guidance C of September 2020, joins four ideas.
 
-Work in progress es lo que está elaborando su autor o su task team. Los demás no lo ven.
+Work in progress is what its author or task team is still preparing. Others do not see it.
 
-Shared es lo ya aprobado para compartirlo con otros task teams, con otros delivery teams o con quien encarga. Sirve para comentar y coordinar. Puede volver a work in progress.
+Shared is what has already been approved for sharing with other task teams, other delivery teams, or the appointing party. It is for comment and coordination. It can return to work in progress.
 
-Published es lo autorizado para un uso que ya obliga: desarrollar el diseño, construir o gestionar el activo. En la lectura británica, lo autoriza la lead appointed party y lo acepta la appointing party. El código de revisión con prefijo C, del anexo nacional, marca ese estado frente al preliminar P. Ese código es práctica del Reino Unido, no una regla universal de ISO.
+Published is what has been authorized for a use that already binds: developing the design, constructing, or managing the asset. In the British reading, the lead appointed party authorizes it and the appointing party accepts it. The revision code with a C prefix, from the national annex, marks that state against the preliminary P. That code is United Kingdom practice, not a universal ISO rule.
 
-Archive es el diario del contenedor. No es la papelera. Cada transición queda registrada.
+Archive is the journal of the container. It is not the waste bin. Each transition is recorded.
 
-La figura es un esquema. Un contenedor puede recorrer otro camino y puede vivir en más de una solución. La cláusula 12.1 recomienda tres metadatos: código de revisión, código de estado y código de clasificación. La cláusula 5.1.7 de la parte 2 exige que el CDE permita asignarlos. El identificador único también es metadato, pero la guía C advierte que el estado y la revisión no deben esconderse dentro del nombre.
+The figure is a scheme. A container can take another path and can live in more than one solution. Clause 12.1 recommends three metadata items: revision code, status code, and classification code. Clause 5.1.7 of Part 2 requires the CDE to allow them to be assigned. The unique identifier is also metadata, but Guidance C warns that status and revision should not be hidden inside the name.
 
-No confundas shared resources con el estado Shared. En la cláusula 5.1.6, shared resources son plantillas, bibliotecas de objetos o estilos que quien encarga pone a disposición. El estado Shared es un momento del flujo.
+Do not confuse shared resources with the Shared state. In clause 5.1.6, shared resources are templates, object libraries, or styles that the appointing party makes available. The Shared state is a moment in the workflow.
 
-## Fuentes
+## Sources
 
-- [Guía C, el CDE, edición 1, septiembre de 2020](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-C_Facilitating-the-common-data-environment-workflow-and-technical-solutions_Edition-1.pdf)
-- [Guía 1, sección 6, contenedor y federación](https://imiframework.org/wp-content/uploads/2019/10/Information-Management-according-to-BS-EN-ISO-19650_-Guidance-Part-1_Concepts_2ndEdition.pdf)
+- [Guidance C, the CDE, edition 1, September 2020](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-C_Facilitating-the-common-data-environment-workflow-and-technical-solutions_Edition-1.pdf)
+- [Guidance 1, section 6, container and federation](https://imiframework.org/wp-content/uploads/2019/10/Information-Management-according-to-BS-EN-ISO-19650_-Guidance-Part-1_Concepts_2ndEdition.pdf)
 `,
   },
   {
     id: "loin",
     group: "base",
     groupLabel: "Base",
-    nav: "Cuánta información",
+    nav: "How much information",
     markdown: `## Level of information need
 
-El level of information need responde a una sola pregunta: cuánta información basta en este intercambio para este propósito. Sirve para no entregar de menos, que aumenta el riesgo, ni de más, que es desperdicio. La guía de conceptos de 2019 dice que el término no se abrevia. LOD y level of detail son marcos antiguos de algunos países. Pueden ilustrar un método local. No son el término de ISO.
+The level of information need answers one question: how much information is enough, in this exchange, for this purpose. It exists so that too little is not delivered, which raises risk, and too much is not delivered, which is waste. The 2019 concepts guidance says the term is not abbreviated. LOD and level of detail are older frameworks used in some countries. They may illustrate a local method. They are not the ISO term.
 
-El concepto entra en la cláusula 11.2 de ISO 19650-1. Quien encarga fija el método en el information standard del proyecto y lo aplica en cada EIR. El nivel de cada contenedor se anota en el task information delivery plan.
+The concept enters in clause 11.2 of ISO 19650-1. The appointing party sets the method in the project's information standard and applies it in each EIR. The level of each container is recorded in the task information delivery plan.
 
-La guía D, todavía sobre la cláusula 11.2, pide tres subdivisiones: geometrical information, alphanumerical information y documentation. Una puerta cortafuego en diseño técnico puede necesitar hueco y sentido de apertura, la resistencia al fuego y el identificador, y el certificado de ensayo. Pedir en ese momento la geometría de fabricación suele ser más de lo que la decisión requiere.
+Guidance D, still on clause 11.2, asks for three subdivisions: geometrical information, alphanumerical information, and documentation. A fire door in technical design may need the opening and the swing, the fire rating and the identifier, and the test certificate. Asking at that moment for fabrication geometry is usually more than the decision requires.
 
-ISO 7817-1:2024 es ahora el texto internacional de conceptos y principios para decir ese nivel con un método estable. El resumen público lo aplica a todo el ciclo de vida, a un intercambio general, al trabajo en curso y a un appointment con entrega especificada. Tiene 23 páginas y se publicó el 20 de junio de 2024, etapa 60.60. El catálogo de NEN da de baja NEN-EN 17412-1:2020 el 1 de julio de 2024 y lo sustituye por NEN-EN-ISO 7817-1:2024. La ficha de ISO 7817-1 no usa ella misma la palabra supersedes. El borrador de la parte 2 sí empareja los dos números: EN 17412-1, ISO 7817-1.
+ISO 7817-1:2024 is now the international text of concepts and principles for stating that level with a stable method. The public abstract applies it across the life cycle, to a general exchange, to work in progress, and to an appointment with a specified delivery. It has 23 pages and was published on 20 June 2024, stage 60.60. The NEN catalogue withdraws NEN-EN 17412-1:2020 on 1 July 2024 and replaces it with NEN-EN-ISO 7817-1:2024. The ISO 7817-1 record does not itself use the word supersedes. The draft of Part 2 does pair the two numbers: EN 17412-1, ISO 7817-1.
 
-Esa parte 2, ISO/DTS 7817-2, seguía en borrador el 26 de noviembre de 2026, etapa 50.20 desde el 17 de septiembre de 2026. Su resumen dice que enseñará a redactar geometría, datos y documentación, y que los relacionará con el EIR, el BIM execution plan, el information delivery manual de ISO 29481 y con IFC. No es norma publicada. La parte 3, ISO/DIS 7817-3, un modelo UML y un esquema XML, cerró votación el 6 de mayo de 2026 y la ficha seguía en 40.60, sin decisión publicada.
+That Part 2, ISO/DTS 7817-2, was still a draft on 26 November 2026, stage 50.20 since 17 September 2026. Its abstract says it will show how to write geometry, data, and documentation, and that it will relate them to the EIR, the BIM execution plan, the information delivery manual of ISO 29481, and IFC. It is not a published standard. Part 3, ISO/DIS 7817-3, a UML model and an XML schema, closed its vote on 6 May 2026 and the record was still at 40.60, with no published decision.
 
-Hasta que esas partes salgan, se estudia 7817-1 junto con la cláusula 11.2 y las tres subdivisiones de la guía D.
+Until those parts are published, study 7817-1 together with clause 11.2 and the three subdivisions in Guidance D.
 
-## Fuentes
+## Sources
 
 - [ISO 7817-1:2024](https://www.iso.org/standard/82914.html)
-- [NEN-EN 17412-1:2020, retirada](https://www.nen.nl/en/nen-en-17412-1-2020-en-277555)
-- [ISO/DTS 7817-2, borrador](https://www.iso.org/standard/89075.html)
-- [ISO/DIS 7817-3, borrador](https://www.iso.org/standard/89077.html)
-- [Guía D, apartado del level of information need](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-D_Developing-information-requirements_Edition-2.pdf)
+- [NEN-EN 17412-1:2020, withdrawn](https://www.nen.nl/en/nen-en-17412-1-2020-en-277555)
+- [ISO/DTS 7817-2, draft](https://www.iso.org/standard/89075.html)
+- [ISO/DIS 7817-3, draft](https://www.iso.org/standard/89077.html)
+- [Guidance D, the level of information need section](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-D_Developing-information-requirements_Edition-2.pdf)
 `,
   },
   {
     id: "entrega",
     group: "proceso",
-    groupLabel: "Proceso",
-    nav: "Entrega",
-    markdown: `## Mientras se diseña y se construye
+    groupLabel: "Process",
+    nav: "Delivery",
+    markdown: `## While the asset is designed and built
 
-ISO 19650-2:2018 especifica el proceso de información en la delivery phase. Vale para cualquier activo y cualquier tamaño, sea cual sea la forma de contratar. La guía 2, edición 6, de febrero de 2021, lee la cláusula 5 como ocho actividades. Las 5.1 y 5.8 son del proyecto entero. Las 5.2 a 5.7 se repiten en cada appointment.
+ISO 19650-2:2018 specifies the information process in the delivery phase. It applies to any asset and any size, whatever the procurement route. Guidance 2, edition 6, February 2021, reads clause 5 as eight activities. Activities 5.1 and 5.8 belong to the whole project. Activities 5.2 to 5.7 repeat for each appointment.
 
-| Cláusula | Actividad | Quién actúa primero |
+| Clause | Activity | Who acts first |
 | --- | --- | --- |
 | 5.1 | Assessment and need | Appointing party |
 | 5.2 | Invitation to tender | Appointing party |
-| 5.3 | Tender response | La candidata a lead appointed party |
-| 5.4 | Appointment | Lead appointed party, con quien encarga |
-| 5.5 | Mobilization | Lead appointed party y su delivery team |
-| 5.6 | Collaborative production of information | Task teams y lead appointed party |
-| 5.7 | Information model delivery | Lead appointed party, y luego quien encarga acepta |
+| 5.3 | Tender response | Prospective lead appointed party |
+| 5.4 | Appointment | Lead appointed party, with the appointing party |
+| 5.5 | Mobilization | Lead appointed party and its delivery team |
+| 5.6 | Collaborative production of information | Task teams and lead appointed party |
+| 5.7 | Information model delivery | Lead appointed party, then the appointing party accepts |
 | 5.8 | Project close-out | Appointing party |
 
-La grafía mobilization es la de esa edición de la guía. En inglés británico también se escribe mobilise. Es la misma actividad.
+The spelling mobilization is the one used in that edition of the guidance. British English also writes mobilise. It is the same activity.
 
-Antes de licitar, quien encarga deja listos, según la tabla de la guía A, los hitos (5.1.3), el information standard (5.1.4), los information production methods and procedures (5.1.5), la reference information y los shared resources (5.1.6), el information protocol (5.1.8), los EIR (5.2.1) y los criterios para evaluar la oferta (5.2.3).
+Before tender, the appointing party has ready, according to the table in Guidance A, the milestones (5.1.3), the information standard (5.1.4), the information production methods and procedures (5.1.5), the reference information and the shared resources (5.1.6), the information protocol (5.1.8), the EIR (5.2.1), and the criteria for evaluating the tender (5.2.3).
 
-El BIM execution plan se cita en la cláusula 3.1.3.1. Hay un solo plan con dos momentos, no dos documentos rivales. En la oferta, cláusula 5.3.2, la candidata lo establece. La cláusula nombra siete asuntos que debe considerar. El pasaje leído de la guía no los enumera, así que aquí no se inventan. Después del contrato, la cláusula 5.4.1 confirma ese plan. En la oferta también puede proponer cambios al information standard o a los métodos, incluidos los que hagan falta para repartir la información con seguridad.
+The BIM execution plan is cited at clause 3.1.3.1. There is one plan with two moments, not two rival documents. At tender, clause 5.3.2, the prospective party establishes it. The clause names seven considerations. The passage read in the guidance does not list them, so they are not invented here. After the contract, clause 5.4.1 confirms that plan. At tender the party may also propose changes to the information standard or to the methods, including those needed to share information securely.
 
-Hay dos matrices y no se mezclan. La de actividades de gestión de la información tiene una plantilla indicativa en el anexo A de la parte 2, ligada a la cláusula 5.1.1. La de entregables no tiene plantilla en la serie. Nace, a alto nivel, dentro del plan de la oferta, y se afina después del contrato. Esa matriz detallada alimenta los TIDP y el MIDP. Las cláusulas que la guía cita son 5.3.2, 5.4.1, 5.4.2, 5.4.4 y 5.4.5.
+There are two matrices and they are not mixed. The information management activity matrix has an indicative template in Annex A of Part 2, tied to clause 5.1.1. The deliverables matrix has no template in the series. It starts, at a high level, inside the tender plan, and it is refined after the contract. That detailed matrix feeds the TIDPs and the MIDP. The clauses the guidance cites are 5.3.2, 5.4.1, 5.4.2, 5.4.4, and 5.4.5.
 
-Cada task team prepara un task information delivery plan, cláusula 5.4.4. Para cada contenedor anota nombre y título, predecesores o dependencias, level of information need, tiempo estimado de producción, autor e hitos de entrega. La lead appointed party compila esos planes en un master information delivery plan, cláusula 5.4.5. La norma no impone un formato único.
+Each task team prepares a task information delivery plan, clause 5.4.4. For each container it records name and title, predecessors or dependencies, level of information need, estimated production time, author, and delivery milestones. The lead appointed party compiles those plans into a master information delivery plan, clause 5.4.5. The standard does not impose a single format.
 
-La cláusula 5.3.6 pide que la candidata establezca el risk register del delivery team. Trata del riesgo de entregar la información a tiempo y en condiciones, no del registro general de seguridad de la obra. La cláusula 6.3.1 de la parte 1, citada por la guía de conceptos, mete el riesgo de información dentro de la gestión ordinaria de riesgos. Un ejemplo: el especialista aún no se conoce, así que la federation strategy de la oferta es provisional y se confirma en la movilización, antes del primer intercambio shared.
+Clause 5.3.6 requires the prospective party to establish the delivery team's risk register. It is about the risk of delivering the information on time and in the required condition, not the general site health and safety register. Clause 6.3.1 of Part 1, cited by the concepts guidance, places information risk inside ordinary risk management. One example: the specialist is not yet known, so the federation strategy in the tender is provisional and is confirmed at mobilization, before the first shared exchange.
 
-La movilización, cláusulas 5.5.1, 5.5.2 y 5.5.3 en la guía, pone en marcha personas y tecnología y prueba los métodos antes de producir en serio. En la producción, las cláusulas 5.6.3 a 5.6.5 y 5.7.1 a 5.7.4 describen capas de revisión: el task team, la lead appointed party y, al entregar el modelo, la aceptación de quien encarga, cláusula 5.7.4. El cierre, 5.8, incluye las lecciones aprendidas.
+Mobilization, clauses 5.5.1, 5.5.2, and 5.5.3 in the guidance, starts people and technology and tests the methods before serious production. In production, clauses 5.6.3 to 5.6.5 and 5.7.1 to 5.7.4 describe layers of review: the task team, the lead appointed party, and, when the model is delivered, acceptance by the appointing party, clause 5.7.4. Close-out, 5.8, includes lessons learned.
 
-## Fuentes
+## Sources
 
-- [Guía 2, edición 6, febrero de 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-2_Parties-teams-and-processes-for-the-delivery-phase-of-assets_Edition-6.pdf)
-- [Guía F, planificación de la entrega, septiembre de 2020](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-F_About-information-delivery-planning_Edition-1.pdf)
-- [Guía E, licitación y encargos, edición 2, febrero de 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-E_Tendering-and-appointments_Edition-2.pdf)
-- [Guía A, tabla de recursos](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-A_The-information-management-function-and-resources_Edition-2.pdf)
+- [Guidance 2, edition 6, February 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-2_Parties-teams-and-processes-for-the-delivery-phase-of-assets_Edition-6.pdf)
+- [Guidance F, information delivery planning, September 2020](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-F_About-information-delivery-planning_Edition-1.pdf)
+- [Guidance E, tendering and appointments, edition 2, February 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-E_Tendering-and-appointments_Edition-2.pdf)
+- [Guidance A, resource table](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-A_The-information-management-function-and-resources_Edition-2.pdf)
 - [ISO 19650-2:2018](https://www.iso.org/standard/68080.html)
 `,
   },
   {
     id: "operacion",
     group: "proceso",
-    groupLabel: "Proceso",
-    nav: "Operación",
-    markdown: `## Cuando el activo ya se usa
+    groupLabel: "Process",
+    nav: "Operation",
+    markdown: `## When the asset is already in use
 
-ISO 19650-3:2020 especifica el proceso durante la operational phase, el tiempo en que el activo se usa para lo que fue hecho. Lo pueden cumplir directamente o delegarlo. El texto del director del proyecto, David Churcher, del 26 de agosto de 2020, lo dirige a quien posee u opera el activo y a los equipos que mantienen, reparan o vigilan. También les sirve a los equipos de obra, porque la información que entregan al final es el arranque de la operación.
+ISO 19650-3:2020 specifies the process during the operational phase, the time in which the asset is used for the purpose it was made. Parties may meet it directly or delegate it. The project leader's text, David Churcher, 26 August 2020, addresses those who own or operate the asset and the teams that maintain, repair, or monitor it. It also serves delivery teams, because the information they hand over at the end is the start of operation.
 
-En esta fase la appointing party es la propietaria, la operadora o quien actúe por ellas. La lead appointed party puede ser un contratista o un equipo interno. El proceso es el mismo. Un contrato marco con órdenes de llamada sigue siendo un appointment.
+In this phase the appointing party is the owner, the operator, or whoever acts for them. The lead appointed party may be a contractor or an in-house team. The process is the same. A framework agreement with call-off orders is still an appointment.
 
-La guía 3, edición 2, de febrero de 2021, lee el proceso como ocho pasos, cláusulas 5.1 a 5.8. El paso 1 lo prepara quien encarga: OIR, AIR, eventos previsibles, information standard del activo y CDE. Después el diagrama se abre en tres caminos.
+Guidance 3, edition 2, February 2021, reads the process as eight steps, clauses 5.1 to 5.8. Step 1 is prepared by the appointing party: OIR, AIR, foreseeable events, the asset information standard, and the CDE. The diagram then opens into three paths.
 
-El camino B es un trigger event previsible, por ejemplo un mantenimiento o una inspección. Se contrata y se moviliza antes de que ocurra. Las cláusulas 5.2 y 5.3 son la contratación. Las 5.4 y 5.5, la planificación y la movilización. Cuando el evento llega, se produce y se revisa, cláusulas 5.6 y 5.7.
+Path B is a foreseeable trigger event, for example a maintenance visit or an inspection. It is procured and mobilized before it happens. Clauses 5.2 and 5.3 are procurement. Clauses 5.4 and 5.5 are planning and mobilization. When the event arrives, information is produced and reviewed, clauses 5.6 and 5.7.
 
-El camino C es un evento que no se podía planear con sensatez: un daño, un pico de demanda, un proyecto nuevo. Primero ocurre. Después se contrata, se moviliza y se produce. Habrá un retraso inevitable entre el hecho y el trabajo.
+Path C is an event that could not reasonably be planned: damage, a demand spike, a new project. It happens first. Procurement, mobilization, and production come after. There will be an unavoidable delay between the event and the work.
 
-El camino D es adquirir un activo que era de otro. La relación no es la de cliente y proveedor de obras. Quien compra a menudo no puede exigir la información como condición del precio. A veces se negocia, o se encarga una comprobación propia.
+Path D is acquiring an asset that belonged to someone else. The relationship is not that of a client and a works contractor. The buyer often cannot demand the information as a condition of the price. Sometimes it is negotiated, or a check is commissioned separately.
 
-La cláusula 5.1.5 es la que la guía cita para identificar los trigger events previsibles. El ritmo de la operación lo marcan esos eventos, igual que el plan de trabajo marca el ritmo de un proyecto. Un ejemplo de la guía: tras el servicio de una caldera, actualizar el libro; en un colegio vacío, los ensayos de legionela.
+Clause 5.1.5 is the one the guidance cites for identifying foreseeable trigger events. Those events set the pace of operation, just as the plan of work sets the pace of a project. One example from the guidance: after a boiler service, update the log book; in an empty school, the legionella tests.
 
-El traspaso entre modelos no es un único instante. La lectura de la guía sobre la figura del ciclo de vida marca tres cosas. Al empezar la entrega, la información pertinente pasa del AIM al PIM. Al empezar la operación, la pertinente pasa del PIM al AIM. Durante la entrega también puede haber traspasos, no solo en los dos extremos. Quien encarga revisa y acepta lo que entrega cada lead appointed party y entonces actualiza los sistemas donde vive el AIM. Aceptar no prueba que, más tarde, la información siga completa. El protocolo del appointment explica esa responsabilidad.
+The handover between models is not a single instant. The guidance's reading of the life-cycle figure marks three things. At the start of delivery, the relevant information passes from the AIM to the PIM. At the start of operation, the relevant information passes from the PIM to the AIM. During delivery there can also be handovers, not only at the two ends. The appointing party reviews and accepts what each lead appointed party delivers and then updates the systems where the AIM lives. Acceptance does not prove that, later, the information is still complete. The appointment protocol explains that responsibility.
 
-Algunas tareas, incluido el BIM execution plan, son a propósito más ligeras que en la parte 2. La proporcionalidad obliga a ajustar el esfuerzo al activo, al evento y al valor de la información. No autoriza a omitir una necesidad legal. La guía pone ejemplos: aplicar el proceso solo a los activos críticos, o no meter información de referencia en un concurso cuando ninguna sirve.
+Some tasks, including the BIM execution plan, are deliberately lighter than in Part 2. Proportionality requires the effort to match the asset, the event, and the value of the information. It does not authorize omitting a legal need. The guidance gives examples: apply the process only to critical assets, or leave reference information out of a competition when none of it is useful.
 
-## Fuentes
+## Sources
 
 - [ISO 19650-3:2020](https://www.iso.org/standard/75109.html)
-- [Nota de David Churcher, 26 de agosto de 2020](https://committee.iso.org/sites/tc59/home/news/content-left-area/news-and-updates/new-standard-for-more-efficient.html)
-- [Guía 3, edición 2, febrero de 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-3_Operational-phase-of-the-asset-life-cycle_Edition-2.pdf)
-- [Guía D, OIR y AIR](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-D_Developing-information-requirements_Edition-2.pdf)
+- [David Churcher's note, 26 August 2020](https://committee.iso.org/sites/tc59/home/news/content-left-area/news-and-updates/new-standard-for-more-efficient.html)
+- [Guidance 3, edition 2, February 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-3_Operational-phase-of-the-asset-life-cycle_Edition-2.pdf)
+- [Guidance D, OIR and AIR](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-D_Developing-information-requirements_Edition-2.pdf)
 `,
   },
   {
     id: "intercambio",
     group: "proceso",
-    groupLabel: "Proceso",
-    nav: "Intercambio",
-    markdown: `## Decidir si el archivo se comparte o se publica
+    groupLabel: "Process",
+    nav: "Exchange",
+    markdown: `## Deciding whether the file is shared or published
 
-ISO 19650-4:2022, 12 páginas, publicada el 11 de agosto de 2022, especifica el proceso y los criterios de decisión de un information exchange, para que el PIM o el AIM resultante sirva. Aplica a las etapas de entrega de la parte 2 y a los trigger events de la parte 3. Se usa a la escala del activo.
+ISO 19650-4:2022, 12 pages, published on 11 August 2022, specifies the process and the decision criteria of an information exchange, so that the resulting PIM or AIM is fit for purpose. It applies to the delivery stages of Part 2 and to the trigger events of Part 3. It is used at the scale of the asset.
 
-El resumen público explica shall consider. La persona tiene que pensar de verdad en cada asunto de la lista. El tiempo y las pruebas dependen del activo, de la experiencia y de la política nacional. En un activo pequeño, algunos asuntos se descartan enseguida, siempre que el descarte sea una decisión y no un olvido.
+The public abstract explains shall consider. The person has to think through each item on the list. The time and the evidence depend on the asset, on experience, and on national policy. On a small asset, some items are set aside at once, provided the setting aside is a decision and not an omission.
 
-Las partes 1, 2, 3 y 5 hablan de appointing, lead appointed y appointed parties. Para un intercambio concreto, la parte 4 usa también information provider, information receiver e information reviewer, porque la misma organización cambia de papel según el momento. Los criterios de los dos puntos de decisión son los mismos: el EIR aplicable, con el information standard y los métodos, más los criterios de calidad de la cláusula 7. También se revisa la calidad técnica.
+Parts 1, 2, 3, and 5 speak of appointing, lead appointed, and appointed parties. For one exchange, Part 4 also uses information provider, information receiver, and information reviewer, because the same organization changes role with the moment. The criteria at the two decision points are the same: the applicable EIR, with the information standard and the methods, plus the quality criteria of clause 7. Technical quality is also reviewed.
 
-La guía 4, de marzo de 2023, coloca dos puntos, A y B, sobre el flujo del CDE. El texto dice que ambos usan los mismos criterios. La lectura de ese texto, no una copia de la figura, asocia A con compartir durante el desarrollo y B con publicar tras autorizar y aceptar. La propia guía recomienda compartir pronto y a menudo, y publicar una vez, cuando el contenedor ya está autorizado y aceptado. Si la figura usara otras etiquetas, habría que corregir esta lectura con un ejemplar de la norma.
+Guidance 4, March 2023, places two points, A and B, on the CDE workflow. The text says that both use the same criteria. A reading of that text, not a copy of the figure, associates A with sharing during development and B with publishing after authorization and acceptance. The guidance itself recommends sharing early and often, and publishing once, when the container is already authorized and accepted. If the figure used other labels, this reading would have to be corrected against a copy of the standard.
 
-La guía C, a la que la guía 4 remite para operar el CDE, define published como lo autorizado por la lead appointed party y aceptado por la appointing party. Shared es el uso fuera del task team autor, antes de esa aceptación.
+Guidance C, which Guidance 4 points to for operating the CDE, defines published as authorized by the lead appointed party and accepted by the appointing party. Shared is use outside the authoring task team, before that acceptance.
 
-Las cláusulas 7.1 a 7.6 son seis criterios, en su mayoría independientes de los requisitos funcionales de un cliente, y por eso se pueden normalizar. La 7.7 dice que la norma no prescribe los criterios funcionales, técnicos o semejantes. Esos siguen en el EIR.
+Clauses 7.1 to 7.6 are six criteria, mostly independent of a client's functional requirements, and that is why they can be standardized. Clause 7.7 says the standard does not prescribe the functional, technical, or similar criteria. Those stay in the EIR.
 
-| Cláusula | Qué mira | Ejemplo de la guía |
+| Clause | What it looks at | Example from the guidance |
 | --- | --- | --- |
-| 7.1 CDE | Nombre y metadatos | Un nombre que no cumple el anexo que se haya acordado |
-| 7.2 Conformance | Esquema y formato | Un XML que no está bien formado |
-| 7.3 Continuity | Correspondencia con otros intercambios | Un espacio que cambia de nombre entre versiones sin control |
-| 7.4 Communication | Pérdida al traducir o convertir | Una fecha que se lee mal |
-| 7.5 Consistency | Federación, espacio y atributos | El mismo elemento en dos modelos, un hueco entre elementos, o un peso que no coincide con la ficha del producto |
-| 7.6 Completeness | Presencia y suficiencia | Faltan material y volumen |
+| 7.1 CDE | Name and metadata | A name that does not meet the annex that was agreed |
+| 7.2 Conformance | Schema and format | An XML file that is not well formed |
+| 7.3 Continuity | Correspondence with other exchanges | A space that changes name between versions without control |
+| 7.4 Communication | Loss in translation or conversion | A date that is read wrongly |
+| 7.5 Consistency | Federation, space, and attributes | The same element in two models, a gap between elements, or a weight that does not match the product data sheet |
+| 7.6 Completeness | Presence and sufficiency | Material and volume are missing |
 
-Valen para planos, documentos y croquis, y también para modelos y bases de datos. La información abierta y estructurada hace más fáciles las comprobaciones automáticas. El programa de autor puede evitar el defecto antes de exportar. El programa de revisión puede encontrarlo después. Las dos cosas son calidad.
+They apply to drawings, documents, and sketches, and also to models and databases. Open, structured information makes automatic checks easier. The authoring program can prevent the defect before export. The review program can find it afterwards. Both are quality.
 
-Information sustainability, en la guía 4, es información que sigue existiendo fuera del programa que la creó y del que la consume. El mismo dato puede servir después para coste, carbono, seguridad o suministro. Los anexos informativos, que no se copian aquí, enumeran normas abiertas candidatas para estructura, formato y clasificación. Que un intercambio concreto vaya en IFC lo decide el EIR. La parte 4 anima a no encerrar el dato en un formato que muera con la licencia.
+Information sustainability, in Guidance 4, is information that continues to exist outside the program that created it and the program that consumes it. The same data can later serve cost, carbon, safety, or supply. The informative annexes, which are not copied here, list open standards that are candidates for structure, format, and classification. Whether a particular exchange travels in IFC is decided by the EIR. Part 4 encourages not locking the data into a format that dies with the licence.
 
-El anexo nacional británico de esta parte, según la guía, añade Uniclass al contenedor y a entidades como zonas y productos. Es una adición nacional.
+The British national annex to this part, according to the guidance, adds Uniclass to the container and to entities such as zones and products. That is a national addition.
 
-## Fuentes
+## Sources
 
 - [ISO 19650-4:2022](https://www.iso.org/standard/78246.html)
-- [Guía 4, marzo de 2023](https://nottingham-repository.worktribe.com/preview/21112102/ISO_19650_Guidance_4_Information%20exchange_Edition%201.pdf)
-- [Guía C, estados del CDE](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-C_Facilitating-the-common-data-environment-workflow-and-technical-solutions_Edition-1.pdf)
-- [Recursos del IMI Framework](https://imiframework.org/resources/)
+- [Guidance 4, March 2023](https://nottingham-repository.worktribe.com/preview/21112102/ISO_19650_Guidance_4_Information%20exchange_Edition%201.pdf)
+- [Guidance C, CDE states](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-C_Facilitating-the-common-data-environment-workflow-and-technical-solutions_Edition-1.pdf)
+- [IMI Framework resources](https://imiframework.org/resources/)
 `,
   },
   {
     id: "seguridad",
     group: "proceso",
-    groupLabel: "Proceso",
-    nav: "Seguridad",
-    markdown: `## Información sensible, sin cerrar la colaboración
+    groupLabel: "Process",
+    nav: "Security",
+    markdown: `## Sensitive information, without closing collaboration
 
-ISO 19650-5:2020, confirmada el 24 de octubre de 2025, especifica un enfoque security-minded para la información en la madurez de la parte 1, y para la información sensible de cualquier iniciativa, proyecto, activo, producto o servicio. Cubre todo el ciclo, exista ya el activo o esté solo planeado. Incluye crear una cultura proporcionada y auditar el cumplimiento. También importa para la información comercial, la personal y la propiedad intelectual. No es un manual de protección de datos.
+ISO 19650-5:2020, confirmed on 24 October 2025, specifies a security-minded approach to information at the maturity of Part 1, and to sensitive information in any initiative, project, asset, product, or service. It covers the whole cycle, whether the asset already exists or is only planned. It includes building a proportionate culture and auditing compliance. It also matters for commercial information, personal information, and intellectual property. It is not a data-protection manual.
 
-La National Protective Security Authority, NPSA, es adonde el IMI Framework envía al lector. No hay una guía 5 propia del UK BIM Framework. NPSA dice que la norma ISO sustituye a PAS 1192-5 y recoge ideas de PAS 185 y PAS 1085. Esas PAS son predecesoras. La guía de conceptos de julio de 2019 todavía mandaba usar PAS 1192-5 hasta que saliera la parte 5. Esa frase quedó vieja en junio de 2020.
+The National Protective Security Authority, NPSA, is where the IMI Framework sends the reader. There is no Guidance 5 of the UK BIM Framework. NPSA says the ISO standard replaces PAS 1192-5 and takes up ideas from PAS 185 and PAS 1085. Those PAS documents are predecessors. The concepts guidance of July 2019 still told readers to use PAS 1192-5 until Part 5 appeared. That sentence went out of date in June 2020.
 
-El objetivo no es anular la colaboración del BIM. Es entender las vulnerabilidades y dejar el riesgo en un nivel que las partes toleran. El mismo cuidado sirve para un secreto comercial y para el plano interno de una estación de bombeo que no debe salir en el modelo abierto de coordinación.
+The aim is not to cancel BIM collaboration. It is to understand the vulnerabilities and to leave the risk at a level the parties tolerate. The same care applies to a trade secret and to the internal drawing of a pumping station that should not appear in the open coordination model.
 
-La introducción de NPSA ordena el proceso así. Se establece si hace falta el enfoque, con el sensitivity assessment process cuando corresponda. Se inicia: gobierno, responsabilidades y el arranque del enfoque. Se redacta una security strategy: riesgos, mitigaciones y riesgos que se toleran. Se redacta un security management plan, que incluye políticas, security information requirements, reglas para dar información a terceros, requisitos logísticos y un security breach/incident management plan. Se trabaja con las appointed parties, dentro y fuera de contrato. Se vigila, se audita y se revisa.
+The NPSA introduction orders the process as follows. Establish whether the approach is needed, using the sensitivity assessment process where it applies. Initiate it: governance, responsibilities, and the start of the approach. Write a security strategy: risks, mitigations, and risks that are tolerated. Write a security management plan, which includes policies, security information requirements, rules for giving information to third parties, logistical requirements, and a security breach/incident management plan. Work with the appointed parties, inside and outside contract. Monitor, audit, and review.
 
-Otra nota de NPSA se titula aplicación del security triage process. El fragmento recuperado dice que se conserva copia de la valoración y que, si se adopta el enfoque, se aplican las cláusulas 5 a 9. No se confirmó si sensitivity assessment y security triage son la misma cláusula. Un navegador de NHS Scotland nombra resultados ST1, ST2, ST3 y ST4 frente a la cláusula 4.8, pero ese PDF se equivoca en los años de las partes 1 y 2. Esos códigos quedan sin confirmar. No se estudian como definición.
+Another NPSA note is titled application of the security triage process. The recovered fragment says that a copy of the assessment is kept and that, if the approach is adopted, clauses 5 to 9 are applied. It was not confirmed whether sensitivity assessment and security triage are the same clause. An NHS Scotland navigator names outcomes ST1, ST2, ST3, and ST4 against clause 4.8, but that PDF gets the years of Parts 1 and 2 wrong. Those codes stay unconfirmed. They are not studied as a definition.
 
-La parte 5 no usa, según la guía del protocolo, la expresión information protocol. Sí exige que los documentos del appointment prevean lo de la cláusula 9.2. La guía E dice que las normas identificadas al hacer el security management plan se consideren en el information standard, y cita las cláusulas 7 y 9.2. Un ejemplo de la guía, no una regla universal: un metadato de sensibilidad y el CDE por el que se distribuye.
+Part 5 does not, according to the protocol guidance, use the expression information protocol. It does require the appointment documents to provide for clause 9.2. Guidance E says that the standards identified while making the security management plan are considered in the information standard, and it cites clauses 7 and 9.2. One example from the guidance, not a universal rule: a sensitivity metadata item and the CDE through which it is distributed.
 
-## Fuentes
+## Sources
 
 - [ISO 19650-5:2020](https://www.iso.org/standard/74206.html)
-- [NPSA, enfoque security-minded, actualizado el 21 de septiembre de 2026](https://www.npsa.gov.uk/security-best-practices/build-it-secure/security-minded-approach-digital-engineering)
-- [Introducción de NPSA a BS EN ISO 19650-5](https://www.npsa.gov.uk/system/files/documents/NPSA%20-%20Introduction%20to%20BS%20EN%20ISO%2019650-5.pdf)
-- [NPSA, aplicación del security triage process](https://www.npsa.gov.uk/system/files/documents/NPSA%20Application%20of%20the%20Security%20Triage%20Process.pdf)
-- [Página de recursos del IMI Framework](https://imiframework.org/resources/)
-- [Guía E, cláusulas 7 y 9.2](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-E_Tendering-and-appointments_Edition-2.pdf)
+- [NPSA, security-minded approach, updated 21 September 2026](https://www.npsa.gov.uk/security-best-practices/build-it-secure/security-minded-approach-digital-engineering)
+- [NPSA introduction to BS EN ISO 19650-5](https://www.npsa.gov.uk/system/files/documents/NPSA%20-%20Introduction%20to%20BS%20EN%20ISO%2019650-5.pdf)
+- [NPSA, application of the security triage process](https://www.npsa.gov.uk/system/files/documents/NPSA%20Application%20of%20the%20Security%20Triage%20Process.pdf)
+- [IMI Framework resources page](https://imiframework.org/resources/)
+- [Guidance E, clauses 7 and 9.2](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-E_Tendering-and-appointments_Edition-2.pdf)
 `,
   },
   {
     id: "formatos",
     group: "formatos",
-    groupLabel: "Formatos",
-    nav: "IFC, IDS y bSDD",
-    markdown: `## Cómo se comprueba lo que el proceso pidió
+    groupLabel: "Formats",
+    nav: "IFC, IDS and bSDD",
+    markdown: `## How to check what the process asked for
 
-ISO 19650 dice quién necesita la información, cuándo y con qué nivel. No define por sí sola el esquema del archivo. Tres piezas abiertas hacen comprobable una parte de ese nivel.
+ISO 19650 says who needs the information, when, and at what level. It does not by itself define the file schema. Three open pieces make part of that level checkable.
 
-ISO 16739-1:2024 es la edición 2 del esquema Industry Foundation Classes. Retira la edición de 2018. Se publicó el 22 de marzo de 2024, 496 páginas, etapa 60.60. El resumen añade infraestructura: puentes, carreteras, ferrocarriles, vías de agua y puertos. Publica el esquema, la documentación, los conjuntos de propiedades y cantidades, y la estructura del archivo de intercambio. Un model view definition es un subconjunto para una entrega concreta. El programa declara a qué vista se ajusta. buildingSMART identifica IFC 4.3 ADD2, versión 4.3.2.0, de abril de 2024, como la edición oficial que corresponde a esa ISO. La documentación HTML dice tener el mismo esquema, más ejemplos, bajo CC BY-ND 4.0.
+ISO 16739-1:2024 is edition 2 of the Industry Foundation Classes schema. It withdraws the 2018 edition. It was published on 22 March 2024, 496 pages, stage 60.60. The abstract adds infrastructure: bridges, roads, railways, waterways, and ports. It publishes the schema, the documentation, the property and quantity sets, and the structure of the exchange file. A model view definition is a subset for a particular delivery. The program declares which view it conforms to. buildingSMART identifies IFC 4.3 ADD2, version 4.3.2.0, of April 2024, as the official edition that corresponds to that ISO. The HTML documentation says it has the same schema, plus examples, under CC BY-ND 4.0.
 
-ISO 7817-1 dice cómo expresar el nivel. IFC es un modo de transportar el modelo. El EIR decide si ese modo es el pedido.
+ISO 7817-1 says how to express the level. IFC is one way to carry the model. The EIR decides whether that way is the one that was ordered.
 
-Information Delivery Specification 1.0 es norma de buildingSMART, no de ISO. La etiqueta v1.0.0 se publicó el 3 de junio de 2024, tras votación favorable del comité de normas. La nota de publicación decía que se hablaba de llevarla a CEN o a ISO. El archivo de esquema del etiqueta lleva version 1.0.0. La copia de este sitio es Development/ids.xsd de esa etiqueta. No se comparó byte a byte con https://standards.buildingsmart.org/IDS/1.0/ids.xsd. La licencia del repositorio es CC BY-ND 4.0: se puede guardar sin modificar y citando a buildingSMART International Ltd.
+Information Delivery Specification 1.0 is a buildingSMART standard, not an ISO standard. Tag v1.0.0 was published on 3 June 2024, after a favourable vote of the standards committee. The release note said there was talk of taking it to CEN or to ISO. The schema file in the tag carries version 1.0.0. The copy on this site is Development/ids.xsd from that tag. It was not compared byte for byte with https://standards.buildingsmart.org/IDS/1.0/ids.xsd. The repository licence is CC BY-ND 4.0: it may be kept unmodified, with credit to buildingSMART International Ltd.
 
-Un archivo IDS es una lista de specifications. El manual pone este ejemplo: all walls must have a fire rating property. Cada specification tiene una description para la persona, una applicability que elige objetos y unos requirements que dicen qué deben tener. Las dos partes se arman con facets. En la 1.0 son seis: entity, con clase IFC y predefined type; attribute, con nombre y valor; classification, con sistema y valor; property, con property set, nombre y valor; material, con valor; y parts, cuyo elemento en el esquema se llama partOf. No hay facet de geometría. Se puede omitir el valor de una propiedad si basta con que exista. Las complex restrictions limitan un valor a una lista, un rango o un patrón.
+An IDS file is a list of specifications. The manual gives this example: all walls must have a fire rating property. Each specification has a description for the person, an applicability that selects objects, and requirements that say what those objects must have. Both parts are built from facets. In 1.0 there are six: entity, with IFC class and predefined type; attribute, with name and value; classification, with system and value; property, with property set, name, and value; material, with value; and parts, whose element in the schema is called partOf. There is no geometry facet. A property value may be omitted if it is enough that the property exists. Complex restrictions limit a value to a list, a range, or a pattern.
 
-El archivo de Aquisgrán que viaja en la misma etiqueta sigue apuntando al esquema 0.9.7. No es un ejemplo de la 1.0.
+The Aachen file that travels in the same tag still points at schema 0.9.7. It is not a 1.0 example.
 
-bSDD es un servicio gratuito de buildingSMART para publicar y citar definiciones de clases y propiedades. La página del servicio dice que no es una norma. Aplica ideas de ISO 12006-3, ISO 23386 e ISO 23387. El contenido lo publican organizaciones. Cuando una versión pasa a Active, su URI no cambia. Lo cargado de IFC, según esa página, es el diccionario de objetos tangibles y propiedades de IFC 4.3, no el esquema completo. IDS puede señalar una clase o una propiedad de bSDD por su URI, sin copiar la definición. La diferencia que pone el propio servicio: bSDD puede definir qué es una cocina y qué es una superficie neta. Un IDS puede exigir que este modelo tenga al menos una cocina así, con superficie por encima de un valor.
+bSDD is a free buildingSMART service for publishing and citing definitions of classes and properties. The service page says it is not a standard. It applies ideas from ISO 12006-3, ISO 23386, and ISO 23387. Organizations publish the content. When a version becomes Active, its URI does not change. What is loaded from IFC, according to that page, is the dictionary of tangible objects and properties of IFC 4.3, not the complete schema. IDS can point at a bSDD class or property by its URI, without copying the definition. The distinction the service itself draws: bSDD can define what a kitchen is and what a net area is. An IDS can require that this model have at least one such kitchen, with an area above a value.
 
-Un IDS aprobado no es la aceptación del contenedor. La aceptación sigue siendo la decisión de la parte 4.
+A passed IDS is not acceptance of the container. Acceptance remains the Part 4 decision.
 
-La guía B de septiembre de 2020 sitúa open data, buildingSMART y COBie en el marco británico. Es anterior a IFC 4.3 y a IDS 1.0. Sirve de contexto, no de ficha técnica actual. Las plantillas CIBSE DE3, de 2016, están escritas para PAS 1192-2:2013. Son historia.
+Guidance B of September 2020 places open data, buildingSMART, and COBie in the British framework. It predates IFC 4.3 and IDS 1.0. It is context, not a current technical record. The CIBSE DE3 templates, from 2016, were written for PAS 1192-2:2013. They are history.
 
-## Fuentes
+## Sources
 
 - [ISO 16739-1:2024](https://www.iso.org/standard/84123.html)
-- [Tabla de ediciones IFC](https://technical.buildingsmart.org/standards/ifc/ifc-schema-specifications/)
-- [Introducción a IFC](https://technical.buildingsmart.org/standards/ifc/)
-- [Documentación IFC 4.3.2.0](https://standards.buildingsmart.org/IFC/DEV/IFC4_3/HTML/)
+- [IFC edition table](https://technical.buildingsmart.org/standards/ifc/ifc-schema-specifications/)
+- [Introduction to IFC](https://technical.buildingsmart.org/standards/ifc/)
+- [IFC 4.3.2.0 documentation](https://standards.buildingsmart.org/IFC/DEV/IFC4_3/HTML/)
 - [IDS 1.0.0](https://github.com/buildingSMART/IDS/releases/tag/v1.0.0)
-- [Esquema IDS 1.0](https://standards.buildingsmart.org/IDS/1.0/ids.xsd)
-- [Licencia CC BY-ND 4.0](https://creativecommons.org/licenses/by-nd/4.0/)
+- [IDS 1.0 schema](https://standards.buildingsmart.org/IDS/1.0/ids.xsd)
+- [CC BY-ND 4.0 licence](https://creativecommons.org/licenses/by-nd/4.0/)
 - [bSDD](https://www.buildingsmart.org/users/services/buildingsmart-data-dictionary/)
-- [Citar bSDD desde IDS e IFC](https://technical.buildingsmart.org/services/bsdd/referencing-bsdd-in-ids-and-ifc/)
-- [Guía B, septiembre de 2020, solo contexto](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-B_Open-data-buildingSMART-and-COBie_Edition-1.pdf)
+- [Citing bSDD from IDS and IFC](https://technical.buildingsmart.org/services/bsdd/referencing-bsdd-in-ids-and-ifc/)
+- [Guidance B, September 2020, context only](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-B_Open-data-buildingSMART-and-COBie_Edition-1.pdf)
 `,
   },
   {
     id: "fuentes",
     group: "cierre",
-    groupLabel: "Cierre",
-    nav: "Todas las fuentes",
-    markdown: `## Dónde está cada cosa
+    groupLabel: "Close",
+    nav: "Every source",
+    markdown: `## Where each thing lives
 
-Las normas completas de ISO y CEN se pagan. Lo que sigue son las fichas abiertas y las guías que se pudieron leer el 26 de noviembre de 2026. La vista previa del Online Browsing Platform no cargó, así que ninguna definición se copió de ahí. Los números de cláusula son los que citan las guías, no una transcripción del texto de pago.
+The full ISO and CEN standards are paid. What follows are the open records and the guidance that could be read on 26 November 2026. The Online Browsing Platform preview did not load, so no definition was copied from there. Clause numbers are those cited by the guidance, not a transcription of the paid text.
 
-### Normas, fichas de catálogo
+### Standards, catalogue records
 
-- [ISO 19650-1:2018](https://www.iso.org/standard/68078.html) y su borrador [ISO/DIS 19650-1](https://www.iso.org/standard/89703.html)
-- [ISO 19650-2:2018](https://www.iso.org/standard/68080.html) y su borrador [ISO/DIS 19650-2](https://www.iso.org/standard/89704.html)
-- [ISO 19650-3:2020](https://www.iso.org/standard/75109.html) y su borrador [ISO/DIS 19650-3](https://www.iso.org/standard/90358.html)
+- [ISO 19650-1:2018](https://www.iso.org/standard/68078.html) and its draft [ISO/DIS 19650-1](https://www.iso.org/standard/89703.html)
+- [ISO 19650-2:2018](https://www.iso.org/standard/68080.html) and its draft [ISO/DIS 19650-2](https://www.iso.org/standard/89704.html)
+- [ISO 19650-3:2020](https://www.iso.org/standard/75109.html) and its draft [ISO/DIS 19650-3](https://www.iso.org/standard/90358.html)
 - [ISO 19650-4:2022](https://www.iso.org/standard/78246.html)
 - [ISO 19650-5:2020](https://www.iso.org/standard/74206.html)
-- [ISO 19650-6:2025](https://www.iso.org/standard/82705.html), salud y seguridad, no estudiada aquí
-- [ISO 7817-1:2024](https://www.iso.org/standard/82914.html), [borrador de la parte 2](https://www.iso.org/standard/89075.html) y [borrador de la parte 3](https://www.iso.org/standard/89077.html)
-- [Retirada de EN 17412-1:2020 en NEN](https://www.nen.nl/en/nen-en-17412-1-2020-en-277555)
+- [ISO 19650-6:2025](https://www.iso.org/standard/82705.html), health and safety, not studied here
+- [ISO 7817-1:2024](https://www.iso.org/standard/82914.html), [draft of Part 2](https://www.iso.org/standard/89075.html), and [draft of Part 3](https://www.iso.org/standard/89077.html)
+- [Withdrawal of EN 17412-1:2020 at NEN](https://www.nen.nl/en/nen-en-17412-1-2020-en-277555)
 - [ISO 16739-1:2024](https://www.iso.org/standard/84123.html)
-- [Nota de Churcher sobre la parte 3](https://committee.iso.org/sites/tc59/home/news/content-left-area/news-and-updates/new-standard-for-more-efficient.html)
+- [Churcher's note on Part 3](https://committee.iso.org/sites/tc59/home/news/content-left-area/news-and-updates/new-standard-for-more-efficient.html)
 
-### Guías abiertas del Reino Unido
+### Open United Kingdom guidance
 
-- [Qué es hoy el marco](https://wearenima.im/uk-bim-framework/) y [sus recursos](https://imiframework.org/resources/)
-- [Conceptos, julio de 2019](https://imiframework.org/wp-content/uploads/2019/10/Information-Management-according-to-BS-EN-ISO-19650_-Guidance-Part-1_Concepts_2ndEdition.pdf). Su apartado de seguridad está superado.
-- [Guía A, febrero de 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-A_The-information-management-function-and-resources_Edition-2.pdf)
-- [Guía B, septiembre de 2020](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-B_Open-data-buildingSMART-and-COBie_Edition-1.pdf)
-- [Guía C, septiembre de 2020](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-C_Facilitating-the-common-data-environment-workflow-and-technical-solutions_Edition-1.pdf)
-- [Guía D, febrero de 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-D_Developing-information-requirements_Edition-2.pdf)
-- [Guía E, febrero de 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-E_Tendering-and-appointments_Edition-2.pdf)
-- [Guía F, septiembre de 2020](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-F_About-information-delivery-planning_Edition-1.pdf)
-- [Guía 2, edición 6, febrero de 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-2_Parties-teams-and-processes-for-the-delivery-phase-of-assets_Edition-6.pdf)
-- [Guía 3, edición 2, febrero de 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-3_Operational-phase-of-the-asset-life-cycle_Edition-2.pdf)
-- [Guía 4, marzo de 2023](https://nottingham-repository.worktribe.com/preview/21112102/ISO_19650_Guidance_4_Information%20exchange_Edition%201.pdf)
-- [Guía del protocolo](https://www.ukbimframework.org/wp-content/uploads/2022/08/Information_protocols_supporting_the_delivery_phase_BS_EN_ISO_19650-2_and_the_operational_phase_BS_EN_ISO_19650-3_of_assets-Guidance_Edition-3.pdf), [plantilla de entrega](https://www.ukbimframework.org/wp-content/uploads/2021/11/Information-Protocol-Template-to-support-BS-EN-ISO-19650-2.pdf) y [plantilla de operación](https://www.ukbimframework.org/wp-content/uploads/2021/11/Information-Protocol-Template-to-support-BS-EN-ISO-19650-3.pdf)
+- [What the framework is today](https://wearenima.im/uk-bim-framework/) and [its resources](https://imiframework.org/resources/)
+- [Concepts, July 2019](https://imiframework.org/wp-content/uploads/2019/10/Information-Management-according-to-BS-EN-ISO-19650_-Guidance-Part-1_Concepts_2ndEdition.pdf). Its security section is superseded.
+- [Guidance A, February 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-A_The-information-management-function-and-resources_Edition-2.pdf)
+- [Guidance B, September 2020](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-B_Open-data-buildingSMART-and-COBie_Edition-1.pdf)
+- [Guidance C, September 2020](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-C_Facilitating-the-common-data-environment-workflow-and-technical-solutions_Edition-1.pdf)
+- [Guidance D, February 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-D_Developing-information-requirements_Edition-2.pdf)
+- [Guidance E, February 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-E_Tendering-and-appointments_Edition-2.pdf)
+- [Guidance F, September 2020](https://www.ukbimframework.org/wp-content/uploads/2020/09/Guidance-Part-F_About-information-delivery-planning_Edition-1.pdf)
+- [Guidance 2, edition 6, February 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-2_Parties-teams-and-processes-for-the-delivery-phase-of-assets_Edition-6.pdf)
+- [Guidance 3, edition 2, February 2021](https://www.ukbimframework.org/wp-content/uploads/2021/02/Guidance-Part-3_Operational-phase-of-the-asset-life-cycle_Edition-2.pdf)
+- [Guidance 4, March 2023](https://nottingham-repository.worktribe.com/preview/21112102/ISO_19650_Guidance_4_Information%20exchange_Edition%201.pdf)
+- [Protocol guidance](https://www.ukbimframework.org/wp-content/uploads/2022/08/Information_protocols_supporting_the_delivery_phase_BS_EN_ISO_19650-2_and_the_operational_phase_BS_EN_ISO_19650-3_of_assets-Guidance_Edition-3.pdf), [delivery template](https://www.ukbimframework.org/wp-content/uploads/2021/11/Information-Protocol-Template-to-support-BS-EN-ISO-19650-2.pdf), and [operation template](https://www.ukbimframework.org/wp-content/uploads/2021/11/Information-Protocol-Template-to-support-BS-EN-ISO-19650-3.pdf)
 
-### Seguridad y openBIM
+### Security and openBIM
 
-- [Página NPSA](https://www.npsa.gov.uk/security-best-practices/build-it-secure/security-minded-approach-digital-engineering), [introducción](https://www.npsa.gov.uk/system/files/documents/NPSA%20-%20Introduction%20to%20BS%20EN%20ISO%2019650-5.pdf) y [triage](https://www.npsa.gov.uk/system/files/documents/NPSA%20Application%20of%20the%20Security%20Triage%20Process.pdf)
-- [IFC, tabla de ediciones](https://technical.buildingsmart.org/standards/ifc/ifc-schema-specifications/), [introducción](https://technical.buildingsmart.org/standards/ifc/) y [documentación 4.3.2](https://standards.buildingsmart.org/IFC/DEV/IFC4_3/HTML/)
-- [IDS 1.0.0](https://github.com/buildingSMART/IDS/releases/tag/v1.0.0) y [esquema](https://standards.buildingsmart.org/IDS/1.0/ids.xsd)
-- [bSDD](https://www.buildingsmart.org/users/services/buildingsmart-data-dictionary/) y [cómo citarlo](https://technical.buildingsmart.org/services/bsdd/referencing-bsdd-in-ids-and-ifc/)
+- [NPSA page](https://www.npsa.gov.uk/security-best-practices/build-it-secure/security-minded-approach-digital-engineering), [introduction](https://www.npsa.gov.uk/system/files/documents/NPSA%20-%20Introduction%20to%20BS%20EN%20ISO%2019650-5.pdf), and [triage](https://www.npsa.gov.uk/system/files/documents/NPSA%20Application%20of%20the%20Security%20Triage%20Process.pdf)
+- [IFC edition table](https://technical.buildingsmart.org/standards/ifc/ifc-schema-specifications/), [introduction](https://technical.buildingsmart.org/standards/ifc/), and [4.3.2 documentation](https://standards.buildingsmart.org/IFC/DEV/IFC4_3/HTML/)
+- [IDS 1.0.0](https://github.com/buildingSMART/IDS/releases/tag/v1.0.0) and [schema](https://standards.buildingsmart.org/IDS/1.0/ids.xsd)
+- [bSDD](https://www.buildingsmart.org/users/services/buildingsmart-data-dictionary/) and [how to cite it](https://technical.buildingsmart.org/services/bsdd/referencing-bsdd-in-ids-and-ifc/)
 
-Lo que no se usa como definición: el texto de pago de las normas, PAS 1192 y BS 1192 como regla actual, las plantillas CIBSE de 2016, y los paquetes que piden un correo para descargarse.
+What is not used as a definition: the paid text of the standards, PAS 1192 and BS 1192 as a current rule, the 2016 CIBSE templates, and the packs that ask for an email address before download.
 `,
   },
   {
     id: "preguntas",
     group: "cierre",
-    groupLabel: "Cierre",
-    nav: "Comprobar",
-    markdown: `## Lee la pregunta, responde, y solo después mira
+    groupLabel: "Close",
+    nav: "Check",
+    markdown: `## Read the question, answer it, and only then look
 
-1. ¿Qué edición estudias hoy de cada texto de 19650-1 a 19650-5, y cuál de ellos está confirmado sin borrador de sustitución?
-2. ¿Por qué no basta el resumen de ISO/DIS 19650-2 para decir cómo quedará la operación?
-3. ¿Puede una misma organización ser lead appointed party y, a la vez, contener un task team?
-4. ¿De dónde salen los AIR y los PIR, y cuántos juegos de PIR tiene un proyecto?
-5. ¿Qué cláusulas cita la guía D para el EIR de quien encarga, en obra y en operación?
-6. ¿Quién ve un contenedor mientras está en work in progress, y qué dos actos hacen falta para llamarlo published en la lectura británica?
-7. ¿Por qué level of information need no se escribe LOD?
-8. ¿Qué sustituyó a EN 17412-1:2020 y en qué fecha lo registra NEN?
-9. ¿Qué cláusulas de la parte 2 se repiten en cada appointment?
-10. ¿En qué momento se establece el BIM execution plan y en qué momento se confirma?
-11. ¿Para qué sirve el anexo A, y qué matriz no trae plantilla?
-12. ¿Qué seis datos anota un TIDP en cada contenedor, según la guía F?
-13. ¿Qué camino de la parte 3 contrata antes del trigger event, y qué camino no puede hacerlo?
-14. ¿El paso del PIM al AIM ocurre solo al inaugurar la operación?
-15. ¿Qué mira cada una de las cláusulas 7.1 a 7.6, y qué se niega a prescribir la 7.7?
-16. ¿Qué PAS dice NPSA que quedó sustituida, y por qué no se memorizan ST1 a ST4?
-17. ¿Qué edición de IFC retiró ISO 16739-1:2024, y qué seis facets tiene IDS 1.0?
-18. ¿Un IDS superado significa que quien encarga ya aceptó el contenedor?
+1. Which edition of each text from 19650-1 to 19650-5 do you study today, and which of them is confirmed with no replacement draft?
+2. Why is the abstract of ISO/DIS 19650-2 not enough to say how operation will turn out?
+3. Can the same organization be a lead appointed party and, at the same time, contain a task team?
+4. Where do the AIR and the PIR come from, and how many PIR sets does a project have?
+5. Which clauses does Guidance D cite for the appointing party's EIR, on a project and in operation?
+6. Who sees a container while it is in work in progress, and which two acts are required before the British reading calls it published?
+7. Why is level of information need not written as LOD?
+8. What replaced EN 17412-1:2020, and on what date does NEN record that?
+9. Which clauses of Part 2 repeat for each appointment?
+10. At what moment is the BIM execution plan established, and at what moment is it confirmed?
+11. What is Annex A for, and which matrix has no template?
+12. Which six items does a TIDP record for each container, according to Guidance F?
+13. Which Part 3 path is procured before the trigger event, and which path cannot be?
+14. Does the move from PIM to AIM happen only when operation starts?
+15. What does each of clauses 7.1 to 7.6 look at, and what does 7.7 refuse to prescribe?
+16. Which PAS does NPSA say was replaced, and why are ST1 to ST4 not memorized?
+17. Which IFC edition did ISO 16739-1:2024 withdraw, and which six facets does IDS 1.0 have?
+18. Does a passed IDS mean the appointing party has already accepted the container?
 
-## Respuestas
+## Answers
 
-1. 2018, 2018, 2020, 2022 y 2020. Solo la parte 5 está confirmada, etapa 90.93, sin borrador de sustitución en la ficha. La parte 4 está publicada, etapa 60.60, también sin borrador.
-2. Porque ese resumen sigue describiendo la entrega, mientras la ficha dice que el borrador sustituirá también a la parte 3. El articulado no se leyó.
-3. Sí. La lead appointed party puede ser la misma organización que uno de sus task teams.
-4. De los OIR. Un solo juego de PIR por proyecto.
-5. ISO 19650-2, cláusula 5.2.1, e ISO 19650-3, cláusula 5.2.2.
-6. Solo el autor o su task team. En la guía británica, lo autoriza la lead appointed party y lo acepta la appointing party.
-7. Porque la guía de 2019 dice que el término no se abrevia. LOD es un marco anterior.
-8. NEN-EN-ISO 7817-1:2024, con baja de la norma europea el 1 de julio de 2024.
-9. De la 5.2 a la 5.7. La 5.1 y la 5.8 son del proyecto.
-10. Lo establece la candidata en la oferta, cláusula 5.3.2. Se confirma tras el contrato, cláusula 5.4.1.
-11. Es una plantilla indicativa de actividades de gestión. La matriz de entregables no trae plantilla en la serie.
-12. Nombre y título, predecesores o dependencias, level of information need, tiempo estimado, autor e hitos.
-13. El camino B contrata antes. El C empieza porque el evento ya ocurrió. El D es una adquisición, no un contrato de obras.
-14. No. También puede haber traspasos durante la entrega, y al empezar la entrega hay traspaso del AIM al PIM.
-15. Nombre y metadatos, esquema y formato, continuidad, pérdida en la conversión, coherencia, y presencia. La 7.7 deja fuera los criterios funcionales y técnicos.
-16. PAS 1192-5. Los códigos salen de un navegador que además fecha mal las partes 1 y 2, y no se confirmaron en la nota de NPSA usada aquí.
-17. Retiró ISO 16739-1:2018. Los facets son entity, attribute, classification, property, material y partOf. No hay geometría.
-18. No. La aceptación sigue siendo la decisión de la parte 4.
+1. 2018, 2018, 2020, 2022, and 2020. Only Part 5 is confirmed, stage 90.93, with no replacement draft on the record. Part 4 is published, stage 60.60, also with no draft.
+2. Because that abstract still describes delivery, while the record says the draft will also replace Part 3. The clause text was not read.
+3. Yes. The lead appointed party can be the same organization as one of its task teams.
+4. From the OIR. One PIR set per project.
+5. ISO 19650-2, clause 5.2.1, and ISO 19650-3, clause 5.2.2.
+6. Only the author or its task team. In the British guidance, the lead appointed party authorizes it and the appointing party accepts it.
+7. Because the 2019 guidance says the term is not abbreviated. LOD is an earlier framework.
+8. NEN-EN-ISO 7817-1:2024, with the European standard withdrawn on 1 July 2024.
+9. 5.2 to 5.7. Clauses 5.1 and 5.8 belong to the project.
+10. The prospective party establishes it at tender, clause 5.3.2. It is confirmed after the contract, clause 5.4.1.
+11. It is an indicative template of management activities. The deliverables matrix has no template in the series.
+12. Name and title, predecessors or dependencies, level of information need, estimated time, author, and milestones.
+13. Path B is procured before. Path C starts because the event has already happened. Path D is an acquisition, not a works contract.
+14. No. There can also be handovers during delivery, and at the start of delivery there is a handover from the AIM to the PIM.
+15. Name and metadata, schema and format, continuity, loss in conversion, consistency, and presence. Clause 7.7 leaves functional and technical criteria out.
+16. PAS 1192-5. The codes come from a navigator that also misdates Parts 1 and 2, and they were not confirmed in the NPSA note used here.
+17. It withdrew ISO 16739-1:2018. The facets are entity, attribute, classification, property, material, and partOf. There is no geometry.
+18. No. Acceptance remains the Part 4 decision.
 
-Si una respuesta no sale con tus palabras, vuelve a ese tema en el índice. No hace falta releer desde el mapa.
+If an answer does not come out in your own words, go back to that topic in the contents. There is no need to reread from the map.
 `,
   },
 ];

@@ -41,6 +41,8 @@ describe("loadCurriculum", () => {
     ]);
     expect(screens.filter((screen) => screen.id !== "preguntas").every((screen) => screen.html.includes("http"))).toBe(true);
     expect(screens.find((screen) => screen.id === "loin")?.html).toContain("level of information need");
+    expect(screens.find((screen) => screen.id === "vigencia")?.html).toContain("Sources");
+    expect(screens.every((screen) => !screen.html.includes("Fuentes") && !screen.nav.includes("Qué"))).toBe(true);
   });
 });
 describe("loadEbimDocs", () => {

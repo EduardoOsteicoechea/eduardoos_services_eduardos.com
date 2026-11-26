@@ -16,10 +16,10 @@ for (const screen of screens) {
 
 <Layout
   title="eBim"
-  description="Lectura de administración sobre ISO 19650 y openBIM, de lo fundamental a lo particular."
+  description="Admin reading on ISO 19650 and openBIM, from fundamentals to particulars."
   robots="noindex,nofollow"
 >
-  <p class="status" data-ebim-status>Comprobando la sesión…</p>
+  <p class="status" data-ebim-status>Checking the session…</p>
 
   <div class="ebim" data-ebim hidden>
     <aside class="ebim-nav" data-ebim-nav>
@@ -29,12 +29,12 @@ for (const screen of screens) {
         data-ebim-collapse
         aria-expanded="true"
         aria-controls="ebim-toc"
-        aria-label="Cerrar el índice"
-        title="Cerrar el índice"
+        aria-label="Close the contents"
+        title="Close the contents"
       >
         <span class="material-symbols-outlined" aria-hidden="true" data-ebim-collapse-icon>left_panel_close</span>
       </button>
-      <nav id="ebim-toc" aria-label="Temas, de lo fundamental a lo particular">
+      <nav id="ebim-toc" aria-label="Topics, from fundamentals to particulars">
         {
           groups.map((group) => (
             <details class="ebim-nav__group" open={group.id === "base"}>
@@ -54,9 +54,9 @@ for (const screen of screens) {
 
     <div class="ebim-read">
       <div class="ebim-pager">
-        <button type="button" data-ebim-prev>Anterior</button>
+        <button type="button" data-ebim-prev>Previous</button>
         <p class="ebim-pager__label" data-ebim-label></p>
-        <button type="button" data-ebim-next>Siguiente</button>
+        <button type="button" data-ebim-next>Next</button>
       </div>
       {
         screens.map((screen) => (
@@ -135,8 +135,8 @@ for (const screen of screens) {
       const expanded = collapse.getAttribute("aria-expanded") !== "false";
       const nextExpanded = !expanded;
       collapse.setAttribute("aria-expanded", nextExpanded ? "true" : "false");
-      collapse.setAttribute("aria-label", nextExpanded ? "Cerrar el índice" : "Abrir el índice");
-      collapse.setAttribute("title", nextExpanded ? "Cerrar el índice" : "Abrir el índice");
+      collapse.setAttribute("aria-label", nextExpanded ? "Close the contents" : "Open the contents");
+      collapse.setAttribute("title", nextExpanded ? "Close the contents" : "Open the contents");
       if (toc instanceof HTMLElement) toc.hidden = !nextExpanded;
       if (collapseIcon instanceof HTMLElement) {
         collapseIcon.textContent = nextExpanded ? "left_panel_close" : "left_panel_open";
@@ -149,7 +149,7 @@ for (const screen of screens) {
       const isAdmin = me.status === 200 && String(me.data.role || "").trim().toLowerCase() === "admin";
       if (mustLog) console.log("ebim.session", { status: me.status, isAdmin, requestId: me.requestId });
       if (!isAdmin) {
-        fail("Esta página solo está disponible para administradores.");
+        fail("This page is available only to administrators.");
         go("/404");
         return;
       }
