@@ -1,0 +1,13 @@
+---
+description: La regla del día del agente de Elías vive solo dentro de todays_homework.
+alwaysApply: true
+---
+
+# Regla del día dentro de todays_homework
+
+La ventana del niño es `ai_signature/todays_homework/`. La regla que ese agente obedece se escribe **solo** ahí:
+
+- `ai_signature/todays_homework/AGENTS.md`
+- `ai_signature/todays_homework/.cursor/rules/hoy.mdc`
+
+Al cambiar de día, sustituye esos dos archivos. No copies la tarea a `ai_signature/.cursor/rules/`, a `ai_signature/AGENTS.md` ni a `orden.md`. Esas copias no las ve la ventana y el agente se queda con el día anterior.
