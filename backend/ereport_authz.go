@@ -89,9 +89,6 @@ func (a *App) hasProductEntitlement(r *http.Request, user *User, product string)
 	if user.Role == roleAdmin {
 		return true, false
 	}
-	if productAdminOnly(product) {
-		return false, false
-	}
 	ents, err := a.store.EntitlementsByUser(r.Context(), user.ID)
 	if err != nil {
 		return false, true

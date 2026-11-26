@@ -971,7 +971,12 @@ func (a *App) evoiceCreatePlaylistShare(w http.ResponseWriter, r *http.Request) 
 func (a *App) evoiceGetPlaylistShareInvite(w http.ResponseWriter, r *http.Request) {
 	if productAdminOnly("evoice") {
 		user := a.currentUser(r)
-		if user == nil || user.Role != roleAdmin {
+		ok, unavailable := a.hasEvoiceAccess(r, user)
+		if unavailable {
+			a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
+			return
+		}
+		if user == nil || (user.Role != roleAdmin && !ok) {
 			a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 			return
 		}
@@ -1005,10 +1010,6 @@ func (a *App) evoiceGetPlaylistShareInvite(w http.ResponseWriter, r *http.Reques
 func (a *App) evoiceAcceptPlaylistShareInvite(w http.ResponseWriter, r *http.Request) {
 	user := a.requireEvoiceUnsafe(w, r)
 	if user == nil {
-		return
-	}
-	if productAdminOnly("evoice") && user.Role != roleAdmin {
-		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return
 	}
 	token := strings.TrimSpace(r.PathValue("token"))

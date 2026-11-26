@@ -98,8 +98,8 @@ func productIDAliases(id string) []string {
 	return []string{n}
 }
 
-// productAdminOnly reports whether a product is hidden from non-admin users
-// (nav, catalog, entitlements, and API-key product gates).
+// productAdminOnly reports whether a product is off the public catalog.
+// Subscribers with a live entitlement still reach it; everyone else does not.
 func productAdminOnly(id string) bool {
 	s, ok := serviceByID[normalizeProductID(id)]
 	if !ok {

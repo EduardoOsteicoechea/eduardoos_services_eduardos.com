@@ -409,14 +409,22 @@ func (a *App) publicArticlesSeriesCatalog(r *http.Request, userIDs []string) ([]
 	return out, nil
 }
 
-// requireArticlesAdminRead gates public Articles reads when the product is
-// admin-only (profile-mode). Non-admins get not_found (no enumeration).
+// requireArticlesAdminRead gates Articles reads when the product is off the
+// public catalog. Admins and subscribers pass; everyone else gets not_found.
 func (a *App) requireArticlesAdminRead(w http.ResponseWriter, r *http.Request) bool {
 	if !productAdminOnly(productArticles) {
 		return true
 	}
 	user := a.currentUser(r)
-	if user == nil || user.Role != roleAdmin {
+	if user != nil && user.Role == roleAdmin {
+		return true
+	}
+	ok, unavailable := a.hasProductEntitlement(r, user, productArticles)
+	if unavailable {
+		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
+		return false
+	}
+	if !ok {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return false
 	}

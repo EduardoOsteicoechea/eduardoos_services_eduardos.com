@@ -108,8 +108,8 @@ func TestSubscriptionsAccessDenyAllow(t *testing.T) {
 	app.Handler().ServeHTTP(hiddenRec, hiddenReq)
 	var hidden map[string]any
 	_ = json.Unmarshal(hiddenRec.Body.Bytes(), &hidden)
-	if hidden["allowed"] != false {
-		t.Fatalf("admin-only product must stay denied for members even with entitlement: %#v", hidden)
+	if hidden["allowed"] != true {
+		t.Fatalf("subscriber of an unlisted product must be allowed: %#v", hidden)
 	}
 
 	adminSeed := httptest.NewRecorder()

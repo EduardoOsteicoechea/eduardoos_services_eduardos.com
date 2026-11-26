@@ -23,7 +23,7 @@ import { bumpUiScale } from "./ereport-workspace";
 import { showErrorModal } from "./error-modal";
 import { startVoiceChat } from "./voice";
 import { go, startClientRouting } from "./router";
-import { isAdminOnlyPath, isAdminOnlyProduct } from "./productVisibility";
+import { isAdminOnlyPath, isAdminOnlyProduct, isPublicProduct } from "./productVisibility";
 import { checkServiceAccess } from "./serviceAccess";
 
 /** Root font-size steps (10px–22px at a 16px browser default). */
@@ -529,7 +529,7 @@ function setServiceNavLocked(node: HTMLElement, locked: boolean): void {
   }
 }
 
-/** Admin-only products stay out of the menu for everyone except platform admin. */
+/** Products off the public catalog stay out of the menu until the user is subscribed. */
 function setServiceNavHidden(node: HTMLElement): void {
   node.hidden = true;
   node.classList.add("sidebar-nav--locked");
@@ -538,10 +538,34 @@ function setServiceNavHidden(node: HTMLElement): void {
   node.setAttribute("title", "Subscription required");
 }
 
+/** Service ids the signed-in user may open. Private ones stay hidden until listed here. */
+const menuEntitledServices = new Set<string>();
+
+function serviceIdForPath(pathname: string): string | null {
+  const path = pathname.replace(/\/+$/, "") || "/";
+  if (path.startsWith("/eoschool") || path.startsWith("/homescool") || path.startsWith("/homeschool")) return "homescool";
+  if (path.startsWith("/emusic")) return "emusic";
+  if (path.startsWith("/eoproject")) return "eoproject";
+  if (path.startsWith("/scrib") || path.includes("calvins-institutes")) return "scrib";
+  if (path.startsWith("/evoice")) return "evoice";
+  if (path.startsWith("/eeyes")) return "eeyes";
+  if (path.startsWith("/documents/pamphlet")) return "epam";
+  if (path.startsWith("/articles")) return "articles";
+  if (path.startsWith("/ereport")) return "ereport";
+  if (path.startsWith("/eapi") || path === "/api-docs") return "api";
+  return null;
+}
+
+function subscriberOwnsPath(pathname: string): boolean {
+  const id = serviceIdForPath(pathname);
+  return Boolean(id && menuEntitledServices.has(id));
+}
+
 async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<void> {
   const nodes = [...document.querySelectorAll("[data-service]")].filter(
     (node): node is HTMLElement => node instanceof HTMLElement,
   );
+  menuEntitledServices.clear();
   if (nodes.length === 0) {
     return;
   }
@@ -549,6 +573,8 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
     for (const node of nodes) {
       // Connector buttons are gated separately (website registration binding).
       if (isEreportConnectorNode(node)) continue;
+      const id = (node.getAttribute("data-service") || "").trim().toLowerCase();
+      if (id) menuEntitledServices.add(id);
       setServiceNavLocked(node, false);
     }
     sessionLog("chrome.refreshAuth.services", { mode: "admin", count: nodes.length });
@@ -571,7 +597,7 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
     ...new Set(
       nodes
         .map((node) => (node.getAttribute("data-service") || "").trim().toLowerCase())
-        .filter((id) => id && id !== "ereport-connector" && !isAdminOnlyProduct(id)),
+        .filter((id) => id && id !== "ereport-connector"),
     ),
   ];
   const allowed = new Map<string, boolean>();
@@ -579,22 +605,25 @@ async function syncSubscriptionNav(isAdmin: boolean, authed: boolean): Promise<v
     ids.map(async (id) => {
       const access = await checkServiceAccess(id);
       // Homescool linked students may use `allowed` without a paid entitlement.
-      // Every other service (including eVoice) needs an active subscription.
+      // Every other service needs an active subscription.
       const unlocked =
         id === "homescool"
           ? Boolean(access.allowed)
           : Boolean(access.hasEntitlement);
       allowed.set(id, unlocked);
+      if (unlocked) menuEntitledServices.add(id);
     }),
   );
   for (const node of nodes) {
     if (isEreportConnectorNode(node)) continue;
     const id = (node.getAttribute("data-service") || "").trim().toLowerCase();
-    if (isAdminOnlyProduct(id)) {
-      setServiceNavHidden(node);
+    const unlocked = Boolean(allowed.get(id));
+    if (!isPublicProduct(id)) {
+      if (unlocked) setServiceNavLocked(node, false);
+      else setServiceNavHidden(node);
       continue;
     }
-    setServiceNavLocked(node, !allowed.get(id));
+    setServiceNavLocked(node, !unlocked);
   }
   sessionLog("chrome.refreshAuth.services", {
     mode: "entitlements",
@@ -609,6 +638,7 @@ function plainUserBlockedPath(pathname: string): boolean {
   }
   if (path.startsWith("/payments")) return false;
   if (path.startsWith("/session")) return false;
+  if (subscriberOwnsPath(path)) return false;
   if (isAdminOnlyPath(path)) return true;
   // Public entitled surfaces keep their own gates; do not soft-block here.
   if (
@@ -631,6 +661,7 @@ function enforcePlainUserRouteAccess(isPlainUser: boolean): void {
 function enforceAdminOnlyPathAccess(isAdmin: boolean): void {
   if (isAdmin || typeof window === "undefined") return;
   if (!isAdminOnlyPath(window.location.pathname)) return;
+  if (subscriberOwnsPath(window.location.pathname)) return;
   sessionLog("chrome.adminOnly.redirect", { from: window.location.pathname });
   go("/404");
 }

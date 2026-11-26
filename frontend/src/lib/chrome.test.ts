@@ -170,6 +170,43 @@ describe("main-menu session chrome", () => {
     expect(go).not.toHaveBeenCalledWith("/");
   });
 
+  it("shows a private service when the member is subscribed to it", async () => {
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-sub",
+      data: { id: "member-sub", role: "user" },
+    });
+    vi.mocked(checkServiceAccess).mockImplementation(async (serviceId: string) => ({
+      allowed: serviceId === "evoice",
+      isAdmin: false,
+      hasEntitlement: serviceId === "evoice",
+      isHomescoolStudent: false,
+    }));
+    await refreshAuthChrome();
+    const evoice = document.querySelector('[data-service="evoice"]') as HTMLElement;
+    const scrib = document.querySelector('[data-service="scrib"]') as HTMLElement;
+    expect(evoice.hidden).toBe(false);
+    expect(evoice.classList.contains("sidebar-nav--locked")).toBe(false);
+    expect(scrib.hidden).toBe(true);
+  });
+
+  it("keeps a subscriber on the service they pay for", async () => {
+    window.history.pushState({}, "", "/evoice");
+    vi.mocked(getMe).mockResolvedValue({
+      status: 200,
+      requestId: "rid-sub-route",
+      data: { id: "member-sub-2", role: "user" },
+    });
+    vi.mocked(checkServiceAccess).mockImplementation(async (serviceId: string) => ({
+      allowed: serviceId === "evoice",
+      isAdmin: false,
+      hasEntitlement: serviceId === "evoice",
+      isHomescoolStudent: false,
+    }));
+    await refreshAuthChrome();
+    expect(go).not.toHaveBeenCalledWith("/404");
+  });
+
   it("redirects plain members away from admin-only eEyes", async () => {
     window.history.pushState({}, "", "/eeyes");
     vi.mocked(getMe).mockResolvedValue({

@@ -33,7 +33,15 @@ func (a *App) requireEeyesUIAdmin(w http.ResponseWriter, r *http.Request) bool {
 		return true
 	}
 	user := a.currentUser(r)
-	if user == nil || user.Role != roleAdmin {
+	if user != nil && user.Role == roleAdmin {
+		return true
+	}
+	ok, unavailable := a.hasProductEntitlement(r, user, productEeyes)
+	if unavailable {
+		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
+		return false
+	}
+	if !ok {
 		a.writeSafeError(w, r, http.StatusNotFound, "not_found")
 		return false
 	}

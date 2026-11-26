@@ -93,9 +93,6 @@ func (a *App) subscriptionsAccessHandler(w http.ResponseWriter, r *http.Request)
 	if user.Role == roleAdmin {
 		allowed = true
 		reason = "admin"
-	} else if productAdminOnly(serviceID) {
-		allowed = false
-		reason = "admin_only"
 	} else if granted, unavailable := a.hasAdminServiceGrant(r, user.ID, serviceID); unavailable {
 		a.writeSafeError(w, r, http.StatusServiceUnavailable, "internal_error")
 		return
