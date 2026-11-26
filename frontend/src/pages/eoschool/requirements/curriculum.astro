@@ -234,6 +234,7 @@ function weekForPlanDay(planDay: number): number {
                     data-curriculum-day-kind={block.dayKind ?? "teach"}
                     data-holiday-name={isHoliday ? (block.holidayName ?? "Feriado") : undefined}
                   >
+                    <div class="eoschool-curriculum__day-tools">
                     <button
                       class="eoschool-curriculum__day-bubble"
                       type="button"
@@ -270,6 +271,7 @@ function weekForPlanDay(planDay: number): number {
                     >
                       <span class="material-symbols-outlined" aria-hidden="true">open_in_full</span>
                     </button>
+                    </div>
                     <div class="eoschool-curriculum__day-body" id={`curriculum-day-body-${dayId}`}>
                       {scheduled.map((sectionId) => {
                         const area = areaBySection[sectionId];
@@ -1215,6 +1217,7 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__day-card {
     cursor: default;
+    position: relative;
     align-self: start;
     align-items: stretch;
     height: auto;
@@ -1228,18 +1231,34 @@ function weekForPlanDay(planDay: number): number {
     overflow: visible;
   }
 
-  .eoschool-curriculum__day-bubble {
+  .eoschool-curriculum__day-tools {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
     z-index: 2;
     transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    height: calc(var(--button-size) * 0.84375);
+    gap: var(--rail-gap);
+    padding-inline: var(--rail-gap);
+    margin: 0;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+  }
+
+  .eoschool-curriculum__day-bubble {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex: 0 0 auto;
     overflow: hidden;
-    width: calc(var(--button-size) * 0.84375);
-    height: calc(var(--button-size) * 0.84375);
+    width: calc(var(--button-size) * 0.84375 - (var(--border-width) * 2));
+    height: calc(var(--button-size) * 0.84375 - (var(--border-width) * 2));
     margin: 0;
     padding: 0;
     border: var(--border-width) solid var(--color-border);
@@ -1277,21 +1296,18 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__day-open {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    z-index: 2;
-    transform: translate(-50%, -50%);
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: calc(var(--button-size) * 0.84375);
-    height: calc(var(--button-size) * 0.84375);
+    flex: 0 0 auto;
+    width: var(--icon-size);
+    height: calc(var(--button-size) * 0.84375 - (var(--border-width) * 2));
     margin: 0;
     padding: 0;
-    border: var(--border-width) solid var(--color-border);
-    border-radius: var(--border-radius);
-    background: var(--color-bg);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     color: var(--color-text);
     cursor: pointer;
   }
@@ -1307,21 +1323,18 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__day-collapse {
-    position: absolute;
-    top: 0;
-    left: calc((var(--button-size) * 0.84375) + var(--rail-gap));
-    z-index: 2;
-    transform: translate(-50%, -50%);
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: calc(var(--button-size) * 0.84375);
-    height: calc(var(--button-size) * 0.84375);
+    flex: 0 0 auto;
+    width: var(--icon-size);
+    height: calc(var(--button-size) * 0.84375 - (var(--border-width) * 2));
     margin: 0;
     padding: 0;
-    border: var(--border-width) solid var(--color-border);
-    border-radius: 50%;
-    background: var(--color-bg);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     color: var(--color-text);
     cursor: pointer;
   }
