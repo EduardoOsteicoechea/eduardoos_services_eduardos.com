@@ -1,6 +1,7 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { loadCurriculum } from "./ebimCurriculum";
 import { renderStudyMarkdown } from "./ebimMarkdown";
 import { loadEbimDocs } from "./ebimVault";
 
@@ -21,6 +22,27 @@ describe("renderStudyMarkdown", () => {
   });
 });
 
+describe("loadCurriculum", () => {
+  it("orders the reading from what is current to how to check it", () => {
+    const screens = loadCurriculum();
+    expect(screens.map((screen) => screen.id)).toEqual([
+      "vigencia",
+      "personas",
+      "requisitos",
+      "cde",
+      "loin",
+      "entrega",
+      "operacion",
+      "intercambio",
+      "seguridad",
+      "formatos",
+      "fuentes",
+      "preguntas",
+    ]);
+    expect(screens.filter((screen) => screen.id !== "preguntas").every((screen) => screen.html.includes("http"))).toBe(true);
+    expect(screens.find((screen) => screen.id === "loin")?.html).toContain("level of information need");
+  });
+});
 describe("loadEbimDocs", () => {
   it("loads every vault file in study order", () => {
     const docs = loadEbimDocs(vault);
