@@ -289,11 +289,43 @@ const registry = [
 </script>
 
 <style>
+  :global(html[data-page="eoschool-hub"]),
+  :global(html[data-page="eoschool-hub"] body) {
+    height: 100%;
+  }
+
+  :global(html[data-page="eoschool-hub"] body) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(html[data-page="eoschool-hub"] .shell) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  :global(html[data-page="eoschool-hub"] main) {
+    flex: 1;
+    min-height: 0;
+    grid-template-rows: minmax(0, 1fr);
+    padding-top: var(--space-padding);
+    overflow: hidden;
+  }
+
+  .product-dash {
+    min-height: 0;
+    overflow: hidden;
+  }
+
   .eoschool-hub__rows {
     display: flex;
     flex-direction: column;
     gap: var(--space-padding);
+    flex: 1;
     min-width: 0;
+    min-height: 0;
   }
 
   .eoschool-hub__main {
@@ -302,10 +334,15 @@ const registry = [
     gap: var(--space-padding);
     flex: 1;
     min-width: 0;
+    min-height: 0;
+    overflow-y: auto;
   }
 
   .eoschool-hub__side {
+    flex: 1;
     min-width: 0;
+    min-height: 0;
+    overflow-y: auto;
   }
 
   .eoschool-hub__side label {
@@ -331,13 +368,14 @@ const registry = [
   @media (min-width: 48rem) {
     .eoschool-hub__rows {
       flex-direction: row;
-      align-items: flex-start;
+      align-items: stretch;
     }
 
     .eoschool-hub__side {
       flex: 0 0 22rem;
       width: 22rem;
       order: -1;
+      overflow-y: auto;
     }
   }
 
