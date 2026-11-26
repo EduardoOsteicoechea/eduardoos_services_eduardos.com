@@ -84,6 +84,121 @@ export function paintCurriculumSubjectScores(root: HTMLElement): void {
     span.textContent = String(score);
     span.setAttribute("aria-label", `Puntaje ${score}`);
   });
+  paintCurriculumSubjectPhotos(root);
+}
+
+function paintCurriculumSubjectPhotos(root: HTMLElement): void {
+  const studentKey = studentKeyFromPage();
+  root.querySelectorAll<HTMLElement>("[data-curriculum-section]").forEach((sectionEl) => {
+    const host = sectionEl.querySelector<HTMLElement>("[data-curriculum-subject-photos]");
+    if (!host) return;
+    const card = sectionEl.closest<HTMLElement>("[data-curriculum-day]");
+    const dayId = card?.dataset.curriculumDay || "";
+    const sectionId = sectionEl.dataset.curriculumSection as CurriculumPlanSectionId | undefined;
+    host.replaceChildren();
+    if (!dayId || !sectionId) {
+      host.hidden = true;
+      return;
+    }
+    const key = sectionProgressKey(dayId, sectionId);
+    const names = activityPhotoNames(key);
+    if (!names.length) {
+      host.hidden = true;
+      return;
+    }
+    const label = sectionEl.querySelector(".eoschool-curriculum__subject-icon")?.getAttribute("title") || "Foto";
+    const rev = photoRev.get(key);
+    const urls = names.map((name) => {
+      const viewURL = curriculumActivityPhotoURL(studentKey, dayId, sectionId, name);
+      return rev ? `${viewURL}&v=${encodeURIComponent(rev)}` : viewURL;
+    });
+    names.forEach((_, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "eoschool-curriculum__subject-photo";
+      button.dataset.curriculumSubjectPhoto = String(index);
+      const tip = `${label}: foto ${index + 1} de ${names.length}`;
+      button.title = tip;
+      button.setAttribute("aria-label", tip);
+      const icon = document.createElement("span");
+      icon.className = "material-symbols-outlined";
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = "fiber_manual_record";
+      button.append(icon);
+      button.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        openCurriculumPhotoViewer(urls, index);
+      });
+      host.append(button);
+    });
+    host.hidden = false;
+  });
+}
+
+type PhotoViewer = { urls: string[]; index: number };
+
+let photoViewer: PhotoViewer = { urls: [], index: 0 };
+
+function openCurriculumPhotoViewer(urls: string[], index: number): void {
+  const modal = document.querySelector<HTMLElement>("[data-curriculum-photo-modal]");
+  if (!modal || !urls.length) return;
+  bindCurriculumPhotoViewer(modal);
+  photoViewer = { urls, index: Math.min(Math.max(index, 0), urls.length - 1) };
+  showCurriculumPhoto(modal);
+  modal.hidden = false;
+  modal.querySelector<HTMLButtonElement>("[data-curriculum-photo-close]")?.focus();
+}
+
+function showCurriculumPhoto(modal: HTMLElement): void {
+  const img = modal.querySelector<HTMLImageElement>("[data-curriculum-photo-img]");
+  const prev = modal.querySelector<HTMLButtonElement>("[data-curriculum-photo-prev]");
+  const next = modal.querySelector<HTMLButtonElement>("[data-curriculum-photo-next]");
+  const url = photoViewer.urls[photoViewer.index];
+  if (img && url) {
+    img.src = url;
+    img.alt = `Foto ${photoViewer.index + 1} de ${photoViewer.urls.length}`;
+  }
+  const single = photoViewer.urls.length < 2;
+  if (prev) prev.disabled = single;
+  if (next) next.disabled = single;
+}
+
+function stepCurriculumPhoto(modal: HTMLElement, delta: number): void {
+  const count = photoViewer.urls.length;
+  if (count < 2) return;
+  photoViewer.index = (photoViewer.index + delta + count) % count;
+  showCurriculumPhoto(modal);
+}
+
+function closeCurriculumPhotoViewer(modal: HTMLElement): void {
+  modal.hidden = true;
+  const img = modal.querySelector<HTMLImageElement>("[data-curriculum-photo-img]");
+  if (img) {
+    img.removeAttribute("src");
+    img.alt = "";
+  }
+}
+
+function bindCurriculumPhotoViewer(modal: HTMLElement): void {
+  if (modal.dataset.photoViewerBound === "true") return;
+  modal.dataset.photoViewerBound = "true";
+  modal.addEventListener("click", (ev) => {
+    const target = ev.target;
+    if (!(target instanceof Element)) return;
+    if (target.closest("[data-curriculum-photo-close]") || target === modal) {
+      closeCurriculumPhotoViewer(modal);
+      return;
+    }
+    if (target.closest("[data-curriculum-photo-prev]")) stepCurriculumPhoto(modal, -1);
+    if (target.closest("[data-curriculum-photo-next]")) stepCurriculumPhoto(modal, 1);
+  });
+  document.addEventListener("keydown", (ev) => {
+    if (modal.hidden) return;
+    if (ev.key === "Escape") closeCurriculumPhotoViewer(modal);
+    if (ev.key === "ArrowLeft") stepCurriculumPhoto(modal, -1);
+    if (ev.key === "ArrowRight") stepCurriculumPhoto(modal, 1);
+  });
 }
 
 function studentKeyFromPage(): string {

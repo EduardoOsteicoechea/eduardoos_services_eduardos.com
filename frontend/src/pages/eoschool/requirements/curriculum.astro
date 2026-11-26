@@ -424,6 +424,7 @@ function weekForPlanDay(planDay: number): number {
                               ) : null}
                             </div>
                             </div>
+                            <div class="eoschool-curriculum__subject-photos" data-curriculum-subject-photos hidden></div>
                           </div>
                         );
                       })}
@@ -607,6 +608,26 @@ function weekForPlanDay(planDay: number): number {
           <section class="eoschool-curriculum-modal__row eoschool-curriculum-modal__row--plain eoschool-curriculum-modal__row--score" data-curriculum-score aria-label="Calificar" hidden></section>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="eoschool-curriculum-photos" data-curriculum-photo-modal hidden>
+    <div
+      class="eoschool-curriculum-photos__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Foto de la actividad"
+    >
+      <button class="icon-btn eoschool-curriculum-photos__close" type="button" data-curriculum-photo-close aria-label="Cerrar">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      </button>
+      <button class="eoschool-curriculum-photos__nav" type="button" data-curriculum-photo-prev aria-label="Foto anterior">
+        <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+      </button>
+      <img class="eoschool-curriculum-photos__img" data-curriculum-photo-img alt="" />
+      <button class="eoschool-curriculum-photos__nav" type="button" data-curriculum-photo-next aria-label="Foto siguiente">
+        <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+      </button>
     </div>
   </div>
 
@@ -1557,6 +1578,20 @@ function weekForPlanDay(planDay: number): number {
     padding: 0;
   }
 
+  .eoschool-curriculum__subject-photos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum__subject-photos[hidden] {
+    display: none;
+  }
+
   .eoschool-curriculum__subject-body {
     margin: 0;
     padding: 0;
@@ -1870,6 +1905,96 @@ function weekForPlanDay(planDay: number): number {
     width: var(--icon-size);
     height: var(--icon-size);
     color: #ffffff;
+  }
+
+  .eoschool-curriculum-photos {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-padding);
+    background: color-mix(in srgb, var(--color-bg) 35%, transparent);
+  }
+
+  .eoschool-curriculum-photos[hidden] {
+    display: none;
+  }
+
+  .eoschool-curriculum-photos__dialog {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--rail-gap);
+    max-width: 40rem;
+    padding-top: calc((var(--button-size) / 2) + var(--space-padding));
+    padding-inline: var(--space-padding);
+    padding-bottom: var(--space-padding);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+  }
+
+  .eoschool-curriculum-photos__close.icon-btn {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    width: var(--button-size);
+    height: var(--button-size);
+    border: 0;
+    border-radius: 50%;
+    background: #dc2626;
+    color: #ffffff;
+  }
+
+  .eoschool-curriculum-photos__close .material-symbols-outlined {
+    font-size: var(--icon-size);
+    width: var(--icon-size);
+    height: var(--icon-size);
+    color: #ffffff;
+    background: transparent;
+  }
+
+  .eoschool-curriculum-photos__nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--button-size);
+    height: var(--button-size);
+    padding: 0;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .eoschool-curriculum-photos__nav:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .eoschool-curriculum-photos__nav .material-symbols-outlined {
+    font-size: var(--icon-size);
+    width: var(--icon-size);
+    height: var(--icon-size);
+    color: var(--color-text);
+    background: transparent;
+  }
+
+  .eoschool-curriculum-photos__img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 32rem;
+    max-height: 24rem;
+    object-fit: contain;
+    background: var(--color-bg);
   }
 
   .eoschool-curriculum-modal__dialog {
@@ -2712,6 +2837,55 @@ function weekForPlanDay(planDay: number): number {
     display: flex;
     flex-wrap: wrap;
     gap: var(--rail-gap);
+  }
+
+  .eoschool-curriculum__subject-photo {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--space-padding);
+    height: var(--space-padding);
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #16a34a;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .eoschool-curriculum__day-card .eoschool-curriculum__subject-photo .material-symbols-outlined {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--font-size-xs);
+    height: var(--font-size-xs);
+    font-size: var(--font-size-xs);
+    line-height: 1;
+    color: #ffffff;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .eoschool-curriculum__subject-photo:hover::after,
+  .eoschool-curriculum__subject-photo:focus-visible::after {
+    content: attr(title);
+    position: absolute;
+    z-index: 3;
+    right: calc(100% + var(--rail-gap));
+    top: 50%;
+    transform: translateY(-50%);
+    padding: var(--rail-gap);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--font-size-xs);
+    font-family: inherit;
+    line-height: 1.2;
+    white-space: nowrap;
+    pointer-events: none;
   }
 
   .eoschool-curriculum-activity__thumb {

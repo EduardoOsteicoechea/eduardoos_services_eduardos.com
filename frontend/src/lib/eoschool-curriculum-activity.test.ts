@@ -120,4 +120,50 @@ describe("paintCurriculumSubjectScores", () => {
     expect(span.textContent).toBe("80");
     expect(span.getAttribute("aria-label")).toBe("Puntaje 80");
   });
+
+  it("paints one green point per photo and opens it with prev and next", () => {
+    document.body.innerHTML = `
+      <div data-curriculum-photo-modal hidden>
+        <button type="button" data-curriculum-photo-close>Cerrar</button>
+        <button type="button" data-curriculum-photo-prev>Anterior</button>
+        <button type="button" data-curriculum-photo-next>Siguiente</button>
+        <img data-curriculum-photo-img alt="" />
+      </div>
+      <article data-curriculum-day="d39">
+        <div data-curriculum-section="len">
+          <span class="eoschool-curriculum__subject-icon" title="Lenguaje"></span>
+          <span data-curriculum-subject-score hidden></span>
+          <div data-curriculum-subject-photos hidden></div>
+        </div>
+      </article>`;
+    setActivityMarks({}, undefined, { "d39:len": ["uno.webp", "dos.webp"] });
+    paintCurriculumSubjectScores(document.body);
+    const points = [...document.querySelectorAll<HTMLButtonElement>("[data-curriculum-subject-photo]")];
+    expect(points).toHaveLength(2);
+    expect(points[0]?.title).toBe("Lenguaje: foto 1 de 2");
+    expect(points[1]?.querySelector(".material-symbols-outlined")?.textContent).toBe("fiber_manual_record");
+    points[1]?.click();
+    const modal = document.querySelector<HTMLElement>("[data-curriculum-photo-modal]")!;
+    const img = modal.querySelector<HTMLImageElement>("[data-curriculum-photo-img]")!;
+    expect(modal.hidden).toBe(false);
+    expect(img.alt).toBe("Foto 2 de 2");
+    expect(img.src).toContain("dos.webp");
+    modal.querySelector<HTMLButtonElement>("[data-curriculum-photo-next]")?.click();
+    expect(img.src).toContain("uno.webp");
+    expect(img.alt).toBe("Foto 1 de 2");
+    modal.querySelector<HTMLButtonElement>("[data-curriculum-photo-prev]")?.click();
+    expect(img.src).toContain("dos.webp");
+    modal.querySelector<HTMLButtonElement>("[data-curriculum-photo-close]")?.click();
+    expect(modal.hidden).toBe(true);
+  });
+
+  it("hides the photo column when the subject has no images", () => {
+    const root = document.createElement("div");
+    root.innerHTML = `<article data-curriculum-day="d39"><div data-curriculum-section="bib"><span data-curriculum-subject-score hidden></span><div data-curriculum-subject-photos></div></div></article>`;
+    setActivityMarks({}, undefined, {});
+    paintCurriculumSubjectScores(root);
+    const host = root.querySelector<HTMLElement>("[data-curriculum-subject-photos]")!;
+    expect(host.hidden).toBe(true);
+    expect(host.childElementCount).toBe(0);
+  });
 });
