@@ -1220,6 +1220,7 @@ function weekForPlanDay(planDay: number): number {
     min-width: 0;
     min-height: 0;
     padding: var(--rail-gap);
+    padding-top: calc(var(--rail-gap) + var(--space-padding));
     display: flex;
     flex-direction: column;
     overflow: visible;
@@ -1591,7 +1592,6 @@ function weekForPlanDay(planDay: number): number {
     min-width: 0;
     position: relative;
     padding: var(--rail-gap);
-    padding-top: calc(var(--rail-gap) + var(--space-padding));
     padding-inline-end: calc(var(--rail-gap) + 0.35rem);
     border-block-start: 0;
     border-radius: var(--border-radius);
