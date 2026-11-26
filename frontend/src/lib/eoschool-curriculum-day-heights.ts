@@ -25,16 +25,22 @@ function equalizeOneWeek(weekDays: HTMLElement): void {
 
   const first4 = cards.slice(0, 4);
   const day5 = cards[4];
+  const collapsed = (card: HTMLElement) => card.classList.contains("eoschool-curriculum__day-card--collapsed");
+  const open4 = first4.filter((card) => !collapsed(card));
+  const measure = open4.length ? open4 : first4;
 
-  const maxPx = Math.max(...first4.map((c) => c.getBoundingClientRect().height));
+  const maxPx = Math.max(...measure.map((c) => c.getBoundingClientRect().height));
   if (!(maxPx > 0)) return;
 
   const heightRem = pxToRem(maxPx);
   for (const card of first4) {
+    if (collapsed(card)) continue;
     card.style.height = heightRem;
   }
-  day5.style.height = heightRem;
-  day5.style.maxHeight = heightRem;
+  if (day5 && !collapsed(day5)) {
+    day5.style.height = heightRem;
+    day5.style.maxHeight = heightRem;
+  }
 }
 
 let refreshAll: (() => void) | null = null;

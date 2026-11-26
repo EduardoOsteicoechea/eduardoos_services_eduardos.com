@@ -252,6 +252,17 @@ function weekForPlanDay(planDay: number): number {
                       <span class="eoschool-curriculum__day-bubble__num">{bibleDay.dayInPlan}</span>
                     </button>
                     <button
+                      class="eoschool-curriculum__day-collapse"
+                      type="button"
+                      data-curriculum-day-collapse
+                      aria-expanded="true"
+                      aria-controls={`curriculum-day-body-${dayId}`}
+                      aria-label={`Colapsar día ${bibleDay.dayInPlan}`}
+                      title={`Colapsar día ${bibleDay.dayInPlan}`}
+                    >
+                      <span class="material-symbols-outlined" aria-hidden="true">expand_less</span>
+                    </button>
+                    <button
                       class="eoschool-curriculum__day-open"
                       type="button"
                       data-curriculum-day-open
@@ -259,7 +270,7 @@ function weekForPlanDay(planDay: number): number {
                     >
                       <span class="material-symbols-outlined" aria-hidden="true">open_in_full</span>
                     </button>
-                    <div class="eoschool-curriculum__day-body">
+                    <div class="eoschool-curriculum__day-body" id={`curriculum-day-body-${dayId}`}>
                       {scheduled.map((sectionId) => {
                         const area = areaBySection[sectionId];
                         if (!area) return null;
@@ -669,6 +680,7 @@ function weekForPlanDay(planDay: number): number {
 </Layout>
 
 <script>
+  import { initCurriculumDayCollapse } from "../../../lib/eoschool-curriculum-day-collapse";
   import { initCurriculumDayHeights } from "../../../lib/eoschool-curriculum-day-heights";
   import { initCurriculumDayModal } from "../../../lib/eoschool-curriculum-day-modal";
   import { initCurriculumProgress } from "../../../lib/eoschool-curriculum-progress";
@@ -707,6 +719,7 @@ function weekForPlanDay(planDay: number): number {
     initCurriculumSubjectCollapse(root);
     initCurriculumWeekCollapse(root);
     initCurriculumDayModal(root);
+    initCurriculumDayCollapse(root);
     initCurriculumWeekPrint(root);
     initCurriculumDayHeights(root);
   }
@@ -1281,6 +1294,44 @@ function weekForPlanDay(planDay: number): number {
     color: var(--color-text);
     background: transparent;
     border-radius: 0;
+  }
+
+  .eoschool-curriculum__day-collapse {
+    position: absolute;
+    top: 0;
+    left: calc((var(--button-size) * 0.84375) + var(--rail-gap));
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--button-size) * 0.84375);
+    height: calc(var(--button-size) * 0.84375);
+    margin: 0;
+    padding: 0;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .eoschool-curriculum__day-collapse .material-symbols-outlined {
+    width: var(--font-size-md);
+    height: var(--font-size-md);
+    font-size: var(--font-size-md);
+    line-height: 1;
+    color: var(--color-text);
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .eoschool-curriculum__day-card--collapsed {
+    align-self: start;
+  }
+
+  .eoschool-curriculum__day-card--collapsed .eoschool-curriculum__day-body {
+    display: none;
   }
 
   .eoschool-curriculum__day-card.product-dash__card {
