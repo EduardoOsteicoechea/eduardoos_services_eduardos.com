@@ -25,6 +25,9 @@ describe("loadEbimDocs", () => {
   it("loads every vault file in study order", () => {
     const docs = loadEbimDocs(vault);
     expect(docs[0]?.id).toBe("index");
+    expect(docs[0]?.kind).toBe("lesson");
+    expect(docs.find((doc) => doc.id === "p1-summary")?.guide).toContain("nivel de necesidad de información");
+    expect(docs.find((doc) => doc.id === "ids-entity")?.kind).toBe("reference");
     expect(docs.at(-1)?.id).toBe("plan");
     expect(docs.map((doc) => doc.id)).toEqual([
       "index",

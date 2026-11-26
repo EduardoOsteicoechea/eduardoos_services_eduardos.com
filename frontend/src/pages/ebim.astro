@@ -8,17 +8,49 @@ const docs = loadEbimDocs(
   join(dirname(fileURLToPath(import.meta.url)), "../../../iso19650_study_vault"),
 );
 
+const lessonTotal = docs.filter((doc) => doc.kind === "lesson").length;
+
+const groupTitle: Record<string, string> = {
+  start: "Inicio",
+  p1: "1. Conceptos",
+  p2: "2. Entrega",
+  p3: "3. Operación",
+  p4: "4. Intercambio",
+  p5: "5. Seguridad",
+  p6: "6. Formatos abiertos",
+  plan: "7. Comprobar",
+};
+
+const itemTitle: Record<string, string> = {
+  index: "Mapa del recorrido",
+  "p1-summary": "Lección",
+  "p1-sources": "Fuentes",
+  "p2-summary": "Lección",
+  "p2-sources": "Fuentes",
+  "p3-summary": "Lección",
+  "p3-sources": "Fuentes",
+  "p4-summary": "Lección",
+  "p4-sources": "Fuentes",
+  "p5-summary": "Lección",
+  "p5-sources": "Fuentes",
+  "p6-summary": "Lección",
+  "p6-sources": "Fuentes",
+  plan: "Preguntas y ejercicios",
+};
+
 type Group = { id: string; label: string; items: EbimDoc[]; refs: EbimDoc[] };
 const groups: Group[] = [];
 for (const doc of docs) {
   let group = groups.find((item) => item.id === doc.group);
   if (!group) {
-    group = { id: doc.group, label: doc.groupLabel, items: [], refs: [] };
+    group = { id: doc.group, label: groupTitle[doc.group] || doc.groupLabel, items: [], refs: [] };
     groups.push(group);
   }
   if (doc.subgroup) group.refs.push(doc);
   else group.items.push(doc);
 }
+
+const navLabel = (doc: EbimDoc) => itemTitle[doc.id] || doc.label;
 ---
 
 <Layout
@@ -26,7 +58,7 @@ for (const doc of docs) {
   description="Admin study reader for the ISO 19650 series and the openBIM notes kept with this site."
   robots="noindex,nofollow"
 >
-  <p class="status" data-ebim-status>Checking session…</p>
+  <p class="status" data-ebim-status>Comprobando la sesión…</p>
 
   <div class="ebim" data-ebim hidden>
     <aside class="ebim-nav" data-ebim-nav>
@@ -36,29 +68,29 @@ for (const doc of docs) {
         data-ebim-collapse
         aria-expanded="true"
         aria-controls="ebim-toc"
-        aria-label="Collapse study navigation"
-        title="Collapse study navigation"
+        aria-label="Cerrar el índice"
+        title="Cerrar el índice"
       >
         <span class="material-symbols-outlined" aria-hidden="true" data-ebim-collapse-icon>left_panel_close</span>
       </button>
-      <nav id="ebim-toc" aria-label="Study order">
+      <nav id="ebim-toc" aria-label="Orden de lectura">
         {
           groups.map((group) => (
-            <details class="ebim-nav__group" open>
+            <details class="ebim-nav__group" open={group.id === "start"}>
               <summary>{group.label}</summary>
               <div class="ebim-nav__items">
                 {group.items.map((doc) => (
                   <button type="button" data-ebim-open={doc.id}>
-                    {doc.label}
+                    {navLabel(doc)}
                   </button>
                 ))}
                 {group.refs.length > 0 ? (
                   <details class="ebim-nav__group">
-                    <summary>{group.refs[0]?.subgroup}</summary>
+                    <summary>Consulta técnica</summary>
                     <div class="ebim-nav__items">
                       {group.refs.map((doc) => (
                         <button type="button" data-ebim-open={doc.id}>
-                          {doc.label}
+                          {navLabel(doc)}
                         </button>
                       ))}
                     </div>
@@ -73,13 +105,25 @@ for (const doc of docs) {
 
     <div class="ebim-read">
       <div class="ebim-pager">
-        <button type="button" data-ebim-prev>Previous</button>
+        <button type="button" data-ebim-prev>Anterior</button>
         <p class="ebim-pager__label" data-ebim-label></p>
-        <button type="button" data-ebim-next>Next</button>
+        <button type="button" data-ebim-next>Siguiente</button>
       </div>
       {
         docs.map((doc) => (
-          <section id={`ebim-${doc.id}`} data-ebim-section={doc.id} hidden>
+          <section
+            id={`ebim-${doc.id}`}
+            data-ebim-section={doc.id}
+            data-ebim-kind={doc.kind}
+            data-ebim-step={doc.lessonStep || undefined}
+            hidden
+          >
+            <header class:list={["ebim-guide", doc.kind === "reference" && "ebim-guide--reference"]}>
+              <p class="ebim-guide__kicker">
+                {doc.kind === "lesson" ? `Lección ${doc.lessonStep} de ${lessonTotal}` : "Consulta"}
+              </p>
+              <p class="ebim-guide__text">{doc.guide}</p>
+            </header>
             <div class="ebim-doc" set:html={doc.html} />
           </section>
         ))
@@ -114,7 +158,7 @@ for (const doc of docs) {
     const collapseIcon = root.querySelector("[data-ebim-collapse-icon]");
     let index = 0;
 
-    const show = (nextIndex: number) => {
+    const show = (nextIndex: number, scroll = false) => {
       index = Math.min(Math.max(nextIndex, 0), sections.length - 1);
       const id = sections[index]?.getAttribute("data-ebim-section") || "";
       for (const section of sections) {
@@ -133,12 +177,17 @@ for (const doc of docs) {
       }
       const opener = openers.find((button) => button.getAttribute("data-ebim-open") === id);
       if (label instanceof HTMLElement) {
-        const group = opener?.closest("details")?.querySelector("summary")?.textContent?.trim() || "";
-        label.textContent = group && opener ? `${group} · ${opener.textContent?.trim() || ""}` : "";
+        const current = sections[index];
+        const kind = current?.getAttribute("data-ebim-kind");
+        const step = current?.getAttribute("data-ebim-step");
+        const name = opener?.textContent?.trim() || "";
+        label.textContent =
+          kind === "lesson" ? `Lección ${step} de ${sections.filter((section) => section.getAttribute("data-ebim-kind") === "lesson").length} · ${name}` : `Consulta · ${name}`;
       }
       if (prev instanceof HTMLButtonElement) prev.disabled = index === 0;
       if (next instanceof HTMLButtonElement) next.disabled = index === sections.length - 1;
       if (mustLog) console.log("ebim.section", { id, index });
+      if (scroll) sections[index]?.scrollIntoView({ block: "start" });
     };
 
     root.addEventListener("click", (event) => {
@@ -148,7 +197,7 @@ for (const doc of docs) {
       if (opener instanceof HTMLButtonElement && root.contains(opener)) {
         const id = opener.getAttribute("data-ebim-open");
         const found = sections.findIndex((section) => section.getAttribute("data-ebim-section") === id);
-        if (found >= 0) show(found);
+        if (found >= 0) show(found, true);
         return;
       }
       const jump = target.closest("[data-ebim-jump]");
@@ -156,21 +205,18 @@ for (const doc of docs) {
         event.preventDefault();
         const id = jump.getAttribute("data-ebim-jump");
         const found = sections.findIndex((section) => section.getAttribute("data-ebim-section") === id);
-        if (found >= 0) show(found);
+        if (found >= 0) show(found, true);
       }
     });
 
-    prev?.addEventListener("click", () => show(index - 1));
-    next?.addEventListener("click", () => show(index + 1));
+    prev?.addEventListener("click", () => show(index - 1, true));
+    next?.addEventListener("click", () => show(index + 1, true));
     collapse?.addEventListener("click", () => {
       const expanded = collapse.getAttribute("aria-expanded") !== "false";
       const nextExpanded = !expanded;
       collapse.setAttribute("aria-expanded", nextExpanded ? "true" : "false");
-      collapse.setAttribute(
-        "aria-label",
-        nextExpanded ? "Collapse study navigation" : "Expand study navigation",
-      );
-      collapse.setAttribute("title", nextExpanded ? "Collapse study navigation" : "Expand study navigation");
+      collapse.setAttribute("aria-label", nextExpanded ? "Cerrar el índice" : "Abrir el índice");
+      collapse.setAttribute("title", nextExpanded ? "Cerrar el índice" : "Abrir el índice");
       if (toc instanceof HTMLElement) toc.hidden = !nextExpanded;
       if (collapseIcon instanceof HTMLElement) {
         collapseIcon.textContent = nextExpanded ? "left_panel_close" : "left_panel_open";
@@ -183,7 +229,7 @@ for (const doc of docs) {
       const isAdmin = me.status === 200 && String(me.data.role || "").trim().toLowerCase() === "admin";
       if (mustLog) console.log("ebim.session", { status: me.status, isAdmin, requestId: me.requestId });
       if (!isAdmin) {
-        fail("This page is available to administrators only.");
+        fail("Esta página solo está disponible para administradores.");
         go("/404");
         return;
       }
