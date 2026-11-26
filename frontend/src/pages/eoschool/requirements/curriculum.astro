@@ -1736,10 +1736,12 @@ function weekForPlanDay(planDay: number): number {
     .eoschool-curriculum__weeks {
       grid-template-columns: repeat(6, minmax(0, 1fr));
     }
+  }
 
+  @media (min-width: 48rem) and (max-width: 63.999rem) {
     .eoschool-curriculum__week-days {
-      grid-template-columns: repeat(5, minmax(11rem, 1fr));
-      overflow-x: auto;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      overflow-x: visible;
     }
   }
 
