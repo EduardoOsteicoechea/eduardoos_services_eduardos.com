@@ -604,7 +604,7 @@ function weekForPlanDay(planDay: number): number {
             hidden
           ></section>
 
-          <section class="eoschool-curriculum-modal__row eoschool-curriculum-modal__row--score" data-curriculum-score aria-label="Calificar" hidden></section>
+          <section class="eoschool-curriculum-modal__row eoschool-curriculum-modal__row--plain eoschool-curriculum-modal__row--score" data-curriculum-score aria-label="Calificar" hidden></section>
         </div>
       </div>
     </div>
@@ -2625,6 +2625,27 @@ function weekForPlanDay(planDay: number): number {
     .eoschool-curriculum-activity__file {
       align-self: stretch;
     }
+  }
+
+  .eoschool-curriculum-activity input[type="number"],
+  .eoschool-curriculum-activity__grade {
+    box-sizing: border-box;
+    height: var(--control-height);
+    min-height: var(--control-height);
+    max-height: var(--control-height);
+    padding: var(--control-padding-block) var(--control-padding-inline);
+    font-size: var(--font-size-md);
+    font-family: inherit;
+    line-height: 1;
+  }
+
+  .eoschool-curriculum-activity__grade {
+    flex-shrink: 0;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-button-bg);
+    color: var(--color-button-fg);
+    cursor: pointer;
   }
 
   .eoschool-curriculum-activity__file .material-symbols-outlined {
