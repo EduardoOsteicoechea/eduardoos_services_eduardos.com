@@ -127,6 +127,44 @@ func TestHomescoolV1StudentDataIsOwnerScoped(t *testing.T) {
 	if photo.Code != http.StatusOK || photo.Header().Get("Content-Type") != "image/webp" || photo.Body.Len() == 0 {
 		t.Fatalf("download: %d %s %d", photo.Code, photo.Header().Get("Content-Type"), photo.Body.Len())
 	}
+	photoPath := eoschoolActivityPhotoAPIPath(eoschoolCurriculumDefaultStudentKey, "d38", "mat", name)
+	linkedBody, _ := json.Marshal(map[string]any{
+		"studentKey": eoschoolCurriculumDefaultStudentKey,
+		"dayId":      "d38",
+		"sectionId":  "mat",
+		"record": map[string]any{
+			"summary":    "Falló 7 × 8.",
+			"rewrite":    "Escribió 54.",
+			"kind":       "multiplication",
+			"photoPaths": []string{photoPath},
+			"items": []map[string]any{{
+				"kind": "mult", "page": 1, "row": 0, "col": 0,
+				"a": 7, "b": 8, "given": 54, "expected": 56, "correct": false,
+			}},
+		},
+	})
+	linked := app.v1Authed(http.MethodPut, "/api/v1/homescool/activities/record", secret, linkedBody, "application/json")
+	if linked.Code != http.StatusOK {
+		t.Fatalf("link photo: %d %s", linked.Code, linked.Body.String())
+	}
+	linkedRow := decodeMap(t, linked)["activityRecords"].(map[string]any)["d38:mat"].(map[string]any)
+	if linkedRow["photos"].([]any)[0] != name || linkedRow["photoPaths"].([]any)[0] != photoPath {
+		t.Fatalf("photo ref %#v", linkedRow)
+	}
+	missingBody, _ := json.Marshal(map[string]any{
+		"studentKey": eoschoolCurriculumDefaultStudentKey,
+		"dayId":      "d38",
+		"sectionId":  "mat",
+		"record": map[string]any{
+			"summary": "Foto que no existe.",
+			"kind":    "prose",
+			"photos":  []string{"/var/www/eduardoos.com/media/eoschool/curriculum/secret.webp"},
+		},
+	})
+	missing := app.v1Authed(http.MethodPut, "/api/v1/homescool/activities/record", secret, missingBody, "application/json")
+	if missing.Code != http.StatusBadRequest {
+		t.Fatalf("disk path: %d %s", missing.Code, missing.Body.String())
+	}
 
 	otherKey := app.doJSON(t, "other@eduardoos.com", http.MethodPost, "/api/apikeys", `{"label":"other-eschool"}`)
 	if otherKey.Code != http.StatusCreated {

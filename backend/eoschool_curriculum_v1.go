@@ -114,7 +114,7 @@ func (a *App) homescoolV1ActivityRecordHandler(w http.ResponseWriter, r *http.Re
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	record, normErr := normalizeEoschoolActivityRecord(body.Record)
+	record, normErr := normalizeEoschoolActivityRecord(body.Record, studentKey, dayID, sectionID)
 	if normErr != nil {
 		a.mustLogf(r, "homescool.v1.record.invalid", "day", dayID, "section", sectionID)
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -130,12 +130,19 @@ func (a *App) homescoolV1ActivityRecordHandler(w http.ResponseWriter, r *http.Re
 	}
 	key := eoschoolCurriculumSectionKey(dayID, sectionID)
 	doc, err := a.eoschoolCurriculum.UpdateStudent(r.Context(), ownerID, studentKey, func(row *EoschoolCurriculumProgressDoc) error {
+		if refErr := ensureEoschoolActivityPhotoRefs(row, key, record.Photos); refErr != nil {
+			return refErr
+		}
 		applyEoschoolActivityRecord(row, key, record, body.Score)
 		return nil
 	})
 	if err != nil {
 		if errors.Is(err, errEoschoolCurriculumStudentNotFound) {
 			a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+			return
+		}
+		if errors.Is(err, errEoschoolActivityPhotoRef) {
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 			return
 		}
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

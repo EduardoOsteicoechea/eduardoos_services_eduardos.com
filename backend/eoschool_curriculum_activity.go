@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"regexp"
 	"sort"
 	"strconv"
@@ -25,6 +26,7 @@ const (
 )
 
 var errEoschoolActivityRecord = errors.New("activity record")
+var errEoschoolActivityPhotoRef = errors.New("activity photo ref")
 
 const (
 	eoschoolActivityPhotoName = "activity.webp"
@@ -116,7 +118,106 @@ func normalizeEoschoolActivityItem(item EoschoolActivityItem) (EoschoolActivityI
 	}
 }
 
-func normalizeEoschoolActivityRecord(rec EoschoolActivityRecord) (EoschoolActivityRecord, error) {
+func eoschoolActivityPhotoAPIPath(studentKey, dayID, sectionID, name string) string {
+	q := url.Values{}
+	q.Set("studentKey", studentKey)
+	q.Set("dayId", dayID)
+	q.Set("sectionId", sectionID)
+	q.Set("name", name)
+	return "/api/v1/homescool/activities/photo?" + q.Encode()
+}
+
+func eoschoolActivityPhotoPaths(studentKey, key string, photos []string) []string {
+	dayID, sectionID, ok := strings.Cut(key, ":")
+	if !ok || studentKey == "" || len(photos) == 0 {
+		return nil
+	}
+	out := make([]string, 0, len(photos))
+	for _, name := range photos {
+		if !validEoschoolActivityPhotoName(name) {
+			continue
+		}
+		out = append(out, eoschoolActivityPhotoAPIPath(studentKey, dayID, sectionID, name))
+	}
+	if len(out) == 0 {
+		return nil
+	}
+	return out
+}
+
+func eoschoolActivityPhotoNameFromRef(raw, studentKey, dayID, sectionID string) (string, error) {
+	raw = strings.TrimSpace(raw)
+	if raw == "" {
+		return "", nil
+	}
+	if !strings.ContainsAny(raw, "/\\?") {
+		if !validEoschoolActivityPhotoName(raw) {
+			return "", errEoschoolActivityRecord
+		}
+		return raw, nil
+	}
+	parsed, err := url.Parse(raw)
+	if err != nil || parsed.IsAbs() || parsed.Host != "" || parsed.User != nil {
+		return "", errEoschoolActivityRecord
+	}
+	switch parsed.Path {
+	case "/api/v1/homescool/activities/photo", "/api/eoschool/curriculum/activities/photo":
+	default:
+		return "", errEoschoolActivityRecord
+	}
+	q := parsed.Query()
+	if normalizeEoschoolCurriculumStudentKey(q.Get("studentKey")) != studentKey ||
+		strings.TrimSpace(q.Get("dayId")) != dayID ||
+		strings.TrimSpace(q.Get("sectionId")) != sectionID {
+		return "", errEoschoolActivityRecord
+	}
+	name := strings.TrimSpace(q.Get("name"))
+	if !validEoschoolActivityPhotoName(name) {
+		return "", errEoschoolActivityRecord
+	}
+	return name, nil
+}
+
+func normalizeEoschoolActivityPhotoRefs(raw []string, studentKey, dayID, sectionID string) ([]string, error) {
+	if len(raw) > eoschoolActivityPhotoMax {
+		return nil, errEoschoolActivityRecord
+	}
+	seen := map[string]bool{}
+	out := make([]string, 0, len(raw))
+	for _, item := range raw {
+		name, err := eoschoolActivityPhotoNameFromRef(item, studentKey, dayID, sectionID)
+		if err != nil {
+			return nil, err
+		}
+		if name == "" || seen[name] {
+			continue
+		}
+		seen[name] = true
+		out = append(out, name)
+	}
+	if len(out) == 0 {
+		return nil, nil
+	}
+	return out, nil
+}
+
+func ensureEoschoolActivityPhotoRefs(row *EoschoolCurriculumProgressDoc, key string, photos []string) error {
+	if len(photos) == 0 {
+		return nil
+	}
+	have := map[string]struct{}{}
+	for _, name := range eoschoolActivityPhotoNames(*row, key) {
+		have[name] = struct{}{}
+	}
+	for _, name := range photos {
+		if _, ok := have[name]; !ok {
+			return errEoschoolActivityPhotoRef
+		}
+	}
+	return nil
+}
+
+func normalizeEoschoolActivityRecord(rec EoschoolActivityRecord, studentKey, dayID, sectionID string) (EoschoolActivityRecord, error) {
 	rec.Summary = clipEoschoolText(rec.Summary, eoschoolActivitySummaryMax)
 	rec.Rewrite = clipEoschoolText(rec.Rewrite, eoschoolActivityRewriteMax)
 	rec.Kind = strings.ToLower(strings.TrimSpace(rec.Kind))
@@ -141,6 +242,12 @@ func normalizeEoschoolActivityRecord(rec EoschoolActivityRecord) (EoschoolActivi
 		}
 		rec.Items[i] = item
 	}
+	photos, err := normalizeEoschoolActivityPhotoRefs(append(append([]string{}, rec.Photos...), rec.PhotoPaths...), studentKey, dayID, sectionID)
+	if err != nil {
+		return rec, err
+	}
+	rec.Photos = photos
+	rec.PhotoPaths = nil
 	return rec, nil
 }
 
@@ -231,6 +338,7 @@ func eoschoolActivityRecordsView(doc EoschoolCurriculumProgressDoc) (map[string]
 		if rec.Items == nil {
 			rec.Items = []EoschoolActivityItem{}
 		}
+		rec.PhotoPaths = eoschoolActivityPhotoPaths(doc.StudentKey, key, rec.Photos)
 		records[key] = rec
 	}
 	return records, eoschoolActivityFacts(records)
@@ -591,7 +699,7 @@ func (a *App) putEoschoolCurriculumActivityRecordHandler(w http.ResponseWriter, 
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	record, normErr := normalizeEoschoolActivityRecord(body.Record)
+	record, normErr := normalizeEoschoolActivityRecord(body.Record, studentKey, dayID, sectionID)
 	if normErr != nil {
 		a.mustLogf(r, "eoschool.activity.record.invalid", "day", dayID, "section", sectionID)
 		a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
@@ -611,12 +719,19 @@ func (a *App) putEoschoolCurriculumActivityRecordHandler(w http.ResponseWriter, 
 	}
 	key := eoschoolCurriculumSectionKey(dayID, sectionID)
 	doc, err := a.eoschoolCurriculum.UpdateStudent(r.Context(), ownerID, studentKey, func(row *EoschoolCurriculumProgressDoc) error {
+		if refErr := ensureEoschoolActivityPhotoRefs(row, key, record.Photos); refErr != nil {
+			return refErr
+		}
 		applyEoschoolActivityRecord(row, key, record, body.Score)
 		return nil
 	})
 	if err != nil {
 		if errors.Is(err, errEoschoolCurriculumStudentNotFound) {
 			a.writeSafeError(w, r, http.StatusNotFound, "not_found")
+			return
+		}
+		if errors.Is(err, errEoschoolActivityPhotoRef) {
+			a.writeSafeError(w, r, http.StatusBadRequest, "invalid_request")
 			return
 		}
 		a.writeSafeError(w, r, http.StatusInternalServerError, "internal_error")

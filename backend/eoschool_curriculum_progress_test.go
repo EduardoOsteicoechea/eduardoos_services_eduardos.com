@@ -167,23 +167,34 @@ func TestSlugifyEoschoolCurriculumStudentKey(t *testing.T) {
 func TestNormalizeEoschoolActivityRecord(t *testing.T) {
 	given := 54
 	miss := false
+	photo := "p0123456789abcdef.webp"
 	rec, err := normalizeEoschoolActivityRecord(EoschoolActivityRecord{
-		Summary: "  7 de 10.  ",
-		Rewrite: "Escribió 54.",
-		Kind:    "multiplication",
+		Summary:    "  7 de 10.  ",
+		Rewrite:    "Escribió 54.",
+		Kind:       "multiplication",
+		Photos:     []string{photo},
+		PhotoPaths: []string{eoschoolActivityPhotoAPIPath(eoschoolCurriculumDefaultStudentKey, "d38", "mat", photo)},
 		Items: []EoschoolActivityItem{{
 			Kind: "mult", Page: 1, Row: 0, Col: 0, A: 7, B: 8, Given: &given, Expected: 56, Correct: &miss,
 		}},
-	})
+	}, eoschoolCurriculumDefaultStudentKey, "d38", "mat")
 	if err != nil {
 		t.Fatal(err)
 	}
 	if rec.Summary != "7 de 10." || rec.Items[0].Expected != 56 || rec.Items[0].Correct == nil || *rec.Items[0].Correct {
 		t.Fatalf("record %#v", rec)
 	}
+	if len(rec.Photos) != 1 || rec.Photos[0] != photo || rec.PhotoPaths != nil {
+		t.Fatalf("photos %#v %#v", rec.Photos, rec.PhotoPaths)
+	}
+	if _, err = normalizeEoschoolActivityRecord(EoschoolActivityRecord{
+		Summary: "Ruta ajena.", Kind: "prose", Photos: []string{"/var/www/eduardoos.com/media/eoschool/curriculum/secret.webp"},
+	}, eoschoolCurriculumDefaultStudentKey, "d38", "mat"); err == nil {
+		t.Fatal("filesystem path")
+	}
 	bad := rec
 	bad.Items[0].Expected = 55
-	if _, err = normalizeEoschoolActivityRecord(bad); err == nil {
+	if _, err = normalizeEoschoolActivityRecord(bad, eoschoolCurriculumDefaultStudentKey, "d38", "mat"); err == nil {
 		t.Fatal("expected mismatch")
 	}
 	divGiven := 4
@@ -193,7 +204,7 @@ func TestNormalizeEoschoolActivityRecord(t *testing.T) {
 		Items: []EoschoolActivityItem{{
 			Kind: "div", Page: 1, A: 12, B: 3, Given: &divGiven,
 		}},
-	})
+	}, eoschoolCurriculumDefaultStudentKey, "d38", "mat")
 	if err != nil || div.Items[0].Expected != 4 || div.Items[0].Correct == nil || !*div.Items[0].Correct {
 		t.Fatalf("div %#v %v", div, err)
 	}
@@ -201,14 +212,14 @@ func TestNormalizeEoschoolActivityRecord(t *testing.T) {
 		Summary: "Resto.",
 		Kind:    "multiplication",
 		Items:   []EoschoolActivityItem{{Kind: "div", Page: 1, A: 7, B: 2, Expected: 3}},
-	}); err == nil {
+	}, eoschoolCurriculumDefaultStudentKey, "d38", "mat"); err == nil {
 		t.Fatal("uneven division")
 	}
 	text, err := normalizeEoschoolActivityRecord(EoschoolActivityRecord{
 		Summary: "Leyó el pasaje.",
 		Kind:    "prose",
 		Items:   []EoschoolActivityItem{{Kind: "text", Prompt: "Idea", Answer: "El becerro", A: 4}},
-	})
+	}, eoschoolCurriculumDefaultStudentKey, "d38", "mat")
 	if err != nil || text.Items[0].A != 0 || text.Items[0].Answer != "El becerro" {
 		t.Fatalf("text %#v %v", text, err)
 	}
@@ -216,7 +227,7 @@ func TestNormalizeEoschoolActivityRecord(t *testing.T) {
 	for i := 0; i < eoschoolActivityRecordMaxItems+1; i++ {
 		tooMany.Items = append(tooMany.Items, EoschoolActivityItem{Kind: "text", Answer: "x"})
 	}
-	if _, err = normalizeEoschoolActivityRecord(tooMany); err == nil {
+	if _, err = normalizeEoschoolActivityRecord(tooMany, eoschoolCurriculumDefaultStudentKey, "d38", "mat"); err == nil {
 		t.Fatal("item cap")
 	}
 }
@@ -236,11 +247,12 @@ func TestEoschoolActivityRecordSurvivesRescore(t *testing.T) {
 		Summary: "Falló 7 × 8.",
 		Rewrite: "Escribió 54.",
 		Kind:    "multiplication",
+		Photos:  []string{"p0123456789abcdef.webp"},
 		Items: []EoschoolActivityItem{
 			{Kind: "mult", Page: 1, Row: 0, Col: 0, A: 7, B: 8, Given: &given, Expected: 56, Correct: &miss},
 			{Kind: "mult", Page: 1, Row: 0, Col: 1, A: 3, B: 4, Given: &hitGiven, Expected: 12, Correct: &hit},
 		},
-	})
+	}, eoschoolCurriculumDefaultStudentKey, "d38", "mat")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -261,6 +273,10 @@ func TestEoschoolActivityRecordSurvivesRescore(t *testing.T) {
 	}
 	if view.ActivityFacts[1].Misses != 0 || view.ActivityFacts[1].Label != "3 × 4" {
 		t.Fatalf("hit %#v", view.ActivityFacts[1])
+	}
+	wantPath := eoschoolActivityPhotoAPIPath(eoschoolCurriculumDefaultStudentKey, "d38", "mat", "p0123456789abcdef.webp")
+	if got := view.ActivityRecords["d38:mat"].PhotoPaths; len(got) != 1 || got[0] != wantPath {
+		t.Fatalf("photo path %#v", got)
 	}
 	applyEoschoolActivityScore(&doc, "d38:mat", 40)
 	if doc.ActivityScores["d38:mat"] != 40 {

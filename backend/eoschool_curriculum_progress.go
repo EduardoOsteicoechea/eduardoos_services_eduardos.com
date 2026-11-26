@@ -86,11 +86,15 @@ type EoschoolActivityItem struct {
 }
 
 // EoschoolActivityRecord is the graded reading of one day+section.
+// Photos stores the task-photo file names this reading came from.
+// PhotoPaths is filled on read as the API download URL for each name.
 type EoschoolActivityRecord struct {
-	Summary string                 `json:"summary" bson:"summary"`
-	Rewrite string                 `json:"rewrite,omitempty" bson:"rewrite,omitempty"`
-	Kind    string                 `json:"kind" bson:"kind"`
-	Items   []EoschoolActivityItem `json:"items" bson:"items"`
+	Summary    string                 `json:"summary" bson:"summary"`
+	Rewrite    string                 `json:"rewrite,omitempty" bson:"rewrite,omitempty"`
+	Kind       string                 `json:"kind" bson:"kind"`
+	Items      []EoschoolActivityItem `json:"items" bson:"items"`
+	Photos     []string               `json:"photos,omitempty" bson:"photos,omitempty"`
+	PhotoPaths []string               `json:"photoPaths,omitempty" bson:"-"`
 }
 
 // EoschoolActivityFact rolls multiplication and division items across days.
