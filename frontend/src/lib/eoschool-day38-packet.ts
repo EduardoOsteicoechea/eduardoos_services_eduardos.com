@@ -11,9 +11,16 @@ export const DAY39_PACKET_HREF = "/eoschool/classes/dia-39.pdf";
 
 export const DAY39_PACKET_NAME = "dia-39.pdf";
 
+export const DAY40_PLAN_DAY = 40;
+
+export const DAY40_PACKET_HREF = "/eoschool/classes/dia-40.pdf";
+
+export const DAY40_PACKET_NAME = "dia-40.pdf";
+
 const DAY_PACKETS: Record<number, string> = {
   [DAY38_PLAN_DAY]: DAY38_PACKET_HREF,
   [DAY39_PLAN_DAY]: DAY39_PACKET_HREF,
+  [DAY40_PLAN_DAY]: DAY40_PACKET_HREF,
 };
 
 export function dayPacketHref(planDay: number): string | null {

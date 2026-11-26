@@ -67,6 +67,16 @@ export function aiGroupsForDay(planDay) {
       ],
     }];
   }
+  if (planDay === 40) {
+    return [{
+      objective: "Fotos y planos",
+      learnings: [
+        "Fotografié piezas sueltas: color, forma y tacos.",
+        "Un plano es esa pieza vista desde un solo lado.",
+        "Pedí un dibujo cada vez: planta, frente, atrás, derecha e izquierda.",
+      ],
+    }];
+  }
   const focus = ROTATION[(planDay - (AI_FROM_PLAN_DAY + 1)) % ROTATION.length];
   return [{ objective: focus.objective, learnings: [focus.learning] }];
 }
@@ -103,17 +113,18 @@ export function aiSheetSection(planDay) {
   }
   if (planDay === 40) {
     return {
-      objective: "Página",
+      objective: "Fotos y planos",
       learning:
-        "La página del inventario muestra un solo dato de una ficha que tú ya confirmaste. · Puede ser el color, la forma o la cantidad. · Si tú no lo dijiste, la página no lo pone.",
+        "Fotografié piezas sueltas. Cada foto es una sola pieza: color, forma y tacos. · Elegí dos. Un plano es esa pieza vista desde un solo lado. · Pedí un dibujo cada vez: planta, frente, atrás, lado derecho y lado izquierdo.",
       activities: [
-        "¿Qué pieza ya confirmaste?",
-        "¿Qué dato eliges para la página: color, forma o cantidad?",
-        "Escribe ese dato, tal como lo confirmaste.",
-        "¿Puede la página poner un color que tú no dijiste?",
-        "Escribe la línea de la página.",
+        "Di qué es un plano y nombra los cinco lados.",
+        "¿La foto es de una pieza sola o de un lego armado?",
+        "¿Qué es un plano?",
+        "¿Cómo se llama la vista desde arriba?",
+        "¿Pides los cinco dibujos juntos o uno por uno?",
+        "Nombra las cuatro fachadas.",
       ],
-      canDo: "Al terminar puedes elegir un dato confirmado y escribir la línea que muestra la página.",
+      canDo: "Al terminar puedes decir qué es un plano y nombrar los cinco lados.",
     };
   }
   const group = aiGroupsForDay(planDay)[0];

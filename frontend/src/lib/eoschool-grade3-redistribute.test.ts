@@ -91,7 +91,7 @@ describe("inteligencia artificial from day 38", () => {
       "Tú confirmas color, forma, tacos y repetidos.",
     ]);
     expect(aiGroupsForDay(39)[0].objective).toBe("Planos");
-    expect(aiGroupsForDay(40)[0].objective).toBe("Página");
+    expect(aiGroupsForDay(40)[0].objective).toBe("Fotos y planos");
     expect(aiGroupsForDay(43)[0].objective).toBe("Revisión");
     expect(aiGroupsForDay(44)[0].objective).toBe("Inventario");
   });
