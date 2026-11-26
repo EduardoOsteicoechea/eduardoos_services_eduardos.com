@@ -5,8 +5,6 @@
 
 export const PUBLIC_PRODUCTS = [
   "ereport",
-  "ereport-connector",
-  "eoproject",
   "api",
 ] as const;
 
@@ -22,6 +20,7 @@ const ADMIN_ONLY_PATH_PREFIXES = [
   "/homescool",
   "/homeschool",
   "/documents/pamphlet",
+  "/eoproject",
   "/evoice",
   "/emusic",
   "/eeyes",

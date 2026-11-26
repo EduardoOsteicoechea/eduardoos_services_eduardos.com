@@ -29,7 +29,7 @@ func TestSubscriptionsCatalogPublic(t *testing.T) {
 		t.Fatal(err)
 	}
 	services, ok := body["services"].([]any)
-	if !ok || len(services) < 3 {
+	if !ok || len(services) < 2 {
 		t.Fatalf("expected public catalog services, got %#v", body["services"])
 	}
 	ids := map[string]bool{}
@@ -38,12 +38,12 @@ func TestSubscriptionsCatalogPublic(t *testing.T) {
 		id, _ := row["id"].(string)
 		ids[id] = true
 	}
-	for _, want := range []string{"ereport", "ereport-connector", "eoproject", "api"} {
+	for _, want := range []string{"ereport", "api"} {
 		if !ids[want] {
 			t.Fatalf("missing public catalog id %s in %#v", want, ids)
 		}
 	}
-	for _, hidden := range []string{"epam", "pamphlet", "articles", "homescool", "scrib", "evoice", "emusic", "eeyes"} {
+	for _, hidden := range []string{"epam", "pamphlet", "articles", "homescool", "scrib", "evoice", "emusic", "eeyes", "eoproject", "ereport-connector"} {
 		if ids[hidden] {
 			t.Fatalf("admin-only product %s must not appear in public catalog", hidden)
 		}
@@ -133,7 +133,7 @@ func TestPaymentsCreateIntentAndStatus(t *testing.T) {
 	app.cfg.PayPalHostedButtonID = "TEST_BUTTON_ID"
 	app.cfg.PayPalCheckoutURL = "https://www.paypal.com/cgi-bin/webscr"
 
-	req, rec := app.memberPOST(t, "/api/payments/intents", `{"services":["ereport","eoproject"],"billing_period":"monthly"}`)
+	req, rec := app.memberPOST(t, "/api/payments/intents", `{"services":["ereport","api"],"billing_period":"monthly"}`)
 	app.Handler().ServeHTTP(rec, req)
 	if rec.Code != http.StatusOK {
 		t.Fatalf("create intent status=%d body=%s", rec.Code, rec.Body.String())
@@ -146,8 +146,8 @@ func TestPaymentsCreateIntentAndStatus(t *testing.T) {
 	if intentID == "" || created["hosted_button_id"] != "TEST_BUTTON_ID" {
 		t.Fatalf("unexpected intent: %#v", created)
 	}
-	if created["amount"] != "2.00" {
-		t.Fatalf("amount=%v want 2.00", created["amount"])
+	if created["amount"] != "4.00" {
+		t.Fatalf("amount=%v want 4.00", created["amount"])
 	}
 
 	hiddenReq, hiddenRec := app.memberPOST(t, "/api/payments/intents", `{"services":["epam"],"billing_period":"monthly"}`)
@@ -197,8 +197,11 @@ func TestKnownCatalogHelpers(t *testing.T) {
 	if !productAdminOnly("epam") || !productAdminOnly("pamphlet") || !productAdminOnly("scrib") {
 		t.Fatal("expected admin-only products")
 	}
-	if productAdminOnly("ereport") || productAdminOnly("eoproject") || productAdminOnly("api") {
+	if productAdminOnly("ereport") || productAdminOnly("api") {
 		t.Fatal("public products must not be admin-only")
+	}
+	if !productAdminOnly("eoproject") || !productAdminOnly("ereport-connector") {
+		t.Fatal("eoproject and website-issues connector must be admin-only")
 	}
 	if payableService("epam") {
 		t.Fatal("admin-only products must not be payable")

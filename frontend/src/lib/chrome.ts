@@ -612,7 +612,6 @@ function plainUserBlockedPath(pathname: string): boolean {
   if (isAdminOnlyPath(path)) return true;
   // Public entitled surfaces keep their own gates; do not soft-block here.
   if (
-    path.startsWith("/eoproject") ||
     path.startsWith("/ereport") ||
     path.startsWith("/eapi") ||
     path === "/api-docs"

@@ -41,20 +41,6 @@ export const SUBSCRIPTION_SERVICES_FALLBACK: SubscriptionService[] = [
     icon: "assignment",
   },
   {
-    id: "ereport-connector",
-    label: "eReport Connector",
-    description: "Use the eReport site connector (website registration binding, quick issue modal, and embed).",
-    monthlyUsd: 1,
-    icon: "cable",
-  },
-  {
-    id: "eoproject",
-    label: "eoProject",
-    description: "Construction project stages, photos, and IFC versions.",
-    monthlyUsd: 1,
-    icon: "architecture",
-  },
-  {
     id: "api",
     label: "eApi",
     description: "Create API keys and call product APIs from external apps.",

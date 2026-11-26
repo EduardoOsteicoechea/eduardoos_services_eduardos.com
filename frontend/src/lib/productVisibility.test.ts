@@ -7,11 +7,11 @@ import {
 } from "./productVisibility";
 
 describe("productVisibility", () => {
-  it("treats ereport, eoproject, and api as public", () => {
+  it("treats ereport and api as public", () => {
     expect(isPublicProduct("ereport")).toBe(true);
-    expect(isPublicProduct("eoproject")).toBe(true);
     expect(isPublicProduct("api")).toBe(true);
-    expect(isPublicProduct("ereport-connector")).toBe(true);
+    expect(isPublicProduct("eoproject")).toBe(false);
+    expect(isPublicProduct("ereport-connector")).toBe(false);
   });
 
   it("maps pamphlet alias to epam and marks it admin-only", () => {
@@ -19,12 +19,15 @@ describe("productVisibility", () => {
     expect(isAdminOnlyProduct("pamphlet")).toBe(true);
     expect(isAdminOnlyProduct("epam")).toBe(true);
     expect(isAdminOnlyProduct("scrib")).toBe(true);
+    expect(isAdminOnlyProduct("eoproject")).toBe(true);
+    expect(isAdminOnlyProduct("ereport-connector")).toBe(true);
   });
 
   it("detects admin-only paths", () => {
     expect(isAdminOnlyPath("/scrib")).toBe(true);
     expect(isAdminOnlyPath("/articles/read")).toBe(true);
     expect(isAdminOnlyPath("/dashboard/latin/calvins-institutes")).toBe(true);
+    expect(isAdminOnlyPath("/eoproject")).toBe(true);
     expect(isAdminOnlyPath("/ereport")).toBe(false);
     expect(isAdminOnlyPath("/portfolio/ereport")).toBe(false);
     expect(isAdminOnlyPath("/ebim")).toBe(true);

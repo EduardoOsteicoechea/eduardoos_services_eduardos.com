@@ -28,10 +28,10 @@ var serviceCatalog = []serviceInfo{
 	{ID: "homescool", Label: "Homescool", Description: "Homescool learning surface.", MonthlyUSD: 1, Visibility: visibilityAdmin},
 	{ID: "scrib", Label: "Scrib", Description: "Layered US Letter manuscript sheets with cloud books.", MonthlyUSD: 1, Visibility: visibilityAdmin},
 	{ID: "ereport", Label: "eReport", Description: "Issue tracker reports with cloud storage and sharing.", MonthlyUSD: 1, Visibility: visibilityPublic},
-	{ID: productEreportConnector, Label: "eReport Connector", Description: "Use the eReport site connector (website registration binding, quick issue modal, and embed).", MonthlyUSD: 1, Visibility: visibilityPublic},
+	{ID: productEreportConnector, Label: "eReport Connector", Description: "Use the eReport site connector (website registration binding, quick issue modal, and embed).", MonthlyUSD: 1, Visibility: visibilityAdmin},
 	{ID: "evoice", Label: "eVoice", Description: "Text-to-audio projects (docs → MP3).", MonthlyUSD: 1, Visibility: visibilityAdmin},
 	{ID: "emusic", Label: "eMusic", Description: "Curated music library with section playlists.", MonthlyUSD: 1, Visibility: visibilityAdmin},
-	{ID: "eoproject", Label: "eoProject", Description: "Construction project stages, photos, and IFC versions.", MonthlyUSD: 1, Visibility: visibilityPublic},
+	{ID: "eoproject", Label: "eoProject", Description: "Construction project stages, photos, and IFC versions.", MonthlyUSD: 1, Visibility: visibilityAdmin},
 	{ID: productEeyes, Label: "eEyes", Description: "Pair Android/Desktop shells, plan human capture tasks, and review completions.", MonthlyUSD: 1, Visibility: visibilityAdmin},
 	{ID: "api", Label: "eApi", Description: "Create API keys and call product APIs from external apps.", MonthlyUSD: 3, Visibility: visibilityPublic},
 }
@@ -63,7 +63,7 @@ func restoreProfileCatalogVisibility() {
 	for i := range serviceCatalog {
 		id := serviceCatalog[i].ID
 		switch id {
-		case "ereport", productEreportConnector, "eoproject", "api":
+		case "ereport", "api":
 			serviceCatalog[i].Visibility = visibilityPublic
 		default:
 			serviceCatalog[i].Visibility = visibilityAdmin
