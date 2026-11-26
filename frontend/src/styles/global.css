@@ -2329,7 +2329,7 @@ section.diag .panel:not(form) {
   /*
    * Top bar (all routes): end-aligned; order =
    * [eReport guest auth when visible] ? session avatar ?
-   * cart (when present) ? menu (flush end).
+   * cart (when present) ? website-issues bug ? menu (flush end).
    */
   .header-cluster--menu,
   .header-cluster--tools {
@@ -2348,8 +2348,12 @@ section.diag .panel:not(form) {
     order: 2;
   }
 
-  .header-menu {
+  .header-bug:not([hidden]) {
     order: 3;
+  }
+
+  .header-menu {
+    order: 4;
   }
 
   .sidebar-left,
@@ -2627,8 +2631,12 @@ section.diag .panel:not(form) {
     order: 2;
   }
 
-  .header-menu {
+  .header-bug:not([hidden]) {
     order: 3;
+  }
+
+  .header-menu {
+    order: 4;
   }
 
   .app-header .icon-btn:not(.header-session):not(.header-menu) {

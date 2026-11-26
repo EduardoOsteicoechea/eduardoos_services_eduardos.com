@@ -392,6 +392,16 @@ const jsonLdString =
           </div>
         ) : null}
         <div class="header-cluster header-cluster--menu" data-header-chrome>
+          <button
+            class="header-bug icon-btn"
+            type="button"
+            data-ereport-connector-open
+            hidden
+            aria-label="Website issues"
+            title="Website issues"
+          >
+            <span class="material-symbols-outlined" aria-hidden="true">bug_report</span>
+          </button>
           <button class="header-menu icon-btn" type="button" aria-controls="main-menu" aria-expanded="false" aria-label="Open menu" title="Open menu">
             <svg class="header-menu-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <line x1="5" y1="9" x2="19" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
@@ -488,18 +498,6 @@ const jsonLdString =
               <span class="material-symbols-outlined" aria-hidden="true">school</span>
               eSchool
             </a>
-            <button
-              type="button"
-              class="sidebar-nav-action"
-              data-ereport-connector-open
-              data-service="ereport-connector"
-              hidden
-              aria-label="Website issues"
-              title="Website issues"
-            >
-              <span class="material-symbols-outlined" aria-hidden="true">bug_report</span>
-              Website issues
-            </button>
           </div>
         </nav>
       </aside>
