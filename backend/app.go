@@ -465,6 +465,8 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("PUT /api/eoschool/curriculum/tutors/{userId}/students", a.putEoschoolCurriculumTutorStudentsHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/progress", a.getEoschoolCurriculumProgressHandler)
 	mux.HandleFunc("PATCH /api/eoschool/curriculum/progress/sections", a.patchEoschoolCurriculumSectionHandler)
+	mux.HandleFunc("PUT /api/eoschool/curriculum/semester-works", a.putEoschoolSemesterWorksHandler)
+	mux.HandleFunc("PUT /api/eoschool/curriculum/outings", a.putEoschoolOutingsHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/activities/photo", a.postEoschoolCurriculumActivityPhotoHandler)
 	mux.HandleFunc("DELETE /api/eoschool/curriculum/activities/photo", a.deleteEoschoolCurriculumActivityPhotoHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/activities/photo", a.getEoschoolCurriculumActivityPhotoHandler)

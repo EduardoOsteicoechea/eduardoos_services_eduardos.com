@@ -15,6 +15,9 @@ type eoschoolCurriculumProgressResponse struct {
 	ActivityScoreNotes map[string]string         `json:"activityScoreNotes"`
 	ActivityPhotos     []string                  `json:"activityPhotos"`
 	ActivityPhotoFiles map[string][]string       `json:"activityPhotoFiles"`
+	SemesterWorks      []EoschoolSemesterWork    `json:"semesterWorks"`
+	OutingYear         string                    `json:"outingYear"`
+	Outings            []EoschoolOuting          `json:"outings"`
 }
 
 func curriculumProgressJSON(doc EoschoolCurriculumProgressDoc) eoschoolCurriculumProgressResponse {
@@ -53,6 +56,14 @@ func curriculumProgressJSON(doc EoschoolCurriculumProgressDoc) eoschoolCurriculu
 		photos = append(photos, key)
 	}
 	sort.Strings(photos)
+	works := doc.SemesterWorks
+	if works == nil {
+		works = []EoschoolSemesterWork{}
+	}
+	outings := doc.Outings
+	if outings == nil {
+		outings = []EoschoolOuting{}
+	}
 	return eoschoolCurriculumProgressResponse{
 		Student:            doc.studentView(),
 		SectionsDone:       doc.SectionsDone,
@@ -60,6 +71,9 @@ func curriculumProgressJSON(doc EoschoolCurriculumProgressDoc) eoschoolCurriculu
 		ActivityScoreNotes: notes,
 		ActivityPhotos:     photos,
 		ActivityPhotoFiles: files,
+		SemesterWorks:      works,
+		OutingYear:         doc.OutingYear,
+		Outings:            outings,
 	}
 }
 

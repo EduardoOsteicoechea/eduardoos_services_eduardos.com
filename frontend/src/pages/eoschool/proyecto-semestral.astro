@@ -6,7 +6,7 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout
   title="Proyecto semestral"
-  description="Proyecto semestral del currículo Homeschool."
+  description="Enlace del PDF de evidencias de cada semestre."
   page="eoschool-proyecto-semestral"
   robots="noindex,nofollow"
 >
@@ -25,32 +25,50 @@ import Layout from "../../layouts/Layout.astro";
       <a class="button" href="/session" data-route>Sign in</a>
     </div>
     <article class="product-dash__card" data-authed hidden>
-      <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
       <h2 class="product-dash__card-title">Proyecto semestral</h2>
-      <p class="product-dash__card-desc">Aquí va el trabajo del semestre. El espacio queda listo para armarlo.</p>
+      <p class="product-dash__card-desc">
+        Cada semestre es un PDF de unas 26 páginas, tope de 30. Aquí se guarda el enlace de Drive.
+        Sin enlace, el trabajo queda pendiente en el dashboard.
+      </p>
+      <label>
+        Estudiante
+        <select data-student-select></select>
+      </label>
+      <label>
+        Enlace del PDF, 1.er semestre
+        <input data-sem="1" type="url" inputmode="url" autocomplete="off" placeholder="https://" />
+      </label>
+      <label>
+        Enlace del PDF, 2.º semestre
+        <input data-sem="2" type="url" inputmode="url" autocomplete="off" placeholder="https://" />
+      </label>
+      <button type="button" class="button" data-save>Guardar enlaces</button>
+      <p class="hint" data-status></p>
     </article>
   </section>
 </Layout>
 
 <script>
-  import { onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
+  import {
+    fetchCurriculumProgress,
+    fetchCurriculumStudents,
+    putCurriculumSemesterWorks,
+    type CurriculumStudent,
+  } from "../../lib/eoschool-curriculum-api";
+  import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
 
   onAstroPageLoad("eoschool-proyecto-semestral", async () => {
     const root = document.querySelector("[data-proyecto-semestral]");
     const banner = root?.querySelector("[data-banner]");
     const gate = root?.querySelector("[data-gate]");
     const authed = root?.querySelector("[data-authed]");
-    if (banner instanceof HTMLElement) {
-      banner.hidden = false;
-      banner.textContent = "Cargando…";
-    }
-
+    const select = root?.querySelector<HTMLSelectElement>("[data-student-select]");
+    const statusEl = root?.querySelector("[data-status]");
+    if (banner instanceof HTMLElement) banner.textContent = "Cargando…";
     const result = await requireService("homescool", { requireSubscription: true, adminOnly: true });
     if (!result.sessionOk || !result.access.allowed) {
       if (banner instanceof HTMLElement) {
-        banner.textContent = result.sessionOk
-          ? "Necesitas suscripción Homescool."
-          : "Inicia sesión para continuar.";
+        banner.textContent = result.sessionOk ? "Necesitas suscripción Homescool." : "Inicia sesión para continuar.";
       }
       setHidden(gate, false);
       setHidden(authed, true);
@@ -59,5 +77,61 @@ import Layout from "../../layouts/Layout.astro";
     if (banner instanceof HTMLElement) banner.hidden = true;
     setHidden(gate, true);
     setHidden(authed, false);
+    if (!select || !root) return;
+
+    const students = await fetchCurriculumStudents();
+    const list: CurriculumStudent[] = students.ok ? students.data.students : [];
+    select.replaceChildren();
+    for (const student of list) {
+      const option = document.createElement("option");
+      option.value = student.studentKey;
+      option.textContent = student.displayName || student.studentKey;
+      select.append(option);
+    }
+
+    const inputFor = (semester: number) =>
+      root.querySelector<HTMLInputElement>(`[data-sem="${semester}"]`);
+
+    async function load() {
+      const loaded = await fetchCurriculumProgress(select.value);
+      if (!loaded.ok) {
+        apiFail("No se pudieron leer los trabajos.", { requestId: loaded.requestId });
+        return;
+      }
+      const works = loaded.data.semesterWorks ?? [];
+      for (const semester of [1, 2]) {
+        const input = inputFor(semester);
+        if (input) input.value = works.find((work) => work.semester === semester)?.driveUrl ?? "";
+      }
+    }
+
+    select.addEventListener("change", () => {
+      void load().catch((err: unknown) => {
+        apiFail(err instanceof Error ? err.message : "No se pudieron leer los trabajos.");
+      });
+    });
+    root.querySelector("[data-save]")?.addEventListener("click", () => {
+      const works = [1, 2]
+        .map((semester) => ({ semester, driveUrl: inputFor(semester)?.value.trim() ?? "" }))
+        .filter((work) => work.driveUrl !== "");
+      void putCurriculumSemesterWorks({ studentKey: select.value, works })
+        .then(() => {
+          if (statusEl) statusEl.textContent = works.length === 0 ? "Sin enlaces. Los dos trabajos quedan pendientes." : "Enlaces guardados en eoschool.";
+        })
+        .catch((err: unknown) => {
+          const requestId = err && typeof err === "object" && "requestId" in err ? String((err as { requestId?: string }).requestId ?? "") : "";
+          apiFail(err instanceof Error ? err.message : "No se pudieron guardar los enlaces.", { requestId });
+        });
+    });
+    if (select.value) await load();
   });
 </script>
+
+<style>
+  [data-proyecto-semestral] .product-dash__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    min-width: 0;
+  }
+</style>

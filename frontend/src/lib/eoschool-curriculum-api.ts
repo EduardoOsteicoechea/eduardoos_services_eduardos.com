@@ -2,6 +2,16 @@ import { apiRequest, apiSend, uploadFileWithProgress, type UploadProgress } from
 
 export const DEFAULT_CURRICULUM_STUDENT_KEY = "elias-osteicoechea";
 
+export type CurriculumOuting = {
+  id?: string;
+  date: string;
+  semester: number;
+  place: string;
+  objective: string;
+  subject: string;
+  notes: string;
+};
+
 export type CurriculumStudent = {
   studentKey: string;
   firstName?: string;
@@ -20,6 +30,9 @@ export type CurriculumProgressPayload = {
   activityScoreNotes?: Record<string, string>;
   activityPhotos?: string[];
   activityPhotoFiles?: Record<string, string[]>;
+  semesterWorks?: { semester: number; driveUrl: string }[];
+  outingYear?: string;
+  outings?: CurriculumOuting[];
 };
 
 export type CurriculumStudentsPayload = {
@@ -149,6 +162,51 @@ export async function patchCurriculumSection(input: {
     };
     err.requestId = requestId;
     err.status = status;
+    throw err;
+  }
+  return data;
+}
+
+export async function putCurriculumSemesterWorks(input: {
+  studentKey: string;
+  works: { semester: number; driveUrl: string }[];
+}): Promise<CurriculumProgressPayload> {
+  const { status, data, requestId } = await apiSend<CurriculumProgressPayload>(
+    "/eoschool/curriculum/semester-works",
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    },
+  );
+  if (status < 200 || status >= 300) {
+    const err = new Error(data.message || "No se pudo guardar el trabajo semestral.") as Error & {
+      requestId?: string;
+    };
+    err.requestId = requestId;
+    throw err;
+  }
+  return data;
+}
+
+export async function putCurriculumOutings(input: {
+  studentKey: string;
+  year: string;
+  outings: CurriculumOuting[];
+}): Promise<CurriculumProgressPayload> {
+  const { status, data, requestId } = await apiSend<CurriculumProgressPayload>(
+    "/eoschool/curriculum/outings",
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    },
+  );
+  if (status < 200 || status >= 300) {
+    const err = new Error(data.message || "No se pudo guardar la planilla de salidas.") as Error & {
+      requestId?: string;
+    };
+    err.requestId = requestId;
     throw err;
   }
   return data;
