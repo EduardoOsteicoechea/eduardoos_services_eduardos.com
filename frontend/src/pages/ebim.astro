@@ -8,49 +8,25 @@ const docs = loadEbimDocs(
   join(dirname(fileURLToPath(import.meta.url)), "../../../iso19650_study_vault"),
 );
 
-const lessonTotal = docs.filter((doc) => doc.kind === "lesson").length;
-
-const groupTitle: Record<string, string> = {
-  start: "Inicio",
-  p1: "1. Conceptos",
-  p2: "2. Entrega",
-  p3: "3. Operación",
-  p4: "4. Intercambio",
-  p5: "5. Seguridad",
-  p6: "6. Formatos abiertos",
-  plan: "7. Comprobar",
+const byId = new Map(docs.map((doc) => [doc.id, doc]));
+const topicOf = (id: string) => {
+  const doc = byId.get(id);
+  if (!doc) throw new Error(`eBim topic missing: ${id}`);
+  return doc;
 };
 
-const itemTitle: Record<string, string> = {
-  index: "Mapa del recorrido",
-  "p1-summary": "Lección",
-  "p1-sources": "Fuentes",
-  "p2-summary": "Lección",
-  "p2-sources": "Fuentes",
-  "p3-summary": "Lección",
-  "p3-sources": "Fuentes",
-  "p4-summary": "Lección",
-  "p4-sources": "Fuentes",
-  "p5-summary": "Lección",
-  "p5-sources": "Fuentes",
-  "p6-summary": "Lección",
-  "p6-sources": "Fuentes",
-  plan: "Preguntas y ejercicios",
-};
+const topics: { id: string; nav: string; summary: EbimDoc; sources: EbimDoc | null }[] = [
+  { id: "index", nav: "Mapa", summary: topicOf("index"), sources: null },
+  { id: "concepts", nav: "Conceptos", summary: topicOf("p1-summary"), sources: topicOf("p1-sources") },
+  { id: "delivery", nav: "Entrega", summary: topicOf("p2-summary"), sources: topicOf("p2-sources") },
+  { id: "operation", nav: "Operación", summary: topicOf("p3-summary"), sources: topicOf("p3-sources") },
+  { id: "exchange", nav: "Intercambio", summary: topicOf("p4-summary"), sources: topicOf("p4-sources") },
+  { id: "security", nav: "Seguridad", summary: topicOf("p5-summary"), sources: topicOf("p5-sources") },
+  { id: "openbim", nav: "Formatos abiertos", summary: topicOf("p6-summary"), sources: topicOf("p6-sources") },
+  { id: "plan", nav: "Preguntas", summary: topicOf("plan"), sources: null },
+];
 
-type Group = { id: string; label: string; items: EbimDoc[]; refs: EbimDoc[] };
-const groups: Group[] = [];
-for (const doc of docs) {
-  let group = groups.find((item) => item.id === doc.group);
-  if (!group) {
-    group = { id: doc.group, label: groupTitle[doc.group] || doc.groupLabel, items: [], refs: [] };
-    groups.push(group);
-  }
-  if (doc.subgroup) group.refs.push(doc);
-  else group.items.push(doc);
-}
-
-const navLabel = (doc: EbimDoc) => itemTitle[doc.id] || doc.label;
+const references = docs.filter((doc) => doc.subgroup);
 ---
 
 <Layout
@@ -73,62 +49,70 @@ const navLabel = (doc: EbimDoc) => itemTitle[doc.id] || doc.label;
       >
         <span class="material-symbols-outlined" aria-hidden="true" data-ebim-collapse-icon>left_panel_close</span>
       </button>
-      <nav id="ebim-toc" aria-label="Orden de lectura">
-        {
-          groups.map((group) => (
-            <details class="ebim-nav__group" open={group.id === "start"}>
-              <summary>{group.label}</summary>
-              <div class="ebim-nav__items">
-                {group.items.map((doc) => (
+      <nav id="ebim-toc" aria-label="Temas">
+        <div class="ebim-nav__items">
+          {
+            topics.map((topic) => (
+              <button type="button" data-ebim-open={topic.id}>
+                {topic.nav}
+              </button>
+            ))
+          }
+          <details class="ebim-nav__group">
+            <summary>Consulta técnica</summary>
+            <div class="ebim-nav__items">
+              {
+                references.map((doc) => (
                   <button type="button" data-ebim-open={doc.id}>
-                    {navLabel(doc)}
+                    {doc.label}
                   </button>
-                ))}
-                {group.refs.length > 0 ? (
-                  <details class="ebim-nav__group">
-                    <summary>Consulta técnica</summary>
-                    <div class="ebim-nav__items">
-                      {group.refs.map((doc) => (
-                        <button type="button" data-ebim-open={doc.id}>
-                          {navLabel(doc)}
-                        </button>
-                      ))}
-                    </div>
-                  </details>
-                ) : null}
-              </div>
-            </details>
-          ))
-        }
+                ))
+              }
+            </div>
+          </details>
+        </div>
       </nav>
     </aside>
 
-    <div class="ebim-read">
-      <div class="ebim-pager">
-        <button type="button" data-ebim-prev>Anterior</button>
-        <p class="ebim-pager__label" data-ebim-label></p>
-        <button type="button" data-ebim-next>Siguiente</button>
-      </div>
+    <article class="ebim-read">
       {
-        docs.map((doc) => (
-          <section
-            id={`ebim-${doc.id}`}
-            data-ebim-section={doc.id}
-            data-ebim-kind={doc.kind}
-            data-ebim-step={doc.lessonStep || undefined}
-            hidden
-          >
-            <header class:list={["ebim-guide", doc.kind === "reference" && "ebim-guide--reference"]}>
-              <p class="ebim-guide__kicker">
-                {doc.kind === "lesson" ? `Lección ${doc.lessonStep} de ${lessonTotal}` : "Consulta"}
-              </p>
-              <p class="ebim-guide__text">{doc.guide}</p>
+        topics.map((topic) => (
+          <section id={`ebim-${topic.id}`} class="ebim-topic" data-ebim-section={topic.id}>
+            <header class="ebim-guide">
+              <p class="ebim-guide__kicker">{topic.nav}</p>
+              <p class="ebim-guide__text">{topic.summary.guide}</p>
             </header>
-            <div class="ebim-doc" set:html={doc.html} />
+            <div class="ebim-doc" set:html={topic.summary.html} />
+            {
+              topic.sources ? (
+                <div class="ebim-sources" id={`ebim-${topic.sources.id}`}>
+                  <h2 class="ebim-sources__title">Fuentes</h2>
+                  <p class="ebim-sources__note">{topic.sources.guide}</p>
+                  <div class="ebim-doc" set:html={topic.sources.html} />
+                </div>
+              ) : null
+            }
           </section>
         ))
       }
-    </div>
+      <section id="ebim-reference" class="ebim-topic" data-ebim-section="reference">
+        <header class="ebim-guide ebim-guide--reference">
+          <p class="ebim-guide__kicker">Consulta técnica</p>
+          <p class="ebim-guide__text">
+            Manual y esquema de IDS, en inglés. Está aquí para comprobar un detalle, no para leerlo como el resto de la página.
+          </p>
+        </header>
+        {
+          references.map((doc) => (
+            <section id={`ebim-${doc.id}`} class="ebim-ref" data-ebim-section={doc.id}>
+              <h2 class="ebim-sources__title">{doc.label}</h2>
+              <p class="ebim-sources__note">{doc.guide}</p>
+              <div class="ebim-doc" set:html={doc.html} />
+            </section>
+          ))
+        }
+      </section>
+    </article>
   </div>
 </Layout>
 
@@ -148,46 +132,27 @@ const navLabel = (doc: EbimDoc) => itemTitle[doc.id] || doc.label;
   };
 
   if (root instanceof HTMLElement) {
-    const sections = [...root.querySelectorAll<HTMLElement>("[data-ebim-section]")];
     const openers = [...root.querySelectorAll<HTMLButtonElement>("[data-ebim-open]")];
-    const prev = root.querySelector("[data-ebim-prev]");
-    const next = root.querySelector("[data-ebim-next]");
-    const label = root.querySelector("[data-ebim-label]");
     const collapse = root.querySelector("[data-ebim-collapse]");
     const toc = root.querySelector("#ebim-toc");
     const collapseIcon = root.querySelector("[data-ebim-collapse-icon]");
-    let index = 0;
 
-    const show = (nextIndex: number, scroll = false) => {
-      index = Math.min(Math.max(nextIndex, 0), sections.length - 1);
-      const id = sections[index]?.getAttribute("data-ebim-section") || "";
-      for (const section of sections) {
-        section.hidden = section.getAttribute("data-ebim-section") !== id;
-      }
+    const mark = (id: string) => {
       for (const button of openers) {
-        const current = button.getAttribute("data-ebim-open") === id;
-        if (current) button.setAttribute("aria-current", "page");
+        if (button.getAttribute("data-ebim-open") === id) button.setAttribute("aria-current", "page");
         else button.removeAttribute("aria-current");
-        if (current) {
-          const group = button.closest("details");
-          if (group) group.open = true;
-          const parent = group?.parentElement?.closest("details");
-          if (parent) parent.open = true;
-        }
       }
+    };
+
+    const goTo = (id: string) => {
+      const section = root.querySelector(`#ebim-${id}`);
+      if (!(section instanceof HTMLElement)) return;
       const opener = openers.find((button) => button.getAttribute("data-ebim-open") === id);
-      if (label instanceof HTMLElement) {
-        const current = sections[index];
-        const kind = current?.getAttribute("data-ebim-kind");
-        const step = current?.getAttribute("data-ebim-step");
-        const name = opener?.textContent?.trim() || "";
-        label.textContent =
-          kind === "lesson" ? `Lección ${step} de ${sections.filter((section) => section.getAttribute("data-ebim-kind") === "lesson").length} · ${name}` : `Consulta · ${name}`;
-      }
-      if (prev instanceof HTMLButtonElement) prev.disabled = index === 0;
-      if (next instanceof HTMLButtonElement) next.disabled = index === sections.length - 1;
-      if (mustLog) console.log("ebim.section", { id, index });
-      if (scroll) sections[index]?.scrollIntoView({ block: "start" });
+      const details = opener?.closest("details");
+      if (details) details.open = true;
+      section.scrollIntoView({ block: "start" });
+      mark(id);
+      if (mustLog) console.log("ebim.section", { id });
     };
 
     root.addEventListener("click", (event) => {
@@ -196,21 +161,31 @@ const navLabel = (doc: EbimDoc) => itemTitle[doc.id] || doc.label;
       const opener = target.closest("[data-ebim-open]");
       if (opener instanceof HTMLButtonElement && root.contains(opener)) {
         const id = opener.getAttribute("data-ebim-open");
-        const found = sections.findIndex((section) => section.getAttribute("data-ebim-section") === id);
-        if (found >= 0) show(found, true);
+        if (id) goTo(id);
         return;
       }
       const jump = target.closest("[data-ebim-jump]");
       if (jump instanceof HTMLAnchorElement && root.contains(jump)) {
         event.preventDefault();
         const id = jump.getAttribute("data-ebim-jump");
-        const found = sections.findIndex((section) => section.getAttribute("data-ebim-section") === id);
-        if (found >= 0) show(found, true);
+        if (id) goTo(id);
       }
     });
 
-    prev?.addEventListener("click", () => show(index - 1, true));
-    next?.addEventListener("click", () => show(index + 1, true));
+    const observed = [...root.querySelectorAll<HTMLElement>(".ebim-topic, .ebim-ref")];
+    if (typeof IntersectionObserver !== "undefined" && observed.length > 0) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          const id = visible?.target.getAttribute("data-ebim-section");
+          if (id) mark(id);
+        },
+        { rootMargin: "-6rem 0rem -12rem 0rem", threshold: [0.1, 0.6] },
+      );
+      for (const section of observed) observer.observe(section);
+    }
     collapse?.addEventListener("click", () => {
       const expanded = collapse.getAttribute("aria-expanded") !== "false";
       const nextExpanded = !expanded;
@@ -235,7 +210,7 @@ const navLabel = (doc: EbimDoc) => itemTitle[doc.id] || doc.label;
       }
       if (status instanceof HTMLElement) status.hidden = true;
       root.hidden = false;
-      show(0);
+      mark("index");
     };
 
     void start();
