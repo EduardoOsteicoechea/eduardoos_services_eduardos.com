@@ -61,9 +61,9 @@ export function aiGroupsForDay(planDay) {
     return [{
       objective: "Planos",
       learnings: [
-        "Eliges 2 fotos de imagenes/completo.",
-        "Creas planos y copias tú esas fotos.",
-        "Pides planta.svg y cuatro fachadas hasta que se parezcan.",
+        "Eliges 2 fotos de las que ya están. Cada una es una pieza sola.",
+        "Creas planos y copias tú esas dos fotos.",
+        "Pides un plano por vez: planta, fachada frontal, fachada posterior, lateral derecha, lateral izquierda.",
       ],
     }];
   }
@@ -82,18 +82,20 @@ export function aiSheetSection(planDay) {
   }
   if (planDay === 39) {
     return {
-      objective: "Planos de dos legos",
+      objective: "Plano de una pieza",
       learning:
-        "Eliges 2 fotos de legos armados en imagenes/completo. · Creas tú la carpeta planos y copias tú las fotos. · Pides planta.svg y cuatro fachadas hasta que se parezcan a la foto.",
+        "Eliges 2 fotos de las que ya están. Cada una es una pieza sola, sin armar. · Creas tú la carpeta planos y copias tú esas dos. · Pides un plano por vez: planta, fachada frontal, fachada posterior, lateral derecha y lateral izquierda. Luego la segunda pieza.",
       activities: [
-        "Elige 2 fotos de legos armados en imagenes/completo.",
+        "Elige 2 fotos de las que ya están. Una pieza sola en cada foto.",
         "Crea tú la carpeta planos. El agente no la crea.",
         "Copia tú esas 2 fotos dentro de planos.",
-        "Pide la planta: la vista desde arriba.",
-        "Pide fachada-frente, fachada-atras, fachada-izquierda y fachada-derecha.",
-        "Cada lego queda en una carpeta con el nombre de su foto.",
-        "Dentro van la foto, planta.svg y las cuatro fachadas.",
-        "Si un plano no se parece a la foto, pide ese plano otra vez.",
+        "Pide solo la planta de la primera pieza.",
+        "Pide solo la fachada frontal.",
+        "Pide solo la fachada posterior.",
+        "Pide solo la fachada lateral derecha.",
+        "Pide solo la fachada lateral izquierda.",
+        "Repite ese orden con la segunda pieza.",
+        "Si un plano no se parece a la foto, pide ese mismo otra vez.",
       ],
       canDo: "Al terminar puedes mostrar dos carpetas, cada una con la foto, la planta y las cuatro fachadas.",
     };
