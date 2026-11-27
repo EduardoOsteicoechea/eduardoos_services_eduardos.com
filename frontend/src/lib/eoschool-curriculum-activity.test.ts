@@ -204,6 +204,11 @@ describe("paintCurriculumSubjectScores", () => {
     const points = [...document.querySelectorAll<HTMLButtonElement>("[data-curriculum-subject-photo]")];
     expect(points).toHaveLength(2);
     expect(points[0]?.title).toBe("Lenguaje: foto 1 de 2");
+    points[1]?.dispatchEvent(new Event("pointerover", { bubbles: true }));
+    const tip = document.querySelector<HTMLElement>("[data-curriculum-photo-tip]");
+    expect(tip?.hidden).toBe(false);
+    expect(tip?.textContent).toBe("Lenguaje: foto 2 de 2");
+    expect(tip?.parentElement).toBe(document.body);
     expect(points[1]?.querySelector(".material-symbols-outlined")?.textContent).toBe("fiber_manual_record");
     points[1]?.click();
     const modal = document.querySelector<HTMLElement>("[data-curriculum-photo-modal]")!;

@@ -1189,8 +1189,8 @@ function weekForPlanDay(planDay: number): number {
     position: relative;
     align-self: start;
     align-items: stretch;
-    height: 5.625rem;
-    min-height: 5.625rem;
+    height: auto;
+    min-height: 0;
     max-height: 5.625rem;
     gap: 0;
     min-width: 0;
@@ -1330,8 +1330,8 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__day-card.product-dash__card {
-    height: 5.625rem;
-    min-height: 5.625rem;
+    height: auto;
+    min-height: 0;
     max-height: 5.625rem;
     overflow: visible;
   }
@@ -2942,19 +2942,10 @@ function weekForPlanDay(planDay: number): number {
     border-radius: 0;
   }
 
-  .eoschool-curriculum__subject:has(.eoschool-curriculum__subject-photo:hover),
-  .eoschool-curriculum__subject:has(.eoschool-curriculum__subject-photo:focus-visible) {
-    z-index: 2;
-  }
-
-  .eoschool-curriculum__subject-photo:hover::after,
-  .eoschool-curriculum__subject-photo:focus-visible::after {
-    content: attr(title);
-    position: absolute;
-    z-index: 3;
-    right: calc(100% + var(--rail-gap));
-    top: 50%;
-    transform: translateY(-50%);
+  .eoschool-curriculum__photo-tip {
+    position: fixed;
+    z-index: calc(var(--z-modal) + 1);
+    margin: 0;
     padding: var(--rail-gap);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
@@ -2965,6 +2956,10 @@ function weekForPlanDay(planDay: number): number {
     line-height: 1.2;
     white-space: nowrap;
     pointer-events: none;
+  }
+
+  .eoschool-curriculum__photo-tip[hidden] {
+    display: none;
   }
 
   .eoschool-curriculum-activity__thumb {

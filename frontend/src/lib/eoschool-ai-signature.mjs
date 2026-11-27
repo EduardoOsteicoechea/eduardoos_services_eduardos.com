@@ -71,9 +71,9 @@ export function aiGroupsForDay(planDay) {
     return [{
       objective: "Fotos y planos",
       learnings: [
-        "Fotografié piezas sueltas: color, forma y tacos.",
-        "Un plano es esa pieza vista desde un solo lado.",
-        "Pedí un dibujo cada vez: planta, frente, atrás, derecha e izquierda.",
+        "Resumen: fotografié piezas sueltas y pedí sus planos.",
+        "Aprendizaje clave: un plano es la pieza desde un solo lado. Planta es desde arriba. Fachada es un lado.",
+        "Conclusión: nombro la planta y las cuatro fachadas, de una en una.",
       ],
     }];
   }
@@ -115,14 +115,16 @@ export function aiSheetSection(planDay) {
     return {
       objective: "Fotos y planos",
       learning:
-        "Fotografié piezas sueltas. Cada foto es una sola pieza: color, forma y tacos. · Elegí dos. Un plano es esa pieza vista desde un solo lado. · Pedí un dibujo cada vez: planta, frente, atrás, lado derecho y lado izquierdo.",
+        "Resumen: fotografié piezas sueltas y pedí sus planos. · Puntos principales: cada foto es una pieza, con color, forma y tacos. Elegí dos. Pedí un dibujo cada vez. · Aprendizaje clave: un plano muestra la pieza desde un solo lado. Planta es desde arriba. Fachada es un lado. · Conclusión: nombro la planta y las cuatro fachadas, en orden.",
       activities: [
-        "Di qué es un plano y nombra los cinco lados.",
+        "Di qué es un plano y nombra la planta y las cuatro fachadas.",
         "¿La foto es de una pieza sola o de un lego armado?",
         "¿Qué es un plano?",
+        "¿Qué es un taco en la pieza?",
         "¿Cómo se llama la vista desde arriba?",
+        "¿Qué quiere decir fachada?",
         "¿Pides los cinco dibujos juntos o uno por uno?",
-        "Nombra las cuatro fachadas.",
+        "Si un dibujo no se parece a la foto, ¿qué pides?",
       ],
       canDo: "Al terminar puedes decir qué es un plano y nombrar los cinco lados.",
     };

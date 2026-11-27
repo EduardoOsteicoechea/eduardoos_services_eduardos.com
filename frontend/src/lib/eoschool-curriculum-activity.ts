@@ -111,6 +111,80 @@ export function paintCurriculumSubjectScores(root: HTMLElement): void {
     };
   });
   paintCurriculumSubjectPhotos(root);
+  bindCurriculumPhotoTooltip(root);
+}
+
+function curriculumPhotoTip(): HTMLElement {
+  let tip = document.querySelector<HTMLElement>("[data-curriculum-photo-tip]");
+  if (!tip) {
+    tip = document.createElement("div");
+    tip.className = "eoschool-curriculum__photo-tip";
+    tip.dataset.curriculumPhotoTip = "";
+    tip.setAttribute("role", "tooltip");
+    tip.hidden = true;
+    document.body.append(tip);
+  }
+  return tip;
+}
+
+function bindCurriculumPhotoTooltip(root: HTMLElement): void {
+  if (root.dataset.photoTipBound === "true") return;
+  root.dataset.photoTipBound = "true";
+
+  const hide = () => {
+    const tip = document.querySelector<HTMLElement>("[data-curriculum-photo-tip]");
+    if (tip) tip.hidden = true;
+  };
+
+  const show = (button: HTMLElement) => {
+    const text = button.getAttribute("title") || button.getAttribute("aria-label") || "";
+    if (!text) return;
+    const tip = curriculumPhotoTip();
+    tip.textContent = text;
+    tip.hidden = false;
+    const anchor = button.getBoundingClientRect();
+    const box = tip.getBoundingClientRect();
+    const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    const gap = 0.5 * rootPx;
+    let left = anchor.left - box.width - gap;
+    let top = anchor.top + anchor.height / 2 - box.height / 2;
+    if (left < gap) left = anchor.right + gap;
+    if (left + box.width > window.innerWidth - gap) {
+      left = Math.max(gap, window.innerWidth - box.width - gap);
+      top = anchor.top - box.height - gap;
+    }
+    if (top < gap) top = anchor.bottom + gap;
+    if (top + box.height > window.innerHeight - gap) top = Math.max(gap, window.innerHeight - box.height - gap);
+    tip.style.left = `${left / rootPx}rem`;
+    tip.style.top = `${top / rootPx}rem`;
+  };
+
+  const photoFrom = (target: EventTarget | null): HTMLElement | null => {
+    if (!(target instanceof Element)) return null;
+    const button = target.closest<HTMLElement>("[data-curriculum-subject-photo]");
+    if (!button || !root.contains(button)) return null;
+    return button;
+  };
+
+  root.addEventListener("pointerover", (ev) => {
+    const button = photoFrom(ev.target);
+    if (button) show(button);
+  });
+  root.addEventListener("pointerout", (ev) => {
+    const button = photoFrom(ev.target);
+    if (!button) return;
+    const next = ev.relatedTarget;
+    if (next instanceof Node && button.contains(next)) return;
+    hide();
+  });
+  root.addEventListener("focusin", (ev) => {
+    const button = photoFrom(ev.target);
+    if (button) show(button);
+  });
+  root.addEventListener("focusout", (ev) => {
+    if (photoFrom(ev.target)) hide();
+  });
+  window.addEventListener("scroll", hide, true);
 }
 
 function paintCurriculumSubjectPhotos(root: HTMLElement): void {
