@@ -350,6 +350,7 @@ function weekForPlanDay(planDay: number): number {
                                   </button>
                                 ) : null}
                               </div>
+                              <div class="eoschool-curriculum__subject-photos" data-curriculum-subject-photos aria-hidden="true"></div>
                               <h4 class="eoschool-curriculum__subject-title">
                                 <span class="page-title-sr">{label}</span>
                                 {isExpo && !expoBible ? (
@@ -407,7 +408,6 @@ function weekForPlanDay(planDay: number): number {
                                 </p>
                               ) : null}
                             </div>
-                            <div class="eoschool-curriculum__subject-photos" data-curriculum-subject-photos aria-hidden="true"></div>
                             <div class="eoschool-curriculum__subject-detail" hidden>
                               {groups.map((group) => (
                                 <div class="eoschool-curriculum__objective-block">
@@ -1436,7 +1436,7 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__subject-head {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
     column-gap: 0.35rem;
     min-width: 0;
@@ -1612,9 +1612,8 @@ function weekForPlanDay(planDay: number): number {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     gap: var(--rail-gap);
-    margin-top: var(--rail-gap);
     min-width: 0;
   }
 
