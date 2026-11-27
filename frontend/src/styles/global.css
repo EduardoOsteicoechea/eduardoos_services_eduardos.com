@@ -229,6 +229,10 @@ a {
   color: var(--color-text);
 }
 
+.app-header .header-bug {
+  cursor: pointer;
+}
+
 .app-header .icon-btn:hover,
 .app-header .icon-btn:focus-visible {
   background: transparent;
