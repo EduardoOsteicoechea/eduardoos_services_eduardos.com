@@ -318,7 +318,7 @@ function weekForPlanDay(planDay: number): number {
                               aria-valuemin="0"
                               aria-valuemax="100"
                               aria-valuenow="10"
-                              aria-orientation="vertical"
+                              aria-orientation="horizontal"
                               aria-label={`Progreso de ${label}`}
                               data-curriculum-subject-progress
                             >
@@ -416,6 +416,7 @@ function weekForPlanDay(planDay: number): number {
                                 </p>
                               ) : null}
                             </div>
+                            <div class="eoschool-curriculum__subject-photos" data-curriculum-subject-photos aria-hidden="true"></div>
                             <div class="eoschool-curriculum__subject-detail" hidden>
                               {groups.map((group) => (
                                 <div class="eoschool-curriculum__objective-block">
@@ -443,7 +444,6 @@ function weekForPlanDay(planDay: number): number {
                             </div>
                             </div>
                             </div>
-                            <div class="eoschool-curriculum__subject-photos" data-curriculum-subject-photos aria-hidden="true"></div>
                           </div>
                         );
                       })}
@@ -1609,7 +1609,6 @@ function weekForPlanDay(planDay: number): number {
     min-width: 0;
     position: relative;
     padding: var(--rail-gap);
-    padding-inline-end: calc(var(--rail-gap) + 0.35rem);
     border-block-start: 0;
     border-radius: var(--border-radius);
   }
@@ -1624,13 +1623,14 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__subject-progress {
     position: absolute;
-    inset-block: 0;
-    inset-inline-end: 0;
-    width: 0.35rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0.125rem;
     overflow: hidden;
     background: color-mix(in srgb, #ca8a04 28%, transparent);
+    border-start-start-radius: var(--border-radius);
     border-start-end-radius: var(--border-radius);
-    border-end-end-radius: var(--border-radius);
     pointer-events: none;
   }
 
@@ -1638,8 +1638,8 @@ function weekForPlanDay(planDay: number): number {
     position: absolute;
     inset: 0;
     background: #eab308;
-    transform: scaleY(0.1);
-    transform-origin: center bottom;
+    transform: scaleX(0.1);
+    transform-origin: left center;
   }
 
   .eoschool-curriculum__subject--done .eoschool-curriculum__subject-progress {
@@ -1648,7 +1648,7 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__subject--done .eoschool-curriculum__subject-progress__fill {
     background: #16a34a;
-    transform: scaleY(1);
+    transform: scaleX(1);
   }
 
   .eoschool-curriculum__subject-rail {
@@ -1692,14 +1692,17 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__subject-photos {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    align-self: flex-start;
-    flex-shrink: 0;
-    width: var(--font-size-xs);
-    min-width: var(--font-size-xs);
     gap: var(--rail-gap);
+    margin-top: var(--rail-gap);
+    min-width: 0;
+  }
+
+  .eoschool-curriculum__subject-photos[aria-hidden="true"] {
+    display: none;
   }
 
   .eoschool-curriculum__subject-body {
