@@ -32,6 +32,14 @@ export function activityPhotoNames(key: string): string[] {
   return photoFiles.get(key) ?? [];
 }
 
+export function dayHasActivityPhotos(dayId: string): boolean {
+  const prefix = `${dayId}:`;
+  for (const [key, names] of photoFiles) {
+    if (key.startsWith(prefix) && names.length > 0) return true;
+  }
+  return false;
+}
+
 export function setActivityMarks(
   nextScores: Record<string, number> | undefined,
   nextPhotos: string[] | undefined,

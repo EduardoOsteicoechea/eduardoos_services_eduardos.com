@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   activityPhotoNames,
+  dayHasActivityPhotos,
   activityTaskCopy,
   evaluationPrintDocument,
   paintCurriculumSubjectScores,
@@ -20,6 +21,8 @@ describe("activity photos", () => {
   it("keeps every uploaded image for the subject", () => {
     setActivityMarks({}, ["d38:len"], { "d38:len": ["p0123456789abcdef.webp", "pabcdef0123456789.webp"] });
     expect(activityPhotoNames("d38:len")).toEqual(["p0123456789abcdef.webp", "pabcdef0123456789.webp"]);
+    expect(dayHasActivityPhotos("d38")).toBe(true);
+    expect(dayHasActivityPhotos("d40")).toBe(false);
   });
 });
 

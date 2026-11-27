@@ -7,16 +7,48 @@ import {
   type MppeCurriculumDaySection,
   type MppeCurriculumDaySheet,
 } from "./mppe-curriculum-day-sheet";
-import { fetchMppeDayPdfPreview } from "./mppe-curriculum-pdf-preview";
+import { fetchClassRetryPdf, fetchMppeDayPdfPreview } from "./mppe-curriculum-pdf-preview";
+import { DEFAULT_CURRICULUM_STUDENT_KEY } from "./eoschool-curriculum-api";
 import { dayPacketHref, dayPacketName } from "./eoschool-day38-packet";
 import { mustLog } from "./dev-log";
-import { renderCurriculumActivity, printCardEvaluations } from "./eoschool-curriculum-activity";
+import { dayHasActivityPhotos, printCardEvaluations, renderCurriculumActivity } from "./eoschool-curriculum-activity";
 
 let sheetCache: Map<string, MppeCurriculumDaySheet> = new Map();
 let activePdfBytes: Uint8Array | null = null;
 let activePdfName = "dia-mppe.pdf";
 let pdfPreviewSeq = 0;
 let openDayCard: HTMLElement | null = null;
+
+// Days whose class text is embedded in the API (pkg/pdf/classsrc).
+const CLASS_RETRY_DAYS = new Set([40]);
+
+function syncRetryButton(modal: HTMLElement, card: HTMLElement): void {
+  const btn = modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-retry]");
+  if (!btn) return;
+  const planDay = parsePlanDay(card);
+  const dayId = card.dataset.curriculumDay ?? "";
+  btn.hidden = !(CLASS_RETRY_DAYS.has(planDay) && dayHasActivityPhotos(dayId));
+}
+
+async function downloadRetryPdf(card: HTMLElement, btn: HTMLButtonElement): Promise<void> {
+  const planDay = parsePlanDay(card);
+  const root = document.querySelector<HTMLElement>("[data-curriculum-progress]");
+  const studentKey = root?.dataset.curriculumStudentKey || DEFAULT_CURRICULUM_STUDENT_KEY;
+  btn.disabled = true;
+  try {
+    const result = await fetchClassRetryPdf(studentKey, planDay);
+    if (!result.ok || !result.pdfBytes?.byteLength) {
+      showErrorModal({
+        message: result.error ?? "No se pudo generar el repaso.",
+        requestId: result.requestId,
+      });
+      return;
+    }
+    downloadPdfBytes(result.pdfBytes, result.filename || `dia-${planDay}-repaso.pdf`);
+  } finally {
+    btn.disabled = false;
+  }
+}
 
 function pdfActionButtons(modal: HTMLElement): HTMLButtonElement[] {
   return [
@@ -264,6 +296,7 @@ function openModal(card: HTMLElement): void {
 
   modal.hidden = false;
   openDayCard = card;
+  syncRetryButton(modal, card);
   document.body.classList.add("eoschool-curriculum-modal-open");
 
   const tabs = modal.querySelectorAll<HTMLButtonElement>("[data-curriculum-modal-tab]");
@@ -350,6 +383,14 @@ export function bindCurriculumDayModalShell(modal: HTMLElement): void {
     if (!activePdfBytes?.byteLength) return;
     if (mustLog) console.log("[curriculum-day-modal] preview", { name: activePdfName });
     openPdfPreview(activePdfBytes);
+  });
+
+  modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-retry]")?.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const btn = ev.currentTarget;
+    if (!(btn instanceof HTMLButtonElement) || btn.disabled || btn.hidden || !openDayCard) return;
+    void downloadRetryPdf(openDayCard, btn);
   });
 
   modal.querySelector<HTMLButtonElement>("[data-curriculum-modal-print-evals]")?.addEventListener("click", (ev) => {

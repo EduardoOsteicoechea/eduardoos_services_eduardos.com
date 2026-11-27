@@ -490,6 +490,7 @@ func (a *App) Handler() http.Handler {
 	mux.HandleFunc("GET /api/eoschool/curriculum/materials/{id}/file", a.getEoschoolCurriculumMaterialFileHandler)
 	mux.HandleFunc("GET /api/eoschool/curriculum/materials/{id}/thumb", a.getEoschoolCurriculumMaterialThumbHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/day-preview", a.postEoschoolMPPECurriculumDayPreviewHandler)
+	mux.HandleFunc("POST /api/eoschool/curriculum/class-retry", a.postEoschoolClassRetryPDFHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/week-preview", a.postEoschoolMPPECurriculumWeekPreviewHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/program-preview", a.postEoschoolMPPECurriculumProgramPreviewHandler)
 	mux.HandleFunc("POST /api/eoschool/curriculum/portfolio-preview", a.postEoschoolMPPECurriculumPortfolioPreviewHandler)

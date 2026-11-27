@@ -88,3 +88,48 @@ export async function fetchMppeWeekPdfPreview(sheets: MppeCurriculumDaySheet[]):
     requestId,
   };
 }
+
+export async function fetchClassRetryPdf(
+  studentKey: string,
+  planDay: number,
+): Promise<{
+  ok: boolean;
+  pdfBytes?: Uint8Array;
+  filename?: string;
+  error?: string;
+  requestId?: string;
+  status?: number;
+}> {
+  const { status, data, requestId } = await apiRequest<{ pdf_base64?: string; filename?: string }>(
+    "/api/eoschool/curriculum/class-retry",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ studentKey, planDay }),
+    },
+  );
+  if (status === 409) {
+    return { ok: false, status, error: "Sube las fotos del día antes de generar el repaso.", requestId };
+  }
+  if (status === 404) {
+    return { ok: false, status, error: "Esta clase no tiene hoja para rehacer.", requestId };
+  }
+  if (status < 200 || status >= 300) {
+    return {
+      ok: false,
+      status,
+      error: data.message || "No se pudo generar el repaso.",
+      requestId,
+    };
+  }
+  if (!data.pdf_base64) {
+    return { ok: false, status, error: "Respuesta sin PDF.", requestId };
+  }
+  return {
+    ok: true,
+    status,
+    pdfBytes: base64ToBytes(data.pdf_base64),
+    filename: data.filename || `dia-${planDay}-repaso.pdf`,
+    requestId,
+  };
+}
