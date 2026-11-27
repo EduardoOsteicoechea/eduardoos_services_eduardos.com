@@ -24,6 +24,7 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
         week: week.week,
         planDay: d.dayInPlan,
         dayId: `d${d.dayInPlan}`,
+        calendarDate: block.calendarDate ?? "",
         scheduled,
       }));
     })
@@ -53,6 +54,8 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
     </div>
 
     <div class="eoschool-progress__body" data-authed hidden>
+      <div class="eoschool-progress__layout">
+      <div class="eoschool-progress__main">
       <div class="eoschool-progress__toolbar">
         <label class="eoschool-progress__student">
           <span class="eoschool-progress__label">Estudiante</span>
@@ -77,7 +80,7 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
           <tbody>
             {
               dayRows.map((day) => (
-                <tr data-day-row={day.dayId}>
+                <tr data-day-row={day.dayId} data-calendar={day.calendarDate}>
                   <td>{day.week}</td>
                   <td>{day.planDay}</td>
                   {CURRICULUM_SECTION_IDS.map((sid) => (
@@ -100,6 +103,17 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
           </tbody>
         </table>
       </div>
+      </div>
+      <aside class="eoschool-progress__profile product-dash__card" data-progress-profile aria-label="Perfil del avance">
+        <h2 class="product-dash__card-title">Perfil del avance</h2>
+        <div data-profile-body>
+          <p class="hint">Se arma al cargar las notas.</p>
+        </div>
+        <p class="hint">
+          <a href="/eoschool/requirements/criterios" data-route>Criterios de 3.er grado</a>
+        </p>
+      </aside>
+      </div>
     </div>
   </section>
 </Layout>
@@ -116,6 +130,12 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
     sectionProgressKey,
     subjectProgressValue,
   } from "../../lib/eoschool-curriculum-progress-status";
+  import {
+    buildProgressProfile,
+    localIsoDate,
+    planDayOnOrBefore,
+    type SubjectLine,
+  } from "../../lib/eoschool-progress-profile";
   import type { CurriculumPlanSectionId } from "../../lib/eoschool-curriculum-plan-classes";
   import { apiFail, onAstroPageLoad, requireService, setHidden } from "../../lib/productGate";
 
@@ -217,6 +237,84 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
     if (summary instanceof HTMLElement) {
       summary.textContent = formatProgressSummary(rollupSubjectProgress(items));
     }
+    paintProfile(root, studentKey, done);
+  }
+
+  function paintProfile(root: Element | null, studentKey: string, done: Set<string>) {
+    const body = root?.querySelector("[data-profile-body]");
+    if (!(body instanceof HTMLElement) || !root) return;
+    let scheduled = 0;
+    let completed = 0;
+    const throughDay = planDayOnOrBefore(
+      [...root.querySelectorAll<HTMLElement>("[data-day-row]")].map((row) => ({
+        planDay: Number((row.dataset.dayRow || "").replace(/^d/, "")),
+        calendarDate: row.dataset.calendar || "",
+      })),
+      localIsoDate(new Date()),
+    );
+    root.querySelectorAll<HTMLElement>("[data-day-row]").forEach((row) => {
+      const planDay = Number((row.dataset.dayRow || "").replace(/^d/, ""));
+      if (!throughDay || planDay > throughDay) return;
+      row.querySelectorAll<HTMLElement>("[data-section-dot]").forEach((dot) => {
+        scheduled += 1;
+        const sid = dot.dataset.section;
+        if (sid && done.has(sectionProgressKey(row.dataset.dayRow || "", sid as CurriculumPlanSectionId))) {
+          completed += 1;
+        }
+      });
+    });
+    const scores: Record<string, number> = {};
+    root.querySelectorAll<HTMLElement>("[data-section-dot]").forEach((dot) => {
+      const row = dot.closest<HTMLElement>("[data-day-row]");
+      const sid = dot.dataset.section;
+      const raw = dot.textContent?.trim() || "";
+      if (!row || !sid || !/^\d+$/.test(raw)) return;
+      scores[sectionProgressKey(row.dataset.dayRow || "", sid as CurriculumPlanSectionId)] = Number(raw);
+    });
+    const view = buildProgressProfile(studentKey, scores, { throughDay, completed, scheduled });
+    body.replaceChildren();
+    addText(body, "eoschool-profile__calendar", view.calendar);
+    if (view.pace) addText(body, "eoschool-profile__pace", view.pace);
+    addText(body, "eoschool-profile__numbers", view.numbers);
+    if (view.subjects.length) {
+      const list = document.createElement("ul");
+      list.className = "eoschool-profile__subjects";
+      for (const subject of view.subjects) list.append(subjectRow(subject));
+      body.append(list);
+    }
+    for (const reading of view.readings) {
+      const block = document.createElement("section");
+      block.className = "eoschool-profile__reading";
+      const title = document.createElement("h3");
+      title.textContent = reading.title;
+      const text = document.createElement("p");
+      text.textContent = reading.text;
+      block.append(title, text);
+      body.append(block);
+    }
+    addText(body, "hint", view.footnote);
+  }
+
+  function addText(parent: HTMLElement, className: string, text: string) {
+    const p = document.createElement("p");
+    p.className = className;
+    p.textContent = text;
+    parent.append(p);
+  }
+
+  function subjectRow(subject: SubjectLine): HTMLLIElement {
+    const row = document.createElement("li");
+    row.className = "eoschool-profile__subject";
+    const name = document.createElement("span");
+    name.textContent = subject.label;
+    const mean = document.createElement("span");
+    mean.className = `eoschool-score eoschool-score--${subject.tone}`;
+    mean.textContent = String(subject.mean);
+    const trail = document.createElement("span");
+    trail.className = "eoschool-profile__trail";
+    trail.textContent = subject.trail;
+    row.append(name, mean, trail);
+    return row;
   }
 </script>
 
@@ -348,5 +446,98 @@ const dayRows = MPPE_40WEEK_CURRICULUM.weeks.flatMap((week) =>
   .eoschool-progress__na {
     color: var(--color-muted);
     font-size: var(--font-size-sm);
+  }
+
+  .eoschool-progress__layout {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    min-width: 0;
+  }
+
+  .eoschool-progress__main {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .eoschool-progress__profile {
+    align-items: stretch;
+    align-self: stretch;
+    order: -1;
+    cursor: default;
+    gap: var(--rail-gap);
+  }
+
+  .eoschool-progress__profile:hover {
+    border-color: var(--color-border);
+  }
+
+  .eoschool-progress__profile h2,
+  .eoschool-profile__reading h3,
+  .eoschool-profile__calendar,
+  .eoschool-profile__pace,
+  .eoschool-profile__numbers,
+  .eoschool-profile__reading p {
+    margin: 0;
+  }
+
+  .eoschool-profile__calendar,
+  .eoschool-profile__numbers,
+  .eoschool-profile__reading p {
+    font-size: var(--font-size-sm);
+    line-height: 1.45;
+  }
+
+  .eoschool-profile__pace {
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+  }
+
+  .eoschool-profile__reading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .eoschool-profile__reading h3 {
+    font-size: var(--font-size-sm);
+    font-weight: 650;
+  }
+
+  .eoschool-profile__subjects {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .eoschool-profile__subject {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--rail-gap);
+    font-size: var(--font-size-sm);
+  }
+
+  .eoschool-profile__trail {
+    color: var(--color-muted);
+    font-size: var(--font-size-xs);
+  }
+
+  @media (min-width: 48rem) {
+    .eoschool-progress__layout {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .eoschool-progress__profile {
+      order: 0;
+      flex: 0 0 22rem;
+      width: 22rem;
+      position: sticky;
+      top: var(--header-size);
+    }
   }
 </style>
