@@ -767,21 +767,30 @@ function openScoreReasonDialog(
     const answer = document.createElement("article");
     answer.className = "eoschool-curriculum-activity__answer";
     answer.dataset.curriculumScoreAnswer = "";
+    const copy = document.createElement("div");
+    copy.className = "eoschool-curriculum-activity__answer-copy";
     const question = item.prompt?.trim() || "";
     if (question) {
       const prompt = document.createElement("p");
       prompt.dataset.curriculumScorePrompt = "";
       prompt.textContent = question;
-      answer.append(prompt);
+      copy.append(prompt);
     }
     const written = item.answer?.trim() || item.rewrite?.trim() || "";
     if (written) {
       const line = document.createElement("p");
       line.dataset.curriculumScoreWrote = "";
       line.textContent = written;
-      answer.append(line);
+      copy.append(line);
     }
-    if (answer.childElementCount) body.append(answer);
+    if (!copy.childElementCount) continue;
+    const mark = scoreAnswerMark(item.correct);
+    if (mark) {
+      answer.dataset.curriculumScoreMark = item.correct ? "ok" : "bad";
+      answer.append(mark);
+    }
+    answer.append(copy);
+    body.append(answer);
   }
   const misses = facts.filter((fact) => fact.misses > 0 && fact.label);
   if (misses.length) {
@@ -803,6 +812,20 @@ function openScoreReasonDialog(
   layer.addEventListener("keydown", (ev) => {
     if (ev.key === "Escape") close();
   });
+}
+
+function scoreAnswerMark(correct: boolean | undefined): HTMLElement | null {
+  if (correct == null) return null;
+  const mark = document.createElement("span");
+  mark.className = "eoschool-curriculum-activity__mark";
+  mark.dataset.curriculumScoreMark = correct ? "ok" : "bad";
+  mark.setAttribute("aria-label", correct ? "Bien" : "Mal");
+  const icon = document.createElement("span");
+  icon.className = "material-symbols-outlined";
+  icon.setAttribute("aria-hidden", "true");
+  icon.textContent = correct ? "check" : "close";
+  mark.append(icon);
+  return mark;
 }
 
 function isScoreKeyRejection(err: unknown): boolean {

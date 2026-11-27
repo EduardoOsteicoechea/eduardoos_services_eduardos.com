@@ -142,6 +142,12 @@ describe("score reason", () => {
           prompt: "¿Cómo es la medida que se da?",
           answer: "buena, apretada y rebosante",
           rewrite: "Buena, apretada, remecida y rebosante.",
+          correct: true,
+        }, {
+          kind: "text",
+          prompt: "¿Dónde pone el cimiento?",
+          answer: "La tierra.",
+          correct: false,
         }],
       },
     });
@@ -150,6 +156,12 @@ describe("score reason", () => {
     expect(modal.querySelector("[data-curriculum-score-reason-text]")?.textContent).toBe("La medida está bien leída.");
     expect(modal.querySelector("[data-curriculum-score-prompt]")?.textContent).toBe("¿Cómo es la medida que se da?");
     expect(modal.querySelector("[data-curriculum-score-wrote]")?.textContent).toBe("buena, apretada y rebosante");
+    const marks = [...modal.querySelectorAll(".eoschool-curriculum-activity__mark")];
+    expect(marks.map((mark) => mark.getAttribute("aria-label"))).toEqual(["Bien", "Mal"]);
+    expect(marks.map((mark) => mark.querySelector(".material-symbols-outlined")?.textContent)).toEqual([
+      "check",
+      "close",
+    ]);
   });
 });
 

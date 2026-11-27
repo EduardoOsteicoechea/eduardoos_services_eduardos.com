@@ -215,12 +215,13 @@ func TestNormalizeEoschoolActivityRecord(t *testing.T) {
 	}, eoschoolCurriculumDefaultStudentKey, "d38", "mat"); err == nil {
 		t.Fatal("uneven division")
 	}
+	hit := true
 	text, err := normalizeEoschoolActivityRecord(EoschoolActivityRecord{
 		Summary: "Leyó el pasaje.",
 		Kind:    "prose",
-		Items:   []EoschoolActivityItem{{Kind: "text", Prompt: "Idea", Answer: "El becerro", A: 4}},
+		Items:   []EoschoolActivityItem{{Kind: "text", Prompt: "Idea", Answer: "El becerro", A: 4, Correct: &hit}},
 	}, eoschoolCurriculumDefaultStudentKey, "d38", "mat")
-	if err != nil || text.Items[0].A != 0 || text.Items[0].Answer != "El becerro" {
+	if err != nil || text.Items[0].A != 0 || text.Items[0].Answer != "El becerro" || text.Items[0].Correct == nil || !*text.Items[0].Correct {
 		t.Fatalf("text %#v %v", text, err)
 	}
 	tooMany := EoschoolActivityRecord{Summary: "Muchas.", Kind: "prose"}

@@ -3182,6 +3182,52 @@ function weekForPlanDay(planDay: number): number {
     background: var(--color-surface);
   }
 
+  .eoschool-curriculum-activity__answer {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .eoschool-curriculum-activity__answer-copy {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: var(--rail-gap);
+    min-width: 0;
+  }
+
+  .eoschool-curriculum-activity__mark {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    color: var(--color-text);
+  }
+
+  .eoschool-curriculum-activity__mark .material-symbols-outlined {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    font-size: var(--icon-size);
+    line-height: 1;
+  }
+
+  .eoschool-curriculum-activity__mark[data-curriculum-score-mark="ok"] {
+    color: var(--color-ok);
+  }
+
+  .eoschool-curriculum-activity__mark[data-curriculum-score-mark="bad"] {
+    color: var(--color-err);
+  }
+
+  .eoschool-curriculum-activity__answer[data-curriculum-score-mark="ok"] {
+    border-color: var(--color-ok);
+  }
+
+  .eoschool-curriculum-activity__answer[data-curriculum-score-mark="bad"] {
+    border-color: var(--color-err);
+  }
+
   .eoschool-curriculum-activity__cell-factors {
     font-size: var(--font-size-md);
   }

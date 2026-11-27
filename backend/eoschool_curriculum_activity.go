@@ -92,7 +92,6 @@ func normalizeEoschoolActivityItem(item EoschoolActivityItem) (EoschoolActivityI
 		item.Page, item.Row, item.Col = 0, 0, 0
 		item.A, item.B, item.Expected = 0, 0, 0
 		item.Given = nil
-		item.Correct = nil
 		if item.Prompt == "" && item.Answer == "" && item.Rewrite == "" {
 			return item, errEoschoolActivityRecord
 		}
