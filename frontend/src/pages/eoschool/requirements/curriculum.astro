@@ -209,7 +209,7 @@ function weekForPlanDay(planDay: number): number {
                 const blockId = `w${weekPlan.week}-b${block.block}`;
                 const scheduled = scheduledSectionsForBlock(block, weekPlan.week);
                 const isExpo = block.dayKind === "exposition";
-                const subjectsOpen = weekSubjectsOpen && !isExpo;
+                const subjectsOpen = weekSubjectsOpen;
                 const isHoliday = block.dayKind === "holiday";
                 const ariaDay = isHoliday
                   ? `Abrir día ${bibleDay.dayInPlan}, feriado ${block.holidayName ?? ""}`
@@ -303,7 +303,7 @@ function weekForPlanDay(planDay: number): number {
                             : area.label;
                         const subjectBodyId = `${blockId}-${area.sectionId}-body`;
                         const expoBible = isExpo && area.sectionId === "bib";
-                        const subjectOpen = isExpo ? expoBible : subjectsOpen;
+                        const subjectOpen = subjectsOpen;
                         return (
                           <div
                             class:list={[
@@ -330,25 +330,6 @@ function weekForPlanDay(planDay: number): number {
                                 <span class="eoschool-curriculum__subject-icon" title={label}>
                                   <span class="material-symbols-outlined" aria-hidden="true">{area.icon}</span>
                                 </span>
-                                {isExpo && !expoBible ? (
-                                  <button
-                                    type="button"
-                                    class="eoschool-curriculum__subject-toggle eoschool-curriculum__subject-toggle--icon"
-                                    data-curriculum-subject-toggle
-                                    aria-expanded={subjectOpen ? "true" : "false"}
-                                    aria-controls={subjectBodyId}
-                                    title={subjectOpen ? `Ocultar ${label}` : `Mostrar ${label}`}
-                                    aria-label={subjectOpen ? `Ocultar ${label}` : `Mostrar ${label}`}
-                                  >
-                                    <span
-                                      class="material-symbols-outlined eoschool-curriculum__subject-chevron"
-                                      data-curriculum-subject-chevron
-                                      aria-hidden="true"
-                                    >
-                                      {subjectOpen ? "expand_less" : "expand_more"}
-                                    </span>
-                                  </button>
-                                ) : null}
                               </div>
                               <div class="eoschool-curriculum__subject-photos" data-curriculum-subject-photos aria-hidden="true"></div>
                               <h4 class="eoschool-curriculum__subject-title">
@@ -1379,26 +1360,6 @@ function weekForPlanDay(planDay: number): number {
     align-items: stretch;
   }
 
-  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject,
-  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject--open,
-  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject:not(.eoschool-curriculum__subject--open) {
-    flex: 0 0 auto;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject-head-start {
-    flex-direction: row;
-    align-items: center;
-    align-self: center;
-    justify-content: flex-start;
-  }
-
-  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject:not(.eoschool-curriculum__subject--open) .eoschool-curriculum__subject-body,
-  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject:not(.eoschool-curriculum__subject--open) .eoschool-curriculum__subject-detail {
-    display: none;
-  }
-
   .eoschool-curriculum__expo-word {
     display: inline-flex;
     align-items: center;
@@ -1620,6 +1581,12 @@ function weekForPlanDay(planDay: number): number {
     padding: 0;
     overflow-x: hidden;
     overflow-y: auto;
+  }
+
+  .eoschool-curriculum__subject-body,
+  .eoschool-curriculum__learnings--card {
+    align-self: stretch;
+    min-width: 0;
   }
 
   .eoschool-curriculum__subject-photos {

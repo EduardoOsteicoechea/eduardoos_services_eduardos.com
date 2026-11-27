@@ -60,7 +60,7 @@ describe("selectCurrentWeek", () => {
     expect(week.querySelector("[data-curriculum-subject-chevron]")?.textContent).toBe("expand_less");
   });
 
-  it("opens only Biblia on day 5", () => {
+  it("opens every subject on day 5", () => {
     const root = rootWithWeeks();
     const week = root.querySelector<HTMLElement>('[data-week="7"]')!;
     const days = week.querySelector(".eoschool-curriculum__week-days");
@@ -93,15 +93,15 @@ describe("selectCurrentWeek", () => {
     const toggles = [...week.querySelectorAll("[data-curriculum-subject-toggle]")];
     expect(toggles[0]?.getAttribute("aria-expanded")).toBe("true");
     expect(toggles[1]?.getAttribute("aria-expanded")).toBe("true");
-    expect(toggles[2]?.getAttribute("aria-expanded")).toBe("false");
+    expect(toggles[2]?.getAttribute("aria-expanded")).toBe("true");
     const expoBodies = [
       ...week.querySelectorAll<HTMLElement>('[data-curriculum-day-kind="exposition"] [data-curriculum-subject-body]'),
     ];
     expect(expoBodies[0]?.hidden).toBe(false);
-    expect(expoBodies[1]?.hidden).toBe(true);
+    expect(expoBodies[1]?.hidden).toBe(false);
   });
 
-  it("opens Biblia on day 5 when the card has no heading toggle", () => {
+  it("opens every day 5 subject when the card has no heading toggle", () => {
     const root = rootWithWeeks();
     const week = root.querySelector<HTMLElement>('[data-week="7"]')!;
     const days = week.querySelector(".eoschool-curriculum__week-days");
@@ -129,8 +129,8 @@ describe("selectCurrentWeek", () => {
     expect(teach.querySelector<HTMLElement>("[data-curriculum-subject-body]")?.hidden).toBe(false);
     expect(bible.classList.contains("eoschool-curriculum__subject--open")).toBe(true);
     expect(bible.querySelector<HTMLElement>("[data-curriculum-subject-body]")?.hidden).toBe(false);
-    expect(language.classList.contains("eoschool-curriculum__subject--open")).toBe(false);
-    expect(language.querySelector<HTMLElement>("[data-curriculum-subject-body]")?.hidden).toBe(true);
+    expect(language.classList.contains("eoschool-curriculum__subject--open")).toBe(true);
+    expect(language.querySelector<HTMLElement>("[data-curriculum-subject-body]")?.hidden).toBe(false);
   });
 
   it("falls back to the current week when the requested week is missing", () => {
