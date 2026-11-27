@@ -170,6 +170,17 @@ describe("paintCurriculumSubjectScores", () => {
     reason?.remove();
   });
 
+  it("keeps an empty score box when the subject has no grade", () => {
+    const root = document.createElement("div");
+    root.innerHTML = `<article data-curriculum-day="d36"><div data-curriculum-section="ide"><span data-curriculum-subject-score hidden></span></div></article>`;
+    setActivityMarks({}, []);
+    paintCurriculumSubjectScores(root);
+    const span = root.querySelector<HTMLElement>("[data-curriculum-subject-score]")!;
+    expect(span.hidden).toBe(false);
+    expect(span.textContent).toBe("");
+    expect(span.getAttribute("role")).toBeNull();
+  });
+
   it("paints one green point per photo and opens it with prev and next", () => {
     document.body.innerHTML = `
       <div data-curriculum-photo-modal hidden>

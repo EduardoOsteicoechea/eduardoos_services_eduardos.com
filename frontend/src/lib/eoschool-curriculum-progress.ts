@@ -2,12 +2,11 @@ import { CURRICULUM_SECTION_IDS, type CurriculumPlanSectionId } from "./eoschool
 import {
   DEFAULT_CURRICULUM_STUDENT_KEY,
   fetchCurriculumProgress,
-  patchCurriculumSection,
+  type CurriculumProgressPayload,
   type CurriculumStudent,
 } from "./eoschool-curriculum-api";
 import { daySectionsComplete, sectionProgressKey } from "./eoschool-curriculum-progress-status";
 import { openCurriculumTreatModal } from "./eoschool-curriculum-treat-modal";
-import { showErrorModal } from "./error-modal";
 import { mustLog } from "./dev-log";
 import { paintCurriculumSubjectScores, setActivityMarks } from "./eoschool-curriculum-activity";
 
@@ -46,8 +45,6 @@ function applyProgress(root: HTMLElement, done: Set<string>): void {
       const checked = done.has(key);
       sectionEl.classList.toggle("eoschool-curriculum__subject--done", checked);
       paintSubjectProgress(sectionEl, checked);
-      const input = sectionEl.querySelector<HTMLInputElement>("[data-curriculum-section-check]");
-      if (input) input.checked = checked;
     });
 
     const complete = dayComplete(card, dayId, done);
@@ -197,12 +194,10 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
       ? new URLSearchParams(window.location.search).get("studentKey")?.trim() || ""
       : "";
   let studentKey = fromDataset || fromQuery || DEFAULT_CURRICULUM_STUDENT_KEY;
-  let persistRemote = false;
 
   try {
     const loaded = await fetchCurriculumProgress(studentKey);
     if (loaded.ok) {
-      persistRemote = true;
       studentKey = loaded.data.student.studentKey;
       root.dataset.curriculumStudentKey = studentKey;
       loaded.data.sectionsDone.forEach((key) => done.add(key));
@@ -249,62 +244,21 @@ export async function initCurriculumProgress(root: HTMLElement | null): Promise<
   if (root.dataset.progressBound === "true") return;
   root.dataset.progressBound = "true";
 
-  root.addEventListener("change", async (ev) => {
-    const target = ev.target;
-    if (!(target instanceof HTMLInputElement) || !target.matches("[data-curriculum-section-check]")) return;
-    const sectionEl = target.closest<HTMLElement>("[data-curriculum-section]");
-    const card = target.closest<HTMLElement>("[data-curriculum-day]");
-    const dayId = card?.dataset.curriculumDay;
-    const sectionId = sectionEl?.dataset.curriculumSection as CurriculumPlanSectionId | undefined;
-    if (!dayId || !sectionId) return;
-    const key = sectionProgressKey(dayId, sectionId);
-    const prev = done.has(key);
-    if (target.checked) done.add(key);
-    else done.delete(key);
+  document.addEventListener("eoschool-curriculum-progress", (ev) => {
+    const detail = (ev as CustomEvent<CurriculumProgressPayload>).detail;
+    if (!detail || !Array.isArray(detail.sectionsDone)) return;
+    const before = new Set(done);
+    done.clear();
+    detail.sectionsDone.forEach((key) => done.add(key));
+    if (detail.student) setStudentBanner(root, detail.student, "remote");
     applyProgress(root, done);
-
-    const justCompleted = target.checked && !prev;
-    if (justCompleted) {
-      void openCurriculumTreatModal(dayId, sectionId);
-    }
-
-    if (!persistRemote) {
-      // Optimistic local-only for guests; do not confuse with session loss.
-      return;
-    }
-
-    try {
-      const data = await patchCurriculumSection({
-        studentKey,
-        dayId,
-        sectionId,
-        completed: target.checked,
-      });
-      done.clear();
-      data.sectionsDone.forEach((k) => done.add(k));
-      setActivityMarks(
-        data.activityScores,
-        data.activityPhotos,
-        data.activityPhotoFiles,
-        data.activityScoreNotes,
-        data.activityRecords,
-        data.activityFacts,
-      );
-      setStudentBanner(root, data.student, "remote");
-      applyProgress(root, done);
-    } catch (err) {
-      if (prev) done.add(key);
-      else done.delete(key);
-      target.checked = prev;
-      applyProgress(root, done);
-      const requestId =
-        err && typeof err === "object" && "requestId" in err
-          ? String((err as { requestId?: string }).requestId || "")
-          : "";
-      showErrorModal({
-        message: err instanceof Error ? err.message : "No se pudo guardar el progreso.",
-        requestId: requestId || undefined,
-      });
+    for (const key of done) {
+      if (before.has(key)) continue;
+      const sep = key.indexOf(":");
+      if (sep < 1) continue;
+      const sectionId = key.slice(sep + 1) as CurriculumPlanSectionId;
+      if (!CURRICULUM_SECTION_IDS.includes(sectionId)) continue;
+      void openCurriculumTreatModal(key.slice(0, sep), sectionId);
     }
   });
 }

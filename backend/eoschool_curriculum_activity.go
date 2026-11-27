@@ -54,12 +54,22 @@ func eoschoolActivityScoreKeyOK(user *User, key string) bool {
 	return subtle.ConstantTimeCompare(got, want) == 1
 }
 
+func markEoschoolSectionDone(row *EoschoolCurriculumProgressDoc, key string) {
+	for _, existing := range row.SectionsDone {
+		if existing == key {
+			return
+		}
+	}
+	row.SectionsDone = append(row.SectionsDone, key)
+}
+
 func applyEoschoolActivityScore(row *EoschoolCurriculumProgressDoc, key string, score int) {
 	if row.ActivityScores == nil {
 		row.ActivityScores = map[string]int{}
 	}
 	row.ActivityScores[key] = score
 	delete(row.ActivityScoreNotes, key)
+	markEoschoolSectionDone(row, key)
 }
 
 func clipEoschoolText(s string, max int) string {

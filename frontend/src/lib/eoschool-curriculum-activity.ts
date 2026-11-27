@@ -75,7 +75,7 @@ export function paintCurriculumSubjectScores(root: HTMLElement): void {
     if (!span || !dayId || !sectionId) return;
     const score = scores.get(sectionProgressKey(dayId, sectionId));
     if (score == null) {
-      span.hidden = true;
+      span.hidden = false;
       span.textContent = "";
       span.removeAttribute("aria-label");
       span.removeAttribute("title");
@@ -277,6 +277,7 @@ function applyPayload(data: CurriculumProgressPayload, key: string): void {
     data.activityFacts,
   );
   photoRev.set(key, String(Date.now()));
+  document.dispatchEvent(new CustomEvent("eoschool-curriculum-progress", { detail: data }));
   const root = document.querySelector<HTMLElement>("[data-curriculum-progress]");
   if (root) paintCurriculumSubjectScores(root);
 }

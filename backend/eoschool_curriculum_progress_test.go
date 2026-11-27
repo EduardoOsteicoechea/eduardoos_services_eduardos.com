@@ -268,6 +268,9 @@ func TestEoschoolActivityRecordSurvivesRescore(t *testing.T) {
 	if view.ActivityScores["d38:mat"] != 70 || view.ActivityScoreNotes["d38:mat"] != "Falló 7 × 8." {
 		t.Fatalf("score/note %#v %#v", view.ActivityScores, view.ActivityScoreNotes)
 	}
+	if len(view.SectionsDone) != 1 || view.SectionsDone[0] != "d38:mat" {
+		t.Fatalf("grade should complete the section, got %v", view.SectionsDone)
+	}
 	if len(view.ActivityFacts) != 2 || view.ActivityFacts[0].Label != "7 × 8" || view.ActivityFacts[0].Misses != 1 {
 		t.Fatalf("facts %#v", view.ActivityFacts)
 	}
@@ -281,6 +284,9 @@ func TestEoschoolActivityRecordSurvivesRescore(t *testing.T) {
 	applyEoschoolActivityScore(&doc, "d38:mat", 40)
 	if doc.ActivityScores["d38:mat"] != 40 {
 		t.Fatal(doc.ActivityScores["d38:mat"])
+	}
+	if len(doc.SectionsDone) != 1 || doc.SectionsDone[0] != "d38:mat" {
+		t.Fatalf("rescore should keep one completion, got %v", doc.SectionsDone)
 	}
 	if _, ok := doc.ActivityScoreNotes["d38:mat"]; ok {
 		t.Fatal("manual rescore should clear the note")
