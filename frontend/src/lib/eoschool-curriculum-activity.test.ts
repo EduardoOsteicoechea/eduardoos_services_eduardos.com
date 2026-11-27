@@ -126,6 +126,31 @@ describe("score reason", () => {
     expect(printed).toContain("Corrección.");
     expect(printed).toContain("56");
   });
+
+  it("shows the question and the child's exact words", () => {
+    const modal = document.createElement("div");
+    modal.innerHTML = `<div data-curriculum-activity hidden></div>`;
+    const card = document.createElement("article");
+    card.dataset.planDay = "39";
+    card.dataset.curriculumDay = "d39";
+    setActivityMarks({ "d39:bib": 80 }, [], undefined, undefined, {
+      "d39:bib": {
+        summary: "La medida está bien leída.",
+        kind: "prose",
+        items: [{
+          kind: "text",
+          prompt: "¿Cómo es la medida que se da?",
+          answer: "buena, apretada y rebosante",
+          rewrite: "Buena, apretada, remecida y rebosante.",
+        }],
+      },
+    });
+    renderCurriculumActivity(modal, card, "bib");
+    modal.querySelector<HTMLButtonElement>("[data-curriculum-score-why]")?.click();
+    expect(modal.querySelector("[data-curriculum-score-reason-text]")?.textContent).toBe("La medida está bien leída.");
+    expect(modal.querySelector("[data-curriculum-score-prompt]")?.textContent).toBe("¿Cómo es la medida que se da?");
+    expect(modal.querySelector("[data-curriculum-score-wrote]")?.textContent).toBe("buena, apretada y rebosante");
+  });
 });
 
 describe("paintCurriculumSubjectScores", () => {

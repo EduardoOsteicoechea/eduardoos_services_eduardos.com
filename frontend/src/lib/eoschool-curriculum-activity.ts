@@ -692,14 +692,17 @@ function openScoreReasonDialog(
     const answer = document.createElement("article");
     answer.className = "eoschool-curriculum-activity__answer";
     answer.dataset.curriculumScoreAnswer = "";
-    if (item.prompt) {
+    const question = item.prompt?.trim() || "";
+    if (question) {
       const prompt = document.createElement("p");
-      prompt.textContent = item.prompt;
+      prompt.dataset.curriculumScorePrompt = "";
+      prompt.textContent = question;
       answer.append(prompt);
     }
-    const written = item.rewrite?.trim() || item.answer?.trim() || "";
+    const written = item.answer?.trim() || item.rewrite?.trim() || "";
     if (written) {
       const line = document.createElement("p");
+      line.dataset.curriculumScoreWrote = "";
       line.textContent = written;
       answer.append(line);
     }
