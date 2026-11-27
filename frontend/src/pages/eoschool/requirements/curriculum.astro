@@ -1191,10 +1191,9 @@ function weekForPlanDay(planDay: number): number {
     align-items: stretch;
     height: auto;
     min-height: 0;
-    max-height: 5.625rem;
+    max-height: none;
     gap: 0;
     min-width: 0;
-    min-height: 0;
     padding: var(--rail-gap);
     padding-top: calc(var(--rail-gap) + var(--space-padding));
     display: flex;
@@ -1305,10 +1304,16 @@ function weekForPlanDay(planDay: number): number {
     margin: 0;
     padding: 0;
     border: 0;
-    border-radius: 0;
-    background: transparent;
-    color: var(--color-text);
+    border-radius: var(--border-radius);
+    background: var(--color-button-bg);
+    color: var(--color-button-fg);
     cursor: pointer;
+  }
+
+  .eoschool-curriculum__day-collapse:hover,
+  .eoschool-curriculum__day-collapse:focus-visible {
+    background: var(--color-accent);
+    color: var(--color-bg);
   }
 
   .eoschool-curriculum__day-collapse .material-symbols-outlined {
@@ -1316,7 +1321,7 @@ function weekForPlanDay(planDay: number): number {
     height: var(--font-size-md);
     font-size: var(--font-size-md);
     line-height: 1;
-    color: var(--color-text);
+    color: inherit;
     background: transparent;
     border-radius: 0;
   }
@@ -1332,7 +1337,7 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__day-card.product-dash__card {
     height: auto;
     min-height: 0;
-    max-height: 5.625rem;
+    max-height: none;
     overflow: visible;
   }
 
@@ -1342,9 +1347,8 @@ function weekForPlanDay(planDay: number): number {
     gap: var(--rail-gap);
     min-width: 0;
     min-height: 0;
-    flex: 1;
-    overflow-x: hidden;
-    overflow-y: auto;
+    flex: 0 0 auto;
+    overflow: visible;
     max-height: none;
   }
 
@@ -1353,7 +1357,7 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__day-card--slot5 .eoschool-curriculum__day-body {
-    overflow-y: auto;
+    overflow: visible;
     min-height: 0;
   }
 
@@ -1487,17 +1491,17 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__subject {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: stretch;
     gap: var(--rail-gap);
     box-sizing: border-box;
     width: 100%;
-    height: 7.1875rem;
-    min-height: 7.1875rem;
-    max-height: 7.1875rem;
+    height: auto;
+    min-height: 0;
+    max-height: 5.625rem;
     min-width: 0;
     position: relative;
     padding: var(--rail-gap);
-    overflow: visible;
+    overflow: hidden;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
   }
@@ -1509,8 +1513,8 @@ function weekForPlanDay(planDay: number): number {
     align-self: stretch;
     min-width: 0;
     min-height: 0;
-    height: 100%;
-    overflow: visible;
+    height: auto;
+    overflow: hidden;
     gap: 0;
   }
 
