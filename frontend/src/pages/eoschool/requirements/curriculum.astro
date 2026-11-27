@@ -1425,6 +1425,12 @@ function weekForPlanDay(planDay: number): number {
     transform: none;
   }
 
+  .eoschool-curriculum__day-card.product-dash__card::after,
+  .eoschool-curriculum__day-card.product-dash__card:hover::after,
+  .eoschool-curriculum__day-card.product-dash__card:focus-visible::after {
+    display: none;
+  }
+
   .eoschool-curriculum__day-card--done,
   .eoschool-curriculum__day-card.product-dash__card--done,
   .eoschool-curriculum__day-card--done:hover,
@@ -1433,7 +1439,7 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__day-card.product-dash__card--done:focus-visible {
     border-color: var(--color-border);
     box-shadow: none;
-    background: color-mix(in srgb, var(--color-ok) 10%, var(--color-surface));
+    background: var(--eo-surface-2, var(--color-surface));
   }
 
   .eoschool-curriculum__week.product-dash__card--done {
@@ -1470,6 +1476,10 @@ function weekForPlanDay(planDay: number): number {
 
   .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject-title {
     min-height: 0;
+  }
+
+  .eoschool-curriculum__day-card--expo .eoschool-curriculum__subject-head .eoschool-curriculum__section-check {
+    justify-self: start;
   }
 
   .eoschool-curriculum__section-check {
@@ -1609,7 +1619,7 @@ function weekForPlanDay(planDay: number): number {
     min-width: 0;
     position: relative;
     padding: var(--rail-gap);
-    border-block-start: 0;
+    border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
   }
 
@@ -1767,7 +1777,6 @@ function weekForPlanDay(planDay: number): number {
   }
 
   .eoschool-curriculum__day-body > .eoschool-curriculum__subject:first-child {
-    border-block-start: 0;
     margin-block-start: 0;
   }
 
