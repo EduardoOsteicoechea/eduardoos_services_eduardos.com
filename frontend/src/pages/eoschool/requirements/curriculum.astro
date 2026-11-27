@@ -1214,9 +1214,9 @@ function weekForPlanDay(planDay: number): number {
     align-items: center;
     justify-items: center;
     box-sizing: border-box;
-    height: calc(var(--button-size) * 0.84375);
+    height: auto;
     gap: var(--rail-gap);
-    padding-inline: var(--rail-gap);
+    padding: 0.25rem;
     margin: 0;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
@@ -1250,12 +1250,12 @@ function weekForPlanDay(planDay: number): number {
     justify-content: center;
     flex: 0 0 auto;
     width: 100%;
-    height: auto;
+    height: calc(var(--button-size) * 0.84375 - (var(--border-width) * 2));
     margin: 0;
     padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
     color: var(--color-text);
     font-size: calc(var(--font-size-xs) * 1.125);
     font-weight: 650;
@@ -1311,9 +1311,9 @@ function weekForPlanDay(planDay: number): number {
     height: calc(var(--button-size) * 0.84375 - (var(--border-width) * 2));
     margin: 0;
     padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    background: var(--color-surface);
     color: var(--color-text);
     cursor: pointer;
   }
@@ -1516,6 +1516,12 @@ function weekForPlanDay(planDay: number): number {
     overflow: hidden;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
+  }
+
+  .eoschool-curriculum__subject[data-curriculum-section="bib"] {
+    height: 4.6875rem;
+    min-height: 4.6875rem;
+    max-height: 4.6875rem;
   }
 
   .eoschool-curriculum__subject-main {
