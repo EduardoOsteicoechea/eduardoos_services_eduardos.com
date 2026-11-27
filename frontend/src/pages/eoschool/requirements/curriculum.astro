@@ -1533,7 +1533,7 @@ function weekForPlanDay(planDay: number): number {
     min-width: 0;
     position: relative;
     padding: var(--rail-gap);
-    overflow: auto;
+    overflow: visible;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
   }
@@ -1542,7 +1542,11 @@ function weekForPlanDay(planDay: number): number {
     display: flex;
     flex-direction: column;
     flex: 1;
+    align-self: stretch;
     min-width: 0;
+    min-height: 0;
+    height: 100%;
+    overflow: visible;
     gap: 0;
   }
 
@@ -1608,11 +1612,14 @@ function weekForPlanDay(planDay: number): number {
     display: flex;
     flex-direction: column;
     flex: 1;
-    align-self: flex-start;
+    align-self: stretch;
     min-width: 0;
+    min-height: 0;
     gap: 0;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .eoschool-curriculum__subject-photos {
@@ -2963,6 +2970,11 @@ function weekForPlanDay(planDay: number): number {
     color: var(--color-muted);
     background: transparent;
     border-radius: 0;
+  }
+
+  .eoschool-curriculum__subject:has(.eoschool-curriculum__subject-photo:hover),
+  .eoschool-curriculum__subject:has(.eoschool-curriculum__subject-photo:focus-visible) {
+    z-index: 2;
   }
 
   .eoschool-curriculum__subject-photo:hover::after,
