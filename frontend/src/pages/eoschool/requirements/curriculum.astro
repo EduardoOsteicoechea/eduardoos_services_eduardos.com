@@ -296,11 +296,7 @@ function weekForPlanDay(planDay: number): number {
                                         ? block.mat
                                         : block.cie) ?? [],
                                   );
-                        const label = isHoliday
-                          ? `${area.label} · Feriado`
-                          : isExpo
-                            ? `${area.label} · Expo`
-                            : area.label;
+                        const label = isHoliday ? `${area.label} · Feriado` : area.label;
                         const subjectBodyId = `${blockId}-${area.sectionId}-body`;
                         const expoBible = isExpo && area.sectionId === "bib";
                         const subjectOpen = subjectsOpen;
@@ -334,9 +330,6 @@ function weekForPlanDay(planDay: number): number {
                               <div class="eoschool-curriculum__subject-photos" data-curriculum-subject-photos aria-hidden="true"></div>
                               <h4 class="eoschool-curriculum__subject-title">
                                 <span class="page-title-sr">{label}</span>
-                                {isExpo && !expoBible ? (
-                                  <span class="eoschool-curriculum__expo-word">Expo</span>
-                                ) : null}
                                 <span class="eoschool-curriculum__subject-score" data-curriculum-subject-score></span>
                               </h4>
                             </div>
@@ -1364,16 +1357,6 @@ function weekForPlanDay(planDay: number): number {
     align-items: stretch;
   }
 
-  .eoschool-curriculum__expo-word {
-    display: inline-flex;
-    align-items: center;
-    align-self: center;
-    margin: 0;
-    font-size: var(--font-size-xs);
-    line-height: 1;
-    color: var(--color-text);
-  }
-
   .eoschool-curriculum__day-card:hover,
   .eoschool-curriculum__day-card:focus-visible {
     transform: none;
@@ -2029,12 +2012,34 @@ function weekForPlanDay(planDay: number): number {
     border: 0;
     border-radius: 0;
     background: var(--color-bg);
+    align-items: flex-start;
+    justify-content: center;
+    overflow: auto;
+  }
+
+  .eoschool-curriculum-photos__dialog:fullscreen .eoschool-curriculum-photos__close.icon-btn {
+    position: fixed;
+    top: var(--rail-gap);
+    transform: translate(-50%, 0);
+  }
+
+  .eoschool-curriculum-photos__dialog:fullscreen .eoschool-curriculum-photos__full {
+    position: fixed;
+  }
+
+  .eoschool-curriculum-photos__dialog:fullscreen .eoschool-curriculum-photos__nav {
+    position: sticky;
+    top: var(--space-padding);
+    z-index: 2;
   }
 
   .eoschool-curriculum-photos__dialog:fullscreen .eoschool-curriculum-photos__img {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
+    align-self: center;
     min-width: 0;
-    min-height: 0;
+    min-height: auto;
+    width: auto;
+    height: auto;
     max-width: none;
     max-height: none;
     object-fit: contain;
