@@ -1218,29 +1218,14 @@ function weekForPlanDay(planDay: number): number {
     gap: var(--rail-gap);
     padding: 0.25rem;
     margin: 0;
-    border: var(--border-width) solid var(--color-border);
+    border: 0;
     border-radius: var(--border-radius);
     background: var(--color-bg);
     overflow: hidden;
   }
 
   .eoschool-curriculum__day-tools-progress {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 0.125rem;
-    overflow: hidden;
-    background: color-mix(in srgb, #16a34a 22%, var(--color-border));
-    pointer-events: none;
-  }
-
-  .eoschool-curriculum__day-tools-progress__fill {
-    position: absolute;
-    inset: 0;
-    background: #16a34a;
-    transform: scaleX(0);
-    transform-origin: left center;
+    display: none;
   }
 
   .eoschool-curriculum__day-bubble {
