@@ -1340,6 +1340,16 @@ function weekForPlanDay(planDay: number): number {
     min-height: 0;
     max-height: none;
     overflow: visible;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .eoschool-curriculum__day-card.product-dash__card:hover,
+  .eoschool-curriculum__day-card.product-dash__card:focus-visible {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
   }
 
   .eoschool-curriculum__day-body {
@@ -1395,9 +1405,9 @@ function weekForPlanDay(planDay: number): number {
   .eoschool-curriculum__day-card--done:focus-visible,
   .eoschool-curriculum__day-card.product-dash__card--done:hover,
   .eoschool-curriculum__day-card.product-dash__card--done:focus-visible {
-    border-color: var(--color-border);
+    border-color: transparent;
     box-shadow: none;
-    background: var(--eo-surface-2, var(--color-surface));
+    background: transparent;
   }
 
   .eoschool-curriculum__week.product-dash__card--done {
