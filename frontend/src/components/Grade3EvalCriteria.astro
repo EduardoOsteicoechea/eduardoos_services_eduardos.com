@@ -1,0 +1,83 @@
+---
+import { GRADE3_EVAL_CRITERIA } from "../lib/eoschool-grade3-eval-criteria";
+---
+
+<div class="grade3-criteria">
+  <p class="lede">
+    Cada línea es algo que un niño de tercer grado muestra con un trabajo. La barra es la más alta que sigue siendo de ese grado:
+    UNESCO, América Latina, Inglaterra, Cambridge, Australia, Common Core, el Bachillerato Internacional y la salud del día.
+    PIRLS y TIMSS son de cuarto grado y no están aquí.
+  </p>
+  {
+    GRADE3_EVAL_CRITERIA.groups.map((group) => (
+      <article class="product-dash__card grade3-criteria__card" id={group.id}>
+        <h2 class="product-dash__card-title">{group.title}</h2>
+        <p class="grade3-criteria__lede">{group.lede}</p>
+        <ol class="grade3-criteria__list">
+          {group.items.map((item) => (
+            <li id={item.id}>
+              <p>{item.text}</p>
+              <p class="grade3-criteria__source">{item.source}</p>
+            </li>
+          ))}
+        </ol>
+      </article>
+    ))
+  }
+  <p class="hint">Un criterio que todavía no se cumple señala qué enseñar. No diagnostica.</p>
+</div>
+
+<style>
+  .grade3-criteria {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-padding);
+    min-width: 0;
+  }
+
+  .grade3-criteria__card {
+    cursor: default;
+    min-height: 0;
+    align-self: stretch;
+  }
+
+  .grade3-criteria__card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .grade3-criteria__lede,
+  .grade3-criteria__list,
+  .grade3-criteria__source {
+    margin: 0;
+  }
+
+  .grade3-criteria__lede,
+  .grade3-criteria__source,
+  .grade3-criteria__list p {
+    font-size: var(--font-size-sm);
+    line-height: 1.45;
+  }
+
+  .grade3-criteria__lede {
+    color: var(--color-muted);
+  }
+
+  .grade3-criteria__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rail-gap);
+    padding-left: 1.25rem;
+  }
+
+  .grade3-criteria__list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  .grade3-criteria__source {
+    color: var(--color-muted);
+  }
+</style>

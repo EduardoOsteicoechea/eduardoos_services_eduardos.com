@@ -1,0 +1,61 @@
+---
+import { Fragment } from "astro/jsx-runtime";
+import EoschoolDashBack from "../../../components/EoschoolDashBack.astro";
+import Grade3EvalCriteria from "../../../components/Grade3EvalCriteria.astro";
+import Layout from "../../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Criterios 3.er grado"
+  description="Criterios de tercer grado: lectura, escritura, matemática, ciencias, inglés, aprendizaje, trato y el día, con la barra más alta de ese grado."
+  page="eoschool-criterios"
+  robots="noindex,nofollow"
+>
+  <Fragment slot="dhs">
+    <a class="dhs-action" href="/eoschool" data-route title="Dashboard" aria-label="Dashboard">
+      <span class="icon-btn" aria-hidden="true"><span class="material-symbols-outlined" aria-hidden="true">dashboard</span></span>
+      Dashboard
+    </a>
+  </Fragment>
+
+  <section class="product-dash page-span-all" data-grade3-criteria>
+    <EoschoolDashBack />
+    <p class="status" data-banner>Cargando…</p>
+    <div data-gate hidden class="product-gate">
+      <p class="hint">Necesitas sesión y suscripción Homescool.</p>
+      <a class="button" href="/session" data-route>Sign in</a>
+    </div>
+    <div data-authed hidden>
+      <Grade3EvalCriteria />
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { onAstroPageLoad, requireService, setHidden } from "../../../lib/productGate";
+
+  onAstroPageLoad("eoschool-criterios", async () => {
+    const root = document.querySelector("[data-grade3-criteria]");
+    const banner = root?.querySelector("[data-banner]");
+    const gate = root?.querySelector("[data-gate]");
+    const authed = root?.querySelector("[data-authed]");
+    if (banner instanceof HTMLElement) {
+      banner.hidden = false;
+      banner.textContent = "Cargando…";
+    }
+    const result = await requireService("homescool", { requireSubscription: true });
+    if (!result.sessionOk || !result.access.allowed) {
+      if (banner instanceof HTMLElement) {
+        banner.textContent = result.sessionOk
+          ? "Necesitas suscripción Homescool."
+          : "Inicia sesión para continuar.";
+      }
+      setHidden(gate, false);
+      setHidden(authed, true);
+    } else {
+      if (banner instanceof HTMLElement) banner.hidden = true;
+      setHidden(gate, true);
+      setHidden(authed, false);
+    }
+  });
+</script>
